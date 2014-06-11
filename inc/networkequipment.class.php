@@ -62,9 +62,16 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       if ($item->getID() > 0) {
          $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-         $pfNetworkEquipment->showForm($item,
-              array('target'=>$CFG_GLPI['root_doc'].
-                                 '/plugins/fusioninventory/front/switch_info.form.php'));
+
+         if (isset($_GET['displaysnmpinfo'])) {
+            $pfNetworkEquipment->showNetworkEquipmentInformation($item,
+                                                                 array('target'=>$CFG_GLPI['root_doc'].
+                                                                       '/plugins/fusioninventory/front/switch_info.form.php'));
+         } else {
+            $pfNetworkEquipment->showForm($item,
+                 array('target'=>$CFG_GLPI['root_doc'].
+                                    '/plugins/fusioninventory/front/switch_info.form.php'));
+         }
       }
 
       return TRUE;
@@ -416,8 +423,23 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-   function showNetworkEquipmentInformation($id, $options) {
+   function showNetworkEquipmentInformation(CommonDBTM $item, $options) {
       global $DB;
+
+      $id = $item->getID();
+      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
+         // Add in database if not exist
+         $input = array();
+         $input['networkequipments_id'] = $id;
+         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
+         $ID_tn = $this->add($input);
+         $this->getFromDB($ID_tn);
+      } else {
+         foreach ($data as $datas) {
+            $this->fields = $datas;
+         }
+      }
+
 
       // Form networking informations
       echo "<form name='form' method='post' action='".$options['target']."'>";
@@ -431,10 +453,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' rowspan='3'>";
+      echo "<td align='center' rowspan='4'>";
       echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
       echo "</td>";
-      echo "<td rowspan='3'>";
+      echo "<td rowspan='4'>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->fields['sysdescr'];
       echo "</textarea>";
@@ -453,7 +475,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "</td>";
       echo "<td align='center'>";
       echo __('CPU usage (in %)', 'fusioninventory')."&nbsp;:";
       echo "</td>";
@@ -461,7 +482,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       Html::displayProgressBar(250, $this->fields['cpu'],
                   array('simple' => TRUE));
       echo "</td>";
+      echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo __('Memory usage (in %)', 'fusioninventory')."&nbsp;:";
       echo "</td>";

@@ -51,7 +51,7 @@ class PluginFusioninventoryComputer extends Computer {
    function getSearchOptions() {
       $computer = new Computer();
       $options  = $computer->getSearchOptions();
-      
+
       $options['6000']['name']          = __('Static group', 'fusioninventory');
       $options['6000']['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
       $options['6000']['massiveaction'] = FALSE;
@@ -65,9 +65,9 @@ class PluginFusioninventoryComputer extends Computer {
                                                                         'specific_itemtype' => 'Computer')));
       return $options;
    }
-   
+
    function getSpecificMassiveActions($checkitem=NULL) {
-   
+
       $actions = array();
       if (isset($_GET['id'])) {
          $id = $_GET['id'];
@@ -84,16 +84,16 @@ class PluginFusioninventoryComputer extends Computer {
 
       if (!isset($_POST['custom_action'])) {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
-               = _x('button', 'Add to group');
-            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem'] 
-               = _x('button', 'Delete');
+               = _x('button', 'Add');
+            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
+               = _x('button','Delete permanently');
       } else {
          if ($_POST['custom_action'] == 'add_to_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
-               = _x('button', 'Add to group');
+               = _x('button', 'Add');
          } elseif($_POST['custom_action'] == 'delete_from_group') {
-            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem'] 
-               = _x('button', 'Delete');
+            $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
+               = _x('button','Delete permanently');
          }
       }
       return $actions;
@@ -111,7 +111,7 @@ class PluginFusioninventoryComputer extends Computer {
       return $forbidden;
    }
 
-   
+
    /**
     * @since version 0.85
     *
@@ -126,13 +126,13 @@ class PluginFusioninventoryComputer extends Computer {
             $input = $ma->getInput();
             foreach ($ids as $key) {
                if ($item->can($key, UPDATE)) {
-                  if (!countElementsInTable($group_item->getTable(), 
+                  if (!countElementsInTable($group_item->getTable(),
                                             "`plugin_fusioninventory_deploygroups_id`='"
-                                                .$_POST['id']."' 
-                                              AND `itemtype`='Computer' 
+                                                .$_POST['id']."'
+                                              AND `itemtype`='Computer'
                                               AND `items_id`='$key'")) {
                      $group_item->add(array(
-                        'plugin_fusioninventory_deploygroups_id' 
+                        'plugin_fusioninventory_deploygroups_id'
                            => $_POST['id'],
                         'itemtype' => 'Computer',
                         'items_id' => $key));
@@ -146,13 +146,13 @@ class PluginFusioninventoryComputer extends Computer {
             }
          }
          return;
-         
+
          case 'deleteitem':
-            
+
             foreach ($ids as $key) {
-               $group_item->deleteByCriteria(array('items_id' => $key, 
-                                                   'itemtype' => 'Computer', 
-                                                   'plugin_fusioninventory_deploygroups_id' 
+               $group_item->deleteByCriteria(array('items_id' => $key,
+                                                   'itemtype' => 'Computer',
+                                                   'plugin_fusioninventory_deploygroups_id'
                                                       => $_POST['id']));
          }
       }

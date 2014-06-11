@@ -155,6 +155,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -193,6 +194,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 1;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -222,6 +224,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -265,6 +268,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -303,6 +307,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(

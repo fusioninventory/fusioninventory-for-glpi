@@ -68,6 +68,27 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          return '';
       }
    }
+
+   static function getStateNames() {
+      return array(
+         self::PREPARED => __('Prepared', 'fusioninventory'),
+         self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
+         self::AGENT_HAS_SENT_DATA => __('Agent replied with data to the server', 'fusioninventory'),
+         self::FINISHED => __('Finished', 'fusioninventory'),
+         self::IN_ERROR => __('Error' , 'fusioninventory'),
+         self::CANCELLED => __('Cancelled', 'fusioninventory')
+      );
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      global $DB;
+
+
+      if ($item->getType() == 'PluginFusioninventoryTask' ) {
+         $item->showJobLogs();
+      }
+   }
    /**
    * Display state of taskjob
    *
@@ -240,6 +261,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    * @return nothing
    *
+   * TODO: There is no need to pass $id since we should use this method with an instantiated
+   * object!!
    **/
    function changeStatus($id, $state) {
       $input = array();
@@ -307,31 +330,51 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $this->getFromDB($taskjobstates_id);
       $input = array();
       $input['id'] = $this->fields['id'];
-      $input['state'] = 3;
+      $input['state'] = self::FINISHED;
 
-      $a_input = array();
+      $log_input = array();
       if ($unknown ==  "1") {
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
          $input['state'] = self::FINISHED;
       } else if ($error == "1") {
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          $input['state'] = self::IN_ERROR;
       } else {
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
          $input['state'] = self::FINISHED;
       }
 
       $this->update($input);
-      $a_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
-      $a_input['items_id'] = $items_id;
-      $a_input['itemtype'] = $itemtype;
-      $a_input['date'] = date("Y-m-d H:i:s");
-      $a_input['comment'] = $message;
-      $pfTaskjoblog->add($a_input);
+      $log_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
+      $log_input['items_id'] = $items_id;
+      $log_input['itemtype'] = $itemtype;
+      $log_input['date'] = date("Y-m-d H:i:s");
+      $log_input['comment'] = $message;
+      $pfTaskjoblog->add($log_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
    }
 
+
+   function fail($reason='') {
+      $log = new PluginFusioninventoryTaskjoblog();
+
+      $log_input = array(
+         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
+         'items_id' => $this->fields['items_id'],
+         'itemtype' => $this->fields['itemtype'],
+         'date' => date("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_ERROR,
+         'comment' => $reason
+      );
+
+      $log->add($log_input);
+
+      $this->update(array(
+         'id' => $this->fields['id'],
+         'state' => self::IN_ERROR
+         ));
+   }
 
    function cancel($reason='') {
 
@@ -342,6 +385,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'items_id' => $this->fields['items_id'],
          'itemtype' => $this->fields['itemtype'],
          'date' => date("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_INFO,
          'comment' => $reason
       );
 

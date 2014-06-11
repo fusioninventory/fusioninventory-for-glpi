@@ -367,6 +367,7 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array();
       $a_inventory['INFO'] = array(
@@ -447,6 +448,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array();
       $a_inventory['INFO'] = array(

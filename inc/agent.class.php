@@ -181,7 +181,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      Toolbox::logDebug($item);
       if ($item->getType() == 'Computer') {
 
          // Possibility to remote agent
@@ -260,8 +259,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         Html::hidden('computers_id',
-                      array('value' => $this->fields["computers_id"]));
+         echo Html::hidden('computers_id',
+                           array('value' => $this->fields["computers_id"]));
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);
@@ -634,7 +633,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $agentStatus = $this->getStatus();
 
-      Toolbox::logDebug($agentStatus);
       switch($agentStatus['message']) {
 
          case 'executing scheduled tasks':
@@ -721,8 +719,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $error = ob_get_contents();
       ob_end_clean();
       $this->restoreDebug();
-      Toolbox::logDebug($url_headers);
-
 
       $status = array(
          "url_ok" => $url_ok,

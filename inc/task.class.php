@@ -40,7 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-
 class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
    static $rightname = 'plugin_fusioninventory_task';
@@ -173,11 +172,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    /**
     * Get the list of taskjobstates
     */
-   function getTaskjobstatesForAgent($agent_id, $methods = array()) {
-
+   function getTaskjobstatesForAgent($agent_id, $methods = array(), $options=array()) {
       global $DB;
 
-      $pfJobstate = new PluginFusioninventoryTaskjobstate();
+      // Check for read only which means we do not change the jobstates state (especially usefull
+      // for the get_agent_jobs.php script).
+      $read_only = false;
+      if ( isset($options['read_only']) ) {
+         $read_only = $options['read_only'];
+      }
 
       $pfTimeslot = new PluginFusioninventoryTimeslot();
 
@@ -189,34 +192,70 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // list of jobstates not allowed to run (ie. filtered by schedule and timeslots)
       $jobstates_to_cancel = array();
 
-      $query = implode( "\n", array(
-         "select",
+      $query = implode(" \n", array(
+         "SELECT",
          "     task.`id`, task.`name`, task.`is_active`,",
          "     task.`datetime_start`, task.`datetime_end`,",
          "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
          "     job.`id`, job.`name`, job.`method`, job.`actors`,",
-         "     run.`itemtype`, run.`items_id`,",
+         "     run.`itemtype`, run.`items_id`, run.`state`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
-         "from `glpi_plugin_fusioninventory_taskjobstates` run",
-         "left join `glpi_plugin_fusioninventory_taskjobs` job",
-         "  on job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
-         "left join `glpi_plugin_fusioninventory_tasks` task",
-         "  on task.`id` = job.`plugin_fusioninventory_tasks_id`",
-         "where",
-         "  job.`method` in ('".implode("','", $methods)."')",
-         "  and run.`state` = ". PluginFusioninventoryTaskjobstate::PREPARED,
-         "  and run.`plugin_fusioninventory_agents_id` = " . $agent_id,
+         "FROM `glpi_plugin_fusioninventory_taskjobstates` run",
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` job",
+         "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
+         "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
+         "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "WHERE",
+         "  job.`method` IN ('".implode("','", $methods)."')",
+         "  and run.`state` IN ('". implode("','", array(
+            PluginFusioninventoryTaskjobstate::PREPARED,
+            PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA,
+            PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA,
+         ))."')",
+         "  AND run.`plugin_fusioninventory_agents_id` = " . $agent_id,
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
          // feature will be properly activated in the taskjobs list.
-         "order by job.`id`",
+         "ORDER BY job.`id`",
       ));
+
 
       $query_result = $DB->query($query);
       $results = array();
       if ($query_result) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
+
+      // Fetch a list of unique actors since the same actor can be assigned to many jobs.
+      $actors = array();
+      foreach($results as $result) {
+         $actors_from_job = importArrayFromDB($result['job']['actors']);
+         foreach($actors_from_job as $actor) {
+            $actor_key = "".key($actor)."_".$actor[key($actor)];
+            if( !isset($actors[$actor_key]) ) {
+               $actors[$actor_key] = array();
+               foreach( $this->getAgentsFromActors(array($actor)) as $agent ) {
+                  $actors[$actor_key][$agent] = true;
+               }
+            }
+         }
+      }
+
+      // Merge agents into one list
+      $agents = array();
+      foreach($actors as $key=>$agents_list) {
+         //Toolbox::logDebug(array("agents_list count" => count($agents_list)));
+         //Toolbox::logDebug(array("agents_list" => $agents_list));
+         foreach( $agents_list as $id => $val) {
+            if(! isset($agents[$id])) {
+               $agents[$id] = true;
+            }
+         }
+      }
+      $agents = array_keys($agents);
+      //Toolbox::logDebug(array("final agents list count" => count($agents)));
+      //Toolbox::logDebug(array("final agents list" => $agents));
+
 
       // Get timeslot's entries from this list at the time of the request (ie. get entries according
       // to the day of the week)
@@ -237,19 +276,34 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
        * - The tasks associated with those taskjobs are not disabled.
        * - The task's schedule and timeslots still match the time those jobstates have been
        * requested.
-       * - [ToBeDone] The agent is still present in the dynamic actors (eg. Dynamic groups)
-       * TODO: add the timeslot condition.
+       * - The agent is still present in the dynamic actors (eg. Dynamic groups)
        */
       foreach($results as $result ) {
 
          $jobstate = new PluginFusioninventoryTaskjobstate();
          $jobstate->getFromDB($result['run']['id']);
 
+         //Cancel the job it has already been sent to the agent but the agent did not replied
+         if (
+            $result['run']['state'] == $jobstate::SERVER_HAS_SENT_DATA
+            or $result['run']['state'] == $jobstate::AGENT_HAS_SENT_DATA
+         ) {
+            $jobstates_to_cancel[$jobstate->fields['id']] = array(
+               'jobstate' => $jobstate,
+               'reason'   => __(
+                  "The agent is requesting a configuration that has already been sent to ".
+                  "him by the server. It is more likely that the agent is subject to a critical ".
+                  "error.", 'fusioninventory'
+               ),
+               'code' => $jobstate::IN_ERROR
+            );
+            continue;
+         }
          //Cancel the jobstate if the related tasks has been deactivated
          if ($result['task']['is_active'] == 0) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
-               'reason' => __('The task has been deactivated after preparation of this job.')
+               'reason' => __('The task has been deactivated after preparation of this job.', 'fusioninventory')
             );
             continue;
          };
@@ -268,7 +322,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
                   'reason' => __(
-                     "This job can not be executed anymore due to the task\'s schedule."
+                     "This job can not be executed anymore due to the task's schedule.", 'fusioninventory'
                   )
                );
                continue;
@@ -302,7 +356,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
                   'reason' => __(
-                     "This job can not be executed anymore due to the task\'s timeslot."
+                     "This job can not be executed anymore due to the task's timeslot.", 'fusioninventory'
                   )
                );
                continue;
@@ -315,17 +369,24 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // is the source of this execution. To do this, we need to track the 'actor_source' in the
          // jobstate when it's generated by prepareTaskjobs().
 
-         $actors = importArrayFromDB($result['job']['actors']);
-         $agents = $this->getAgentsFromActors($actors);
+         //$job_actors = importArrayFromDB($result['job']['actors']);
+         $chrono = microtime(true);
          if ( !in_array($agent_id, $agents) ) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
                'reason' => __(
-                  'This agent does not belong anymore in the actors defined in the job.'
+                  'This agent does not belong anymore in the actors defined in the job.', 'fusioninventory'
                )
             );
             continue;
          }
+
+         //Toolbox::logDebug(
+         //   sprintf(
+         //      "Time to check if '%s' is still in actors list: %5.6f",
+         //      $_GET['machineid'],(microtime(true) - $chrono)
+         //   )
+         //);
 
          //TODO: The following method (actually defined as member of taskjob) needs to be
          //initialized when getting the jobstate from DB (with a getfromDB hook for example)
@@ -337,8 +398,19 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       //Remove the list of jobstates previously filtered for removal.
       foreach( $jobstates_to_cancel as $jobstate) {
-         $jobstate['jobstate']->cancel($jobstate['reason']);
+         if (!isset($jobstate['code'])) {
+            $jobstate['code'] = PluginFusioninventoryTaskjobstate::CANCELLED;
+         }
+         switch($jobstate['code']) {
+            case PluginFusioninventoryTaskjobstate::IN_ERROR:
+               $jobstate['jobstate']->fail($jobstate['reason']);
+               break;
+            default:
+               $jobstate['jobstate']->cancel($jobstate['reason']);
+               break;
+         }
       }
+
       return $jobstates;
    }
 
@@ -355,40 +427,37 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       //transform methods array into string for database query
       $methods = "'" . implode("','", $methods) . "'";
 
-      $query = implode( "\n", array(
-         "select",
+      $query = implode( " \n", array(
+         "SELECT",
          "     task.`id`, task.`name`,",
          "     job.`id`, job.`name`, job.`method`, ",
-         "     job.`targets`, job.`actors`,",
-         "     run.`id`, run.`plugin_fusioninventory_agents_id`",
-         "from `glpi_plugin_fusioninventory_taskjobs` job",
-         "left join `glpi_plugin_fusioninventory_tasks` task",
-         "  on task.`id` = job.`plugin_fusioninventory_tasks_id`",
-         "left join `glpi_plugin_fusioninventory_taskjobstates` run",
-         "  on job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
-         "where task.`is_active` = 1",
-         "and (",
+         "     job.`targets`, job.`actors`",
+         "FROM `glpi_plugin_fusioninventory_taskjobs` job",
+         "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
+         "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "WHERE task.`is_active` = 1",
+         "AND (",
          /**
           * Filter jobs by the schedule and timeslots
           */
          // check only if now() >= datetime_start if datetime_end is null
-         "        (   task.`datetime_start` is not null and task.`datetime_end` is null",
-         "              and '".$now->format("Y-m-d H:i:s")."' >= task.`datetime_start` )",
-         "     or",
+         "        (   task.`datetime_start` IS NOT NULL AND task.`datetime_end` IS NULL",
+         "              AND '".$now->format("Y-m-d H:i:s")."' >= task.`datetime_start` )",
+         "     OR",
          // check if now() is between datetime_start and datetime_end
-         "        (   task.`datetime_start` is not null and task.`datetime_end` is not null",
-         "              and '".$now->format("Y-m-d H:i:s")."' ",
-         "                    between task.`datetime_start` and task.`datetime_end` )",
-         "     or",
+         "        (   task.`datetime_start` IS NOT NULL AND task.`datetime_end` IS NOT NULL",
+         "              AND '".$now->format("Y-m-d H:i:s")."' ",
+         "                    between task.`datetime_start` AND task.`datetime_end` )",
+         "     OR",
          // finally, check if this task can be run at any time ( datetime_start and datetime_end are
          // both null)
-         "        ( task.`datetime_start` is null and task.`datetime_end` is null )",
+         "        ( task.`datetime_start` IS NULL AND task.`datetime_end` IS NULL )",
          ")",
-         "and job.`method` in (".$methods.")",
+         "AND job.`method` IN (".$methods.")",
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
          // feature will be properly activated in the taskjobs list.
-         "order by job.`id`",
+         "ORDER BY job.`id`",
       ));
 
       $query_result = $DB->query($query);
@@ -397,13 +466,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
 
+      // Fetch a list of actors to be prepared. We may have the same actors for each job so this
+      // part can speed up the process.
+      //$actors = array();
+
       // Set basic elements of jobstates
       $run_base = array(
          'state' => PluginFusioninventoryTaskjobstate::PREPARED,
-         'date'  => $now->format("Y-m-d H:i:s"),
+      );
+      $log_base = array(
+         'date'    => $now->format("Y-m-d H:i:s"),
+         'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+         'comment' => ''
       );
 
       $jobstate = new PluginFusioninventoryTaskjobstate();
+      $joblog   = new PluginFusioninventoryTaskjoblog();
 
       foreach($results as $index => $result) {
 
@@ -421,25 +499,26 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if (count($agent_ids) == 0) {
             continue;
          }
-
+         $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
-
+         $limit = 0;
          foreach($targets as $target) {
+            $agent_ids = $saved_agent_ids;
             $item_type = key($target);
             $item_id = current($target);
             $job_id = $result['job']['id'];
             $jobstates_running = $jobstate->find(
-               implode("\n", array(
+               implode(" \n", array(
                   "    `itemtype` = '" . $item_type . "'",
-                  "and `items_id` = ".$item_id,
-                  "and `plugin_fusioninventory_taskjobs_id` = ". $job_id,
-                  "and `state` not in ( " . implode( "," , array(
+                  "AND `items_id` = ".$item_id,
+                  "AND `plugin_fusioninventory_taskjobs_id` = ". $job_id,
+                  "AND `state` not in ('" . implode( "','" , array(
                      PluginFusioninventoryTaskjobstate::FINISHED,
                      PluginFusioninventoryTaskjobstate::IN_ERROR,
                      PluginFusioninventoryTaskjobstate::CANCELLED
-                  )) . ")",
-                  "and `plugin_fusioninventory_agents_id` in (",
-                  "  '" . implode("','", array_keys($agent_ids)) . "'",
+                  )) . "')",
+                  "AND `plugin_fusioninventory_agents_id` IN (",
+                  "'" . implode("','", array_keys($agent_ids)) . "'",
                   ")"
                ))
             );
@@ -455,19 +534,36 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             foreach($agent_ids as $agent_id => $agent_not_running) {
+
                if( $agent_not_running) {
+
+                  $limit += 1;
+                  if ($limit > 500) {
+                     $limit = 0;
+                     break;
+                  }
                   $run = array_merge(
                      $run_base,
                      array(
-                        'itemtype' => $item_type,
-                        'items_id' => $item_id,
+                        'itemtype'                           => $item_type,
+                        'items_id'                           => $item_id,
                         'plugin_fusioninventory_taskjobs_id' => $job_id,
-                        'plugin_fusioninventory_agents_id' => $agent_id,
-                        'uniqid' => uniqid(),
+                        'plugin_fusioninventory_agents_id'   => $agent_id,
+                        'uniqid'                             => uniqid(),
                      )
                   );
 
-                  $jobstate->add($run);
+                  $run_id = $jobstate->add($run);
+                  if ($run_id !== false) {
+                     $log = array_merge(
+                        $log_base,
+                        array(
+                           'plugin_fusioninventory_taskjobstates_id' => $run_id,
+                           ''
+                        )
+                     );
+                     $joblog->add($log);
+                  }
                }
             }
 
@@ -493,24 +589,53 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $itemtype = key($actor);
          $itemid = $actor[$itemtype];
          $item = getItemForItemtype($itemtype);
-         $item->getFromDB($itemid);
+         $dbresult = $item->getFromDB($itemid);
+         // If this item doesn't exists, we continue to the next actor item.
+         // TODO: remove this faulty actor from the list of job actor.
+         if ($dbresult === false) { continue ; }
+
          switch($itemtype) {
+
             case 'Computer':
                   $computers[$itemid] = 1;
                break;
-            case 'PluginFusioninventoryDeployGroup':
 
+            case 'PluginFusioninventoryDeployGroup':
+               $config = new PluginFusioninventoryConfig();
+               $user   = new User();
                // Force user and active entity Session since Search class can't live without it.
                // (cf. DeployGroupDynamicData)
                $OLD_SESSION = array();
+
+               if (isset($_SESSION['glpiID'])) {
+                  $OLD_SESSION['glpiID'] = $_SESSION['glpiID'];
+               }
+
                if (isset($_SESSION['glpiname'])) {
                   $OLD_SESSION['glpiname'] = $_SESSION['glpiname'];
                }
+
                if (isset($_SESSION['glpiactiveentities_string'])) {
                   $OLD_SESSION['glpiactiveentities_string'] = $_SESSION['glpiactiveentities_string'];
                }
-               $_SESSION['glpiname'] = 'Plugin_FusionInventory';
-               $_SESSION['glpiactiveentities_string'] = '0';
+
+               if (isset($_SESSION['glpiactiveentities'])) {
+                  $OLD_SESSION['glpiactiveentities'] = $_SESSION['glpiactiveentities'];
+               }
+
+               if (isset($_SESSION['glpiparententities'])) {
+                  $OLD_SESSION['glpiparententities'] = $_SESSION['glpiparententities'];
+               }
+
+               $users_id  = $config->getValue('users_id');
+               $user->getFromDB($users_id);
+
+               $_SESSION['glpiID']   = $users_id;
+               $_SESSION['glpiname'] = $user->getField('name');
+               $_SESSION['glpiactiveentities'] = getSonsOf('glpi_entities', 0);
+               $_SESSION['glpiactiveentities_string'] =
+                  "'". implode( "', '", $_SESSION['glpiactiveentities'] )."'";
+               $_SESSION['glpiparententities'] = array();
 
                foreach(
                   PluginFusioninventoryDeployGroup::getTargetsForGroup($itemid) as $computerid
@@ -518,13 +643,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $computers[$computerid] = 1;
                }
                // Get back to original session variable
+               if (isset($OLD_SESSION['glpiID'])) {
+                  $_SESSION['glpiID'] = $OLD_SESSION['glpiID'];
+               }
                if (isset($OLD_SESSION['glpiname'])) {
                   $_SESSION['glpiname'] = $OLD_SESSION['glpiname'];
                }
                if (isset($OLD_SESSION['glpiactiveentities_string'])) {
                   $_SESSION['glpiactiveentities_string'] = $OLD_SESSION['glpiactiveentities_string'];
                }
+               if (isset($OLD_SESSION['glpiactiveentities'])) {
+                  $_SESSION['glpiactiveentities'] = $OLD_SESSION['glpiactiveentities'];
+               }
+               if (isset($OLD_SESSION['glpiparententities'])) {
+                  $_SESSION['glpiparententities'] = $OLD_SESSION['glpiparententities'];
+               }
                break;
+
             case 'Group':
 
                //find computers by user associated with this group
@@ -547,7 +682,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                foreach($computer_from_group as $computer_entry) {
                   $computers[$computer_entry['id']] = 1;
                }
-
                break;
 
             /**
@@ -583,6 +717,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    *
    **/
    static function cronTaskscheduler() {
+
+      ini_set("max_execution_time", "0");
+
       $task = new self();
       $methods = array();
       foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
@@ -592,52 +729,417 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return true;
    }
 
-   static function getTasksRunning($methods = array(), $entities_id = null) {
+   static function FormatChrono($chrono) {
+      $interval = abs($chrono['end'] - $chrono['start']);
+      $micro = intval($interval * 100);
+      $seconds = intval($interval % 60);
+      $minutes = intval($interval / 60);
+      $hours = intval($interval / 60 / 60);
+      return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
+   }
+
+   function getJoblogs($task_ids = array()) {
       global $DB;
 
-      $methods_restrict = null;
-      if( !is_array($methods) ) {
-         trigger_error("'methods' must be an array.");
-      } else {
-         if (count($methods_restrict) > 0) {
-            $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
+      $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
+
+      $runclass = new PluginFusioninventoryTaskjobstate();
+      $run_states = $runclass->getStateNames();
+
+      //$methods_restrict = null;
+      //if( !is_array($methods) ) {
+      //   trigger_error("'methods' must be an array.");
+      //} else {
+      //   if (count($methods_restrict) > 0) {
+      //      $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
+      //   }
+      //}
+
+      //$task_ids = array();
+      $query_where = array();
+      $query_where[] = "WHERE 1";
+
+      if (isset($_SESSION['glpiactiveentities_string'])) {
+         $query_where[] = getEntitiesRestrictRequest("AND", 'task');
+      }
+
+      if ( is_array($task_ids) and count($task_ids) > 0 ) {
+         $query_where[] = "AND task.`id` IN (" . implode(",",$task_ids) . ")";
+      }
+
+      // quickly filter empty WHERE entry
+      $query_where = array_filter($query_where);
+
+      $query_fields = array(
+         array('task.id'      , 'task.`id`'),
+         array('task.name'    , 'task.`name`'),
+         array('job.id'       , 'job.`id`'),
+         array('job.name'     , 'job.`name`'),
+         array('job.method'   , 'job.`method`'),
+         array('job.targets'   , 'job.`targets`'),
+      );
+
+      $fieldmap = array();
+      foreach($query_fields  as $index => $key) {
+         $fieldmap[$key[0]]=$index;
+      }
+
+      $query_select = array();
+      foreach($query_fields as $index => $key) {
+         $query_select[] = $key[1] . " AS '" . $key[0] . "'";
+      }
+
+      $query_joins = array();
+      $query_joins['task'] = implode( "\n", array(
+         "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task",
+         "  ON job.`plugin_fusioninventory_tasks_id` = task.`id`",
+      ));
+
+      $data_structure = array(
+         'query' => implode("\n", array(
+            "SELECT",
+            implode(",\n", $query_select),
+            "FROM `glpi_plugin_fusioninventory_taskjobs` as job",
+            implode("\n", $query_joins),
+            implode("\n", $query_where)
+         )),
+         'result' => null
+      );
+
+      $data_structure['result'] = $DB->query($data_structure['query']);
+
+      //Results grouped by tasks > jobs > jobstates
+      $logs = array();
+
+      //Target cache (used to speed up data formatting)
+      $targets_cache = array();
+
+      while( $result = $data_structure['result']->fetch_row() ) {
+         $task_id = $result[$fieldmap['task.id']];
+         if (!array_key_exists($task_id, $logs)) {
+            $logs[$task_id] = array(
+               'task_name' => $result[$fieldmap['task.name']],
+               'task_id' => $result[$fieldmap['task.id']],
+               'jobs'      => array()
+            );
+         }
+         $job_id = $result[$fieldmap['job.id']];
+         $jobs_handle = &$logs[$task_id]['jobs'];
+         if ( !array_key_exists($job_id, $jobs_handle) ) {
+            $jobs_handle[$job_id] = array(
+               'name'    => $result[ $fieldmap['job.name']],
+               'id'      => $result[ $fieldmap['job.id']],
+               'method'  => $result[ $fieldmap['job.method']],
+               'targets' => array()
+            );
+         }
+         $targets = importArrayFromDB($result[$fieldmap['job.targets']]);
+         $targets_handle = &$jobs_handle[$job_id]['targets'];
+         $agent_state_types = array(
+            'agents_prepared', 'agents_cancelled', 'agents_running',
+            'agents_success', 'agents_error', 'agents_notdone'
+         );
+         foreach( $targets as $target) {
+            $item_type = key($target);
+            $item_id = current($target);
+
+            $target_id = $item_type . "_" . $item_id;
+            if (isset($targets_cache[$target_id])) {
+               $item = $targets_cache[$target_id];
+            } else {
+               $item = new $item_type();
+               $item->getFromDB($item_id);
+               $targets_cache[$target_id] = $item;
+            }
+            $targets_handle[$target_id] = array(
+               'id'        => $item->fields['id'],
+               'name'      => $item->fields['name'],
+               'type_name' => $item->getTypeName(),
+               'item_link' => $item->getLinkUrl(),
+               'counters'  => array(),
+               'agents' => array()
+            );
+            // create agent states counter lists
+            foreach($agent_state_types as $type) {
+               $targets_handle[$target_id]['counters'][$type] = array();
+            }
          }
       }
 
-      $entities_restrict = null;
-      if (!is_null($entities_id) and isset($_SESSION['glpiactiveentities_string'])) {
-         $entities_restrict = getEntitiesRestrictRequest("AND", 'task');
+
+      // Query fields mapping used to easily select fields by name
+      $query_fields = array(
+         array( 'task.id'        , 'task.`id`'),
+         array( 'task.name'      , 'task.`name`'),
+         array( 'job.id'         , 'job.`id`'),
+         array( 'job.name'       , 'job.`name`'),
+         array( 'job.method'     , 'job.`method`'),
+         array( 'agent.id'       , 'agent.`id`'),
+         array( 'agent.name'     , 'agent.`name`'),
+         array( 'run.id'         , 'run.`id`'),
+         array( 'run.itemtype'   , 'run.`itemtype`'),
+         array( 'run.items_id'   , 'run.`items_id`'),
+         array( 'run.state'      , 'run.`state`'),
+         array( 'log.last_date'  , 'MAX(log.`date`)'),
+         array( 'log.last_timestamp'  , 'UNIX_TIMESTAMP(MAX(log.`date`))'),
+         array( 'log.last_id'  , 'MAX(log.`id`)'),
+         array( 'log.last_comment'  , 'MAX(log.`comment`)'),
+      );
+      $fieldmap = array();
+      foreach($query_fields  as $index => $key) {
+         $fieldmap[$key[0]]=$index;
       }
 
-      $query = implode("\n", array_filter( array(
-         "select",
-         "  task.`id`, task.`name`,",
-         "  job.`id`, job.`name`,",
-         "  run.`id`",
-         "from `glpi_plugin_fusioninventory_tasks` as task",
-         "left join `glpi_plugin_fusioninventory_taskjobs` as job",
-         "  on job.`plugin_fusioninventory_tasks_id` = task.`id`",
-         "left join `glpi_plugin_fusioninventory_taskjobstates` as run",
-         "  on run.`plugin_fusioninventory_taskjobs_id` = job.`id`",
-         "where",
-         "  run.`state` not in (". implode( "," , array(
-            PluginFusioninventoryTaskjobstate::FINISHED,
-            PluginFusioninventoryTaskjobstate::IN_ERROR,
-            PluginFusioninventoryTaskjobstate::CANCELLED
-         )) . ")",
-         (!is_null($methods_restrict)?"  ".$methods_restrict:null),
-         (!empty($entities_restrict)?"  ".$entities_restrict:null),
-      )));
-      $query_result = $DB->query($query);
-      echo $query."\n";
-      $results = array();
-      if ( $query_result ) {
-         $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+      $query_select = array();
+      foreach($query_fields as $index => $key) {
+         $query_select[] = $key[1] . " AS '" . $key[0] . "'";
       }
-      return $results;
+
+      $query_joins = array();
+      $query_joins['max_run'] = implode("\n",array(
+         "INNER JOIN (",
+         "  SELECT",
+         "     MAX(`id`) AS max_id,",
+         "     `plugin_fusioninventory_agents_id`,",
+         "     `plugin_fusioninventory_taskjobs_id`,",
+         "     `items_id`, `itemtype`",
+         "  FROM `glpi_plugin_fusioninventory_taskjobstates`",
+         "  GROUP BY",
+         "     `plugin_fusioninventory_agents_id`,",
+         "     `plugin_fusioninventory_taskjobs_id`,",
+         "     `items_id`, `itemtype`",
+         ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
+      ));
+
+      $query_joins['run'] = implode("\n",array(
+         "INNER JOIN `glpi_plugin_fusioninventory_taskjobstates` AS run",
+         "  ON max_run.`max_id` = run.`id`",
+      ));
+      $query_joins['log'] = implode( "\n", array(
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
+         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
+      ));
+      $query_joins['job'] = implode( "\n", array(
+         "INNER JOIN `glpi_plugin_fusioninventory_taskjobs` AS job",
+         "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
+      ));
+      $query_joins['task'] = implode( "\n", array(
+         "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task",
+         "  ON job.`plugin_fusioninventory_tasks_id` = task.`id`",
+      ));
+
+      $queries = array();
+
+      /*
+       * Get latest jobstates for agents
+       */
+      $queries['1_last_runs'] = array(
+         'query' => implode(" \n", array(
+            "SELECT",
+            implode( ",\n", $query_select),
+            "FROM `glpi_plugin_fusioninventory_agents` AS agent",
+            implode( "\n", $query_joins),
+            implode("\n", $query_where),
+            "GROUP BY job.`id`, agent.`id`, run.`id`",
+         )),
+         'result' => null
+      );
+
+      /*
+       * Get last finished jobstates (ie. `state` >= 3)
+       */
+      $query_joins['max_run'] = implode("\n",array(
+         "INNER JOIN (",
+         "  SELECT",
+         "     MAX(`id`) AS max_id,",
+         "     `plugin_fusioninventory_agents_id`,",
+         "     `plugin_fusioninventory_taskjobs_id`,",
+         "     `items_id`, `itemtype`",
+         "  FROM `glpi_plugin_fusioninventory_taskjobstates`",
+         "  WHERE `state` IN ( ".
+            implode(",", array(
+               PluginFusioninventoryTaskjobstate::FINISHED,
+               PluginFusioninventoryTaskjobstate::IN_ERROR,
+            )) .
+         " )",
+         "  GROUP BY",
+         "     `plugin_fusioninventory_agents_id`,",
+         "     `plugin_fusioninventory_taskjobs_id`,",
+         "     `items_id`, `itemtype`",
+         ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
+      ));
+      $queries['2_finished_runs'] = array(
+         'query' => implode(" \n", array(
+            "SELECT",
+            implode( ",\n", $query_select),
+            "FROM `glpi_plugin_fusioninventory_agents` AS agent",
+            implode( "\n", $query_joins),
+            implode( "\n", $query_where),
+            "GROUP BY job.`id`, agent.`id`, run.`id`",
+         )),
+         'result' => null
+      );
+
+
+      $query_chrono = array(
+         "start" => microtime(true),
+         "end"   => 0
+      );
+      ksort($queries);
+      foreach($queries as $query_name => $contents) {
+         $queries[$query_name]['result'] = $DB->query($contents['query']);
+
+         $query_chrono['end'] = microtime(true);
+         // For debug only
+         //if ($debug_mode) {
+         //   file_put_contents("/tmp/glpi_".$query_name.".sql",$contents['query']);
+         //}
+      };
+
+
+      $agents = array();
+
+
+      $format_chrono = array(
+         "start" => microtime(true),
+         "end"   => 0
+      );
+
+      foreach($queries as $query_name => $contents) {
+         if (!is_null($contents['result'])) {
+            while( $result = $contents['result']->fetch_row()) {
+
+               // We need to check if the results are consistent with the view's structure gathered
+               // by the first query
+               $task_id = $result[$fieldmap['task.id']];
+               //if (!array_key_exists($task_id, $logs)) {
+               if ( !isset($logs[$task_id]) ) {
+                  continue;
+               };
+
+               $job_id = $result[$fieldmap['job.id']];
+               $jobs = &$logs[$task_id]['jobs'];
+               if ( !isset($jobs[$job_id]) ) {
+                  continue;
+               }
+
+               $target_id = $result[ $fieldmap['run.itemtype']].'_'.$result[$fieldmap['run.items_id']];
+               $targets = &$jobs[$job_id]['targets'];
+               if ( !isset($targets[$target_id]) ) {
+                  continue;
+               }
+               $counters = &$targets[$target_id]['counters'];
+
+               $agent_id = $result[$fieldmap['agent.id']];
+               $agents[$agent_id] = $result[$fieldmap['agent.name']];
+
+               if ( ! isset($targets[$target_id]['agents'][$agent_id]) ) {
+                  $targets[$target_id]['agents'][$agent_id] = array();
+               }
+               $agent_state = '';
+               // Update counters
+               switch ($result[$fieldmap['run.state']] ) {
+
+                  case PluginFusioninventoryTaskjobstate::CANCELLED :
+                     // We put this agent in the cancelled counter if it does not have any other job
+                     // states.
+                     if (
+                        !isset( $counters['agents_prepared'][$agent_id])
+                        and !isset( $counters['agents_running'][$agent_id])
+                     ) {
+                        $counters['agents_cancelled'][$agent_id] = 1;
+                        $agent_state = 'cancelled';
+                     }
+
+                     break;
+
+                  case PluginFusioninventoryTaskjobstate::PREPARED :
+                     // We put this agent in the prepared counter if it has not yet completed any job.
+                     $counters['agents_prepared'][$agent_id] = 1;
+                     $agent_state = 'prepared';
+                     break;
+
+                  case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :
+                  case PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA :
+                     // This agent is running so it must not be in any other counter
+                     foreach( $agent_state_types as $type ) {
+                        if ( isset($counters[$type][$agent_id]) ){
+                           unset($counters[$type][$agent_id]);
+                        }
+                     }
+                     $counters['agents_running'][$agent_id] = 1;
+                     $agent_state = 'running';
+
+                     break;
+
+                  case PluginFusioninventoryTaskjobstate::IN_ERROR :
+                     if( isset($counters['agents_success'][$agent_id]) ) {
+                        unset($counters['agents_success'][$agent_id]);
+                     }
+
+                     $counters['agents_error'][$agent_id] = 1;
+                     $agent_state = 'error';
+
+                     if ( isset($counters['agents_notdone'][$agent_id]) ) {
+                        unset($counters['agents_notdone'][$agent_id]);
+                     }
+                     break;
+                  case PluginFusioninventoryTaskjobstate::FINISHED :
+                     if( isset($counters['agents_error'][$agent_id]) ) {
+                        unset($counters['agents_error'][$agent_id]);
+                     }
+
+                     $counters['agents_success'][$agent_id] = 1;
+                     $agent_state = 'success';
+
+                     if ( isset($counters['agents_notdone'][$agent_id]) ) {
+                        unset($counters['agents_notdone'][$agent_id]);
+                     }
+                     break;
+
+               }
+               if (
+                      !isset($counters['agents_error'][$agent_id])
+                  and !isset($counters['agents_success'][$agent_id])
+               ){
+                  $counters['agents_notdone'][$agent_id] = 1;
+               }
+               if (
+                     isset($counters['agents_running'][$agent_id])
+                  or isset($counters['agents_prepared'][$agent_id])
+               ) {
+                  unset($counters['agents_cancelled'][$agent_id]);
+               }
+
+               $targets[$target_id]['agents'][$agent_id][] = array(
+                  'agent_id' => $agent_id,
+                  'numstate' => $result[$fieldmap['run.state']],
+                  'state' => $agent_state,
+                  'jobstate_id' => $result[$fieldmap['run.id']],
+                  'last_log_id' => $result[$fieldmap['log.last_id']],
+                  'last_log_date' => $result[$fieldmap['log.last_date']],
+                  'timestamp' => $result[$fieldmap['log.last_timestamp']],
+                  'last_log' => $result[$fieldmap['log.last_comment']]
+               );
+            }
+         }
+      }
+
+      $format_chrono['end'] = microtime(true);
+      if ($debug_mode) {
+
+         function tmp_display_log($log) { return "ID:". $log['task_id'] . "(".$log['task_name'].")";}
+         Toolbox::logDebug(
+            array(
+               "tasks" => implode(',',array_map('tmp_display_log', $logs)),
+               "row count" => count($logs),
+               "Joblogs Query"=>self::FormatChrono($query_chrono),
+               "Format logs results" => self::FormatChrono($format_chrono),
+            )
+         );
+      }
+      return array('tasks' => $logs, 'agents' => $agents);
    }
-
-
 
    function getTasksPlanned($tasks_id=0) {
       global $DB;
@@ -798,8 +1300,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          ".$where."
          GROUP BY plugin_fusioninventory_tasks_id
          ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`date` DESC";
-
-
 
       return $DB->query($query);
    }

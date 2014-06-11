@@ -89,7 +89,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $tab[1]['field']          = 'name';
       $tab[1]['linkfield']      = '';
       $tab[1]['name']           = __('Name');
-
       $tab[1]['datatype']       = 'itemlink';
 
       $tab[2]['table']           = 'glpi_entities';
@@ -97,12 +96,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $tab[2]['linkfield']       = 'entities_id';
       $tab[2]['name']            = __('Entity');
 
-
       $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $tab[4]['field']          = 'name';
       $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
       $tab[4]['name']           = __('Task');
-
       $tab[4]['datatype']       = 'itemlink';
       $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
 
@@ -111,18 +108,15 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $tab[5]['linkfield']      = '';
       $tab[5]['name']           = __('Status');
 
-
       $tab[6]['table']          = $this->getTable();
       $tab[6]['field']          = 'id';
       $tab[6]['linkfield']      = '';
       $tab[6]['name']           = __('ID');
 
-
       return $tab;
    }
 
    function getTask() {
-      Toolbox::logDebug($this->fields);
       $pfTask = new PluginFusioninventoryTask();
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       return $pfTask;
@@ -149,7 +143,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       if ($type == 'definition') {
          echo __('Definition', 'fusioninventory');
       } else if ($type == 'action') {
-         echo __('Action');
+         echo __('Action', 'fusioninventory');
       }
       echo "</th>";
       echo "</tr>";
@@ -312,7 +306,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     */
 
    function getItemsForModuleItemtype($method, $itemtype) {
-      
+
    }
 
    /**
@@ -1158,9 +1152,9 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo "<th>".__('Name')."</th>";
       echo "<th>".__('Active')."</th>";
       echo "<th>".__('Scheduled date', 'fusioninventory')."</th>";
-      echo "<th>".__('Periodicity')."</th>";
+      echo "<th>".__('Periodicity', 'fusioninventory')."</th>";
       echo "<th>".__('Definition', 'fusioninventory')."</td>";
-      echo "<th>".__('Action')."</th>";
+      echo "<th>".__('Action', 'fusioninventory')."</th>";
       echo "</tr>";
 
       foreach ($a_list as $data) {
