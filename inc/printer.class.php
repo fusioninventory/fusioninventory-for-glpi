@@ -230,6 +230,15 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
       echo "</table>";
    }
+
+
+
+   static function showInfo($item) {
+
+      // Manage locks pictures
+      PluginFusioninventoryLock::showLockIcon('Printer');
+
+   }
 }
 
 ?>

@@ -705,3 +705,9 @@ a.expanded > div.fold {
    background-image: linear-gradient(top, #ffb94b, #fddb6f);
 
 }
+
+.lockfield {
+   background-image: url('../../../plugins/fusioninventory/pics/lock.png');
+   background-repeat: no-repeat; 
+   background-position: right;
+}
