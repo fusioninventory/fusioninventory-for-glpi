@@ -746,16 +746,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $runclass = new PluginFusioninventoryTaskjobstate();
       $run_states = $runclass->getStateNames();
 
-      //$methods_restrict = null;
-      //if( !is_array($methods) ) {
-      //   trigger_error("'methods' must be an array.");
-      //} else {
-      //   if (count($methods_restrict) > 0) {
-      //      $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
-      //   }
-      //}
-
-      //$task_ids = array();
       $query_where = array();
       $query_where[] = "WHERE 1";
 
@@ -1173,9 +1163,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
 
    /**
-   *  Get tasks filtered by relevant criterias
-   *  @param $filter criterias to filter in the request
-   **/
+    *  Get tasks filtered by relevant criterias
+    *  @param $filter criterias to filter in the request
+    **/
    static function getItemsFromDB($filter) {
 
       global $DB;
