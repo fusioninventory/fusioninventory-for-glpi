@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author
+   @co-author Kevin Roy
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -42,14 +42,13 @@
 
 if (strpos($_SERVER['PHP_SELF'], "taskjob_logs.php")) {
    include ("../../../inc/includes.php");
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+   Session::checkCentralAccess();
 }
 
-Session::checkCentralAccess();
-
-// $_GET['taskjobs_id'] => update taskjob
-// $_GET['tasks_id'] => add new taskjob
+//unlock session since access checks have been done
+session_write_close();
+header("Content-Type: text/html; charset=UTF-8");
+Html::header_nocache();
 
 $pfTask = new PluginFusioninventoryTask();
 
