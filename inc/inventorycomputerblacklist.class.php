@@ -228,9 +228,26 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                      $a_computerinventory['Computer']['computermodels_id'] = "";
                   }
                }
-              break;
+               if (isset($a_computerinventory['Computer'])) {
+                  if ($a_computerinventory['Computer']['computermodels_id'] == "") {
+                     if (isset($a_computerinventory['Computer']['mmodel'])) {
+                        $a_computerinventory['Computer']['computermodels_id'] =
+                           $a_computerinventory['Computer']['mmodel'];
 
-           case 'storagesSerial':
+                        foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                           if ((isset($a_computerinventory['Computer']['computermodels_id']))
+                                   && (strtolower($a_computerinventory['Computer']['computermodels_id'])
+                                           == strtolower($blacklist_data['value']))) {
+                              $a_computerinventory['Computer']['computermodels_id'] = "";
+                              break;
+                           }
+                        }
+                     }
+                  }
+               }
+               break;
+
+            case 'storagesSerial':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
 //               foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
