@@ -301,6 +301,10 @@ class PluginFusioninventoryFormatconvert {
          } else if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['MMODEL'];
          }
+         if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
+            $a_inventory['Computer']['mmodel'] = $array['BIOS']['MMODEL'];
+         }
+
          if (isset($array['BIOS']['SSN'])) {
             $a_inventory['Computer']['serial'] = trim($array['BIOS']['SSN']);
             // HP patch for serial begin with 'S'
