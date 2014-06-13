@@ -388,8 +388,16 @@ class PluginFusioninventoryFormatconvert {
          }
          if (isset($array_tmp['plugin_fusioninventory_computerarchs_id'])
                  && $array_tmp['plugin_fusioninventory_computerarchs_id'] != '') {
+                 
+            $rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
+            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['plugin_fusioninventory_computerarchs_id']));
+            if (isset($res_rule['name'])) {
             $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] =
-                 $array_tmp['plugin_fusioninventory_computerarchs_id'];
+                 $res_rule['name'];
+            } else {
+               $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] =
+                  $array_tmp['plugin_fusioninventory_computerarchs_id'];
+            }
          }
       }
 

@@ -98,12 +98,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
           'deploytask'                 => 'PluginFusioninventoryDeployTask',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
-          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
+          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice',
+          'ruledictionnarycomputerarch'=> 'PluginFusioninventoryRuleDictionnaryComputerArch'
       );
       $options = array();
-
-      $options['title'] = self::getTypeName();
-      $options['page']  = self::getSearchURL(false);
 
       $options['menu']['title'] = self::getTypeName();
       $options['menu']['page']  = self::getSearchURL(false);
@@ -122,6 +120,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
          }
       }
+
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
            'page'  => PluginFusioninventoryAgent::getSearchURL(false),
@@ -321,12 +320,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/collectrule.php";
       }
 
+      if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
+         $a_menu[6]['name'] = __('Dictionnary of computer architectures', 'fusioninventory');
+         $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/ruledictionnarycomputerarch.php";
+      }
 
       if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {
-         $a_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
-         $a_menu[6]['pic']  = $CFG_GLPI['root_doc'].
+         $a_menu[7]['name'] = _n('Blacklist', 'Blacklists', 1);
+         $a_menu[7]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
-         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
+         $a_menu[7]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
