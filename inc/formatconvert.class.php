@@ -287,12 +287,24 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
+         if ((isset($array['BIOS']['MMANUFACTURER']))
+                      AND (!empty($array['BIOS']['MMANUFACTURER']))) {
+            $a_inventory['Computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
+         }
+         if ((isset($array['BIOS']['BMANUFACTURER']))
+                      AND (!empty($array['BIOS']['BMANUFACTURER']))) {
+            $a_inventory['Computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+         }
 
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
          } else if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['MMODEL'];
          }
+         if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
+            $a_inventory['Computer']['mmodel'] = $array['BIOS']['MMODEL'];
+         }
+
          if (isset($array['BIOS']['SSN'])) {
             $a_inventory['Computer']['serial'] = trim($array['BIOS']['SSN']);
             // HP patch for serial begin with 'S'

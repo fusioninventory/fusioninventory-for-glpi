@@ -224,6 +224,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "     'agents_prepared'  : '". __('Prepared' , 'fusioninventory')."',",
          "     'agents_cancelled' : '". __('Cancelled', 'fusioninventory')."',",
          "  };",
+         "  taskjobs.logstatuses_names = " . json_encode(
+            PluginFusioninventoryTaskjoblog::dropdownStateValues()
+         ) . ";",
          "</script>",
       ));
 
@@ -250,9 +253,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $task_id = json_encode(array());
       }
       $pfAgent = new PluginFusioninventoryAgent();
+      $Computer = new Computer();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
          "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
+         "  taskjobs.computers_url = '". $Computer->getFormUrl()."'",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
@@ -266,10 +271,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  );",
          "</script>"
       ));
-   }
-
-   function ajaxGetJobs($options) {
-
    }
 
    // TODO: Move this method in task.class

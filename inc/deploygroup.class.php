@@ -112,7 +112,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";

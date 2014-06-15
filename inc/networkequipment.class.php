@@ -528,6 +528,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     * @param type $networkequipments_id
     */
    static function showInfo($item) {
+      
+      // Manage locks pictures
+      PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
+
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
       $a_networkequipmentextend = current($pfNetworkEquipment->find(
                                               "`networkequipments_id`='".$item->getID()."'",
