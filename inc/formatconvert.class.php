@@ -223,18 +223,22 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp['operatingsystemservicepacks_id'] = $array['HARDWARE']['OSCOMMENTS'];
       }
       if (isset($array_tmp['users_id'])) {
-         $array_tmp['contact'] = $array_tmp['users_id'];
-         $tmp_users_id = $array_tmp['users_id'];
-         $split_user = explode("@", $tmp_users_id);
-         $query = "SELECT `id`
-                   FROM `glpi_users`
-                   WHERE `name` = '" . $split_user[0] . "'
-                   LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $array_tmp['users_id'] = $DB->result($result, 0, 0);
+         if ($array_tmp['users_id'] == '') {
+            unset($array_tmp['users_id']);
          } else {
-            $array_tmp['users_id'] = 0;
+            $array_tmp['contact'] = $array_tmp['users_id'];
+            $tmp_users_id = $array_tmp['users_id'];
+            $split_user = explode("@", $tmp_users_id);
+            $query = "SELECT `id`
+                      FROM `glpi_users`
+                      WHERE `name` = '" . $split_user[0] . "'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == 1) {
+               $array_tmp['users_id'] = $DB->result($result, 0, 0);
+            } else {
+               $array_tmp['users_id'] = 0;
+            }
          }
       }
       $array_tmp['is_dynamic'] = 1;
