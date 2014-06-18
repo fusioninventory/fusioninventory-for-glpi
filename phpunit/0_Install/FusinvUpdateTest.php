@@ -105,6 +105,10 @@ class UpdateTest extends RestoreDatabase_TestCase {
       );
       $this->assertEquals(0,$returncode,implode("\n", $output));
 
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
       $FusinvDB = new FusinvDB();
       $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);
 
