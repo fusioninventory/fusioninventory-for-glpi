@@ -2406,7 +2406,8 @@ return namelist;
       $uniqid = 0;
       if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
          // Get module name
-         $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
+         //$pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
+         $pluginName = 'fusioninventory';
          if (
             strstr($pluginName, "fusioninventory")
             OR strstr($pluginName, "fusinv")

@@ -261,11 +261,11 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          // Get job and data to send to agent
          if ($pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id'])) {
 
-            $pluginName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
-            if ($pluginName) {
-               $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);
+//            $pluginName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
+//            if ($pluginName) {
+               $className = "PluginFusioninventory".ucfirst($pfTaskjob->fields['method']);
                $moduleRun[$className][] = $data;
-            }
+//            }
          }
       }
       return $moduleRun;
