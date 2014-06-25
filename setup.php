@@ -235,10 +235,6 @@ function plugin_init_fusioninventory() {
       // Load config
       PluginFusioninventoryConfig::loadCache();
 
-      // ##### 4. Set in session module_id #####
-
-      $_SESSION["plugin_fusioninventory_moduleid"] = $moduleId;
-
       // ##### 5. Set in session XMLtags of methods #####
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
