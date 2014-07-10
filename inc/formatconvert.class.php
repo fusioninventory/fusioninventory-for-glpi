@@ -917,13 +917,13 @@ class PluginFusioninventoryFormatconvert {
             $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
             if ($type_tmp == "Drive") {
                // it's cd-rom / dvd
-//               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+//               if ($pfConfig->getValue(,
 //                    "component_drive") =! 0) {
 //// TODO ***
 //                }
             } else {
                // it's harddisk
-//               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+//               if ($pfConfig->getValue(,
 //                    "component_harddrive") != 0) {
                if (is_array($a_storage)) {
                   if ($pfConfig->getValue('component_harddrive') == 1) {
