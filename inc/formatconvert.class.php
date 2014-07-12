@@ -70,7 +70,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -857,6 +857,8 @@ class PluginFusioninventoryFormatconvert {
       // * PERIPHERAL
       $a_inventory['peripheral'] = array();
       if ($pfConfig->getValue('import_peripheral') > 0) {
+         $a_peripheral_name = array();
+         $per = 0;
          if (isset($array['USBDEVICES'])) {
             foreach ($array['USBDEVICES'] as $a_peripherals) {
                $array_tmp = $thisc->addValues($a_peripherals,
@@ -895,6 +897,44 @@ class PluginFusioninventoryFormatconvert {
                        && $array_tmp['serial'] == '')) {
 
                   $a_inventory['peripheral'][] = $array_tmp;
+                  $a_peripheral_name[$array_tmp['name']] = $per;
+                  $per++;
+               }
+            }
+         }
+         if (isset($array['INPUTS'])) {
+            $a_pointingtypes = array(
+                3 => 'Mouse',
+                4 => 'Trackball',
+                5 => 'Track Point',
+                6 => 'Glide Point',
+                7 => 'Touch Pad',
+                8 => 'Touch Screen',
+                9 => 'Mouse - Optical Sensor'
+            );
+            foreach ($array['INPUTS'] as $a_peripherals) {
+               $array_tmp = $thisc->addValues($a_peripherals,
+                                              array(
+                                                 'NAME'         => 'name',
+                                                 'MANUFACTURER' => 'manufacturers_id'));
+               $array_tmp['serial'] = '';
+               $array_tmp['peripheraltypes_id'] = '';
+               if (isset($a_peripherals['POINTINGTYPE'])
+                       && isset($a_pointingtypes[$a_peripherals['POINTINGTYPE']])) {
+
+                  $array_tmp['peripheraltypes_id'] = $a_pointingtypes[$a_peripherals['POINTINGTYPE']];
+               }
+               if (isset($a_peripherals['LAYOUT'])) {
+                  $array_tmp['peripheraltypes_id'] = 'keyboard';
+               }
+
+               if (!($pfConfig->getValue('import_peripheral') == 3
+                       && $array_tmp['serial'] == '')) {
+                  if (isset($a_peripheral_name[$array_tmp['name']])) {
+                     $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
+                  } else {
+                     $a_inventory['peripheral'][] = $array_tmp;
+                  }
                }
             }
          }
