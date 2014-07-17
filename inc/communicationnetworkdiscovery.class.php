@@ -172,7 +172,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['name'] = $arrayinventory['NETBIOSNAME'];
       } else if ((isset($arrayinventory['DNSHOSTNAME']))
               && (!empty($arrayinventory['DNSHOSTNAME']))) {
-         $input['name'] = $arrayinventory['DNSHOSTNAME'];
+         if (strpos($arrayinventory['DNSHOSTNAME'],'.') !== false) {
+            $splitname = explode('.', $arrayinventory['DNSHOSTNAME']);
+            $input['name'] = $splitname[0];
+            if (!isset($arrayinventory['WORKGROUP'])) {
+               unset($splitname[0]);
+               $arrayinventory['WORKGROUP'] = implode('.', $splitname);
+               $_SESSION['SOURCE_XMLDEVICE'] = $arrayinventory;
+            }
+         } else {
+            $input['name'] = $arrayinventory['DNSHOSTNAME'];
+         }
       }
 
       if (!isset($arrayinventory['ENTITY'])) {
