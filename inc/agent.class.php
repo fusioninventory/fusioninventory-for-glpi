@@ -340,7 +340,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
+      $pfConfig = new PluginFusioninventoryConfig();
+      echo "<td>".__('Agent port', 'fusioninventory')." (".
+              __('if empty use port configured in general options', 'fusioninventory')
+              ." <i>".$pfConfig->getValue('agent_port')."</i>)&nbsp:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='agent_port' value='".$this->fields['agent_port']."'/>";
+      echo "</td>";
       echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["tag"];
@@ -896,6 +902,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       if ( isset($this->fields['id']) ) {
          $computer = $this->getAssociatedComputer();
+         if ($this->fields['agent_port'] != ''
+                 && is_numeric($this->fields['agent_port'])) {
+            $port = $this->fields['agent_port'];
+         }
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
             array_push($url_addresses, "http://".$computer->fields["name"].
                ":".$port);

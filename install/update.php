@@ -524,6 +524,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
          'value'   => NULL
       );
+      $a_table['fields']['agent_port']    = array('type'    => 'varchar(6)',
+                                                  'value'   => NULL);
 
       $a_table['oldfields']  = array(
          'module_snmpquery',

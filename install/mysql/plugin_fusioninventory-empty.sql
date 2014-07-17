@@ -43,6 +43,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `senddico` tinyint(1) NOT NULL DEFAULT '0',
    `timeout_networkdiscovery` int(4) NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout (disabled by default)',
    `timeout_networkinventory` int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout (disabled by default)',
+   `agent_port` varchar(6) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),
