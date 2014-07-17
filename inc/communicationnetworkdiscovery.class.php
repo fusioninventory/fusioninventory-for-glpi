@@ -172,7 +172,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['name'] = $arrayinventory['NETBIOSNAME'];
       } else if ((isset($arrayinventory['DNSHOSTNAME']))
               && (!empty($arrayinventory['DNSHOSTNAME']))) {
-         $input['name'] = $arrayinventory['DNSHOSTNAME'];
+         if (strpos($arrayinventory['DNSHOSTNAME'],'.') !== false) {
+            $splitname = explode('.', $arrayinventory['DNSHOSTNAME']);
+            $input['name'] = $splitname[0];
+            if (!isset($arrayinventory['WORKGROUP'])) {
+               unset($splitname[0]);
+               $arrayinventory['WORKGROUP'] = implode('.', $splitname);
+               $_SESSION['SOURCE_XMLDEVICE'] = $arrayinventory;
+            }
+         } else {
+            $input['name'] = $arrayinventory['DNSHOSTNAME'];
+         }
       }
 
       if (!isset($arrayinventory['ENTITY'])) {
@@ -209,7 +219,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
-      
+
       if (isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
@@ -352,7 +362,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
       $input = array();
       $input['id'] = $item->getID();
-      
+
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()),
                                                              $item->getID());
 
@@ -405,13 +415,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                //Manage IP and Mac address
                $NetworkPort = new NetworkPort();
                $a_nports = current($NetworkPort->find(
-                       "`itemtype`='Computer' AND `items_id`='".$item->getID()."' 
+                       "`itemtype`='Computer' AND `items_id`='".$item->getID()."'
                            AND `instantiation_type`='NetworkPortEthernet'",
                        "",
                        1));
                $networkports_id = 0;
                if (isset($a_nports['id'])) {
-                  if (isset($arrayinventory['MAC']) 
+                  if (isset($arrayinventory['MAC'])
                           && !empty($arrayinventory['MAC'])) {
                      $input = array();
                      $input['id'] = $a_nports['id'];
@@ -535,13 +545,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
             $a_nports = current($NetworkPort->find(
-                    "`itemtype`='PluginFusioninventoryUnknownDevice' AND `items_id`='".$item->getID()."' 
+                    "`itemtype`='PluginFusioninventoryUnknownDevice' AND `items_id`='".$item->getID()."'
                         AND `instantiation_type`='NetworkPortEthernet'",
                     "",
                     1));
             $networkports_id = 0;
             if (isset($a_nports['id'])) {
-               if (isset($arrayinventory['MAC']) 
+               if (isset($arrayinventory['MAC'])
                        && !empty($arrayinventory['MAC'])) {
                   $input = array();
                   $input['id'] = $a_nports['id'];
@@ -621,7 +631,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['items_id'] = $item->getID();
                $input['instantiation_type'] = 'NetworkPortAggregate';
                $input['name'] = "management";
-               if (isset($arrayinventory['MAC']) 
+               if (isset($arrayinventory['MAC'])
                        && !empty($arrayinventory['MAC'])) {
                   $input['mac'] = $arrayinventory['MAC'];
                }
@@ -690,7 +700,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             }
             $pfModel = new PluginFusioninventorySnmpmodel();
-            if (isset($arrayinventory['MODELSNMP']) 
+            if (isset($arrayinventory['MODELSNMP'])
                     && !empty($arrayinventory['MODELSNMP'])) {
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
                if ($model_id > 0) {
@@ -711,13 +721,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
             $a_nports = current($NetworkPort->find(
-                    "`itemtype`='Printer' AND `items_id`='".$item->getID()."' 
+                    "`itemtype`='Printer' AND `items_id`='".$item->getID()."'
                         AND `instantiation_type`='NetworkPortEthernet'",
                     "",
                     1));
             $networkports_id = 0;
             if (isset($a_nports['id'])) {
-               if (isset($arrayinventory['MAC']) 
+               if (isset($arrayinventory['MAC'])
                        && !empty($arrayinventory['MAC'])) {
                   $input = array();
                   $input['id'] = $a_nports['id'];
