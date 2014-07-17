@@ -488,6 +488,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                         'value'   => NULL);
       $a_table['fields']['senddico']      = array('type'    => 'bool',
                                                   'value'   => NULL);
+      $a_table['fields']['agent_port']    = array('type'    => 'varchar(6)',
+                                                  'value'   => NULL);
 
       $a_table['oldfields']  = array(
          'module_snmpquery',

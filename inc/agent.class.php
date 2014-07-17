@@ -302,7 +302,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
+      $pfConfig = new PluginFusioninventoryConfig();
+      echo "<td>".__('Agent port', 'fusioninventory')." (".
+              __('if empty use port configured in general options', 'fusioninventory')
+              ." <i>".$pfConfig->getValue('agent_port')."</i>)&nbsp:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='agent_port' value='".$this->fields['agent_port']."'/>";
+      echo "</td>";
       echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["tag"];
@@ -673,19 +679,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $ret = array();
 
+      $agent_port = $config->getValue('agent_port');
       if ($pfAgent->getFromDB($agent_id)) {
          $computer = new Computer();
          $computer->getFromDB($pfAgent->fields['computers_id']);
+         if ($pfAgent->fields['agent_port'] != ''
+                 && is_numeric($pfAgent->fields['agent_port'])) {
+            $agent_port = $pfAgent->fields['agent_port'];
+         }
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
             array_push($ret, "http://".$computer->fields["name"].
-               ":".$config->getValue('agent_port'));
+               ":".$agent_port);
 
             $domain = new Domain();
             $domain->getFromDB($computer->fields['domains_id']);
             array_push($ret, "http://".
                $computer->fields["name"].'.'.
                $domain->fields["name"].
-               ":".$config->getValue('agent_port'));
+               ":".$agent_port);
          }
       }
 
@@ -695,13 +706,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/',
                     $pfAgent->fields['name'],
                     $stack)) {
-         array_push($ret, "http://".$stack[1].":".$config->getValue('agent_port'));
+         array_push($ret, "http://".$stack[1].":".$agent_port);
       }
 
       $a_ips = $pfAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
          if ($ip != '') {
-            array_push($ret, "http://".$ip.":".$config->getValue('agent_port'));
+            array_push($ret, "http://".$ip.":".$agent_port);
          }
       }
       return $ret;

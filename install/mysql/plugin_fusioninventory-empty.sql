@@ -41,6 +41,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `threads_networkdiscovery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
    `threads_networkinventory` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
    `senddico` tinyint(1) NOT NULL DEFAULT '0',
+   `agent_port` varchar(6) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),
