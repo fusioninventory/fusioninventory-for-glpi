@@ -113,6 +113,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfStateInventory = new PluginFusioninventoryStateInventory();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
@@ -139,6 +140,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th>".__('Unique id', 'fusioninventory')."</th>";
+      echo "<th>".__('Task job', 'fusioninventory')."</th>";
       echo "<th>".__('Agent', 'fusioninventory')."</th>";
       echo "<th>".__('Status')."</th>";
       echo "<th>".__('Starting date', 'fusioninventory')."</th>";
@@ -164,6 +166,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
+         $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
+         echo "<td>".$pfTaskjob->getLink()."</td>";
          $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
          echo "<td>".$pfAgent->getLink(1)."</td>";
          $nb_found = 0;
