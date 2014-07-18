@@ -70,7 +70,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
       $input['agents_old_days']        = '0';
-      $input['memcached']              = '';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -367,10 +366,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
-      echo "<td>".__('Memcached server address (empty to disable it)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td></td>";
       echo "<td width='20%'>";
-      echo "<input type='text' name='memcached' size='50' ".
-               "value='".$this->getValue('memcached')."'/>";
       echo "</td>";
       echo "</tr>";
 

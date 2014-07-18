@@ -995,7 +995,10 @@ class PluginFusioninventoryFormatconvert {
       $cnt = 0;
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
-            $user_temp = $a_inventory['Computer']['contact'];
+            $user_temp = '';
+            if (isset($a_inventory['Computer']['contact'])) {
+               $user_temp = $a_inventory['Computer']['contact'];
+            }
             $a_inventory['Computer']['contact'] = '';
          }
          foreach ($array['USERS'] as $a_users) {

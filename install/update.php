@@ -4400,6 +4400,109 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
+   /*
+    * Table glpi_plugin_fusioninventory_dblockinventorynames
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_dblockinventorynames';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['value']      = array('type'    => "varchar(100) NOT NULL DEFAULT ''",
+                                               'value'   => NULL);
+      $a_table['fields']['date']       = array('type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'value', 'name' => '', 'type' => 'UNIQUE');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_dblockinventories
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_dblockinventories';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['value']      = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['date']       = array('type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'value', 'name' => '', 'type' => 'UNIQUE');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_dblocksoftwares
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_dblocksoftwares';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['value']      = array('type'    => 'bool',
+                                               'value'   => NULL);
+      $a_table['fields']['date']       = array('type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'value', 'name' => '', 'type' => 'UNIQUE');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_dblocksoftwareversions
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_dblocksoftwareversions';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['value']      = array('type'    => 'bool',
+                                               'value'   => NULL);
+      $a_table['fields']['date']       = array('type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'value', 'name' => '', 'type' => 'UNIQUE');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
 
 
 
@@ -7409,10 +7512,19 @@ function migrateTablesFusionInventory($migration, $a_table) {
    }
 
    if (!TableExists($a_table['name'])) {
-      $query = "CREATE TABLE `".$a_table['name']."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                     PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+
+      if (strstr($a_table['name'], 'glpi_plugin_fusioninventory_dblock')) {
+         $query = "CREATE TABLE `".$a_table['name']."` (
+                        `value` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`value`)
+                     ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+      } else {
+         $query = "CREATE TABLE `".$a_table['name']."` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+      }
+
       $DB->query($query);
    }
 
