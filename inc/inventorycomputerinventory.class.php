@@ -477,6 +477,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventories`
             SET `value`='".$items_id."'";
+         $CFG_GLPI["use_log_in_files"] = FALSE;
          if (!$DB->query($query)) {
             $communication = new PluginFusioninventoryCommunication();
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
@@ -486,6 +487,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
             exit;
          }
+         $CFG_GLPI["use_log_in_files"] = TRUE;
 
          // * For benchs
          //$start = microtime(TRUE);
