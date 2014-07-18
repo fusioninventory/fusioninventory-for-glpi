@@ -49,10 +49,12 @@ if (session_id()=="") {
    session_start();
 }
 
-$_SESSION['glpi_use_mode'] = 0;
 if (!defined('GLPI_ROOT')) {
    include_once("../../../inc/includes.php");
 }
+$_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
+// This will disable write errors in logs
+   $CFG_GLPI["use_log_in_files"] = FALSE;
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
