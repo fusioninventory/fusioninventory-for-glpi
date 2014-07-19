@@ -108,6 +108,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Computer
          $db_computer = array();
          $db_computer = $computer->fields;
+         $computerName = $a_computerinventory['Computer']['name'];
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                           $db_computer, $a_lockable);
          $a_computerinventory['Computer'] = $a_ret[0];
@@ -739,7 +740,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                         $changes[0] = '0';
                         $changes[1] = "";
-                        $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                        $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                         $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                                      Log::HISTORY_INSTALL_SOFTWARE);
                      }
@@ -774,7 +775,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
 
                            $changes[0] = '0';
-                           $changes[1] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $changes[1] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                            $changes[2] = "";
                            $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
@@ -862,7 +863,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                            $changes[0] = '0';
                            $changes[1] = "";
-                           $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_INSTALL_SOFTWARE);
                         }
