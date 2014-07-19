@@ -114,10 +114,27 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                                       '1',
                                                       '==diconotuptodate==');
                } else {
+                  $messages = array(
+                      'Total Found'   => 0,
+                      'Created' => 0,
+                      'Updated' => 0
+                  );
+                  $messages['Updated'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                          . " AND `comment` LIKE '%==updatetheitem==%'");
+                  $messages['Created'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                          . " AND `comment` LIKE '%==addtheitem==%'");
+
+                  $messages['Total Found'] = $messages['Updated'] + $messages['Created'];
+
+                  $message = 'Total Found:'.$messages['Total Found'].' Created:'.$messages['Created'].' Updated:'.$messages['Updated'];
 
                   $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
                                                       $a_agent['id'],
-                                                      'PluginFusioninventoryAgent');
+                                                      'PluginFusioninventoryAgent',
+                                                      '0',
+                                                      $message);
                }
             }
          }
