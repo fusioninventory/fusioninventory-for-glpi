@@ -1143,8 +1143,9 @@ return namelist;
       //Get every running tasks with dynamic groups
       $running_tasks = $pfTask->getItemsFromDB(
          array(
-            'is_running' => TRUE,
-            'definitions' => array('PluginFusioninventoryDeployGroup')
+            'is_running'  => TRUE,
+            'is_active'   => TRUE,
+            'actions' => array('PluginFusioninventoryDeployGroup' => TRUE)
          )
       );
 
