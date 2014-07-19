@@ -1233,7 +1233,39 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
       }
 
-      //TODO: Filter by action classes
+      // Filter by action classes
+      if (isset($filter['actions'])
+            && is_array($filter['actions']) ) {
+         $where_tmp = array();
+         //check classes existence and append them to the query filter
+         foreach($filter['actions'] as $itemclass => $itemid) {
+            if ( class_exists($itemclass) ) {
+
+               $cond = "taskjob.`action` LIKE '%\"".$itemclass."\"";
+
+               //adding itemid if not empty
+               if (!empty($itemid)) {
+                     $cond .= ":\"".$itemid."\"";
+               }
+               //closing LIKE statement
+               $cond .= "%'";
+               $where_tmp[] = $cond;
+            }
+         }
+         //join every filtered conditions
+         if( count($where_tmp) > 0) {
+            // add taskjobs table JOIN statement if not already set
+            if ( !isset( $leftjoin['taskjobs'] ) ) {
+               $leftjoin_bak = $leftjoin;
+               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
+            }
+            if (!isset( $select["taskjobs"]) ) {
+               $select['taskjobs'] = "taskjob.*";
+            }
+            $where[] = "( " . implode("OR", $where_tmp) . " )";
+         }
+      }
 
       //TODO: Filter by list of IDs
       if (     isset($filter['by_ids'])
