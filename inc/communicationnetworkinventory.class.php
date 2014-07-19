@@ -106,9 +106,16 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $this->importContent($a_CONTENT);
 
       if (isset($a_CONTENT['AGENT']['END'])) {
-          $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
-              $this->agent['id'],
-              'PluginFusioninventoryAgent');
+         $cnt = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                          . " AND `comment` LIKE '%[==detail==] Update %'");
+
+          $pfTaskjobstate->changeStatusFinish(
+                  $a_CONTENT['PROCESSNUMBER'],
+                  $this->agent['id'],
+                  'PluginFusioninventoryAgent',
+                  '0',
+                  'Total updated:'.$cnt);
       }
       if (isset($a_CONTENT['AGENT']['START'])) {
           $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
