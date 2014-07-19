@@ -65,6 +65,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
+
+   /**
+    * @see CommonDBTM::useDeletedToLockIfDynamic()
+    *
+    * @since version 0.84
+   **/
+   function useDeletedToLockIfDynamic() {
+      return false;
+   }
+
+   
+
    function getSearchOptions() {
 
       $tab = array();
