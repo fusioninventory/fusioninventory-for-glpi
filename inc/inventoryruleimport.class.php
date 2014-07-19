@@ -696,7 +696,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
-                           $output['found_equipment'] = array(0, $itemtype);
+                           $output['found_equipment'] = array(0, "PluginFusioninventoryUnknownDevice");
                            return $output;
                         } else {
                            $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
