@@ -75,7 +75,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return false;
    }
 
-   
+
 
    function getSearchOptions() {
 
@@ -858,6 +858,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                       AND `itemtype` = 'PluginFusioninventoryUnknownDevice'");
 
       $this->getFromDB($items_id);
+      $this->fields = Toolbox::addslashes_deep($this->fields);
       $data = array();
       switch ($this->fields['item_type']) {
          case 'Printer':
