@@ -1594,6 +1594,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               'is_deleted',
                               "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
+                              'is_template',
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              'users_id',
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
                               'serial',
                               "varchar(255) DEFAULT NULL");
          $migration->addField($newTable,
