@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+2.2");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+3.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -50,7 +50,7 @@ $PF_ESXINVENTORY = FALSE;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+2.2 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+3.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 /*
