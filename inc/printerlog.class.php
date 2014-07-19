@@ -366,6 +366,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    function showGraph($id, $options=array()) {
       global $DB, $CFG_GLPI;
 
+      $printer = new Printer();
+
       $where='';
       $begin='';
       $end='';
@@ -533,8 +535,9 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       foreach($printersView as $printer_id=>$name) {
          $printersused[] = $printer_id;
       }
+      $printer->getFromDB($id);
       Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
-                                      'entiry'  => $_SESSION['glpiactive_entity'],
+                                      'entity'  => $printer->fields['entities_id'],
                                       'used'    => $printersused));
       echo "&nbsp;<input type='submit' value=\"".__('Add')."\" class='submit' ".
               "name='graph_plugin_fusioninventory_printer_add'>";
