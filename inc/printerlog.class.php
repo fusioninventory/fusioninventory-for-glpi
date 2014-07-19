@@ -88,7 +88,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab[18]['field'] = 'name';
       $tab[18]['linkfield'] = 'states_id';
       $tab[18]['name'] = __('Status');
-      $tab[18]['datatype']='itemptype';
+      $tab[18]['datatype']='dropdown';
 
       $tab[20]['table'] = 'glpi_printers';
       $tab[20]['field'] = 'serial';
