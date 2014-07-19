@@ -229,8 +229,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                          BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
-        $result=$DB->query($query);
-        while ($data=$DB->fetch_array($result)) {
+         $query .= " GROUP BY `glpi_networkequipments`.`id`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
            if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
               $input = array();
               $input['TYPE'] = 'NETWORKING';
@@ -278,6 +279,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                       BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
                       AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
+         $query .= " GROUP BY `glpi_printers`.`id`";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
