@@ -2110,6 +2110,11 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
             case 'glpi_networkports.networkports_id':
                return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer' ) ";
                break;
+
+            case 'glpi_printers.printers_id':
+               return " LEFT JOIN `glpi_printers` ON (`glpi_plugin_fusioninventory_printers`.`printers_id` = `glpi_printers`.`id` AND `glpi_printers`.`id` IS NOT NULL ) ";
+               break;
+
          }
          break;
 
@@ -2532,7 +2537,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
          }
          break;
 
-   }
+         }
    return "";
 }
 
