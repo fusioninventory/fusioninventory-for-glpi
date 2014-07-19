@@ -529,7 +529,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                 0,
                                                 '',
-                                                1,
+                                                0,
                                                 "No suitable devices to inventory");
             $input_taskjob = array();
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
