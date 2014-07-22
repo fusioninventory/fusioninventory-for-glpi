@@ -297,6 +297,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          );
 
       echo "</td>";
+      echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo $this->fields["useragent"];
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
@@ -305,13 +312,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'min' => 0,
              'max' => 60)
          );
-
       echo "</td>";
-      echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
+      echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
-      echo $this->fields["useragent"];
+      echo Html::convDateTime($this->fields["last_contact"]);
       echo "</td>";
       echo "</tr>";
+
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
@@ -323,6 +330,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'max' => 400)
       );
       echo "</td>";
+      echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo $this->fields["tag"];
+      echo "</td>";
+      echo "</tr>";
 
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
@@ -333,9 +345,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'max' => 60)
       );
       echo "</td>";
-      echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo Html::convDateTime($this->fields["last_contact"]);
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
@@ -347,9 +357,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       echo "<input type='text' name='agent_port' value='".$this->fields['agent_port']."'/>";
       echo "</td>";
-      echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["tag"];
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
