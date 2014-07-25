@@ -1664,11 +1664,15 @@ class PluginFusioninventoryFormatconvert {
                      $this->foreignkey_itemtype[$key] =
                                  getItemTypeForTable(getTableNameForForeignKeyField($key));
                      if ($key == 'computermodels_id') {
-                        $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
-                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value,
-                                                                '-1',
-                                                                array('manufacturer' => $manufacturer));
+                        if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'])) {
+                           $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
+                           $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                   $value,
+                                                                   '-1',
+                                                                   array('manufacturer' => $manufacturer));
+                        } else {
+                           $array[$key] = 0;
+                        }
                      } else {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                                 $value);
