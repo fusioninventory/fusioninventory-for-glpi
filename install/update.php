@@ -1253,7 +1253,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['entities_id']= array('type'    => 'integer',
                                                'value'   => NULL);
-      $a_table['fields']['entities_id']= array('type'    => 'locations_id',
+      $a_table['fields']['locations_id']= array('type'    => 'integer',
                                                'value'   => NULL);
       $a_table['fields']['is_deleted'] = array('type'    => 'bool',
                                                'value'   => NULL);
@@ -1285,7 +1285,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['is_dynamic'] = array('type'    => 'bool',
                                                'value'   => NULL);
-      $a_table['fields']['is_dynamic'] = array('type'    => 'longblob',
+      $a_table['fields']['serialized_inventory'] = array('type'    => 'longblob',
                                                'value'   => NULL);
 
      $a_table['oldfields']  = array(
@@ -1326,7 +1326,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_unknowndevices`";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_unmanaged`
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_unmanageds`
                SET `sysdescr`='".$data['sysdescr']."',
                    `plugin_fusioninventory_configsecurities_id`='".$data['plugin_fusinvsnmp_configsecurities_id']."'
                WHERE `id`='".$data['plugin_fusioninventory_unknowndevices_id']."'");
