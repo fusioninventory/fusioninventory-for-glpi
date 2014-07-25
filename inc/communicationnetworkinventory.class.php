@@ -404,7 +404,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $errors .= $this->rulepassed(0, $input['itemtype']);
             }
          } else {
-            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
+            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnmanaged");
          }
       }
       return $errors;
@@ -469,7 +469,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             unset($_SESSION['plugin_fusioninventory_rules_id']);
          }
       }
-      if ($itemtype == "PluginFusioninventoryUnknownDevice") {
+      if ($itemtype == "PluginFusioninventoryUnmanaged") {
          $class->getFromDB($items_id);
          $input = array();
          $input['id'] = $class->fields['id'];
@@ -488,12 +488,12 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          // TODO : add import ports
          PluginFusioninventoryToolbox::writeXML($items_id,
                                                 serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                                'PluginFusioninventoryUnknownDevice');
+                                                'PluginFusioninventoryUnmanaged');
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[==detail==] ==updatetheitem== Update '.
-                 PluginFusioninventoryUnknownDevice::getTypeName().
-                 ' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
+                 PluginFusioninventoryUnmanaged::getTypeName().
+                 ' [[PluginFusioninventoryUnmanaged::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =

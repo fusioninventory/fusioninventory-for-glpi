@@ -42,14 +42,14 @@
 
 include ("../../../inc/includes.php");
 
-$pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+$pfUnmanaged = new PluginFusioninventoryUnmanaged();
 $ptt  = new PluginFusioninventoryTask();
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
-        "assets", "pluginfusioninventoryunknowndevice");
+        "assets", "pluginfusioninventoryunmanaged");
 
 
-Session::checkRight('plugin_fusioninventory_unknowndevice', READ);
+Session::checkRight('plugin_fusioninventory_unmanaged', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -58,47 +58,47 @@ if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
 if (isset ($_POST["add"])) {
-   Session::checkRight('plugin_fusioninventory_unknowndevice', CREATE);
+   Session::checkRight('plugin_fusioninventory_unmanaged', CREATE);
    if (isset($_POST['items_id'])
           && ($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
-   $pfUnknownDevice->add($_POST);
+   $pfUnmanaged->add($_POST);
    Html::back();
 } else if (isset($_POST["delete"])) {
-   Session::checkRight('plugin_fusioninventory_unknowndevice', PURGE);
+   Session::checkRight('plugin_fusioninventory_unmanaged', PURGE);
 
-   $pfUnknownDevice->check($_POST['id'], 'w');
+   $pfUnmanaged->check($_POST['id'], 'w');
 
-   $pfUnknownDevice->delete($_POST);
+   $pfUnmanaged->delete($_POST);
 
-   $pfUnknownDevice->redirectToList();
+   $pfUnmanaged->redirectToList();
 } else if (isset($_POST["restore"])) {
 
-   $pfUnknownDevice->check($_POST['id'], 'd');
+   $pfUnmanaged->check($_POST['id'], 'd');
 
-   if ($pfUnknownDevice->restore($_POST)) {
-      Event::log($_POST["id"], "PluginFusioninventoryUnknownDevice", 4, "inventory",
+   if ($pfUnmanaged->restore($_POST)) {
+      Event::log($_POST["id"], "PluginFusioninventoryUnmanaged", 4, "inventory",
                $_SESSION["glpiname"]." ".__('restoration of the item', 'fusioninventory')." ".
-               $pfUnknownDevice->getField('name'));
+               $pfUnmanaged->getField('name'));
    }
-   $pfUnknownDevice->redirectToList();
+   $pfUnmanaged->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
-   Session::checkRight('plugin_fusioninventory_unknowndevice', PURGE);
+   Session::checkRight('plugin_fusioninventory_unmanaged', PURGE);
 
-   $pfUnknownDevice->check($_POST['id'], 'w');
+   $pfUnmanaged->check($_POST['id'], 'w');
 
-   $pfUnknownDevice->delete($_POST, 1);
-   $pfUnknownDevice->redirectToList();
+   $pfUnmanaged->delete($_POST, 1);
+   $pfUnmanaged->redirectToList();
 } else if (isset($_POST["update"])) {
-   $pfUnknownDevice->check($_POST['id'], 'w');
-   $pfUnknownDevice->update($_POST);
+   $pfUnmanaged->check($_POST['id'], 'w');
+   $pfUnmanaged->update($_POST);
    Html::back();
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = $pfUnknownDevice->import($_POST['id'], $Import, $NoImport);
+   list($Import, $NoImport) = $pfUnmanaged->import($_POST['id'], $Import, $NoImport);
     Session::addMessageAfterRedirect(
             __('Number of imported devices', 'fusioninventory')." : ".$Import);
     Session::addMessageAfterRedirect(
@@ -107,11 +107,11 @@ if (isset ($_POST["add"])) {
    if ($Import == "0") {
       Html::back();
    } else {
-      Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/unknowndevice.php");
+      Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/unmanaged.php");
    }
 }
 
-$pfUnknownDevice->showForm($id);
+$pfUnmanaged->showForm($id);
 
 Html::footer();
 

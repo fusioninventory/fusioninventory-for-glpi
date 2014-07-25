@@ -341,7 +341,7 @@ class PluginFusioninventoryCommunication {
          $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
          $_SESSION['glpiactiveprofile']['networking'] = 'w';
 
-         $_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
+         $_SESSION["glpi_plugin_fusioninventory_profile"]['unmanaged'] = 'w';
       }
 
       $communication  = new PluginFusioninventoryCommunication();

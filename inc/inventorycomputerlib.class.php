@@ -1060,7 +1060,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       // * Networkports
          if ($pfConfig->getValue("component_networkcard") != 0) {
-            // Get port from unknown device if exist
+            // Get port from unmanaged device if exist
             $this->manageNetworkPort($a_computerinventory['networkport'], $computers_id, $no_history);
          }
 
@@ -1693,18 +1693,18 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
             $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
-               AND `itemtype`='PluginFusioninventoryUnknownDevice'", "", 1);
+               AND `itemtype`='PluginFusioninventoryUnmanaged'", "", 1);
             if (count($a_networkports) > 0) {
                $input = current($a_networkports);
-               $unknowndevices_id = $input['items_id'];
+               $unmanageds_id = $input['items_id'];
                $input['logical_number'] = $a_networkport['logical_number'];
                $input['itemtype'] = 'Computer';
                $input['items_id'] = $computers_id;
                $input['is_dynamic'] = 1;
                $input['name'] = $a_networkport['name'];
                $networkPort->update($input, !$no_history);
-               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
+               $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+               $pfUnmanaged->delete(array('id'=>$unmanageds_id), 1);
             }
          }
       }
