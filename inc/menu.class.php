@@ -84,7 +84,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'config'                     => 'PluginFusioninventoryConfig',
           'task'                       => 'PluginFusioninventoryTask',
           'timeslot'                   => 'PluginFusioninventoryTimeslot',
-          'unknowndevice'              => 'PluginFusioninventoryUnknownDevice',
+          'unmanaged'                  => 'PluginFusioninventoryUnmanaged',
           'inventoryruleimport'        => 'PluginFusioninventoryInventoryRuleImport',
           'inventoryruleentity'        => 'PluginFusioninventoryInventoryRuleEntity',
           'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
@@ -625,9 +625,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/task.php"
           ),
           array(
-              'text' => __('If you have devices not typed, import them from unknown devices', 'fusioninventory'),
+              'text' => __('If you have devices not typed, import them from unmanaged devices', 'fusioninventory'),
               'url'  => $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/unknowndevice.php"
+                                 "/plugins/fusioninventory/front/unmanaged.php"
           ),
           array(
               'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'fusioninventory'),

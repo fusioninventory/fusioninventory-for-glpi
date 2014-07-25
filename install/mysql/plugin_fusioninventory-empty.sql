@@ -186,9 +186,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknowndevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unmanageds`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `date_mod` datetime DEFAULT NULL,
@@ -1067,16 +1067,16 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryAgent', '8', '6', '0'),
           (NULL,'PluginFusioninventoryAgent', '9', '7', '0'),
 
-          (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '3', '3', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '7', '5', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '10', '6', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '2', '1', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '4', '2', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '3', '3', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '5', '4', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '7', '5', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '10', '6', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '18', '8', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '14', '9', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '15', '10', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '9', '11', '0'),
 
           (NULL, 'PluginFusioninventoryTask', '2', '1', '0'),
           (NULL, 'PluginFusioninventoryTask', '3', '2', '0'),

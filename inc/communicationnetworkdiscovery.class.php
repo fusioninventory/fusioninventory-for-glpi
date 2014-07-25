@@ -264,7 +264,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                 AND !isset($data['action'])) {
             $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice", $input['entities_id']);
+            $this->rulepassed(0, "PluginFusioninventoryUnmanaged", $input['entities_id']);
          }
       }
    }
@@ -416,13 +416,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
             break;
 
-         case 'PluginFusioninventoryUnknownDevice':
+         case 'PluginFusioninventoryUnmanaged':
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryToolbox::writeXML(
                   $input['id'],
                   serialize($_SESSION['SOURCE_XMLDEVICE']),
-                  'PluginFusioninventoryUnknownDevice'
+                  'PluginFusioninventoryUnmanaged'
                );
             }
 
@@ -465,7 +465,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             $this->_updateNetworkInfo(
                $arrayinventory,
-               'PluginFusioninventoryUnknownDevice',
+               'PluginFusioninventoryUnmanaged',
                $item->getID(),
                'NetworkPortEthernet',
                1

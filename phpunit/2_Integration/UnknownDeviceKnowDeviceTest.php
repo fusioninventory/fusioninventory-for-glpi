@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class UnknownDeviceKnowDeviceTest extends Common_TestCase {
+class UnmanagedKnowDeviceTest extends Common_TestCase {
 
    /*
     * When switch get unknown mac address, it create unknown device (in reality a computer)

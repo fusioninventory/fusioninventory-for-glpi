@@ -543,7 +543,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                     $PLUGIN_FUSIONINVENTORY_XML->asXML(),
                     'computer');
          }
-      } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
+      } else if ($itemtype == 'PluginFusioninventoryUnmanaged') {
 
          $class = new $itemtype();
          if ($items_id == "0") {
@@ -577,7 +577,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             PluginFusioninventoryToolbox::writeXML(
                     $items_id,
                     $PLUGIN_FUSIONINVENTORY_XML->asXML(),
-                    'PluginFusioninventoryUnknownDevice');
+                    'PluginFusioninventoryUnmanaged');
          }
 
          if (isset($a_computerinventory['Computer']['name'])) {
