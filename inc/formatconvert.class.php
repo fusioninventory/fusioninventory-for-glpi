@@ -70,7 +70,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -223,18 +223,22 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp['operatingsystemservicepacks_id'] = $array['HARDWARE']['OSCOMMENTS'];
       }
       if (isset($array_tmp['users_id'])) {
-         $array_tmp['contact'] = $array_tmp['users_id'];
-         $tmp_users_id = $array_tmp['users_id'];
-         $split_user = explode("@", $tmp_users_id);
-         $query = "SELECT `id`
-                   FROM `glpi_users`
-                   WHERE `name` = '" . $split_user[0] . "'
-                   LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $array_tmp['users_id'] = $DB->result($result, 0, 0);
+         if ($array_tmp['users_id'] == '') {
+            unset($array_tmp['users_id']);
          } else {
-            $array_tmp['users_id'] = 0;
+            $array_tmp['contact'] = $array_tmp['users_id'];
+            $tmp_users_id = $array_tmp['users_id'];
+            $split_user = explode("@", $tmp_users_id);
+            $query = "SELECT `id`
+                      FROM `glpi_users`
+                      WHERE `name` = '" . $split_user[0] . "'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == 1) {
+               $array_tmp['users_id'] = $DB->result($result, 0, 0);
+            } else {
+               $array_tmp['users_id'] = 0;
+            }
          }
       }
       $array_tmp['is_dynamic'] = 1;
@@ -287,12 +291,24 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
+         if ((isset($array['BIOS']['MMANUFACTURER']))
+                      AND (!empty($array['BIOS']['MMANUFACTURER']))) {
+            $a_inventory['Computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
+         }
+         if ((isset($array['BIOS']['BMANUFACTURER']))
+                      AND (!empty($array['BIOS']['BMANUFACTURER']))) {
+            $a_inventory['Computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+         }
 
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
          } else if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['MMODEL'];
          }
+         if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
+            $a_inventory['Computer']['mmodel'] = $array['BIOS']['MMODEL'];
+         }
+
          if (isset($array['BIOS']['SSN'])) {
             $a_inventory['Computer']['serial'] = trim($array['BIOS']['SSN']);
             // HP patch for serial begin with 'S'
@@ -841,6 +857,8 @@ class PluginFusioninventoryFormatconvert {
       // * PERIPHERAL
       $a_inventory['peripheral'] = array();
       if ($pfConfig->getValue('import_peripheral') > 0) {
+         $a_peripheral_name = array();
+         $per = 0;
          if (isset($array['USBDEVICES'])) {
             foreach ($array['USBDEVICES'] as $a_peripherals) {
                $array_tmp = $thisc->addValues($a_peripherals,
@@ -879,6 +897,44 @@ class PluginFusioninventoryFormatconvert {
                        && $array_tmp['serial'] == '')) {
 
                   $a_inventory['peripheral'][] = $array_tmp;
+                  $a_peripheral_name[$array_tmp['name']] = $per;
+                  $per++;
+               }
+            }
+         }
+         if (isset($array['INPUTS'])) {
+            $a_pointingtypes = array(
+                3 => 'Mouse',
+                4 => 'Trackball',
+                5 => 'Track Point',
+                6 => 'Glide Point',
+                7 => 'Touch Pad',
+                8 => 'Touch Screen',
+                9 => 'Mouse - Optical Sensor'
+            );
+            foreach ($array['INPUTS'] as $a_peripherals) {
+               $array_tmp = $thisc->addValues($a_peripherals,
+                                              array(
+                                                 'NAME'         => 'name',
+                                                 'MANUFACTURER' => 'manufacturers_id'));
+               $array_tmp['serial'] = '';
+               $array_tmp['peripheraltypes_id'] = '';
+               if (isset($a_peripherals['POINTINGTYPE'])
+                       && isset($a_pointingtypes[$a_peripherals['POINTINGTYPE']])) {
+
+                  $array_tmp['peripheraltypes_id'] = $a_pointingtypes[$a_peripherals['POINTINGTYPE']];
+               }
+               if (isset($a_peripherals['LAYOUT'])) {
+                  $array_tmp['peripheraltypes_id'] = 'keyboard';
+               }
+
+               if (!($pfConfig->getValue('import_peripheral') == 3
+                       && $array_tmp['serial'] == '')) {
+                  if (isset($a_peripheral_name[$array_tmp['name']])) {
+                     $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
+                  } else {
+                     $a_inventory['peripheral'][] = $array_tmp;
+                  }
                }
             }
          }
@@ -901,13 +957,13 @@ class PluginFusioninventoryFormatconvert {
             $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
             if ($type_tmp == "Drive") {
                // it's cd-rom / dvd
-//               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+//               if ($pfConfig->getValue(,
 //                    "component_drive") =! 0) {
 //// TODO ***
 //                }
             } else {
                // it's harddisk
-//               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+//               if ($pfConfig->getValue(,
 //                    "component_harddrive") != 0) {
                if (is_array($a_storage)) {
                   if ($pfConfig->getValue('component_harddrive') == 1) {
@@ -939,7 +995,10 @@ class PluginFusioninventoryFormatconvert {
       $cnt = 0;
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
-            $user_temp = $a_inventory['Computer']['contact'];
+            $user_temp = '';
+            if (isset($a_inventory['Computer']['contact'])) {
+               $user_temp = $a_inventory['Computer']['contact'];
+            }
             $a_inventory['Computer']['contact'] = '';
          }
          foreach ($array['USERS'] as $a_users) {

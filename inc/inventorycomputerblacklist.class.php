@@ -117,7 +117,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('blacklisted value', 'fusioninventory')."</td>";
       echo "<td>";
-      echo "<input type='text' name='value' value='".$this->fields['value']."' />";
+      Html::autocompletionTextField($this,'value');
       echo "</td>";
       echo "<td>".__('Name')."</td>";
       echo "<td>";
@@ -155,13 +155,15 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['serial']))
-                      && ($a_computerinventory['Computer']['serial'] == $blacklist_data['value'])) {
+                      && (strtolower($a_computerinventory['Computer']['serial'])
+                              == strtolower($blacklist_data['value']))) {
                      $a_computerinventory['Computer']['serial'] = "";
                   }
                   if (isset($a_computerinventory['monitor'])) {
                      foreach($a_computerinventory['monitor'] as $num_m=>$data_m) {
                         if ((isset($data_m['serial']))
-                            && ($data_m['serial'] == $blacklist_data['value'])) {
+                            && (strtolower($data_m['serial'])
+                                    == strtolower($blacklist_data['value']))) {
                            $a_computerinventory['monitor'][$num_m]['serial'] = "";
                         }
                      }
@@ -174,7 +176,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['uuid']))
-                        && ($a_computerinventory['Computer']['uuid'] == $blacklist_data['value'])) {
+                        && (strtolower($a_computerinventory['Computer']['uuid'])
+                                == strtolower($blacklist_data['value']))) {
                      $a_computerinventory['Computer']['uuid'] = "";
                   }
                }
@@ -187,7 +190,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                   if (isset($a_computerinventory['networkport'])) {
                      foreach($a_computerinventory['networkport'] as $key=>$network) {
                         if ((isset($network['mac']))
-                                AND ($network['mac'] == $blacklist_data['value'])) {
+                                AND (strtolower($network['mac'])
+                                        == strtolower($blacklist_data['value']))) {
                            $a_computerinventory['networkport'][$key]['mac'] = "";
                         }
                      }
@@ -200,8 +204,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['os_license_number']))
-                          && ($a_computerinventory['Computer']['os_license_number'] ==
-                                  $blacklist_data['value'])) {
+                          && (strtolower($a_computerinventory['Computer']['os_license_number'])
+                                  == strtolower($blacklist_data['value']))) {
                      $a_computerinventory['Computer']['os_license_number'] = "";
                   }
                }
@@ -212,14 +216,31 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['computermodels_id']))
-                          && ($a_computerinventory['Computer']['computermodels_id'] ==
-                                  $blacklist_data['value'])) {
+                          && (strtolower($a_computerinventory['Computer']['computermodels_id'])
+                                  == strtolower($blacklist_data['value']))) {
                      $a_computerinventory['Computer']['computermodels_id'] = "";
                   }
                }
-              break;
+               if (isset($a_computerinventory['Computer'])) {
+                  if ($a_computerinventory['Computer']['computermodels_id'] == "") {
+                     if (isset($a_computerinventory['Computer']['mmodel'])) {
+                        $a_computerinventory['Computer']['computermodels_id'] =
+                           $a_computerinventory['Computer']['mmodel'];
 
-           case 'storagesSerial':
+                        foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                           if ((isset($a_computerinventory['Computer']['computermodels_id']))
+                                   && (strtolower($a_computerinventory['Computer']['computermodels_id'])
+                                           == strtolower($blacklist_data['value']))) {
+                              $a_computerinventory['Computer']['computermodels_id'] = "";
+                              break;
+                           }
+                        }
+                     }
+                  }
+               }
+               break;
+
+            case 'storagesSerial':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
 //               foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
@@ -266,8 +287,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                          && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                  $blacklist_data['value'])) {
+                          && (strtolower($a_computerinventory['Computer']['manufacturers_id'])
+                                  == strtolower($blacklist_data['value']))) {
                      $a_computerinventory['Computer']['manufacturers_id'] = "";
                      break;
                   }
@@ -280,8 +301,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                         foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                            if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                                   && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                           $blacklist_data['value'])) {
+                                   && (strtolower($a_computerinventory['Computer']['manufacturers_id'])
+                                           == strtolower($blacklist_data['value']))) {
                               $a_computerinventory['Computer']['manufacturers_id'] = "";
                               break;
                            }
@@ -295,8 +316,8 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
                         foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                            if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                                   && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                           $blacklist_data['value'])) {
+                                   && (strtolower($a_computerinventory['Computer']['manufacturers_id'])
+                                           == strtolower($blacklist_data['value']))) {
                               $a_computerinventory['Computer']['manufacturers_id'] = "";
                               break;
                            }
@@ -312,7 +333,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       if (isset($a_computerinventory['networkport'])) {
          foreach($a_computerinventory['networkport'] as $key=>$network) {
             if ((isset($network['name']))
-                    AND ($network['name'] == "Miniport d'ordonnancement de paquets")) {
+                    AND (strtolower($network['name']) =="miniport d'ordonnancement de paquets")) {
                $a_computerinventory['networkport'][$key]['mac'] = "";
             }
          }

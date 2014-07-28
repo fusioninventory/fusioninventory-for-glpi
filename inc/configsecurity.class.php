@@ -74,7 +74,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      echo "<input type='text' name='name' value='" . $this->fields["name"] . "'/>";
+      Html::autocompletionTextField($this,'name');
       echo "</td>";
       echo "</tr>";
 
@@ -93,12 +93,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Community', 'fusioninventory') . "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
+      Html::autocompletionTextField($this,'community');
       echo "</td>";
 
       echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='username' value='" . $this->fields["username"] . "'/>";
+      Html::autocompletionTextField($this,'username');
       echo "</td>";
       echo "</tr>";
 
@@ -115,8 +115,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='auth_passphrase'
-                   value='".$this->fields["auth_passphrase"]."'/>";
+      Html::autocompletionTextField($this,'auth_passphrase');
       echo "</td>";
       echo "</tr>";
 
@@ -132,8 +131,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='priv_passphrase'
-                   value='" . $this->fields["priv_passphrase"] . "'/>";
+      Html::autocompletionTextField($this,'priv_passphrase');
       echo "</td>";
       echo "</tr>";
 

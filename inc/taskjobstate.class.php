@@ -304,7 +304,77 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       return $moduleRun;
    }
 
+   /**
+    * Process ajax parameters for getLogs() methods
+    *
+    * since 0.85+1.0
+    * @param $options  array of ajax expected 'id' and 'last_date' parameters
+    * @return a json encoded list of logs grouped by jobstates
+    */
 
+   function ajaxGetLogs($params) {
+      $result = array();
+
+      $id = null;
+      $last_date = null;
+
+      if( isset($params['id']) and $params['id'] > 0){
+         $id = $params['id'];
+      }
+      if( isset($params['last_date'])){
+         $last_date = $params['last_date'];
+      }
+
+      if (!is_null($id) and !is_null($last_date)) {
+         echo json_encode($this->getLogs($id, $last_date));
+      }
+
+   }
+
+   /**
+    * Get logs associated to a jobstate.
+    *
+    * since 0.85+1.0
+    */
+
+   function getLogs( $id, $last_date ) {
+      global $DB;
+      $fields = array(
+         'log.id' => 0,
+         'log.date' => 1,
+         'log.comment' => 2,
+         'log.state' => 3,
+         'run.id' => 4,
+         );
+      $query = implode("\n", array(
+         "SELECT log.`id` AS 'log.id',",
+         "log.`date` AS 'log.date',",
+         "log.`comment` AS 'log.comment',",
+         "log.`state` AS 'log.state',",
+         "run.`uniqid` AS 'run.id'",
+         "FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log",
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS run",
+         "ON run.`id` = log.`plugin_fusioninventory_taskjobstates_id`",
+         "WHERE run.`id` = ".$id,
+         "AND log.`date` <= '". $last_date . "'",
+         "ORDER BY log.`id` DESC"
+      ));
+
+
+      $res = $DB->query($query);
+      $logs = array();
+      while( $result = $res->fetch_row() ) {
+         $run_id = $result[$fields['run.id']];
+         $logs['run']  = $run_id;
+         $logs['logs'][] = array(
+            'log.id' => $result[$fields['log.id']],
+            'log.comment' => $result[$fields['log.comment']],
+            'log.date' => $result[$fields['log.date']],
+            'log.state' => $result[$fields['log.state']]
+         );
+      }
+      return $logs;
+   }
 
    /**
    * Change the status to finish

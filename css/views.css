@@ -460,7 +460,7 @@ a.expanded > div.fold {
 .agent_block {
    border: 1px solid #CCC;
    border-left-width: 5px;
-   padding: 2px 5px;
+/*   padding: 2px 5px;*/
    margin: 2px;
    right:0;
    vertical-align: bottom;
@@ -471,6 +471,9 @@ a.expanded > div.fold {
    position:relative;
 }
 
+.agent_block.pinned {
+   margin-bottom: 10px;
+}
 
 .agent_block.agent_success{
    background: #AFA;
@@ -524,7 +527,13 @@ a.expanded > div.fold {
     vertical-align: bottom;
     display: block;
     padding: 0;
-    margin: 0;
+    margin: 5px;
+}
+
+.agent_block.pinned > a{
+   padding-left: 20px;
+   background: url('../../../pics/menu_show.png');
+   background-repeat: no-repeat;
 }
 
 .agent_block > span.comment {
@@ -541,6 +550,46 @@ a.expanded > div.fold {
    position: absolute;
    top: 0;
    right: 0;
+}
+
+/* Execution tables */
+
+table.runs,
+table.runs *{
+   background: white;
+   opacity: 1.0;
+   border-spacing: 0;
+}
+
+table.runs {
+   border: none;
+}
+
+table.runs th {
+   background-color: grey;
+   color:white;
+}
+
+table.runs td {
+   white-space: nowrap;
+   padding-right: 10px;
+   vertical-align: top;
+}
+
+
+table.runs tr {
+   border-bottom : 1px dashed grey;
+   margin-bottom: 5px;
+}
+
+table.runs tr.void {
+   border: none;
+   margin-bottom: 5px;
+}
+
+table.runs td.comment {
+   width: 100%;
+   white-space: normal;
 }
 
 .runs_block {
