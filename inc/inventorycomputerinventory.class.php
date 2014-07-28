@@ -72,18 +72,30 @@ class PluginFusioninventoryInventoryComputerInventory {
          $name = strtolower($arrayinventory['CONTENT']['HARDWARE']['NAME']);
       }
 
-      if ($pfConfig->getValue('memcached')) {
-         $memcache = new Memcached();
-         $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+      // Clean all DB LOCK if exist more than 10 minutes
+      $time = 600;
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventorynames` "
+              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventories` "
+              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares` "
+              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions` "
+              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
 
-         while(!$memcache->add("lock:inventoryname".$name, "1", 300000)) {
-            usleep(1000);
-         }
-         $this->sendCriteria($p_DEVICEID, $arrayinventory);
-         $memcache->delete("lock:inventoryname".$name);
-      } else {
-         $this->sendCriteria($p_DEVICEID, $arrayinventory);
+      // DB LOCK
+      $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventorynames`
+            SET `value`='".$name."'";
+      $CFG_GLPI["use_log_in_files"] = FALSE;
+      while(!$DB->query($query)) {
+         usleep(100000);
       }
+      $CFG_GLPI["use_log_in_files"] = TRUE;
+      $this->sendCriteria($p_DEVICEID, $arrayinventory);
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventorynames`
+            WHERE `value`='".$name."'";
+      $DB->query($query);
+
       return $errors;
    }
 
@@ -468,49 +480,34 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          $pfConfig = new PluginFusioninventoryConfig();
 
-         if ($pfConfig->getValue('memcached')) {
-            $memcache = new Memcached();
-            $memcache->addServer($pfConfig->getValue('memcached'), 11211);
-
-            if ($memcache->get("lock:inventory".$items_id)) {
-
-               $communication = new PluginFusioninventoryCommunication();
-               $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+         $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventories`
+            SET `value`='".$items_id."'";
+         $CFG_GLPI["use_log_in_files"] = FALSE;
+         if (!$DB->query($query)) {
+            $communication = new PluginFusioninventoryCommunication();
+            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
          <REPLY>
          <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
          </REPLY>");
-               $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-               exit;
-            }
+            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+            exit;
          }
+         $CFG_GLPI["use_log_in_files"] = TRUE;
 
          // * For benchs
          //$start = microtime(TRUE);
 
          PluginFusioninventoryInventoryComputerStat::increment();
 
-         if ($pfConfig->getValue('memcached')) {
-            $memcache = new Memcached();
-            $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+         $pfInventoryComputerLib->updateComputer(
+                 $a_computerinventory,
+                 $items_id,
+                 $no_history,
+                 $setdynamic);
 
-            while(!$memcache->add("lock:inventory".$items_id, "1", 300000)) {
-               usleep(1000);
-            }
-
-            $pfInventoryComputerLib->updateComputer(
-                    $a_computerinventory,
-                    $items_id,
-                    $no_history,
-                    $setdynamic);
-
-            $memcache->delete("lock:inventory".$items_id);
-         } else {
-            $pfInventoryComputerLib->updateComputer(
-                    $a_computerinventory,
-                    $items_id,
-                    $no_history,
-                    $setdynamic);
-         }
+         $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventories`
+               WHERE `value`='".$items_id."'";
+         $DB->query($query);
 
          $plugin = new Plugin();
          if ($plugin->isActivated('monitoring')) {

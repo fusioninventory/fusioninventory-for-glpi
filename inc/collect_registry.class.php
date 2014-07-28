@@ -142,7 +142,7 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       echo "<td>";
       echo "<input type='hidden' name='plugin_fusioninventory_collects_id'
                value='".$contents_id."' />";
-      echo "<input type='text' name='name' value='".$this->fields['name']."' />";
+      Html::autocompletionTextField($this,'name');
       echo "</td>";
       echo "<td>".__('Hive', 'fusioninventory')."</td>";
       echo "<td>";

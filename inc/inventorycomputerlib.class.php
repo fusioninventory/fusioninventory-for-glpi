@@ -102,11 +102,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 //      $pfInventoryComputerStorage_Storage =
 //             new PluginFusioninventoryInventoryComputerStorage_Storage();
 
-      if ($pfConfig->getValue('memcached')) {
-         $memcache = new Memcached();
-         $memcache->addServer($pfConfig->getValue('memcached'), 11211);
-      }
-
       $computer->getFromDB($computers_id);
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
@@ -676,11 +671,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softwareVersionInventory = array();
 
                $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-               if ($pfConfig->getValue('memcached')) {
-                  while(!$memcache->add("lock:software", "1", 300000)) {
-                     usleep(1000);
-                  }
+               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
+                     SET `value`='1'";
+               $CFG_GLPI["use_log_in_files"] = FALSE;
+               while(!$DB->query($queryDBLOCK)) {
+                  usleep(100000);
                }
+               $CFG_GLPI["use_log_in_files"] = TRUE;
                $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                foreach ($a_computerinventory['software'] as $a_software) {
                   if (!isset($this->softList[$a_software['name']."$$$$".
@@ -689,17 +686,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         $options);
                   }
                }
-               if ($pfConfig->getValue('memcached')) {
-                  $memcache->delete("lock:software");
-               }
+               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
+                     WHERE `value`='1'";
+               $DB->query($queryDBLOCK);
                $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                               $a_computerinventory['software'],
                                               $lastSoftwareVid);
-               if ($pfConfig->getValue('memcached')) {
-                  while(!$memcache->add("lock:softwareversion", "1", 300000)) {
-                     usleep(1000);
-                  }
+               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                     SET `value`='1'";
+               $CFG_GLPI["use_log_in_files"] = FALSE;
+               while(!$DB->query($queryDBLOCK)) {
+                  usleep(100000);
                }
+               $CFG_GLPI["use_log_in_files"] = TRUE;
                $this->loadSoftwareVersions($entities_id,
                                            $a_computerinventory['software'],
                                            $lastSoftwareVid);
@@ -709,9 +708,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $this->addSoftwareVersion($a_software, $softwares_id);
                   }
                }
-               if ($pfConfig->getValue('memcached')) {
-                  $memcache->delete("lock:softwareversion");
-               }
+               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                     WHERE `value`='1'";
+               $DB->query($queryDBLOCK);
                $a_toinsert = array();
                foreach ($a_computerinventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -795,11 +794,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
 
                      $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-                     if ($pfConfig->getValue('memcached')) {
-                        while(!$memcache->add("lock:software", "1", 300000)) {
-                           usleep(1000);
-                        }
+                     $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
+                           SET `value`='1'";
+                     $CFG_GLPI["use_log_in_files"] = FALSE;
+                     while(!$DB->query($queryDBLOCK)) {
+                        usleep(100000);
                      }
+                     $CFG_GLPI["use_log_in_files"] = TRUE;
                      $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                      foreach ($a_computerinventory['software'] as $a_software) {
                         if (!isset($this->softList[$a_software['name']."$$$$".
@@ -808,18 +809,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                               $options);
                         }
                      }
-                     if ($pfConfig->getValue('memcached')) {
-                        $memcache->delete("lock:software");
-                     }
+                     $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
+                           WHERE `value`='1'";
+                     $DB->query($queryDBLOCK);
 
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                                     $a_computerinventory['software'],
                                                     $lastSoftwareVid);
-                     if ($pfConfig->getValue('memcached')) {
-                        while(!$memcache->add("lock:softwareversion", "1", 300000)) {
-                           usleep(1000);
-                        }
+                     $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                           SET `value`='1'";
+                     $CFG_GLPI["use_log_in_files"] = FALSE;
+                     while(!$DB->query($queryDBLOCK)) {
+                        usleep(100000);
                      }
+                     $CFG_GLPI["use_log_in_files"] = TRUE;
                      $this->loadSoftwareVersions($entities_id,
                                                  $a_computerinventory['software'],
                                                  $lastSoftwareVid);
@@ -829,9 +832,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $this->addSoftwareVersion($a_software, $softwares_id);
                         }
                      }
-                     if ($pfConfig->getValue('memcached')) {
-                        $memcache->delete("lock:softwareversion");
-                     }
+                     $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                           WHERE `value`='1'";
+                     $DB->query($queryDBLOCK);
                      $a_toinsert = array();
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
