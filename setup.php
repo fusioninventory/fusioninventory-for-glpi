@@ -235,10 +235,6 @@ function plugin_init_fusioninventory() {
       // Load config
       PluginFusioninventoryConfig::loadCache();
 
-      // ##### 4. Set in session module_id #####
-
-      $_SESSION["plugin_fusioninventory_moduleid"] = $moduleId;
-
       // ##### 5. Set in session XMLtags of methods #####
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
@@ -287,14 +283,6 @@ function plugin_init_fusioninventory() {
             )
          );
       }
-      if (  script_endswith("/computer.form.php") ) {
-         PluginFusioninventoryLock::showLockIcon('Computer');
-      } else if (  script_endswith("/printer.form.php") ) {
-         PluginFusioninventoryLock::showLockIcon('Printer');
-      } else if (  script_endswith("/networkequipment.form.php") ) {
-         PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
-      }
-
 
       if (  script_endswith("task.form.php")
          or script_endswith("taskjob.php")
@@ -327,6 +315,8 @@ function plugin_init_fusioninventory() {
             'Computer' =>  array('PluginFusioninventoryInventoryComputerComputer',
                                  'showInfo'),
             'NetworkEquipment' => array('PluginFusioninventoryNetworkEquipment',
+                                        'showInfo'),
+            'Printer' => array('PluginFusioninventoryPrinter',
                                         'showInfo'));
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;

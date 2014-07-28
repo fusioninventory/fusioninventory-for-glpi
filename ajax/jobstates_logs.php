@@ -28,8 +28,8 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    David Durieux
-   @co-author Kevin Roy
+   @author    Kevin Roy
+   @co-author
    @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -40,19 +40,18 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjob_logs.php")) {
+if (strpos($_SERVER['PHP_SELF'], "jobstates_logs.php")) {
    include ("../../../inc/includes.php");
    Session::checkCentralAccess();
 }
-
 //unlock session since access checks have been done
 session_write_close();
-header("Content-Type: text/html; charset=UTF-8");
+header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
+$pfJobstate = new PluginFusioninventoryTaskjobstate();
 
-$pfTask = new PluginFusioninventoryTask();
-
-$pfTask->ajaxGetJobLogs($_GET);
+$pfJobstate->ajaxGetLogs($_GET);
 
 ?>
+
 
