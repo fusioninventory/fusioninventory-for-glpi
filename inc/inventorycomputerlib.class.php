@@ -120,8 +120,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $history = FALSE;
          }
 
-         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
-
          $computer->update($input, $history);
 
       $this->computer = $computer;
