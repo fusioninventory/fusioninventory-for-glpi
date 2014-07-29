@@ -425,6 +425,13 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactive_entity']         = $entities_id;
          } else {
             $computer->getFromDB($items_id);
+            $a_computerinventory['Computer']['states_id'] = $computer->fields['states_id'];
+            $input = array();
+            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+            if (isset($input['states_id'])) {
+                $a_computerinventory['Computer']['states_id'] = $input['states_id'];
+            }
+            
             $_SESSION['glpiactiveentities']        = array($entities_id);
             $_SESSION['glpiactiveentities_string'] = $entities_id;
             $_SESSION['glpiactive_entity']         = $entities_id;
@@ -461,6 +468,11 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input = array();
             $input['entities_id'] = $entities_id;
             PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+            if (isset($input['states_id'])) {
+                $a_computerinventory['Computer']['states_id'] = $input['states_id'];
+            } else {
+                $a_computerinventory['Computer']['states_id'] = 0;
+            }
             $items_id = $computer->add($input);
             $no_history = TRUE;
             $setdynamic = 0;
