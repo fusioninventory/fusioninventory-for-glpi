@@ -1133,6 +1133,28 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
+   
+      /**
+    * Force end task
+    */
+   function forceEndByModule() {
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+   
+      $a_taskjobstates =
+      $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
+   
+      //TODO: in order to avoid too many atomic operations on DB, convert the
+      //following into a massive prepared operation (ie. ids in one massive action)
+      foreach($a_taskjobstates as $a_taskjobstate) {
+         $pfTaskjobstate->getFromDB($a_taskjobstate['id']);
+         if ($a_taskjobstate['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+            $pfTaskjobstate->changeStatusFinish(
+                  $a_taskjobstate['id'], 0, '', 1, "Deployment disabled on this agent", 0, 0
+            );
+         }
+      }
+      $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
+   }
 
    /*
     * Display static list of taskjob
