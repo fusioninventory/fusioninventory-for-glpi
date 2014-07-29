@@ -284,7 +284,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    function getTaskjobsAgent($agent_id) {
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-
+      $pfAgentModule = new PluginFusioninventoryAgentmodule();
+      
       $moduleRun = array();
 
       $a_taskjobstates = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
@@ -293,17 +294,24 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       foreach ($a_taskjobstates as $data) {
          // Get job and data to send to agent
          if ($pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id'])) {
-
             $pluginName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
             if ($pluginName) {
-               $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);
-               $moduleRun[$className][] = $data;
+               $moduleName = $pfTaskjob->fields['method'];
+               if ($moduleName == "deployinstall" || $moduleName == "deployuninstall") {
+                  $moduleName = "deploy";
+               }
+               if ($pfAgentModule->isAgentCanDo($moduleName, $agent_id)) { 
+                  $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);
+                  $moduleRun[$className][] = $data;
+               } else {
+                  $pfTaskjob->forceEndByModule();
+               }
             }
          }
       }
       return $moduleRun;
    }
-
+   
    /**
     * Process ajax parameters for getLogs() methods
     *
