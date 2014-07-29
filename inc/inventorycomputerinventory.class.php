@@ -300,7 +300,8 @@ class PluginFusioninventoryInventoryComputerInventory {
                return;
             }
 
-            if (isset($dataEntity['entities_id'])) {
+            if (isset($dataEntity['entities_id'])
+                    && $dataEntity['entities_id'] >= 0) {
                $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
                $input['entities_id'] = $dataEntity['entities_id'];
             } else {
