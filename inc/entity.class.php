@@ -70,7 +70,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       $array_ret = array();
       if ($item->getID() > -1) {
          if (Session::haveRight("entity", 'r')) {
-            $array_ret[0] = self::createTabEntry(__('Fusioninventory', 'monitoring'));
+            $array_ret[0] = self::createTabEntry('Fusioninventory');
          }
       }
       return $array_ret;
