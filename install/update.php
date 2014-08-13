@@ -1257,6 +1257,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['is_deleted'] = array('type'    => 'bool',
                                                'value'   => NULL);
+      $a_table['fields']['is_template']= array('type'    => 'bool',
+                                               'value'   => NULL);
+      $a_table['fields']['users_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
       $a_table['fields']['serial']     = array('type'    => 'string',
                                                'value'   => NULL);
       $a_table['fields']['otherserial']= array('type'    => 'string',
