@@ -723,7 +723,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($nb_unicity == 0) {
                         $options['disable_unicity_check'] = TRUE;
                      }
-
                      $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                      $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
                            SET `value`='1'";
@@ -2010,7 +2009,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $result = $DB->query($sql);
 
       while ($data = $DB->fetch_assoc($result)) {
-         $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data['id'];
+         $this->softList[Toolbox::addslashes_deep($data['name'])."$$$$".$data['manufacturers_id']] = $data['id'];
       }
       return $lastid;
    }
