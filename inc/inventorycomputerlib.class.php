@@ -592,7 +592,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
              *
              */
 
-
             if (count($db_software) == 0) { // there are no software associated with computer
                $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
                $options = array();
