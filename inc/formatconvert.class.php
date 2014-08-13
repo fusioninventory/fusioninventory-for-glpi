@@ -380,10 +380,13 @@ class PluginFusioninventoryFormatconvert {
                  $array['OPERATINGSYSTEM'],
                  array(
                     'FULL_NAME'      => 'operatingsystems_id',
-                    'KERNEL_VERSION' => 'operatingsystemversions_id',
+                    'VERSION'        => 'operatingsystemversions_id',
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
                     'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
 
+         if (!isset($array['OPERATINGSYSTEM']['VERSION'])) {
+            $array_tmp['operatingsystemversions_id'] = $array['OPERATINGSYSTEM']['KERNEL_VERSION'];
+         }
          foreach ($array_tmp as $key=>$value) {
             if (isset($a_inventory['Computer'][$key])
                     && $a_inventory['Computer'][$key] != '') {
