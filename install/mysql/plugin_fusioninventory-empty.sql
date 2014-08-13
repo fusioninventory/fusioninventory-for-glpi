@@ -195,6 +195,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `locations_id` int(11) NOT NULL DEFAULT '0',
    `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+   `is_template` tinyint(1) NOT NULL DEFAULT '0',
+   `users_id` int(11) NOT NULL DEFAULT '0',
    `serial` varchar(255) DEFAULT NULL,
    `otherserial` varchar(255) DEFAULT NULL,
    `contact` varchar(255) DEFAULT NULL,
