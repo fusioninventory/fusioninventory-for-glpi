@@ -309,6 +309,11 @@ class PluginFusioninventoryInventoryComputerInventory {
                     && $dataEntity['entities_id'] >= 0) {
                $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
                $input['entities_id'] = $dataEntity['entities_id'];
+
+            } else if (isset($dataEntity['entities_id'])
+                    && $dataEntity['entities_id'] == -1) {
+               $input['entities_id'] = 0;
+               $_SESSION["plugin_fusioninventory_entity"] = -1;
             } else {
                $input['entities_id'] = 0;
                $_SESSION["plugin_fusioninventory_entity"] = 0;
@@ -405,21 +410,15 @@ class PluginFusioninventoryInventoryComputerInventory {
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
 
       if ($itemtype == 'Computer') {
-         $a_computerinventory = $pfFormatconvert->extraCollectInfo(
-                                                $a_computerinventory,
-                                                $items_id);
-      }
-
-      $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
-                                             $a_computerinventory,
-                                             $entities_id);
-
-      if ($itemtype == 'Computer') {
          $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
          $pfAgent                = new PluginFusioninventoryAgent();
 
          $computer   = new Computer();
          if ($items_id == '0') {
+            if ($entities_id == -1) {
+               $entities_id = 0;
+               $_SESSION["plugin_fusioninventory_entity"] = 0;
+            }
             $_SESSION['glpiactiveentities']        = array($entities_id);
             $_SESSION['glpiactiveentities_string'] = $entities_id;
             $_SESSION['glpiactive_entity']         = $entities_id;
@@ -431,7 +430,12 @@ class PluginFusioninventoryInventoryComputerInventory {
             if (isset($input['states_id'])) {
                 $a_computerinventory['Computer']['states_id'] = $input['states_id'];
             }
-            
+
+            if ($entities_id == -1) {
+               $entities_id = $computer->fields['entities_id'];
+               $_SESSION["plugin_fusioninventory_entity"] = $computer->fields['entities_id'];
+            }
+
             $_SESSION['glpiactiveentities']        = array($entities_id);
             $_SESSION['glpiactiveentities_string'] = $entities_id;
             $_SESSION['glpiactive_entity']         = $entities_id;
@@ -460,6 +464,12 @@ class PluginFusioninventoryInventoryComputerInventory {
                }
             }
          }
+         $a_computerinventory = $pfFormatconvert->extraCollectInfo(
+                                                $a_computerinventory,
+                                                $items_id);
+         $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
+                                                $a_computerinventory,
+                                                $entities_id);
 
          $no_history = FALSE;
          // * New
@@ -558,8 +568,16 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
       } else if ($itemtype == 'PluginFusioninventoryUnmanaged') {
 
+         $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
+                                                $a_computerinventory,
+                                                $entities_id);
+
          $class = new $itemtype();
          if ($items_id == "0") {
+            if ($entities_id == -1) {
+               $entities_id = 0;
+               $_SESSION["plugin_fusioninventory_entity"] = 0;
+            }
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $items_id = $class->add($input);
