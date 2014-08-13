@@ -825,6 +825,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                       AND `itemtype` = 'PluginFusioninventoryUnmanaged'");
 
       $this->getFromDB($items_id);
+      $this->fields = Toolbox::addslashes_deep($this->fields);
       $data = array();
       switch ($this->fields['item_type']) {
          case 'Printer':
