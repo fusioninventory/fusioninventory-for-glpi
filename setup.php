@@ -192,6 +192,7 @@ function plugin_init_fusioninventory() {
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY']
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
+      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/profile.class.php');
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
 
