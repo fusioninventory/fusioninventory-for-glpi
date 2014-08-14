@@ -175,6 +175,7 @@ function plugin_init_fusioninventory() {
       $moduleId = $Plugin->fields['id'];
 
       // Load config
+      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/config.class.php');
       PluginFusioninventoryConfig::loadCache();
 
       // ##### 4. Set in session module_id #####
