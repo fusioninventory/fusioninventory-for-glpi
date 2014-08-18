@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * @return nothing
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
