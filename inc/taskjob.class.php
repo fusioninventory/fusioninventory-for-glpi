@@ -930,8 +930,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                        "id DESC", "1");
                $finish = FALSE;
                if (count($has_recent_log_entries) == 1) {
-                  $data = current($has_recent_log_entries);
-                  $date = strtotime($data['date']);
+                  $data2 = current($has_recent_log_entries);
+                  $date = strtotime($data2['date']);
                   $date += (4 * 3600);
                   if ($date < date('U')) {
                      $finish = TRUE;
