@@ -58,7 +58,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -393,7 +393,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
-      global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY;
+      global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
