@@ -60,6 +60,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5151]['datatype']  = 'text';
          $sopt[5151]['joinparams']  = array('jointype' => 'child');
          $sopt[5151]['massiveaction'] = FALSE;
+         $sopt[5151]['forcegroupby'] = TRUE;
 
          $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5152]['field']     = 'version';
@@ -67,6 +68,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5152]['datatype']  = 'text';
          $sopt[5152]['joinparams']  = array('jointype' => 'child');
          $sopt[5152]['massiveaction'] = FALSE;
+         $sopt[5152]['forcegroupby'] = TRUE;
 
          $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5153]['field']     = 'is_active';
@@ -75,6 +77,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5153]['datatype']  = 'bool';
          $sopt[5153]['joinparams']  = array('jointype' => 'child');
          $sopt[5153]['massiveaction'] = FALSE;
+         $sopt[5153]['forcegroupby'] = TRUE;
 
          $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5154]['field']     = 'uptodate';
@@ -83,6 +86,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5154]['datatype']  = 'bool';
          $sopt[5154]['joinparams']  = array('jointype' => 'child');
          $sopt[5154]['massiveaction'] = FALSE;
+         $sopt[5154]['forcegroupby'] = TRUE;
 
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
