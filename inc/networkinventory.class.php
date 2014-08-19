@@ -455,7 +455,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   $agent_id = current($a_action);
                   if ($pfAgent->getFromDB($agent_id)) {
                      $agent_version = $pfAgent->getAgentVersion($agent_id);
-                     if ($agent_version < '2.3.4') {
+                     if (strnatcmp($agent_version, '2.3.4') < 0) {
                         $agent_require_model = 1;
                      }
                      if ($communication == 'pull') {
