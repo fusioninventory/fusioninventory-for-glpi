@@ -3,10 +3,10 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Geraldziu <maciejhelt@gmail.com>, 2013
-# Geraldziu <maciejhelt@gmail.com>, 2013
+# Maciej Helt <maciejhelt@gmail.com>, 2013
+# Maciej Helt <maciejhelt@gmail.com>, 2013
 # mirekgab <mirekgab@wp.pl>, 2014
-# adamcios <p.adamcio@o-it.pl>, 2012-2013
+# Piotr Adamcio <p.adamcio@o-it.pl>, 2012-2013
 # wolvverine <wolvverinepld@gmail.com>, 2013
 # wolvverine <wolvverinepld@gmail.com>, 2013
 msgid ""

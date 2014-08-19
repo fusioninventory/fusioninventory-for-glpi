@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2014-01-05 01:07+0000\n"
+"PO-Revision-Date: 2014-04-17 10:08+0000\n"
 "Last-Translator: pexy <pexyyy@gmail.com>\n"
 "Language-Team: Estonian (Estonia) (http://www.transifex.com/projects/p/FusionInventory/language/et_EE/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr ""
 #: hook.php:124 inc/agent.class.php:140 inc/agent.class.php:186
 #: inc/agent.class.php:282 inc/agent.class.php:805
 msgid "Useragent"
-msgstr ""
+msgstr "Agendi tarkvara"
 
 #: hook.php:131 inc/agent.class.php:146 inc/agent.class.php:306
 #: inc/agent.class.php:810 inc/config.class.php:527 inc/config.class.php:545
@@ -134,7 +134,7 @@ msgstr "Võrguseadmete inventeerimine (SNMP)"
 #: hook.php:915 inc/taskjoblog.class.php:442 inc/taskjoblog.class.php:885
 #: inc/taskjoblog.class.php:943
 msgid "Force the end"
-msgstr ""
+msgstr "Sunni lõpetama"
 
 #: hook.php:1033 inc/deploytask.class.php:56 inc/deploytask.class.php:114
 msgid "Task"
@@ -395,7 +395,7 @@ msgstr ""
 
 #: inc/agent.class.php:100 inc/agent.class.php:187 inc/agent.class.php:298
 msgid "Last contact"
-msgstr ""
+msgstr "Viimane ühendus"
 
 #: inc/agent.class.php:106 inc/agent.class.php:258
 msgid "locked"
@@ -403,11 +403,11 @@ msgstr ""
 
 #: inc/agent.class.php:112 inc/agent.class.php:231
 msgid "Device_id"
-msgstr ""
+msgstr "Seadme identifikaator"
 
 #: inc/agent.class.php:119 inc/agent.class.php:238
 msgid "Computer link"
-msgstr ""
+msgstr "Ühendatud arvuti"
 
 #: inc/agent.class.php:529
 msgid "Agent state"
@@ -441,7 +441,7 @@ msgstr "Erandid"
 #: inc/agentmodule.class.php:139 inc/agentmodule.class.php:249
 #: inc/deploystaticmisc.class.php:56
 msgid "Package deployment"
-msgstr ""
+msgstr "Pakkide pigaldus"
 
 #: inc/collect.class.php:50 inc/staticmisc.class.php:707
 msgid "Collect information"
@@ -726,7 +726,7 @@ msgstr "Agendi port"
 
 #: inc/config.class.php:332
 msgid "Extra-debug"
-msgstr ""
+msgstr "Silumisrežiim"
 
 #: inc/config.class.php:337
 msgid "Service URL"
@@ -805,11 +805,11 @@ msgstr ""
 
 #: inc/config.class.php:700
 msgid "Root folder for sending files from server"
-msgstr "Kataloog, kus asuvad pakid alla laadimiseks"
+msgstr "Üleslaadimise kataloog"
 
 #: inc/config.class.php:708
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Luba sellest serverist pakke alla laadida"
 
 #: inc/configlogfield.class.php:145
 msgid "History configuration"
@@ -877,11 +877,11 @@ msgstr ""
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Tagastusväärtus on võrdne"
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Tagastusväärtus ei ole võrdne"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
@@ -1085,7 +1085,7 @@ msgstr "P2P"
 
 #: inc/deployfile.class.php:429
 msgid "retention days"
-msgstr ""
+msgstr "Säilitamine (päevades)"
 
 #: inc/deployfile.class.php:698
 msgid "Transfer error: the file size is too big"
@@ -1133,11 +1133,11 @@ msgstr "MB"
 
 #: inc/deploygroup.class.php:75 inc/deploygroup_staticdata.class.php:74
 msgid "Static group"
-msgstr ""
+msgstr "Staatiline grupp"
 
 #: inc/deploygroup.class.php:76 inc/deploygroup_dynamicdata.class.php:63
 msgid "Dynamic group"
-msgstr ""
+msgstr "Dünaamiline grupp"
 
 #: inc/deploygroup.class.php:110
 msgid "Add group"
@@ -1205,11 +1205,11 @@ msgstr ""
 #: inc/stateinventory.class.php:153 inc/taskjoblog.class.php:67
 #: inc/taskjoblog.class.php:637 inc/taskjoblog.class.php:983
 msgid "Prepared"
-msgstr ""
+msgstr "Ette valmistatud"
 
 #: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:100
 msgid "Package uninstall"
-msgstr "Paigalda pakk"
+msgstr "Eemalda pakk"
 
 #: inc/deploystaticmisc.class.php:94 inc/deploytask.class.php:54
 msgid "Group of computers"
@@ -2385,19 +2385,19 @@ msgstr ""
 #: inc/taskjob.class.php:309 inc/taskjob.class.php:1888
 #: inc/taskjob.class.php:2023
 msgid "day(s)"
-msgstr ""
+msgstr "Päeva"
 
 #: inc/networkequipment.class.php:588 inc/task.class.php:280
 #: inc/taskjob.class.php:307 inc/taskjob.class.php:1882
 #: inc/taskjob.class.php:2021
 msgid "hour(s)"
-msgstr ""
+msgstr "Tundi"
 
 #: inc/networkequipment.class.php:589 inc/task.class.php:278
 #: inc/taskjob.class.php:305 inc/taskjob.class.php:1876
 #: inc/taskjob.class.php:2019
 msgid "Minute(s)"
-msgstr ""
+msgstr "Minutit"
 
 #: inc/networkequipment.class.php:590
 msgid "sec(s)"
@@ -2684,7 +2684,7 @@ msgstr ""
 
 #: inc/staticmisc.class.php:93
 msgid "Package install"
-msgstr "Eemalda pakk"
+msgstr "Paigalda pakk"
 
 #: inc/staticmisc.class.php:107
 msgid "Collect data"
@@ -2751,16 +2751,16 @@ msgstr ""
 #: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1491
 #: inc/taskjob.class.php:1855
 msgid "Scheduled date"
-msgstr ""
+msgstr "Planeeritud algusaeg"
 
 #: inc/task.class.php:112 inc/task.class.php:255 inc/taskjob.class.php:1999
 msgid "Communication type"
-msgstr ""
+msgstr "Ühendumisviis"
 
 #: inc/task.class.php:210 inc/taskjob.class.php:2080
 #: inc/taskjob.class.php:2113
 msgid "Force start"
-msgstr ""
+msgstr "Sunni alustama"
 
 #: inc/task.class.php:230
 msgid "Reinitialization"
@@ -2768,15 +2768,15 @@ msgstr ""
 
 #: inc/task.class.php:258 inc/task.class.php:565 inc/taskjob.class.php:2002
 msgid "Server contacts the agent (push)"
-msgstr ""
+msgstr "Server võtab agendiga ühendust (lükka)"
 
 #: inc/task.class.php:260 inc/task.class.php:568 inc/taskjob.class.php:2004
 msgid "Agent contacts the server (pull)"
-msgstr ""
+msgstr "Agent võtab serveriga ühendust (tõmba)"
 
 #: inc/task.class.php:284 inc/taskjob.class.php:2025
 msgid "month(s)"
-msgstr ""
+msgstr "Kuud"
 
 #: inc/task.class.php:430
 msgid "Planned for running"
@@ -2867,7 +2867,7 @@ msgstr ""
 
 #: inc/taskjoblog.class.php:879 inc/taskjoblog.class.php:930
 msgid "View logs of this execution"
-msgstr ""
+msgstr "Vaata selle käivituse logisid"
 
 #: inc/taskjoblog.class.php:900 inc/taskjoblog.class.php:955
 msgid "See all executions"
@@ -2975,7 +2975,7 @@ msgstr ""
 
 #: inc/wizard.class.php:462
 msgid "Welcome in FusionInventory. Begin configuration?"
-msgstr ""
+msgstr "Teetulemast kasutama FusionInventory serverit"
 
 #: inc/wizard.class.php:488
 msgid "ESX servers"

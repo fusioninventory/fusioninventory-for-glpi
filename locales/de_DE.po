@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Mathieu Simon <mathieu.sim@gmail.com>, 2012-2014
+# Megachip <www.transifex.com@megskywalker.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2014-01-24 15:10+0000\n"
-"Last-Translator: Mathieu Simon <mathieu.sim@gmail.com>\n"
+"PO-Revision-Date: 2014-05-06 23:10+0000\n"
+"Last-Translator: Megachip <www.transifex.com@megskywalker.de>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/FusionInventory/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +80,7 @@ msgstr "SNMP-Authentifizierung "
 #: inc/printer.class.php:153 inc/snmpmodel.class.php:107
 #: inc/unknowndevice.class.php:163 inc/unknowndevice.class.php:376
 msgid "Sysdescr"
-msgstr "SNMP-Authentifizierung"
+msgstr "Systembeschreibung"
 
 #: hook.php:252 inc/networkequipment.class.php:486
 msgid "CPU usage (in %)"
@@ -93,7 +94,7 @@ msgstr[1] "Sperrungen"
 
 #: hook.php:836 hook.php:842
 msgid "Target a task"
-msgstr ""
+msgstr "Wähle einen Task"
 
 #: hook.php:850 hook.php:861
 msgid "Load the correct SNMP model"
@@ -147,7 +148,7 @@ msgstr "Paket"
 
 #: hook.php:1063
 msgid "Create a job for each computer"
-msgstr ""
+msgstr "Job für jeden Computer erstellen"
 
 #: hook.php:1065
 msgid "Create a job for each group"
@@ -208,7 +209,7 @@ msgstr "Anzahl Tage seite der letzten Inventarisierung"
 
 #: setup.php:304 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
-msgstr ""
+msgstr "Computer, welche seit xx Tagen nicht inventorisiert wurden"
 
 #: setup.php:409 setup.php:410
 msgid "Documentation"
@@ -271,7 +272,7 @@ msgstr "Entitätsregeln"
 #: setup.php:459 inc/inventoryrulelocation.class.php:57
 #: inc/inventoryrulelocationcollection.class.php:56
 msgid "Location rules"
-msgstr ""
+msgstr "Standortregeln"
 
 #: setup.php:462 inc/menu.class.php:155
 msgid "Import agent XML file"
@@ -295,12 +296,12 @@ msgstr "Ihre version von GLPI ist nicht kompatibel, benötige 0.84."
 
 #: setup.php:582
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "fileinfo Erweiterung (PHP) wird benötigt..."
 
 #: setup.php:595
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Bitte den Ordner %s in glpi/plugins löschen"
 
 #: ajax/dropdownsnmpmodelconstruct_progressbar.php:53
 msgid "Printer cartridges"
@@ -328,7 +329,7 @@ msgstr "Import von SNMP-Modellen abgeschlossen."
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
-msgstr "Kann keine ZP-Datei erstellen!"
+msgstr "Kann ZiP-Datei nicht lesen!"
 
 #: front/inventorycomputerimportxml.php:93
 msgid "No file to import!"
@@ -445,7 +446,7 @@ msgstr "Paketverteilung"
 
 #: inc/collect.class.php:50 inc/staticmisc.class.php:707
 msgid "Collect information"
-msgstr ""
+msgstr "Sammle Informationen"
 
 #: inc/collect.class.php:82
 msgid "Registry"
@@ -458,7 +459,7 @@ msgstr "WMI"
 #: inc/collect.class.php:84 inc/collect_file.class.php:50
 #: inc/collect_file.class.php:72
 msgid "Find file"
-msgstr ""
+msgstr "Finde Datei"
 
 #: inc/collect_file.class.php:98
 msgid "Find file associated"
@@ -547,11 +548,11 @@ msgstr "Gross-/Kleinschreibung beachten"
 #: inc/collect_file_content.class.php:50 inc/collect_file_content.class.php:84
 #: inc/collect_file_content.class.php:90
 msgid "Find file content"
-msgstr ""
+msgstr "Finde Dateiinhalt"
 
 #: inc/collect_file_content.class.php:199
 msgid "Path/file"
-msgstr ""
+msgstr "Pfad/Datei"
 
 #: inc/collect_file_content.class.php:237
 msgid "pathfile"
@@ -674,7 +675,7 @@ msgstr "Dateigrösse"
 #: inc/communicationnetworkinventory.class.php:219
 #: inc/communicationnetworkinventory.class.php:290
 msgid "Unattended element in"
-msgstr ""
+msgstr "Unbeaufsichtigtes Element in"
 
 #: inc/computerlicenseinfo.class.php:70
 msgid "Software licenses"
@@ -789,7 +790,7 @@ msgstr "Netzwerklaufwerke"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Erstelle einen Computer basierend auf den Informationen der virtuellen Maschine (Nur wenn diese keinen eigenen Agenten hat!)"
 
 #: inc/config.class.php:601
 msgid "Automatic computers transfer"
@@ -805,7 +806,7 @@ msgstr "Netzwerkoptionen"
 
 #: inc/config.class.php:700
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Wurzelverzeichnis um Dateien vom Server zu senden"
 
 #: inc/config.class.php:708
 msgid "Use this GLPI server as a mirror server"
@@ -889,7 +890,7 @@ msgstr "Ausgabe des Kommandos enthält"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "Ausgabe des Kommandos enthält nicht"
 
 #: inc/deployaction.class.php:71
 msgid "Command"
@@ -924,7 +925,7 @@ msgstr "Auszuführender Befehl"
 
 #: inc/deployaction.class.php:197
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "Rückgabewerte dieses Befehls gespeichert"
 
 #: inc/deployaction.class.php:209 inc/deploycheck.class.php:185
 #: inc/deployfile.class.php:286
@@ -1021,7 +1022,7 @@ msgstr "EInheit"
 
 #: inc/deploycheck.class.php:400
 msgid "In case of error"
-msgstr ""
+msgstr "Im Falle eines Fehlers"
 
 #: inc/deploycheck.class.php:403 inc/deploystate.class.php:127
 msgid "Error"
@@ -1073,7 +1074,7 @@ msgstr "Auswählen"
 
 #: inc/deployfile.class.php:402
 msgid "Select the file on server"
-msgstr ""
+msgstr "Datei auf dem Server wählen"
 
 #: inc/deployfile.class.php:417
 msgid "Uncompress"
@@ -1089,11 +1090,11 @@ msgstr "Vorhaltezeit in Tagen"
 
 #: inc/deployfile.class.php:698
 msgid "Transfer error: the file size is too big"
-msgstr ""
+msgstr "Übertragungsfehler: Die Datei ist zu groß"
 
 #: inc/deployfile.class.php:701
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Die hochgeladene Datei ist unvollständig"
 
 #: inc/deployfile.class.php:704
 msgid "No file was uploaded"
@@ -1187,7 +1188,7 @@ msgstr "Aktionen"
 
 #: inc/deploypackage.class.php:694
 msgid "Item successfully added"
-msgstr ""
+msgstr "Element erfolgreich hinzugefügt"
 
 #: inc/deploystate.class.php:119 inc/taskjoblog.class.php:73
 #: inc/taskjoblog.class.php:651 inc/taskjoblog.class.php:768
@@ -1233,11 +1234,11 @@ msgstr "Aufgabe hinzufügen"
 
 #: inc/deploytask.class.php:145
 msgid "Edit impossible, this task is active"
-msgstr ""
+msgstr "Diese Aufgabe ist aktiv und kann nicht bearbeitet werden."
 
 #: inc/deploytask.class.php:175
 msgid "This task is active. delete denied"
-msgstr ""
+msgstr "Diese Aufgabe ist aktiv und kann nicht gelöscht werden."
 
 #: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:58
 msgid "Uninstallation"
@@ -1399,7 +1400,7 @@ msgstr "GLPI-Werte"
 
 #: inc/lock.class.php:165
 msgid "Values of last inventory"
-msgstr ""
+msgstr "Werte der letzte Inventarisierung"
 
 #: inc/lock.class.php:248 inc/taskjob.class.php:52 inc/taskjob.class.php:1470
 #: inc/taskjoblog.class.php:138 inc/taskjobstate.class.php:193
@@ -2311,7 +2312,7 @@ msgstr "Allgemein"
 
 #: inc/menu.class.php:163
 msgid "Additional computer information"
-msgstr ""
+msgstr "Zusätzliche (Computer) Informationen"
 
 #: inc/menu.class.php:169
 msgid "Tasks"
@@ -2547,7 +2548,7 @@ msgstr "Rechteverwaltung"
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
 msgid "Import information"
-msgstr ""
+msgstr "Information importieren"
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
 msgid "Rule import logs"
@@ -2688,7 +2689,7 @@ msgstr "Paketinstallation"
 
 #: inc/staticmisc.class.php:107
 msgid "Collect data"
-msgstr ""
+msgstr "Sammle Daten"
 
 #: inc/staticmisc.class.php:200 inc/staticmisc.class.php:336
 msgid "Agents"
@@ -2780,7 +2781,7 @@ msgstr "Kommunikationsmodus"
 
 #: inc/task.class.php:430
 msgid "Planned for running"
-msgstr ""
+msgstr "zur Ausführung geplant"
 
 #: inc/task.class.php:448
 msgid "In error"
@@ -2905,7 +2906,7 @@ msgstr "Details"
 
 #: inc/taskjoblog.class.php:1095
 msgid "Agent communication error, impossible to start agent"
-msgstr ""
+msgstr "Kommunikationsfehler, kann den Agent nicht starten"
 
 #: inc/taskjoblog.class.php:1096
 msgid "Agent stopped/crashed"

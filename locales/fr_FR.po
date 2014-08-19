@@ -3,23 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# lostprophet91 <lostprophet91@gmail.com>, 2013
+# Alexandre Brianceau <lostprophet91@gmail.com>, 2013
 # Asmodojo <asmodojo@outlook.com>, 2013
 # David Durieux <d.durieux@siprossii.com>, 2012-2014
 # EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
 # Gonéri Le Bouder <goneri@rulezlan.org>, 2013
 # kiniou <kiniou@gmail.com>, 2013
 # kiniou <kiniou@gmail.com>, 2013
-# lostprophet91 <lostprophet91@gmail.com>, 2013
+# Alexandre Brianceau <lostprophet91@gmail.com>, 2013
 # Mathieu Simon <mathieu.sim@gmail.com>, 2013
-# oviri <tamaoviri@gmail.com>, 2013
-# oviri <tamaoviri@gmail.com>, 2013
+# Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# Tamatoa Davio <tamaoviri@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2014-03-03 08:41+0000\n"
+"PO-Revision-Date: 2014-07-29 18:39+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -799,7 +799,7 @@ msgstr "Lecteurs réseau"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr "Création d'ordinateur basé sur les informations de la machine virtuelle ( uniauement lorsque la machine virtuelle n'a pas d'agent ! )"
+msgstr "Création d'ordinateur basé sur les informations de la machine virtuelle ( uniquement lorsque la machine virtuelle n'a pas d'agent ! )"
 
 #: inc/config.class.php:601
 msgid "Automatic computers transfer"
