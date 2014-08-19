@@ -224,59 +224,62 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       if (in_array($criteria->fields["condition"], array(self::PATTERN_CIDR))) {
          $condition = $criteria->fields['condition'];
          $pattern   = $criteria->fields['pattern'];
-         $crit      = $criteria->fields['criteria'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
                                           $input[$criteria->fields["criteria"]]);
+
+         list ($subnet, $bits) = explode('/', $pattern);
+         $subnet = ip2long($subnet);
+         $mask = -1 << (32 - $bits);
+         $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+
          if (is_array($value)) {
             foreach ($value as $ip) {
-               list ($subnet, $bits) = explode('/', $pattern);
-               $ip = ip2long($ip);
-               $subnet = ip2long($subnet);
-               $mask = -1 << (32 - $bits);
-               $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
-               if (($ip & $mask) == $subnet) {
-                  $res = TRUE;
+               if (isset($ip) && $ip != '') {
+                  $ip = ip2long($ip);
+                  if (($ip & $mask) == $subnet) {
+                     $res = TRUE;
+                     break 1;
+                  }
                }
             }
          } else {
-            list ($subnet, $bits) = explode('/', $pattern);
-            $ip = ip2long($value);
-            $subnet = ip2long($subnet);
-            $mask = -1 << (32 - $bits);
-            $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
-            if (($ip & $mask) == $subnet) {
-               $res = TRUE;
+            if (isset($value) && $value != '') {
+               $ip = ip2long($value);
+               if (($ip & $mask) == $subnet) {
+                  $res = TRUE;
+               }
             }
          }
       } else if (in_array($criteria->fields["condition"], array(self::PATTERN_NOT_CIDR))) {
          $condition = $criteria->fields['condition'];
          $pattern   = $criteria->fields['pattern'];
-         $crit      = $criteria->fields['criteria'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
                                           $input[$criteria->fields["criteria"]]);
+
+         list ($subnet, $bits) = explode('/', $pattern);
+         $subnet = ip2long($subnet);
+         $mask = -1 << (32 - $bits);
+         $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+
          if (is_array($value)) {
             $resarray = TRUE;
             foreach ($value as $ip) {
-               list ($subnet, $bits) = explode('/', $pattern);
-               $ip = ip2long($ip);
-               $subnet = ip2long($subnet);
-               $mask = -1 << (32 - $bits);
-               $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
-               if (($ip & $mask) == $subnet) {
-                  $resarray = FALSE;
+               if (isset($ip) && $ip != '') {
+                  $ip = ip2long($ip);
+                  if (($ip & $mask) == $subnet) {
+                     $resarray = FALSE;
+                  }
                }
             }
             $res = $resarray;
          } else {
-            list ($subnet, $bits) = explode('/', $pattern);
-            $ip = ip2long($value);
-            $subnet = ip2long($subnet);
-            $mask = -1 << (32 - $bits);
-            $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
-            if (($ip & $mask) != $subnet) {
-               $res = TRUE;
+            if (isset($value) && $value != '') {
+               $ip = ip2long($value);
+               if (($ip & $mask) != $subnet) {
+                  $res = TRUE;
+               }
             }
          }
       }
