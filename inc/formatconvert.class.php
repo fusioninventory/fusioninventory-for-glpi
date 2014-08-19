@@ -1611,7 +1611,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
-         'nbcores', 'nbthreads');
+         'nbcores', 'nbthreads', 'frequency');
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
