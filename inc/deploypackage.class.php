@@ -443,13 +443,16 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    static function plusButtonSubtype($order_id, $subtype, $rand) {
       global $CFG_GLPI;
-      echo "&nbsp;";
-      echo "<img id='plus_{$subtype}s_block{$rand}'";
-      echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
-      echo  " title='".__('Add')."' alt='".__('Add')."' ";
-      echo  " class='pointer' src='".
-            $CFG_GLPI["root_doc"].
-            "/pics/add_dropdown.png' /> ";
+
+      if (self::canEdit()) {
+         echo "&nbsp;";
+         echo "<img id='plus_{$subtype}s_block{$rand}'";
+         echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
+         echo  " title='".__('Add')."' alt='".__('Add')."' ";
+         echo  " class='pointer' src='".
+               $CFG_GLPI["root_doc"].
+               "/pics/add_dropdown.png' /> ";
+      }
    }
 
    static function plusButton($dom_id, $clone = FALSE) {
@@ -480,9 +483,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
          echo PluginFusioninventoryToolbox::displayJson($order->fields['json']);
          echo "</textarea>";
-         echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
-         echo "<input type='submit' name='update_json' value=\"".
-            _sx('button', 'Save')."\" class='submit'>";
+         if (self::canEdit()) {
+            echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
+            echo "<input type='submit' name='update_json' value=\"".
+               _sx('button', 'Save')."\" class='submit'>";
+         }
          Html::closeForm();
          // === debug ===
       }

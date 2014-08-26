@@ -158,9 +158,11 @@ class PluginFusioninventoryDeployAction {
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td class='control'>";
-         echo "<input type='checkbox' name='action_entries[]' value='$i' />";
-         echo "</td>";
+         if (PluginFusioninventoryDeployPackage::canEdit()) {
+            echo "<td class='control'>";
+            echo "<input type='checkbox' name='action_entries[]' value='$i' />";
+            echo "</td>";
+         }
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
@@ -206,18 +208,24 @@ class PluginFusioninventoryDeployAction {
          }
          echo "</td>";
          echo "</td>";
-         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
-            "'><div class='drag row'></div></td>";
+         if (PluginFusioninventoryDeployPackage::canEdit()) {
+            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+               "'><div class='drag row'></div></td>";
+         }
          echo "</tr>";
          $i++;
       }
-      echo "<tr><th>";
-      Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
-      echo "</th><th colspan='3' class='mark'></th></tr>";
+      if (PluginFusioninventoryDeployPackage::canEdit()) {
+         echo "<tr><th>";
+         Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
+         echo "</th><th colspan='3' class='mark'></th></tr>";
+      }
       echo "</table>";
-      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
-      echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'fusioninventory')."\" class='submit'>";
+      if (PluginFusioninventoryDeployPackage::canEdit()) {
+         echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
+         echo "<input type='submit' name='delete' value=\"".
+            __('Delete', 'fusioninventory')."\" class='submit'>";
+      }
    }
 
 
@@ -427,12 +435,14 @@ class PluginFusioninventoryDeployAction {
 
       echo "<tr>";
       echo "<td></td><td>";
-      if ( $mode === 'edit' ) {
-         echo "<input type='submit' name='save_item' value=\"".
-            _sx('button', 'Save')."\" class='submit' >";
-      } else {
-         echo "<input type='submit' name='add_item' value=\"".
-            _sx('button', 'Add')."\" class='submit' >";
+      if (PluginFusioninventoryDeployPackage::canEdit()) {
+         if ( $mode === 'edit' ) {
+            echo "<input type='submit' name='save_item' value=\"".
+               _sx('button', 'Save')."\" class='submit' >";
+         } else {
+            echo "<input type='submit' name='add_item' value=\"".
+               _sx('button', 'Add')."\" class='submit' >";
+         }
       }
       echo "</td>";
       echo "</tr></table>";
