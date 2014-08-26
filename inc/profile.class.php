@@ -322,7 +322,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       echo "<tr>";
       echo "<th colspan='4'>";
       echo "<input type='hidden' name='profile_id' value='".$items_id."'/>";
-      echo "<input type='submit' value='".__('Post')."' class='submit' >";
+      echo "<input type='submit' value='".__s('Save')."' class='submit' >";
       echo "</td>";
       echo "</tr>";
 
