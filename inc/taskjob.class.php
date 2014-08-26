@@ -298,18 +298,20 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<td>".__('Module', 'fusioninventory')."&nbsp;:</td>";
          echo "<td>";
          $randmethod = $this->dropdownMethod("method", $this->fields['method']);
-         echo "<div style='display:none' id='methodupdate' >";
-         $params = array('method' => '__VALUE__',
-                         'rand'      => $randmethod,
-                         'myname'    => 'method',
-                         'name'      => 'methodupdate',
-                         'taskjobs_id'=>$id );
-         Ajax::updateItemOnEvent("dropdown_method".$randmethod,
-                                 "methodupdate",
-                                 $CFG_GLPI["root_doc"].
-                                    "/plugins/fusioninventory/ajax/taskmethodupdate.php",
-                                 $params);
-         echo "</div>";
+         if ($this->canUpdate()) {
+            echo "<div style='display:none' id='methodupdate' >";
+            $params = array('method' => '__VALUE__',
+                            'rand'      => $randmethod,
+                            'myname'    => 'method',
+                            'name'      => 'methodupdate',
+                            'taskjobs_id'=>$id );
+            Ajax::updateItemOnEvent("dropdown_method".$randmethod,
+                                    "methodupdate",
+                                    $CFG_GLPI["root_doc"].
+                                       "/plugins/fusioninventory/ajax/taskmethodupdate.php",
+                                    $params);
+            echo "</div>";
+         }
       }
       echo "</td>";
       echo "</tr>";
@@ -433,24 +435,25 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</tr>";
       }
 
-      echo "<tr>";
-      if ($id<=0) {
-         echo "<td colspan='4' valign='top' align='center'>";
-         echo "<input type='submit' name='add' value=\"".__('Add')."\" class='submit'>";
-         echo "</td>";
-      } else {
-         echo "<td valign='top' align='center' colspan='2'>";
-         echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit'>";
-         echo "</td>";
-         echo "<td valign='top' align='center' colspan='2'>";
-         echo "<input type='submit' name='delete' value=\"".__('Purge', 'fusioninventory')."\"
-                         class='submit' ".
-               Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).
-                 ">";
-         echo "</td>";
+      if ($this->canUpdate()) {
+         echo "<tr>";
+         if ($id<=0) {
+            echo "<td colspan='4' valign='top' align='center'>";
+            echo "<input type='submit' name='add' value=\"".__('Add')."\" class='submit'>";
+            echo "</td>";
+         } else {
+            echo "<td valign='top' align='center' colspan='2'>";
+            echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit'>";
+            echo "</td>";
+            echo "<td valign='top' align='center' colspan='2'>";
+            echo "<input type='submit' name='delete' value=\"".__('Purge', 'fusioninventory')."\"
+                            class='submit' ".
+                  Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).
+                    ">";
+            echo "</td>";
+         }
+         echo '</tr>';
       }
-      echo '</tr>';
-
       echo "</table>";
       Html::closeForm();
 
@@ -740,7 +743,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                }
                echo "<tr>";
                echo "<td style='padding: 1px 2px;'>";
-               echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
+               if ($this->canUpdate()) {
+                  echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
+               }
                echo "</td>";
                echo "<td style='padding: 1px 2px;'>";
                echo $display;
@@ -753,9 +758,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</table>";
 
       if ($nb > 0) {
-         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' ".
-                 "value=\"".__('Delete', 'fusioninventory')."\" class='submit'></center>";
-
+         if ($this->canUpdate()) {
+            echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' ".
+                    "value=\"".__('Delete', 'fusioninventory')."\" class='submit'></center>";
+         }
          $params = array($name.'item' => '__CHECKBOX__',
                          'type'      => $name,
                          'taskjobs_id'=>$id);
