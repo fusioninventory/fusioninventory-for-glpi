@@ -201,9 +201,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          // start new line
          $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td class='control'>";
-         echo "<input type='checkbox' name='file_entries[]' value='$i' />";
-         echo "</td>";
+         if (self::canEdit()) {
+            echo "<td class='control'>";
+            echo "<input type='checkbox' name='file_entries[]' value='$i' />";
+            echo "</td>";
+         }
          echo "<td class='filename'>";
          if (
                !empty($file_mimetype)
@@ -283,18 +285,23 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "</div>";
          }
          echo "</td>";
-         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
-            "'><div class='drag row'></div></td>";
+         if (self::canEdit()) {
+            echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+               "'><div class='drag row'></div></td>";
+         }
          $i++;
       }
-      echo "<tr><th>";
-      Html::checkAllAsCheckbox("filesList$rand", mt_rand());
-      echo "</th><th colspan='3' class='mark'></th></tr>";
+      if (self::canEdit()) {
+         echo "<tr><th>";
+         Html::checkAllAsCheckbox("filesList$rand", mt_rand());
+         echo "</th><th colspan='3' class='mark'></th></tr>";
+      }
       echo "</table>";
-      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
-      echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'fusioninventory')."\" class='submit'>";
-
+      if (self::canEdit()) {
+         echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
+         echo "<input type='submit' name='delete' value=\"".
+            __('Delete', 'fusioninventory')."\" class='submit'>";
+      }
    }
 
 
@@ -440,12 +447,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</tr><tr>";
       echo "<td>";
       echo "</td><td>";
-      if ( $mode === 'edit' ) {
-         echo "<input type='submit' name='save_item' value=\"".
-            _sx('button', 'Save')."\" class='submit' >";
-      } else {
-         echo "<input type='submit' name='add_item' value=\"".
-            _sx('button', 'Add')."\" class='submit' >";
+      if (self::canEdit()) {
+         if ( $mode === 'edit' ) {
+            echo "<input type='submit' name='save_item' value=\"".
+               _sx('button', 'Save')."\" class='submit' >";
+         } else {
+            echo "<input type='submit' name='add_item' value=\"".
+               _sx('button', 'Add')."\" class='submit' >";
+         }
       }
       echo "</td>";
       echo "</tr></table>";
@@ -617,7 +626,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $sha512 = $datas['jobs']['associatedFiles'][$index];
 
          //remove file
-         // I've commented the following piece of code because 
+         // I've commented the following piece of code because
          // if you remove the first line in the files list,
          // PHP will transform these table as a json dictionnary instead of json list.
          unset($files[$index]);
