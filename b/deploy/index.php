@@ -50,6 +50,7 @@ if (isset($_GET['action'])) {
       case 'getJobs':
          if(isset($_GET['machineid'])) {
             $pfAgent = new PluginFusioninventoryAgent();
+            $pfAgentModule = new PluginFusioninventoryAgentModule();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
             $pfTaskjob = new PluginFusioninventoryTaskjob();
 
@@ -57,7 +58,22 @@ if (isset($_GET['action'])) {
 
             if(isset($a_agent['id'])) {
                $methods = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
-
+               // In case deploy module is disabled since task prepared
+               if (!$pfAgentModule->isAgentCanDo("DEPLOY", $a_agent['id'])) {
+                  foreach ($methods as $taskjobs) {
+                     foreach ($taskjobs as $data) {
+                        $pfTaskjobstate->changeStatusFinish($data['id'],
+                                                      0,
+                                                      '',
+                                                      0,
+                                                      "Deploy module has been disabled for this agent",
+                                                      0,
+                                                      0);
+                     }
+                  }
+                  echo "{}";
+                  exit;
+               }
 
                $new_taskjobs = array();
                //Reconstruct taskjobs list by id and not by classname
