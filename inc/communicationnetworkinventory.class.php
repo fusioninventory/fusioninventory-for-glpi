@@ -266,6 +266,15 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $serialized = gzcompress(serialize($a_inventory));
 
+      if (isset($a_inventory['name'])
+              && $a_inventory['name'] == '') {
+         unset($a_inventory['name']);
+      }
+      if (isset($a_inventory['serial'])
+              && $a_inventory['serial'] == '') {
+         unset($a_inventory['serial']);
+      }
+
       switch ($itemtype) {
 
          case 'Printer':

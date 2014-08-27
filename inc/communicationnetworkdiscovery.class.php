@@ -402,6 +402,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
          }
       }
+      if (isset($input['name'])
+              && $input['name'] == '') {
+         unset($input['name']);
+      }
+      if (isset($input['serial'])
+              && $input['serial'] == '') {
+         unset($input['serial']);
+      }
 
       if (isset($arrayinventory['ENTITY']) AND !empty($arrayinventory['ENTITY'])) {
          $input['entities_id'] = $arrayinventory['ENTITY'];
