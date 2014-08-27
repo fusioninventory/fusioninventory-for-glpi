@@ -57,31 +57,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
-   function canEditPackage() {
-      $this->getRunningTasks();
-      if (count($this->running_tasks) > 0) {
-            return FALSE;
-      }
-      return TRUE;
-   }
-
-   function canEditItem() {
-
-      if (!$this->canEditPackage()) {
-         return FALSE;
-      }
-      return TRUE;
-   }
-
-   function canDeleteItem() {
-
-      if (!$this->canEditPackage()) {
-         return FALSE;
-      }
-      return TRUE;
-   }
-
    /**
    *  Check if we can edit (or delete) this item
    *  If it's not possible display an error message
@@ -366,7 +341,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<th id='th_title_{$subtype}_$rand'>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
          echo "&nbsp;".__($label, 'fusioninventory');
-         self::plusButtonSubtype($orders_id, $subtype, $rand);
+         $package->plusButtonSubtype($package->getID(), $orders_id, $subtype, $rand);
          echo "</th>";
          echo "</tr>";
 
@@ -441,10 +416,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
    }
 
-   static function plusButtonSubtype($order_id, $subtype, $rand) {
+   function plusButtonSubtype($id, $order_id, $subtype, $rand) {
       global $CFG_GLPI;
 
-      if (self::canEdit()) {
+      if ($this->can($id, 'w')) {
          echo "&nbsp;";
          echo "<img id='plus_{$subtype}s_block{$rand}'";
          echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
@@ -473,9 +448,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             "/pics/add_dropdown.png'> ";
    }
 
-   static function display_json_debug($order) {
+   static function display_json_debug(PluginFusioninventoryDeployOrder $order) {
       global $CFG_GLPI;
+
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+
+         $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+         $pfDeployPackage->getFromDB($order->fields['plugin_fusioninventory_deploypackages_id']);
+
          // === debug ===
          echo "<span class='red'><b>DEBUG</b></span>";
          echo "<form action='".$CFG_GLPI["root_doc"].
@@ -483,7 +463,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
          echo PluginFusioninventoryToolbox::displayJson($order->fields['json']);
          echo "</textarea>";
-         if (self::canEdit()) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
             echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
             echo "<input type='submit' name='update_json' value=\"".
                _sx('button', 'Save')."\" class='submit'>";

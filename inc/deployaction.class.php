@@ -56,14 +56,6 @@ class PluginFusioninventoryDeployAction {
       );
    }
 
-   static function canCreate() {
-      return TRUE;
-   }
-
-   static function canView() {
-      return TRUE;
-   }
-
 
 
    static function getTypes() {
@@ -151,14 +143,17 @@ class PluginFusioninventoryDeployAction {
 
 
 
-   static function displayList($order, $datas, $rand) {
+   static function displayList(PluginFusioninventoryDeployOrder $order, $datas, $rand) {
       global $CFG_GLPI;
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage->getFromDB($order->fields['plugin_fusioninventory_deploypackages_id']);
 
       echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if (PluginFusioninventoryDeployPackage::canEdit()) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
             echo "<td class='control'>";
             echo "<input type='checkbox' name='action_entries[]' value='$i' />";
             echo "</td>";
@@ -208,20 +203,20 @@ class PluginFusioninventoryDeployAction {
          }
          echo "</td>";
          echo "</td>";
-         if (PluginFusioninventoryDeployPackage::canEdit()) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
          $i++;
       }
-      if (PluginFusioninventoryDeployPackage::canEdit()) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if (PluginFusioninventoryDeployPackage::canEdit()) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit'>";
@@ -294,6 +289,16 @@ class PluginFusioninventoryDeployAction {
 
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
+
+      if (isset($request_data['orders_id'])) {
+         $pfDeployOrder->getFromDB($request_data['orders_id']);
+         $pfDeployPackage->getFromDB($pfDeployOrder->fields['plugin_fusioninventory_deploypackages_id']);
+      } else {
+         $pfDeployPackage->getEmpty();
+      }
 
       /*
        * Get type from request params
@@ -435,7 +440,7 @@ class PluginFusioninventoryDeployAction {
 
       echo "<tr>";
       echo "<td></td><td>";
-      if (PluginFusioninventoryDeployPackage::canEdit()) {
+      if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
          if ( $mode === 'edit' ) {
             echo "<input type='submit' name='save_item' value=\"".
                _sx('button', 'Save')."\" class='submit' >";
