@@ -112,6 +112,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return $sopt;
    }
 
+
+   
    /**
    * Purge task and taskjob
    *
