@@ -120,7 +120,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
       global $CFG_GLPI;
 
       $tab_names = array();

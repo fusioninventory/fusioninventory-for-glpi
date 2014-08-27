@@ -185,13 +185,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
-
       $options['colspan'] = 2;
+      $this->initForm($id, $options);
       $this->showTabs($options);
       $this->showFormHeader($options);
 
