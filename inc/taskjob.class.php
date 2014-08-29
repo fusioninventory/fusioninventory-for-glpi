@@ -1785,8 +1785,8 @@ return namelist;
                                 "id DESC", "1");
                         $finish = FALSE;
                         if (count($a_valid4h) == 1) {
-                           $data = current($a_valid4h);
-                           $date = strtotime($data['date']);
+                           $datajs = current($a_valid4h);
+                           $date = strtotime($datajs['date']);
                            $date += (4 * 3600);
                            if ($date < date('U')) {
                               $finish = TRUE;
