@@ -384,7 +384,8 @@ class PluginFusioninventoryFormatconvert {
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
                     'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
 
-         if (!isset($array['OPERATINGSYSTEM']['VERSION'])) {
+         if (!isset($array['OPERATINGSYSTEM']['VERSION'])
+                 && isset($array['OPERATINGSYSTEM']['KERNEL_VERSION'])) {
             $array_tmp['operatingsystemversions_id'] = $array['OPERATINGSYSTEM']['KERNEL_VERSION'];
          }
          foreach ($array_tmp as $key=>$value) {
