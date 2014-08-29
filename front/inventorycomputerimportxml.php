@@ -87,7 +87,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 
       $xml = file_get_contents($_FILES['importfile']['tmp_name']);
       $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
-      $pfCommunication->handleOCSCommunication($xml);
+      $pfCommunication->handleOCSCommunication($xml, 'glpi');
       unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('No file to import!', 'fusioninventory');
