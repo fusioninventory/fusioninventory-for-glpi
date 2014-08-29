@@ -45,8 +45,6 @@ include ("../../../inc/includes.php");
 $dropdown = new PluginFusioninventoryCredential();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
-print_r($_SESSION["glpipopup"]);
-//dropdown_plugin_fusioninventory_credentials_id
 if (isset($_GET['popup'])) {
    Ajax::refreshDropdownPopupInMainWindow();
 }
