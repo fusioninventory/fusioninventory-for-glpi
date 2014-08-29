@@ -229,17 +229,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @param $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
     */
    static function findItemtypeType($credential_itemtype) {
-      foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
 
-         if (is_callable(array($class, 'credential_types'))) {
-            $res = call_user_func(array($class, 'credential_types'));
-            foreach ($res as $credential) {
-               if ($credential['itemtype'] == $credential_itemtype) {
-                  return $credential;
-               }
-            }
-         }
+      $credential = array ('itemtype'  => 'PluginFusioninventoryInventoryComputerESX', //Credential itemtype
+                           'name'      => __('VMware host', 'fusioninventory'), //Label
+                           'targets'   => array('Computer'));
+      if ($credential['itemtype'] == $credential_itemtype) {
+         return $credential;
       }
       return array();
    }
@@ -313,38 +308,18 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    static function dropdownCredentialsForItemtype($params = array()) {
-      global  $CFG_GLPI;
 
-      $p = array();
-      if ($params['itemtype'] != '') {
-         $p['value']    = '';
-         $p['itemtype'] = '';
-         $p['id']       = 0;
-         foreach ($params as $key => $value) {
-            $p[$key] = $value;
-         }
-         $condition = "`itemtype`='".$p['itemtype']."'";
-         $condition.= getEntitiesRestrictRequest(" AND", "glpi_plugin_fusioninventory_credentials",
-                                                 "entities_id", $_SESSION['glpiactiveentities'],
-                                                 TRUE);
-         $results   = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
-                                           $condition);
-         $types = array();
-         foreach ($results as $result) {
-            $types[$result['id']] = $result['name'];
-         }
-         $rand = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types,
-                                         array('value' => $value));
-
-         if (PluginFusioninventoryProfile::haveRight('credential', 'w')) {
-            echo "<img alt='' title=\"".__('Add')."\" src='".$CFG_GLPI["root_doc"].
-               "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
-               onClick=\"var w = window.open('".
-               Toolbox::getItemTypeFormURL('PluginFusioninventoryCredential')."?popup=1&amp;rand=".
-               $rand."' , 'glpipopup', 'height=400, ".
-               "width=1000, top=100, left=100, scrollbars=yes' );w.focus();\">";
-         }
+      // params
+      // Array ( [itemtype] => PluginFusioninventoryInventoryComputerESX [id] => 0 )
+      if ($params['itemtype'] == 'PluginFusioninventoryInventoryComputerESX') {
+         $params['itemtype'] = 'PluginFusioninventoryCredential';
       }
+      $value = 0;
+      if (isset($params['id'])) {
+         $value = $params['id'];
+      }
+      Dropdown::show($params['itemtype'], array('entity_sons' => TRUE,
+                                                'value'       => $value));
    }
 
 
