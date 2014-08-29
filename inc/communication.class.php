@@ -316,7 +316,7 @@ class PluginFusioninventoryCommunication {
     * Manage communication with old protocol (XML over POST)
     *
     **/
-   function handleOCSCommunication($xml='') {
+   function handleOCSCommunication($xml='', $output='ext') {
 
       // ***** For debug only ***** //
       //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
@@ -392,11 +392,15 @@ class PluginFusioninventoryCommunication {
             AND
          (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
       ) {
-         $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+         if ($output == 'glpi') {
+            Session::addMessageAfterRedirect('SSL REQUIRED BY SERVER', false, ERROR);
+         } else {
+            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
    <ERROR>SSL REQUIRED BY SERVER</ERROR>
 </REPLY>");
-         $communication->sendMessage($compressmode);
+            $communication->sendMessage($compressmode);
+         }
          return;
       }
 
@@ -418,11 +422,15 @@ class PluginFusioninventoryCommunication {
          $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (!$pxml) {
-            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+            if ($output == 'glpi') {
+               Session::addMessageAfterRedirect('XML not well formed!', false, ERROR);
+            } else {
+               $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
    <ERROR>XML not well formed!</ERROR>
 </REPLY>");
-            $communication->sendMessage($compressmode);
+               $communication->sendMessage($compressmode);
+            }
             return;
          }
       }
@@ -460,10 +468,14 @@ class PluginFusioninventoryCommunication {
             $communication->sendMessage($compressmode);
          }
       } else {
-         $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+         if ($output == 'glpi') {
+            Session::addMessageAfterRedirect('XML has been imported succesfully!');
+         } else {
+            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
-         $communication->sendMessage($compressmode);
+            $communication->sendMessage($compressmode);
+         }
       }
    }
 }
