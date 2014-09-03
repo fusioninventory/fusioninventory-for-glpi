@@ -271,9 +271,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          $a_entities = $entity->find("`entities_id`='".$entities_id."'", "", 1);
          if (count($a_entities) == '0') {
             // ... if they exist use current entity parameter.
-            $config = current($this->find("`type`='".$name."'"));
-            if (isset($config['value'])) {
-               return $config['value'];
+            $a_entity = current($a_entities);
+            if ($a_entity['agent_base_url'] != '') {
+               return $a_entity['agent_base_url'];
+            } else {
+               // ... else use global plugin configuration parameter.
+               $config = current($this->find("`type`='".$name."'"));
+               if (isset($config['value'])) {
+                  return $config['value'];
+               }
             }
          } else {
             // ... else use global plugin configuration parameter.
