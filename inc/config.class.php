@@ -258,9 +258,34 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          return $PF_CONFIG[$name];
       }
 
-      $config = current($this->find("`type`='".$name."'"));
-      if (isset($config['value'])) {
-         return $config['value'];
+      // If a current entity is defined, get its ID ...
+      $entities_id = -1;
+      if (isset($_SESSION["plugin_fusioninventory_entity"]) && ($_SESSION["plugin_fusioninventory_entity"] != 0) && ($_SESSION["plugin_fusioninventory_entity"] != -1)) {
+         $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+      }
+      
+      // If 'agent_base_url' is requested and a current entity is defined ...
+      if (($name == 'agent_base_url') && ($entities_id != -1)) {
+         // Get current entity parameters ...
+         $entity = new PluginFusioninventoryEntity();
+         $a_entities = $entity->find("`entities_id`='".$entities_id."'", "", 1);
+         if (count($a_entities) == '0') {
+            // ... if they exist use current entity parameter.
+            $config = current($this->find("`type`='".$name."'"));
+            if (isset($config['value'])) {
+               return $config['value'];
+            }
+         } else {
+            // ... else use global plugin configuration parameter.
+            $a_entity = current($a_entities);
+            return $a_entity['agent_base_url'];
+         }
+      } else {
+         // ... else use global plugin configuration parameter.
+         $config = current($this->find("`type`='".$name."'"));
+         if (isset($config['value'])) {
+            return $config['value'];
+         }
       }
       return NULL;
    }
