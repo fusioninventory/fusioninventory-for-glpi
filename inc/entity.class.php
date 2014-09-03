@@ -63,8 +63,11 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       $array_ret = array();
       if ($item->getID() > -1) {
-         if (Session::haveRight("config", READ)) {
-            $array_ret[0] = self::createTabEntry('Fusioninventory');
+         // GLPI 0.85 start
+         if (Session::haveRight("config", 'r')) {
+         // if (Session::haveRight("config", READ)) {
+         // GLPI 0.85 end
+            $array_ret[0] = self::createTabEntry(__('Fusion inventory', 'fusioninventory'));
          }
       }
       return $array_ret;
@@ -100,11 +103,33 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       if (count($a_configs) == '1') {
          $a_config = current($a_configs);
          $id = $a_config['id'];
+         $this->getFromDB($id);
+      } else {
+         $input = array();
+         $input['entities_id'] = $entities_id;
+         $id = $this->add($input);
+         $this->getFromDB($id);
       }
 
-      $this->initForm($id, $options);
-      $this->showFormHeader($options);
+      // GLPI 0.85 start
+      // $this->initForm($id, $options);
+      // $this->showFormHeader($options);
+      echo "<form name='form' method='post'
+         action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/entity.form.php'>";
+      echo "<table class='tab_cadre_fixe'";
+      // GLPI 0.85 end
 
+      echo "<tr>";
+      echo "<td colspan='2'>";
+      echo __('Agent URL for the entity (empty to use the URL defined in the plugin configuration)', 'fusioninventory').
+              "&nbsp:";
+      echo "</td>";
+      echo "<td colspan='2'>";
+      echo "<input type='text' name='agent_base_url' value='".$this->fields["agent_base_url"]."' size='30'/>";
+      echo "</td>";
+      echo "</tr>";
+      
+      
       echo "<tr>";
       echo "<td colspan='2'>";
       echo __('Model for automatic computers transfer in an other entity', 'fusioninventory').
@@ -120,7 +145,9 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          $params['toadd'] = array('-1' => __('Inheritance of the parent entity'));
       }
       Dropdown::show('Transfer', $params);
-      echo Html::hidden('entities_id', array('value' => $entities_id));
+      // GLPI 0.85 start
+      // echo Html::hidden('entities_id', array('value' => $entities_id));
+      // GLPI 0.85 end
       echo "</td>";
       echo "</tr>";
 
@@ -148,7 +175,18 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          echo "</tr>";
       }
 
-      $this->showFormButtons($options);
+      // GLPI 0.85 start
+      // $this->showFormButtons($options);
+      echo "<tr>";
+      echo "<td colspan='4' align='center'>";
+      echo "<input type='hidden' name='entities_id' value='".$this->fields['entities_id']."'/>";
+      echo "<input type='hidden' name='id' value='".$this->fields['id']."'/>";
+      echo "<input type='submit' name='update' value=\"".__('Save')."\" class='submit'>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      Html::closeForm();
+      // GLPI 0.85 end
 
       return true;
    }
