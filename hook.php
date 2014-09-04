@@ -230,6 +230,16 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['forcegroupby']='1';
    }
 
+   if ($itemtype == 'Entity') {
+      // Agent base URL
+      $sopt[6192]['table']='glpi_plugin_fusioninventory_entities';
+      $sopt[6192]['field']='agent_base_url';
+      $sopt[6192]['linkfield']='';
+      $sopt[6192]['name']=__('Agent base URL', 'fusioninventory');
+      $sopt[6192]['joinparams']  = array('jointype' => 'child');
+      $sopt[6192]['massiveaction'] = FALSE;
+   }
+
    if ($itemtype == 'Printer') {
       // Switch
       $sopt[5192]['table']='glpi_plugin_fusioninventory_networkequipments';
