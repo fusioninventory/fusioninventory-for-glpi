@@ -787,6 +787,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['transfers_id_auto']= array('type'    => 'integer',
                                                  'value'   => NULL);
+      $a_table['fields']['agent_base_url']= array('type'    => 'string',
+                                                 'value'   => '');
 
       $a_table['oldfields']  = array();
 
@@ -806,10 +808,32 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $transfers_id_auto = $a_config['value'];
          }
+         
+         $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+                                           "`type`='agent_base_url'");
+         $agent_base_url = '';
+         if (count($a_configs) > 0) {
+            $a_config = current($a_configs);
+            $agent_base_url = $a_config['value'];
+         }
+         
          $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
-               (`entities_id`, `transfers_id_auto`)
-            VALUES ('0', '".$transfers_id_auto."');");
+               (`entities_id`, `transfers_id_auto`, `agent_base_url`)
+            VALUES ('0', '".$transfers_id_auto."', '".$agent_base_url."');");
+      } else if (countElementsInTable($a_table['name']) > 0) {
+         $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+                                           "`type`='agent_base_url'");
+         $agent_base_url = '';
+         if (count($a_configs) > 0) {
+            $a_config = current($a_configs);
+            $agent_base_url = $a_config['value'];
+         }
+         
+         $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
+               SET `agent_base_url` = '".$agent_base_url."'
+               ;");
       }
+
 
 
    /*
