@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class RestURL extends RestoreDatabase_TestCase {
+class RestURLTest extends RestoreDatabase_TestCase {
 
 
 
