@@ -150,8 +150,8 @@ class PluginFusioninventoryStaticmisc {
       return $rand;
    }
 
-   
-   
+
+
    static function task_definitionselection_PluginFusioninventoryDeployGroup_wakeonlan($title) {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -258,10 +258,10 @@ class PluginFusioninventoryStaticmisc {
 
          array('profil'  => 'status',
                 'name'    => __('Deployment status')),
-          
+
          array('profil'  => 'collect',
                 'name'    => __('Additional computer information finder', 'fusioninventory'))
-          
+
       );
 
    }
@@ -290,7 +290,7 @@ class PluginFusioninventoryStaticmisc {
    *   value name of the itemtype
    **/
    static function task_definitiontype_InventoryComputerESX($a_itemtype) {
-      $a_itemtype['PluginFusioninventoryCredentialIp'] = 
+      $a_itemtype['PluginFusioninventoryCredentialIp'] =
                        PluginFusioninventoryCredentialIp::getTypeName();
       return $a_itemtype;
    }
@@ -400,10 +400,10 @@ class PluginFusioninventoryStaticmisc {
     * For the moment it's hardcoded, but in a future release it may be in DB
     * @return an array of parameters
     */
-   static function task_ESX_getParameters() {
-
+   static function task_ESX_getParameters($entities_id) {
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
+                    "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('ESX', $entities_id));
+
    }
 
 
@@ -556,8 +556,8 @@ class PluginFusioninventoryStaticmisc {
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
-   
-   
+
+
    static function task_definitionselection_PluginFusioninventoryDeployPackage_deployinstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -689,26 +689,25 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   static function task_deploy_getParameters() {
-      $config = new PluginFusioninventoryConfig();
+   static function task_deploy_getParameters($entities_id) {
       return array(
          "task" => "Deploy",
-         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/deploy/",
+         "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy', $entities_id)
       );
    }
-   
-   
+
+
 
    /*
-    * Collect 
+    * Collect
     */
    static function task_definitiontype_collect($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryCollect' => __('Collect information', 'fusioninventory'));
    }
-   
-   
-   
+
+
+
    static function task_definitionselection_PluginFusioninventoryCollect_collect() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -717,7 +716,7 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-   
+
    static function task_actiontype_collect($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
@@ -727,7 +726,7 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-   
+
    static function task_actionselection_Computer_collect() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -753,7 +752,7 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-   
+
    static function task_actionselection_Group_collect() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -761,9 +760,9 @@ class PluginFusioninventoryStaticmisc {
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Group", $options);
    }
-   
-   
-   
+
+
+
    static function task_actionselection_PluginFusioninventoryDeployGroup_collect() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -772,16 +771,15 @@ class PluginFusioninventoryStaticmisc {
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
 
-   
-   
-   static function task_collect_getParameters() {
-      $config = new PluginFusioninventoryConfig();
+
+
+   static function task_collect_getParameters($entities_id) {
       return array(
          "task" => "Collect",
-         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/collect/",
+         "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Collect', $entities_id)
       );
    }
-   
+
 }
 
 ?>

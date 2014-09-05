@@ -154,32 +154,25 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          echo "</tr>";
       }
 
-      
+
       echo "<tr>";
       echo "<td colspan='2'>";
-      echo __('Agent URL for the entity (empty to use the URL defined in the plugin global configuration)', 'fusioninventory').
-              "&nbsp:";
-      echo "</td>";
-      echo "<td colspan='2'>";
-      
-      $pfConfig = new PluginFusioninventoryConfig();
-      $configValue = $pfConfig->getValue('agent_base_url');
-      
       $value = $this->fields["agent_base_url"];
       $inheritedValue = $this->getValueAncestor('agent_base_url', $entities_id);
+      echo __('Service URL', 'fusioninventory').'&nbsp;';
+      Html::showToolTip('ex: http://192.168.20.1/glpi');
+      echo " : ";
 
+      echo "</td>";
+      echo "<td colspan='2'>";
+      if (empty($value) && $entities_id == 0) {
+         echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" width='20' height='20' alt=\"warning\"> ";
+      }
       echo "<input type='text' name='agent_base_url' value='".$value."' size='30'/>";
       echo "</td>";
       echo "</tr>";
-      
-      if (empty($value) && empty($inheritedValue)) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td colspan='2'></td>";
-         echo "<td colspan='2' class='green'>";
-         echo __('Inheritance of the configuration parameter')."&nbsp;:&nbsp;".$configValue;
-         echo "</td>";
-         echo "</tr>";
-      } else if (empty($value) && ! empty($inheritedValue)) {
+
+      if (empty($value) && !empty($inheritedValue)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2'></td>";
          echo "<td colspan='2' class='green'>";
@@ -187,8 +180,8 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-      
-      
+
+
       $this->showFormButtons($options);
 
       return true;
