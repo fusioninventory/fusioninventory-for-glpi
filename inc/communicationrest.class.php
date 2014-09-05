@@ -90,6 +90,8 @@ class PluginFusioninventoryCommunicationRest {
    static function getConfigByAgent($params = array()) {
       $schedule = array();
 
+      $a_agent = PluginFusioninventoryAgent::getByDeviceID($params['machineid']);
+
       if (isset($params['task'])) {
          foreach (array_keys($params['task']) as $task) {
             foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
@@ -103,7 +105,7 @@ class PluginFusioninventoryCommunicationRest {
                    * Since migration, there is only one plugin in one directory
                    * It's maybe time to redo this function -- kiniou
                    */
-                  $schedule[] = call_user_func(array($class, self::getMethodForParameters($task)));
+                  $schedule[] = call_user_func(array($class, self::getMethodForParameters($task)), $a_agent['entities_id']);
                   break; //Stop the loop since we found the module corresponding to the asked task
                }
             }

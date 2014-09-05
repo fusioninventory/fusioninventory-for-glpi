@@ -448,10 +448,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                     strtolower($modulename).'/';
          }
       }
-      
+
       // ... else use global plugin configuration parameter.
       $config = new PluginFusioninventoryConfig();
-      if (strlen($config->getValue('agent_base_url'))<10) {
+      if (strlen($pfEntity->getValue('agent_base_url', $entities_id))<10) {
          PluginFusioninventoryCommunicationRest::sendError();
          exit;
          // die ("agent_base_url is unset!\n");
@@ -459,12 +459,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-agent-url",
-         "Global configuration URL: ".$config->getValue('agent_base_url')
+         "Global configuration URL: ".$pfEntity->getValue('agent_base_url', $entities_id)
       );
-      
+
       # Construct the path to the JSON back from the agent_base_url.
       # agent_base_url is the initial URL used by the agent
-      return $config->getValue('agent_base_url').'/plugins/fusioninventory/b/'.
+      return $pfEntity->getValue('agent_base_url', $entities_id).'/plugins/fusioninventory/b/'.
               strtolower($modulename).'/';
    }
 
