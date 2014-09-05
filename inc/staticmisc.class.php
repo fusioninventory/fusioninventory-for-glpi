@@ -351,10 +351,10 @@ class PluginFusioninventoryStaticmisc {
     * For the moment it's hardcoded, but in a future release it may be in DB
     * @return an array of parameters
     */
-   static function task_ESX_getParameters() {
-
+   static function task_ESX_getParameters($entities_id) {
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
+                    "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('ESX', $entities_id));
+
    }
 
 
@@ -640,11 +640,10 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   static function task_deploy_getParameters() {
-      $config = new PluginFusioninventoryConfig();
+   static function task_deploy_getParameters($entities_id) {
       return array(
          "task" => "Deploy",
-         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/deploy/",
+         "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy', $entities_id)
       );
    }
 
@@ -725,11 +724,10 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   static function task_collect_getParameters() {
-      $config = new PluginFusioninventoryConfig();
+   static function task_collect_getParameters($entities_id) {
       return array(
          "task" => "Collect",
-         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/collect/",
+         "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Collect', $entities_id)
       );
    }
 
