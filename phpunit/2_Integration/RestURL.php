@@ -43,10 +43,11 @@
 class RestURL extends RestoreDatabase_TestCase {
 
 
+
    /**
     * @test
     */
-   public function getCollectURLRootEntity() {
+   public function prepareDB() {
       global $DB;
 
       $DB->connect();
@@ -55,18 +56,52 @@ class RestURL extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
+      $query = "INSERT INTO `glpi_entities` "
+              . " (`id`, `name`, `entities_id`, `level`) "
+              . " VALUES ('1', 'ent1', '0', '2')";
+      $DB->query($query);
+      $entities_id = 1;
+
       $pfAgent = new PluginFusioninventoryAgent();
 
       $input = array(
           'name'        => 'toto',
-          'entities_id' => 0,
+          'entities_id' => $entities_id,
           'device_id'   => 'toto-device'
       );
       $agents_id = $pfAgent->add($input);
 
       $config = new PluginFusioninventoryConfig();
-      $config->updateValue('agent_base_url', 'http://127.0.0.1/glpi085');
       $config->loadCache();
+
+      $pfEntity = new PluginFusioninventoryEntity();
+      $input = array(
+              'id'             => 1,
+              'entities_id'    => 0,
+              'agent_base_url' => 'http://127.0.0.1/glpi085');
+      $pfEntity->update($input);
+      $input = array(
+              'entities_id'    => $entities_id,
+              'agent_base_url' => 'http://10.0.2.2/glpi085');
+      $pfEntity->add($input);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function getCollectURLEnt1Entity() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $entities_id = 1;
+      $agents_id = 1;
 
       // Get answer
       $input = array(
@@ -77,9 +112,9 @@ class RestURL extends RestoreDatabase_TestCase {
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://127.0.0.1/glpi085/plugins/fusioninventory/b/collect/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/collect/',
                           $response['schedule'][0]['remote'],
-                          'May have only 1 computerdisk');
+                          'Wrong URL');
    }
 
 
@@ -96,18 +131,8 @@ class RestURL extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $pfAgent = new PluginFusioninventoryAgent();
-
-      $input = array(
-          'name'        => 'toto',
-          'entities_id' => 0,
-          'device_id'   => 'toto-device'
-      );
-      $agents_id = $pfAgent->add($input);
-
-      $config = new PluginFusioninventoryConfig();
-      $config->updateValue('agent_base_url', 'http://127.0.0.1/glpi085');
-      $config->loadCache();
+      $entities_id = 1;
+      $agents_id = 1;
 
       // Get answer
       $input = array(
@@ -118,9 +143,9 @@ class RestURL extends RestoreDatabase_TestCase {
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://127.0.0.1/glpi085/plugins/fusioninventory/b/deploy/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/deploy/',
                           $response['schedule'][0]['remote'],
-                          'May have only 1 computerdisk');
+                          'Wrong URL');
    }
 
 
@@ -137,18 +162,8 @@ class RestURL extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $pfAgent = new PluginFusioninventoryAgent();
-
-      $input = array(
-          'name'        => 'toto',
-          'entities_id' => 0,
-          'device_id'   => 'toto-device'
-      );
-      $agents_id = $pfAgent->add($input);
-
-      $config = new PluginFusioninventoryConfig();
-      $config->updateValue('agent_base_url', 'http://127.0.0.1/glpi085');
-      $config->loadCache();
+      $entities_id = 1;
+      $agents_id = 1;
 
       // Get answer
       $input = array(
@@ -159,9 +174,46 @@ class RestURL extends RestoreDatabase_TestCase {
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
-      $this->assertEquals('http://127.0.0.1/glpi085/plugins/fusioninventory/b/esx/',
+      $this->assertEquals('http://10.0.2.2/glpi085/plugins/fusioninventory/b/esx/',
                           $response['schedule'][0]['remote'],
-                          'May have only 1 computerdisk');
+                          'Wrong URL');
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function getCollectURLRootEntity() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $entities_id = 1;
+      $agents_id = 1;
+
+      $config = new PluginFusioninventoryConfig();
+      $config->loadCache();
+
+      $pfEntity = new PluginFusioninventoryEntity();
+      $pfEntity->delete(array('id' => 2));
+
+      // Get answer
+      $input = array(
+          'action'    => 'getConfig',
+          'task'      => array('COLLECT' => '1.0.0'),
+          'machineid' => 'toto-device'
+      );
+
+      $response = PluginFusioninventoryCommunicationRest::communicate($input);
+
+      $this->assertEquals('http://127.0.0.1/glpi085/plugins/fusioninventory/b/collect/',
+                          $response['schedule'][0]['remote'],
+                          'Wrong URL');
    }
 
 }
