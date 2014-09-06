@@ -902,14 +902,6 @@ function plugin_fusioninventory_MassiveActions($type) {
                      __('Module', 'fusioninventory')." - ".$data['modulename'];
          }
          $array['plugin_fusioninventory_transfert']                 = __('Transfer');
-         $array['plugin_fusioninventory_set_discovery_threads']     =
-                                          __('Threads number', 'fusioninventory')."&nbsp;(".
-                                             strtolower(__('Network discovery', 'fusioninventory')).
-                                             ")";
-         $array['plugin_fusioninventory_set_snmpinventory_threads'] =
-                                          __('Threads number', 'fusioninventory')."&nbsp;(".
-                                             strtolower(
-                                             __('Network inventory (SNMP)', 'fusioninventory')).")";
          return $array;
          break;
 
@@ -965,7 +957,6 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
    $field = $options['options']['field'];
    $linkfield = $options['options']['linkfield'];
 
-
    switch ($table.".".$field) {
 
       case "glpi_plugin_fusioninventory_unknowndevices.item_type":
@@ -1000,8 +991,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          return TRUE;
          break;
 
-      case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-         Dropdown::showNumber("threads_discovery", array(
+      case 'glpi_plugin_fusioninventory_agents.threads_networkdiscovery' :
+         Dropdown::showNumber("threads_networkdiscovery", array(
              'value' => $linkfield,
              'min' => 1,
              'max' => 400)
@@ -1009,8 +1000,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          return TRUE;
          break;
 
-      case 'glpi_plugin_fusioninventory_agents.threads_query' :
-         Dropdown::showNumber("threads_query", array(
+      case 'glpi_plugin_fusioninventory_agents.threads_networkinventory' :
+         Dropdown::showNumber("threads_networkinventory", array(
              'value' => $linkfield,
              'min' => 1,
              'max' => 400)
@@ -1166,22 +1157,6 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          Dropdown::show('Entity');
          echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
                "value='".__('Post')."'>";
-         break;
-
-      case 'plugin_fusinvsnmp_set_discovery_threads':
-         echo Dropdown::showNumber('threads_networkdiscovery', array(
-             'value' => '10')
-         );
-         echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-               __('Post') . "\" >";
-         break;
-
-      case 'plugin_fusinvsnmp_set_snmpinventory_threads':
-         echo Dropdown::showNumber('threads_networkinventory', array(
-             'value' => '5')
-         );
-         echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-               __('Post') . "\" >";
          break;
 
       case "plugin_fusioninventory_transfert" :
