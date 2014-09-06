@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2014-07-29 18:39+0000\n"
+"PO-Revision-Date: 2014-09-06 20:42+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -2786,7 +2786,7 @@ msgstr "L'agent initie le contact avec le serveur (pull)"
 
 #: inc/task.class.php:284 inc/taskjob.class.php:2025
 msgid "month(s)"
-msgstr "Mode de communication"
+msgstr "mois"
 
 #: inc/task.class.php:430
 msgid "Planned for running"
