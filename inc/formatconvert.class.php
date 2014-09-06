@@ -1668,6 +1668,10 @@ class PluginFusioninventoryFormatconvert {
                   if ($key == "bios_manufacturers_id") {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
                                                              $value);
+                  } else if ($key == "locations_id") {
+                        $array[$key] = Dropdown::importExternal('Location',
+                                                                $value,
+                                                                $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isset($this->foreignkey_itemtype[$key])) {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                              $value);
