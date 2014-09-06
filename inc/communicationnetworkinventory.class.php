@@ -458,6 +458,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
       );
 
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
@@ -478,6 +480,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
          }
+         $_SESSION["plugin_fusioninventory_entity"] = $input['entities_id'];
          $items_id = $class->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
