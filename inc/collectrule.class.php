@@ -71,49 +71,48 @@ class PluginFusioninventoryCollectRule extends Rule {
    }
 
 
-//
-//   function executeActions($output, $params) {
-//
-//      PluginFusioninventoryToolbox::logIfExtradebug(
-//         "pluginFusioninventory-collectrules",
-//         "execute action\n"
-//      );
-//
-//      if (count($this->actions)) {
-//         foreach ($this->actions as $action) {
-//            switch ($action->fields["action_type"]) {
-//               case "assign" :
-//                  PluginFusioninventoryToolbox::logIfExtradebug(
-//                     "pluginFusioninventory-collectrules",
-//                     "value ".$action->fields["value"]."\n"
-//                  );
-//                  $output[$action->fields["field"]] = $action->fields["value"];
-//                  break;
-//
-//               case "regex_result" :
-//                  //Assign entity using the regex's result
-//                  if ($action->fields["field"] == "_affect_entity_by_tag") {
-//                     PluginFusioninventoryToolbox::logIfExtradebug(
-//                        "pluginFusioninventory-collectrules",
-//                        "value ".$action->fields["value"]."\n"
-//                     );
-//                     //Get the TAG from the regex's results
-//                     $res = RuleAction::getRegexResultById($action->fields["value"],
-//                                                           $this->regex_results[0]);
-//                     if (!is_null($res)) {
-//                        //Get the entity associated with the TAG
-//                        $target_entity = Entity::getEntityIDByTag($res);
-//                        if ($target_entity != '') {
-//                           $output["entities_id"]=$target_entity;
-//                        }
-//                     }
-//                  }
-//                  break;
-//            }
-//         }
-//      }
-//      return $output;
-//   }
+
+   function executeActions($output, $params) {
+
+      if (count($this->actions)) {
+         foreach ($this->actions as $action) {
+            switch ($action->fields["action_type"]) {
+               case "assign" :
+                  $output[$action->fields["field"]] = $action->fields["value"];
+                  break;
+
+               case "regex_result" :
+                  //Regex result : assign value from the regex
+                  $res = "";
+                  if (isset($this->regex_results[0])) {
+                     $res .= RuleAction::getRegexResultById($action->fields["value"],
+                                                            $this->regex_results[0]);
+                  } else {
+                     $res .= $action->fields["value"];
+                  }
+                  if ($res != ''
+                          && ($action->fields["field"] != 'user'
+                              && $action->fields["field"] != 'otherserial'
+                              && $action->fields["field"] != 'softwareversion')) {
+                     $res = Dropdown::importExternal(
+                             getItemTypeForTable(
+                                     getTableNameForForeignKeyField(
+                                             $action->fields['field'])),
+                             $res);
+                  }
+                  $output[$action->fields["field"]] = $res;
+                  break;
+
+               default:
+                  //plugins actions
+                  $executeaction = clone $this;
+                  $ouput = $executeaction->executePluginsActions($action, $output, $params);
+                  break;
+            }
+         }
+      }
+      return $output;
+   }
 
 
 
@@ -156,18 +155,22 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['computertypes_id']['name']  = __('Type');
       $actions['computertypes_id']['type']  = 'dropdown';
       $actions['computertypes_id']['table'] = 'glpi_computertypes';
+      $actions['computertypes_id']['force_actions'] = array('assign', 'regex_result');
 
       $actions['computermodels_id']['name']  = __('Model');
       $actions['computermodels_id']['type']  = 'dropdown';
       $actions['computermodels_id']['table'] = 'glpi_computermodels';
+      $actions['computermodels_id']['force_actions'] = array('assign', 'regex_result');
 
       $actions['operatingsystems_id']['name']  = __('Operating system');
       $actions['operatingsystems_id']['type']  = 'dropdown';
       $actions['operatingsystems_id']['table'] = 'glpi_operatingsystems';
+      $actions['operatingsystems_id']['force_actions'] = array('assign', 'regex_result');
 
       $actions['operatingsystemversions_id']['name']  = _n('Version of the operating system', 'Versions of the operating system', 1);
       $actions['operatingsystemversions_id']['type']  = 'dropdown';
       $actions['operatingsystemversions_id']['table'] = 'glpi_operatingsystemversions';
+      $actions['operatingsystemversions_id']['force_actions'] = array('assign', 'regex_result');
 
       $actions['user']['name']  = __('User');
       $actions['user']['force_actions'] = array('assign', 'regex_result');
