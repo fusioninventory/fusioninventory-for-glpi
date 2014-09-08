@@ -119,6 +119,15 @@ if (isset($_GET['action'])) {
                           $jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
                   if (isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 0) { // it not find the path
+                     $pfTaskjobstate->changeStatusFinish(
+                          $jobstate['id'],
+                          $jobstate['items_id'],
+                          $jobstate['itemtype'],
+                          1,
+                          'Path not found');
+                  }
+                  if (isset($a_values['_cpt'])
                           && $a_values['_cpt'] == 1) { // it last value
                      $pfTaskjobstate->changeStatusFinish(
                           $jobstate['id'],
