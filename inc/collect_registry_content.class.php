@@ -127,6 +127,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       }
       
       unset($registry_data['_cpt']);
+      unset($registry_data['cpt']);
       
       foreach ($registry_data as $key => $value) {
          foreach ($db_registries as $keydb => $arraydb) {
