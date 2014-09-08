@@ -129,7 +129,17 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       unset($registry_data['_cpt']);
       unset($registry_data['cpt']);
       
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-collect",
+         "Registry collection for computer: $computers_id\n"
+      );
+      
       foreach ($registry_data as $key => $value) {
+         PluginFusioninventoryToolbox::logIfExtradebug(
+            "pluginFusioninventory-collect",
+            " - $key = $value\n"
+         );
+         
          foreach ($db_registries as $keydb => $arraydb) {
             if ($arraydb['key'] == $key) {
                $input = array();
