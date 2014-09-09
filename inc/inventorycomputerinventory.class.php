@@ -87,8 +87,18 @@ class PluginFusioninventoryInventoryComputerInventory {
       $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventorynames`
             SET `value`='".$name."'";
       $CFG_GLPI["use_log_in_files"] = FALSE;
+      $start_time = date('U');
       while(!$DB->query($query)) {
          usleep(100000);
+         if ((date('U') - $start_time) > 5) {
+            $communication = new PluginFusioninventoryCommunication();
+            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+         <REPLY>
+         <ERROR>ERROR: Timeout for DB lock based on name</ERROR>
+         </REPLY>");
+            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+            exit;
+         }
       }
       $CFG_GLPI["use_log_in_files"] = TRUE;
       $this->sendCriteria($p_DEVICEID, $arrayinventory);
