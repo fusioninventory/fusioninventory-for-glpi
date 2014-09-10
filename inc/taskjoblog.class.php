@@ -221,13 +221,16 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          // Display
 
          echo "<table class='tab_cadre' style='width: ".$width."px'>";
+         
+         $nb_actions = $DB->numrows($result);
+         
          echo "<tr class='tab_bg_1'>";
-         echo "<th width='32' rowspan='2'>";
+         echo "<th width='32' rowspan='3'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                   "/plugins/fusioninventory/pics/task_running.png'/>";
          echo "</th>";
-         echo "<th>";
-         if ($DB->numrows($result) > 0) {
+         if ($nb_actions > 0) {
+            echo "<th>";
             echo "<form name='form' method='post' action='".
                     $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
             echo "<input type='hidden' name='taskjobs_id' value='".
@@ -235,13 +238,38 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo '<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
                 class="submit" type="submit">';
             Html::closeForm();
+            echo "</th>";
          }
-         echo "</th>";
          echo "</tr>";
+
+         if ($nb_actions > 0) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<th colspan='2'>";
+            echo __('Processing actions: ', 'fusioninventory') . $nb_actions;
+            echo "</th>";
+            echo "</tr>";
+         } else {
+            echo "<tr class='tab_bg_1'>";
+            echo "<th colspan='2'>";
+            echo __('No processing actions ...', 'fusioninventory');
+            echo "</th>";
+            echo "</tr>";
+         }
+
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         if ($DB->numrows($result) > 0) {
+         if ($nb_actions > 0) {
             echo "<table class='tab_cadre'>";
+            
+            echo "<tr>";
+            echo "<td colspan='5'>";
+            Html::printAjaxPager('', $start, $nb_actions);
+            echo "</td>";
+            echo "</tr>";
+            
+            $query .= ' LIMIT '.intval($start).', '.intval($_SESSION['glpilist_limit']);
+            $result = $DB->query($query);
+            
             echo "<tr>";
             echo "<th></th>";
             echo "<th>".__('Unique id', 'fusioninventory')."</th>";
@@ -264,6 +292,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
                $this->showHistoryLines($data['id'], 1, 0, 7);
                $a_uniqid[] = $data['uniqid'];
             }
+            echo "<tr>";
+            echo "<td colspan='5'>";
+            Html::printAjaxPager('', $start, $nb_actions);
+            echo "</td>";
+            echo "</tr>";
+            
             echo "</table>";
          }
          echo "</td>";
@@ -284,9 +318,9 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`="3"
-            '.$where.'
-         GROUP BY uniqid, plugin_fusioninventory_agents_id';
+            '.$where;
       $resultcount = $DB->query($querycount);
+      
       $a_datacount = $DB->fetch_assoc($resultcount);
       $number = $a_datacount['cpt'];
       if (isset($options['uniqid']) AND $number == '0') {
@@ -294,12 +328,28 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       } else {
          // display
          echo "<table class='tab_cadre' width='".$width."'>";
+         
+         if ($number > 0) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<th colspan='2'>";
+            echo __('Completed actions: ', 'fusioninventory') . $number;
+            echo "</th>";
+            echo "</tr>";
+         } else {
+            echo "<tr class='tab_bg_1'>";
+            echo "<th colspan='2'>";
+            echo __('No completed actions', 'fusioninventory');
+            echo "</th>";
+            echo "</tr>";
+         }
+         
          echo "<tr class='tab_bg_1'>";
          echo "<th width='32'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                   "/plugins/fusioninventory/pics/task_finished.png'/>";
          echo "</td>";
          echo "<td>";
+         if ($number > 0) {
             echo "<table class='tab_cadre' >";
             echo "<tr>";
             echo "<td colspan='5'>";
@@ -334,7 +384,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "</td>";
             echo "</tr>";
             echo "</table>";
-
+         }
          echo "</td>";
          echo "</tr>";
          echo "</table>";
