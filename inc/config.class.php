@@ -68,9 +68,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfSetup = new PluginFusioninventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
-      $input['agent_base_url']         = '';
       $input['agents_old_days']        = '0';
-      $input['memcached']              = '';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -333,6 +331,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
       echo "</td>";
+/*
+      No more parameter in configuration; parameter is now in entity configuration.
+
       echo "<td>";
       echo __('Service URL', 'fusioninventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
@@ -355,6 +356,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<input type='text' name='agent_base_url' size='50' ".
                "value='".$this->getValue('agent_base_url')."'/>";
       echo "</td>";
+*/
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -367,10 +369,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
-      echo "<td>".__('Memcached server address (empty to disable it)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td></td>";
       echo "<td width='20%'>";
-      echo "<input type='text' name='memcached' size='50' ".
-               "value='".$this->getValue('memcached')."'/>";
       echo "</td>";
       echo "</tr>";
 

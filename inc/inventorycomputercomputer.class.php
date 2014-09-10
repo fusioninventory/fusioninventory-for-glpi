@@ -75,6 +75,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showInfo($item) {
       global $CFG_GLPI;
 
+      // Manage locks pictures
+      PluginFusioninventoryLock::showLockIcon('Computer');
+
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
                                               "`computers_id`='".$item->getID()."'",

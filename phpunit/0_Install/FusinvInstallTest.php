@@ -84,6 +84,10 @@ class FusinvInstallTest extends Common_TestCase {
          implode("\n",$output)
       );
 
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
       $FusinvDBTest = new FusinvDB();
       $FusinvDBTest->checkInstall("fusioninventory", "install new version");
 

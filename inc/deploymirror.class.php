@@ -98,9 +98,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       }
 
       //add default mirror (this server) if enabled in config
+      $entities_id = 0;
+      if (isset($agent['entities_id'])) {
+         $entities_id = $agent['entities_id'];
+      }
       if ( isset($PF_CONFIG['server_as_mirror'])
               && (bool)$PF_CONFIG['server_as_mirror'] == TRUE) {
-         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
+         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
 
@@ -122,7 +126,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
 
       echo "<td rowspan='2' class='middle right'>".__('Comments')."&nbsp;: </td>";
@@ -132,7 +136,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='url' size='40' value='".$this->fields["url"]."'/>";
+      Html::autocompletionTextField($this,'url', array('size' => 40));
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";

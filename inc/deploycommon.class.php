@@ -74,6 +74,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $joblog     = new PluginFusioninventoryTaskjoblog();
       $jobstate   = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
+      $agentmodule= new PluginFusioninventoryAgentmodule();
 
       $job->getFromDB($taskjob_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
@@ -253,34 +254,36 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                                              0,
                                              0);
             } else {
-               $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+               if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {
+                  $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-               $jobstates_running = $jobstate->find(
-                  implode(" ",
-                     array(
-                        "    `itemtype` = 'PluginFusioninventoryDeployPackage'",
-                        "AND `items_id` = ".$package->fields['id'],
-                        "AND `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
-                        "AND `plugin_fusioninventory_agents_id` = " . $agents_id
+                  $jobstates_running = $jobstate->find(
+                     implode(" ",
+                        array(
+                           "    `itemtype` = 'PluginFusioninventoryDeployPackage'",
+                           "AND `items_id` = ".$package->fields['id'],
+                           "AND `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
+                           "AND `plugin_fusioninventory_agents_id` = " . $agents_id
+                        )
                      )
-                  )
-               );
+                  );
 
-               if (count($jobstates_running) == 0) {
-                  # Push the agent, in the stack of agent to awake
-                  if ($communication == "push") {
-                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                  if (count($jobstates_running) == 0) {
+                     # Push the agent, in the stack of agent to awake
+                     if ($communication == "push") {
+                        $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                     }
+
+                     $jobstates_id= $jobstate->add($c_input);
+
+                     //Add log of taskjob
+                     $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
+                     $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                     $taskvalid++;
+                     $joblog->add($c_input);
+                     unset($c_input['state']);
+                     unset($c_input['plugin_fusioninventory_agents_id']);
                   }
-
-                  $jobstates_id= $jobstate->add($c_input);
-
-                  //Add log of taskjob
-                  $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                  $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-                  $taskvalid++;
-                  $joblog->add($c_input);
-                  unset($c_input['state']);
-                  unset($c_input['plugin_fusioninventory_agents_id']);
                }
             }
          }

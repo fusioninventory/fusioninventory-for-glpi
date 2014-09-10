@@ -64,7 +64,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       $array_ret = array();
       if ($item->getID() > -1) {
          if (Session::haveRight("config", READ)) {
-            $array_ret[0] = self::createTabEntry(__('Fusioninventory', 'monitoring'));
+            $array_ret[0] = self::createTabEntry('Fusioninventory');
          }
       }
       return $array_ret;
@@ -128,7 +128,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       if ($this->fields['transfers_id_auto'] == '-1') {
 
          echo "<tr class='tab_bg_1'>";
-         if ($this->fields['transfers_id_auto'] == '-1') {
+         // if ($this->fields['transfers_id_auto'] == '-1') {
             echo "<td colspan='2'>";
             echo "</td>";
             echo "<td colspan='2' class='green'>";
@@ -141,12 +141,40 @@ class PluginFusioninventoryEntity extends CommonDBTM {
                echo Dropdown::getDropdownName('glpi_transfers', $val);
             }
             echo "</td>";
-         } else {
-            echo "<td colspan='4'>";
-            echo "</td>";
-         }
+         // } else {
+            // echo "<td colspan='4'>";
+            // echo "</td>";
+         // }
          echo "</tr>";
       }
+
+
+      echo "<tr>";
+      echo "<td colspan='2'>";
+      $value = $this->fields["agent_base_url"];
+      $inheritedValue = $this->getValueAncestor('agent_base_url', $entities_id);
+      echo __('Service URL', 'fusioninventory').'&nbsp;';
+      Html::showToolTip('ex: http://192.168.20.1/glpi');
+      echo " : ";
+
+      echo "</td>";
+      echo "<td colspan='2'>";
+      if (empty($value) && $entities_id == 0) {
+         echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" width='20' height='20' alt=\"warning\"> ";
+      }
+      echo "<input type='text' name='agent_base_url' value='".$value."' size='30'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      if (empty($value) && !empty($inheritedValue)) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td colspan='2'></td>";
+         echo "<td colspan='2' class='green'>";
+         echo __('Inheritance of the parent entity')."&nbsp;:&nbsp;".$inheritedValue;
+         echo "</td>";
+         echo "</tr>";
+      }
+
 
       $this->showFormButtons($options);
 
@@ -175,6 +203,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          $query = "SELECT * FROM `".$this->getTable()."`
             WHERE `entities_id`='".$entity."'
                AND `".$name."` IS NOT NULL
+               AND `".$name."` != ''
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) != 0) {
@@ -202,7 +231,8 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       $query = "SELECT `".$name."` FROM `".$this->getTable()."`
          WHERE `entities_id`='".$entities_id."'
-            AND `".$name."` IS NOT NULL
+            AND `".$name."` IS NOT NULL 
+            AND `".$name."` != ''
          LIMIT 1";
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {

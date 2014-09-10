@@ -249,7 +249,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
       global $DB;
 
-      $pfUnknownDevice  = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged      = new PluginFusioninventoryUnmanaged();
       $NetworkPort      = new NetworkPort();
       $networkName      = new NetworkName();
       $iPAddress        = new IPAddress();
@@ -342,7 +342,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
 
       if ($PortID == "") {
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unmanageds`
             WHERE `ip`='".$IP."'
             LIMIT 1";
          $result = $DB->query($query);
@@ -351,7 +351,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             // Search port and add if required
             $query1 = "SELECT *
                 FROM `glpi_networkports`
-                WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+                WHERE `itemtype`='PluginFusioninventoryUnmanaged'
                    AND `items_id`='".$data['id']."'
                    AND `name`='".$ifDescr."'
                 LIMIT 1";
@@ -363,13 +363,13 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                // Add port
                $input = array();
                $input['items_id'] = $data['id'];
-               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
             }
-            // Update unknown device
+            // Update unmanaged device
             $input = array();
             $input['id'] = $data['id'];
             $input['ip'] = $IP;
@@ -382,7 +382,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             if ($sysdescr != '') {
                $input['sysdescr'] = $sysdescr;
             }
-            $pfUnknownDevice->update($input);
+            $pfUnmanaged->update($input);
             return $PortID;
          }
 
@@ -394,7 +394,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                  ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                     AND `glpi_ipaddresses`.`itemtype`='NetworkName'
 
-             WHERE `glpi_networkports`.`itemtype`='PluginFusioninventoryUnknownDevice'
+             WHERE `glpi_networkports`.`itemtype`='PluginFusioninventoryUnmanaged'
                AND `glpi_ipaddresses`.`name`='".$IP."'
              LIMIT 1";
          $result0 = $DB->query($query0);
@@ -403,7 +403,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             // Search port and add if required
             $query1 = "SELECT *
                 FROM `glpi_networkports`
-                WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+                WHERE `itemtype`='PluginFusioninventoryUnmanaged'
                    AND `items_id`='".$data0['items_id']."'
                    AND `name`='".$ifDescr."'
                 LIMIT 1";
@@ -415,7 +415,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                // Add port
                $input = array();
                $input['items_id'] = $data0['items_id'];
-               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
                $input['name'] = $ifDescr;
                $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
@@ -433,7 +433,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             }
             return $PortID;
          }
-         // Add unknown device
+         // Add unmanaged device
          $input = array();
          $input['ip'] = $IP;
          if (strstr($model, "Phone")) {
@@ -451,11 +451,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if ($sysdescr != '') {
             $input['sysdescr'] = $sysdescr;
          }
-         $unkonwn_id = $pfUnknownDevice->add($input);
+         $unkonwn_id = $pfUnmanaged->add($input);
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
-         $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+         $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
          $input['name'] = $ifDescr;
          $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
@@ -539,11 +539,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       if ($PortID == "") {
          $NetworkPort = new NetworkPort();
-         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $PluginFusioninventoryUnmanaged = new PluginFusioninventoryUnmanaged();
 
          $query = "SELECT *
              FROM `glpi_networkports`
-             WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+             WHERE `itemtype`='PluginFusioninventoryUnmanaged'
                AND `mac`='".$sysmac."'
              LIMIT 1";
          $result = $DB->query($query);
@@ -551,7 +551,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $data = $DB->fetch_assoc($result);
             return $data['id'];
          }
-         // Add unknown device because not find device
+         // Add unmanaged device because not find device
          $input = array();
          $input['mac'] = $sysmac;
          if (isset($params['sysname'])) {
@@ -563,11 +563,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if (isset($params['sysdescr'])) {
             $input['sysdescr'] = $params['sysdescr'];
          }
-         $unkonwn_id = $PluginFusioninventoryUnknownDevice->add($input);
+         $unkonwn_id = $PluginFusioninventoryUnmanaged->add($input);
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
-         $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+         $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
          $input['mac'] = $sysmac;
          if (isset($params['ifdescr'])) {
             $input['name'] = $params['ifdescr'];
@@ -594,10 +594,10 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       if ($opposite_port != ""
               && $opposite_port!= 0) {
          $networkPort->getFromDB($opposite_port);
-         if ($networkPort->fields["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
-            $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-            if ($pfUnknownDevice->getFromDB($networkPort->fields['items_id'])) {
-               if ($pfUnknownDevice->fields['hub'] == 1) {
+         if ($networkPort->fields["itemtype"] == 'PluginFusioninventoryUnmanaged') {
+            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+            if ($pfUnmanaged->getFromDB($networkPort->fields['items_id'])) {
+               if ($pfUnmanaged->fields['hub'] == 1) {
                   $is_multiple = TRUE;
                }
             }
