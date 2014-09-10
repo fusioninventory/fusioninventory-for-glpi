@@ -209,6 +209,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          $query = "SELECT * FROM `".$this->getTable()."`
             WHERE `entities_id`='".$entity."'
                AND `".$name."` IS NOT NULL
+               AND `".$name."` != ''
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) != 0) {
@@ -236,7 +237,8 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       $query = "SELECT `".$name."` FROM `".$this->getTable()."`
          WHERE `entities_id`='".$entities_id."'
-            AND `".$name."` IS NOT NULL
+            AND `".$name."` IS NOT NULL 
+            AND `".$name."` != ''
          LIMIT 1";
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
