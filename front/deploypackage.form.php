@@ -68,7 +68,8 @@ if (isset($_POST['update_json'])) {
    Html::back();
 }
 
-$data = Toolbox::stripslashes_deep($_POST);
+//$data = Toolbox::stripslashes_deep($_POST);
+$data = $_POST;
 
 $package = new PluginFusioninventoryDeployPackage();
 //general form

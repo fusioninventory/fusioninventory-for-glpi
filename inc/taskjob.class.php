@@ -528,8 +528,9 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       //Get every running tasks with dynamic groups
       $running_tasks = $pfTask->getItemsFromDB(
          array(
-            'is_running' => TRUE,
-            'definitions' => array('PluginFusioninventoryDeployGroup')
+            'is_running'  => TRUE,
+            'is_active'   => TRUE,
+            'actions' => array('PluginFusioninventoryDeployGroup' => TRUE)
          )
       );
 
@@ -925,11 +926,23 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             $task = $DB->fetch_assoc($result);
             if ($task['communication'] == 'pull') {
                $has_recent_log_entries = $pfTaskjoblog->find(
-                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                          AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
+                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'",
+                       "id DESC", "1");
+               $finish = FALSE;
+               if (count($has_recent_log_entries) == 1) {
+                  $data2 = current($has_recent_log_entries);
+                  $date = strtotime($data2['date']);
+                  $date += (4 * 3600);
+                  if ($date < date('U')) {
+                     $finish = TRUE;
+                  }
+               } else {
+                  $finish = TRUE;
+               }
+
                # No news from the agent since 4 hour. The agent is probably crached.
                //Let's cancel the task
-               if (count($has_recent_log_entries) == 1) {
+               if ($finish) {
                      $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
                               AND `plugin_fusioninventory_agents_id`='".
                                  $data['plugin_fusioninventory_agents_id']."'
@@ -946,9 +959,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                $a_valid = $pfTaskjoblog->find(
                        "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                           AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
-               $a_valid4h = $pfTaskjoblog->find(
-                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                          AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
 
                if (count($a_valid) == '1') {
                   // Get agent status
@@ -990,7 +1000,22 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                                                                1,
                                                                "==agentcrashed==");
                         }
+                        $a_valid4h = $pfTaskjoblog->find(
+                                "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'",
+                                "id DESC", "1");
+                        $finish = FALSE;
                         if (count($a_valid4h) == 1) {
+                           $datajs = current($a_valid4h);
+                           $date = strtotime($datajs['date']);
+                           $date += (4 * 3600);
+                           if ($date < date('U')) {
+                              $finish = TRUE;
+                           }
+                        } else {
+                           $finish = TRUE;
+                        }
+
+                        if ($finish) {
                            $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
                                                    AND `plugin_fusioninventory_agents_id`='".
                                                       $data['plugin_fusioninventory_agents_id']."'

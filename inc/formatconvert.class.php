@@ -70,7 +70,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -380,10 +380,14 @@ class PluginFusioninventoryFormatconvert {
                  $array['OPERATINGSYSTEM'],
                  array(
                     'FULL_NAME'      => 'operatingsystems_id',
-                    'KERNEL_VERSION' => 'operatingsystemversions_id',
+                    'VERSION'        => 'operatingsystemversions_id',
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
                     'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
 
+         if (!isset($array['OPERATINGSYSTEM']['VERSION'])
+                 && isset($array['OPERATINGSYSTEM']['KERNEL_VERSION'])) {
+            $array_tmp['operatingsystemversions_id'] = $array['OPERATINGSYSTEM']['KERNEL_VERSION'];
+         }
          foreach ($array_tmp as $key=>$value) {
             if (isset($a_inventory['Computer'][$key])
                     && $a_inventory['Computer'][$key] != '') {
@@ -857,6 +861,8 @@ class PluginFusioninventoryFormatconvert {
       // * PERIPHERAL
       $a_inventory['peripheral'] = array();
       if ($pfConfig->getValue('import_peripheral') > 0) {
+         $a_peripheral_name = array();
+         $per = 0;
          if (isset($array['USBDEVICES'])) {
             foreach ($array['USBDEVICES'] as $a_peripherals) {
                $array_tmp = $thisc->addValues($a_peripherals,
@@ -895,6 +901,44 @@ class PluginFusioninventoryFormatconvert {
                        && $array_tmp['serial'] == '')) {
 
                   $a_inventory['peripheral'][] = $array_tmp;
+                  $a_peripheral_name[$array_tmp['name']] = $per;
+                  $per++;
+               }
+            }
+         }
+         if (isset($array['INPUTS'])) {
+            $a_pointingtypes = array(
+                3 => 'Mouse',
+                4 => 'Trackball',
+                5 => 'Track Point',
+                6 => 'Glide Point',
+                7 => 'Touch Pad',
+                8 => 'Touch Screen',
+                9 => 'Mouse - Optical Sensor'
+            );
+            foreach ($array['INPUTS'] as $a_peripherals) {
+               $array_tmp = $thisc->addValues($a_peripherals,
+                                              array(
+                                                 'NAME'         => 'name',
+                                                 'MANUFACTURER' => 'manufacturers_id'));
+               $array_tmp['serial'] = '';
+               $array_tmp['peripheraltypes_id'] = '';
+               if (isset($a_peripherals['POINTINGTYPE'])
+                       && isset($a_pointingtypes[$a_peripherals['POINTINGTYPE']])) {
+
+                  $array_tmp['peripheraltypes_id'] = $a_pointingtypes[$a_peripherals['POINTINGTYPE']];
+               }
+               if (isset($a_peripherals['LAYOUT'])) {
+                  $array_tmp['peripheraltypes_id'] = 'keyboard';
+               }
+
+               if (!($pfConfig->getValue('import_peripheral') == 3
+                       && $array_tmp['serial'] == '')) {
+                  if (isset($a_peripheral_name[$array_tmp['name']])) {
+                     $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
+                  } else {
+                     $a_inventory['peripheral'][] = $array_tmp;
+                  }
                }
             }
          }
@@ -955,7 +999,10 @@ class PluginFusioninventoryFormatconvert {
       $cnt = 0;
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
-            $user_temp = $a_inventory['Computer']['contact'];
+            $user_temp = '';
+            if (isset($a_inventory['Computer']['contact'])) {
+               $user_temp = $a_inventory['Computer']['contact'];
+            }
             $a_inventory['Computer']['contact'] = '';
          }
          foreach ($array['USERS'] as $a_users) {
@@ -1565,7 +1612,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
-         'nbcores', 'nbthreads');
+         'nbcores', 'nbthreads', 'frequency');
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
@@ -1613,6 +1660,10 @@ class PluginFusioninventoryFormatconvert {
                   if ($key == "bios_manufacturers_id") {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
                                                              $value);
+                  } else if ($key == "locations_id") {
+                        $array[$key] = Dropdown::importExternal('Location',
+                                                                $value,
+                                                                $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isset($this->foreignkey_itemtype[$key])) {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                              $value);
@@ -1621,11 +1672,15 @@ class PluginFusioninventoryFormatconvert {
                      $this->foreignkey_itemtype[$key] =
                                  getItemTypeForTable(getTableNameForForeignKeyField($key));
                      if ($key == 'computermodels_id') {
-                        $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
-                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value,
-                                                                '-1',
-                                                                array('manufacturer' => $manufacturer));
+                        if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'])) {
+                           $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
+                           $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                   $value,
+                                                                   '-1',
+                                                                   array('manufacturer' => $manufacturer));
+                        } else {
+                           $array[$key] = 0;
+                        }
                      } else {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                                 $value);

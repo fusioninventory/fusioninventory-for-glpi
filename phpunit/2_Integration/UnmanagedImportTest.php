@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class UnknownDeviceImportTest extends Common_TestCase {
+class UnmanagedImportTest extends Common_TestCase {
 
 
 
@@ -57,7 +57,7 @@ class UnknownDeviceImportTest extends Common_TestCase {
       Session::initEntityProfiles(2);
       Session::changeProfile(4);
 
-      $pfUnknownDevice  = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged      = new PluginFusioninventoryUnmanaged();
       $networkEquipment = new NetworkEquipment();
       $networkPort      = new NetworkPort();
       $networkName      = new NetworkName();
@@ -74,12 +74,12 @@ class UnknownDeviceImportTest extends Common_TestCase {
           'comment'     => 'this is a comment',
           'plugin_fusioninventory_configsecurities_id' => 1
       );
-      $unknowndevices_id = $pfUnknownDevice->add($input);
+      $unmanageds_id = $pfUnmanaged->add($input);
 
       // * Add networkport
       $input = array();
-      $input['itemtype']            = 'PluginFusioninventoryUnknownDevice';
-      $input['items_id']            = $unknowndevices_id;
+      $input['itemtype']            = 'PluginFusioninventoryUnmanaged';
+      $input['items_id']            = $unmanageds_id;
       $input['instantiation_type']  = 'NetworkPortEthernet';
       $input['name']                = 'general';
       $input['mac']                 = '00:00:00:43:ae:0f';
@@ -102,13 +102,13 @@ class UnknownDeviceImportTest extends Common_TestCase {
       $iPAddress->add($input);
 
 
-      $pfUnknownDevice->import($unknowndevices_id);
+      $pfUnmanaged->import($unmanageds_id);
 
       $cnt = countElementsInTable("glpi_networkequipments");
 
       $this->assertEquals(1, $cnt, "May have network equipment added");
 
-      $cnt = countElementsInTable("glpi_plugin_fusioninventory_unknowndevices");
+      $cnt = countElementsInTable("glpi_plugin_fusioninventory_unmanageds");
 
       $this->assertEquals(0, $cnt, "Unknown device may be deleted");
 
