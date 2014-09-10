@@ -296,7 +296,7 @@ class PluginFusioninventoryToolbox {
    /**
    * Write XML in a folder from an inventory by agent
    *
-   * @param $items_id integer id of the unknown device
+   * @param $items_id integer id of the unmanaged device
    * @param $xml value xml informations (with XML structure)
    *
    * @return nothing

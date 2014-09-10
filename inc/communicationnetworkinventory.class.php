@@ -106,9 +106,16 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $this->importContent($a_CONTENT);
 
       if (isset($a_CONTENT['AGENT']['END'])) {
-          $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
-              $this->agent['id'],
-              'PluginFusioninventoryAgent');
+         $cnt = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                          . " AND `comment` LIKE '%[==detail==] Update %'");
+
+          $pfTaskjobstate->changeStatusFinish(
+                  $a_CONTENT['PROCESSNUMBER'],
+                  $this->agent['id'],
+                  'PluginFusioninventoryAgent',
+                  '0',
+                  'Total updated:'.$cnt);
       }
       if (isset($a_CONTENT['AGENT']['START'])) {
           $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
@@ -259,6 +266,15 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $serialized = gzcompress(serialize($a_inventory));
 
+      if (isset($a_inventory['name'])
+              && $a_inventory['name'] == '') {
+         unset($a_inventory['name']);
+      }
+      if (isset($a_inventory['serial'])
+              && $a_inventory['serial'] == '') {
+         unset($a_inventory['serial']);
+      }
+
       switch ($itemtype) {
 
          case 'Printer':
@@ -404,7 +420,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $errors .= $this->rulepassed(0, $input['itemtype']);
             }
          } else {
-            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnknownDevice");
+            $errors .= $this->rulepassed(0, "PluginFusioninventoryUnmanaged");
          }
       }
       return $errors;
@@ -431,6 +447,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
       );
 
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
@@ -451,6 +469,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
          }
+         $_SESSION["plugin_fusioninventory_entity"] = $input['entities_id'];
          $items_id = $class->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
@@ -469,7 +488,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             unset($_SESSION['plugin_fusioninventory_rules_id']);
          }
       }
-      if ($itemtype == "PluginFusioninventoryUnknownDevice") {
+      if ($itemtype == "PluginFusioninventoryUnmanaged") {
          $class->getFromDB($items_id);
          $input = array();
          $input['id'] = $class->fields['id'];
@@ -488,12 +507,12 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          // TODO : add import ports
          PluginFusioninventoryToolbox::writeXML($items_id,
                                                 serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                                'PluginFusioninventoryUnknownDevice');
+                                                'PluginFusioninventoryUnmanaged');
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[==detail==] ==updatetheitem== Update '.
-                 PluginFusioninventoryUnknownDevice::getTypeName().
-                 ' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
+                 PluginFusioninventoryUnmanaged::getTypeName().
+                 ' [[PluginFusioninventoryUnmanaged::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =

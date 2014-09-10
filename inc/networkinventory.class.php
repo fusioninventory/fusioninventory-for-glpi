@@ -196,8 +196,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                          BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
-        $result=$DB->query($query);
-        while ($data=$DB->fetch_array($result)) {
+         $query .= " GROUP BY `glpi_networkequipments`.`id`";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
            if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
               $input = array();
               $input['TYPE'] = 'NETWORKING';
@@ -232,6 +233,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                       BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
                       AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
+         $query .= " GROUP BY `glpi_printers`.`id`";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
@@ -402,7 +404,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   $agent_id = current($a_action);
                   if ($pfAgent->getFromDB($agent_id)) {
                      $agent_version = $pfAgent->getAgentVersion($agent_id);
-                     if ($agent_version < '2.3.4') {
+                     if (strnatcmp($agent_version, '2.3.4') < 0) {
                         $agent_require_model = 1;
                      }
                      if ($communication == 'pull') {
@@ -468,7 +470,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
                                                 0,
                                                 '',
-                                                1,
+                                                0,
                                                 "No suitable devices to inventory");
             $input_taskjob = array();
             $input_taskjob['id'] = $pfTaskjob->fields['id'];

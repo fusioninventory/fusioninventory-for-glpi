@@ -107,6 +107,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[7]['field']         = 'name';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
       $tab[7]['datatype']      = 'itemlink';
+      $tab[7]['itemlink_type'] = 'Computer';
+      $tab[7]['massiveaction'] = FALSE;
 
       $tab[8]['table']     = $this->getTable();
       $tab[8]['field']     = 'version';
@@ -134,6 +136,21 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[11]['name']      = __('FusionInventory tag', 'fusioninventory');
       $tab[11]['datatype']  = 'text';
       $tab[11]['massiveaction'] = FALSE;
+
+      $tab[12]['table']     = $this->getTable();
+      $tab[12]['field']     = 'threads_networkdiscovery';
+      $tab[12]['name']      = __('Threads number', 'fusioninventory')."&nbsp;(".
+                                 strtolower(__('Network discovery', 'fusioninventory')).
+                                 ")";
+      $tab[12]['datatype']  = 'integer';
+
+      $tab[13]['table']     = $this->getTable();
+      $tab[13]['field']     = 'threads_networkinventory';
+      $tab[13]['name']      = __('Threads number', 'fusioninventory')."&nbsp;(".
+                                 strtolower(__('Network inventory (SNMP)', 'fusioninventory')).
+                                 ")";
+      $tab[13]['datatype']  = 'integer';
+
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -297,6 +314,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          );
 
       echo "</td>";
+      echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo $this->fields["useragent"];
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
@@ -305,13 +329,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'min' => 0,
              'max' => 60)
          );
-
       echo "</td>";
-      echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
+      echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
-      echo $this->fields["useragent"];
+      echo Html::convDateTime($this->fields["last_contact"]);
       echo "</td>";
       echo "</tr>";
+
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
@@ -323,6 +347,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'max' => 400)
       );
       echo "</td>";
+      echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo $this->fields["tag"];
+      echo "</td>";
+      echo "</tr>";
 
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
@@ -333,17 +362,19 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'max' => 60)
       );
       echo "</td>";
-      echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo Html::convDateTime($this->fields["last_contact"]);
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
+      $pfConfig = new PluginFusioninventoryConfig();
+      echo "<td>".__('Agent port', 'fusioninventory')." (".
+              __('if empty use port configured in general options', 'fusioninventory')
+              ." <i>".$pfConfig->getValue('agent_port')."</i>)&nbsp:</td>";
       echo "<td align='center'>";
-      echo $this->fields["tag"];
+      echo "<input type='text' name='agent_port' value='".$this->fields['agent_port']."'/>";
+      echo "</td>";
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
@@ -896,6 +927,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       if ( isset($this->fields['id']) ) {
          $computer = $this->getAssociatedComputer();
+         if ($this->fields['agent_port'] != ''
+                 && is_numeric($this->fields['agent_port'])) {
+            $port = $this->fields['agent_port'];
+         }
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
             array_push($url_addresses, "http://".$computer->fields["name"].
                ":".$port);

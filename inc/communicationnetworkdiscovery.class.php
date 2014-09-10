@@ -114,10 +114,27 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                                       '1',
                                                       '==diconotuptodate==');
                } else {
+                  $messages = array(
+                      'Total Found'   => 0,
+                      'Created' => 0,
+                      'Updated' => 0
+                  );
+                  $messages['Updated'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                          . " AND `comment` LIKE '%==updatetheitem==%'");
+                  $messages['Created'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                          . " AND `comment` LIKE '%==addtheitem==%'");
+
+                  $messages['Total Found'] = $messages['Updated'] + $messages['Created'];
+
+                  $message = 'Total Found:'.$messages['Total Found'].' Created:'.$messages['Created'].' Updated:'.$messages['Updated'];
 
                   $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
                                                       $a_agent['id'],
-                                                      'PluginFusioninventoryAgent');
+                                                      'PluginFusioninventoryAgent',
+                                                      '0',
+                                                      $message);
                }
             }
          }
@@ -172,7 +189,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['name'] = $arrayinventory['NETBIOSNAME'];
       } else if ((isset($arrayinventory['DNSHOSTNAME']))
               && (!empty($arrayinventory['DNSHOSTNAME']))) {
-         $input['name'] = $arrayinventory['DNSHOSTNAME'];
+         if (strpos($arrayinventory['DNSHOSTNAME'],'.') !== false) {
+            $splitname = explode('.', $arrayinventory['DNSHOSTNAME']);
+            $input['name'] = $splitname[0];
+            if (!isset($arrayinventory['WORKGROUP'])) {
+               unset($splitname[0]);
+               $arrayinventory['WORKGROUP'] = implode('.', $splitname);
+               $_SESSION['SOURCE_XMLDEVICE'] = $arrayinventory;
+            }
+         } else {
+            $input['name'] = $arrayinventory['DNSHOSTNAME'];
+         }
       }
 
       if (!isset($arrayinventory['ENTITY'])) {
@@ -264,7 +291,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                 AND !isset($data['action'])) {
             $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice", $input['entities_id']);
+            $this->rulepassed(0, "PluginFusioninventoryUnmanaged", $input['entities_id']);
          }
       }
    }
@@ -375,6 +402,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
          }
       }
+      if (isset($input['name'])
+              && $input['name'] == '') {
+         unset($input['name']);
+      }
+      if (isset($input['serial'])
+              && $input['serial'] == '') {
+         unset($input['serial']);
+      }
 
       if (isset($arrayinventory['ENTITY']) AND !empty($arrayinventory['ENTITY'])) {
          $input['entities_id'] = $arrayinventory['ENTITY'];
@@ -416,13 +451,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
             break;
 
-         case 'PluginFusioninventoryUnknownDevice':
+         case 'PluginFusioninventoryUnmanaged':
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryToolbox::writeXML(
                   $input['id'],
                   serialize($_SESSION['SOURCE_XMLDEVICE']),
-                  'PluginFusioninventoryUnknownDevice'
+                  'PluginFusioninventoryUnmanaged'
                );
             }
 
@@ -465,7 +500,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             $this->_updateNetworkInfo(
                $arrayinventory,
-               'PluginFusioninventoryUnknownDevice',
+               'PluginFusioninventoryUnmanaged',
                $item->getID(),
                'NetworkPortEthernet',
                1

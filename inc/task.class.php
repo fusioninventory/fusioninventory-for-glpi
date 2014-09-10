@@ -112,6 +112,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return $sopt;
    }
 
+
+   
    /**
    * Purge task and taskjob
    *
@@ -746,16 +748,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $runclass = new PluginFusioninventoryTaskjobstate();
       $run_states = $runclass->getStateNames();
 
-      //$methods_restrict = null;
-      //if( !is_array($methods) ) {
-      //   trigger_error("'methods' must be an array.");
-      //} else {
-      //   if (count($methods_restrict) > 0) {
-      //      $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
-      //   }
-      //}
-
-      //$task_ids = array();
       $query_where = array();
       $query_where[] = "WHERE 1";
 
@@ -880,10 +872,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          array( 'run.itemtype'   , 'run.`itemtype`'),
          array( 'run.items_id'   , 'run.`items_id`'),
          array( 'run.state'      , 'run.`state`'),
-         array( 'log.last_date'  , 'MAX(log.`date`)'),
-         array( 'log.last_timestamp'  , 'UNIX_TIMESTAMP(MAX(log.`date`))'),
-         array( 'log.last_id'  , 'MAX(log.`id`)'),
-         array( 'log.last_comment'  , 'MAX(log.`comment`)'),
+         array( 'log.last_date'  , 'log.`date`'),
+         array( 'log.last_timestamp'  , 'UNIX_TIMESTAMP(log.`date`)'),
+         array( 'log.last_id'  , 'log.`id`'),
+         array( 'log.last_comment'  , 'log.`comment`'),
       );
       $fieldmap = array();
       foreach($query_fields  as $index => $key) {
@@ -899,15 +891,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $query_joins['max_run'] = implode("\n",array(
          "INNER JOIN (",
          "  SELECT",
-         "     MAX(`id`) AS max_id,",
-         "     `plugin_fusioninventory_agents_id`,",
-         "     `plugin_fusioninventory_taskjobs_id`,",
-         "     `items_id`, `itemtype`",
-         "  FROM `glpi_plugin_fusioninventory_taskjobstates`",
+         "     MAX(run.`id`) AS max_id,",
+         "     run.`plugin_fusioninventory_agents_id`,",
+         "     run.`plugin_fusioninventory_taskjobs_id`,",
+         "     run.`items_id`, run.`itemtype`,",
+         "     MAX(log.`id`) AS max_log_id",
+         "  FROM `glpi_plugin_fusioninventory_taskjobstates` AS run",
+         "  LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log",
+         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
          "  GROUP BY",
-         "     `plugin_fusioninventory_agents_id`,",
-         "     `plugin_fusioninventory_taskjobs_id`,",
-         "     `items_id`, `itemtype`",
+         "     run.`plugin_fusioninventory_agents_id`,",
+         "     run.`plugin_fusioninventory_taskjobs_id`,",
+         "     run.`items_id`, run.`itemtype`",
          ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
       ));
 
@@ -917,7 +912,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ));
       $query_joins['log'] = implode( "\n", array(
          "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
-         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
+         "  ON log.`id` = max_run.`max_log_id`",
       ));
       $query_joins['job'] = implode( "\n", array(
          "INNER JOIN `glpi_plugin_fusioninventory_taskjobs` AS job",
@@ -951,21 +946,24 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $query_joins['max_run'] = implode("\n",array(
          "INNER JOIN (",
          "  SELECT",
-         "     MAX(`id`) AS max_id,",
-         "     `plugin_fusioninventory_agents_id`,",
-         "     `plugin_fusioninventory_taskjobs_id`,",
-         "     `items_id`, `itemtype`",
-         "  FROM `glpi_plugin_fusioninventory_taskjobstates`",
-         "  WHERE `state` IN ( ".
+         "     MAX(run.`id`) AS max_id,",
+         "     run.`plugin_fusioninventory_agents_id`,",
+         "     run.`plugin_fusioninventory_taskjobs_id`,",
+         "     run.`items_id`, run.`itemtype`,",
+         "     MAX(log.`id`) AS max_log_id",
+         "  FROM `glpi_plugin_fusioninventory_taskjobstates` AS run",
+         "  LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log",
+         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
+         "  WHERE run.`state` IN ( ".
             implode(",", array(
                PluginFusioninventoryTaskjobstate::FINISHED,
                PluginFusioninventoryTaskjobstate::IN_ERROR,
             )) .
          " )",
          "  GROUP BY",
-         "     `plugin_fusioninventory_agents_id`,",
-         "     `plugin_fusioninventory_taskjobs_id`,",
-         "     `items_id`, `itemtype`",
+         "     run.`plugin_fusioninventory_agents_id`,",
+         "     run.`plugin_fusioninventory_taskjobs_id`,",
+         "     run.`items_id`, run.`itemtype`",
          ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
       ));
       $queries['2_finished_runs'] = array(
@@ -1167,9 +1165,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
 
    /**
-   *  Get tasks filtered by relevant criterias
-   *  @param $filter criterias to filter in the request
-   **/
+    *  Get tasks filtered by relevant criterias
+    *  @param $filter criterias to filter in the request
+    **/
    static function getItemsFromDB($filter) {
 
       global $DB;
@@ -1237,7 +1235,39 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
       }
 
-      //TODO: Filter by action classes
+      // Filter by action classes
+      if (isset($filter['actions'])
+            && is_array($filter['actions']) ) {
+         $where_tmp = array();
+         //check classes existence and append them to the query filter
+         foreach($filter['actions'] as $itemclass => $itemid) {
+            if ( class_exists($itemclass) ) {
+
+               $cond = "taskjob.`action` LIKE '%\"".$itemclass."\"";
+
+               //adding itemid if not empty
+               if (!empty($itemid)) {
+                     $cond .= ":\"".$itemid."\"";
+               }
+               //closing LIKE statement
+               $cond .= "%'";
+               $where_tmp[] = $cond;
+            }
+         }
+         //join every filtered conditions
+         if( count($where_tmp) > 0) {
+            // add taskjobs table JOIN statement if not already set
+            if ( !isset( $leftjoin['taskjobs'] ) ) {
+               $leftjoin_bak = $leftjoin;
+               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
+            }
+            if (!isset( $select["taskjobs"]) ) {
+               $select['taskjobs'] = "taskjob.*";
+            }
+            $where[] = "( " . implode("OR", $where_tmp) . " )";
+         }
+      }
 
       //TODO: Filter by list of IDs
       if (     isset($filter['by_ids'])
