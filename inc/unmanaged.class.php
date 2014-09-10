@@ -40,11 +40,11 @@
    ------------------------------------------------------------------------
  */
 
-class PluginFusioninventoryUnknownDevice extends CommonDBTM {
+class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
    public $dohistory = TRUE;
 
-   static $rightname = 'plugin_fusioninventory_unknowndevice';
+   static $rightname = 'plugin_fusioninventory_unmanaged';
 
    /**
    * Get name of this type
@@ -53,7 +53,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-      return __('Unknown device', 'fusioninventory');
+      return __('Unmanaged device', 'fusioninventory');
    }
 
    static function getMenuName() {
@@ -75,7 +75,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = __('Unknown device', 'fusioninventory');
+      $tab['common'] = __('Unmanaged device', 'fusioninventory');
 
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         =  'name';
@@ -159,7 +159,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
       $tab[17]['datatype']  = 'dropdown';
 
-      $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
+      $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnmanaged");
 
       return $tab;
    }
@@ -203,9 +203,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       global $CFG_GLPI;
 
       if ($tabnum == 1) {
-         $pfUnknownDevice = new self();
-         $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] .
-               '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],
+         $pfUnmanaged = new self();
+         $pfUnmanaged->importForm($CFG_GLPI['root_doc'] .
+               '/plugins/fusioninventory/front/unmanaged.form.php?id='.$_POST["id"],
                                    $_POST["id"]);
       }
       return TRUE;
@@ -217,7 +217,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $ong = array();
       $this->addStandardTab('NetworkPort', $ong, $options);
-      $this->addStandardTab('PluginFusioninventoryUnknownDevice', $ong, $options);
+      $this->addStandardTab('PluginFusioninventoryUnmanaged', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
@@ -225,9 +225,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    /**
-   * Display form for unknown device
+   * Display form for unmanaged device
    *
-   * @param $id integer id of the unknown device
+   * @param $id integer id of the unmanaged device
    * @param $options array
    *
    * @return bool TRUE if form is ok
@@ -396,7 +396,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Form to import devices in GLPI inventory (computer, printer...)
    *
    * @param $target target page
-   * @param $id integer id of the unknowndevice
+   * @param $id integer id of the unmanaged
    *
    * @return nothing
    *
@@ -407,7 +407,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<table  class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
-      echo __('Import unknown device into asset', 'fusioninventory');
+      echo __('Import unmanaged device into asset', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -437,16 +437,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $query = "SELECT `glpi_networkports`.`id`
                 FROM `glpi_networkports`
-                     LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
-                               ON `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
-                     WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-                           AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
-      $unknown_infos = array();
+                     LEFT JOIN `glpi_plugin_fusioninventory_unmanageds`
+                               ON `items_id`=`glpi_plugin_fusioninventory_unmanageds`.`id`
+                     WHERE `itemtype`='PluginFusioninventoryUnmanaged'
+                           AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL;";
+      $unmanaged_infos = array();
       $result=$DB->query($query);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
-            $unknown_infos["name"] = '';
-            $newID=$this->add($unknown_infos);
+            $unmanaged_infos["name"] = '';
+            $newID=$this->add($unmanaged_infos);
 
             $query_update = "UPDATE `glpi_networkports`
                              SET `items_id`='".$newID."'
@@ -526,7 +526,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
          } else if (count($a_ports) == "0") {
             // Port don't exist
-            // Create unknown device
+            // Create unmanaged device
             $input = array();
             $a_manufacturer = array(
                 0 => PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac)
@@ -536,9 +536,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             if (isset($_SESSION["plugin_fusioninventory_entity"])) {
                $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
             }
-            $unknown_id = $this->add($input);
+            $unmanageds_id = $this->add($input);
             $input = array();
-            $input["items_id"] = $unknown_id;
+            $input["items_id"] = $unmanageds_id;
             $input["itemtype"] = $this->getType();
             $input["mac"] = $ifmac;
             $input['instantiation_type'] = "NetworkPortEthernet";
@@ -554,7 +554,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    /**
    * Delete all ports connected in hub and not found in last inventory
    *
-   * @param $hub_id integer id of the hub (unknown device)
+   * @param $hub_id integer id of the hub (unmanaged device)
    * @param $a_portUsed array list of the ports found in last inventory
    *
    * @return nothing
@@ -582,7 +582,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * Connect a port to hub
    *
    * @param $a_port array datas of a port
-   * @param $hub_id integer id of the hub (unknown device)
+   * @param $hub_id integer id of the hub (unmanaged device)
    *
    * @return id of the port of the hub where port is connected
    *
@@ -670,7 +670,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    * @param $pfNetworkport object Informations of the network port
    *
-   * @return id of the hub (unknowndevice)
+   * @return id of the hub (unmanageddevice)
    *
    **/
    function createHub($pfNetworkport, $a_mac) {
@@ -774,14 +774,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 // *************************** end hub management ****************************** //
 
    /**
-   * Purge unknwon devices
+   * Purge unmanaged devices
    *
    * @param $pram object to purge
    *
    * @return nothing
    *
    **/
-   static function purgeUnknownDevice($parm) {
+   static function purgeUnmanagedDevice($parm) {
 
       // Delete XML file if exist
       $folder = substr($parm->fields["id"], 0, -1);
@@ -790,16 +790,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.
-              "/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".
+              "/fusioninventory/xml/PluginFusioninventoryUnmanaged/".$folder."/".
               $parm->fields["id"])) {
-         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".
+         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnmanaged/".
                  $folder."/".$parm->fields["id"]);
       }
 
       // Delete Networkports
       $NetworkPort = new NetworkPort();
       $a_ports = $NetworkPort->find("`items_id`='".$parm->fields["id"]."'
-                     AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+                     AND `itemtype`='PluginFusioninventoryUnmanaged'");
       foreach($a_ports as $a_port) {
          $NetworkPort->delete($a_port, 1);
       }
@@ -822,9 +822,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $NetworkPort = new NetworkPort();
 
       $a_NetworkPorts = $NetworkPort->find("`items_id` = '".$items_id."'
-                      AND `itemtype` = 'PluginFusioninventoryUnknownDevice'");
+                      AND `itemtype` = 'PluginFusioninventoryUnmanaged'");
 
       $this->getFromDB($items_id);
+      $this->fields = Toolbox::addslashes_deep($this->fields);
       $data = array();
       switch ($this->fields['item_type']) {
          case 'Printer':

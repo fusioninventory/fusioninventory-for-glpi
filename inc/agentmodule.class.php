@@ -433,17 +433,38 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * @return nothing
    *
    **/
-   static function getUrlForModule($modulename) {
+   static function getUrlForModule($modulename, $entities_id=-1) {
+      // Get current entity URL if it exists ...
+      $pfEntity = new PluginFusioninventoryEntity();
+      $baseUrl = $pfEntity->getValue('agent_base_url', $entities_id);
+      if (! empty($baseUrl)) {
+         PluginFusioninventoryToolbox::logIfExtradebug(
+            "pluginFusioninventory-agent-url",
+            "Entity ".$entities_id.", agent base URL: ".$baseUrl
+         );
+
+         if ($baseUrl != 'N/A') {
+            return $baseUrl.'/plugins/fusioninventory/b/'.
+                    strtolower($modulename).'/';
+         }
+      }
+
+      // ... else use global plugin configuration parameter.
       $config = new PluginFusioninventoryConfig();
-      if (strlen($config->getValue('agent_base_url'))<10) {
+      if (strlen($pfEntity->getValue('agent_base_url', $entities_id))<10) {
          PluginFusioninventoryCommunicationRest::sendError();
          exit;
-//          die ("agent_base_url is unset!\n");
+         // die ("agent_base_url is unset!\n");
       }
+
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-agent-url",
+         "Global configuration URL: ".$pfEntity->getValue('agent_base_url', $entities_id)
+      );
 
       # Construct the path to the JSON back from the agent_base_url.
       # agent_base_url is the initial URL used by the agent
-      return $config->getValue('agent_base_url').'/plugins/fusioninventory/b/'.
+      return $pfEntity->getValue('agent_base_url', $entities_id).'/plugins/fusioninventory/b/'.
               strtolower($modulename).'/';
    }
 

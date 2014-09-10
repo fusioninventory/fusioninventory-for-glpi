@@ -65,7 +65,7 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       // Force profile in session to SuperAdmin
       $_SESSION['glpiprofiles'] = array('4' => array('entities' => 0));
 
-      $_SESSION['glpi_plugin_fusioninventory_profile']['unknowndevice'] = 'w';
+      $_SESSION['glpi_plugin_fusioninventory_profile']['unmanaged'] = 'w';
 
       $_SESSION['glpiactiveentities'] = array(0, 1);
 

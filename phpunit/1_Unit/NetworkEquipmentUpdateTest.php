@@ -317,7 +317,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    /**
     * @test
     */
-   public function UnknowndeviceNetworkPort() {
+   public function UnmanagedNetworkPort() {
       global $DB;
 
       $DB->connect();
@@ -325,7 +325,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $networkPort = new NetworkPort();
 
       $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:35'
-         AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+         AND `itemtype`='PluginFusioninventoryUnmanaged'");
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
 
@@ -347,7 +347,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
 
       $a_networkports = $networkPort->find("`logical_number`='10001'");
 
@@ -357,12 +357,12 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $opposites_id = $networkPort_NetworkPort->getOppositeContact($a_networkport['id']);
 
       $networkPort->getFromDB($opposites_id);
-      $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+      $pfUnmanaged->getFromDB($networkPort->fields['items_id']);
 
-      $this->assertEquals(0, $pfUnknownDevice->fields['hub'], 'May not be a hub');
+      $this->assertEquals(0, $pfUnmanaged->fields['hub'], 'May not be a hub');
 
-      $a_networkports = $networkPort->find("`items_id`='".$pfUnknownDevice->fields['id']."'
-         AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+      $a_networkports = $networkPort->find("`items_id`='".$pfUnmanaged->fields['id']."'
+         AND `itemtype`='PluginFusioninventoryUnmanaged'");
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
    }
