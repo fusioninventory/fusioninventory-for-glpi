@@ -107,6 +107,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[7]['field']         = 'name';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
       $tab[7]['datatype']      = 'itemlink';
+      $tab[7]['itemlink_type'] = 'Computer';
+      $tab[7]['massiveaction'] = FALSE;
 
       $tab[8]['table']     = $this->getTable();
       $tab[8]['field']     = 'version';
@@ -134,6 +136,21 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[11]['name']      = __('FusionInventory tag', 'fusioninventory');
       $tab[11]['datatype']  = 'text';
       $tab[11]['massiveaction'] = FALSE;
+
+      $tab[12]['table']     = $this->getTable();
+      $tab[12]['field']     = 'threads_networkdiscovery';
+      $tab[12]['name']      = __('Threads number', 'fusioninventory')."&nbsp;(".
+                                 strtolower(__('Network discovery', 'fusioninventory')).
+                                 ")";
+      $tab[12]['datatype']  = 'integer';
+
+      $tab[13]['table']     = $this->getTable();
+      $tab[13]['field']     = 'threads_networkinventory';
+      $tab[13]['name']      = __('Threads number', 'fusioninventory')."&nbsp;(".
+                                 strtolower(__('Network inventory (SNMP)', 'fusioninventory')).
+                                 ")";
+      $tab[13]['datatype']  = 'integer';
+
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();

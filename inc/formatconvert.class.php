@@ -380,10 +380,14 @@ class PluginFusioninventoryFormatconvert {
                  $array['OPERATINGSYSTEM'],
                  array(
                     'FULL_NAME'      => 'operatingsystems_id',
-                    'KERNEL_VERSION' => 'operatingsystemversions_id',
+                    'VERSION'        => 'operatingsystemversions_id',
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
                     'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
 
+         if (!isset($array['OPERATINGSYSTEM']['VERSION'])
+                 && isset($array['OPERATINGSYSTEM']['KERNEL_VERSION'])) {
+            $array_tmp['operatingsystemversions_id'] = $array['OPERATINGSYSTEM']['KERNEL_VERSION'];
+         }
          foreach ($array_tmp as $key=>$value) {
             if (isset($a_inventory['Computer'][$key])
                     && $a_inventory['Computer'][$key] != '') {
@@ -1660,7 +1664,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
-         'nbcores', 'nbthreads');
+         'nbcores', 'nbthreads', 'frequency');
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
@@ -1708,6 +1712,10 @@ class PluginFusioninventoryFormatconvert {
                   if ($key == "bios_manufacturers_id") {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
                                                              $value);
+                  } else if ($key == "locations_id") {
+                        $array[$key] = Dropdown::importExternal('Location',
+                                                                $value,
+                                                                $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isset($this->foreignkey_itemtype[$key])) {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                              $value);
@@ -1716,11 +1724,15 @@ class PluginFusioninventoryFormatconvert {
                      $this->foreignkey_itemtype[$key] =
                                  getItemTypeForTable(getTableNameForForeignKeyField($key));
                      if ($key == 'computermodels_id') {
-                        $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
-                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value,
-                                                                '-1',
-                                                                array('manufacturer' => $manufacturer));
+                        if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'])) {
+                           $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
+                           $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                   $value,
+                                                                   '-1',
+                                                                   array('manufacturer' => $manufacturer));
+                        } else {
+                           $array[$key] = 0;
+                        }
                      } else {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                                 $value);

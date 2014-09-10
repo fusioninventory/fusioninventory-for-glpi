@@ -211,13 +211,13 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
     PluginFusioninventoryProfile::initProfile();
 
    /*
-    * bug of purge network port when purge unknown devices, so we clean
+    * bug of purge network port when purge unmanaged devices, so we clean
     */
       $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
-         LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
-            ON `glpi_plugin_fusioninventory_unknowndevices`.`id` = `glpi_networkports`.`items_id`
-         WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL ";
+         LEFT JOIN `glpi_plugin_fusioninventory_unmanageds`
+            ON `glpi_plugin_fusioninventory_unmanageds`.`id` = `glpi_networkports`.`items_id`
+         WHERE `itemtype`='PluginFusioninventoryUnmanaged'
+            AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL ";
       $result=$DB->query($sql);
       while ($data=$DB->fetch_array($result)) {
          $networkPort->delete(array('id'=>$data['nid']), 1);

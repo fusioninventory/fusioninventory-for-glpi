@@ -84,7 +84,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'config'                     => 'PluginFusioninventoryConfig',
           'task'                       => 'PluginFusioninventoryTask',
           'timeslot'                   => 'PluginFusioninventoryTimeslot',
-          'unknowndevice'              => 'PluginFusioninventoryUnknownDevice',
+          'unmanaged'                  => 'PluginFusioninventoryUnmanaged',
           'inventoryruleimport'        => 'PluginFusioninventoryInventoryRuleImport',
           'inventoryruleentity'        => 'PluginFusioninventoryInventoryRuleEntity',
           'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
@@ -178,11 +178,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>\n";
       }
 
-      $config = new PluginFusioninventoryConfig();
-      if (strlen($config->getValue('agent_base_url'))<10
+      $pfEntity = new PluginFusioninventoryEntity();
+      if (strlen($pfEntity->getValue('agent_base_url', 0))<10
               && !strstr($_SERVER['PHP_SELF'], 'front/config.form.php')) {
          echo "<div class='msgboxmonit msgboxmonit-red'>";
-         print "<center><a href=\"config.form.php\">";
+         print "<center><a href=\"".$CFG_GLPI['root_doc']."/front/entity.form.php?id=0&forcetab=PluginFusioninventoryEntity$0\">";
          print __('The server needs to kown the URL the agents use to access the server. Please '.
                  'configure it in the General Configuration page.', 'fusioninventory');
          print "</a></center>";
@@ -620,9 +620,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/task.php"
           ),
           array(
-              'text' => __('If you have devices not typed, import them from unknown devices', 'fusioninventory'),
+              'text' => __('If you have devices not typed, import them from unmanaged devices', 'fusioninventory'),
               'url'  => $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/unknowndevice.php"
+                                 "/plugins/fusioninventory/front/unmanaged.php"
           ),
           array(
               'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'fusioninventory'),

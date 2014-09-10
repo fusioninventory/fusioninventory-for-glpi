@@ -122,7 +122,7 @@ function plugin_init_fusioninventory() {
                //'Computer',
                //'Printer',
                //'NetworkEquipment',
-               //'PluginFusioninventoryUnknowndevice',
+               //'PluginFusioninventoryUnmanaged',
                'PluginFusioninventoryTask',
             )
          )
@@ -136,7 +136,7 @@ function plugin_init_fusioninventory() {
          )
       );
 
-      Plugin::registerClass('PluginFusioninventoryUnknownDevice');
+      Plugin::registerClass('PluginFusioninventoryUnmanaged');
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile',
               array('addtabon' => array('Profile')));
@@ -189,7 +189,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryRulematchedlog',
               array('addtabon' => array('Computer',
                                         'PluginFusioninventoryAgent',
-                                        'PluginFusioninventoryUnknownDevice',
+                                        'PluginFusioninventoryUnmanaged',
                                         'Printer',
                                         'NetworkEquipment')));
 
@@ -252,7 +252,7 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
-      $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnknownDevice';
+      $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnmanaged';
 
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
@@ -356,18 +356,18 @@ function plugin_init_fusioninventory() {
                                                                'purgeTask'),
                  'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob',
                                                                'purgeTaskjob'),
-                 'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
-                                                               'purgeUnknownDevice'),
+                 'PluginFusioninventoryUnmanaged' => array('PluginFusioninventoryUnmanaged',
+                                                               'purgeUnmanaged'),
                  'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
                  'Printer'                            => 'plugin_item_purge_fusinvsnmp',
-                 'PluginFusioninventoryUnknownDevice' => 'plugin_item_purge_fusinvsnmp');
+                 'PluginFusioninventoryUnmanaged' => 'plugin_item_purge_fusinvsnmp');
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-      if (Session::haveRight('plugin_fusioninventory_unknowndevice', READ)) {
-         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnknowndevice';
+      if (Session::haveRight('plugin_fusioninventory_unmanaged', READ)) {
+         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnmanaged';
       }
       if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['plugins'] = 'PluginFusioninventoryMenu';
@@ -471,8 +471,8 @@ function plugin_init_fusioninventory() {
       }
    }
 
-   // Add unknown devices in list of devices with networport
-   $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
+   // Add unmanaged devices in list of devices with networport
+   $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnmanaged";
 }
 
 

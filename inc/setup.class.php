@@ -762,11 +762,11 @@ class PluginFusioninventorySetup {
 
 
       $ranking++;
-      // Create rule for import into unknown devices
+      // Create rule for import into unmanaged devices
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
-      $input['name']='Unknown device import';
+      $input['name']='Unmanaged device import';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;

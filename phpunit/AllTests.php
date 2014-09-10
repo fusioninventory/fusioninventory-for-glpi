@@ -146,7 +146,7 @@ ini_set("max_execution_time", "0");
 $_SESSION['glpiprofiles'] = array('4' => array('entities' => 0));
 Session::changeProfile(4);
 
-$_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
+$_SESSION["glpi_plugin_fusioninventory_profile"]['unmanaged'] = 'w';
 
 $_SESSION['glpiactiveentities'] = array(0, 1);
 
@@ -178,8 +178,8 @@ require_once '2_Integration/RuleImport.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
 require_once '2_Integration/SoftwareVersionAdd.php';
 require_once '2_Integration/ComputerDynamic.php';
-require_once '2_Integration/UnknownDeviceKnowDevice.php';
-require_once '2_Integration/UnknownDeviceImport.php';
+require_once '2_Integration/UnmanagedManaged.php';
+require_once '2_Integration/UnmanagedImport.php';
 require_once '2_Integration/TaskDeployDynamicGroup.php';
 require_once '2_Integration/ComputerPrinter.php';
 require_once '2_Integration/ComputerLicense.php';
@@ -225,8 +225,8 @@ class AllTests {
          $suite->addTest(SoftwareEntityCreation_AllTests::suite());
          $suite->addTest(SoftwareVersionAdd_AllTests::suite());
          $suite->addTest(ComputerDynamic_AllTests::suite());
-         $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
-         $suite->addTest(UnknownDeviceImport_AllTests::suite());
+         $suite->addTest(UnmanagedManaged_AllTests::suite());
+         $suite->addTest(UnmanagedImport_AllTests::suite());
          //$suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
          $suite->addTest(ComputerPrinter_AllTests::suite());
          $suite->addTest(ComputerLicense_AllTests::suite());

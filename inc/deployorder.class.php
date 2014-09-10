@@ -66,6 +66,18 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
 
    }
 
+
+
+   static function canCreate() {
+      return PluginFusioninventoryProfile::haveRight('packages', 'w');
+   }
+
+   static function canView() {
+      return PluginFusioninventoryProfile::haveRight('packages', 'r');
+   }
+
+
+
    /*
     * The 'Render' things should be renamed to something appropriate
     * ... don't know yet, so just leaving it as is -- kiniou
