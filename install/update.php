@@ -808,7 +808,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $transfers_id_auto = $a_config['value'];
          }
-         
+
          $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
                                            "`type`='agent_base_url'");
          $agent_base_url = '';
@@ -816,7 +816,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
          }
-         
+
          $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
                (`entities_id`, `transfers_id_auto`, `agent_base_url`)
             VALUES ('0', '".$transfers_id_auto."', '".$agent_base_url."');");
@@ -828,7 +828,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
          }
-         
+
          $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
                SET `agent_base_url` = '".$agent_base_url."'
                ;");
@@ -2141,82 +2141,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "plugin_fusioninventory_inventorycomputerstorages_id_2");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_configurationmanagements
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_configurationmanagements';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['items_id']   = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['itemtype']   = array(
-                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
-                        'value'   => NULL);
-      $a_table['fields']['serialized_referential']   = array('type'    => 'longblob',
-                                                             'value'   => "");
-      $a_table['fields']['sha_referential']          = array('type'    => 'string',
-                                                             'value'   => NULL);
-      $a_table['fields']['date']                     = array('type'    => 'datetime',
-                                                             'value'   => NULL);
-      $a_table['fields']['users_id']                 = array('type'    => 'integer',
-                                                             'value'   => NULL);
-      $a_table['fields']['serialized_last']          = array('type'    => 'longblob',
-                                                             'value'   => "");
-      $a_table['fields']['sha_last']                 = array('type'    => 'string',
-                                                             'value'   => NULL);
-      $a_table['fields']['sentnotification']         = array('type'    => 'bool',
-                                                             'value'   => '0');
-      $a_table['fields']['conform']                  = array('type'    => 'bool',
-                                                             'value'   => '1');
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_configurationmanagements_models
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_configurationmanagements_models';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['itemtype']   = array(
-                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
-                        'value'   => NULL);
-      $a_table['fields']['serialized_model']   = array('type'    => 'longblob',
-                                                             'value'   => "");
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
 
 
 

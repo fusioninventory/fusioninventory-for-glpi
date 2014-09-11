@@ -445,40 +445,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                                              $width_status);
       }
 
-      /*
-       * Configuration management
-       */
-      $a_menu = array();
-
-      if (Session::haveRight('config', UPDATE)) {
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
-                                    "`conform`='0'");
-         $a_menu[0]['name'] = __('Not conform', 'fusioninventory')." <sup>(".$nb.")</sup>";
-         $a_menu[0]['pic']  = "";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_notconform.php";
-
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
-                                    "`sha_referential`='' OR `sha_referential` IS NULL");
-         $a_menu[1]['name'] = __('To be validated', 'fusioninventory')." <sup>(".$nb.")</sup>";
-         $a_menu[1]['pic']  = "";
-         $a_menu[1]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_tobevalidated.php";
-
-         $a_menu[2]['name'] = __('Models', 'fusioninventory');
-         $a_menu[2]['pic']  = "";
-         $a_menu[2]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_model.php";
-
-      }
-
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
-      }
-
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -841,22 +807,22 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $dataDeploy = array();
       $dataDeploy[0] = array(
-          'key' => 'Deployment prepared and waiting',
+          'key' => 'Prepared and waiting',
           'y'   => 0,
           'color' => '#efefef'
       );
       $dataDeploy[1] = array(
-          'key' => 'Deployment running',
+          'key' => 'Running',
           'y'   => 0,
           'color' => '#aaaaff'
       );
       $dataDeploy[2] = array(
-          'key' => 'Deployment successfull',
+          'key' => 'Successfull',
           'y'   => 0,
           'color' => '#aaffaa'
       );
       $dataDeploy[3] = array(
-          'key' => 'Deployment in error',
+          'key' => 'In error',
           'y'   => 0,
           'color' => '#ff0000'
       );
@@ -870,7 +836,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             }
          }
       }
-
+      for ($k=0; $k<4; $k++) {
+         $dataDeploy[$k]['key'] .= " : ".$dataDeploy[$k]['y'];
+      }
 
       echo "<table align='center'>";
       echo "<tr height='280'>";
@@ -883,7 +851,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";
-      self::showChart('deploy', $dataDeploy);
+      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -903,7 +871,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-   static function showChart($name, $data) {
+   static function showChart($name, $data, $title='') {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
