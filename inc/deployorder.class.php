@@ -52,6 +52,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
    const INSTALLATION_ORDER   = 0;
    const UNINSTALLATION_ORDER = 1;
 
+   static $rightname = 'plugin_fusioninventory_package';
+
    function __construct($order_type = NULL, $packages_id = NULL) {
 
       if (
@@ -65,17 +67,6 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
 
    }
-
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'w');
-   }
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'r');
-   }
-
 
 
    /*
