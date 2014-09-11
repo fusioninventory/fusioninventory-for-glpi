@@ -419,7 +419,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function plusButtonSubtype($id, $order_id, $subtype, $rand) {
       global $CFG_GLPI;
 
-      if ($this->can($id, 'w')) {
+      if ($this->can($id, UPDATE)) {
          echo "&nbsp;";
          echo "<img id='plus_{$subtype}s_block{$rand}'";
          echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
