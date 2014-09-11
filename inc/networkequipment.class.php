@@ -140,7 +140,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          return;
       }
 
-      $canedit = $item->can($item->getID(), 'w');
+      $canedit = $item->can($item->getID(), UPDATE);
       if ($canedit) {
          $networkPort = new NetworkPort();
          echo "\n<form method='get' action='" . $networkPort->getFormURL() ."'>\n";
@@ -320,7 +320,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       $NetworkPort = new NetworkPort();
 
-      $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+      $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnmanaged'
                                     AND `items_id`='".$items_id."'");
       echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
       foreach ($a_ports as $a_port) {
@@ -331,7 +331,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                $link = '';
                $link1 = '';
                $link2 = '';
-               if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
                   $classname = $NetworkPort->fields['itemtype'];
                   $item = new $classname;
                   $item->getFromDB($NetworkPort->fields['items_id']);
@@ -340,7 +340,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                                       $item->getLink());
                   // Get ips
                   $a_ips = PluginFusioninventoryToolbox::getIPforDevice(
-                             'PluginFusioninventoryUnknownDevice',
+                             'PluginFusioninventoryUnmanaged',
                              $item->getID()
                           );
                   $link2 = str_replace($item->getName(0), implode(", ", $a_ips),
@@ -528,7 +528,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     * @param type $networkequipments_id
     */
    static function showInfo($item) {
-      
+
       // Manage locks pictures
       PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
 
@@ -904,7 +904,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                         $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
                                              $item->getLink());
 
-                     if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
+                     if ($data_device["itemtype"] == 'PluginFusioninventoryUnmanaged') {
                         $icon = $this->getItemtypeIcon($item->fields["item_type"]);
                         if ($item->getField("accepted") == "1") {
                            echo "<td style='background:#bfec75'

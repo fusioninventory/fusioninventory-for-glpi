@@ -198,7 +198,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
    /**
     * @test
     */
-   public function NortelUnknowndevice() {
+   public function NortelUnmanaged() {
       global $DB;
 
       $DB->connect();
@@ -218,7 +218,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $pfUnknownDevice        = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged            = new PluginFusioninventoryUnmanaged();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
@@ -232,15 +232,15 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'entities_id' => 0
       ));
 
-      // Unknowndevice
-      $unknowndevices_id = $pfUnknownDevice->add(array(
+      // Unmanaged
+      $unmanageds_id = $pfUnmanaged->add(array(
           'name'        => 'otherswitch',
           'entities_id' => 0
       ));
 
       $networkports_unknown_id = $networkport->add(array(
-          'itemtype'       => 'PluginFusioninventoryUnknownDevice',
-          'items_id'       => $unknowndevices_id,
+          'itemtype'       => 'PluginFusioninventoryUnmanaged',
+          'items_id'       => $unmanageds_id,
           'entities_id'    => 0,
           'mac'            => '00:24:b5:bd:c8:01'
       ));
@@ -450,7 +450,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
     * @test
     * It find unknown device, but may add the port with this ifdescr
     */
-   public function Cisco1Unknowndevice() {
+   public function Cisco1Unmanaged() {
       global $DB;
 
       $DB->connect();
@@ -473,7 +473,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
       $networkName            = new NetworkName();
       $iPAddress              = new IPAddress();
       $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
-      $pfUnknownDevice        = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged            = new PluginFusioninventoryUnmanaged();
 
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
@@ -487,15 +487,15 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'entities_id' => 0
       ));
 
-      // Unknowndevice
-      $unknowndevices_id = $pfUnknownDevice->add(array(
+      // Unmanaged
+      $unmanageds_id = $pfUnmanaged->add(array(
           'name'        => 'otherswitch',
           'entities_id' => 0
       ));
 
       $networkports_unknown_id = $networkport->add(array(
-          'itemtype'       => 'PluginFusioninventoryUnknownDevice',
-          'items_id'       => $unknowndevices_id,
+          'itemtype'       => 'PluginFusioninventoryUnmanaged',
+          'items_id'       => $unmanageds_id,
           'entities_id'    => 0
       ));
 
@@ -526,7 +526,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
                           count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, TRUE).')');
 
-      $a_unkowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unknowndevices');
+      $a_unkowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unmanageds');
 
       $this->assertEquals(1,
                           count($a_unkowns),
@@ -535,8 +535,8 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $a_networkport_ref = array(
           'id'                 => '3',
-          'items_id'           => $unknowndevices_id,
-          'itemtype'           => 'PluginFusioninventoryUnknownDevice',
+          'items_id'           => $unmanageds_id,
+          'itemtype'           => 'PluginFusioninventoryUnmanaged',
           'entities_id'        => '0',
           'is_recursive'       => '0',
           'logical_number'     => '0',
@@ -720,7 +720,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
    /**
     * @test
     */
-   public function testCisco2Unknowndevice() {
+   public function testCisco2Unmanaged() {
 
       $this->mark_incomplete();
 

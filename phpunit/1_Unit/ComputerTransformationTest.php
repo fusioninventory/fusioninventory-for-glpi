@@ -132,7 +132,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
      );
-      // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -209,7 +208,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux/admin@local.com'
      );
-      // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -290,7 +288,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
@@ -303,9 +300,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'serial'                           => '',
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
-          'contact'                          => ''
      );
-      // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -376,7 +371,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
@@ -389,9 +383,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'serial'                           => '',
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
-          'contact'                          => ''
      );
-      // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -618,7 +610,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'SKUNUMBER'     => '',
           'SMANUFACTURER' => 'Dell Inc.',
           'SMODEL'        => 'Dell DXP051',
-          'SSN'           => '6PkkD1K');
+          'SSN'           => '6PkkD1K'
+          );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
@@ -659,7 +652,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
@@ -672,9 +664,10 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'serial'                           => '6PkkD1K',
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
-          'contact'                          => ''
+          'mmanufacturer'                    => 'Dell Inc.',
+          'bmanufacturer'                    => 'Dell Inc.',
+          'mmodel'                           => '0FJ030'
      );
-      // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -760,7 +753,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
@@ -773,9 +765,10 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'serial'                           => '6PkkD1K',
           'computertypes_id'                 => '0FJ030',
           'is_dynamic'                       => 1,
-          'contact'                          => ''
-     );
-      // users_id = 0 because user notin DB
+          'mmanufacturer'                    => 'Dell Inc.',
+          'bmanufacturer'                    => 'Dell Inc.',
+          'mmodel'                           => '0FJ030'
+          );
       $this->assertEquals($a_reference, $a_return);
    }
 

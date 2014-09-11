@@ -55,7 +55,7 @@ class PluginFusioninventoryProfile extends Profile {
        *    remotecontrol
        *    configuration
        *    wol
-       *    unknowndevice
+       *    unmanaged
        *    task
        *    iprange
        *    credential
@@ -79,7 +79,7 @@ class PluginFusioninventoryProfile extends Profile {
                       'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
                       'configuration'          => 'plugin_fusioninventory_configuration',
                       'wol'                    => 'plugin_fusioninventory_wol',
-                      'unknowndevice'          => 'plugin_fusioninventory_unknowndevice',
+                      'unmanaged'              => 'plugin_fusioninventory_unmanaged',
                       'task'                   => 'plugin_fusioninventory_task',
                       'credential'             => 'plugin_fusioninventory_credential',
                       'credentialip'           => 'plugin_fusioninventory_credentialip',
@@ -263,9 +263,9 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryPrinter',
                 'label'     => __('Printer SNMP', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_printer'),
-          array('itemtype'  => 'PluginFusioninventoryUnknowndevice',
-                'label'     => __('Unknown devices', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_unknowndevice'),
+          array('itemtype'  => 'PluginFusioninventoryUnmanaged',
+                'label'     => __('Unmanaged devices', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_unmanaged'),
           array('itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_importxml'),
@@ -351,6 +351,7 @@ class PluginFusioninventoryProfile extends Profile {
             unset($_SESSION['glpiactiveprofile'][$right['field']]);
          }
       }
+      ProfileRight::deleteProfileRights(array($right['field']));
 
       if (isset($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu'])) {
          unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu']);
@@ -358,11 +359,11 @@ class PluginFusioninventoryProfile extends Profile {
       if (isset($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu'])) {
          unset ($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu']);
       }
-      if (isset($_SESSION['glpimenu']['assets']['types']['PluginFusioninventoryUnknowndevice'])) {
-         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryUnknowndevice']);
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginFusioninventoryUnmanaged'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryUnmanaged']);
       }
-      if (isset($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunknowndevice'])) {
-         unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunknowndevice']);
+      if (isset($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged'])) {
+         unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged']);
       }
    }
 

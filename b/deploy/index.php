@@ -50,6 +50,7 @@ if (isset($_GET['action'])) {
       case 'getJobs':
          if(isset($_GET['machineid'])) {
             $pfAgent        = new PluginFusioninventoryAgent();
+            $pfAgentModule = new PluginFusioninventoryAgentModule();
             $pfTask         = new PluginFusioninventoryTask();
             $pfTaskjob      = new PluginFusioninventoryTaskjob();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -57,6 +58,24 @@ if (isset($_GET['action'])) {
             $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
             if (isset($agent['id'])) {
+               $methods = $pfTaskjobstate->getTaskjobsAgent($agent['id']);
+               // In case deploy module is disabled since task prepared
+               if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
+                  foreach ($methods as $taskjobs) {
+                     foreach ($taskjobs as $data) {
+                        $pfTaskjobstate->changeStatusFinish($data['id'],
+                                                      0,
+                                                      '',
+                                                      0,
+                                                      "Deploy module has been disabled for this agent",
+                                                      0,
+                                                      0);
+                     }
+                  }
+                  echo "{}";
+                  exit;
+               }
+
                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                   $agent['id'],
                   array('deployinstall', 'deployuninstall')

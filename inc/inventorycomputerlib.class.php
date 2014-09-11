@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * @return nothing
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
@@ -101,11 +101,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 //      $pfInventoryComputerStorage_Storage =
 //             new PluginFusioninventoryInventoryComputerStorage_Storage();
 
-      if ($pfConfig->getValue('memcached')) {
-         $memcache = new Memcached();
-         $memcache->addServer($pfConfig->getValue('memcached'), 11211);
-      }
-
       $computer->getFromDB($computers_id);
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
@@ -113,6 +108,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Computer
          $db_computer = array();
          $db_computer = $computer->fields;
+         $computerName = $a_computerinventory['Computer']['name'];
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                           $db_computer, $a_lockable);
          $a_computerinventory['Computer'] = $a_ret[0];
@@ -609,9 +605,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             $db_software = array();
-            $datatoto = array('patatou');
             if ($no_history === FALSE) {
-            $datatoto[] = 'patatou2';
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                           `glpi_softwares`.`name`,
                           `glpi_softwareversions`.`name` AS version,
@@ -629,7 +623,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      AND `glpi_computers_softwareversions`.`is_dynamic`='1'";
                $result = $DB->query($query);
                while ($data = $DB->fetch_assoc($result)) {
-                  $datatoto[] = $data;
                   $idtmp = $data['sid'];
                   unset($data['sid']);
                   if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
@@ -675,11 +668,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softwareVersionInventory = array();
 
                $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-               if ($pfConfig->getValue('memcached')) {
-                  while(!$memcache->add("lock:software", "1", 300000)) {
-                     usleep(1000);
-                  }
+               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
+                     SET `value`='1'";
+               $CFG_GLPI["use_log_in_files"] = FALSE;
+               while(!$DB->query($queryDBLOCK)) {
+                  usleep(100000);
                }
+               $CFG_GLPI["use_log_in_files"] = TRUE;
                $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                foreach ($a_computerinventory['software'] as $a_software) {
                   if (!isset($this->softList[$a_software['name']."$$$$".
@@ -688,17 +683,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         $options);
                   }
                }
-               if ($pfConfig->getValue('memcached')) {
-                  $memcache->delete("lock:software");
-               }
+               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
+                     WHERE `value`='1'";
+               $DB->query($queryDBLOCK);
                $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                               $a_computerinventory['software'],
                                               $lastSoftwareVid);
-               if ($pfConfig->getValue('memcached')) {
-                  while(!$memcache->add("lock:softwareversion", "1", 300000)) {
-                     usleep(1000);
-                  }
+               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                     SET `value`='1'";
+               $CFG_GLPI["use_log_in_files"] = FALSE;
+               while(!$DB->query($queryDBLOCK)) {
+                  usleep(100000);
                }
+               $CFG_GLPI["use_log_in_files"] = TRUE;
                $this->loadSoftwareVersions($entities_id,
                                            $a_computerinventory['software'],
                                            $lastSoftwareVid);
@@ -708,9 +705,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $this->addSoftwareVersion($a_software, $softwares_id);
                   }
                }
-               if ($pfConfig->getValue('memcached')) {
-                  $memcache->delete("lock:softwareversion");
-               }
+               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                     WHERE `value`='1'";
+               $DB->query($queryDBLOCK);
                $a_toinsert = array();
                foreach ($a_computerinventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -740,7 +737,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                         $changes[0] = '0';
                         $changes[1] = "";
-                        $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                        $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                         $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                                      Log::HISTORY_INSTALL_SOFTWARE);
                      }
@@ -775,7 +772,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
 
                            $changes[0] = '0';
-                           $changes[1] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $changes[1] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                            $changes[2] = "";
                            $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
@@ -792,13 +789,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($nb_unicity == 0) {
                         $options['disable_unicity_check'] = TRUE;
                      }
-
                      $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-                     if ($pfConfig->getValue('memcached')) {
-                        while(!$memcache->add("lock:software", "1", 300000)) {
-                           usleep(1000);
-                        }
+                     $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
+                           SET `value`='1'";
+                     $CFG_GLPI["use_log_in_files"] = FALSE;
+                     while(!$DB->query($queryDBLOCK)) {
+                        usleep(100000);
                      }
+                     $CFG_GLPI["use_log_in_files"] = TRUE;
                      $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                      foreach ($a_computerinventory['software'] as $a_software) {
                         if (!isset($this->softList[$a_software['name']."$$$$".
@@ -807,18 +805,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                               $options);
                         }
                      }
-                     if ($pfConfig->getValue('memcached')) {
-                        $memcache->delete("lock:software");
-                     }
+                     $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
+                           WHERE `value`='1'";
+                     $DB->query($queryDBLOCK);
 
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                                     $a_computerinventory['software'],
                                                     $lastSoftwareVid);
-                     if ($pfConfig->getValue('memcached')) {
-                        while(!$memcache->add("lock:softwareversion", "1", 300000)) {
-                           usleep(1000);
-                        }
+                     $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                           SET `value`='1'";
+                     $CFG_GLPI["use_log_in_files"] = FALSE;
+                     while(!$DB->query($queryDBLOCK)) {
+                        usleep(100000);
                      }
+                     $CFG_GLPI["use_log_in_files"] = TRUE;
                      $this->loadSoftwareVersions($entities_id,
                                                  $a_computerinventory['software'],
                                                  $lastSoftwareVid);
@@ -828,9 +828,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $this->addSoftwareVersion($a_software, $softwares_id);
                         }
                      }
-                     if ($pfConfig->getValue('memcached')) {
-                        $memcache->delete("lock:softwareversion");
-                     }
+                     $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                           WHERE `value`='1'";
+                     $DB->query($queryDBLOCK);
                      $a_toinsert = array();
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -859,7 +859,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                            $changes[0] = '0';
                            $changes[1] = "";
-                           $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_INSTALL_SOFTWARE);
                         }
@@ -1057,7 +1057,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       // * Networkports
          if ($pfConfig->getValue("component_networkcard") != 0) {
-            // Get port from unknown device if exist
+            // Get port from unmanaged device if exist
             $this->manageNetworkPort($a_computerinventory['networkport'], $computers_id, $no_history);
          }
 
@@ -1690,18 +1690,18 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
             $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
-               AND `itemtype`='PluginFusioninventoryUnknownDevice'", "", 1);
+               AND `itemtype`='PluginFusioninventoryUnmanaged'", "", 1);
             if (count($a_networkports) > 0) {
                $input = current($a_networkports);
-               $unknowndevices_id = $input['items_id'];
+               $unmanageds_id = $input['items_id'];
                $input['logical_number'] = $a_networkport['logical_number'];
                $input['itemtype'] = 'Computer';
                $input['items_id'] = $computers_id;
                $input['is_dynamic'] = 1;
                $input['name'] = $a_networkport['name'];
                $networkPort->update($input, !$no_history);
-               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
+               $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+               $pfUnmanaged->delete(array('id'=>$unmanageds_id), 1);
             }
          }
       }
@@ -2101,7 +2101,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $result = $DB->query($sql);
 
       while ($data = $DB->fetch_assoc($result)) {
-         $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data['id'];
+         $this->softList[Toolbox::addslashes_deep($data['name'])."$$$$".$data['manufacturers_id']] = $data['id'];
       }
       return $lastid;
    }

@@ -43,6 +43,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `senddico` tinyint(1) NOT NULL DEFAULT '0',
    `timeout_networkdiscovery` int(4) NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout (disabled by default)',
    `timeout_networkinventory` int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout (disabled by default)',
+   `agent_port` varchar(6) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),
@@ -69,6 +70,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_entities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
+   `agent_base_url` varchar(255) NOT NULL DEFAULT '',
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -185,15 +187,17 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknowndevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unmanageds`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `date_mod` datetime DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `locations_id` int(11) NOT NULL DEFAULT '0',
    `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+   `is_template` tinyint(1) NOT NULL DEFAULT '0',
+   `users_id` int(11) NOT NULL DEFAULT '0',
    `serial` varchar(255) DEFAULT NULL,
    `otherserial` varchar(255) DEFAULT NULL,
    `contact` varchar(255) DEFAULT NULL,
@@ -473,38 +477,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_inventorycomputerstorages_id_1` (`plugin_fusioninventory_inventorycomputerstorages_id_1`),
   KEY `plugin_fusioninventory_inventorycomputerstorages_id_2` (`plugin_fusioninventory_inventorycomputerstorages_id_2`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configurationmanagements`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_configurationmanagements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `items_id` int(11) NOT NULL DEFAULT '0',
-  `itemtype` varchar(100) DEFAULT NULL,
-  `serialized_referential` longblob,
-  `sha_referential` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
-  `users_id` int(11) NOT NULL DEFAULT '0',
-  `serialized_last` longblob,
-  `sha_last` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sentnotification` tinyint(1) NOT NULL DEFAULT '0',
-  `conform` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configurationmanagements_models`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_configurationmanagements_models` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `itemtype` varchar(100) DEFAULT NULL,
-  `serialized_model` longblob,
-  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -997,6 +969,51 @@ CREATE TABLE `glpi_plugin_fusioninventory_timeslotentries` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblockinventorynames`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_dblockinventorynames` (
+  `value` varchar(100) NOT NULL DEFAULT '',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`value`),
+   UNIQUE KEY `value` (`value`)
+) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblockinventories`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_dblockinventories` (
+  `value` int(11) NOT NULL DEFAULT '0',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`value`),
+   UNIQUE KEY `value` (`value`)
+) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblocksoftwares`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwares` (
+  `value` tinyint(1) NOT NULL DEFAULT '0',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`value`),
+   UNIQUE KEY `value` (`value`)
+) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblocksoftwareversions`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
+  `value` tinyint(1) NOT NULL DEFAULT '0',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`value`),
+   UNIQUE KEY `value` (`value`)
+) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 -- INSERT
 -- glpi_plugin_fusioninventory_configsecurities
 INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
@@ -1021,16 +1038,16 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryAgent', '8', '6', '0'),
           (NULL,'PluginFusioninventoryAgent', '9', '7', '0'),
 
-          (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '3', '3', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '7', '5', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '10', '6', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '2', '1', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '4', '2', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '3', '3', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '5', '4', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '7', '5', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '10', '6', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '18', '8', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '14', '9', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '15', '10', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '9', '11', '0'),
 
           (NULL, 'PluginFusioninventoryTask', '2', '1', '0'),
           (NULL, 'PluginFusioninventoryTask', '3', '2', '0'),

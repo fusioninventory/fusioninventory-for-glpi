@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-11 22:50+0200\n"
-"PO-Revision-Date: 2014-06-11 21:04+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-06-13 13:28+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1422,15 +1422,15 @@ msgstr "Kötü IP"
 
 #: inc/iprange_configsecurity.class.php:64
 msgid "Associated SNMP authentications"
-msgstr ""
+msgstr "İlişkili SNMP kimlik doğrulamaları"
 
 #: inc/iprange_configsecurity.class.php:146
 msgid "SNMP Authentication"
-msgstr ""
+msgstr "SNMP Kimlik Doğrulaması"
 
 #: inc/iprange_configsecurity.class.php:149
 msgid "Version"
-msgstr ""
+msgstr "Sürüm"
 
 #: inc/lock.class.php:177
 msgid "Values GLPI"
@@ -3226,4 +3226,4 @@ msgstr "Ağ aygıtları ve yazıcılar"
 
 #: inc/wizard.class.php:1020
 msgid "Credential"
-msgstr ""
+msgstr "Kimlik Doğrulama Bilgisi"

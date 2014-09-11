@@ -84,7 +84,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'config'                     => 'PluginFusioninventoryConfig',
           'task'                       => 'PluginFusioninventoryTask',
           'timeslot'                   => 'PluginFusioninventoryTimeslot',
-          'unknowndevice'              => 'PluginFusioninventoryUnknownDevice',
+          'unmanaged'                  => 'PluginFusioninventoryUnmanaged',
           'inventoryruleimport'        => 'PluginFusioninventoryInventoryRuleImport',
           'inventoryruleentity'        => 'PluginFusioninventoryInventoryRuleEntity',
           'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
@@ -177,11 +177,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>\n";
       }
 
-      $config = new PluginFusioninventoryConfig();
-      if (strlen($config->getValue('agent_base_url'))<10
+      $pfEntity = new PluginFusioninventoryEntity();
+      if (strlen($pfEntity->getValue('agent_base_url', 0))<10
               && !strstr($_SERVER['PHP_SELF'], 'front/config.form.php')) {
          echo "<div class='msgboxmonit msgboxmonit-red'>";
-         print "<center><a href=\"config.form.php\">";
+         print "<center><a href=\"".$CFG_GLPI['root_doc']."/front/entity.form.php?id=0&forcetab=PluginFusioninventoryEntity$0\">";
          print __('The server needs to kown the URL the agents use to access the server. Please '.
                  'configure it in the General Configuration page.', 'fusioninventory');
          print "</a></center>";
@@ -445,40 +445,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                                              $width_status);
       }
 
-      /*
-       * Configuration management
-       */
-      $a_menu = array();
-
-      if (Session::haveRight('config', UPDATE)) {
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
-                                    "`conform`='0'");
-         $a_menu[0]['name'] = __('Not conform', 'fusioninventory')." <sup>(".$nb.")</sup>";
-         $a_menu[0]['pic']  = "";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_notconform.php";
-
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
-                                    "`sha_referential`='' OR `sha_referential` IS NULL");
-         $a_menu[1]['name'] = __('To be validated', 'fusioninventory')." <sup>(".$nb.")</sup>";
-         $a_menu[1]['pic']  = "";
-         $a_menu[1]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_tobevalidated.php";
-
-         $a_menu[2]['name'] = __('Models', 'fusioninventory');
-         $a_menu[2]['pic']  = "";
-         $a_menu[2]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_model.php";
-
-      }
-
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
-      }
-
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -625,9 +591,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/task.php"
           ),
           array(
-              'text' => __('If you have devices not typed, import them from unknown devices', 'fusioninventory'),
+              'text' => __('If you have devices not typed, import them from unmanaged devices', 'fusioninventory'),
               'url'  => $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/unknowndevice.php"
+                                 "/plugins/fusioninventory/front/unmanaged.php"
           ),
           array(
               'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'fusioninventory'),
@@ -823,27 +789,56 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'color' => '#dedede'
       );
 
-      $dataDeploy = array();
-      $dataDeploy[] = array(
-          'key' => 'Deployment successfull : 400',
-          'y'   => 400,
-          'color' => '#3dff7d'
-      );
-      $dataDeploy[] = array(
-          'key' => 'Deployment in error : 55',
-          'y'   => 55,
-          'color' => '#ff3d3d'
-      );
-      $dataDeploy[] = array(
-          'key' => 'Deployment prepared and waiting : 568',
-          'y'   => 568,
-          'color' => '#feffc9'
-      );
 
       // Number of computer inventories in last hour, 6 hours, 24 hours
       $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
 
+      // Deploy
+      $query = "SELECT `plugin_fusioninventory_tasks_id` FROM glpi_plugin_fusioninventory_taskjobs"
+              . " WHERE method LIKE '%deploy%'"
+              . " GROUP BY `plugin_fusioninventory_tasks_id`";
+      $result = $DB->query($query);
+      $a_tasks = array();
+      while ($data=$DB->fetch_array($result)) {
+         $a_tasks[] = $data['plugin_fusioninventory_tasks_id'];
+      }
+      $pfTask = new PluginFusioninventoryTask();
+      $data = $pfTask->getJoblogs($a_tasks);
 
+      $dataDeploy = array();
+      $dataDeploy[0] = array(
+          'key' => 'Prepared and waiting',
+          'y'   => 0,
+          'color' => '#efefef'
+      );
+      $dataDeploy[1] = array(
+          'key' => 'Running',
+          'y'   => 0,
+          'color' => '#aaaaff'
+      );
+      $dataDeploy[2] = array(
+          'key' => 'Successfull',
+          'y'   => 0,
+          'color' => '#aaffaa'
+      );
+      $dataDeploy[3] = array(
+          'key' => 'In error',
+          'y'   => 0,
+          'color' => '#ff0000'
+      );
+      foreach ($data['tasks'] as $lev1) {
+         foreach ($lev1['jobs'] as $lev2) {
+            foreach ($lev2['targets'] as $lev3) {
+               $dataDeploy[2]['y'] += count($lev3['counters']['agents_success']);
+               $dataDeploy[3]['y'] += count($lev3['counters']['agents_error']);
+               $dataDeploy[0]['y'] += count($lev3['counters']['agents_prepared']);
+               $dataDeploy[1]['y'] += count($lev3['counters']['agents_running']);
+            }
+         }
+      }
+      for ($k=0; $k<4; $k++) {
+         $dataDeploy[$k]['key'] .= " : ".$dataDeploy[$k]['y'];
+      }
 
       echo "<table align='center'>";
       echo "<tr height='280'>";
@@ -856,7 +851,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";
-      self::showChart('deploy', $dataDeploy);
+      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -876,7 +871,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-   static function showChart($name, $data) {
+   static function showChart($name, $data, $title='') {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
