@@ -823,26 +823,53 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'color' => '#dedede'
       );
 
-      $dataDeploy = array();
-      $dataDeploy[] = array(
-          'key' => 'Deployment successfull : 400',
-          'y'   => 400,
-          'color' => '#3dff7d'
-      );
-      $dataDeploy[] = array(
-          'key' => 'Deployment in error : 55',
-          'y'   => 55,
-          'color' => '#ff3d3d'
-      );
-      $dataDeploy[] = array(
-          'key' => 'Deployment prepared and waiting : 568',
-          'y'   => 568,
-          'color' => '#feffc9'
-      );
 
       // Number of computer inventories in last hour, 6 hours, 24 hours
       $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
 
+      // Deploy
+      $query = "SELECT `plugin_fusioninventory_tasks_id` FROM glpi_plugin_fusioninventory_taskjobs"
+              . " WHERE method LIKE '%deploy%'"
+              . " GROUP BY `plugin_fusioninventory_tasks_id`";
+      $result = $DB->query($query);
+      $a_tasks = array();
+      while ($data=$DB->fetch_array($result)) {
+         $a_tasks[] = $data['plugin_fusioninventory_tasks_id'];
+      }
+      $pfTask = new PluginFusioninventoryTask();
+      $data = $pfTask->getJoblogs($a_tasks);
+
+      $dataDeploy = array();
+      $dataDeploy[0] = array(
+          'key' => 'Deployment prepared and waiting',
+          'y'   => 0,
+          'color' => '#efefef'
+      );
+      $dataDeploy[1] = array(
+          'key' => 'Deployment running',
+          'y'   => 0,
+          'color' => '#aaaaff'
+      );
+      $dataDeploy[2] = array(
+          'key' => 'Deployment successfull',
+          'y'   => 0,
+          'color' => '#aaffaa'
+      );
+      $dataDeploy[3] = array(
+          'key' => 'Deployment in error',
+          'y'   => 0,
+          'color' => '#ff0000'
+      );
+      foreach ($data['tasks'] as $lev1) {
+         foreach ($lev1['jobs'] as $lev2) {
+            foreach ($lev2['targets'] as $lev3) {
+               $dataDeploy[2]['y'] += count($lev3['counters']['agents_success']);
+               $dataDeploy[3]['y'] += count($lev3['counters']['agents_error']);
+               $dataDeploy[0]['y'] += count($lev3['counters']['agents_prepared']);
+               $dataDeploy[1]['y'] += count($lev3['counters']['agents_running']);
+            }
+         }
+      }
 
 
       echo "<table align='center'>";
