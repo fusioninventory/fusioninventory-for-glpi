@@ -70,7 +70,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agents_old_days']        = '0';
 
-      $input['import_printer']         = 2;
       $input['import_peripheral']      = 2;
       $input['import_software']        = 1;
       $input['import_volume']          = 1;
@@ -430,30 +429,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Printer', 'Printers', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $elements = array();
-      $elements[0] = __('No import');
-      $elements[1] = __('Global import', 'fusioninventory');
-      $elements[2] = __('Unique import', 'fusioninventory');
-      $elements[3] = __('Unique import on serial number', 'fusioninventory');
-
-      Dropdown::showFromArray("import_printer", $elements,
-                              array('value' =>
-                                 $pfConfig->getValue('import_printer')));
-      echo "&nbsp;";
-      $text = "* ".__('No import')."&nbsp;:&nbsp;".
-      __('This option will not import this item', 'fusioninventory')."<br/><br/>".
-      "* ".__('Global import', 'fusioninventory')."&nbsp;:&nbsp;".
-      __("This option will merge items with same name to reduce number of items if this ".
-            "management isn't important", 'fusioninventory')."<br/><br/>".
-      "* ".__('Unique import', 'fusioninventory')."&nbsp;:&nbsp;".
-      __('This option will create one item for each item found', 'fusioninventory')."<br/><br/>".
-      "* ".__('Unique import on serial number', 'fusioninventory')."&nbsp;:&nbsp;".
-      __('This option will create one item for each item have serial number', 'fusioninventory');
-      Html::showToolTip($text);
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo _n('Memory', 'Memories', 2)."&nbsp;:";
@@ -483,7 +459,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                               array('value' =>
                                        $pfConfig->getValue('import_peripheral')));
       echo "&nbsp;";
-      Html::showToolTip($text);
       echo "</td>";
       echo "<td>";
       echo _n('Network card', 'Network cards', 2)."&nbsp;:";
