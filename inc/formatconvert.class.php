@@ -846,86 +846,77 @@ class PluginFusioninventoryFormatconvert {
 
       // * PERIPHERAL
       $a_inventory['peripheral'] = array();
-      if ($pfConfig->getValue('import_peripheral') > 0) {
-         $a_peripheral_name = array();
-         $per = 0;
-         if (isset($array['USBDEVICES'])) {
-            foreach ($array['USBDEVICES'] as $a_peripherals) {
-               $array_tmp = $thisc->addValues($a_peripherals,
-                                              array(
-                                                 'NAME'         => 'name',
-                                                 'MANUFACTURER' => 'manufacturers_id',
-                                                 'SERIAL'       => 'serial',
-                                                 'PRODUCTNAME'  => 'productname'));
+      $a_peripheral_name = array();
+      $per = 0;
+      if (isset($array['USBDEVICES'])) {
+         foreach ($array['USBDEVICES'] as $a_peripherals) {
+            $array_tmp = $thisc->addValues($a_peripherals,
+                                           array(
+                                              'NAME'         => 'name',
+                                              'MANUFACTURER' => 'manufacturers_id',
+                                              'SERIAL'       => 'serial',
+                                              'PRODUCTNAME'  => 'productname'));
 
-               if(isset($a_peripherals['VENDORID'])
-                        AND $a_peripherals['VENDORID'] != ''
-                        AND isset($a_peripherals['PRODUCTID'])) {
+            if(isset($a_peripherals['VENDORID'])
+                     AND $a_peripherals['VENDORID'] != ''
+                     AND isset($a_peripherals['PRODUCTID'])) {
 
-                  $dataArray = PluginFusioninventoryInventoryExternalDB::getDataFromUSBID(
-                             $a_peripherals['VENDORID'],
-                             $a_peripherals['PRODUCTID']
-                          );
-                  $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
-                  if (!empty($dataArray[0])
-                          AND empty($array_tmp['manufacturers_id'])) {
-                     $array_tmp['manufacturers_id'] = $dataArray[0];
-                  }
-                  $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
-                  if (!empty($dataArray[1])
-                          AND empty($a_peripherals['productname'])) {
-                     $a_peripherals['productname'] = $dataArray[1];
-                  }
+               $dataArray = PluginFusioninventoryInventoryExternalDB::getDataFromUSBID(
+                          $a_peripherals['VENDORID'],
+                          $a_peripherals['PRODUCTID']
+                       );
+               $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
+               if (!empty($dataArray[0])
+                       AND empty($array_tmp['manufacturers_id'])) {
+                  $array_tmp['manufacturers_id'] = $dataArray[0];
                }
-
-               if ($array_tmp['productname'] != '') {
-                  $array_tmp['name'] = $array_tmp['productname'];
-               }
-               unset($array_tmp['productname']);
-
-               if (!($pfConfig->getValue('import_peripheral') == 3
-                       && $array_tmp['serial'] == '')) {
-
-                  $a_inventory['peripheral'][] = $array_tmp;
-                  $a_peripheral_name[$array_tmp['name']] = $per;
-                  $per++;
+               $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
+               if (!empty($dataArray[1])
+                       AND empty($a_peripherals['productname'])) {
+                  $a_peripherals['productname'] = $dataArray[1];
                }
             }
+
+            if ($array_tmp['productname'] != '') {
+               $array_tmp['name'] = $array_tmp['productname'];
+            }
+            unset($array_tmp['productname']);
+
+            $a_inventory['peripheral'][] = $array_tmp;
+            $a_peripheral_name[$array_tmp['name']] = $per;
+            $per++;
          }
-         if (isset($array['INPUTS'])) {
-            $a_pointingtypes = array(
-                3 => 'Mouse',
-                4 => 'Trackball',
-                5 => 'Track Point',
-                6 => 'Glide Point',
-                7 => 'Touch Pad',
-                8 => 'Touch Screen',
-                9 => 'Mouse - Optical Sensor'
-            );
-            foreach ($array['INPUTS'] as $a_peripherals) {
-               $array_tmp = $thisc->addValues($a_peripherals,
-                                              array(
-                                                 'NAME'         => 'name',
-                                                 'MANUFACTURER' => 'manufacturers_id'));
-               $array_tmp['serial'] = '';
-               $array_tmp['peripheraltypes_id'] = '';
-               if (isset($a_peripherals['POINTINGTYPE'])
-                       && isset($a_pointingtypes[$a_peripherals['POINTINGTYPE']])) {
+      }
+      if (isset($array['INPUTS'])) {
+         $a_pointingtypes = array(
+             3 => 'Mouse',
+             4 => 'Trackball',
+             5 => 'Track Point',
+             6 => 'Glide Point',
+             7 => 'Touch Pad',
+             8 => 'Touch Screen',
+             9 => 'Mouse - Optical Sensor'
+         );
+         foreach ($array['INPUTS'] as $a_peripherals) {
+            $array_tmp = $thisc->addValues($a_peripherals,
+                                           array(
+                                              'NAME'         => 'name',
+                                              'MANUFACTURER' => 'manufacturers_id'));
+            $array_tmp['serial'] = '';
+            $array_tmp['peripheraltypes_id'] = '';
+            if (isset($a_peripherals['POINTINGTYPE'])
+                    && isset($a_pointingtypes[$a_peripherals['POINTINGTYPE']])) {
 
-                  $array_tmp['peripheraltypes_id'] = $a_pointingtypes[$a_peripherals['POINTINGTYPE']];
-               }
-               if (isset($a_peripherals['LAYOUT'])) {
-                  $array_tmp['peripheraltypes_id'] = 'keyboard';
-               }
+               $array_tmp['peripheraltypes_id'] = $a_pointingtypes[$a_peripherals['POINTINGTYPE']];
+            }
+            if (isset($a_peripherals['LAYOUT'])) {
+               $array_tmp['peripheraltypes_id'] = 'keyboard';
+            }
 
-               if (!($pfConfig->getValue('import_peripheral') == 3
-                       && $array_tmp['serial'] == '')) {
-                  if (isset($a_peripheral_name[$array_tmp['name']])) {
-                     $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
-                  } else {
-                     $a_inventory['peripheral'][] = $array_tmp;
-                  }
-               }
+            if (isset($a_peripheral_name[$array_tmp['name']])) {
+               $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
+            } else {
+               $a_inventory['peripheral'][] = $array_tmp;
             }
          }
       }
