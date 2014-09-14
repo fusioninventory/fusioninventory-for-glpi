@@ -396,7 +396,7 @@ class PluginFusioninventoryFormatconvert {
          }
          if (isset($array_tmp['plugin_fusioninventory_computerarchs_id'])
                  && $array_tmp['plugin_fusioninventory_computerarchs_id'] != '') {
-                 
+
             $rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
             $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['plugin_fusioninventory_computerarchs_id']));
             if (isset($res_rule['name'])) {
@@ -774,46 +774,34 @@ class PluginFusioninventoryFormatconvert {
 
       // * MONITORS
       $a_inventory['monitor'] = array();
-      if ($pfConfig->getValue('import_monitor') > 0) {
-         if (isset($array['MONITORS'])) {
-            $a_serialMonitor = array();
-            foreach ($array['MONITORS'] as $a_monitors) {
-               $array_tmp = $thisc->addValues($a_monitors,
-                                              array(
-                                                 'CAPTION'      => 'name',
-                                                 'MANUFACTURER' => 'manufacturers_id',
-                                                 'SERIAL'       => 'serial',
-                                                 'DESCRIPTION'  => 'comment'));
-               if (!($pfConfig->getValue('import_monitor') == 3
-                       && (!isset($array_tmp['serial'])
-                           ||$array_tmp['serial'] == ''))) {
-                  $add = 1;
-                  if (isset($array_tmp['serial'])
-                          && $array_tmp['serial'] != ''
-                          && isset($a_serialMonitor[$array_tmp['serial']])) {
-                     $add = 0;
-                  }
-                  if (!isset($array_tmp['name'])) {
-                     $array_tmp['name'] = '';
-                  }
-                  if ($array_tmp['name'] == ''
-                          && isset($array_tmp['comment'])) {
-                     $array_tmp['name'] = $array_tmp['comment'];
-                  }
-                  if (isset($array_tmp['comment'])) {
-                     unset($array_tmp['comment']);
-                  }
-                  if (!isset($array_tmp['serial'])) {
-                     $array_tmp['serial'] = '';
-                  }
-                  if (!isset($array_tmp['manufacturers_id'])) {
-                     $array_tmp['manufacturers_id'] = '';
-                  }
-                  if ($add == 1) {
-                     $a_inventory['monitor'][] = $array_tmp;
-                     $a_serialMonitor[$array_tmp['serial']] = 1;
-                  }
-               }
+      if (isset($array['MONITORS'])) {
+         $a_serialMonitor = array();
+         foreach ($array['MONITORS'] as $a_monitors) {
+            $array_tmp = $thisc->addValues($a_monitors,
+                                           array(
+                                              'CAPTION'      => 'name',
+                                              'MANUFACTURER' => 'manufacturers_id',
+                                              'SERIAL'       => 'serial',
+                                              'DESCRIPTION'  => 'comment'));
+            if (!isset($array_tmp['name'])) {
+               $array_tmp['name'] = '';
+            }
+            if ($array_tmp['name'] == ''
+                    && isset($array_tmp['comment'])) {
+               $array_tmp['name'] = $array_tmp['comment'];
+            }
+            if (isset($array_tmp['comment'])) {
+               unset($array_tmp['comment']);
+            }
+            if (!isset($array_tmp['serial'])) {
+               $array_tmp['serial'] = '';
+            }
+            if (!isset($array_tmp['manufacturers_id'])) {
+               $array_tmp['manufacturers_id'] = '';
+            }
+            if (!isset($a_serialMonitor[$array_tmp['serial']])) {
+               $a_inventory['monitor'][] = $array_tmp;
+               $a_serialMonitor[$array_tmp['serial']] = 1;
             }
          }
       }
