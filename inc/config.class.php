@@ -70,7 +70,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agents_old_days']        = '0';
 
-      $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
       $input['import_peripheral']      = 2;
       $input['import_software']        = 1;
@@ -465,15 +464,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Monitor', 'Monitors', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("import_monitor", $elements,
-                              array('value' =>
-                                 $pfConfig->getValue('import_monitor')));
-      echo "&nbsp;";
-      Html::showToolTip($text);
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "<td>";
       echo _n('Hard drive', 'Hard drives', 2)."&nbsp;:";
