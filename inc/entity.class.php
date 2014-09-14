@@ -197,13 +197,18 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       $entities_ancestors = getAncestorsOf("glpi_entities", $entities_id);
 
+      $where = '';
+      if ($name == 'agent_base_url') {
+         $where = "AND `".$name."` != ''";
+      }
+
       $nbentities = count($entities_ancestors);
       for ($i=0; $i<$nbentities; $i++) {
          $entity = array_pop($entities_ancestors);
          $query = "SELECT * FROM `".$this->getTable()."`
             WHERE `entities_id`='".$entity."'
                AND `".$name."` IS NOT NULL
-               AND `".$name."` != ''
+               ".$where."
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) != 0) {
@@ -229,10 +234,15 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    function getValue($name, $entities_id) {
       global $DB;
 
+      $where = '';
+      if ($name == 'agent_base_url') {
+         $where = "AND `".$name."` != ''";
+      }
+
       $query = "SELECT `".$name."` FROM `".$this->getTable()."`
          WHERE `entities_id`='".$entities_id."'
-            AND `".$name."` IS NOT NULL 
-            AND `".$name."` != ''
+            AND `".$name."` IS NOT NULL
+            ".$where."
          LIMIT 1";
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
