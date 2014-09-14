@@ -809,45 +809,35 @@ class PluginFusioninventoryFormatconvert {
 
       // * PRINTERS
       $a_inventory['printer'] = array();
-      if ($pfConfig->getValue('import_printer') > 0) {
-         if (isset($array['PRINTERS'])) {
-            $rulecollection = new RuleDictionnaryPrinterCollection();
-            foreach ($array['PRINTERS'] as $a_printers) {
-               $array_tmp = $thisc->addValues($a_printers,
-                                              array(
-                                                 'NAME'         => 'name',
-                                                 'PORT'         => 'port',
-                                                 'SERIAL'       => 'serial'));
-               if (!($pfConfig->getValue('import_printer') == 3
-                       && $array_tmp['serial'] == '')) {
-
-                  if (strstr($array_tmp['port'], "USB")) {
-                     $array_tmp['have_usb'] = 1;
-                  } else {
-                     $array_tmp['have_usb'] = 0;
-                  }
-                  unset($array_tmp['port']);
-                  $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['name']));
-                  if (isset($res_rule['_ignore_ocs_import'])
-                          && $res_rule['_ignore_ocs_import'] == "1") {
-                     // Ignrore import printer
-                  } else if (isset($res_rule['_ignore_import'])
-                          && $res_rule['_ignore_import'] == "1") {
-                     // Ignrore import printer
-                  } else {
-                      if (isset($res_rule['name'])) {
-                         $array_tmp['name'] = $res_rule['name'];
-                      }
-                      if (isset($res_rule['manufacturer'])) {
-                         $array_tmp['manufacturers_id'] = $res_rule['manufacturer'];
-                      }
-                      // use config of plugin (unit, global unit, unit with serial)
-//                      if (isset($res_rule['is_global'])) {
-//                         $array_tmp['is_global'] = $res_rule['is_global'];
-//                      }
-                     $a_inventory['printer'][] = $array_tmp;
-                  }
+      if (isset($array['PRINTERS'])) {
+         $rulecollection = new RuleDictionnaryPrinterCollection();
+         foreach ($array['PRINTERS'] as $a_printers) {
+            $array_tmp = $thisc->addValues($a_printers,
+                                           array(
+                                              'NAME'         => 'name',
+                                              'PORT'         => 'port',
+                                              'SERIAL'       => 'serial'));
+            if (strstr($array_tmp['port'], "USB")) {
+               $array_tmp['have_usb'] = 1;
+            } else {
+               $array_tmp['have_usb'] = 0;
+            }
+            unset($array_tmp['port']);
+            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['name']));
+            if (isset($res_rule['_ignore_ocs_import'])
+                    && $res_rule['_ignore_ocs_import'] == "1") {
+               // Ignrore import printer
+            } else if (isset($res_rule['_ignore_import'])
+                    && $res_rule['_ignore_import'] == "1") {
+               // Ignrore import printer
+            } else {
+               if (isset($res_rule['name'])) {
+                  $array_tmp['name'] = $res_rule['name'];
                }
+               if (isset($res_rule['manufacturer'])) {
+                  $array_tmp['manufacturers_id'] = $res_rule['manufacturer'];
+               }
+               $a_inventory['printer'][] = $array_tmp;
             }
          }
       }

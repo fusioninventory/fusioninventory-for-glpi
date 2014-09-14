@@ -5165,6 +5165,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $input['value'] = '1';
          $ruleaction->add($input);
 
+   // Add printer rules (in first in rule list) when use it since 0.85
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
+           ." WHERE `type`='import_printer' ";
 
 
    /*
@@ -5232,8 +5235,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       // Update fusinvinventory _config values to this plugin
       $input = array();
-      $input['import_monitor']         = 2;
-      $input['import_printer']         = 2;
       $input['import_peripheral']      = 2;
       $input['import_software']        = 1;
       $input['import_volume']          = 1;
