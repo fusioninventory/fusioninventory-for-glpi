@@ -257,9 +257,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['osname'] = $a_computerinventory['Computer']['operatingsystems_id'];
 
          }
-         if ((isset($a_computerinventory['Computer']['models_id']))
-                 AND (!empty($a_computerinventory['Computer']['models_id']))) {
-            $input['model'] = $a_computerinventory['Computer']['models_id'];
+         if ((isset($a_computerinventory['Computer']['computermodels_id']))
+                 AND (!empty($a_computerinventory['Computer']['computermodels_id']))) {
+            $input['model'] = $a_computerinventory['Computer']['computermodels_id'];
          }
          // TODO
 //         if (isset($arrayinventory['CONTENT']['STORAGES'])) {
