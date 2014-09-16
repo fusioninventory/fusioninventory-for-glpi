@@ -1952,11 +1952,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
-      $ids   = array();
+      //Get all glpi_plugin_fusioninventory_inventorycomputercomputers rows with serialized_inventory at NULL
       $query = "SELECT `id`, `computers_id` 
                 FROM `glpi_plugin_fusioninventory_inventorycomputercomputers` 
                 WHERE `serialized_inventory` IS NULL";
       foreach ($DB->request($query) as $computerinfos) {
+         //For each line, recreate a new array which contains the minimum informations to correctly handle locks
          $computer = new Computer();
          if ($computer->getFromDB($computerinfos['computers_id'])) {
             $a_inventory = array(
@@ -2003,6 +2004,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                'contact'                          => $computer->fields['contact'],
                'states_id'                        => $computer->fields['states_id']
             );
+            //Serialize and gzip the array, as needed by FusionInventory
             $tmp = Toolbox::addslashes_deep(gzcompress(serialize($a_inventory)));
             $query = "UPDATE `glpi_plugin_fusioninventory_inventorycomputercomputers` 
                      SET `serialized_inventory`=\"$tmp\" 
