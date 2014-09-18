@@ -759,6 +759,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => array('entities_id'. 'transfers_id_auto'),
+                                 'name' => 'unicity',
+                                 'type' => 'UNIQUE');
 
       $a_table['oldkeys'] = array();
 

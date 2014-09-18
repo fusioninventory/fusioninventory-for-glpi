@@ -69,7 +69,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_entities` (
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
    `agent_base_url` varchar(255) NOT NULL DEFAULT '',
-   PRIMARY KEY (`id`)
+   PRIMARY KEY (`id`),
+   KEY `entities_id` (`entities_id`,`transfers_id_auto`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
