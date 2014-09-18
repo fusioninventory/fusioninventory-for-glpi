@@ -760,8 +760,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_table['keys']   = array();
       $a_table['keys'][] = array('field' => array('entities_id'. 'transfers_id_auto'),
-                                 'name' => 'unicity',
-                                 'type' => 'UNIQUE');
+                                 'name' => 'entities_id',
+                                 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
