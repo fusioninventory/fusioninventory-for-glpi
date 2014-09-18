@@ -772,7 +772,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $transfers_id_auto = $a_config['value'];
          }
-         
+
          $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
                                            "`type`='agent_base_url'");
          $agent_base_url = '';
@@ -780,7 +780,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
          }
-         
+
          $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
                (`entities_id`, `transfers_id_auto`, `agent_base_url`)
             VALUES ('0', '".$transfers_id_auto."', '".$agent_base_url."');");
@@ -792,7 +792,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
          }
-         
+
          $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
                SET `agent_base_url` = '".$agent_base_url."'
                ;");
@@ -5153,6 +5153,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'computers_id', 'name' => '', 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
