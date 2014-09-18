@@ -4080,6 +4080,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'computers_id', 'name' => '', 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
