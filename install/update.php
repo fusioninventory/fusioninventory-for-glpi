@@ -1458,6 +1458,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             array("plugin_fusioninventory_agents_id", "state"),
                             "plugin_fusioninventory_agents_id");
+         $migration->addKey($newTable,
+                            array("uniqid", "state"),
+                            "uniqid");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
 
