@@ -8660,54 +8660,55 @@ function migrateTablesFromFusinvDeploy ($migration) {
    //migrate fusinvdeploy_files to fusioninventory_deployfiles
    if (TableExists("glpi_plugin_fusinvdeploy_files")) {
       $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
-      $f_query =
-         implode(array(
-            "SELECT  files.`id`, files.`name`,",
-            "        files.`filesize`, files.`mimetype`,",
-            "        files.`sha512`, files.`shortsha512`,",
-            "        files.`create_date`,",
-            "        pkgs.`entities_id`, pkgs.`is_recursive`",
-            "FROM glpi_plugin_fusinvdeploy_files as files",
-            "LEFT JOIN glpi_plugin_fusioninventory_deployorders as orders",
-            "  ON orders.`id` = files.`plugin_fusinvdeploy_orders_id`",
-            "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
-            "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
-            "WHERE",
-            "  files.`shortsha512` != \"\""
-         ), " \n");
-      $f_res = $DB->query($f_query);
-      while($f_datas = $DB->fetch_assoc($f_res)) {
-         $entry = array(
-            "id"        => $f_datas["id"],
-            "name"      => $f_datas["name"],
-            "filesize"  => $f_datas["filesize"],
-            "mimetype"  => $f_datas["mimetype"],
-            "shortsha512"  => $f_datas["shortsha512"],
-            "sha512"  => $f_datas["sha512"],
-            "comments"  => "",
-            "date_mod"  => $f_datas["create_date"],
-            "entities_id"  => $f_datas["entities_id"],
-            "is_recursive"  => $f_datas["is_recursive"],
-         );
-         $migration->displayMessage("\n");
-         // Check if file exists
-         $i_DeployFile = new PluginFusioninventoryDeployFile();
-         $migration->displayMessage(
-            "migrating file ". $entry['name'] .
-            " sha:" . $entry['sha512'] .
-            "\n"
-         );
-         if ($i_DeployFile->checkPresenceManifest($entry['sha512'])) {
+      if (FieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
+         $f_query =
+            implode(array(
+               "SELECT  files.`id`, files.`name`,",
+               "        files.`filesize`, files.`mimetype`,",
+               "        files.`sha512`, files.`shortsha512`,",
+               "        files.`create_date`,",
+               "        pkgs.`entities_id`, pkgs.`is_recursive`",
+               "FROM glpi_plugin_fusinvdeploy_files as files",
+               "LEFT JOIN glpi_plugin_fusioninventory_deployorders as orders",
+               "  ON orders.`id` = files.`plugin_fusinvdeploy_orders_id`",
+               "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
+               "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
+               "WHERE",
+               "  files.`shortsha512` != \"\""
+            ), " \n");
+         $f_res = $DB->query($f_query);
+         while($f_datas = $DB->fetch_assoc($f_res)) {
+            $entry = array(
+               "id"        => $f_datas["id"],
+               "name"      => $f_datas["name"],
+               "filesize"  => $f_datas["filesize"],
+               "mimetype"  => $f_datas["mimetype"],
+               "shortsha512"  => $f_datas["shortsha512"],
+               "sha512"  => $f_datas["sha512"],
+               "comments"  => "",
+               "date_mod"  => $f_datas["create_date"],
+               "entities_id"  => $f_datas["entities_id"],
+               "is_recursive"  => $f_datas["is_recursive"],
+            );
+            $migration->displayMessage("\n");
+            // Check if file exists
+            $i_DeployFile = new PluginFusioninventoryDeployFile();
             $migration->displayMessage(
-               "manifest exists" .
+               "migrating file ". $entry['name'] .
+               " sha:" . $entry['sha512'] .
                "\n"
             );
-            $migration->insertInTable(
-               "glpi_plugin_fusioninventory_deployfiles", $entry
-            );
+            if ($i_DeployFile->checkPresenceManifest($entry['sha512'])) {
+               $migration->displayMessage(
+                  "manifest exists" .
+                  "\n"
+               );
+               $migration->insertInTable(
+                  "glpi_plugin_fusioninventory_deployfiles", $entry
+               );
+            }
          }
       }
-
    }
 
    /**
