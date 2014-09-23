@@ -138,7 +138,7 @@ class RuleIgnoredImport extends Common_TestCase {
           'entities_id' => '0',
           'ip'          => NULL,
           'mac'         => NULL,
-          'rules_id'    => '24',
+          'rules_id'    => '30',
           'method'      => 'inventory',
           'serial'      => '',
           'uuid'        => ''

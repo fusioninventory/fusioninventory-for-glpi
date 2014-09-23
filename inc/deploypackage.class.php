@@ -402,7 +402,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<tr><td>";
          echo "<span id='package_json_debug'>";
          self::display_json_debug($order);
-         echo "</span>";
+         echo "</sp3an>";
          echo "</td></tr>";
       }
       echo "</table>";
@@ -419,7 +419,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function plusButtonSubtype($id, $order_id, $subtype, $rand) {
       global $CFG_GLPI;
 
-      if ($this->can($id, 'w')) {
+      if ($this->can($id, UPDATE)) {
          echo "&nbsp;";
          echo "<img id='plus_{$subtype}s_block{$rand}'";
          echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
@@ -463,7 +463,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
          echo PluginFusioninventoryToolbox::displayJson($order->fields['json']);
          echo "</textarea>";
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
             echo "<input type='submit' name='update_json' value=\"".
                _sx('button', 'Save')."\" class='submit'>";

@@ -98,12 +98,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
           'deploytask'                 => 'PluginFusioninventoryDeployTask',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
-          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
+          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice',
+          'ruledictionnarycomputerarch'=> 'PluginFusioninventoryRuleDictionnaryComputerArch'
       );
       $options = array();
-
-      $options['title'] = self::getTypeName();
-      $options['page']  = self::getSearchURL(false);
 
       $options['menu']['title'] = self::getTypeName();
       $options['menu']['page']  = self::getSearchURL(false);
@@ -122,6 +120,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
          }
       }
+
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
            'page'  => PluginFusioninventoryAgent::getSearchURL(false),
@@ -321,12 +320,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/collectrule.php";
       }
 
+      if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
+         $a_menu[6]['name'] = __('Dictionnary of computer architectures', 'fusioninventory');
+         $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/ruledictionnarycomputerarch.php";
+      }
 
       if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {
-         $a_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
-         $a_menu[6]['pic']  = $CFG_GLPI['root_doc'].
+         $a_menu[7]['name'] = _n('Blacklist', 'Blacklists', 1);
+         $a_menu[7]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
-         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
+         $a_menu[7]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
@@ -435,40 +440,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'),
-                                                             $a_menu,
-                                                             $type,
-                                                             $width_status);
-      }
-
-      /*
-       * Configuration management
-       */
-      $a_menu = array();
-
-      if (Session::haveRight('config', UPDATE)) {
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
-                                    "`conform`='0'");
-         $a_menu[0]['name'] = __('Not conform', 'fusioninventory')." <sup>(".$nb.")</sup>";
-         $a_menu[0]['pic']  = "";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_notconform.php";
-
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
-                                    "`sha_referential`='' OR `sha_referential` IS NULL");
-         $a_menu[1]['name'] = __('To be validated', 'fusioninventory')." <sup>(".$nb.")</sup>";
-         $a_menu[1]['pic']  = "";
-         $a_menu[1]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_tobevalidated.php";
-
-         $a_menu[2]['name'] = __('Models', 'fusioninventory');
-         $a_menu[2]['pic']  = "";
-         $a_menu[2]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configurationmanagement_model.php";
-
-      }
-
-      if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
                                                              $a_menu,
                                                              $type,
                                                              $width_status);
@@ -818,27 +789,56 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'color' => '#dedede'
       );
 
-      $dataDeploy = array();
-      $dataDeploy[] = array(
-          'key' => 'Deployment successfull : 400',
-          'y'   => 400,
-          'color' => '#3dff7d'
-      );
-      $dataDeploy[] = array(
-          'key' => 'Deployment in error : 55',
-          'y'   => 55,
-          'color' => '#ff3d3d'
-      );
-      $dataDeploy[] = array(
-          'key' => 'Deployment prepared and waiting : 568',
-          'y'   => 568,
-          'color' => '#feffc9'
-      );
 
       // Number of computer inventories in last hour, 6 hours, 24 hours
       $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
 
+      // Deploy
+      $query = "SELECT `plugin_fusioninventory_tasks_id` FROM glpi_plugin_fusioninventory_taskjobs"
+              . " WHERE method LIKE '%deploy%'"
+              . " GROUP BY `plugin_fusioninventory_tasks_id`";
+      $result = $DB->query($query);
+      $a_tasks = array();
+      while ($data=$DB->fetch_array($result)) {
+         $a_tasks[] = $data['plugin_fusioninventory_tasks_id'];
+      }
+      $pfTask = new PluginFusioninventoryTask();
+      $data = $pfTask->getJoblogs($a_tasks);
 
+      $dataDeploy = array();
+      $dataDeploy[0] = array(
+          'key' => 'Prepared and waiting',
+          'y'   => 0,
+          'color' => '#efefef'
+      );
+      $dataDeploy[1] = array(
+          'key' => 'Running',
+          'y'   => 0,
+          'color' => '#aaaaff'
+      );
+      $dataDeploy[2] = array(
+          'key' => 'Successfull',
+          'y'   => 0,
+          'color' => '#aaffaa'
+      );
+      $dataDeploy[3] = array(
+          'key' => 'In error',
+          'y'   => 0,
+          'color' => '#ff0000'
+      );
+      foreach ($data['tasks'] as $lev1) {
+         foreach ($lev1['jobs'] as $lev2) {
+            foreach ($lev2['targets'] as $lev3) {
+               $dataDeploy[2]['y'] += count($lev3['counters']['agents_success']);
+               $dataDeploy[3]['y'] += count($lev3['counters']['agents_error']);
+               $dataDeploy[0]['y'] += count($lev3['counters']['agents_prepared']);
+               $dataDeploy[1]['y'] += count($lev3['counters']['agents_running']);
+            }
+         }
+      }
+      for ($k=0; $k<4; $k++) {
+         $dataDeploy[$k]['key'] .= " : ".$dataDeploy[$k]['y'];
+      }
 
       echo "<table align='center'>";
       echo "<tr height='280'>";
@@ -851,7 +851,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";
-      self::showChart('deploy', $dataDeploy);
+      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
       echo "</td>";
       echo "</tr>";
 
@@ -871,7 +871,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-   static function showChart($name, $data) {
+   static function showChart($name, $data, $title='') {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 

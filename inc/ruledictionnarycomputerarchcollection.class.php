@@ -1,5 +1,4 @@
 <?php
-
 /*
    ------------------------------------------------------------------------
    FusionInventory
@@ -35,32 +34,20 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
+   @since     2010
 
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),
-             $_SERVER["PHP_SELF"],
-             "plugins",
-             "pluginfusioninventorymenu",
-             "configurationmanagement");
-
-//Session::checkRight('plugin_fusioninventory_blacklist', READ);
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$_GET['target']="configurationmanagement_tobevalidated.php";
-
-$_GET['field'] = array('3');
-$_GET['searchtype'] = array('contains');
-$_GET['contains'] = array("^$");
-
-Search::manageGetValues('PluginFusioninventoryConfigurationmanagement');
-Search::showList('PluginFusioninventoryConfigurationmanagement', $_GET);
-
-Html::footer();
-
+class PluginFusioninventoryRuleDictionnaryComputerArchCollection extends RuleDictionnaryDropdownCollection {
+   public $item_table  = "glpi_plugin_fusioninventory_computerarchs";
+   
+   /**
+    * @see RuleCollection::getTitle()
+   **/
+   function getTitle() {
+      return __('Dictionnary of computer architectures', 'fusioninventory');
+   }
+}
 ?>

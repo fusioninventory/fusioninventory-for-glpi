@@ -140,7 +140,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          return;
       }
 
-      $canedit = $item->can($item->getID(), 'w');
+      $canedit = $item->can($item->getID(), UPDATE);
       if ($canedit) {
          $networkPort = new NetworkPort();
          echo "\n<form method='get' action='" . $networkPort->getFormURL() ."'>\n";
