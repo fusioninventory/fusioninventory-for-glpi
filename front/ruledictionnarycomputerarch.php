@@ -1,5 +1,4 @@
 <?php
-
 /*
    ------------------------------------------------------------------------
    FusionInventory
@@ -40,17 +39,19 @@
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include ('../../../inc/includes.php');
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-             "pluginfusioninventorymenu", "configurationmanagement_model");
-
-Session::checkRight('plugin_fusioninventory_agent', READ);
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "pluginfusioninventorymenu",
+             "ruledictionnarycomputerarch");
+Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryConfigurationManagement_Model');
 
-Html::footer();
+$rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
 
+include (GLPI_ROOT . "/front/rule.common.php");
 ?>

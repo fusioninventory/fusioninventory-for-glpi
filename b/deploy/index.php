@@ -58,9 +58,9 @@ if (isset($_GET['action'])) {
             $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
             if (isset($agent['id'])) {
-               $methods = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
+               $methods = $pfTaskjobstate->getTaskjobsAgent($agent['id']);
                // In case deploy module is disabled since task prepared
-               if (!$pfAgentModule->isAgentCanDo("DEPLOY", $a_agent['id'])) {
+               if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
                   foreach ($methods as $taskjobs) {
                      foreach ($taskjobs as $data) {
                         $pfTaskjobstate->changeStatusFinish($data['id'],

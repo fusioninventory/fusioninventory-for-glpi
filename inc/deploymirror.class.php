@@ -77,18 +77,16 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * Location is retrieved from the computer data.
     */
 
-   static function getList($agent_id = 0) {
+   static function getList($agent = NULL) {
       global $PF_CONFIG;
 
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
 
-      $agent = new PluginFusioninventoryAgent();
-      $agent->getFromDB($agent_id);
-      if ( !($agent->fields['id'] > 0) or !isset($agent->fields['computers_id'])) {
+      if (!isset($agent) || !isset($agent['computers_id'])) {
          return array();
       }
       $computer = new Computer();
-      $computer->getFromDB($agent->fields['computers_id']);
+      $computer->getFromDB($agent['computers_id']);
 
       $mirrors = array();
       foreach ($results as $result) {

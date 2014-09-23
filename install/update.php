@@ -801,6 +801,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => array('entities_id', 'transfers_id_auto'),
+                                 'name' => 'entities_id',
+                                 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
@@ -814,7 +817,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $transfers_id_auto = $a_config['value'];
          }
-         
+
          $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
                                            "`type`='agent_base_url'");
          $agent_base_url = '';
@@ -822,7 +825,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
          }
-         
+
          $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
                (`entities_id`, `transfers_id_auto`, `agent_base_url`)
             VALUES ('0', '".$transfers_id_auto."', '".$agent_base_url."');");
@@ -834,7 +837,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
          }
-         
+
          $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
                SET `agent_base_url` = '".$agent_base_url."'
                ;");
@@ -2147,82 +2150,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "plugin_fusioninventory_inventorycomputerstorages_id_2");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_configurationmanagements
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_configurationmanagements';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['items_id']   = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['itemtype']   = array(
-                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
-                        'value'   => NULL);
-      $a_table['fields']['serialized_referential']   = array('type'    => 'longblob',
-                                                             'value'   => "");
-      $a_table['fields']['sha_referential']          = array('type'    => 'string',
-                                                             'value'   => NULL);
-      $a_table['fields']['date']                     = array('type'    => 'datetime',
-                                                             'value'   => NULL);
-      $a_table['fields']['users_id']                 = array('type'    => 'integer',
-                                                             'value'   => NULL);
-      $a_table['fields']['serialized_last']          = array('type'    => 'longblob',
-                                                             'value'   => "");
-      $a_table['fields']['sha_last']                 = array('type'    => 'string',
-                                                             'value'   => NULL);
-      $a_table['fields']['sentnotification']         = array('type'    => 'bool',
-                                                             'value'   => '0');
-      $a_table['fields']['conform']                  = array('type'    => 'bool',
-                                                             'value'   => '1');
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_configurationmanagements_models
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_configurationmanagements_models';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['itemtype']   = array(
-                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
-                        'value'   => NULL);
-      $a_table['fields']['serialized_model']   = array('type'    => 'longblob',
-                                                             'value'   => "");
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
 
 
 
@@ -4162,6 +4089,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'computers_id', 'name' => '', 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
@@ -5129,6 +5057,244 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $pfSetup = new PluginFusioninventorySetup();
       $pfSetup->initRules();
    }
+   // Add peripheral rules (in first in rule list) when use it since 0.85
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
+           ." WHERE `type`='import_peripheral' ";
+   $DB->query($query);
+   $query = "UPDATE `glpi_rules` "
+           ." SET `ranking` = `ranking`+3"
+           ." WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
+   $ranking = 0;
+     // Create rule for : Peripheral + serial
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Peripheral serial';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Peripheral';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Peripheral import
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Peripheral import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Peripheral';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Peripheral ignore import
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Peripheral ignore import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Peripheral';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_ignore_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+   // Add monitor rules (in first in rule list) when use it since 0.85
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
+           ." WHERE `type`='import_monitor' ";
+   $DB->query($query);
+   $query = "UPDATE `glpi_rules` "
+           ." SET `ranking` = `ranking`+3"
+           ." WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
+   $ranking = 0;
+     // Create rule for : Monitor + serial
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Monitor serial';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Monitor';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Monitor import
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Monitor import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Monitor';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Monitor ignore import
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Monitor ignore import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Monitor';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_ignore_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+   // Add printer rules (in first in rule list) when use it since 0.85
+   $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
+           ." WHERE `type`='import_printer' ";
 
 
    /*
@@ -5196,9 +5362,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       // Update fusinvinventory _config values to this plugin
       $input = array();
-      $input['import_monitor']         = 2;
-      $input['import_printer']         = 2;
-      $input['import_peripheral']      = 2;
       $input['import_software']        = 1;
       $input['import_volume']          = 1;
       $input['import_antivirus']       = 1;
@@ -7744,54 +7907,55 @@ function migrateTablesFromFusinvDeploy ($migration) {
    //migrate fusinvdeploy_files to fusioninventory_deployfiles
    if (TableExists("glpi_plugin_fusinvdeploy_files")) {
       $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
-      $f_query =
-         implode(array(
-            "SELECT  files.`id`, files.`name`,",
-            "        files.`filesize`, files.`mimetype`,",
-            "        files.`sha512`, files.`shortsha512`,",
-            "        files.`create_date`,",
-            "        pkgs.`entities_id`, pkgs.`is_recursive`",
-            "FROM glpi_plugin_fusinvdeploy_files as files",
-            "LEFT JOIN glpi_plugin_fusioninventory_deployorders as orders",
-            "  ON orders.`id` = files.`plugin_fusinvdeploy_orders_id`",
-            "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
-            "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
-            "WHERE",
-            "  files.`shortsha512` != \"\""
-         ), " \n");
-      $f_res = $DB->query($f_query);
-      while($f_datas = $DB->fetch_assoc($f_res)) {
-         $entry = array(
-            "id"        => $f_datas["id"],
-            "name"      => $f_datas["name"],
-            "filesize"  => $f_datas["filesize"],
-            "mimetype"  => $f_datas["mimetype"],
-            "shortsha512"  => $f_datas["shortsha512"],
-            "sha512"  => $f_datas["sha512"],
-            "comments"  => "",
-            "date_mod"  => $f_datas["create_date"],
-            "entities_id"  => $f_datas["entities_id"],
-            "is_recursive"  => $f_datas["is_recursive"],
-         );
-         $migration->displayMessage("\n");
-         // Check if file exists
-         $i_DeployFile = new PluginFusioninventoryDeployFile();
-         $migration->displayMessage(
-            "migrating file ". $entry['name'] .
-            " sha:" . $entry['sha512'] .
-            "\n"
-         );
-         if ($i_DeployFile->checkPresenceManifest($entry['sha512'])) {
+      if (FieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
+         $f_query =
+            implode(array(
+               "SELECT  files.`id`, files.`name`,",
+               "        files.`filesize`, files.`mimetype`,",
+               "        files.`sha512`, files.`shortsha512`,",
+               "        files.`create_date`,",
+               "        pkgs.`entities_id`, pkgs.`is_recursive`",
+               "FROM glpi_plugin_fusinvdeploy_files as files",
+               "LEFT JOIN glpi_plugin_fusioninventory_deployorders as orders",
+               "  ON orders.`id` = files.`plugin_fusinvdeploy_orders_id`",
+               "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
+               "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
+               "WHERE",
+               "  files.`shortsha512` != \"\""
+            ), " \n");
+         $f_res = $DB->query($f_query);
+         while($f_datas = $DB->fetch_assoc($f_res)) {
+            $entry = array(
+               "id"        => $f_datas["id"],
+               "name"      => $f_datas["name"],
+               "filesize"  => $f_datas["filesize"],
+               "mimetype"  => $f_datas["mimetype"],
+               "shortsha512"  => $f_datas["shortsha512"],
+               "sha512"  => $f_datas["sha512"],
+               "comments"  => "",
+               "date_mod"  => $f_datas["create_date"],
+               "entities_id"  => $f_datas["entities_id"],
+               "is_recursive"  => $f_datas["is_recursive"],
+            );
+            $migration->displayMessage("\n");
+            // Check if file exists
+            $i_DeployFile = new PluginFusioninventoryDeployFile();
             $migration->displayMessage(
-               "manifest exists" .
+               "migrating file ". $entry['name'] .
+               " sha:" . $entry['sha512'] .
                "\n"
             );
-            $migration->insertInTable(
-               "glpi_plugin_fusioninventory_deployfiles", $entry
-            );
+            if ($i_DeployFile->checkPresenceManifest($entry['sha512'])) {
+               $migration->displayMessage(
+                  "manifest exists" .
+                  "\n"
+               );
+               $migration->insertInTable(
+                  "glpi_plugin_fusioninventory_deployfiles", $entry
+               );
+            }
          }
       }
-
    }
 
    /**
