@@ -105,13 +105,20 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          unset($search_params['metacriteria']);
       }
       PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
-
+Toolbox::logDebug($_GET);
       unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       if (isset($_GET['preview'])) {
          //Add extra parameters for massive action display : only the Add action should be displayed
          $search_params['massiveactionparams']['extraparams']['id'] = $item->getID();
          $search_params['massiveactionparams']['extraparams']['custom_action'] = 'add_to_group';
          $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
+         foreach (array('sort', 'order', 'start') as $field) {
+            if (isset($_GET[$field])) {
+               $search_params[$field] = $_GET[$field];
+            }
+         }
+         $search_params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true)."?id=".$item->getID()."&preview=1";
+         Toolbox::logDebug($search_params);
          Search::showList('PluginFusioninventoryComputer', $search_params);
       }
    }
@@ -127,6 +134,12 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
+      $search_params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true)."?id=".$group->getID();
+      foreach (array('sort', 'order', 'start') as $field) {
+         if (isset($_GET[$field])) {
+            $search_params[$field] = $_GET[$field];
+         }
+      }         
       Search::showList('PluginFusioninventoryComputer', $search_params);
    }
 }
