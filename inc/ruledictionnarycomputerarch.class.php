@@ -1,5 +1,4 @@
 <?php
-
 /*
    ------------------------------------------------------------------------
    FusionInventory
@@ -35,32 +34,51 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
+   @since     2010
 
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDropdown {
 
-Html::header(__('FusionInventory', 'fusioninventory'),
-             $_SERVER["PHP_SELF"],
-             "plugins",
-             "pluginfusioninventorymenu",
-             "configurationmanagement");
 
-//Session::checkRight('plugin_fusioninventory_blacklist', READ);
+   /**
+    * Constructor
+   **/
+   function __construct() {
+      parent::__construct('PluginFusioninventoryRuleDictionnaryComputerArch');
+   }
 
-PluginFusioninventoryMenu::displayMenu("mini");
+   static function getTypeName($nb=0) {
+      return __('Dictionnary of computer architectures', 'fusioninventory');
+   }
 
-$_GET['target']="configurationmanagement_tobevalidated.php";
+   function getCriterias() {
 
-$_GET['field'] = array('3');
-$_GET['searchtype'] = array('contains');
-$_GET['contains'] = array("^$");
+      static $criterias = array();
 
-Search::manageGetValues('PluginFusioninventoryConfigurationmanagement');
-Search::showList('PluginFusioninventoryConfigurationmanagement', $_GET);
+      if (count($criterias)) {
+         return $criterias;
+      }
 
-Html::footer();
+      $criterias['name']['field'] = 'name';
+      $criterias['name']['name']  = __('Architecture', 'fusioninventory');
+      $criterias['name']['table'] = 'glpi_plugin_fusioninventory_computerarchs';
+      return $criterias;
+   }
 
+
+   /**
+    * @see Rule::getActions()
+   **/
+   function getActions() {
+
+      $actions                          = array();
+      $actions['name']['name']          = __('Architecture', 'fusioninventory');
+      $actions['name']['force_actions'] = array('assign', 'regex_result');
+
+      return $actions;
+   }
+
+}
 ?>

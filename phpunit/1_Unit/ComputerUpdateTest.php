@@ -53,6 +53,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = '';
+
       $date = date('Y-m-d H:i:s');
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
@@ -956,6 +958,11 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       global $DB;
 
       $DB->connect();
+
+      $a_dataMonit = getAllDatasFromTable("glpi_monitors");
+
+      $this->assertEquals(1, count($a_dataMonit), "Must have 1 monitor created");
+
 
       $a_dataLink = getAllDatasFromTable("glpi_computers_items",
                                          "`itemtype`='Monitor'

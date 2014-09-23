@@ -77,18 +77,16 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * Location is retrieved from the computer data.
     */
 
-   static function getList($agent_id = 0) {
+   static function getList($agent = NULL) {
       global $PF_CONFIG;
 
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
 
-      $agent = new PluginFusioninventoryAgent();
-      $agent->getFromDB($agent_id);
-      if ( !($agent->fields['id'] > 0) or !isset($agent->fields['computers_id'])) {
+      if (!isset($agent) || !isset($agent['computers_id'])) {
          return array();
       }
       $computer = new Computer();
-      $computer->getFromDB($agent->fields['computers_id']);
+      $computer->getFromDB($agent['computers_id']);
 
       $mirrors = array();
       foreach ($results as $result) {
@@ -98,9 +96,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       }
 
       //add default mirror (this server) if enabled in config
+      $entities_id = 0;
+      if (isset($agent['entities_id'])) {
+         $entities_id = $agent['entities_id'];
+      }
       if ( isset($PF_CONFIG['server_as_mirror'])
               && (bool)$PF_CONFIG['server_as_mirror'] == TRUE) {
-         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
+         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
 

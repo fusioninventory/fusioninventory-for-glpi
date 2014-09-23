@@ -52,6 +52,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
    const INSTALLATION_ORDER   = 0;
    const UNINSTALLATION_ORDER = 1;
 
+   static $rightname = 'plugin_fusioninventory_package';
+
    function __construct($order_type = NULL, $packages_id = NULL) {
 
       if (
@@ -65,6 +67,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
 
    }
+
 
    /*
     * The 'Render' things should be renamed to something appropriate

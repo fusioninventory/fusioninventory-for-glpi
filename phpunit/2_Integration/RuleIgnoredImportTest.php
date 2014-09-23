@@ -104,7 +104,7 @@ class RuleIgnoredImport extends Common_TestCase {
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
-      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
       $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 
       $a_inventory = array();
@@ -124,8 +124,8 @@ class RuleIgnoredImport extends Common_TestCase {
       $a_computers = $computer->find();
       $this->assertEquals(0, count($a_computers), 'Computer may not be added');
 
-      $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(0, count($a_unknown), 'Unknowndevice may not be added');
+      $a_unknown = $pfUnmanaged->find();
+      $this->assertEquals(0, count($a_unknown), 'Unmanaged may not be added');
 
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');
@@ -138,7 +138,7 @@ class RuleIgnoredImport extends Common_TestCase {
           'entities_id' => '0',
           'ip'          => NULL,
           'mac'         => NULL,
-          'rules_id'    => '24',
+          'rules_id'    => '30',
           'method'      => 'inventory',
           'serial'      => '',
           'uuid'        => ''
@@ -166,7 +166,7 @@ class RuleIgnoredImport extends Common_TestCase {
 
       $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $computer = new Computer();
-      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
       $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
       $GLPIlog = new GLPIlogs();
 
@@ -181,8 +181,8 @@ class RuleIgnoredImport extends Common_TestCase {
       $a_computers = $computer->find();
       $this->assertEquals(0, count($a_computers), 'Computer may not be added');
 
-      $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(0, count($a_unknown), 'Unknowndevice may not be added');
+      $a_unknown = $pfUnmanaged->find();
+      $this->assertEquals(0, count($a_unknown), 'Unmanaged may not be added');
 
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');

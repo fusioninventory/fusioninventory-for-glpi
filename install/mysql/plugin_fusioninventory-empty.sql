@@ -70,7 +70,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_entities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`)
+   `agent_base_url` varchar(255) NOT NULL DEFAULT '',
+   PRIMARY KEY (`id`),
+   KEY `entities_id` (`entities_id`,`transfers_id_auto`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -161,7 +163,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
   KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`),
-  KEY `plugin_fusioninventory_agents_ids_states` (`plugin_fusioninventory_agents_id`, `plugin_fusioninventory_taskjobs_id`, `items_id`, `itemtype`, `id`, `state`)
+  KEY `plugin_fusioninventory_agents_ids_states` (`plugin_fusioninventory_agents_id`, `plugin_fusioninventory_taskjobs_id`, `items_id`, `itemtype`, `id`, `state`),
+  KEY `uniqid` (`uniqid`,`state`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -186,15 +189,17 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknowndevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unmanageds`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `date_mod` datetime DEFAULT NULL,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `locations_id` int(11) NOT NULL DEFAULT '0',
    `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+   `is_template` tinyint(1) NOT NULL DEFAULT '0',
+   `users_id` int(11) NOT NULL DEFAULT '0',
    `serial` varchar(255) DEFAULT NULL,
    `otherserial` varchar(255) DEFAULT NULL,
    `contact` varchar(255) DEFAULT NULL,
@@ -474,38 +479,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_inventorycomputerstorages_id_1` (`plugin_fusioninventory_inventorycomputerstorages_id_1`),
   KEY `plugin_fusioninventory_inventorycomputerstorages_id_2` (`plugin_fusioninventory_inventorycomputerstorages_id_2`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configurationmanagements`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_configurationmanagements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `items_id` int(11) NOT NULL DEFAULT '0',
-  `itemtype` varchar(100) DEFAULT NULL,
-  `serialized_referential` longblob,
-  `sha_referential` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
-  `users_id` int(11) NOT NULL DEFAULT '0',
-  `serialized_last` longblob,
-  `sha_last` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sentnotification` tinyint(1) NOT NULL DEFAULT '0',
-  `conform` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configurationmanagements_models`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_configurationmanagements_models` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `itemtype` varchar(100) DEFAULT NULL,
-  `serialized_model` longblob,
-  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -899,7 +872,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
   `plugin_fusioninventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
   `key` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1067,16 +1041,16 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryAgent', '8', '6', '0'),
           (NULL,'PluginFusioninventoryAgent', '9', '7', '0'),
 
-          (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '3', '3', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '7', '5', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '10', '6', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '2', '1', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '4', '2', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '3', '3', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '5', '4', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '7', '5', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '10', '6', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '18', '8', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '14', '9', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '15', '10', '0'),
+          (NULL, 'PluginFusioninventoryUnmanaged', '9', '11', '0'),
 
           (NULL, 'PluginFusioninventoryTask', '2', '1', '0'),
           (NULL, 'PluginFusioninventoryTask', '3', '2', '0'),

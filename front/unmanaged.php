@@ -42,41 +42,14 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-             "pluginfusioninventorymenu", "configurationmanagement_model");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+        "assets", "pluginfusioninventoryunmanaged",  "unmanaged");
 
-PluginFusioninventoryMenu::displayMenu("mini");
+Session::checkRight('plugin_fusioninventory_unmanaged', READ);
 
-$pfConfigurationManagement_Model = new PluginFusioninventoryConfigurationManagement_Model();
+$_GET['target'] = "unmanaged.php";
 
-if (isset($_POST["add"])) {
-   $pfConfigurationManagement_Model->add($_POST);
-   Html::back();
-} else if (isset($_POST["update"])) {
-   $pfConfigurationManagement_Model->update($_POST);
-   Html::back();
-} else if (isset($_REQUEST["purge"])) {
-   $pfConfigurationManagement_Model->delete($_POST);
-   $pfConfigurationManagement_Model->redirectToList();
-} else if (isset($_POST['update_serialized'])) {
-   unset($_POST['update_serialized']);
-   $serialized_model = array();
-   foreach ($_POST as $key => $value) {
-      if ($value != 'notmanaged'
-              && $value != 'id') {
-         $serialized_model[$key] = $value;
-      }
-   }
-   $_POST['serialized_model'] = exportArrayToDB($serialized_model);
-   $pfConfigurationManagement_Model->update($_POST);
-   Html::back();
-}
-
-
-if (!isset($_GET["id"])) {
-   $_GET['id'] = '';
-}
-$pfConfigurationManagement_Model->showForm($_GET['id']);
+Search::show('PluginFusioninventoryUnmanaged');
 
 Html::footer();
 

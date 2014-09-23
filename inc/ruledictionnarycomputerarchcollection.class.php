@@ -1,5 +1,4 @@
 <?php
-
 /*
    ------------------------------------------------------------------------
    FusionInventory
@@ -40,17 +39,15 @@
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
-        "assets", "pluginfusioninventoryunknowndevice",  "unknowndevice");
-
-Session::checkRight('plugin_fusioninventory_unknowndevice', READ);
-
-$_GET['target'] = "unknowndevice.php";
-
-Search::show('PluginFusioninventoryUnknownDevice');
-
-Html::footer();
-
+class PluginFusioninventoryRuleDictionnaryComputerArchCollection extends RuleDictionnaryDropdownCollection {
+   public $item_table  = "glpi_plugin_fusioninventory_computerarchs";
+   
+   /**
+    * @see RuleCollection::getTitle()
+   **/
+   function getTitle() {
+      return __('Dictionnary of computer architectures', 'fusioninventory');
+   }
+}
 ?>

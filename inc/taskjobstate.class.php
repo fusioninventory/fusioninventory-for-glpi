@@ -384,13 +384,13 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @param $itemtype value type of the item
    * @param $error bool error
    * @param $message value message for the status
-   * @param $unknown bool unknown or not device
+   * @param $unknown bool unmanaged or not device
    *
    * @return nothing
    *
    **/
    function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='',
-                               $unknown=0, $reinitialize=1) {
+                               $unmanaged=0, $reinitialize=1) {
       global $DB;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -403,7 +403,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $input['state'] = self::FINISHED;
 
       $log_input = array();
-      if ($unknown ==  "1") {
+      if ($unmanaged ==  "1") {
          $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
          $input['state'] = self::FINISHED;
       } else if ($error == "1") {

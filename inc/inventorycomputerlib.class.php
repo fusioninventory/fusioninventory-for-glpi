@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * @return nothing
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
@@ -96,6 +96,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+      $computer_Item                = new Computer_Item();
+      $monitor                      = new Monitor();
+      $printer                      = new Printer();
+      $peripheral                   = new Peripheral();
 
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
@@ -108,6 +112,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Computer
          $db_computer = array();
          $db_computer = $computer->fields;
+         $computerName = $a_computerinventory['Computer']['name'];
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                           $db_computer, $a_lockable);
          $a_computerinventory['Computer'] = $a_ret[0];
@@ -604,9 +609,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             $db_software = array();
-            $datatoto = array('patatou');
             if ($no_history === FALSE) {
-            $datatoto[] = 'patatou2';
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                           `glpi_softwares`.`name`,
                           `glpi_softwareversions`.`name` AS version,
@@ -624,7 +627,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      AND `glpi_computers_softwareversions`.`is_dynamic`='1'";
                $result = $DB->query($query);
                while ($data = $DB->fetch_assoc($result)) {
-                  $datatoto[] = $data;
                   $idtmp = $data['sid'];
                   unset($data['sid']);
                   if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
@@ -739,7 +741,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                         $changes[0] = '0';
                         $changes[1] = "";
-                        $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                        $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                         $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                                      Log::HISTORY_INSTALL_SOFTWARE);
                      }
@@ -774,7 +776,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
 
                            $changes[0] = '0';
-                           $changes[1] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $changes[1] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                            $changes[2] = "";
                            $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
@@ -791,7 +793,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($nb_unicity == 0) {
                         $options['disable_unicity_check'] = TRUE;
                      }
-
                      $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                      $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
                            SET `value`='1'";
@@ -862,7 +863,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                            $changes[0] = '0';
                            $changes[1] = "";
-                           $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
                            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_INSTALL_SOFTWARE);
                         }
@@ -1060,7 +1061,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       // * Networkports
          if ($pfConfig->getValue("component_networkcard") != 0) {
-            // Get port from unknown device if exist
+            // Get port from unmanaged device if exist
             $this->manageNetworkPort($a_computerinventory['networkport'], $computers_id, $no_history);
          }
 
@@ -1228,403 +1229,248 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
       // * Monitors
-         if ($pfConfig->getValue("import_monitor") != 0) {
-            $db_monitors = array();
-            $computer_Item = new Computer_Item();
-            if ($no_history === FALSE) {
-               if ($pfConfig->getValue('import_monitor') == 1) {
-                  // Global import
-                  $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`,
-                        `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
-                     WHERE `itemtype`='Monitor'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == 0) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_monitors[$idtmp] = $data2;
-                     }
-                  }
-               } else if ($pfConfig->getValue('import_monitor') == 2) {
-                  // Unique import
-                  $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`,
-                        `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
-                     WHERE `itemtype`='Monitor'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_monitors[$idtmp] = $data2;
-                     }
-                  }
-               } else if ($pfConfig->getValue('import_monitor') == 3) {
-                  // Unique import on serial number
-                  $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`,
-                        `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
-                     WHERE `itemtype`='Monitor'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['serial'] == ''
-                             || $data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_monitors[$idtmp] = $data2;
-                     }
-                  }
-               }
-            }
-
-            if (count($db_monitors) == 0) {
-               foreach ($a_computerinventory['monitor'] as $a_monitor) {
-                  $a_monitor['entities_id'] = $entities_id;
-                  $this->addMonitor($a_monitor, $computers_id, $no_history);
-               }
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $a_monitors = array();
+      foreach ($a_computerinventory['monitor'] as $key => $arrays) {
+         $input = array();
+         $input['itemtype'] = "Monitor";
+         $input['name']     = $arrays['name'];
+         $input['serial']   = $arrays['serial'];
+         $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
+         if (isset($data['found_equipment'])) {
+            if ($data['found_equipment'][0] == 0) {
+               // add monitor
+               $arrays['entities_id'] = $entities_id;
+               $a_monitors[] = $monitor->add($arrays);
             } else {
-               // Check all fields from source:
-               foreach ($a_computerinventory['monitor'] as $key => $arrays) {
-                  $arrayslower = array_map('strtolower', $arrays);
-                  foreach ($db_monitors as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
-                        unset($a_computerinventory['monitor'][$key]);
-                        unset($db_monitors[$keydb]);
-                        break;
-                     }
-                  }
-               }
-               if ($pfConfig->getValue('import_monitor') == 1) {
-                  foreach ($a_computerinventory['monitor'] as $key => $arrays) {
-                     unset($arrays['serial']);
-                     $arrayslower = array_map('strtolower', $arrays);
-                     foreach ($db_monitors as $keydb => $arraydb) {
-                        unset($arraydb['serial']);
-                        if ($arrayslower == $arraydb) {
-                           unset($a_computerinventory['monitor'][$key]);
-                           unset($db_monitors[$keydb]);
-                           break;
-                        }
-                     }
-                  }
-               }
+               $a_monitors[] = $data['found_equipment'][0];
+            }
+         }
+      }
 
-               if (count($a_computerinventory['monitor']) == 0
-                  AND count($db_monitors) == 0) {
-                  // Nothing to do
-               } else {
-                  if (count($db_monitors) != 0) {
-                     // Delete monitors links in DB
-                     foreach ($db_monitors as $idtmp => $data) {
-                        $computer_Item->delete(array('id'=>$idtmp), 1);
-                     }
-                  }
-                  if (count($a_computerinventory['monitor']) != 0) {
-                     foreach($a_computerinventory['monitor'] as $a_monitor) {
-                        $a_monitor['entities_id'] = $entities_id;
-                        $this->addMonitor($a_monitor, $computers_id, $no_history);
-                     }
-                  }
+      $db_monitors = array();
+      $query = "SELECT `glpi_monitors`.`id`,
+                       `glpi_computers_items`.`id` as link_id
+            FROM `glpi_computers_items`
+         LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
+         WHERE `itemtype`='Monitor'
+            AND `computers_id`='".$computers_id."'
+            AND `entities_id`='".$entities_id."'
+            AND `glpi_computers_items`.`is_dynamic`='1'
+            AND `glpi_monitors`.`is_global`='0'";
+      $result = $DB->query($query);
+      while ($data = $DB->fetch_assoc($result)) {
+         $idtmp = $data['link_id'];
+         unset($data['link_id']);
+         $db_monitors[$idtmp] = $data['id'];
+      }
+
+      if (count($db_monitors) == 0) {
+         foreach ($a_monitors as $monitors_id) {
+            $input = array();
+            $input['computers_id']   = $computers_id;
+            $input['itemtype']       = 'Monitor';
+            $input['items_id']       = $monitors_id;
+            $input['is_dynamic']     = 1;
+            $input['_no_history']    = $no_history;
+            $computer_Item->add($input, array(), !$no_history);
+         }
+      } else {
+         // Check all fields from source:
+         foreach ($a_monitors as $key => $monitors_id) {
+            foreach ($db_monitors as $keydb => $monits_id) {
+               if ($monitors_id == $monits_id) {
+                  unset($a_monitors[$key]);
+                  unset($db_monitors[$keydb]);
+                  break;
                }
             }
          }
+
+         if (count($a_monitors) == 0
+            AND count($db_monitors) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_monitors) != 0) {
+               // Delete monitors links in DB
+               foreach ($db_monitors as $idtmp => $monits_id) {
+                  $computer_Item->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (count($a_monitors) != 0) {
+               foreach($a_monitors as $key => $monitors_id) {
+                  $input = array();
+                  $input['computers_id']   = $computers_id;
+                  $input['itemtype']       = 'Monitor';
+                  $input['items_id']       = $monitors_id;
+                  $input['is_dynamic']     = 1;
+                  $input['_no_history']    = $no_history;
+                  $computer_Item->add($input, array(), !$no_history);
+               }
+            }
+         }
+      }
 
 
       // * Printers
-         if ($pfConfig->getValue("import_printer") != 0) {
-            $db_printers = array();
-            $computer_Item = new Computer_Item();
-            if ($no_history === FALSE) {
-               if ($pfConfig->getValue('import_printer') == 1) {
-                  // Global import
-                  $query = "SELECT `glpi_printers`.`name`, `glpi_printers`.`serial`,
-                        `glpi_printers`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
-                     WHERE `itemtype`='Printer'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == '0') {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_printers[$idtmp] = $data2;
-                     }
-                  }
-               } else if ($pfConfig->getValue('import_printer') == 2) {
-                  // Unique import
-                  $query = "SELECT `glpi_printers`.`name`, `glpi_printers`.`serial`,
-                        `glpi_printers`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
-                     WHERE `itemtype`='Printer'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_printers[$idtmp] = $data2;
-                     }
-                  }
-               } else if ($pfConfig->getValue('import_printer') == 3) {
-                  // Unique import on serial number
-                  $query = "SELECT `glpi_printers`.`name`, `glpi_printers`.`serial`,
-                        `glpi_printers`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
-                     WHERE `itemtype`='Printer'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['serial'] == ''
-                             || $data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_printers[$idtmp] = $data;
-                     }
-                  }
-               }
-            }
-
-            if (count($db_printers) == 0) {
-               foreach ($a_computerinventory['printer'] as $a_printer) {
-                  $a_printer['entities_id'] = $entities_id;
-                  $this->addPrinter($a_printer, $computers_id, $no_history);
-               }
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $a_printers = array();
+      foreach ($a_computerinventory['printer'] as $key => $arrays) {
+         $input = array();
+         $input['itemtype'] = "Printer";
+         $input['name']     = $arrays['name'];
+         $input['serial']   = $arrays['serial'];
+         $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
+         if (isset($data['found_equipment'])) {
+            if ($data['found_equipment'][0] == 0) {
+               // add printer
+               $arrays['entities_id'] = $entities_id;
+               $a_printers[] = $printer->add($arrays);
             } else {
-               // Check all fields from source:
-               foreach ($a_computerinventory['printer'] as $key => $arrays) {
-                  unset($arrays['have_usb']);
-                  $arrayslower = array_map('strtolower', $arrays);
-                  foreach ($db_printers as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
-                        unset($a_computerinventory['printer'][$key]);
-                        unset($db_printers[$keydb]);
-                        break;
-                     }
-                  }
-               }
-               if ($pfConfig->getValue('import_printer') == 1) {
-                  foreach ($a_computerinventory['printer'] as $key => $arrays) {
-                     unset($arrays['have_usb']);
-                     unset($arrays['serial']);
-                     $arrayslower = array_map('strtolower', $arrays);
-                     foreach ($db_printers as $keydb => $arraydb) {
-                        unset($arraydb['serial']);
-                        if ($arrayslower == $arraydb) {
-                           unset($a_computerinventory['printer'][$key]);
-                           unset($db_printers[$keydb]);
-                           break;
-                        }
-                     }
-                  }
-               }
-
-               if (count($a_computerinventory['printer']) == 0
-                  AND count($db_printers) == 0) {
-                  // Nothing to do
-               } else {
-                  if (count($db_printers) != 0) {
-                     // Delete printers links in DB
-                     foreach ($db_printers as $idtmp => $data) {
-                        $computer_Item->delete(array('id'=>$idtmp), 1);
-                     }
-                  }
-                  if (count($a_computerinventory['printer']) != 0) {
-                     foreach($a_computerinventory['printer'] as $a_printer) {
-                        $a_printer['entities_id'] = $entities_id;
-                        $this->addPrinter($a_printer, $computers_id, $no_history);
-                     }
-                  }
+               $a_printers[] = $data['found_equipment'][0];
+            }
+         }
+      }
+      $db_printers = array();
+      $query = "SELECT `glpi_printers`.`id`, `glpi_computers_items`.`id` as link_id
+            FROM `glpi_computers_items`
+         LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
+         WHERE `itemtype`='Printer'
+            AND `computers_id`='".$computers_id."'
+            AND `entities_id`='".$entities_id."'
+            AND `glpi_computers_items`.`is_dynamic`='1'
+            AND `glpi_printers`.`is_global`='0'";
+      $result = $DB->query($query);
+      while ($data = $DB->fetch_assoc($result)) {
+         $idtmp = $data['link_id'];
+         unset($data['link_id']);
+         $db_printers[$idtmp] = $data['id'];
+      }
+      if (count($db_printers) == 0) {
+         foreach ($a_printers as $printers_id) {
+            $input['entities_id'] = $entities_id;
+            $input['computers_id']   = $computers_id;
+            $input['itemtype']       = 'Printer';
+            $input['items_id']       = $printers_id;
+            $input['is_dynamic']     = 1;
+            $input['_no_history']    = $no_history;
+            $computer_Item->add($input, array(), !$no_history);
+         }
+      } else {
+         // Check all fields from source:
+         foreach ($a_printers as $key => $printers_id) {
+            foreach ($db_printers as $keydb => $prints_id) {
+               if ($printers_id == $prints_id) {
+                  unset($a_printers[$key]);
+                  unset($db_printers[$keydb]);
+                  break;
                }
             }
          }
+         if (count($a_printers) == 0
+            AND count($db_printers) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_printers) != 0) {
+               // Delete printers links in DB
+               foreach ($db_printers as $idtmp => $data) {
+                  $computer_Item->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (count($a_printers) != 0) {
+               foreach ($a_printers as $printers_id) {
+                  $input['entities_id'] = $entities_id;
+                  $input['computers_id']   = $computers_id;
+                  $input['itemtype']       = 'Printer';
+                  $input['items_id']       = $printers_id;
+                  $input['is_dynamic']     = 1;
+                  $input['_no_history']    = $no_history;
+                  $computer_Item->add($input, array(), !$no_history);
+               }
+            }
+         }
+      }
 
       // * Peripheral
-         if ($pfConfig->getValue("import_peripheral") != 0) {
-            $db_peripherals = array();
-            $computer_Item = new Computer_Item();
-            if ($no_history === FALSE) {
-               if ($pfConfig->getValue('import_peripheral') == 1) {
-                  // Global import
-                  $query = "SELECT `glpi_peripherals`.`name`, `glpi_peripherals`.`manufacturers_id`,
-                        `glpi_peripherals`.`serial`,
-                        `glpi_peripherals`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
-                     WHERE `itemtype`='Peripheral'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == 0) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_peripherals[$idtmp] = $data2;
-                     }
-                  }
-               } else if ($pfConfig->getValue('import_peripheral') == 2) {
-                  // Unique import
-                  $query = "SELECT `glpi_peripherals`.`name`, `glpi_peripherals`.`manufacturers_id`,
-                        `glpi_peripherals`.`serial`,
-                        `glpi_peripherals`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
-                     WHERE `itemtype`='Peripheral'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_peripherals[$idtmp] = $data2;
-                     }
-                  }
-               } else if ($pfConfig->getValue('import_peripheral') == 3) {
-                  // Unique import on serial number
-                  $query = "SELECT `glpi_peripherals`.`name`, `glpi_peripherals`.`manufacturers_id`,
-                        `glpi_peripherals`.`serial`,
-                        `glpi_peripherals`.`is_global`, `glpi_computers_items`.`id` as link_id
-                        FROM `glpi_computers_items`
-                     LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
-                     WHERE `itemtype`='Peripheral'
-                        AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'
-                        AND `glpi_computers_items`.`is_dynamic`='1'";
-                  $result = $DB->query($query);
-                  while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['serial'] == ''
-                             || $data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']), 1);
-                     } else {
-                        $idtmp = $data['link_id'];
-                        unset($data['link_id']);
-                        unset($data['is_global']);
-                        $data1 = Toolbox::addslashes_deep($data);
-                        $data2 = array_map('strtolower', $data1);
-                        $db_peripherals[$idtmp] = $data2;
-                     }
-                  }
-               }
-            }
-
-            if (count($db_peripherals) == 0) {
-               foreach ($a_computerinventory['peripheral'] as $a_peripheral) {
-                  $a_peripheral['entities_id'] = $entities_id;
-                  $this->addPeripheral($a_peripheral, $computers_id, $no_history);
-               }
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $a_peripherals = array();
+      foreach ($a_computerinventory['peripheral'] as $key => $arrays) {
+         $input = array();
+         $input['itemtype'] = "Peripheral";
+         $input['name']     = $arrays['name'];
+         $input['serial']   = $arrays['serial'];
+         $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
+         if (isset($data['found_equipment'])) {
+            if ($data['found_equipment'][0] == 0) {
+               // add peripheral
+               $arrays['entities_id'] = $entities_id;
+               $a_peripherals[] = $peripheral->add($arrays);
             } else {
-               // Check all fields from source:
-               foreach ($a_computerinventory['peripheral'] as $key => $arrays) {
-                  $arrayslower = array_map('strtolower', $arrays);
-                  foreach ($db_peripherals as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
-                        unset($a_computerinventory['peripheral'][$key]);
-                        unset($db_peripherals[$keydb]);
-                        break;
-                     }
-                  }
-               }
-               if ($pfConfig->getValue('import_peripheral') == 1) {
-                  foreach ($a_computerinventory['peripheral'] as $key => $arrays) {
-                     unset($arrays['serial']);
-                     $arrayslower = array_map('strtolower', $arrays);
-                     foreach ($db_peripherals as $keydb => $arraydb) {
-                        unset($arraydb['serial']);
-                        if ($arrayslower == $arraydb) {
-                           unset($a_computerinventory['peripheral'][$key]);
-                           unset($db_peripherals[$keydb]);
-                           break;
-                        }
-                     }
-                  }
-               }
+               $a_peripherals[] = $data['found_equipment'][0];
+            }
+         }
+      }
+      $db_peripherals = array();
+      $query = "SELECT `glpi_peripherals`.`id`, `glpi_computers_items`.`id` as link_id
+            FROM `glpi_computers_items`
+         LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
+         WHERE `itemtype`='Peripheral'
+            AND `computers_id`='".$computers_id."'
+            AND `entities_id`='".$entities_id."'
+            AND `glpi_computers_items`.`is_dynamic`='1'
+      AND `glpi_peripherals`.`is_global`='0'";
+      $result = $DB->query($query);
+      while ($data = $DB->fetch_assoc($result)) {
+         $idtmp = $data['link_id'];
+         unset($data['link_id']);
+         $db_peripherals[$idtmp] = $data['id'];
+      }
 
-               if (count($a_computerinventory['peripheral']) == 0
-                  AND count($db_peripherals) == 0) {
-                  // Nothing to do
-               } else {
-                  if (count($db_peripherals) != 0) {
-                     // Delete peripherals links in DB
-                     foreach ($db_peripherals as $idtmp => $data) {
-                        $computer_Item->delete(array('id'=>$idtmp), 1);
-                     }
-                  }
-                  if (count($a_computerinventory['peripheral']) != 0) {
-                     foreach($a_computerinventory['peripheral'] as $a_peripheral) {
-                        $a_peripheral['entities_id'] = $entities_id;
-                        $this->addPeripheral($a_peripheral, $computers_id, $no_history);
-                     }
-                  }
+      if (count($db_peripherals) == 0) {
+         foreach ($a_peripherals as $peripherals_id) {
+            $input = array();
+            $input['computers_id']   = $computers_id;
+            $input['itemtype']       = 'Peripharal';
+            $input['items_id']       = $peripherals_id;
+            $input['is_dynamic']     = 1;
+            $input['_no_history']    = $no_history;
+            $computer_Item->add($input, array(), !$no_history);
+         }
+      } else {
+         // Check all fields from source:
+         foreach ($a_peripherals as $key => $peripherals_id) {
+            foreach ($db_peripherals as $keydb => $periphs_id) {
+               if ($peripherals_id == $periphs_id) {
+                  unset($a_peripherals[$key]);
+                  unset($db_peripherals[$keydb]);
+                  break;
                }
             }
          }
+
+         if (count($a_peripherals) == 0
+            AND count($db_peripherals) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_peripherals) != 0) {
+               // Delete peripherals links in DB
+               foreach ($db_peripherals as $idtmp => $data) {
+                  $computer_Item->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (count($a_peripherals) != 0) {
+               foreach ($a_peripherals as $peripherals_id) {
+                  $input = array();
+                  $input['computers_id']   = $computers_id;
+                  $input['itemtype']       = 'Peripharal';
+                  $input['items_id']       = $peripherals_id;
+                  $input['is_dynamic']     = 1;
+                  $input['_no_history']    = $no_history;
+                  $computer_Item->add($input, array(), !$no_history);
+               }
+            }
+         }
+      }
 
       // * storage
       // Manage by uuid to correspond with GLPI data
@@ -1693,18 +1539,18 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
             $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
-               AND `itemtype`='PluginFusioninventoryUnknownDevice'", "", 1);
+               AND `itemtype`='PluginFusioninventoryUnmanaged'", "", 1);
             if (count($a_networkports) > 0) {
                $input = current($a_networkports);
-               $unknowndevices_id = $input['items_id'];
+               $unmanageds_id = $input['items_id'];
                $input['logical_number'] = $a_networkport['logical_number'];
                $input['itemtype'] = 'Computer';
                $input['items_id'] = $computers_id;
                $input['is_dynamic'] = 1;
                $input['name'] = $a_networkport['name'];
                $networkPort->update($input, !$no_history);
-               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
+               $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+               $pfUnmanaged->delete(array('id'=>$unmanageds_id), 1);
             }
          }
       }
@@ -2104,7 +1950,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $result = $DB->query($sql);
 
       while ($data = $DB->fetch_assoc($result)) {
-         $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data['id'];
+         $this->softList[Toolbox::addslashes_deep($data['name'])."$$$$".$data['manufacturers_id']] = $data['id'];
       }
       return $lastid;
    }
@@ -2244,306 +2090,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                          Log::HISTORY_INSTALL_SOFTWARE);
          }
       }
-   }
-
-
-
-   function addMonitor($data, $computers_id, $no_history) {
-      global $DB;
-
-      $computer_Item = new Computer_Item();
-      $monitor       = new Monitor();
-      $pfConfig      = new PluginFusioninventoryConfig();
-      $pfEntity      = new PluginFusioninventoryEntity();
-
-      $monitors_id = 0;
-      if ($pfConfig->getValue('import_monitor') == 1) {
-         $where_serial = "AND (`serial`='".$data['serial']."'
-                  OR `serial`=''
-                  OR `serial` IS NULL)";
-         if ($data['serial'] == '') {
-            $where_serial = '';
-         }
-         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."')";
-         if ($data['manufacturers_id'] == 0) {
-            $where_manufacturer = '';
-         }
-         // Global import
-         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
-            WHERE `name`='".$data['name']."'
-               ".$where_manufacturer."
-               ".$where_serial."
-               AND `is_global`='1'
-               AND `entities_id`='".$data['entities_id']."'
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $monitors_id = $db_data['id'];
-         } else {
-            $data['is_global'] = 1;
-            $monitors_id = $monitor->add($data, array(), !$no_history);
-         }
-      } else if ($pfConfig->getValue('import_monitor') == 2) {
-         // Unique import
-         $added = 0;
-         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
-            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_monitors`.`id`
-               AND `glpi_computers_items`.`itemtype`='Monitor'
-            WHERE `name`='".$data['name']."'
-               AND `manufacturers_id`='".$data['manufacturers_id']."'
-               AND `serial`='".$data['serial']."'
-               AND `is_global`='0'
-               AND `entities_id`='".$data['entities_id']."'
-               AND `glpi_computers_items`.`id` IS NULL
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $monitors_id = $db_data['id'];
-         } else {
-            $data['is_global'] = 0;
-            $monitors_id = $monitor->add($data, array(), !$no_history);
-            $added = 1;
-         }
-      } else if ($pfConfig->getValue('import_monitor') == 3) {
-         // Unique import on serial number
-         $entity = "AND `entities_id`='".$data['entities_id']."'";
-         if ($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0) {
-            $entity = '';
-         }
-         $added = 0;
-         $query = "SELECT `glpi_monitors`.`id`, `glpi_monitors`.`entities_id`
-            FROM `glpi_monitors`
-            WHERE `serial`='".$data['serial']."'
-               AND `is_global`='0'
-               ".$entity."
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $monitors_id = $db_data['id'];
-            if ($db_data['entities_id'] != $data['entities_id']) {
-               $transfer = new Transfer();
-               $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0);
-               $item_to_transfer = array("Monitor" => array($db_data['id']=>$db_data['id']));
-               $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
-            }
-         } else {
-            $data['is_global'] = 0;
-            $monitors_id = $monitor->add($data, array(), !$no_history);
-            $added = 1;
-         }
-         if ($added == 0) {
-            $monitor->getFromDB($monitors_id);
-            $computer_Item->disconnectForItem($monitor);
-         }
-      }
-      $data['computers_id']   = $computers_id;
-      $data['itemtype']       = 'Monitor';
-      $data['items_id']       = $monitors_id;
-      $data['is_dynamic']     = 1;
-      $data['_no_history']    = $no_history;
-      $computer_Item->add($data, array(), !$no_history);
-   }
-
-
-
-   function addPrinter($data, $computers_id, $no_history) {
-      global $DB;
-
-      $computer_Item = new Computer_Item();
-      $printer       = new Printer();
-      $pfConfig      = new PluginFusioninventoryConfig();
-      $pfEntity      = new PluginFusioninventoryEntity();
-
-      $printers_id = 0;
-      if ($pfConfig->getValue('import_printer') == 1) {
-         // Global import
-         $where_serial = "AND (`serial`='".$data['serial']."'
-                  OR `serial`=''
-                  OR `serial` IS NULL)";
-         if ($data['serial'] == '') {
-            $where_serial = '';
-         }
-         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
-            WHERE `name`='".$data['name']."'
-               ".$where_serial."
-               AND `is_global`='1'
-               AND `entities_id`='".$data['entities_id']."'
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $printers_id = $db_data['id'];
-         } else {
-            $data['is_global'] = 1;
-            $printers_id = $printer->add($data, array(), !$no_history);
-         }
-      } else if ($pfConfig->getValue('import_printer') == 2) {
-         // Unique import
-         $added = 0;
-         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
-            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_printers`.`id`
-               AND `glpi_computers_items`.`itemtype`='Printer'
-            WHERE `name`='".$data['name']."'
-               AND `serial`='".$data['serial']."'
-               AND `is_global`='0'
-               AND `entities_id`='".$data['entities_id']."'
-               AND `glpi_computers_items`.`id` IS NULL
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $printers_id = $db_data['id'];
-         } else {
-            $data['is_global'] = 0;
-            $printers_id = $printer->add($data, array(), !$no_history);
-            $added = 1;
-         }
-      } else if ($pfConfig->getValue('import_printer') == 3) {
-         // Unique import on serial number
-         $entity = "AND `entities_id`='".$data['entities_id']."'";
-         if ($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0) {
-            $entity = '';
-         }
-         $added = 0;
-         $query = "SELECT `glpi_printers`.`id`, `glpi_printers`.`entities_id`
-            FROM `glpi_printers`
-            WHERE `name`='".$data['name']."'
-               AND `serial`='".$data['serial']."'
-               AND `is_global`='0'
-               ".$entity."
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $printers_id = $db_data['id'];
-            if ($db_data['entities_id'] != $data['entities_id']) {
-               $transfer = new Transfer();
-               $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0);
-               $item_to_transfer = array("Printer" => array($db_data['id']=>$db_data['id']));
-               $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
-            }
-         } else {
-            $data['is_global'] = 0;
-            $printers_id = $printer->add($data, array(), !$no_history);
-            $added = 1;
-         }
-         if ($added == 0) {
-            $printer->getFromDB($printers_id);
-            $computer_Item->disconnectForItem($printer);
-         }
-      }
-      $data['computers_id']   = $computers_id;
-      $data['itemtype']       = 'Printer';
-      $data['items_id']       = $printers_id;
-      $data['is_dynamic']     = 1;
-      $data['_no_history']    = $no_history;
-      $computer_Item->add($data, array(), !$no_history);
-   }
-
-
-
-   function addPeripheral($data, $computers_id, $no_history) {
-      global $DB;
-
-      $computer_Item = new Computer_Item();
-      $peripheral    = new Peripheral();
-      $pfConfig      = new PluginFusioninventoryConfig();
-      $pfEntity      = new PluginFusioninventoryEntity();
-
-      $peripherals_id = 0;
-      if ($pfConfig->getValue('import_peripheral') == 1) {
-         // Global import
-         $where_serial = "AND (`serial`='".$data['serial']."'
-                  OR `serial`=''
-                  OR `serial` IS NULL)";
-         if ($data['serial'] == '') {
-            $where_serial = '';
-         }
-         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."')";
-         if ($data['manufacturers_id'] == 0) {
-            $where_manufacturer = '';
-         }
-         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
-            WHERE `name`='".$data['name']."'
-               ".$where_manufacturer."
-               ".$where_serial."
-               AND `is_global`='1'
-               AND `entities_id`='".$data['entities_id']."'
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $peripherals_id = $db_data['id'];
-         } else {
-            $data['is_global'] = 1;
-            $peripherals_id = $peripheral->add($data, array(), !$no_history);
-         }
-      } else if ($pfConfig->getValue('import_peripheral') == 2) {
-         // Unique import
-         $added = 0;
-         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
-            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_peripherals`.`id`
-               AND `glpi_computers_items`.`itemtype`='Peripheral'
-            WHERE `name`='".$data['name']."'
-               AND `manufacturers_id`='".$data['manufacturers_id']."'
-               AND `serial`='".$data['serial']."'
-               AND `is_global`='0'
-               AND `entities_id`='".$data['entities_id']."'
-               AND `glpi_computers_items`.`id` IS NULL
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $peripherals_id = $db_data['id'];
-         } else {
-            $data['is_global'] = 0;
-            $peripherals_id = $peripheral->add($data, array(), !$no_history);
-            $added = 1;
-         }
-      } else if ($pfConfig->getValue('import_peripheral') == 3) {
-         // Unique import on serial number
-         $entity = "AND `entities_id`='".$data['entities_id']."'";
-         if ($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0) {
-            $entity = '';
-         }
-         $added = 0;
-         $query = "SELECT `glpi_peripherals`.`id`, `glpi_peripherals`.`entities_id`
-            FROM `glpi_peripherals`
-            WHERE `name`='".$data['name']."'
-               AND `manufacturers_id`='".$data['manufacturers_id']."'
-               AND `serial`='".$data['serial']."'
-               AND `is_global`='0'
-               ".$entity."
-            LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $db_data = $DB->fetch_assoc($result);
-            $peripherals_id = $db_data['id'];
-            if ($db_data['entities_id'] != $data['entities_id']) {
-               $transfer = new Transfer();
-               $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0);
-               $item_to_transfer = array("Peripheral" => array($db_data['id']=>$db_data['id']));
-               $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
-            }
-         } else {
-            $data['is_global'] = 0;
-            $peripherals_id = $peripheral->add($data, array(), !$no_history);
-            $added = 1;
-         }
-         if ($added == 0) {
-            $peripheral->getFromDB($peripherals_id);
-            $computer_Item->disconnectForItem($peripheral);
-         }
-      }
-      $data['computers_id']   = $computers_id;
-      $data['itemtype']       = 'Peripheral';
-      $data['items_id']       = $peripherals_id;
-      $data['is_dynamic']     = 1;
-      $data['_no_history']    = $no_history;
-      $computer_Item->add($data, array(), !$no_history);
    }
 
 
