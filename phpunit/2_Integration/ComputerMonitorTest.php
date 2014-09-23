@@ -141,103 +141,6 @@ class ComputerMonitor extends Common_TestCase {
    }
 
 
-   // Import Monitor of computer with each options:
-   //   * 1 = Global import
-   //   * 2 = Unique import
-   //   * 3 = Unique import on serial number
-
-   /**
-    * TODO: use some dataProvider
-    */
-
-   /**
-    * @test
-    */
-   public function PrinterGlobalimport() {
-      global $DB;
-
-      $DB->connect();
-
-      self::restore_database();
-
-      $_SESSION['glpiactive_entity'] = 0;
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
-
-      $pfConfig         = new PluginFusioninventoryConfig();
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-      $computer         = new Computer();
-
-      $pfConfig->updateValue('import_monitor', 1);
-      PluginFusioninventoryConfig::loadCache();
-
-      $a_computerinventory = $this->a_computer1;
-      $a_computer = $a_computerinventory['Computer'];
-      $a_computer["entities_id"] = 0;
-      $computers_id = $computer->add($a_computer);
-
-      $pfiComputerLib->updateComputer($a_computerinventory,
-                                      $computers_id,
-                                      FALSE,
-                                      1);
-
-      $computer->getFromDB(1);
-      $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-
-      $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer');
-      $this->assertEquals(1,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
-                          'First computer (links)');
-
-      $a_computerinventory = $this->a_computer2;
-      $a_computer = $a_computerinventory['Computer'];
-      $a_computer["entities_id"] = 0;
-      $computers_id = $computer->add($a_computer);
-
-      $pfiComputerLib->updateComputer($a_computerinventory,
-                                      $computers_id,
-                                      FALSE,
-                                      1);
-
-      $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'Second computer');
-      $this->assertEquals(2,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
-                          'Second computer (links)');
-
-      // * Retry first computer
-      $a_computerinventory = $this->a_computer1;
-      $pfiComputerLib->updateComputer($a_computerinventory,
-                                      $computers_id,
-                                      FALSE,
-                                      1);
-
-      $computer->getFromDB(1);
-      $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-
-      $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer');
-      $this->assertEquals(2,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
-                          'First computer (links)');
-
-      $this->assertEquals(0,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 6'),
-                          'First computer (number id of links recreated)');
-
-
-      $pfConfig->updateValue('import_monitor', 2);
-      PluginFusioninventoryConfig::loadCache();
-   }
-
-
-
-   /**
-    * @test
-    */
-   public function MonitorUniqueimport() {
-      $this->mark_incomplete();
-   }
-
-
 
    /**
     * @test
@@ -256,10 +159,6 @@ class ComputerMonitor extends Common_TestCase {
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
-
-      // Unique import on serial number
-      $pfConfig->updateValue('import_monitor', 3);
-      PluginFusioninventoryConfig::loadCache();
 
       $a_computerinventory = $this->a_computer1;
       $a_computer = $a_computerinventory['Computer'];
@@ -344,9 +243,6 @@ class ComputerMonitor extends Common_TestCase {
       $this->assertEquals(0,
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'),
                           'First computer (number id of links recreated) (4)');
-
-      $pfConfig->updateValue('import_monitor', 2);
-      PluginFusioninventoryConfig::loadCache();
    }
 }
 ?>

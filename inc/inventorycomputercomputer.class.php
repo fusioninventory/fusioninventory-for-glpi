@@ -141,6 +141,16 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</tr>';
       }
 
+      if ($a_computerextend['plugin_fusioninventory_computerarchs_id'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo "<td>".__('Architecture', 'fusioninventory')."</td>";
+         echo '<td>'; 
+         echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_computerarchs', 
+                                        $a_computerextend['plugin_fusioninventory_computerarchs_id']);
+         echo '</td>';
+         echo '</tr>';
+      }
+
       if ($a_computerextend['operatingsystem_installationdate'] != '') {
          echo '<tr class="tab_bg_1">';
          echo "<td>".__('Operating system')." - ".__('Installation')." (".

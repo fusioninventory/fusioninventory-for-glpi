@@ -366,17 +366,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
           ),
           2 => array(
               'id'               => '2',
-              'itemtype'         => 'Monitor',
-              'items_id'         => '1',
-              'itemtype_link'    => '',
-              'linked_action'    => '0',
-              'user_name'        => '',
-              'id_search_option' => '7',
-              'old_value'        => 'ddurieux',
-              'new_value'        => 'root'
-          ),
-          3 => array(
-              'id'               => '3',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'DeviceProcessor',
@@ -386,8 +375,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'Core i3 (1)',
               'new_value'        => ''
           ),
-          4 => array(
-              'id'               => '4',
+          3 => array(
+              'id'               => '3',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'SoftwareVersion',
@@ -397,8 +386,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ORBit2 - 2.14.19 (3)',
               'new_value'        => ''
           ),
-          5 => array(
-              'id'               => '5',
+          4 => array(
+              'id'               => '4',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '3',
               'itemtype_link'    => 'Computer',

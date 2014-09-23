@@ -664,14 +664,15 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $inputrulelog = array();
       $inputrulelog['date'] = date('Y-m-d H:i:s');
       $inputrulelog['rules_id'] = $this->fields['id'];
-      if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-         $inputrulelog['method'] = $class->getMethod();
+      if (!isset($params['return'])) {
+         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+            $inputrulelog['method'] = $class->getMethod();
+         }
+         if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+            $inputrulelog['plugin_fusioninventory_agents_id'] =
+                           $_SESSION['plugin_fusioninventory_agents_id'];
+         }
       }
-      if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-         $inputrulelog['plugin_fusioninventory_agents_id'] =
-                        $_SESSION['plugin_fusioninventory_agents_id'];
-      }
-
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "execute action\n"
@@ -691,11 +692,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                         $items_id = current($datas);
                         $output['found_equipment'] = array($items_id, $itemtype);
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                           $inputrulelog['items_id'] = $items_id;
-                           $inputrulelog['itemtype'] = $itemtype;
-                           $pfRulematchedlog->add($inputrulelog);
-                           $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-                           $class->rulepassed($items_id, $itemtype);
+                           if (!isset($params['return'])) {
+                              $inputrulelog['items_id'] = $items_id;
+                              $inputrulelog['itemtype'] = $itemtype;
+                              $pfRulematchedlog->add($inputrulelog);
+                              $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+                              $class->rulepassed($items_id, $itemtype);
+                           }
                            return $output;
                         } else {
                            $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
@@ -711,9 +714,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                            if ($criteria->fields['criteria'] == 'itemtype') {
                               $itemtype = $criteria->fields['pattern'];
                               if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                                 $_SESSION['plugin_fusioninventory_rules_id'] =
-                                                $this->fields['id'];
-                                 $class->rulepassed("0", $itemtype);
+                                 if (!isset($params['return'])) {
+                                    $_SESSION['plugin_fusioninventory_rules_id'] =
+                                                   $this->fields['id'];
+                                    $class->rulepassed("0", $itemtype);
+                                 }
                                  $output['found_equipment'] = array(0, $itemtype);
                                  return $output;
                               } else {
@@ -728,8 +733,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      }
                      if ($itemtype_found == "0") {
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
-                           $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
+                           if (!isset($params['return'])) {
+                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+                              $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
+                           }
                            $output['found_equipment'] = array(0, "PluginFusioninventoryUnmanaged");
                            return $output;
                         } else {
@@ -760,8 +767,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      if ($criteria->fields['criteria'] == 'itemtype') {
                         $itemtype = $criteria->fields['pattern'];
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
-                           $class->rulepassed("0", $itemtype);
+                           if (!isset($params['return'])) {
+                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+                              $class->rulepassed("0", $itemtype);
+                           }
                            $output['found_equipment'] = array(0, $itemtype);
                            return $output;
                         } else {
@@ -775,8 +784,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                }
                if ($itemtype_found == "0") {
                   if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                     $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
-                     $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
+                     if (!isset($params['return'])) {
+                        $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+                        $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
+                     }
                      $output['found_equipment'] = array(0, 'PluginFusioninventoryUnmanaged');
                      return $output;
                   } else {

@@ -191,7 +191,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          // start new line
          $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
             echo "<input type='checkbox' name='file_entries[]' value='$i' />";
             echo "</td>";
@@ -275,19 +275,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "</div>";
          }
          echo "</td>";
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
+         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          $i++;
       }
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
+      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("filesList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
+      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit'>";
@@ -447,7 +447,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</tr><tr>";
       echo "<td>";
       echo "</td><td>";
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), 'w')) {
+      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
          if ( $mode === 'edit' ) {
             echo "<input type='submit' name='save_item' value=\"".
                _sx('button', 'Save')."\" class='submit' >";

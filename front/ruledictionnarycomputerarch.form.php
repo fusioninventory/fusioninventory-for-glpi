@@ -1,5 +1,4 @@
 <?php
-
 /*
    ------------------------------------------------------------------------
    FusionInventory
@@ -35,32 +34,23 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
+   @since     2010
 
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include ('../../../inc/includes.php');
 
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
              "pluginfusioninventorymenu",
-             "configurationmanagement");
-
-//Session::checkRight('plugin_fusioninventory_blacklist', READ);
+             "ruledictionnarycomputerarch");
+Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-PluginFusioninventoryConfigurationManagement::cronCheckdevices();
+$rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
 
-$params = Search::manageParams('PluginFusioninventoryConfigurationmanagement', $_GET);
-$params['criteria'][0]['field']      = 2;
-$params['criteria'][0]['searchtype'] = 'equals';
-$params['criteria'][0]['value']      = '0';
-
-Search::showList('PluginFusioninventoryConfigurationmanagement', $params);
-
-Html::footer();
-
+include (GLPI_ROOT . "/front/rule.common.form.php");
 ?>
