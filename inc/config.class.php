@@ -70,9 +70,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agents_old_days']        = '0';
 
-      $input['import_monitor']         = 2;
-      $input['import_printer']         = 2;
-      $input['import_peripheral']      = 2;
       $input['import_software']        = 1;
       $input['import_volume']          = 1;
       $input['import_antivirus']       = 1;
@@ -407,7 +404,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       echo _n('Volume', 'Volumes', 2)."&nbsp;:";
       echo "</td>";
-      echo "<td>";
+      echo "<td width='360'>";
       Dropdown::showYesNo("import_volume", $pfConfig->getValue('import_volume'));
       echo "</td>";
       echo "<th colspan='2' width='30%'>";
@@ -432,89 +429,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo _n('Printer', 'Printers', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $elements = array();
-      $elements[0] = __('No import');
-      $elements[1] = __('Global import', 'fusioninventory');
-      $elements[2] = __('Unique import', 'fusioninventory');
-      $elements[3] = __('Unique import on serial number', 'fusioninventory');
-
-      Dropdown::showFromArray("import_printer", $elements,
-                              array('value' =>
-                                 $pfConfig->getValue('import_printer')));
-      echo "&nbsp;";
-      $text = "* ".__('No import')."&nbsp;:&nbsp;".
-      __('This option will not import this item', 'fusioninventory')."<br/><br/>".
-      "* ".__('Global import', 'fusioninventory')."&nbsp;:&nbsp;".
-      __("This option will merge items with same name to reduce number of items if this ".
-            "management isn't important", 'fusioninventory')."<br/><br/>".
-      "* ".__('Unique import', 'fusioninventory')."&nbsp;:&nbsp;".
-      __('This option will create one item for each item found', 'fusioninventory')."<br/><br/>".
-      "* ".__('Unique import on serial number', 'fusioninventory')."&nbsp;:&nbsp;".
-      __('This option will create one item for each item have serial number', 'fusioninventory');
-      Html::showToolTip($text);
-      echo "</td>";
-      echo "<td>";
-      echo _n('Memory', 'Memories', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_memory", $pfConfig->getValue('component_memory'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Monitor', 'Monitors', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("import_monitor", $elements,
-                              array('value' =>
-                                 $pfConfig->getValue('import_monitor')));
-      echo "&nbsp;";
-      Html::showToolTip($text);
-      echo "</td>";
-      echo "<td>";
-      echo _n('Hard drive', 'Hard drives', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_harddrive", $pfConfig->getValue('component_harddrive'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo _n('Device', 'Devices', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showFromArray("import_peripheral", $elements,
-                              array('value' =>
-                                       $pfConfig->getValue('import_peripheral')));
-      echo "&nbsp;";
-      Html::showToolTip($text);
-      echo "</td>";
-      echo "<td>";
-      echo _n('Network card', 'Network cards', 2)."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("component_networkcard", $pfConfig->getValue('component_networkcard'));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
       echo _n('Virtual machine', 'Virtual machines', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_vm", $pfConfig->getValue('import_vm'));
       echo "</td>";
       echo "<td>";
-      echo __('Virtual network card', 'fusioninventory')."&nbsp;:";
+      echo _n('Memory', 'Memories', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_networkcardvirtual",
-                          $pfConfig->getValue('component_networkcardvirtual'));
+      Dropdown::showYesNo("component_memory", $pfConfig->getValue('component_memory'));
       echo "</td>";
       echo "</tr>";
 
@@ -527,10 +451,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                           $pfConfig->getValue('import_antivirus'));
       echo "</td>";
       echo "<td>";
-      echo _n('Graphics card', 'Graphics cards', 2)."&nbsp;:";
+      echo _n('Hard drive', 'Hard drives', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_graphiccard", $pfConfig->getValue('component_graphiccard'));
+      Dropdown::showYesNo("component_harddrive", $pfConfig->getValue('component_harddrive'));
       echo "</td>";
       echo "</tr>";
 
@@ -545,10 +469,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                               array('value'=>$pfConfig->getValue('location')));
       echo "</td>";
       echo "<td>";
-      echo _n('Soundcard', 'Soundcards', 2)."&nbsp;:";
+      echo _n('Network card', 'Network cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_soundcard", $pfConfig->getValue('component_soundcard'));
+      Dropdown::showYesNo("component_networkcard", $pfConfig->getValue('component_networkcard'));
       echo "</td>";
       echo "</tr>";
 
@@ -563,10 +487,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                               array('value'=>$pfConfig->getValue('group')));
       echo "</td>";
       echo "<td>";
-      echo _n('Drive', 'Drives', 2)."&nbsp;:";
+      echo __('Virtual network card', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_drive", $pfConfig->getValue('component_drive'));
+      Dropdown::showYesNo("component_networkcardvirtual",
+                          $pfConfig->getValue('component_networkcardvirtual'));
       echo "</td>";
       echo "</tr>";
 
@@ -578,10 +503,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                            'value'  => $pfConfig->getValue('states_id_default')));
       echo "</td>";
       echo "<td>";
-      echo __('Network drives', 'fusioninventory')."&nbsp;:";
+      echo _n('Graphics card', 'Graphics cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_networkdrive", $pfConfig->getValue('component_networkdrive'));
+      Dropdown::showYesNo("component_graphiccard", $pfConfig->getValue('component_graphiccard'));
       echo "</td>";
       echo "</tr>";
 
@@ -596,10 +521,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                               array('value'=>$pfConfig->getValue('otherserial')));
       echo "</td>";
       echo "<td>";
-      echo _n('Controller', 'Controllers', 2)."&nbsp;:";
+      echo _n('Soundcard', 'Soundcards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
+      Dropdown::showYesNo("component_soundcard", $pfConfig->getValue('component_soundcard'));
       echo "</td>";
       echo "</tr>";
 
@@ -610,7 +535,33 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
       echo "</td>";
+      echo "<td>";
+      echo _n('Drive', 'Drives', 2)."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_drive", $pfConfig->getValue('component_drive'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'>";
+      echo "</td>";
+      echo "<td>";
+      echo __('Network drives', 'fusioninventory')."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_networkdrive", $pfConfig->getValue('component_networkdrive'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "<td>";
+      echo _n('Controller', 'Controllers', 2)."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
       echo "</td>";
       echo "</tr>";
 

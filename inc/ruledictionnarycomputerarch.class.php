@@ -1,5 +1,4 @@
 <?php
-
 /*
    ------------------------------------------------------------------------
    FusionInventory
@@ -40,44 +39,46 @@
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDropdown {
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-             "pluginfusioninventorymenu", "configurationmanagement_model");
 
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$pfConfigurationManagement_Model = new PluginFusioninventoryConfigurationManagement_Model();
-
-if (isset($_POST["add"])) {
-   $pfConfigurationManagement_Model->add($_POST);
-   Html::back();
-} else if (isset($_POST["update"])) {
-   $pfConfigurationManagement_Model->update($_POST);
-   Html::back();
-} else if (isset($_REQUEST["purge"])) {
-   $pfConfigurationManagement_Model->delete($_POST);
-   $pfConfigurationManagement_Model->redirectToList();
-} else if (isset($_POST['update_serialized'])) {
-   unset($_POST['update_serialized']);
-   $serialized_model = array();
-   foreach ($_POST as $key => $value) {
-      if ($value != 'notmanaged'
-              && $value != 'id') {
-         $serialized_model[$key] = $value;
-      }
+   /**
+    * Constructor
+   **/
+   function __construct() {
+      parent::__construct('PluginFusioninventoryRuleDictionnaryComputerArch');
    }
-   $_POST['serialized_model'] = exportArrayToDB($serialized_model);
-   $pfConfigurationManagement_Model->update($_POST);
-   Html::back();
+
+   static function getTypeName($nb=0) {
+      return __('Dictionnary of computer architectures', 'fusioninventory');
+   }
+
+   function getCriterias() {
+
+      static $criterias = array();
+
+      if (count($criterias)) {
+         return $criterias;
+      }
+
+      $criterias['name']['field'] = 'name';
+      $criterias['name']['name']  = __('Architecture', 'fusioninventory');
+      $criterias['name']['table'] = 'glpi_plugin_fusioninventory_computerarchs';
+      return $criterias;
+   }
+
+
+   /**
+    * @see Rule::getActions()
+   **/
+   function getActions() {
+
+      $actions                          = array();
+      $actions['name']['name']          = __('Architecture', 'fusioninventory');
+      $actions['name']['force_actions'] = array('assign', 'regex_result');
+
+      return $actions;
+   }
+
 }
-
-
-if (!isset($_GET["id"])) {
-   $_GET['id'] = '';
-}
-$pfConfigurationManagement_Model->showForm($_GET['id']);
-
-Html::footer();
-
 ?>
