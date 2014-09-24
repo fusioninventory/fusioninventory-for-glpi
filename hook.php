@@ -914,14 +914,14 @@ function plugin_fusioninventory_MassiveActions($type) {
          break;
 
       case 'PluginFusioninventoryAgent';
-         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $pfAgentmodule->find();
          $array = array();
-         foreach ($a_modules as $data) {
-            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] =
-                     __('Module', 'fusioninventory')." - ".$data['modulename'];
-         }
          if (PluginFusioninventoryProfile::haveRight("agent", "w")) {
+            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+            $a_modules = $pfAgentmodule->find();
+            foreach ($a_modules as $data) {
+               $array["plugin_fusioninventory_agentmodule".$data["modulename"]] =
+                        __('Module', 'fusioninventory')." - ".$data['modulename'];
+            }
             $array['plugin_fusioninventory_transfert'] = __('Transfer');
          }
          return $array;
