@@ -915,7 +915,7 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case 'PluginFusioninventoryAgent';
          $array = array();
-         if (PluginFusioninventoryProfile::haveRight("agent", "w")) {
+         if (Session::haveRight("plugin_fusioninventory_agent", UPDATE)) {
             $pfAgentmodule = new PluginFusioninventoryAgentmodule();
             $a_modules = $pfAgentmodule->find();
             foreach ($a_modules as $data) {
