@@ -921,7 +921,9 @@ function plugin_fusioninventory_MassiveActions($type) {
             $array["plugin_fusioninventory_agentmodule".$data["modulename"]] =
                      __('Module', 'fusioninventory')." - ".$data['modulename'];
          }
-         $array['plugin_fusioninventory_transfert']                 = __('Transfer');
+         if (PluginFusioninventoryProfile::haveRight("agent", "w")) {
+            $array['plugin_fusioninventory_transfert'] = __('Transfer');
+         }
          return $array;
          break;
 
