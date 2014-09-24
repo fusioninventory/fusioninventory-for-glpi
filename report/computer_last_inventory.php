@@ -74,8 +74,8 @@ echo __('Number of days (minimum) since last inventory', 'fusioninventory')." :&
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", array(
-                'value' => $nbdays, 
-                'min'   => 1, 
+                'value' => $nbdays,
+                'min'   => 1,
                 'max'   => 365)
 );
 echo "</td>";
@@ -106,10 +106,10 @@ if (($state != "") AND ($state != "0")) {
    $state_sql = " AND `states_id` = '".$state."' ";
 }
 
-$query = "SELECT `last_fusioninventory_update`, `computers_id` 
+$query = "SELECT `last_fusioninventory_update`, `computers_id`
       FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
    LEFT JOIN `glpi_computers` ON `computers_id`=`glpi_computers`.`id`
-WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) 
+WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY)
       OR last_fusioninventory_update IS NULL)
    ".$state_sql.")".getEntitiesRestrictRequest("AND", "glpi_computers")."
 
@@ -120,7 +120,7 @@ $result = $DB->query($query);
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 
 echo "<tr class='tab_bg_1'>";
-echo "<th colspan='4'>".__('Number of items')." : ".$DB->numrows($result)."</th>";
+echo "<th colspan='5'>".__('Number of items')." : ".$DB->numrows($result)."</th>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
@@ -128,6 +128,7 @@ echo "<th>".__('Name')."</th>";
 echo "<th>".__('Last inventory')."</th>";
 echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
+echo "<th>".__('Status')."</th>";
 echo "</tr>";
 
 while ($data=$DB->fetch_array($result)) {
@@ -139,6 +140,9 @@ while ($data=$DB->fetch_array($result)) {
    echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
    echo "<td>".$computer->fields['serial']."</td>";
    echo "<td>".$computer->fields['otherserial']."</td>";
+   echo "<td>";
+   echo Dropdown::getDropdownName(getTableForItemType("State"), $computer->fields['states_id']);
+   echo "</td>";
    echo "</tr>";
 }
 
