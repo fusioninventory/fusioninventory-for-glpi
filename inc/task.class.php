@@ -1325,5 +1325,51 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
+
+   /**
+    * @see CommonDBTM::post_updateItem()
+   **/
+   function post_updateItem($history=1) {
+      global $DB, $CFG_GLPI;
+
+      if (isset($this->oldvalues['is_active'])
+              && $this->oldvalues['is_active'] == 1) {
+         // If disable task, must end all taskjobstates prepared
+         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         $query = implode(" \n", array(
+            "SELECT",
+            "     task.`id`, task.`name`, task.`is_active`,",
+            "     task.`datetime_start`, task.`datetime_end`,",
+            "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
+            "     job.`id`, job.`name`, job.`method`, job.`actors`,",
+            "     run.`itemtype`, run.`items_id`, run.`state`,",
+            "     run.`id`, run.`plugin_fusioninventory_agents_id`",
+            "FROM `glpi_plugin_fusioninventory_taskjobstates` run",
+            "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` job",
+            "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
+            "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
+            "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+            "WHERE",
+            "  run.`state` IN ('". implode("','", array(
+               PluginFusioninventoryTaskjobstate::PREPARED,
+            ))."')",
+            "  AND task.`id` = " . $this->fields['id'],
+            // order the result by job.id
+            // TODO: the result should be ordered by the future job.index field when drag and drop
+            // feature will be properly activated in the taskjobs list.
+            "ORDER BY job.`id`",
+         ));
+         $query_result = $DB->query($query);
+         $results = array();
+         if ($query_result) {
+            $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+         }
+         foreach ($results as $data) {
+            $pfTaskjobstate->getFromDB($data['run']['id']);
+            $pfTaskjobstate->cancel(__('Task has been disabled', 'fusioninventory'));
+         }
+      }
+      parent::post_updateItem($history);
+   }
 }
 
