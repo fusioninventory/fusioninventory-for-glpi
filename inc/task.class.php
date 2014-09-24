@@ -113,7 +113,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
-   
+
    /**
    * Purge task and taskjob
    *
@@ -292,11 +292,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          ) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
-               'reason'   => __(
-                  "The agent is requesting a configuration that has already been sent to ".
-                  "him by the server. It is more likely that the agent is subject to a critical ".
-                  "error.", 'fusioninventory'
-               ),
+               'reason'   => __("The agent is requesting a configuration that has already been sent to him by the server. It is more likely that the agent is subject to a critical error.", 'fusioninventory'),
                'code' => $jobstate::IN_ERROR
             );
             continue;
@@ -323,9 +319,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             if ( !($schedule_start <= $now and $now <= $schedule_end) ) {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
-                  'reason' => __(
-                     "This job can not be executed anymore due to the task's schedule.", 'fusioninventory'
-                  )
+                  'reason' => __("This job can not be executed anymore due to the task's schedule.", 'fusioninventory')
                );
                continue;
             }
@@ -357,9 +351,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             if ( !$timeslot_matched ) {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
-                  'reason' => __(
-                     "This job can not be executed anymore due to the task's timeslot.", 'fusioninventory'
-                  )
+                  'reason' => __("This job can not be executed anymore due to the task's timeslot.", 'fusioninventory')
                );
                continue;
             }
@@ -376,9 +368,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if ( !in_array($agent_id, $agents) ) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
-               'reason' => __(
-                  'This agent does not belong anymore in the actors defined in the job.', 'fusioninventory'
-               )
+               'reason' => __('This agent does not belong anymore in the actors defined in the job.', 'fusioninventory')
             );
             continue;
          }

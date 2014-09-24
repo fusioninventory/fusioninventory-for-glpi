@@ -443,7 +443,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'itemtype' => $this->fields['itemtype'],
          'date' => date("Y-m-d H:i:s"),
          'state' => PluginFusioninventoryTaskjoblog::TASK_ERROR,
-         'comment' => $reason
+         'comment' => Toolbox::addslashes_deep($reason)
       );
 
       $log->add($log_input);
@@ -464,7 +464,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'itemtype' => $this->fields['itemtype'],
          'date' => date("Y-m-d H:i:s"),
          'state' => PluginFusioninventoryTaskjoblog::TASK_INFO,
-         'comment' => $reason
+         'comment' => Toolbox::addslashes_deep($reason)
       );
 
       $log->add($log_input);
