@@ -114,7 +114,7 @@ $query = "SELECT * FROM (
 SELECT `glpi_networkequipments`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `networkequipmentmodels_id`, `glpi_networkequipments`.`id` as `network_id`, 0 as `printer_id`,
    `plugin_fusioninventory_configsecurities_id`,
-   `glpi_ipaddresses`.`name` as ip
+   `glpi_ipaddresses`.`name` as ip, `states_id`
    FROM `glpi_plugin_fusioninventory_networkequipments`
 JOIN `glpi_networkequipments` on `networkequipments_id` = `glpi_networkequipments`.`id`
 LEFT JOIN `glpi_networkports`
@@ -132,7 +132,7 @@ UNION
 SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `printermodels_id`, 0 as `network_id`, `glpi_printers`.`id` as `printer_id`,
    `plugin_fusioninventory_configsecurities_id`,
-   `glpi_ipaddresses`.`name` as ip
+   `glpi_ipaddresses`.`name` as ip, `states_id`
    FROM `glpi_plugin_fusioninventory_printers`
 JOIN `glpi_printers` on `printers_id` = `glpi_printers`.`id`
 LEFT JOIN `glpi_networkports`
@@ -159,6 +159,7 @@ echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Model')."</th>";
 echo "<th>".__('SNMP authentication')."</th>";
+echo "<th>".__('Status')."</th>";
 echo "</tr>";
 
 if ($result=$DB->query($query)) {
@@ -194,6 +195,9 @@ if ($result=$DB->query($query)) {
       }
       echo "<td>";
       echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_configsecurities', $data['plugin_fusioninventory_configsecurities_id']);
+      echo "</td>";
+      echo "<td>";
+      echo Dropdown::getDropdownName(getTableForItemType("State"), $data['states_id']);
       echo "</td>";
       echo "</tr>";
    }
