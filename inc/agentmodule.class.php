@@ -207,7 +207,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function showFormAgentException($items_id) {
       global $CFG_GLPI;
 
-      $canedit = 1;
+      $canedit = PluginFusioninventoryProfile::haveRight("agent", "w");
       echo "<br/>";
       if ($canedit) {
          echo "<form name='form_ic' method='post' action='".$CFG_GLPI['root_doc'].
