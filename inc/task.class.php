@@ -525,6 +525,30 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
             }
 
+
+
+            // Cancel agents prepared but not in $agent_ids (like computer
+            // not in dynamic group)
+            $jobstates_tocancel = $jobstate->find(
+               implode(" \n", array(
+                  "    `itemtype` = '" . $item_type . "'",
+                  "AND `items_id` = ".$item_id,
+                  "AND `plugin_fusioninventory_taskjobs_id` = ". $job_id,
+                  "AND `state` not in ('" . implode( "','" , array(
+                     PluginFusioninventoryTaskjobstate::FINISHED,
+                     PluginFusioninventoryTaskjobstate::IN_ERROR,
+                     PluginFusioninventoryTaskjobstate::CANCELLED
+                  )) . "')",
+                  "AND `plugin_fusioninventory_agents_id` NOT IN (",
+                  "'" . implode("','", array_keys($agent_ids)) . "'",
+                  ")"
+               ))
+            );
+            foreach ($jobstates_tocancel as $jobstate_tocancel) {
+               $jobstate->getFromDB($jobstate_tocancel['id']);
+               $jobstate->cancel(__('Device no longer defined in definition of job', 'fusioninventory'));
+            }
+
             foreach($agent_ids as $agent_id => $agent_not_running) {
 
                if( $agent_not_running) {
@@ -1159,8 +1183,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     *  @param $filter criterias to filter in the request
     **/
    static function getItemsFromDB($filter) {
-
       global $DB;
+
       $select = array("tasks"=>"task.*");
       $where = array();
       $leftjoin = array();
