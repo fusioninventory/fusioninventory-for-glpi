@@ -165,7 +165,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(1);
+      $data = $pfTask->getJoblogs(array(1));
 
       $ref = array(
           1 => 'portdavid',
@@ -211,7 +211,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(1);
+      $data = $pfTask->getJoblogs(array(1));
 
       $ref = array(
           1 => 'portdavid',
@@ -244,7 +244,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(1);
+      $data = $pfTask->getJoblogs(array(1));
 
       $ref = array(
           1 => 'portdavid',
@@ -285,7 +285,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(1);
+      $data = $pfTask->getJoblogs(array(1));
 
       $ref = array(
           1 => 'portdavid',
