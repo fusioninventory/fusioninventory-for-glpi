@@ -514,6 +514,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    **/
    function getAgentsFromComputers($computer_ids = array()) {
 
+      if (count($computer_ids) == 0) {
+         return array();
+      }
+
       $computer_ids = "'" . implode("','", $computer_ids) . "'";
 
       $agents = $this->find("`computers_id` in (".$computer_ids.")", "");

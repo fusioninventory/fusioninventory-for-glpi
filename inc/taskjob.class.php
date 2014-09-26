@@ -530,7 +530,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          array(
             'is_running'  => TRUE,
             'is_active'   => TRUE,
-            'actions' => array('PluginFusioninventoryDeployGroup' => TRUE)
+            'actors' => array('PluginFusioninventoryDeployGroup' => TRUE)
          )
       );
 
@@ -1601,35 +1601,28 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       $uniqid = 0;
-      if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
-         // Get module name
-         $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
+//      if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
+
+         $input = array();
+         $input['id'] = $a_taskjob['id'];
+         $input['execution_id'] = $a_taskjob['execution_id'] + 1;
+         $pfTaskjob->update($input);
+
+         $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
+         $item = new $itemtype;
+
          if (
-            strstr($pluginName, "fusioninventory")
-            OR strstr($pluginName, "fusinv")
+            in_array(
+               $a_taskjob['method'],
+               array('deployinstall', 'deployuninstall')
+            ) && isset( $a_taskjob['definitions_filter'] )
          ) {
-
-            $input = array();
-            $input['id'] = $a_taskjob['id'];
-            $input['execution_id'] = $a_taskjob['execution_id'] + 1;
-            $pfTaskjob->update($input);
-
-            $itemtype = "Plugin".ucfirst($pluginName).ucfirst($a_taskjob['method']);
-            $item = new $itemtype;
-
-            if (
-               in_array(
-                  $a_taskjob['method'],
-                  array('deployinstall', 'deployuninstall')
-               ) && isset( $a_taskjob['definitions_filter'] )
-            ) {
-               $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
-            } else {
-               $uniqid = $item->prepareRun($a_taskjob['id']);
-            }
+            $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
+         } else {
+            $uniqid = $item->prepareRun($a_taskjob['id']);
          }
          return $uniqid;
-      }
+//      }
    }
 
 
