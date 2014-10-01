@@ -304,6 +304,9 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
       Crontask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
                                'comment'=>'Clean agents not contacted since xxx days'));
+      Crontask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
+                         array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                               'comment'=>'Wake agents ups'));
 
    /*
     * Create rules

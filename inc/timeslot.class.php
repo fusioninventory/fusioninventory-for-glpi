@@ -130,7 +130,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *    )
     */
 
-   function getTimeslotEntries($timeslot_ids = array(), $weekdays = null ) {
+   function getTimeslotEntries($timeslot_ids = array(), $weekdays = null) {
 
       $condition = array(
          "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."')",
@@ -138,7 +138,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       if ( !is_null($weekdays) ) {
          $condition[] = "and `day` = '".$weekdays."'";
       }
-
+      
       $results = array();
 
       $timeslot_entries = getAllDatasFromTable(
@@ -156,6 +156,35 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       return $results;
    }
 
+   /**
+   * Get all current active timeslots
+   * @since 0.85+1.0
+   */
+   function getCurrentActiveTimeslots() {
+      global $DB;
+      
+      $timeslots   = array();
+      $date        = new DateTime('NOW');
+      $day_of_week = $date->format("N");
+      $timeinsecs  = $date->format('H') * HOUR_TIMESTAMP 
+                        + $date->format('i') * MINUTE_TIMESTAMP 
+                        + $date->format('s');
+      
+      //Get all timeslots currently active
+      $query_timeslot = "SELECT `t`.`id` 
+                         FROM `glpi_plugin_fusioninventory_timeslots` as t 
+                         INNER JOIN `glpi_plugin_fusioninventory_timeslotentries` as te 
+                           ON (`te`.`plugin_fusioninventory_timeslots_id`=`t`.`id`) 
+                         WHERE $timeinsecs BETWEEN `te`.`begin` 
+                            AND `te`.`end` 
+                            AND `day`='".$day_of_week."'";
+      foreach ($DB->request($query_timeslot) as $timeslot) {
+         $timeslots[] = $timeslot['id'];
+      }
+      
+      return $timeslots;
+   }
+   
    /**
     * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
     * @param date    The date and time we want to transform into cursor. If null the default value

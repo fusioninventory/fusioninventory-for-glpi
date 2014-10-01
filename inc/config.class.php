@@ -69,6 +69,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $users_id = $pfSetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
       $input['agents_old_days']        = '0';
+      $input['wakeup_agent_max']       = '10';
+      $input['memcached']              = '';
 
       $input['import_software']        = 1;
       $input['import_volume']          = 1;
@@ -366,9 +368,24 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
-      echo "<td></td>";
+
+      echo "<td>".__('Maximum number of agents to wake up in a task', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      Dropdown::showNumber("wakeup_agent_max", array(
+             'value' => $this->getValue('wakeup_agent_max'),
+             'min' => 1,
+             'max' => 100)
+         );
+      echo "</td>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Memcached server address (empty to disable it)', 'fusioninventory')."&nbsp;:</td>";
+
       echo "<td width='20%'>";
       echo "</td>";
+      echo "<td></td>";
       echo "</tr>";
 
       $options['candel'] = FALSE;
