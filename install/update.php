@@ -1961,6 +1961,68 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
+      //Get all glpi_plugin_fusioninventory_inventorycomputercomputers rows with serialized_inventory at NULL
+      $query = "SELECT `id`, `computers_id` 
+                FROM `glpi_plugin_fusioninventory_inventorycomputercomputers` 
+                WHERE `serialized_inventory` IS NULL";
+      foreach ($DB->request($query) as $computerinfos) {
+         //For each line, recreate a new array which contains the minimum informations to correctly handle locks
+         $computer = new Computer();
+         if ($computer->getFromDB($computerinfos['computers_id'])) {
+            $a_inventory = array(
+               'fusioninventorycomputer' => Array(
+                  'winowner'                        => '',
+                  'wincompany'                      => '',
+                  'operatingsystem_installationdate'=> '',
+                  'last_fusioninventory_update'     => ''
+               ),
+               'soundcard'      => array(),
+               'graphiccard'    => array(),
+               'controller'     => array(),
+               'processor'      => array(),
+               'computerdisk'   => array(),
+               'memory'         => array(),
+               'monitor'        => array(),
+               'printer'        => array(),
+               'peripheral'     => array(),
+               'networkport'    => array(),
+               'software'       => array(),
+               'harddrive'      => array(),
+               'virtualmachine' => array(),
+               'antivirus'      => array(),
+               'storage'        => array(),
+               'licenseinfo'    => array(),
+               'networkcard'    => array(),
+               'itemtype'       => 'Computer'
+               );
+            $a_inventory['Computer'] = array(
+               'name'                             => $computer->getName(),
+               'users_id'                         => $computer->fields['users_id'],
+               'operatingsystems_id'              => $computer->fields['operatingsystems_id'],
+               'operatingsystemversions_id'       => $computer->fields['operatingsystemversions_id'],
+               'uuid'                             => $computer->fields['uuid'],
+               'domains_id'                       => $computer->fields['domains_id'],
+               'os_licenseid'                     => $computer->fields['os_licenseid'],
+               'os_license_number'                => $computer->fields['os_license_number'],
+               'operatingsystemservicepacks_id'   => $computer->fields['operatingsystemservicepacks_id'],
+               'manufacturers_id'                 => $computer->fields['manufacturers_id'],
+               'computermodels_id'                => $computer->fields['computermodels_id'],
+               'serial'                           => $computer->fields['serial'],
+               'computertypes_id'                 => $computer->fields['computertypes_id'],
+               'is_dynamic'                       => 1,
+               'contact'                          => $computer->fields['contact'],
+               'states_id'                        => $computer->fields['states_id']
+            );
+            //Serialize and gzip the array, as needed by FusionInventory
+            $tmp = Toolbox::addslashes_deep(gzcompress(serialize($a_inventory)));
+            $query = "UPDATE `glpi_plugin_fusioninventory_inventorycomputercomputers` 
+                     SET `serialized_inventory`=\"$tmp\" 
+                     WHERE `id`='".$computerinfos['id']."'";
+            $DB->query($query);
+         
+         }
+      }
+      
       $migration->dropTable('glpi_plugin_fusinvinventory_libserialization');
 
 
