@@ -69,8 +69,8 @@ class PluginFusioninventoryFormatconvert {
                            'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS',
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS');
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'LICENSEINFOS', 'STORAGES', 'ORACLEDB');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -1153,8 +1153,60 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
+      
+      // * ORACLE DB
+      $a_inventory['oracledb'] = array();
+	if (isset($array['ORACLEDB'])) {
+	  foreach ($array['ORACLEDB'] as $a_oracledb) {
+	    $values = array('NAME' => 'name',
+			    'VERSION'      => 'version',
+			    'MEMORYTARGET' => 'memory_target',
+			    'SGATARGET'    => 'sga_target',
+			    'ADVANCEDCOMPRESSION' 
+			       => 'has_advanced_compression', 
+			    'ACTIVEDATAGUARD' 
+			       => 'has_active_data_guard',
+			    'CHANGEMANAGEMENTPACK' 
+			       => 'has_change_management_pack',
+			    'CONFIGURATIONMANAGEMENT' 
+			       => 'has_configuration_management',
+			    'DATAMASKINGPACK' 
+			       => 'has_data_masking_pack',
+			    'DATAMINING' 
+			       => 'has_data_mining',
+			    'DATAVAULT' 
+			       => 'has_data_vault',
+			    'DIAGNOSTICPACK' 
+			       => 'has_diagnostic_pack',
+			    'EXADATA' 
+			       => 'has_exadata',
+			    'LABELSECURITY' 
+			       => 'has_label_security',
+			    'OLAP' => 'has_olap',
+			    'PARTINIONNING' => 'has_paritionning',
+			    'PROVISIONNINGPAPACK' 
+			       => 'has_provisionning_patch_automation_pack',
+			    'PROVISIONNINGPAPFORDB' 
+			       => 
+'has_provisionning_patch_automation_pack_for_database',
+			    'REALAPPLICATIONCLUSTER' 
+			       => 'has_real_application_cluster',
+			    'REALAPPLICATIONTESTING' 
+			       => 'has_real_application_testing',
+			    'SPATIAL' => 'has_spatial',
+			    'TOTALRECALL' => 'has_total_recall',
+			    'TUNINGPACK' => 'has_tuning_pack',
+			    'WEBLOGICSERVERMANAGEMENTPACK' 
+			       => 'has_weblogic_server_management_pack'
+			    );
+			    
+	    $array_tmp = $thisc->addValues($a_oracledb, $values);
+	    $array_tmp['is_dynamic'] = 1;
+	    $a_inventory['oracledb'][] = $array_tmp;
+	}
+      }
 
-      // * STORAGE/VOLUMES
+// * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
 /* begin code, may works at 90%
       if (isset($array['PHYSICAL_VOLUMES'])) {
