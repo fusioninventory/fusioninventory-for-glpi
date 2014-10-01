@@ -212,7 +212,7 @@ class PluginFusioninventoryFormatconvert {
                                         'UUID'           => 'uuid',
                                         'LASTLOGGEDUSER' => 'users_id',
                                         'operatingsystemservicepacks_id' =>
-                                                      'operatingsystemservicepacks_id',
+                                               'operatingsystemservicepacks_id',
                                         'manufacturers_id' => 'manufacturers_id',
                                         'computermodels_id' => 'computermodels_id',
                                         'serial' => 'serial',
@@ -370,6 +370,10 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['BIOS']['BMANUFACTURER'])) {
          $a_inventory['fusioninventorycomputer']['bios_manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
       }
+      if (isset($array['HARDWARE']['HOSTID'])) {
+         $a_inventory['fusioninventorycomputer']['hostid'] = $array['HARDWARE']['HOSTID'];
+      }
+
 
       $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
 

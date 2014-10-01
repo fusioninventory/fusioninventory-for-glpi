@@ -416,6 +416,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `bios_date` datetime DEFAULT NULL,
+  `hostid` varchar(255) DEFAULT NULL,
   `bios_version` varchar(255) DEFAULT NULL,
   `bios_assettag` varchar(255) DEFAULT NULL,
   `bios_manufacturers_id` int(11) NOT NULL DEFAULT '0',

@@ -5601,6 +5601,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
+   $migration->addField('glpi_plugin_fusioninventory_inventorycomputercomputers', 'hostid', 'string');
+   $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
 
    //TECLIB' 
    if (!TableExists('glpi_plugin_fusioninventory_inventorycomputersolariszones')) {
