@@ -78,7 +78,14 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          case 1:
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-            $params['sort'] = '';
+            foreach (array('sort', 'order', 'start') as $field) {
+               if (isset($_GET[$field])) {
+                  $params[$field] = $_GET[$field];
+               }
+            }
+            
+            $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true)."?id=".$item->getID();
+            
             Search::showList('PluginFusioninventoryComputer', $params, array('2'));
             break;
       }
