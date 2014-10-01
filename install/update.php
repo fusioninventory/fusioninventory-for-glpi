@@ -3882,102 +3882,110 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
        * glpi_plugin_fusioninventory_deploygroups_staticdatas
        */
 
-      $a_table = array();
+      //Temporary fix
+      //TODO find why migrateTablesFusionInventory change plugin_fusioninventory_deploygroups_id field !
+      if (TableExists('glpi_plugin_fusinvdeploy_groups_dynamicdatas')) {
+         $a_table = array();
 
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deploygroups_staticdatas';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_groups_staticdatas'
-      );
+         //table name
+         $a_table['name'] = 'glpi_plugin_fusioninventory_deploygroups_staticdatas';
+         $a_table['oldname'] = array(
+            'glpi_plugin_fusinvdeploy_groups_staticdatas'
+         );
 
-      $a_table['fields'] = array(
-         'id' =>  array(
-            'type' => 'autoincrement',
-            'value' => NULL
-         ),
-         'groups_id' =>  array(
-            'type' => 'integer',
-            'value' => NULL
-         ),
-         'itemtype' =>  array(
-            'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
-            'value' => NULL
-         ),
-         'items_id' =>  array(
-            'type' => 'integer',
-            'value' => NULL
-         ),
-      );
+         $a_table['fields'] = array(
+            'id' =>  array(
+               'type' => 'autoincrement',
+               'value' => NULL
+            ),
+            'groups_id' =>  array(
+               'type' => 'integer',
+               'value' => NULL
+            ),
+            'itemtype' =>  array(
+               'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+               'value' => NULL
+            ),
+            'items_id' =>  array(
+               'type' => 'integer',
+               'value' => NULL
+            ),
+         );
 
-      $a_table['oldfields'] = array(
-      );
+         $a_table['oldfields'] = array(
+         );
 
-      $a_table['renamefields'] = array(
-      );
+         $a_table['renamefields'] = array(
+         );
 
-      $a_table['keys'] = array(
-         array(
-            'field' => 'groups_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'items_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
+         $a_table['keys'] = array(
+            array(
+               'field' => 'groups_id',
+               'name' => '',
+               'type' => 'KEY'
+            ),
+            array(
+               'field' => 'items_id',
+               'name' => '',
+               'type' => 'KEY'
+            ),
+         );
 
-      $a_table['oldkeys'] = array(
-      );
+         $a_table['oldkeys'] = array(
+         );
 
-      migrateTablesFusionInventory($migration, $a_table);
-
+         migrateTablesFusionInventory($migration, $a_table);
+      }
+      
       /*
        * glpi_plugin_fusioninventory_deploygroups_dynamicdatas
        */
 
-      $a_table = array();
+      //Temporary fix
+      //TODO find why migrateTablesFusionInventory change plugin_fusioninventory_deploygroups_id field !
+      if (TableExists('glpi_plugin_fusinvdeploy_groups_dynamicdatas')) {
+         $a_table = array();
 
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deploygroups_dynamicdatas';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_groups_dynamicdatas'
-      );
+         //table name
+         $a_table['name'] = 'glpi_plugin_fusioninventory_deploygroups_dynamicdatas';
+         $a_table['oldname'] = array(
+            'glpi_plugin_fusinvdeploy_groups_dynamicdatas'
+         );
 
-      $a_table['fields'] = array(
-         'id' =>  array(
-            'type' => 'autoincrement',
-            'value' => NULL
-         ),
-         'groups_id' =>  array(
-            'type' => 'integer',
-            'value' => NULL
-         ),
-         'fields_array' =>  array(
-            'type' => 'text',
-            'value' => NULL
-         ),
-      );
+         $a_table['fields'] = array(
+            'id' =>  array(
+               'type' => 'autoincrement',
+               'value' => NULL
+            ),
+            'groups_id' =>  array(
+               'type' => 'integer',
+               'value' => NULL
+            ),
+            'fields_array' =>  array(
+               'type' => 'text',
+               'value' => NULL
+            ),
+         );
 
-      $a_table['oldfields'] = array(
-      );
+         $a_table['oldfields'] = array(
+         );
 
-      $a_table['renamefields'] = array(
-      );
+         $a_table['renamefields'] = array(
+         );
 
-      $a_table['keys'] = array(
-         array(
-            'field' => 'groups_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
+         $a_table['keys'] = array(
+            array(
+               'field' => 'groups_id',
+               'name' => '',
+               'type' => 'KEY'
+            ),
+         );
 
-      $a_table['oldkeys'] = array(
-      );
+         $a_table['oldkeys'] = array(
+         );
 
-      migrateTablesFusionInventory($migration, $a_table);
+         migrateTablesFusionInventory($migration, $a_table);
+      }
 
       /*
       * import old datas as json in order table before migrate this table
@@ -5517,11 +5525,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /**
    * Add field to manage which group can be refreshed by updatedynamictasks crontask
    */
+   /*
    if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
       $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
       $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
       $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-   }
+   }*/
+   
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 
@@ -5620,6 +5630,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
    //Migrate search params for dynamic groups
    doDynamicDataSearchParamsMigration();
+   if (FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
+      $migration->dropField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
+   }
 }
 
 /**
@@ -5633,10 +5646,12 @@ function doDynamicDataSearchParamsMigration() {
    $query = "SELECT `id`, `fields_array` FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`";
    foreach ($DB->request($query) as $dynamic_data) {
       $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
-      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
-                       SET `fields_array`='$new_values'
-                       WHERE `id`='".$dynamic_data['id']."'";
-      $DB->query($query_update);
+      if ($new_values != false) {
+         $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
+                        SET `fields_array`='$new_values'
+                        WHERE `id`='".$dynamic_data['id']."'";
+         $DB->query($query_update);
+      }
    }
 }
 
@@ -5656,8 +5671,8 @@ function migrationDynamicGroupFields($fields) {
 
    //We're still in 0.85 or higher,
    //no need for migration !
-   if (isset($fields['criteria'])) {
-      return serialize($fields);
+   if (isset($data['criteria'])) {
+      return false;
    }
 
    //Upgrade from 0.84
