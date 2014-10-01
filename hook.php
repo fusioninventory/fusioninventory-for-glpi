@@ -289,8 +289,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                                    'joinparams' => array('jointype'          => 'itemtype_item',
                                                                            'specific_itemtype' => 'Computer')));
 
->>>>>>> 43c3091808d3d2d5c23741b5f51be55370e171b1
-
         $sopt[5364]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
         $sopt[5364]['field']         = 'zone_number';
         $sopt[5364]['name']          = __("Zone number");
