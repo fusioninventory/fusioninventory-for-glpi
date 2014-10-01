@@ -96,6 +96,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerSolariszone        = new PluginFusioninventoryInventoryComputerSolariszone();
       $computer_Item                = new Computer_Item();
       $monitor                      = new Monitor();
       $printer                      = new Printer();
@@ -873,6 +874,68 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
+      // * Solaris zones
+         if ($pfConfig->getValue("import_vm") == 1) {
+            $db_computersolariszone = array();
+            if ($no_history === FALSE) {
+               $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputersolariszones`
+                  WHERE `computers_id` = '$computers_id'
+                     AND `is_dynamic`='1'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_computersolariszone[$idtmp] = $data1;
+               }
+            }
+         
+            $simplecomputersolariszone = array();
+            if (isset($a_computerinventory['solariszone'])) {
+               foreach ($a_computerinventory['solariszone'] as $key=>$a_computersolariszone) {
+                  $a_field = array('name', 'uuid', 'zone_number', 'zone_max_swap', 'zone_max_locked_memory', 
+				   'zone_max_shm_memory', 'zone_cpu_cap', 'zone_dedicated_cpu');
+                  foreach ($a_field as $field) {
+                     if (isset($a_computersolariszone[$field])) {
+                        $simplecomputersolariszone[$key][$field] =
+                                    $a_computersolariszone[$field];
+                     }
+                  }
+               }
+            }
+         
+            foreach ($simplecomputersolariszone as $key => $arrays) {
+               foreach ($db_computersolariszone as $keydb => $arraydb) {
+                  if ($arrays == $arraydb) {
+                     $input = array();
+                     $input['id'] = $keydb;
+                     $pfComputerSolariszone->update($input);
+                     unset($simplecomputersolariszone[$key]);
+                     unset($a_computerinventory['solariszone'][$key]);
+                     unset($db_computersolariszone[$keydb]);
+                     break;
+                  }
+               }
+            }
+            if (count($a_computerinventory['solariszone']) == 0
+               && count($db_computersolariszone) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_computersolariszone) != 0) {
+                  // Delete virtualmachine in DB
+                  foreach ($db_computersolariszone as $idtmp => $data) {
+                     $pfComputerSolariszone->delete(array('id'=>$idtmp), 1);
+                  }
+               }
+               if (count($a_computerinventory['solariszone']) != 0) {
+                  foreach($a_computerinventory['solariszone'] as $a_solariszone) {
+                     $a_solariszone['computers_id'] = $computers_id;
+                     $pfComputerSolariszone->add($a_solariszone, array(), FALSE);
+                  }
+               }
+            }
+         }
+      
       // * Virtualmachines
          if ($pfConfig->getValue("import_vm") == 1) {
             $db_computervirtualmachine = array();

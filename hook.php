@@ -212,6 +212,48 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                                                            'specific_itemtype' => 'Computer')));
 
 
+        $sopt[5364]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
+        $sopt[5364]['field']         = 'zone_number';
+        $sopt[5364]['name']          = __("Zone number");
+        $sopt[5364]['type']          = 'text';
+        $sopt[5364]['joinparams']  = array('jointype' => 'child');
+        $sopt[5364]['massiveaction'] = FALSE;
+
+        $sopt[5365]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
+        $sopt[5365]['field']         = 'zone_max_swap';
+        $sopt[5365]['name']          = __("Zone max swap");
+        $sopt[5365]['type']          = 'text';
+        $sopt[5365]['joinparams']  = array('jointype' => 'child');
+        $sopt[5365]['massiveaction'] = FALSE;
+
+        $sopt[5366]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
+        $sopt[5366]['field']         = 'zone_max_locked_memory';
+        $sopt[5366]['name']          = __("Zone max locked memory");
+        $sopt[5366]['type']          = 'text';
+        $sopt[5366]['joinparams']  = array('jointype' => 'child');
+        $sopt[5366]['massiveaction'] = FALSE;
+
+        $sopt[5367]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
+        $sopt[5367]['field']         = 'zone_max_shm_memory';
+        $sopt[5367]['name']          = __("Zone max shm memory");
+        $sopt[5367]['type']          = 'text';
+        $sopt[5367]['joinparams']  = array('jointype' => 'child');
+        $sopt[5367]['massiveaction'] = FALSE;
+
+        $sopt[5368]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
+        $sopt[5368]['field']         = 'zone_cpu_cap';
+        $sopt[5368]['name']          = __("Zone cpu cap");
+        $sopt[5368]['type']          = 'text';
+        $sopt[5368]['joinparams']  = array('jointype' => 'child');
+        $sopt[5368]['massiveaction'] = FALSE;
+
+        $sopt[5369]['table']         = 'glpi_plugin_fusioninventory_inventorycomputersolariszones';
+        $sopt[5369]['field']         = 'zone_dedicated_cpu';
+        $sopt[5369]['name']          = __("Zone dedicated cpu");
+        $sopt[5369]['type']          = 'text';
+        $sopt[5369]['joinparams']  = array('jointype' => 'child');
+        $sopt[5369]['massiveaction'] = FALSE;
+
    }
 
    if ($itemtype == 'Computer') {

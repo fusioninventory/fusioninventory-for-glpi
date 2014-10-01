@@ -1026,6 +1026,29 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      // * SOLARISZONES
+      $a_inventory['solariszone'] = array();
+      if ($pfConfig->getValue('import_vm') == 1) {
+         if (isset($array['SOLARISZONES'])) {
+            foreach ($array['SOLARISZONES'] as $a_solariszones) {
+               $array_tmp = $thisc->addValues($a_solariszones,
+                                              array(
+                                                 'NAME'        => 'name',
+                                                 'VCPU'        => 'vcpu',
+                                                 'MEMORY'      => 'ram',
+                                                 'ZONENUMBER'  => 'zone_number',
+                                                 'ZONEMAXSWAP' => 'zone_max_swap',
+                                                 'ZONEMAXLOCKEDMEMORY' => 'zone_max_locked_memory',
+                                                 'ZONEMAXSHMMEMORY' => 'zone_max_shm_memory',
+                                                 'ZONECPUCAP'  => 'zone_cpu_cap',
+                                                 'ZONEDEDICATEDCPU' => 'zone_dedicated_cpu',
+                                                 'UUID'        => 'uuid'));
+               $array_tmp['is_dynamic'] = 1;
+               $a_inventory['solariszone'][] = $array_tmp;
+            }
+         }
+      }
+
       // * VIRTUALMACHINES
       $a_inventory['virtualmachine'] = array();
       if ($pfConfig->getValue('import_vm') == 1) {
