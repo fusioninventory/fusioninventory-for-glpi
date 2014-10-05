@@ -1557,6 +1557,7 @@ class PluginFusioninventoryFormatconvert {
    function replaceids($array) {
       global $CFG_GLPI;
 
+      $manufacturer = new Manufacturer();
       foreach ($array as $key=>$value) {
          if (!is_int($key)
                  && ($key == "software"
@@ -1569,7 +1570,6 @@ class PluginFusioninventoryFormatconvert {
             } else {
                if ($key == "manufacturers_id"
                        || $key == 'bios_manufacturers_id') {
-                  $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
                   if ($key == 'bios_manufacturers_id') {
                      $this->foreignkey_itemtype[$key] =
