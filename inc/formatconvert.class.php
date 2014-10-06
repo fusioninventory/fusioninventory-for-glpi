@@ -1881,10 +1881,22 @@ class PluginFusioninventoryFormatconvert {
          foreach ($array['CARTRIDGES'] as $name=>$value) {
             $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
             if ($plugin_fusioninventory_mappings) {
-               if (!is_numeric($value)) {
-                  $value = 0;
+               if (strstr($value, 'pages')) { // 30pages
+                  $value = str_replace('pages', '', $value);
+                  $value = 0 - $value;
+               } else if ($value == '') { // no info
+                  // nothing to do
+               } else if (is_numeric($value)) { // percentage
+                  // nothing to do
+               } else if ($value == 'OK') { // state type 'OK'
+                  $value = 100000;
+               } else {
+                  // special cases
+                  $value = '';
                }
-               $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value;
+               if ($value != '') {
+                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value;
+               }
             }
          }
       }
