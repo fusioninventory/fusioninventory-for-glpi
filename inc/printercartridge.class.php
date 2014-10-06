@@ -78,7 +78,15 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          echo "<td align='center'>";
          echo "</td>";
          echo "<td align='center'>";
-         PluginFusioninventoryDisplay::bar($a_cartridge['state']);
+         if ($a_cartridge['state'] == 100000) {
+            echo __('OK');
+         } else if ($a_cartridge['state'] < 0) {
+            $a_cartridge['state'] = $a_cartridge['state'] * -1;
+            echo $a_cartridge['state'];
+            echo ' '.__('remaining pages', 'fusioninventory');
+         } else {
+            PluginFusioninventoryDisplay::bar($a_cartridge['state']);
+         }
          echo "</td>";
          echo "</tr>";
       }
