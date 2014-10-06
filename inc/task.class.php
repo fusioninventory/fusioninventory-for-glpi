@@ -493,6 +493,20 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
          $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
+         if ($result['job']['method'] == 'networkinventory') {
+            $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
+            foreach($targets as $keyt=>$target) {
+               $item_type = key($target);
+               $items_id = current($target);
+               if ($item_type == 'PluginFusioninventoryIPRange') {
+                  unset($targets[$keyt]);
+                  // In this case get devices of this iprange
+                  $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
+                  $targets = array_merge($targets, $deviceList);
+               }
+            }
+         }
+
          $limit = 0;
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;
