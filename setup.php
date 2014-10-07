@@ -404,12 +404,6 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
          }
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
-            ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
-               title='".__('Documentation', 'fusioninventory')."'
-               alt='".__('Documentation', 'fusioninventory')."'>"] =
-            'front/documentation.php';
-
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
          // Hack for NetworkEquipment display ports
