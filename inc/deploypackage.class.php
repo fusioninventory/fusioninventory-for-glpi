@@ -64,11 +64,29 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
+      if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+         $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'import'] = __('Import', 'fusioninventory');
+         return $actions;
+      }
       $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
       $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'export'] = __('Export', 'fusioninventory');
 
       return $actions;
    }
+
+
+   function getForbiddenStandardMassiveAction() {
+
+      $forbidden   = parent::getForbiddenStandardMassiveAction();
+      if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+         $forbidden[] = 'update';
+         $forbidden[] = 'add';
+         $forbidden[] = 'delete';
+         $forbidden[] = 'purge';
+      }
+      return $forbidden;
+   }
+
 
 
    /**
@@ -114,6 +132,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   $input['entities_id'] = $ma->POST['entities_id'];
                   $pfDeployPackage->update($input);
                }
+            }
+            break;
+
+         case 'import' :
+            foreach ($ids as $key) {
+               $item->importPackage($key);
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
             }
             break;
 
@@ -862,14 +887,22 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     */
    function listPackagesToImport() {
 
+      $rand = mt_rand();
+
+      echo "<div class='spaced'>";
+      Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
+
+      $massiveactionparams = array('container' => 'mass'.__CLASS__.$rand);
+      Html::showMassiveActions($massiveactionparams);
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>";
+      echo "<th colspan='5'>";
       echo __('Packages to import', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<th width='10'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>";
       echo "<th>";
       echo __('Name');
       echo "</th>";
@@ -887,6 +920,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          $file = str_replace(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/", "", $file);
          $split = explode('.', $file);
+         echo "<td>";
+         Html::showMassiveActionCheckBox(__CLASS__, $file);
+         echo "</td>";
          echo "<td>";
          echo $split[2];
          echo "</td>";
@@ -912,7 +948,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-         echo "</table>";
+      echo "</table>";
+      $massiveactionparams['ontop'] =false;
+      Html::showMassiveActions($massiveactionparams);
+      echo "</div>";
    }
 
 }
