@@ -273,6 +273,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
    }
+   
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export');
+   }
 
    if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/upload')) {
       rename(
@@ -3732,6 +3739,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          ),
          'date_mod' =>  array(
                   'type' => 'datetime DEFAULT NULL',
+                  'value' => NULL
+         ),
+         'uuid' =>  array(
+                  'type' => 'string',
                   'value' => NULL
          ),
       );
