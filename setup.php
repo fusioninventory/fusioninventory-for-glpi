@@ -204,7 +204,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
               array('rulecollections_types'=>TRUE));
       array_push($CFG_GLPI["dictionnary_types"], 'PluginFusioninventoryRuleDictionnaryComputerArchCollection');
-      
+
       // Networkinventory and networkdiscovery
       Plugin::registerClass('PluginFusioninventorySnmpmodel');
       Plugin::registerClass('PluginFusioninventoryNetworkEquipment',

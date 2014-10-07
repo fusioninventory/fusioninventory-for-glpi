@@ -78,6 +78,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
    static function getAdditionalMenuOptions() {
+      global $CFG_GLPI;
 
       $elements = array(
           'iprange'                    => 'PluginFusioninventoryIPRange',
@@ -120,6 +121,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
          }
       }
+
+      // Add icon for import package
+      $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/menu_import.png",
+                                      array('alt' => __('Import', 'fusioninventory')));
+      $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deploypackage.import.php';
+
 
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
