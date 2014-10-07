@@ -127,6 +127,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                       array('alt' => __('Import', 'fusioninventory')));
       $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deploypackage.import.php';
 
+      // Add icon for documentation
+      $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/books.png",
+                                      array('alt' => __('Import', 'fusioninventory')));
+      $options['menu']['links'][$img] = '/plugins/fusioninventory/front/documentation.php';
+
+
 
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
