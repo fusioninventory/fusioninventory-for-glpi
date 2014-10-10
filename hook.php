@@ -914,23 +914,6 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
 
-      case "PluginFusioninventoryUnmanaged";
-         $array = array();
-         if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-            $array["plugin_fusioninventory_unknown_import"]    = __('Import');
-         }
-         if(Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
-            $array["plugin_fusioninventory_assign_auth"]       =
-                                          __('Assign SNMP authentication', 'fusioninventory');
-         }
-         if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
-            $array["plugin_fusioninventory_assign_model"]      =
-                                          __('Assign SNMP model', 'fusioninventory');
-         }
-
-         return $array;
-         break;
-
       case "PluginFusioninventoryTask";
          return array (
             'plugin_fusioninventory_transfert' => __('Transfer')
@@ -1231,26 +1214,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
                $DB->query($sql);
             }
-         break;
-
-      case "plugin_fusioninventory_unknown_import" :
-         if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-            $Import = 0;
-            $NoImport = 0;
-            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-            foreach ($data['item'] as $key => $val) {
-               if ($val == 1) {
-                  list($Import, $NoImport) = $pfUnmanaged->import($key, $Import, $NoImport);
-               }
-            }
-             Session::addMessageAfterRedirect(
-                        __('Number of imported devices', 'fusioninventory')." : ".$Import
-                     );
-             Session::addMessageAfterRedirect(
-                   __('Number of devices not imported because type not defined', 'fusioninventory').
-                     " : ".$NoImport
-                );
-         }
          break;
 
       case "plugin_fusioninventory_transfert" :
