@@ -846,9 +846,16 @@ function plugin_fusioninventory_install() {
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion();
 
-   if ((isset($version_detected))
-      AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
-        AND $version_detected!='0') {
+   if (
+      isset($version_detected)
+      AND (
+         defined('FORCE_UPGRADE')
+         OR (
+            $version_detected != PLUGIN_FUSIONINVENTORY_VERSION
+            AND $version_detected!='0'
+         )
+      )
+   ) {
       pluginFusioninventoryUpdate($version_detected, $migrationname);
    } else if ((isset($version_detected))
            && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
