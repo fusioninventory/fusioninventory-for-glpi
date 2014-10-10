@@ -228,6 +228,113 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      if (Session::haveRight("plugin_fusioninventory_agent", UPDATE)) {
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find();
+         foreach ($a_modules as $data) {
+            $actions['PluginFusioninventoryAgent'.MassiveAction::CLASS_ACTION_SEPARATOR.$data["modulename"]] =
+                     __('Module', 'fusioninventory')." - ".$data['modulename'];
+         }
+         $actions['PluginFusioninventoryAgent'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+      }
+
+      return $actions;
+   }
+
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+
+      switch ($ma->getAction()) {
+         case 'transfert' :
+            Dropdown::show('Entity');
+            echo "<br><br>".Html::submit(__('Post'),
+                                         array('name' => 'massiveaction'));
+            return true;
+
+      }
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
+      foreach ($a_modules as $data) {
+         if ($ma->getAction() == $data['modulename']) {
+            Dropdown::showYesNo($ma->getAction());
+            echo "<br><br>".Html::submit(__('Post'),
+                                         array('name' => 'massiveaction'));
+            return true;
+         }
+      }
+      return parent::showMassiveActionsSubForm($ma);
+   }
+
+
+
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      switch ($ma->getAction()) {
+
+         case 'transfert' :
+            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+            foreach ($ids as $key) {
+               if ($pfDeployPackage->getFromDB($key)) {
+                  $input = array();
+                  $input['id'] = $key;
+                  $input['entities_id'] = $ma->POST['entities_id'];
+                  $pfDeployPackage->update($input);
+               }
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            return;
+            break;
+
+      }
+
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
+      foreach ($a_modules as $data2) {
+         if ($ma->getAction() == $data2['modulename']) {
+            foreach ($ids as $key) {
+               if ($ma->POST[$data2['modulename']] == $data2['is_active']) {
+                  // Remove from exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (in_array($key, $a_exceptions)) {
+                     foreach ($a_exceptions as $key2=>$value2) {
+                        if ($value2 == $key) {
+                           unset($a_exceptions[$key2]);
+                        }
+                     }
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               } else {
+                  // Add to exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (!in_array($key, $a_exceptions)) {
+                     $a_exceptions[] = (string)$key;
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               }
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            $pfAgentmodule->update($data2);
+         }
+      }
+
+      return;
+   }
+
+
+
+   /**
    * Display form for agent configuration
    *
    * @param $computers_id integer ID of the agent
