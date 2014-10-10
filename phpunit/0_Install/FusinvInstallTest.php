@@ -76,7 +76,7 @@ class FusinvInstallTest extends Common_TestCase {
       $output = array();
       $returncode = 0;
       exec(
-         "php -f ".FUSINV_ROOT. "/scripts/cli_install.php 4",
+         "php -f ".FUSINV_ROOT. "/scripts/cli_install.php -- --as-user 'glpi'",
          $output, $returncode
       );
       $this->assertEquals(0,$returncode,
