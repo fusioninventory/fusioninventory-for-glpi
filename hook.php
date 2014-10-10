@@ -892,12 +892,6 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
 
-      case 'PluginFusioninventoryDeployGroup' :
-         return array (
-            "plugin_fusinvdeploy_deploy_target_task" => __('Target a task', 'fusioninventory')
-         );
-         break;
-
       case "NetworkEquipment":
          return array (
             "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
@@ -918,20 +912,6 @@ function plugin_fusioninventory_MassiveActions($type) {
             "plugin_fusioninventory_assign_auth"   =>
                                           __('Assign SNMP authentication', 'fusioninventory')
          );
-         break;
-
-      case 'PluginFusioninventoryAgent';
-         $array = array();
-         if (Session::haveRight("plugin_fusioninventory_agent", UPDATE)) {
-            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-            $a_modules = $pfAgentmodule->find();
-            foreach ($a_modules as $data) {
-               $array["plugin_fusioninventory_agentmodule".$data["modulename"]] =
-                        __('Module', 'fusioninventory')." - ".$data['modulename'];
-            }
-            $array['plugin_fusioninventory_transfert'] = __('Transfer');
-         }
-         return $array;
          break;
 
       case "PluginFusioninventoryUnmanaged";
@@ -1141,17 +1121,6 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
    }
 
-   if (strstr($options['action'], 'plugin_fusioninventory_agentmodule')) {
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $pfAgentmodule->find();
-      foreach ($a_modules as $data) {
-         if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
-            Dropdown::showYesNo($options['action']);
-            echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"".
-                    __('Post') . "\" >";
-         }
-      }
-   }
    return "";
 }
 
@@ -1454,40 +1423,8 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
          break;
 
-
    }
 
-   if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $pfAgentmodule->find();
-      foreach ($a_modules as $data2) {
-         if ($data['action'] == "plugin_fusioninventory_agentmodule".$data2['modulename']) {
-            foreach ($data['item'] as $items_id => $val) {
-               if ($data["plugin_fusioninventory_agentmodule".$data2['modulename']] ==
-                        $data2['is_active']) {
-                  // Remove from exceptions
-                  $a_exceptions = importArrayFromDB($data2['exceptions']);
-                  if (in_array($items_id, $a_exceptions)) {
-                     foreach ($a_exceptions as $key=>$value) {
-                        if ($value == $items_id) {
-                           unset($a_exceptions[$key]);
-                        }
-                     }
-                  }
-                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
-               } else {
-                  // Add to exceptions
-                  $a_exceptions = importArrayFromDB($data2['exceptions']);
-                  if (!in_array($items_id, $a_exceptions)) {
-                     $a_exceptions[] = (string)$items_id;
-                  }
-                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
-               }
-            }
-            $pfAgentmodule->update($data2);
-         }
-      }
-   }
    return TRUE;
 }
 

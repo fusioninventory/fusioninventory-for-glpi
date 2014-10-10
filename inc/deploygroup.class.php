@@ -83,6 +83,205 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return $ong;
    }
 
+
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      $actions['PluginFusioninventoryDeployGroup'.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'fusioninventory');
+      return $actions;
+   }
+
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      global $CFG_GLPI;
+
+      switch ($ma->getAction()) {
+//         case 'add_to_static_group':
+//            Dropdown::show('PluginFusioninventoryDeployGroup',
+//                            array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
+//            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+//            return true;
+
+         case 'targettask' :
+            echo "<table class='tab_cadre' width='600'>";
+            echo "<tr>";
+            echo "<td>";
+            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo "</td>";
+            echo "<td>";
+            $rand = mt_rand();
+            Dropdown::show('PluginFusioninventoryTask', array(
+                  'name'      => "tasks_id",
+                  'condition' => "is_active = 0",
+                  'toupdate'  => array(
+                        'value_fieldname' => "id",
+                        'to_update'       => "dropdown_packages_id$rand",
+                        'url'             => $CFG_GLPI["root_doc"].
+                                                "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
+               )
+            ));
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>";
+            echo __('Package', 'fusioninventory')."&nbsp;:";
+            echo "</td>";
+            echo "<td>";
+            Dropdown::show('PluginFusioninventoryDeployPackage', array(
+                     'name' => "packages_id",
+                     'rand' => $rand
+            ));
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td colspan='2'>";
+            echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
+            echo __('Create a job for each group', 'fusioninventory');
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td colspan='2' align='center'>";
+            echo Html::submit(__('Post'),
+                              array('name' => 'massiveaction'));
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+            return true;
+
+      }
+      return parent::showMassiveActionsSubForm($ma);
+   }
+
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+      global $DB;
+
+      switch ($ma->getAction()) {
+
+         case 'plugin_fusioninventory_deploy_target_task' :
+            $taskjob = new PluginFusioninventoryDeployTaskjob();
+            $tasks = array();
+
+            //get old datas
+            $oldjobs = $taskjob->find("plugin_fusioninventory_tasks_id = '".$ma->POST['tasks_id']."'");
+
+            // TODO: rename 'tasks' variables into 'job'
+            // The 'separate jobs' option allows to create a taskjob for each computer
+            // (I can't see the point but it may be
+            // usefull for some people ... even if it creates 500 jobs for just a
+            // single deployment package targetted ... i prefer not to comment
+            // furthermore :) ).
+
+            if (array_key_exists('separate_jobs', $data)) {
+               foreach ($ids as $key => $val) {
+                  $task = new StdClass;
+                  $task->package_id = $ma->POST['packages_id'];
+                  $task->method = 'deployinstall';
+                  $task->retry_nb = 3;
+                  $task->retry_time = 0;
+                  //add new datas
+                  $task->action = array(array('PluginFusioninventoryDeployGroup' => $key));
+                  $tasks[] = $task;
+               }
+            } else {
+               $task = new StdClass;
+               $task->package_id = $ma->POST['packages_id'];
+               $task->method = 'deployinstall';
+               $task->retry_nb = 3;
+               $task->retry_time = 0;
+               $task->action = array();
+               //add new datas
+               foreach ($ids as $key => $val) {
+                  $task->action[] = array('PluginFusioninventoryDeployGroup' => $key);
+               }
+               $tasks[] = $task;
+
+            }
+            if ($data['tasks_id'] == 0) {
+               $pfTask = new PluginFusioninventoryTask();
+               $input = array();
+               $input['name'] = 'Deploy';
+               $input['communication'] = 'push';
+               $input['date_scheduled'] = date("Y-m-d H:i:s");
+               $data['tasks_id'] = $pfTask->add($input);
+            }
+            $params = array(
+               'tasks_id' => $data['tasks_id'],
+               'tasks'    => json_encode($tasks)
+            );
+            $taskjob->saveDatas($params);
+
+            //reimport old jobs
+            foreach($oldjobs as $job) {
+               $sql = "INSERT INTO glpi_plugin_fusioninventory_taskjobs (";
+               foreach ($job as $key => $val) {
+                  $sql .= "`$key`, ";
+               }
+               $sql = substr($sql, 0, -2).") VALUES (";
+               foreach ($job as $val) {
+                  if (is_numeric($val) && (int)$val == $val) {
+                     $sql .= "$val, ";
+                  } else {
+                     $sql .= "'$val', ";
+                  }
+               }
+               $sql = substr($sql, 0, -2).");";
+
+               $DB->query($sql);
+            }
+            break;
+
+
+//         case 'add_to_static_group' :
+//            if ($item->getType() == 'Computer') {
+//               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+//               foreach ($ids as $id) {
+//                  //if ($group_item->can($id, UPDATE)) {
+//                     if (!countElementsInTable($group_item->getTable(),
+//                                             "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
+//                                                AND `itemtype`='Computer'
+//                                                AND `items_id`='$id'")) {
+//                        $values = array(
+//                           'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+//                           'itemtype' => 'Computer',
+//                           'items_id' => $id);
+//                        $group_item->add($values);
+//                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+//                     } else {
+//                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+//                     }
+//               //} else {
+//               //   $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_NORIGHT);
+//               //   $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+//               //}
+//            }
+//         }
+//         parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+      }
+   }
+
+
+
    function showMenu($options=array())  {
       $this->displaylist = false;
       $this->fields['id'] = -1;
@@ -350,54 +549,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
    }
 
-   static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-         case 'add_to_static_group':
-          Dropdown::show('PluginFusioninventoryDeployGroup',
-                         array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
-         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-         return true;
-    }
-      return parent::showMassiveActionsSubForm($ma);
-   }
 
-   /**
-    * @since version 0.85
-    *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
-   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
-                                                       array $ids) {
-      global $DB;
-
-      switch ($ma->getAction()) {
-         case 'add_to_static_group' :
-            if ($item->getType() == 'Computer') {
-               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
-               foreach ($ids as $id) {
-                  //if ($group_item->can($id, UPDATE)) {
-                     if (!countElementsInTable($group_item->getTable(),
-                                             "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
-                                                AND `itemtype`='Computer'
-                                                AND `items_id`='$id'")) {
-                        $values = array(
-                           'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
-                           'itemtype' => 'Computer',
-                           'items_id' => $id);
-                        $group_item->add($values);
-                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
-                     } else {
-                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
-                     }
-               //} else {
-               //   $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_NORIGHT);
-               //   $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
-               //}
-            }
-         }
-         parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
-      }
-   }
 
    function cleanDBOnPurge() {
       $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
