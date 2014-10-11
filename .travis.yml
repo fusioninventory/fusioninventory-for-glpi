@@ -18,6 +18,7 @@ before_install:
  - sudo cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
  - sudo chown -R travis:www-data /var/www/fi_testsuite
  - sudo chmod -R g+w /var/www/fi_testsuite
+ - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
 script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
