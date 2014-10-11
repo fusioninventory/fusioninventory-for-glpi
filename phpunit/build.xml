@@ -33,19 +33,22 @@
   <delete dir="${basedir}/build/coverage" />
   <delete dir="${basedir}/build/logs" />
   <delete dir="${basedir}/build/pdepend" />
-  <copy overwrite='true'
-   file="${basedir}/glpi/plugins/fusioninventory/phpunit/composer.json"
-   tofile="${basedir}/composer.json"
-   />
  </target>
 
  <target name="composer" description="Ensure composer is installed">
-  <exec dir="${basedir}" executable="./glpi/plugins/fusioninventory/phpunit/tools/composer">
-   <arg value="install" />
+  <copy overwrite='true' verbose='true'
+   file="${basedir}/glpi/plugins/fusioninventory/phpunit/composer.json"
+   tofile="${basedir}/composer.json"
+   />
+  <exec failonerror="true" dir="${basedir}" executable="./glpi/plugins/fusioninventory/phpunit/tools/get_composer.sh">
+  </exec>
+  <exec failonerror="true" dir="${basedir}" executable="composer">
+   <arg value="update" />
+   <arg value="--prefer-source" />
   </exec>
  </target>
 
- <target name="prepare" depends="clean,composer" description="Prepare for build">
+ <target name="prepare" depends="clean" description="Prepare for build">
   <mkdir dir="${basedir}/build/api"/>
   <mkdir dir="${basedir}/build/code-browser"/>
   <mkdir dir="${basedir}/build/coverage"/>
