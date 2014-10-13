@@ -236,7 +236,7 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       );
       global $DB;
 
-      // Verify prepare a network discovery task
+      // Verify preparation of a network discovery task
       $DB->connect();
 
       PluginFusioninventoryTask::cronTaskscheduler();
