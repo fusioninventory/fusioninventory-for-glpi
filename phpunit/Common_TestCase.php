@@ -9,8 +9,10 @@ include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
 
-   public function mark_incomplete() {
-      $this->markTestIncomplete('This test is not implemented yet');
+   public function mark_incomplete($description=null) {
+      $this->markTestIncomplete(
+         is_null($description) ? 'This test is not implemented yet' : $description
+      );
    }
 
    public static function restore_database() {
