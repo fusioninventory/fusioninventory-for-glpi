@@ -245,12 +245,13 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
           1 => 'computer1',
       );
 
-      $this->assertEquals($ref, $data['agents']);
-
       $this->mark_incomplete(
           "This test needs to be simplified since there seems to be too much"
-         ."variables in play."
+         ." variables in play."
       );
+
+      $this->assertEquals($ref, $data['agents']);
+
    }
 
 
