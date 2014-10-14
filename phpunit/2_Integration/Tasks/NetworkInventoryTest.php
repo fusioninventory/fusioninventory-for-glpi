@@ -230,10 +230,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function prepareTask() {
-      $this->mark_incomplete(
-          "This test needs to be simplified since there seems to be too much"
-         ."variables in play."
-      );
       global $DB;
 
       // Verify preparation of a network discovery task
@@ -250,6 +246,11 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       );
 
       $this->assertEquals($ref, $data['agents']);
+
+      $this->mark_incomplete(
+          "This test needs to be simplified since there seems to be too much"
+         ."variables in play."
+      );
    }
 
 
@@ -258,6 +259,8 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function getDevicesToInventory() {
+
+
       global $DB;
 
       // Verify prepare a network discovery task
@@ -269,6 +272,10 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $jobstate->getFromDB(1);
       $data = $pfNetworkinventory->run($jobstate);
 
+      $this->mark_incomplete(
+         "This test doesn't assert anything! Also, there are too much notices thrown ... needs"
+         ."investigations."
+      );
 
    }
 
