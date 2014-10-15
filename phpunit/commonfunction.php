@@ -78,10 +78,17 @@ function construct_mysql_options($dbuser='', $dbhost='', $dbpassword='', $cmd_ba
    }
    $cmd = array($cmd_base);
 
-   if (strpos($dbhost, ':')) {
+   if (strpos($dbhost, ':') !== FALSE) {
       $dbhost = explode( ':', $dbhost);
-      $cmd[] = "--host ".$dbhost[0];
-      $cmd[] = "--port ".$dbhost[1];
+      if ( !empty($dbhost[0]) ) {
+         $cmd[] = "--host ".$dbhost[0];
+      }
+      if ( is_numeric($dbhost[1]) ) {
+         $cmd[] = "--port ".$dbhost[1];
+      } else {
+         // The dbhost's second part is assumed to be a socket file if it is not numeric.
+         $cmd[] = "--socket ".$dbhost[1];
+      }
    } else {
       $cmd[] = "--host ".$dbhost;
    }
