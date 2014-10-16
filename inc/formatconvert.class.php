@@ -1613,7 +1613,8 @@ class PluginFusioninventoryFormatconvert {
       foreach ($array as $key=>$value) {
          if (!is_int($key)
                  && ($key == "software"
-                     || $key == 'ipaddress')) {
+                     || $key == 'ipaddress'
+                     || $key == 'internalport')) {
             // do nothing
          } else {
             //if (is_array($value)) {
