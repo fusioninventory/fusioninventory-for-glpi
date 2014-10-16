@@ -166,6 +166,13 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</tr>';
       }
 
+      if ($a_computerextend['oscomment'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo "<td>".__('Comments')."</td>";
+         echo '<td>'.$a_computerextend['oscomment'].'</td>';
+         echo '</tr>';
+      }
+
       // Display automatic entity transfer
       echo '<tr class="tab_bg_1">';
       echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';

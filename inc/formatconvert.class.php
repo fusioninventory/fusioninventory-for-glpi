@@ -262,6 +262,10 @@ class PluginFusioninventoryFormatconvert {
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
       }
 
+      if (isset($array['HARDWARE']['DESCRIPTION'])) {
+         $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
+      }
+
       if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
       }

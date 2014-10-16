@@ -273,7 +273,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
    }
-   
+
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import');
    }
@@ -1921,6 +1921,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                            'value'   => "");
       $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
                                                            'value'   => "0");
+      $a_table['fields']['oscomment']              = array('type'    => 'text',
+                                                           'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
