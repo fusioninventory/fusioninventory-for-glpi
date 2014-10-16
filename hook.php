@@ -142,6 +142,13 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5162]['joinparams']      = array('beforejoin'
                                             => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
                                                      'joinparams' => array('jointype'          => 'child')));
+
+         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5163]['field']     = 'oscomment';
+         $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
+         $sopt[5163]['joinparams']  = array('jointype' => 'child');
+         $sopt[5163]['massiveaction'] = FALSE;
+
    }
 
    if ($itemtype == 'Computer') {

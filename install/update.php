@@ -2249,6 +2249,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                            'value'   => "");
       $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
                                                            'value'   => "0");
+      $a_table['fields']['oscomment']              = array('type'    => 'text',
+                                                           'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
