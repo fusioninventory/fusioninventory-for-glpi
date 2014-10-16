@@ -143,12 +143,17 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                             => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
                                                      'joinparams' => array('jointype'          => 'child')));
 
-         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
-         $sopt[5163]['field']     = 'conform';
-         $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
-         $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
+//         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
+//         $sopt[5163]['field']     = 'conform';
+//         $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
+//         $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
+//         $sopt[5163]['massiveaction'] = FALSE;
+//         $sopt[5163]['datatype']  = 'bool';
+         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5163]['field']     = 'oscomment';
+         $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
+         $sopt[5163]['joinparams']  = array('jointype' => 'child');
          $sopt[5163]['massiveaction'] = FALSE;
-         $sopt[5163]['datatype']  = 'bool';
 
          $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
          $sopt[5164]['field']         = "DEPLOY";
