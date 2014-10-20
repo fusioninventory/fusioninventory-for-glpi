@@ -60,7 +60,7 @@ if (isset($_POST["rules_id"])) {
 }
 
 $rule = new $sub_type();
-$rule->checkGlobal('r');
+$rule->checkGlobal(READ);
 
 $test_rule_output = NULL;
 
