@@ -55,7 +55,7 @@ $rulecollection = RuleCollection::getClassByType($sub_type);
 if ($rulecollection->isRuleRecursive()) {
    $rulecollection->setEntity($_SESSION['glpiactive_entity']);
 }
-$rulecollection->checkGlobal('r');
+$rulecollection->checkGlobal(READ);
 
 if (!strpos($_SERVER['PHP_SELF'], "popup")) {
    Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "display");
