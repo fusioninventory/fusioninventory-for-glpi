@@ -95,7 +95,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'winowner'                        => '',
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
-              'last_fusioninventory_update'     => $date
+              'last_fusioninventory_update'     => $date,
+              'oscomment'                       => 'amd64/-1-11-30 22:04:44'
           ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
@@ -266,7 +267,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
               'last_fusioninventory_update'              => $date,
-              'plugin_fusioninventory_computerarchs_id'  => '32 bits'
+              'plugin_fusioninventory_computerarchs_id'  => '32 bits',
+              'oscomment'                                => ''
           ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
@@ -349,7 +351,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> 'NULL',
-              'last_fusioninventory_update'     => $date
+              'last_fusioninventory_update'     => $date,
+              'oscomment'                       => ''
           ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
@@ -630,7 +633,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'bios_date'                                => '2006-05-30',
               'bios_version'                             => 'A05',
               'bios_assettag'                            => '',
-              'bios_manufacturers_id'                    => 'Dell Inc.'
+              'bios_manufacturers_id'                    => 'Dell Inc.',
+              'oscomment'                                => ''
           ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
@@ -731,7 +735,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'bios_date'                                => '2006-05-30',
               'bios_version'                             => 'A05',
               'bios_assettag'                            => '',
-              'bios_manufacturers_id'                    => 'Dell Inc.'
+              'bios_manufacturers_id'                    => 'Dell Inc.',
+              'oscomment'                                => ''
           ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
