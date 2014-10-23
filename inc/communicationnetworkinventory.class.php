@@ -193,7 +193,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
 
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-                              '[==detail==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
+                              '[==detail==] No informations [['.$a_inventory['itemtype'].'::'.$dchild['INFO']['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
                      if (count($a_inventory) > 0) {
