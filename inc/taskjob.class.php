@@ -1150,7 +1150,7 @@ return namelist;
          array(
             'is_running'  => TRUE,
             'is_active'   => TRUE,
-            'actions' => array('PluginFusioninventoryDeployGroup' => TRUE)
+            'actions' => array('PluginFusioninventoryDeployGroup' => "")
          )
       );
 
