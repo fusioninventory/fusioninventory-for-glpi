@@ -481,12 +481,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             }
             if ($agent_require_model == 1) {
                foreach ($a_NetworkEquipment as $num=>$items_id) {
-                  if ($a_specificity['DEVICE']['NetworkEquipment'.$data['gID']]['MODELSNMP_ID'] == 0) {
+                  if ($a_specificity['DEVICE']['NetworkEquipment'.$items_id]['MODELSNMP_ID'] == 0) {
                      unset($a_NetworkEquipment[$num]);
                   }
                }
                foreach ($a_Printer as $num=>$items_id) {
-                  if ($a_specificity['DEVICE']['Printer'.$data['gID']]['MODELSNMP_ID'] == 0) {
+                  if ($a_specificity['DEVICE']['Printer'.$items_id]['MODELSNMP_ID'] == 0) {
                      unset($a_Printer[$num]);
                   }
                }
