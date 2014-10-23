@@ -530,7 +530,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          array(
             'is_running'  => TRUE,
             'is_active'   => TRUE,
-            'actors' => array('PluginFusioninventoryDeployGroup' => TRUE)
+            'actors' => array('PluginFusioninventoryDeployGroup' => "")
          )
       );
 
