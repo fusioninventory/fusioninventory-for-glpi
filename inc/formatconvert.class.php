@@ -1573,8 +1573,9 @@ class PluginFusioninventoryFormatconvert {
             if ((array)$value === $value) {
                $array[$key] = $this->replaceids($value);
             } else {
-               if ($key == "manufacturers_id"
-                       || $key == 'bios_manufacturers_id') {
+               if (!is_numeric($key)
+                       && ($key == "manufacturers_id"
+                           || $key == 'bios_manufacturers_id')) {
                   $array[$key]  = $manufacturer->processName($value);
                   if ($key == 'bios_manufacturers_id') {
                      $this->foreignkey_itemtype[$key] =
@@ -1585,7 +1586,8 @@ class PluginFusioninventoryFormatconvert {
                      }
                   }
                }
-               if ($key == "locations_id") {
+               if (!is_numeric($key)
+                       && $key == "locations_id") {
                         $array[$key] = Dropdown::importExternal('Location',
                                                                 $value,
                                                                 $_SESSION["plugin_fusioninventory_entity"]);
