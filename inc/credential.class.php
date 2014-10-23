@@ -285,7 +285,13 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       } else {
          $credential = new PluginFusioninventoryCredential();
          $credential->getFromDB($params['id']);
-         $p = $credential->fields;
+         if ($credential->getFromDB($params['id'])) {
+            $p = $credential->fields;
+         } else {
+            $p['value']    = '';
+            $p['itemtype'] = 0;
+            $p['id']       = 0;
+         }
       }
 
       $types     = self::getCredentialsItemTypes();
@@ -308,6 +314,10 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    static function dropdownCredentialsForItemtype($params = array()) {
+
+      if (empty($params['itemtype'])) {
+         return;
+      }
 
       // params
       // Array ( [itemtype] => PluginFusioninventoryInventoryComputerESX [id] => 0 )
