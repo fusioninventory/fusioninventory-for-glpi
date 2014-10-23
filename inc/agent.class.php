@@ -151,6 +151,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                                  ")";
       $tab[13]['datatype']  = 'integer';
 
+      $tab[14]['table']     = $this->getTable();
+      $tab[14]['field']     = 'agent_port';
+      $tab[14]['linkfield'] = 'agent_port';
+      $tab[14]['name']      = __('Agent port', 'fusioninventory');
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
