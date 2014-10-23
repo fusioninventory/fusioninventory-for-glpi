@@ -1625,8 +1625,9 @@ class PluginFusioninventoryFormatconvert {
             if ((array)$value === $value) {
                $array[$key] = $this->replaceids($value);
             } else {
-               if ($key == "manufacturers_id"
-                       || $key == "bios_manufacturers_id") {
+               if (!is_numeric($key)
+                       && ($key == "manufacturers_id"
+                           || $key == 'bios_manufacturers_id')) {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
                   if ($key == 'bios_manufacturers_id') {
