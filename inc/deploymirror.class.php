@@ -99,6 +99,26 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          if ($computer->fields['locations_id'] == $result['locations_id']) {
             $mirrors[] = $result['url'];
          }
+
+         $entities = $result['entities_id'];
+         if ($result['is_recursive']) {
+            $entities = getSonsOf('glpi_entities', $result['entities_id']);
+         }
+
+         $add_mirror = false;
+         if(is_array($entities)) {
+            if(in_array($computer->fields['entities_id'], $entities)) {
+               $add_mirror = true;
+            }
+         } else {
+            if($computer->fields['entities_id'] == $result['entities_id']) {
+               $add_mirror = true;
+            }
+         }
+
+         if(!in_array($result['url'], $mirrors) && $add_mirror) {
+            $mirrors[] = $result['url'];
+         }
       }
 
       //add default mirror (this server) if enabled in config
