@@ -110,6 +110,11 @@ if (isset($_GET['action'])) {
             switch ($jobstate['itemtype']) {
 
                case 'PluginFusioninventoryCollect_Registry':
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-collect",
+                     "Registry collection result received for computer: $computers_id\n"
+                  );
+
                   // update registry content
                   $pfCRC = new PluginFusioninventoryCollect_Registry_Content();
                   $pfCRC->updateComputer($computers_id,
@@ -118,21 +123,33 @@ if (isset($_GET['action'])) {
                   $pfTaskjobstate->changeStatus(
                           $jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if (isset($a_values['_cpt'])
-                          && $a_values['_cpt'] == 0) { // it not find the path
+                  if ((isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 0)
+                      || (isset($a_values['cpt'])
+                          && $a_values['cpt'] == 0)) { // it not find the path
                      $pfTaskjobstate->changeStatusFinish(
                           $jobstate['id'],
                           $jobstate['items_id'],
                           $jobstate['itemtype'],
                           1,
                           'Path not found');
+                     PluginFusioninventoryToolbox::logIfExtradebug(
+                        "pluginFusioninventory-collect",
+                        "Registry collection failed for computer: $computers_id\n"
+                     );
                   }
-                  if (isset($a_values['_cpt'])
-                          && $a_values['_cpt'] == 1) { // it last value
+                  if ((isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 1)
+                      || (isset($a_values['cpt'])
+                          && $a_values['cpt'] == 1)) { // it last value
                      $pfTaskjobstate->changeStatusFinish(
                           $jobstate['id'],
                           $jobstate['items_id'],
                           $jobstate['itemtype']);
+                     PluginFusioninventoryToolbox::logIfExtradebug(
+                        "pluginFusioninventory-collect",
+                        "Registry collection finished for computer: $computers_id\n"
+                     );
                   }
                   break;
 
@@ -145,7 +162,22 @@ if (isset($_GET['action'])) {
                   $pfTaskjobstate->changeStatus(
                           $jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if ($a_values['_cpt'] == 1) { // it last value
+                  if ((isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 0)
+                      || (isset($a_values['cpt'])
+                          && $a_values['cpt'] == 0)) { // it not find the path
+                     $pfTaskjobstate->changeStatusFinish(
+                          $jobstate['id'],
+                          $jobstate['items_id'],
+                          $jobstate['itemtype'],
+                          1,
+                          'Class/properties not found');
+                  }
+                  if ((isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 1)
+                      || (isset($a_values['cpt'])
+                          && $a_values['cpt'] == 1)) { // it last value
+                  // if ($a_values['_cpt'] == 1) { // it last value
                      $pfTaskjobstate->changeStatusFinish(
                           $jobstate['id'],
                           $jobstate['items_id'],
@@ -156,11 +188,28 @@ if (isset($_GET['action'])) {
                case 'PluginFusioninventoryCollect_File':
                   // update registry content
                   $pfCFC = new PluginFusioninventoryCollect_File_Content();
+				  // Replace \ with / ... else, bad storage in DB !
+                  $a_values['path'] = str_replace('\\\\', '/', $a_values['path']);
                   $pfCFC->storeTempFilesFound($jobstate['id'], $a_values);
                   $pfTaskjobstate->changeStatus(
                           $jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if ($a_values['_cpt'] == 1) { // it last value
+                  if ((isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 0)
+                      || (isset($a_values['cpt'])
+                          && $a_values['cpt'] == 0)) { // it not find the path
+                     $pfTaskjobstate->changeStatusFinish(
+                          $jobstate['id'],
+                          $jobstate['items_id'],
+                          $jobstate['itemtype'],
+                          1,
+                          'Directory/files not found');
+                  }
+                  if ((isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 1)
+                      || (isset($a_values['cpt'])
+                          && $a_values['cpt'] == 1)) { // it last value
+                  // if ($a_values['_cpt'] == 1) { // it last value
                      $pfCFC->updateComputer($computers_id,
                                             $jobstate['items_id'],
                                             $jobstate['id']);
