@@ -109,9 +109,11 @@ class PluginFusioninventoryMenu {
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
       }
 
-      $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
-      $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
-      $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
+      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
+         $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
+         $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
+         $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
+      }
 
       if (Session::haveRight("config", "w")) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
@@ -320,10 +322,11 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
-      $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
-      $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
-
+      if(PluginFusioninventoryProfile::haveRight("task", "r")) {
+         $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
+         $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
+         $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
+      }
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'),
                                                              $a_menu,

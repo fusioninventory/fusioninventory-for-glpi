@@ -59,15 +59,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
    static function canCreate() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("task", "w");
    }
 
    static function canView() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
    function canCreateItem() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("task", "w");
    }
 
    public function __construct() {

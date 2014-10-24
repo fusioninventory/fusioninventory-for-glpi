@@ -53,11 +53,11 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
    static function canCreate() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("task", "w");
    }
 
    static function canView() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
 
