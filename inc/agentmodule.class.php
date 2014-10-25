@@ -208,6 +208,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       global $CFG_GLPI;
 
       $canedit = PluginFusioninventoryProfile::haveRight("agent", "w");
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->getFromDB($items_id);
+      $canedit = $pfAgent->can($items_id, 'w');
+
       echo "<br/>";
       if ($canedit) {
          echo "<form name='form_ic' method='post' action='".$CFG_GLPI['root_doc'].
