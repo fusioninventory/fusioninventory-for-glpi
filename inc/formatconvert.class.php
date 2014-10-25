@@ -632,6 +632,12 @@ class PluginFusioninventoryFormatconvert {
                                                  'MANUFACTURER' => 'manufacturers_id',
                                                  'SERIAL'       => 'serial',
                                                  'DESCRIPTION'  => 'comment'));
+
+               $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
+               $array_tmp2 = array('monitor' => array(0 => $array_tmp));
+               $array_tmp2 = $pfBlacklist->cleanBlacklist($array_tmp2);
+               $array_tmp = $array_tmp2['monitor'][0];
+
                if (!($pfConfig->getValue('import_monitor') == 3
                        && (!isset($array_tmp['serial'])
                            ||$array_tmp['serial'] == ''))) {
