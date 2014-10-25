@@ -167,26 +167,27 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
 
       // Display automatic entity transfer
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
-      echo '<td>';
-      $pfEntity = new PluginFusioninventoryEntity();
-      if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
-         echo __('No, locked (by entity configuration)', 'fusioninventory');
-      } else {
-         if ($a_computerextend['is_entitylocked'] == 1) {
-            echo __('No, locked manually', 'fusioninventory');
-            echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
-                  $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
+      if (Session::isMultiEntitiesMode()) {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
+         echo '<td>';
+         $pfEntity = new PluginFusioninventoryEntity();
+         if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
+            echo __('No, locked (by entity configuration)', 'fusioninventory');
          } else {
-            echo __('Yes');
-            echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
-                  $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
+            if ($a_computerextend['is_entitylocked'] == 1) {
+               echo __('No, locked manually', 'fusioninventory');
+               echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+                     $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
+            } else {
+               echo __('Yes');
+               echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+                     $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
+            }
          }
+         echo '</td>';
+         echo '</tr>';
       }
-      echo '</td>';
-      echo '</tr>';
-
       echo '</table>';
    }
 
