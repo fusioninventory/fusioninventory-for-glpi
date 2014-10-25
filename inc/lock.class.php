@@ -565,6 +565,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $item_device->fields[$key] = $value;
          }
       }
+      $exclude = $pfLock->excludeFields();
+      foreach ($exclude as $key) {
+         if (isset($item_device->fields[$key])) {
+            unset($item_device->fields[$key]);
+         }
+      }
       $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
       $item_device->update($item_device->fields);
       unset($_SESSION['glpi_fusionionventory_nolock']);
