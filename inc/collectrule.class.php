@@ -184,6 +184,7 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['states_id']['table'] = 'glpi_states';
 
       $actions['software']['name']  = __('Software');
+      $actions['software']['force_actions'] = array('assign', 'regex_result');
 
       $actions['softwareversion']['name']  = __('Software version');
       $actions['softwareversion']['force_actions'] = array('assign', 'regex_result');
