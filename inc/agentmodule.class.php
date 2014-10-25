@@ -207,7 +207,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function showFormAgentException($items_id) {
       global $CFG_GLPI;
 
-      $canedit = PluginFusioninventoryProfile::haveRight("agent", "w");
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->getFromDB($items_id);
       $canedit = $pfAgent->can($items_id, 'w');
