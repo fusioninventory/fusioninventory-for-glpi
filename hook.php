@@ -56,37 +56,41 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
          $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5151]['field']     = 'name';
-         $sopt[5151]['name']      = 'Antivirus name';
-         $sopt[5151]['datatype']  = 'text';
+         $sopt[5151]['name']      = __('Antivirus name', 'fusioninventory');
+         $sopt[5151]['datatype']  = 'string';
          $sopt[5151]['joinparams']  = array('jointype' => 'child');
          $sopt[5151]['massiveaction'] = FALSE;
          $sopt[5151]['forcegroupby'] = TRUE;
+         $sopt[5151]['searchtype'] = array('contains');
 
          $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5152]['field']     = 'version';
-         $sopt[5152]['name']      = 'Antivirus version';
-         $sopt[5152]['datatype']  = 'text';
+         $sopt[5152]['name']      = __('Antivirus version', 'fusioninventory');
+         $sopt[5152]['datatype']  = 'string';
          $sopt[5152]['joinparams']  = array('jointype' => 'child');
          $sopt[5152]['massiveaction'] = FALSE;
          $sopt[5152]['forcegroupby'] = TRUE;
+         $sopt[5151]['searchtype'] = array('contains');
 
          $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5153]['field']     = 'is_active';
          $sopt[5153]['linkfield'] = '';
-         $sopt[5153]['name']      = 'Antivirus activé';
+         $sopt[5153]['name']      = __('Antivirus enabled', 'fusioninventory');
          $sopt[5153]['datatype']  = 'bool';
          $sopt[5153]['joinparams']  = array('jointype' => 'child');
          $sopt[5153]['massiveaction'] = FALSE;
          $sopt[5153]['forcegroupby'] = TRUE;
+         $sopt[5153]['searchtype'] = array('equals');
 
          $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5154]['field']     = 'uptodate';
          $sopt[5154]['linkfield'] = '';
-         $sopt[5154]['name']      = 'Antivirus à jour';
+         $sopt[5154]['name']      = __('Antivirus up to date', 'fusioninventory');
          $sopt[5154]['datatype']  = 'bool';
          $sopt[5154]['joinparams']  = array('jointype' => 'child');
          $sopt[5154]['massiveaction'] = FALSE;
          $sopt[5154]['forcegroupby'] = TRUE;
+         $sopt[5154]['searchtype'] = array('equals');
 
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
