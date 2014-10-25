@@ -281,13 +281,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             GROUP BY uniqid, plugin_fusioninventory_agents_id
             ORDER BY `id` DESC';
       }
-      $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
+      $querycount = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`="3"
             '.$where.'
          GROUP BY uniqid, plugin_fusioninventory_agents_id';
       $resultcount = $DB->query($querycount);
-//      $a_datacount = $DB->fetch_assoc($resultcount);
       $number = $DB->numrows($resultcount);
       if (isset($options['uniqid']) AND $number == '0') {
 
