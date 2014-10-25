@@ -189,6 +189,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
+         echo "<th>".__('ID')."</th>";
          echo "<th>".__('Unique id', 'fusioninventory')."</th>";
          echo "<th>".__('Job', 'fusioninventory')."</th>";
          echo "<th>".__('Agent', 'fusioninventory')."</th>";

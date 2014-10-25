@@ -126,6 +126,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[1]['field']         = 'id';
       $sopt[1]['name']          = __('ID');
       $sopt[1]['massiveaction'] = FALSE; // implicit field is id
+      $sopt[1]['datatype']        = 'number';
 
       $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $sopt[2]['field']          = 'name';
@@ -192,6 +193,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $this->javascriptHistory();
       $a_uniqid = array();
 
+      if (!isset($_SESSION['plugin_fusioninventory_tasks_sort'])) {
+         $_SESSION['plugin_fusioninventory_tasks_sort'] = 'id';
+         $_SESSION['plugin_fusioninventory_tasks_sort_order'] = 'DESC';
+      }
+
       $start = 0;
       if (isset($_REQUEST["start"])) {
          $start = $_REQUEST["start"];
@@ -212,7 +218,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             AND `state`!="3"
             '.$where.'
          GROUP BY uniqid, plugin_fusioninventory_agents_id
-         ORDER BY `id` DESC';
+         ORDER BY `'.$_SESSION['plugin_fusioninventory_tasks_sort'].'` '.$_SESSION['plugin_fusioninventory_tasks_sort_order'];
       $result = $DB->query($query);
       // ***** Display for all status running / prepared
       if (isset($options['uniqid']) AND $DB->numrows($result) == '0') {
@@ -244,20 +250,39 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<table class='tab_cadre'>";
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>".__('Unique id', 'fusioninventory')."</th>";
+            $urlLink = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.form.php?taskjoblogsort=";
+            $num = 0;
+            $sort = 0;
+            if ($_SESSION['plugin_fusioninventory_tasks_sort'] == 'id') {
+               $sort = 1;
+            }
+            echo Search::showHeaderItem('', __('ID'), $num, $urlLink.'id', $sort,
+                    $_SESSION['plugin_fusioninventory_tasks_sort_order']);
+
+            $sort = 0;
+            if ($_SESSION['plugin_fusioninventory_tasks_sort'] == 'uniqid') {
+               $sort = 1;
+            }
+            echo Search::showHeaderItem('', __('Unique id', 'fusioninventory'),
+                    $num, $urlLink.'uniqid', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
+
             echo "<th>".__('Process number', 'fusioninventory')."</th>";
-            echo "<th>".__('Agent', 'fusioninventory')."</th>";
-            echo "<th>";
-            echo __('Date');
+            $sort = 0;
+            if ($_SESSION['plugin_fusioninventory_tasks_sort'] == 'plugin_fusioninventory_agents_id') {
+               $sort = 1;
+            }
+            echo Search::showHeaderItem('', __('Agent', 'fusioninventory'),
+                    $num, $urlLink.'plugin_fusioninventory_agents_id', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
 
-            echo "</th>";
-            echo "<th>";
-            echo __('Status');
+            $sort = 0;
+            echo Search::showHeaderItem('', __('Date'),
+                    $num, '', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
 
-            echo "</th>";
+            echo Search::showHeaderItem('', __('Status'),
+                    $num, '', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
+
             echo "<th>";
             echo __('Comments');
-
             echo "</th>";
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
@@ -279,7 +304,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
                AND `state`!="3"
                '.$where.'
             GROUP BY uniqid, plugin_fusioninventory_agents_id
-            ORDER BY `id` DESC';
+            ORDER BY `'.$_SESSION['plugin_fusioninventory_tasks_sort'].'` '.$_SESSION['plugin_fusioninventory_tasks_sort_order'];
       }
       $querycount = 'SELECT id FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
@@ -311,16 +336,36 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             $result = $DB->query($query);
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>".__('Unique id', 'fusioninventory')."</th>";
-            echo "<th>".__('Agent', 'fusioninventory')."</th>";
-            echo "<th>";
-            echo __('Date');
+            $urlLink = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.form.php?taskjoblogsort=";
+            $num = 0;
+            $sort = 0;
+            if ($_SESSION['plugin_fusioninventory_tasks_sort'] == 'id') {
+               $sort = 1;
+            }
+            echo Search::showHeaderItem('', __('ID'), $num, $urlLink.'id', $sort,
+                    $_SESSION['plugin_fusioninventory_tasks_sort_order']);
 
-            echo "</th>";
-            echo "<th>";
-            echo __('Status');
+            $sort = 0;
+            if ($_SESSION['plugin_fusioninventory_tasks_sort'] == 'uniqid') {
+               $sort = 1;
+            }
+            echo Search::showHeaderItem('', __('Unique id', 'fusioninventory'),
+                    $num, $urlLink.'uniqid', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
 
-            echo "</th>";
+            $sort = 0;
+            if ($_SESSION['plugin_fusioninventory_tasks_sort'] == 'plugin_fusioninventory_agents_id') {
+               $sort = 1;
+            }
+            echo Search::showHeaderItem('', __('Agent', 'fusioninventory'),
+                    $num, $urlLink.'plugin_fusioninventory_agents_id', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
+
+            $sort = 0;
+            echo Search::showHeaderItem('', __('Date'),
+                    $num, '', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
+
+            echo Search::showHeaderItem('', __('Status'),
+                    $num, '', $sort, $_SESSION['plugin_fusioninventory_tasks_sort_order']);
+
             echo "</tr>";
 
             while ($data=$DB->fetch_array($result)) {
@@ -406,6 +451,9 @@ function appear_array(id){
                "onClick='document.getElementById(\"viewfollowup".$pfTaskjobstate->fields["id"].
                "\").show();close_array(".$pfTaskjobstate->fields["id"].");' /></td>";
 
+      echo "<td>";
+      echo $pfTaskjobstate->fields['id'];
+      echo "</td>";
       echo "<td>";
       echo $pfTaskjobstate->fields['uniqid'];
       echo "</td>";

@@ -50,7 +50,15 @@ PluginFusioninventoryProfile::checkRight("task", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-if (isset($_POST['forcestart'])) {
+if (isset($_GET['taskjoblogsort'])) {
+   if ($_SESSION['plugin_fusioninventory_tasks_sort'] == $_GET['taskjoblogsort']) {
+      $_SESSION['plugin_fusioninventory_tasks_sort_order'] = 'ASC';
+   } else {
+      $_SESSION['plugin_fusioninventory_tasks_sort'] = $_GET['taskjoblogsort'];
+      $_SESSION['plugin_fusioninventory_tasks_sort_order'] = 'DESC';
+   }
+   Html::back();
+} elseif (isset($_POST['forcestart'])) {
    PluginFusioninventoryProfile::checkRight("task", "w");
    $pfTaskjob = new PluginFusioninventoryTaskjob();
    $pfTaskjob->forceRunningTask($_POST['id']);
