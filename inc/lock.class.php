@@ -674,7 +674,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       $exclude = $pfLock->excludeFields();
       foreach ($exclude as $key) {
-         if (isset($item_device->fields[$key])) {
+         if (isset($item_device->fields[$key])
+                 && $key != 'id') {
             unset($item_device->fields[$key]);
          }
       }
