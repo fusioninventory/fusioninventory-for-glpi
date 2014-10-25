@@ -287,8 +287,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             '.$where.'
          GROUP BY uniqid, plugin_fusioninventory_agents_id';
       $resultcount = $DB->query($querycount);
-      $a_datacount = $DB->fetch_assoc($resultcount);
-      $number = $a_datacount['cpt'];
+//      $a_datacount = $DB->fetch_assoc($resultcount);
+      $number = $DB->numrows($resultcount);
       if (isset($options['uniqid']) AND $number == '0') {
 
       } else {
