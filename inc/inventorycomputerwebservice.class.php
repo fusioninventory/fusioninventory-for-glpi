@@ -75,6 +75,26 @@ class PluginFusioninventoryInventoryComputerWebservice {
 
       return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);
    }
+
+
+
+   static function methodExtendedInfo($params, $protocol) {
+      $response = array();
+
+      if (!isset($params['computers_id'])
+              || !is_numeric($params['computers_id'])) {
+         return $response;
+      }
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $a_computerextend = current($pfInventoryComputerComputer->find(
+                                              "`computers_id`='".$params['computers_id']."'",
+                                              "", 1));
+      if (empty($a_computerextend)) {
+         return $response;
+      }
+      return $a_computerextend;
+   }
+
 }
 
 ?>
