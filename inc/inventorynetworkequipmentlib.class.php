@@ -328,6 +328,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
 
+      if ($a_lldp['ip'] == ''
+              && $a_lldp['name'] == ''
+              && $a_lldp['mac'] == '') {
+         return;
+      }
+
       $portID = FALSE;
       if ($a_lldp['ip'] != '') {
          $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_lldp['ip'],
