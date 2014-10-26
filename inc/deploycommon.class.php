@@ -116,14 +116,16 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $members = $group_users->getGroupUsers($items_id);
 
                foreach ($members as $member) {
-                  $computers = $computer_object->find("users_id = '${member['id']}'");
+                  $computers = $computer_object->find("users_id = '${member['id']}' "
+                  . " AND `is_deleted`='0' AND `is_template`='0'");
                   foreach($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
 
                //find computers directly associated with this group
-               $computers = $computer_object->find("groups_id = '$items_id'");
+               $computers = $computer_object->find("groups_id = '$items_id' "
+                       . " AND `is_deleted`='0' AND `is_template`='0'");
                foreach($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
