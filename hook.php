@@ -2828,6 +2828,11 @@ function plugin_fusioninventory_registerMethods() {
    $WEBSERVICES_METHOD['fusioninventory.test'] = array(
                      'PluginFusioninventoryInventoryComputerWebservice',
                      'methodTest');
+   $WEBSERVICES_METHOD['fusioninventory.computerextendedinfo'] = array(
+       'PluginFusioninventoryInventoryComputerWebservice',
+		 'methodExtendedInfo');
+
+
 }
 
 ?>
