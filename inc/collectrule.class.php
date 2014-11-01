@@ -93,6 +93,7 @@ class PluginFusioninventoryCollectRule extends Rule {
                   if ($res != ''
                           && ($action->fields["field"] != 'user'
                               && $action->fields["field"] != 'otherserial'
+                              && $action->fields["field"] != 'software'
                               && $action->fields["field"] != 'softwareversion')) {
                      $res = Dropdown::importExternal(
                              getItemTypeForTable(
