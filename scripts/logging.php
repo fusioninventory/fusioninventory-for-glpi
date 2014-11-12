@@ -3,9 +3,13 @@
  * Logging facility
  */
 
-error_reporting( E_ALL  );
-ini_set("display_errors", 'stderr');
 ini_set("log_errors", true);
+
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
+set_error_handler(null);
+
+include_once(__DIR__ . "/../../../inc/toolbox.class.php");
 
 class Logging {
    public static $LOG_CRITICAL = array('level'=>50, 'name'=>'CRITICAL ');
@@ -26,17 +30,21 @@ class Logging {
       }
    }
 
-   public function formatlog($arg, $loglevel) {
-      if (is_array($arg) || is_object($arg)) {
-         $msg = print_r($arg, true);
-      } else if (is_null($arg)) {
-         $msg = ' NULL';
-      } else if (is_bool($arg)) {
-         $msg = ($arg ? 'true' : 'false');
-      } else {
-         $msg = $arg;
+   public function formatlog($messages, $loglevel) {
+      $msg = array();
+      foreach($messages as $message) {
+         if (is_array($message) || is_object($message)) {
+            //$msg[] = print_r($message, true);
+            $msg[] = PluginFusioninventoryToolbox::formatJson(json_encode($message));
+         } else if (is_null($message)) {
+            $msg[] = ' NULL';
+         } else if (is_bool($message)) {
+            $msg[] = ($message ? 'true' : 'false');
+         } else {
+            $msg[] = $message;
+         }
       }
-      return $loglevel['name'] . ': '. $msg;
+      return $loglevel['name'] . ': '. implode("\n",$msg);
    }
 
    function printlog($msg="", $loglevel) {
@@ -56,15 +64,18 @@ class Logging {
       }
    }
 
-   function info($msg) {
+   function info() {
+      $msg = func_get_args();
       $this->printlog($msg, self::$LOG_INFO);
    }
 
-   function error($msg) {
+   function error() {
+      $msg = func_get_args();
       $this->printlog($msg, self::$LOG_ERROR);
    }
 
-   function debug($msg) {
+   function debug() {
+      $msg = func_get_args();
       $this->printlog($msg, self::$LOG_DEBUG);
    }
 
