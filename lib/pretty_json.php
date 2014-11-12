@@ -12,7 +12,7 @@ function pretty_json($json) {
     $result      = '';
     $pos         = 0;
     $strLen      = strlen($json);
-    $indentStr   = '  ';
+    $indentStr   = '    ';
     $newLine     = "\n";
     $prevChar    = '';
     $outOfQuotes = TRUE;
@@ -38,6 +38,9 @@ function pretty_json($json) {
 
         // Add the character to the result string.
         $result .= $char;
+        if ($char == ':') {
+           $result .= ' ';
+        }
 
         // If the last character was the beginning of an element,
         // output a new line and indent the next line.
