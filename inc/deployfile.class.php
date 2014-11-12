@@ -732,20 +732,23 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
 
          //prepare file data for insertion in repo
-         $datas = array(
+         $data = array(
             'file_tmp_name' => $file_tmp_name,
             'mime_type' => $_FILES['file']['type'],
             'filesize' => $_FILES['file']['size'],
             'filename' => $filename,
-            'p2p' => isset($_POST['p2p']) ? 1 : 0,
-            'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
-            'p2p-retention-duration' => is_numeric($params['p2p-retention-duration']) ?
-               $params['p2p-retention-duration'] : 0,
+            'p2p' => isset($params['p2p']) ? 1 : 0,
+            'uncompress' => isset($params['uncompress']) ? 1 : 0,
+            'p2p-retention-duration' => (
+               is_numeric($params['p2p-retention-duration'])
+               ? $params['p2p-retention-duration']
+               : 0
+            ),
             'orders_id' => $params['orders_id']
          );
 
          //Add file in repo
-         if ($filename && self::addFileInRepo($datas)) {
+         if ($filename && self::addFileInRepo($data)) {
             Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
             return TRUE;
          } else {
@@ -777,20 +780,23 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $filesize = filesize($file_path);
 
          //prepare file data for insertion in repo
-         $datas = array(
+         $data = array(
             'file_tmp_name' => $file_path,
             'mime_type' => $mime_type,
             'filesize' => $filesize,
             'filename' => $filename,
-            'p2p' => isset($_POST['p2p']) ? 1 : 0,
-            'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
-            'p2p-retention-duration' => is_numeric($_POST['p2p-retention-duration']) ?
-               $_POST['p2p-retention-duration'] : 0,
+            'p2p' => isset($params['p2p']) ? 1 : 0,
+            'uncompress' => isset($params['uncompress']) ? 1 : 0,
+            'p2p-retention-duration' => (
+               is_numeric($params['p2p-retention-duration'])
+               ? $params['p2p-retention-duration']
+               : 0
+            ),
             'orders_id' => $params['orders_id']
          );
 
          //Add file in repo
-         if ($filename && self::addFileInRepo($datas)) {
+         if ($filename && self::addFileInRepo($data)) {
             Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
             return TRUE;
          } else {
