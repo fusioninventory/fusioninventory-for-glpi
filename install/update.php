@@ -837,11 +837,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          if (count($a_configs) > 0) {
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
-         }
 
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
-               SET `agent_base_url` = '".$agent_base_url."'
-               ;");
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
+                  SET `agent_base_url` = '".$agent_base_url."'
+                  ;");
+         }
       }
 
 
