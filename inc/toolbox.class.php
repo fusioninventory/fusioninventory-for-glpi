@@ -603,13 +603,13 @@ class PluginFusioninventoryToolbox {
 
 
 
-   static function displayJson($json) {
+   static function formatJson($json) {
       $version = phpversion();
 
       if ( version_compare($version, '5.4', 'lt') ) {
-         echo pretty_json($json);
+         return pretty_json($json);
       } else if ( version_compare($version, '5.4', 'ge') ) {
-         echo json_encode(
+         return json_encode(
             json_decode($json, TRUE),
             JSON_PRETTY_PRINT
          );
