@@ -97,7 +97,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'collect'                    => 'PluginFusioninventoryCollect',
           'deploypackage'              => 'PluginFusioninventoryDeployPackage',
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
-          'deploytask'                 => 'PluginFusioninventoryDeployTask',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
           'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice',
           'ruledictionnarycomputerarch'=> 'PluginFusioninventoryRuleDictionnaryComputerArch'
