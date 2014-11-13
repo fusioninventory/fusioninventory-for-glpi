@@ -58,68 +58,60 @@ if (isset($_GET['action'])) {
             $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
             if (isset($agent['id'])) {
-               $methods = $pfTaskjobstate->getTaskjobsAgent($agent['id']);
-               // In case deploy module is disabled since task prepared
-               if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
-                  foreach ($methods as $taskjobs) {
-                     foreach ($taskjobs as $data) {
-                        $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                      0,
-                                                      '',
-                                                      0,
-                                                      "Deploy module has been disabled for this agent",
-                                                      0,
-                                                      0);
-                     }
-                  }
-                  echo "{}";
-                  exit;
-               }
 
                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                   $agent['id'],
                   array('deployinstall', 'deployuninstall')
                );
-
-               //sort taskjobs by key id
-               /**
-                * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
-                * manipulated by drad and drop (cf. Task::getTaskjobsForAgent() ).
-                */
-               ////start of json response
-               $order = new stdClass;
-               $order->jobs = array();
-               $order->associatedFiles = new stdClass;
-
-               ////aggregate json orders in a single json response
-               foreach ($taskjobstates as $taskjobstate) {
-
-                  // TODO: The run() method should be renamed as getData() and moved to the Package
-                  // class since we want package configuration (Order class may be useless ... needs
-                  // some thinking)
-                  $deploycommon = new PluginFusioninventoryDeployCommon();
-                  // Get taskjob json order
-                  $jobstate_order = $deploycommon->run($taskjobstate);
-
-                  // Append order to the final json
-                  $order->jobs[] = $jobstate_order['job'];
-                  // Update associated files list
-                  foreach( $jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
-                     if(!array_key_exists($hash, $order->associatedFiles) ) {
-                        $order->associatedFiles->$hash = $associatedFiles;
-                     }
+               if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
+                  foreach($taskjobstates as $taskjobstate) {
+                     $taskjobstate->cancel(
+                        __("Deploy module has been disabled for this agent", 'fusioninventory')
+                     );
                   }
-                  $taskjobstate->changeStatus(
-                     $taskjobstate->fields['id'] ,
-                     $taskjobstate::SERVER_HAS_SENT_DATA
-                  );
-               }
-
-               // return an empty dictionnary if there are no jobs.
-               if ( count($order->jobs) == 0) {
                   $response = "{}";
                } else {
-                  $response = json_encode($order);
+
+                  //sort taskjobs by key id
+                  /**
+                   * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
+                   * manipulated by drag and drop (cf. Task::getTaskjobsForAgent() ).
+                   */
+                  ////start of json response
+                  $order = new stdClass;
+                  $order->jobs = array();
+                  $order->associatedFiles = new stdClass;
+
+                  ////aggregate json orders in a single json response
+                  foreach ($taskjobstates as $taskjobstate) {
+
+                     // TODO: The run() method should be renamed as getData() and moved to the Package
+                     // class since we want package configuration (Order class may be useless ... needs
+                     // some thinking)
+                     $deploycommon = new PluginFusioninventoryDeployCommon();
+                     // Get taskjob json order
+                     $jobstate_order = $deploycommon->run($taskjobstate);
+
+                     // Append order to the final json
+                     $order->jobs[] = $jobstate_order['job'];
+                     // Update associated files list
+                     foreach( $jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
+                        if(!array_key_exists($hash, $order->associatedFiles) ) {
+                           $order->associatedFiles->$hash = $associatedFiles;
+                        }
+                     }
+                     $taskjobstate->changeStatus(
+                        $taskjobstate->fields['id'] ,
+                        $taskjobstate::SERVER_HAS_SENT_DATA
+                     );
+                  }
+
+                  // return an empty dictionnary if there are no jobs.
+                  if ( count($order->jobs) == 0) {
+                     $response = "{}";
+                  } else {
+                     $response = json_encode($order);
+                  }
                }
             }
          }
