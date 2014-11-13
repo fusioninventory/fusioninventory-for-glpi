@@ -227,13 +227,6 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'),
-          /**
-           * The DeployState class is not used anymore. It's just commented for references.
-           * TODO: replace DeployState with the monitoring facility.
-           */
-          //array('itemtype'  => 'PluginFusioninventoryDeployState',
-          //      'label'     => __('Deployment status'),
-          //      'field'     => 'plugin_fusioninventory_status')
       );
       return $rights;
    }
