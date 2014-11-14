@@ -874,7 +874,17 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                break;
 
             case 10:
-               echo "<td>".$pfNetworkPort->fields["portduplex"]."</td>";
+               if ($pfNetworkPort->fields["portduplex"] == 2) {
+                  echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
+                  echo __('Half', 'fusioninventory');
+                  echo '</td>';
+               } else if ($pfNetworkPort->fields["portduplex"] == 3) {
+                  echo '<td>';
+                  echo __('Full', 'fusioninventory');
+                  echo '</td>';
+               } else {
+                  echo "<td></td>";
+               }
                break;
 
             case 11:
