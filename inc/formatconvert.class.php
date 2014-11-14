@@ -1756,7 +1756,8 @@ class PluginFusioninventoryFormatconvert {
                                               'IFOUTOCTETS'       => 'ifoutoctets',
                                               'IFSTATUS'          => 'ifstatus',
                                               'IFTYPE'            => 'iftype',
-                                              'TRUNK'             => 'trunk'));
+                                              'TRUNK'             => 'trunk',
+                                              'IFPORTDUPLEX'      => 'portduplex'));
             $array_tmp['ifspeed'] = $array_tmp['speed'];
             if ($array_tmp['ifdescr'] == '') {
                $array_tmp['ifdescr'] = $array_tmp['name'];
