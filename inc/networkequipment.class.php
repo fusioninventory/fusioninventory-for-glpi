@@ -796,7 +796,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             }
             echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".
                     $checked."/>";
-         } else if (PluginMonitoringSession::haveRight("config_components_catalogs", 'r')) {
+         } else if (Session::haveRight("plugin_monitoring_componentscatalog", READ)) {
             echo Dropdown::getYesNo($state);
          }
          echo "</td>";
