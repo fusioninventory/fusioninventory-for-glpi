@@ -1374,6 +1374,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 
+
    /*
     * Table glpi_plugin_fusioninventory_ignoredimportdevices
     */
@@ -4836,6 +4837,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
    changeDisplayPreference("PluginFusinvsnmpPrinterLogReport",
                            "PluginFusioninventoryPrinterLogReport");
+   changeDisplayPreference("PluginFusioninventoryUnknownDevice",
+                           "PluginFusioninventoryUnmanaged");
 
    /*
     * Delete IP and MAC of PluginFusioninventoryUnknownDevice in displaypreference
@@ -5026,6 +5029,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          WHERE `id`='".$data['id']."'";
       $DB->query($queryu);
    }
+
+
+   /*
+    * Convert itemtype from glpi_plugin_fusioninventory_unknowndevices to
+    * PluginFusioninventoryUnmanaged
+    */
+   $tables = array('glpi_networkports', 'glpi_logs',
+      'glpi_plugin_fusioninventory_ignoredimportdevices');
+   foreach ($tables as $table) {
+      $query = "UPDATE `".$table."` ".
+               "SET `itemtype`='PluginFusioninventoryUnmanaged'".
+               "WHERE `itemtype` = 'glpi_plugin_fusioninventory_unknowndevices'";
+      $DB->query($query);
+   }
+
 
 
    /*
