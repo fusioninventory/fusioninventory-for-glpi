@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -206,7 +206,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
               array('rulecollections_types'=>TRUE));
       array_push($CFG_GLPI["dictionnary_types"], 'PluginFusioninventoryRuleDictionnaryComputerArchCollection');
-      
+
       // Networkinventory and networkdiscovery
       Plugin::registerClass('PluginFusioninventorySnmpmodel');
       Plugin::registerClass('PluginFusioninventoryNetworkEquipment',
@@ -407,12 +407,6 @@ function plugin_init_fusioninventory() {
          if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
          }
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
-            ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
-               title='".__('Documentation', 'fusioninventory')."'
-               alt='".__('Documentation', 'fusioninventory')."'>"] =
-            'front/documentation.php';
 
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 

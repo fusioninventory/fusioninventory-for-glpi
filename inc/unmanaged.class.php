@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -220,6 +220,68 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $this->addStandardTab('PluginFusioninventoryUnmanaged', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
+   }
+
+
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
+         $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'import']    = __('Import');
+      }
+      if(Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
+         $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
+                                       __('Assign SNMP authentication', 'fusioninventory');
+      }
+      return $actions;
+   }
+
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+
+      switch ($ma->getAction()) {
+
+         case "assign_auth" :
+            PluginFusioninventoryConfigSecurity::auth_dropdown();
+            echo "<br><br>";
+            break;
+
+      }
+      return parent::showMassiveActionsSubForm($ma);
+   }
+
+
+
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      switch ($ma->getAction()) {
+
+         case "import" :
+            $Import = 0;
+            $NoImport = 0;
+            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+            foreach ($ids as $key) {
+               list($Import, $NoImport) = $pfUnmanaged->import($key, $Import, $NoImport);
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            $ma->addMessage(__('Number of imported devices', 'fusioninventory')." : ".$Import);
+            $ma->addMessage(__('Number of devices not imported because type not defined', 'fusioninventory').
+                     " : ".$NoImport);
+            break;
+
+      }
+      return;
    }
 
 

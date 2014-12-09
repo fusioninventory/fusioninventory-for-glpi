@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------

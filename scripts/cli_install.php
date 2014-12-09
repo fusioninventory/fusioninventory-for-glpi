@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -40,23 +40,32 @@
    ------------------------------------------------------------------------
  */
 
-if (in_array('--help', $_SERVER['argv'])) {
-   die("usage: ".$_SERVER['argv'][0]." [ --optimize ]\n");
-}
-
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
 include ("../../../inc/includes.php");
 
+include ("./docopt.php");
+
+$doc = <<<DOC
+cli_install.php
+
+Usage:
+   cli_install.php [--no-models-update] [--force-upgrade] [--as-user USER] [--optimize]
+
+Options:
+   --force-upgrade      Force upgrade.
+   --no-models-update   Do not perform SNMP models update.
+   --as-user USER       Do install/upgrade as specified USER.
+   --optimize           Optimize tables.
+
+DOC;
+
+$docopt = new \Docopt\Handler();
+$args = $docopt->handle($doc);
+
 // Init debug variable
 $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
 $_SESSION['glpilanguage']  = "en_GB";
-
-if (isset($_SERVER["argv"][1])
-        && is_numeric($_SERVER["argv"][1])) {
-   $_SESSION['glpiactiveprofile']['id'] = $_SERVER["argv"][1];
-   Session::changeProfile($_SERVER["argv"][1]);
-}
 
 Session::LoadLanguage();
 
@@ -88,67 +97,65 @@ $current_version = pluginFusioninventoryGetCurrentVersion();
 
 $migration = new CliMigration($current_version);
 
-   if (!isset($current_version)) {
-      $current_version = 0;
-   }
-   if ($current_version == '0') {
-      $migration->displayWarning("***** Install process of plugin FUSIONINVENTORY *****");
-   } else {
-      $migration->displayWarning("***** Update process of plugin FUSIONINVENTORY *****");
-   }
+if (!isset($current_version)) {
+   $current_version = 0;
+}
+if ($current_version == '0') {
+   $migration->displayWarning("***** Install process of plugin FUSIONINVENTORY *****");
+} else {
+   $migration->displayWarning("***** Update process of plugin FUSIONINVENTORY *****");
+}
 
-   $migration->displayWarning("Current FusionInventory version: $current_version");
-   $migration->displayWarning("Version to update: ".PLUGIN_FUSIONINVENTORY_VERSION);
+$migration->displayWarning("Current FusionInventory version: $current_version");
+$migration->displayWarning("Version to update: ".PLUGIN_FUSIONINVENTORY_VERSION);
 
-   // To prevent problem of execution time
-   ini_set("max_execution_time", "0");
-   ini_set("memory_limit", "-1");
-   ini_set("session.use_cookies","0");
-   $mess = '';
-   if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
-        AND $current_version!='0') {
-      $mess = "Update needed.";
-   } else if ($current_version == PLUGIN_FUSIONINVENTORY_VERSION) {
-      $mess = "No migration needed.";
-   } else {
-      $mess = "installation done.";
-   }
+// To prevent problem of execution time
+ini_set("max_execution_time", "0");
+ini_set("memory_limit", "-1");
+ini_set("session.use_cookies","0");
+$mess = '';
+if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
+     AND $current_version!='0') {
+   $mess = "Update needed.";
+} else if ($current_version == PLUGIN_FUSIONINVENTORY_VERSION) {
+   $mess = "No migration needed.";
+} else {
+   $mess = "installation done.";
+}
 
-   $migration->displayWarning($mess);
+$migration->displayWarning($mess);
 
-   $options = getopt(
-      "",
-      array(
-         "no-models-update",
-         "as-user:"
-      )
-   );
+if ($args['--no-models-update']) {
+   define('NO_MODELS_UPDATE', TRUE);
+}
 
-   if (array_key_exists('no-models-update', $options)) {
-      define('NO_MODELS_UPDATE', TRUE);
-   }
-
-   if (array_key_exists('as-user', $options)) {
-      $user = new User();
-      $user->getFromDBbyName($options['as-user']);
-      $auth = new Auth();
-      $auth->auth_succeded = true;
-      $auth->user = $user;
-      Session::init($auth);
-   }
-   $plugin->getFromDBbyDir("fusioninventory");
-   print("Installing Plugin...\n");
-   $plugin->install($plugin->fields['id']);
-   print("Install Done\n");
-   print("Activating Plugin...\n");
-   $plugin->activate($plugin->fields['id']);
-   print("Activation Done\n");
-   print("Loading Plugin...\n");
-   $plugin->load("fusioninventory");
-   print("Load Done...\n");
+if ($args['--force-upgrade']) {
+   define('FORCE_UPGRADE', TRUE);
+}
 
 
-if (in_array('--optimize', $_SERVER['argv'])) {
+if ( !is_null($args['--as-user']) ) {
+   $user = new User();
+   $user->getFromDBbyName($args['--as-user']);
+   $auth = new Auth();
+   $auth->auth_succeded = true;
+   $auth->user = $user;
+   Session::init($auth);
+}
+
+$plugin->getFromDBbyDir("fusioninventory");
+print("Installing Plugin...\n");
+$plugin->install($plugin->fields['id']);
+print("Install Done\n");
+print("Activating Plugin...\n");
+$plugin->activate($plugin->fields['id']);
+print("Activation Done\n");
+print("Loading Plugin...\n");
+$plugin->load("fusioninventory");
+print("Load Done...\n");
+
+
+if ($args['--optimize']) {
 
    $migration->displayTitle(__('Optimizing tables'));
 

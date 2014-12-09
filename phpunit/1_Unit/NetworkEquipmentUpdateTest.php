@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -56,7 +56,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
 
       $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
               ." SET `import`='1'"
-              ." WHERE `number`='53'");
+              ." WHERE `number`='54'");
 
       $this->datelatupdate = date('Y-m-d H:i:s');
 
@@ -144,6 +144,24 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'mac'              => '6c:50:4d:39:59:88',
               'trunk'            => 1,
               'ifspeed'          => 4294967295
+          ),
+          '5006' => array(
+              'ifdescr'          => 'vlan0',
+              'ifinerrors'       => 0,
+              'ifinoctets'       => 1076823325,
+              'ifinternalstatus' => 1,
+              'iflastchange'     => '53.53 seconds',
+              'ifmtu'            => 1500,
+              'name'             => 'vlan0',
+              'logical_number'   => 5006,
+              'ifouterrors'      => 0,
+              'ifoutoctets'      => 2179528910,
+              'speed'            => 4294967295,
+              'ifstatus'         => 1,
+              'iftype'           => 54,
+              'mac'              => '6c:50:4d:39:59:89',
+              'trunk'            => 1,
+              'ifspeed'          => 4294967295
           )
       );
       $a_inventory['connection-mac'] = array(
@@ -193,6 +211,10 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
       $this->assertGreaterThan(0, $this->items_id);
 
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+              ." SET `import`='0'"
+              ." WHERE `number`='54'");
 
       // To be sure not have 2 sme informations
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
@@ -419,5 +441,23 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $a_vlans = NetworkPort_Vlan::getVlansForNetworkPort($a_networkport['id']);
       $this->assertEquals(2, count($a_vlans), 'Networkport 10002 of switch may have 2 Vlans');
    }
+
+
+
+   /**
+    * @test
+    */
+   public function NetworkPortCreated() {
+      global $DB;
+
+      $DB->connect();
+
+      $networkPort = new NetworkPort();
+      $a_networkports = $networkPort->find("`itemtype`='NetworkEquipment'");
+
+      $this->assertEquals(4, count($a_networkports), 'Number of networkport must be 4');
+
+   }
+
 }
 ?>

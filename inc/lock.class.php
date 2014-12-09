@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author David Durieux
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -670,6 +670,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
       foreach ($a_serialized as $key=>$value) {
          if (!in_array($key, $a_fieldList)) {
             $item_device->fields[$key] = $value;
+         }
+      }
+      $exclude = $pfLock->excludeFields();
+      foreach ($exclude as $key) {
+         if (isset($item_device->fields[$key])
+                 && $key != 'id') {
+            unset($item_device->fields[$key]);
          }
       }
       $_SESSION['glpi_fusionionventory_nolock'] = TRUE;

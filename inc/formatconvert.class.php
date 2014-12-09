@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -260,6 +260,10 @@ class PluginFusioninventoryFormatconvert {
               && !empty($array['OPERATINGSYSTEM']['INSTALL_DATE'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] =
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
+      }
+
+      if (isset($array['HARDWARE']['DESCRIPTION'])) {
+         $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
       }
 
       if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
@@ -1692,15 +1696,17 @@ class PluginFusioninventoryFormatconvert {
       foreach ($array as $key=>$value) {
          if (!is_int($key)
                  && ($key == "software"
-                     || $key == 'ipaddress')) {
+                     || $key == 'ipaddress'
+                     || $key == 'internalport')) {
             // do nothing
          } else {
             //if (is_array($value)) {
             if ((array)$value === $value) {
                $array[$key] = $this->replaceids($value);
             } else {
-               if ($key == "manufacturers_id"
-                       || $key == "bios_manufacturers_id") {
+               if (!is_numeric($key)
+                       && ($key == "manufacturers_id"
+                           || $key == 'bios_manufacturers_id')) {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
                   if ($key == 'bios_manufacturers_id') {
@@ -1829,7 +1835,8 @@ class PluginFusioninventoryFormatconvert {
                                               'IFOUTOCTETS'       => 'ifoutoctets',
                                               'IFSTATUS'          => 'ifstatus',
                                               'IFTYPE'            => 'iftype',
-                                              'TRUNK'             => 'trunk'));
+                                              'TRUNK'             => 'trunk',
+                                              'IFPORTDUPLEX'      => 'portduplex'));
             $array_tmp['ifspeed'] = $array_tmp['speed'];
             if ($array_tmp['ifdescr'] == '') {
                $array_tmp['ifdescr'] = $array_tmp['name'];
@@ -1940,15 +1947,17 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['networkport'] = array();
       if (isset($array['PORTS'])) {
          foreach ($array['PORTS']['PORT'] as $a_port) {
-            $array_tmp = $thisc->addValues($a_port,
-                                           array(
-                                              'IFNAME'   => 'name',
-                                              'IFNUMBER' => 'logical_number',
-                                              'MAC'      => 'mac',
-                                              'IP'       => 'ip',
-                                              'IFTYPE'   => 'iftype'));
+            if (!isset($a_port['IFNUMBER'])) {
+               $array_tmp = $thisc->addValues($a_port,
+                                              array(
+                                                 'IFNAME'   => 'name',
+                                                 'IFNUMBER' => 'logical_number',
+                                                 'MAC'      => 'mac',
+                                                 'IP'       => 'ip',
+                                                 'IFTYPE'   => 'iftype'));
 
-            $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+               $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+            }
          }
       }
 
@@ -1960,10 +1969,22 @@ class PluginFusioninventoryFormatconvert {
          foreach ($array['CARTRIDGES'] as $name=>$value) {
             $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
             if ($plugin_fusioninventory_mappings) {
-               if (!is_numeric($value)) {
-                  $value = 0;
+               if (strstr($value, 'pages')) { // 30pages
+                  $value = str_replace('pages', '', $value);
+                  $value = 0 - $value;
+               } else if ($value == '') { // no info
+                  // nothing to do
+               } else if (is_numeric($value)) { // percentage
+                  // nothing to do
+               } else if ($value == 'OK') { // state type 'OK'
+                  $value = 100000;
+               } else {
+                  // special cases
+                  $value = '';
                }
-               $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value;
+               if ($value != '') {
+                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value;
+               }
             }
          }
       }

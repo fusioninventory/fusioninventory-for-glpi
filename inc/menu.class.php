@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -78,6 +78,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
    static function getAdditionalMenuOptions() {
+      global $CFG_GLPI;
 
       $elements = array(
           'iprange'                    => 'PluginFusioninventoryIPRange',
@@ -96,7 +97,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'collect'                    => 'PluginFusioninventoryCollect',
           'deploypackage'              => 'PluginFusioninventoryDeployPackage',
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
-          'deploytask'                 => 'PluginFusioninventoryDeployTask',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
           'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice',
           'ruledictionnarycomputerarch'=> 'PluginFusioninventoryRuleDictionnaryComputerArch'
@@ -120,6 +120,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
          }
       }
+
+      // Add icon for import package
+      $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/menu_import.png",
+                                      array('alt' => __('Import', 'fusioninventory')));
+      $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deploypackage.import.php';
+
+      // Add icon for documentation
+      $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/books.png",
+                                      array('alt' => __('Import', 'fusioninventory')));
+      $options['menu']['links'][$img] = '/plugins/fusioninventory/front/documentation.php';
+
+
 
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),

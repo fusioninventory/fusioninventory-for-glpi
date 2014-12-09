@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -55,6 +55,97 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    static function getTypeName($nb=0) {
       return __('Package', 'fusioninventory');
    }
+
+
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+         $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'import'] = __('Import', 'fusioninventory');
+         return $actions;
+      }
+      $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+      $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'export'] = __('Export', 'fusioninventory');
+
+      return $actions;
+   }
+
+
+   function getForbiddenStandardMassiveAction() {
+
+      $forbidden   = parent::getForbiddenStandardMassiveAction();
+      if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
+         $forbidden[] = 'update';
+         $forbidden[] = 'add';
+         $forbidden[] = 'delete';
+         $forbidden[] = 'purge';
+      }
+      return $forbidden;
+   }
+
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+
+      switch ($ma->getAction()) {
+         case 'transfert' :
+            Dropdown::show('Entity');
+            echo "<br><br>".Html::submit(__('Post'),
+                                         array('name' => 'massiveaction'));
+            return true;
+
+      }
+      return parent::showMassiveActionsSubForm($ma);
+   }
+
+
+
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      switch ($ma->getAction()) {
+
+         case 'export' :
+            foreach ($ids as $key) {
+               if ($item->can($key, UPDATE)) {
+                  $item->exportPackage($key);
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+              }
+            }
+            break;
+
+         case 'transfert' :
+            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+            foreach ($ids as $key) {
+               if ($pfDeployPackage->getFromDB($key)) {
+                  $input = array();
+                  $input['id'] = $key;
+                  $input['entities_id'] = $ma->POST['entities_id'];
+                  $pfDeployPackage->update($input);
+               }
+            }
+            break;
+
+         case 'import' :
+            foreach ($ids as $key) {
+               $item->importPackage($key);
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            break;
+
+      }
+      return;
+   }
+
 
 
    /**
@@ -461,7 +552,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<form action='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo PluginFusioninventoryToolbox::displayJson($order->fields['json']);
+         echo PluginFusioninventoryToolbox::formatJson($order->fields['json']);
          echo "</textarea>";
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
@@ -643,6 +734,226 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       //exit;
 
    }
+
+
+
+   /**
+    * Used to export package
+    *
+    */
+   function exportPackage($packages_id) {
+      $this->getFromDB($packages_id);
+      if (empty($this->fields['uuid'])) {
+         $input = array(
+             'id'   => $this->fields['id'],
+             'uuid' => Rule::getUuid()
+         );
+         $this->update($input);
+      }
+
+      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
+      $pfDeployFile  = new PluginFusioninventoryDeployFile();
+
+      // Generate JSON
+      $a_xml = array();
+      $input = $this->fields;
+      unset($input['id']);
+      $a_xml['package'] = $input;
+      $a_xml['orders'] = array();
+      $a_xml['files'] = array();
+      $a_xml['manifests'] = array();
+      $a_xml['repository'] = array();
+
+      $a_files = array();
+      $a_data = $pfDeployOrder->find("`plugin_fusioninventory_deploypackages_id`='".$this->fields['id']."'");
+      foreach ($a_data as $data) {
+         unset($data['id']);
+         unset($data['plugin_fusioninventory_deploypackages_id']);
+         $a_xml['orders'][] = $data;
+         $json = json_decode($data['json'], true);
+         $a_files = array_merge($a_files, $json['associatedFiles']);
+
+      }
+
+      // Add files
+      foreach ($a_files as $files_id=>$data) {
+         $a_pkgfiles = current($pfDeployFile->find("`sha512`='".$files_id."'", '', 1));
+         if (count($a_pkgfiles) > 0) {
+            unset($a_pkgfiles['id']);
+            $a_xml['files'][] = $a_pkgfiles;
+         }
+      }
+
+
+      // Create zip with JSON and files
+      $name = preg_replace("/[^a-zA-Z0-9]/", '', $this->fields['name']);
+      $filename = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/export/".$this->fields['uuid'].".".$name.".zip";
+      if (file_exists($filename)) {
+         unlink($filename);
+      }
+
+
+      $zip = new ZipArchive();
+      if($zip->open($filename) == TRUE) {
+         if($zip->open($filename, ZipArchive::CREATE) == TRUE) {
+            $zip->addEmptyDir('files');
+            $zip->addEmptyDir('files/manifests');
+            $zip->addEmptyDir('files/repository');
+            foreach ($a_files as $hash=>$data) {
+               $sha512 = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash);
+               $sha512 = trim($sha512);
+               $zip->addFile(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash, "files/manifests/".$hash);
+               $a_xml['manifests'][] = $hash;
+               $file = PluginFusioninventoryDeployFile::getDirBySha512($sha512).
+                       "/".$sha512;
+               $zip->addFile(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/".$file, "files/repository/".$file);
+               $a_xml['repository'][] = $file;
+            }
+
+            $json_string = json_encode($a_xml);
+            $zip->addFromString('information.json', $json_string);
+         }
+         $zip->close();
+      }
+   }
+
+
+
+   /**
+    * Used to import package
+    *
+    */
+   function importPackage($zipfile) {
+
+      $zip           = new ZipArchive();
+      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
+      $pfDeployFile  = new PluginFusioninventoryDeployFile();
+
+      $filename = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/".$zipfile;
+
+      $extract_folder = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/".$zipfile.".extract";
+
+      if ($zip->open($filename, ZipArchive::CREATE) == TRUE) {
+         $zip->extractTo($extract_folder);
+
+         $zip->close();
+      }
+      $json_string = file_get_contents($extract_folder."/information.json");
+
+      $a_info = json_decode($json_string, true);
+
+      // Find package with this uuid
+      $a_packages = $this->find("`uuid`='".$a_info['package']['uuid']."'");
+      if (count($a_packages) == 0) {
+         // Create it
+         $_SESSION['tmp_clone_package'] = true;
+         $packages_id = $this->add($a_info['package']);
+         unset($_SESSION['tmp_clone_package']);
+         foreach ($a_info['orders'] as $input) {
+            $input['plugin_fusioninventory_deploypackages_id'] = $packages_id;
+            $pfDeployOrder->add($input);
+            echo "|";
+         }
+         foreach ($a_info['files'] as $input) {
+            $pfDeployFile->add($input);
+         }
+      } else {
+         // Update current
+
+      }
+      // Copy files
+      foreach ($a_info['manifests'] as $manifest) {
+         rename($extract_folder."/files/manifests/".$manifest, GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$manifest);
+      }
+      foreach ($a_info['repository'] as $repository) {
+         $split = explode('/', $repository);
+         array_pop($split);
+         $folder = '';
+         foreach ($split as $dir) {
+            $folder .= '/'.$dir;
+            if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository".$folder)) {
+               mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository".$folder);
+            }
+         }
+         rename($extract_folder."/files/repository/".$repository, GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/".$repository);
+      }
+
+   }
+
+
+
+   /**
+    * Display list of packages to import
+    */
+   function listPackagesToImport() {
+
+      $rand = mt_rand();
+
+      echo "<div class='spaced'>";
+      Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
+
+      $massiveactionparams = array('container' => 'mass'.__CLASS__.$rand);
+      Html::showMassiveActions($massiveactionparams);
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='5'>";
+      echo __('Packages to import', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th width='10'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>";
+      echo "<th>";
+      echo __('Name');
+      echo "</th>";
+      echo "<th>";
+      echo __('uuid');
+      echo "</th>";
+      echo "<th>";
+      echo __('Package to update');
+      echo "</th>";
+      echo "<th>";
+      echo "</th>";
+      echo "</tr>";
+
+      foreach (glob(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/*.zip") as $file) {
+         echo "<tr class='tab_bg_1'>";
+         $file = str_replace(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/", "", $file);
+         $split = explode('.', $file);
+         echo "<td>";
+         Html::showMassiveActionCheckBox(__CLASS__, $file);
+         echo "</td>";
+         echo "<td>";
+         echo $split[2];
+         echo "</td>";
+         echo "<td>";
+         echo $split[0].".".$split[1];
+         echo "</td>";
+         echo "<td>";
+         $import_create = __('Import (create)', 'fusioninventory');
+         $a_packages = current($this->find("`uuid`='".$split[0].".".$split[1]."'", '', 1));
+         if (count($a_packages) > 1) {
+            $this->getFromDB($a_packages['id']);
+            echo $this->getLink();
+            $import_create = __('Import (update)', 'fusioninventory');
+         }
+         echo "</td>";
+         echo "<td>";
+
+         echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
+         echo Html::hidden('importfile', array('value' => $file));
+         echo "<input type='submit' value='".$import_create."' class='submit' />";
+         Html::closeForm();
+
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+      $massiveactionparams['ontop'] =false;
+      Html::showMassiveActions($massiveactionparams);
+      echo "</div>";
+   }
+
 }
 
 ?>

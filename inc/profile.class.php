@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -227,13 +227,6 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'),
-          /**
-           * The DeployState class is not used anymore. It's just commented for references.
-           * TODO: replace DeployState with the monitoring facility.
-           */
-          //array('itemtype'  => 'PluginFusioninventoryDeployState',
-          //      'label'     => __('Deployment status'),
-          //      'field'     => 'plugin_fusioninventory_status')
       );
       return $rights;
    }

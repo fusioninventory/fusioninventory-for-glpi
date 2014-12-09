@@ -603,13 +603,13 @@ class PluginFusioninventoryToolbox {
 
 
 
-   static function displayJson($json) {
+   static function formatJson($json) {
       $version = phpversion();
 
       if ( version_compare($version, '5.4', 'lt') ) {
-         echo pretty_json($json);
+         return pretty_json($json);
       } else if ( version_compare($version, '5.4', 'ge') ) {
-         echo json_encode(
+         return json_encode(
             json_decode($json, TRUE),
             JSON_PRETTY_PRINT
          );
@@ -688,6 +688,59 @@ class PluginFusioninventoryToolbox {
       }
       return TRUE;
    }
+
+   /**
+    *  Execute a function as Fusioninventory user
+    *  @param $function callable
+    *  @param $args array
+    *
+    *  @return the normally returned value from executed callable
+    */
+
+   function executeAsFusioninventoryUser($function, array $args = array()) {
+
+      $config = new PluginFusioninventoryConfig();
+      $user = new User();
+
+      // Backup _SESSION environment
+      $OLD_SESSION = array();
+
+      foreach(
+         array(
+            'glpiID', 'glpiname','glpiactiveentities_string', 'glpiactiveentities',
+            'glpiparententities'
+         ) as $session_key
+      ) {
+         if (isset($_SESSION[$session_key])) {
+            $OLD_SESSION[$session_key] = $_SESSION[$session_key];
+         }
+
+      }
+
+      // Configure impersonation
+      $users_id  = $config->getValue('users_id');
+      $user->getFromDB($users_id);
+
+      $_SESSION['glpiID']   = $users_id;
+      $_SESSION['glpiname'] = $user->getField('name');
+      $_SESSION['glpiactiveentities'] = getSonsOf('glpi_entities', 0);
+      $_SESSION['glpiactiveentities_string'] =
+         "'". implode( "', '", $_SESSION['glpiactiveentities'] )."'";
+      $_SESSION['glpiparententities'] = array();
+
+      // Execute function with impersonated SESSION
+      $result = call_user_func_array($function, $args);
+
+      // Restore SESSION
+      foreach($OLD_SESSION as $key => $value) {
+         $_SESSION[$key] = $value;
+      }
+
+      // Return function results
+      return $result;
+
+   }
+
 }
 
 ?>

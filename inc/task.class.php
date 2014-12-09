@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -493,6 +493,20 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
          $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
+         if ($result['job']['method'] == 'networkinventory') {
+            $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
+            foreach($targets as $keyt=>$target) {
+               $item_type = key($target);
+               $items_id = current($target);
+               if ($item_type == 'PluginFusioninventoryIPRange') {
+                  unset($targets[$keyt]);
+                  // In this case get devices of this iprange
+                  $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
+                  $targets = array_merge($targets, $deviceList);
+               }
+            }
+         }
+
          $limit = 0;
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;
@@ -601,6 +615,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $computers = array();
       $computer = new Computer();
       $agent = new PluginFusioninventoryAgent();
+      $pfToolbox = new PluginFusioninventoryToolbox();
       foreach($actors as $actor) {
          $itemtype = key($actor);
          $itemid = $actor[$itemtype];
@@ -617,62 +632,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                break;
 
             case 'PluginFusioninventoryDeployGroup':
-               $config = new PluginFusioninventoryConfig();
-               $user   = new User();
-               // Force user and active entity Session since Search class can't live without it.
-               // (cf. DeployGroupDynamicData)
-               $OLD_SESSION = array();
 
-               if (isset($_SESSION['glpiID'])) {
-                  $OLD_SESSION['glpiID'] = $_SESSION['glpiID'];
-               }
-
-               if (isset($_SESSION['glpiname'])) {
-                  $OLD_SESSION['glpiname'] = $_SESSION['glpiname'];
-               }
-
-               if (isset($_SESSION['glpiactiveentities_string'])) {
-                  $OLD_SESSION['glpiactiveentities_string'] = $_SESSION['glpiactiveentities_string'];
-               }
-
-               if (isset($_SESSION['glpiactiveentities'])) {
-                  $OLD_SESSION['glpiactiveentities'] = $_SESSION['glpiactiveentities'];
-               }
-
-               if (isset($_SESSION['glpiparententities'])) {
-                  $OLD_SESSION['glpiparententities'] = $_SESSION['glpiparententities'];
-               }
-
-               $users_id  = $config->getValue('users_id');
-               $user->getFromDB($users_id);
-
-               $_SESSION['glpiID']   = $users_id;
-               $_SESSION['glpiname'] = $user->getField('name');
-               $_SESSION['glpiactiveentities'] = getSonsOf('glpi_entities', 0);
-               $_SESSION['glpiactiveentities_string'] =
-                  "'". implode( "', '", $_SESSION['glpiactiveentities'] )."'";
-               $_SESSION['glpiparententities'] = array();
-
-               foreach(
-                  PluginFusioninventoryDeployGroup::getTargetsForGroup($itemid) as $computerid
-               ) {
+               $group_targets = $pfToolbox->executeAsFusioninventoryUser(
+                  'PluginFusioninventoryDeployGroup::getTargetsForGroup',
+                  array($itemid)
+               );
+               foreach( $group_targets as $computerid ) {
                   $computers[$computerid] = 1;
-               }
-               // Get back to original session variable
-               if (isset($OLD_SESSION['glpiID'])) {
-                  $_SESSION['glpiID'] = $OLD_SESSION['glpiID'];
-               }
-               if (isset($OLD_SESSION['glpiname'])) {
-                  $_SESSION['glpiname'] = $OLD_SESSION['glpiname'];
-               }
-               if (isset($OLD_SESSION['glpiactiveentities_string'])) {
-                  $_SESSION['glpiactiveentities_string'] = $OLD_SESSION['glpiactiveentities_string'];
-               }
-               if (isset($OLD_SESSION['glpiactiveentities'])) {
-                  $_SESSION['glpiactiveentities'] = $OLD_SESSION['glpiactiveentities'];
-               }
-               if (isset($OLD_SESSION['glpiparententities'])) {
-                  $_SESSION['glpiparententities'] = $OLD_SESSION['glpiparententities'];
                }
                break;
 
@@ -716,6 +682,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                break;
          }
       }
+
       //Get agents from the computer's ids list
       foreach($agent->getAgentsFromComputers(array_keys($computers)) as $agent_entry) {
          $agents[$agent_entry['id']] = 1;

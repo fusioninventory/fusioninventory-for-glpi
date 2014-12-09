@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -173,27 +173,35 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</tr>';
       }
 
-      // Display automatic entity transfer
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
-      echo '<td>';
-      $pfEntity = new PluginFusioninventoryEntity();
-      if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
-         echo __('No, locked (by entity configuration)', 'fusioninventory');
-      } else {
-         if ($a_computerextend['is_entitylocked'] == 1) {
-            echo __('No, locked manually', 'fusioninventory');
-            echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
-                  $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
-         } else {
-            echo __('Yes');
-            echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
-                  $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
-         }
+      if ($a_computerextend['oscomment'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo "<td>".__('Comments')."</td>";
+         echo '<td>'.$a_computerextend['oscomment'].'</td>';
+         echo '</tr>';
       }
-      echo '</td>';
-      echo '</tr>';
 
+      // Display automatic entity transfer
+      if (Session::isMultiEntitiesMode()) {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
+         echo '<td>';
+         $pfEntity = new PluginFusioninventoryEntity();
+         if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
+            echo __('No, locked (by entity configuration)', 'fusioninventory');
+         } else {
+            if ($a_computerextend['is_entitylocked'] == 1) {
+               echo __('No, locked manually', 'fusioninventory');
+               echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+                     $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
+            } else {
+               echo __('Yes');
+               echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+                     $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
+            }
+         }
+         echo '</td>';
+         echo '</tr>';
+      }
       echo '</table>';
    }
 

@@ -428,6 +428,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `plugin_fusioninventory_computerarchs_id` int(11) NOT NULL DEFAULT '0',
   `serialized_inventory` longblob,
   `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
+  `oscomment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
@@ -832,6 +833,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
   `entities_id` int(11) NOT NULL,
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `date_mod` datetime DEFAULT NULL,
+  `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)

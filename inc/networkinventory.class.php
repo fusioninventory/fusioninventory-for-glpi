@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -190,8 +190,13 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      WHERE `glpi_networkequipments`.`is_deleted`='0'
                           AND `plugin_fusioninventory_configsecurities_id`!='0'";
          if ($pfIPRange->fields['entities_id'] != '-1') {
-           $query .= " AND `glpi_networkequipments`.`entities_id`='".
-                        $pfIPRange->fields['entities_id']."' ";
+            $entities = "(".$this->fields['entities_id'];
+            foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
+               $entities .= ",$parent";
+            }
+            $entities .= ")";
+            $query .= " AND `glpi_networkequipments`.`entities_id` IN ".
+                        $entities." ";
          }
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                          BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
@@ -228,7 +233,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_configsecurities_id`!='0'";
          if ($pfIPRange->fields['entities_id'] != '-1') {
-            $query .= "AND `glpi_printers`.`entities_id`='".$pfIPRange->fields['entities_id']."' ";
+            $entities = "(".$this->fields['entities_id'];
+            foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
+               $entities .= ",$parent";
+            }
+            $entities .= ")";
+            $query .= "AND `glpi_printers`.`entities_id` IN ".$entities." ";
          }
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                       BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
@@ -693,6 +703,98 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          }
       }
       return $a_agentList;
+   }
+
+
+
+   function getDevicesOfIPRange($items_id) {
+      global $DB;
+
+      $devicesList = array();
+      $pfIPRange = new PluginFusioninventoryIPRange();
+
+      // get all snmpauth
+      $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
+
+      $pfIPRange->getFromDB($items_id);
+   // Search NetworkEquipment
+      $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
+                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
+                         `plugin_fusioninventory_configsecurities_id`
+                  FROM `glpi_networkequipments`
+                  LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
+                       ON `networkequipments_id`=`glpi_networkequipments`.`id`
+                  LEFT JOIN `glpi_networkports`
+                       ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
+                          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+                  LEFT JOIN `glpi_networknames`
+                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                          AND `glpi_networknames`.`itemtype`='NetworkPort'
+                  LEFT JOIN `glpi_ipaddresses`
+                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+                  WHERE `glpi_networkequipments`.`is_deleted`='0'
+                       AND `plugin_fusioninventory_configsecurities_id`!='0'";
+      if ($pfIPRange->fields['entities_id'] != '-1') {
+         $entities = "(".$pfIPRange->fields['entities_id'];
+         foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
+            $entities .= ",$parent";
+         }
+         $entities .= ")";
+         $query .= " AND `glpi_networkequipments`.`entities_id` IN ".
+                     $entities." ";
+      }
+      $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
+                      BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
+                      AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
+      $query .= " GROUP BY `glpi_networkequipments`.`id`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+            $devicesList[] = array(
+               'NetworkEquipment' => $data['gID']
+            );
+         }
+     }
+  // Search Printer
+     $query = "SELECT `glpi_printers`.`id` AS `gID`,
+                      `glpi_ipaddresses`.`name` AS `gnifaddr`,
+                      `plugin_fusioninventory_configsecurities_id`
+               FROM `glpi_printers`
+               LEFT JOIN `glpi_plugin_fusioninventory_printers`
+                       ON `printers_id`=`glpi_printers`.`id`
+               LEFT JOIN `glpi_networkports`
+                    ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
+                       AND `glpi_networkports`.`itemtype`='Printer'
+               LEFT JOIN `glpi_networknames`
+                    ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                       AND `glpi_networknames`.`itemtype`='NetworkPort'
+               LEFT JOIN `glpi_ipaddresses`
+                    ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                       AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+               WHERE `glpi_printers`.`is_deleted`=0
+                     AND `plugin_fusioninventory_configsecurities_id`!='0'";
+      if ($pfIPRange->fields['entities_id'] != '-1') {
+         $entities = "(".$pfIPRange->fields['entities_id'];
+         foreach (getAncestorsOf("glpi_entities", $pfIPRange->fields['entities_id']) as $parent) {
+            $entities .= ",$parent";
+         }
+         $entities .= ")";
+         $query .= "AND `glpi_printers`.`entities_id` IN ".$entities." ";
+      }
+      $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
+                   BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
+                   AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
+      $query .= " GROUP BY `glpi_printers`.`id`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+            $devicesList[] = array(
+               'Printer' => $data['gID']
+            );
+         }
+      }
+      return $devicesList;
    }
 }
 

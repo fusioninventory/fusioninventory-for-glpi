@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -272,6 +272,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+   }
+
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/import');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/export');
    }
 
    if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/upload')) {
@@ -836,11 +843,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          if (count($a_configs) > 0) {
             $a_config = current($a_configs);
             $agent_base_url = $a_config['value'];
-         }
 
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
-               SET `agent_base_url` = '".$agent_base_url."'
-               ;");
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_entities`
+                  SET `agent_base_url` = '".$agent_base_url."'
+                  ;");
+         }
       }
 
 
@@ -1370,6 +1377,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }
          $migration->dropTable('glpi_plugin_fusinvsnmp_unknowndevices');
       }
+
 
 
 
@@ -1920,6 +1928,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                            'value'   => "");
       $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
                                                            'value'   => "0");
+      $a_table['fields']['oscomment']              = array('type'    => 'text',
+                                                           'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
@@ -3802,6 +3812,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'type' => 'datetime DEFAULT NULL',
                   'value' => NULL
          ),
+         'uuid' =>  array(
+                  'type' => 'string',
+                  'value' => NULL
+         ),
       );
 
       $a_table['oldfields'] = array(
@@ -4899,6 +4913,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
    changeDisplayPreference("PluginFusinvsnmpPrinterLogReport",
                            "PluginFusioninventoryPrinterLogReport");
+   changeDisplayPreference("PluginFusioninventoryUnknownDevice",
+                           "PluginFusioninventoryUnmanaged");
 
    /*
     * Delete IP and MAC of PluginFusioninventoryUnknownDevice in displaypreference
@@ -5089,6 +5105,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          WHERE `id`='".$data['id']."'";
       $DB->query($queryu);
    }
+
+
+   /*
+    * Convert itemtype from glpi_plugin_fusioninventory_unknowndevices to
+    * PluginFusioninventoryUnmanaged
+    */
+   $tables = array('glpi_networkports', 'glpi_logs',
+      'glpi_plugin_fusioninventory_ignoredimportdevices');
+   foreach ($tables as $table) {
+      $query = "UPDATE `".$table."` ".
+               "SET `itemtype`='PluginFusioninventoryUnmanaged'".
+               "WHERE `itemtype` = 'glpi_plugin_fusioninventory_unknowndevices'";
+      $DB->query($query);
+   }
+
 
 
    /*

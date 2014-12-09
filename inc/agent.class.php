@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -151,6 +151,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                                  ")";
       $tab[13]['datatype']  = 'integer';
 
+      $tab[14]['table']     = $this->getTable();
+      $tab[14]['field']     = 'agent_port';
+      $tab[14]['linkfield'] = 'agent_port';
+      $tab[14]['name']      = __('Agent port', 'fusioninventory');
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -182,7 +186,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $CFG_GLPI;
       $tab_names = array();
-      if ( $this->can("task", "r") ) {
+      if ( $this->can(0, CREATE) ) {
          if ($item->getType() == 'Computer') {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
          }
@@ -223,6 +227,113 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          return Html::showToolTip($comment, array('display' => FALSE));
       }
       return $comment;
+   }
+
+
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      if (Session::haveRight("plugin_fusioninventory_agent", UPDATE)) {
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find();
+         foreach ($a_modules as $data) {
+            $actions['PluginFusioninventoryAgent'.MassiveAction::CLASS_ACTION_SEPARATOR.$data["modulename"]] =
+                     __('Module', 'fusioninventory')." - ".$data['modulename'];
+         }
+         $actions['PluginFusioninventoryAgent'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+      }
+
+      return $actions;
+   }
+
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+
+      switch ($ma->getAction()) {
+         case 'transfert' :
+            Dropdown::show('Entity');
+            echo "<br><br>".Html::submit(__('Post'),
+                                         array('name' => 'massiveaction'));
+            return true;
+
+      }
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
+      foreach ($a_modules as $data) {
+         if ($ma->getAction() == $data['modulename']) {
+            Dropdown::showYesNo($ma->getAction());
+            echo "<br><br>".Html::submit(__('Post'),
+                                         array('name' => 'massiveaction'));
+            return true;
+         }
+      }
+      return parent::showMassiveActionsSubForm($ma);
+   }
+
+
+
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      switch ($ma->getAction()) {
+
+         case 'transfert' :
+            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+            foreach ($ids as $key) {
+               if ($pfDeployPackage->getFromDB($key)) {
+                  $input = array();
+                  $input['id'] = $key;
+                  $input['entities_id'] = $ma->POST['entities_id'];
+                  $pfDeployPackage->update($input);
+               }
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            return;
+            break;
+
+      }
+
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
+      foreach ($a_modules as $data2) {
+         if ($ma->getAction() == $data2['modulename']) {
+            foreach ($ids as $key) {
+               if ($ma->POST[$data2['modulename']] == $data2['is_active']) {
+                  // Remove from exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (in_array($key, $a_exceptions)) {
+                     foreach ($a_exceptions as $key2=>$value2) {
+                        if ($value2 == $key) {
+                           unset($a_exceptions[$key2]);
+                        }
+                     }
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               } else {
+                  // Add to exceptions
+                  $a_exceptions = importArrayFromDB($data2['exceptions']);
+                  if (!in_array($key, $a_exceptions)) {
+                     $a_exceptions[] = (string)$key;
+                  }
+                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
+               }
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            $pfAgentmodule->update($data2);
+         }
+      }
+
+      return;
    }
 
 

@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -56,37 +56,41 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
          $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5151]['field']     = 'name';
-         $sopt[5151]['name']      = 'Antivirus name';
-         $sopt[5151]['datatype']  = 'text';
+         $sopt[5151]['name']      = __('Antivirus name', 'fusioninventory');
+         $sopt[5151]['datatype']  = 'string';
          $sopt[5151]['joinparams']  = array('jointype' => 'child');
          $sopt[5151]['massiveaction'] = FALSE;
          $sopt[5151]['forcegroupby'] = TRUE;
+         $sopt[5151]['searchtype'] = array('contains');
 
          $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5152]['field']     = 'version';
-         $sopt[5152]['name']      = 'Antivirus version';
-         $sopt[5152]['datatype']  = 'text';
+         $sopt[5152]['name']      = __('Antivirus version', 'fusioninventory');
+         $sopt[5152]['datatype']  = 'string';
          $sopt[5152]['joinparams']  = array('jointype' => 'child');
          $sopt[5152]['massiveaction'] = FALSE;
          $sopt[5152]['forcegroupby'] = TRUE;
+         $sopt[5151]['searchtype'] = array('contains');
 
          $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5153]['field']     = 'is_active';
          $sopt[5153]['linkfield'] = '';
-         $sopt[5153]['name']      = 'Antivirus activé';
+         $sopt[5153]['name']      = __('Antivirus enabled', 'fusioninventory');
          $sopt[5153]['datatype']  = 'bool';
          $sopt[5153]['joinparams']  = array('jointype' => 'child');
          $sopt[5153]['massiveaction'] = FALSE;
          $sopt[5153]['forcegroupby'] = TRUE;
+         $sopt[5153]['searchtype'] = array('equals');
 
          $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5154]['field']     = 'uptodate';
          $sopt[5154]['linkfield'] = '';
-         $sopt[5154]['name']      = 'Antivirus à jour';
+         $sopt[5154]['name']      = __('Antivirus up to date', 'fusioninventory');
          $sopt[5154]['datatype']  = 'bool';
          $sopt[5154]['joinparams']  = array('jointype' => 'child');
          $sopt[5154]['massiveaction'] = FALSE;
          $sopt[5154]['forcegroupby'] = TRUE;
+         $sopt[5154]['searchtype'] = array('equals');
 
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
@@ -143,12 +147,17 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                             => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
                                                      'joinparams' => array('jointype'          => 'child')));
 
-         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
-         $sopt[5163]['field']     = 'conform';
-         $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
-         $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
+//         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
+//         $sopt[5163]['field']     = 'conform';
+//         $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
+//         $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
+//         $sopt[5163]['massiveaction'] = FALSE;
+//         $sopt[5163]['datatype']  = 'bool';
+         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5163]['field']     = 'oscomment';
+         $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
+         $sopt[5163]['joinparams']  = array('jointype' => 'child');
          $sopt[5163]['massiveaction'] = FALSE;
-         $sopt[5163]['datatype']  = 'bool';
 
          $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
          $sopt[5164]['field']         = "DEPLOY";
@@ -965,9 +974,16 @@ function plugin_fusioninventory_install() {
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion();
 
-   if ((isset($version_detected))
-      AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
-        AND $version_detected!='0') {
+   if (
+      isset($version_detected)
+      AND (
+         defined('FORCE_UPGRADE')
+         OR (
+            $version_detected != PLUGIN_FUSIONINVENTORY_VERSION
+            AND $version_detected!='0'
+         )
+      )
+   ) {
       pluginFusioninventoryUpdate($version_detected, $migrationname);
    } else if ((isset($version_detected))
            && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
@@ -1004,12 +1020,6 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
 
-      case 'PluginFusioninventoryDeployGroup' :
-         return array (
-            "plugin_fusinvdeploy_deploy_target_task" => __('Target a task', 'fusioninventory')
-         );
-         break;
-
       case "NetworkEquipment":
          return array (
             "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
@@ -1032,37 +1042,6 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
 
-      case 'PluginFusioninventoryAgent';
-         $array = array();
-         if (Session::haveRight("plugin_fusioninventory_agent", UPDATE)) {
-            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-            $a_modules = $pfAgentmodule->find();
-            foreach ($a_modules as $data) {
-               $array["plugin_fusioninventory_agentmodule".$data["modulename"]] =
-                        __('Module', 'fusioninventory')." - ".$data['modulename'];
-            }
-            $array['plugin_fusioninventory_transfert'] = __('Transfer');
-         }
-         return $array;
-         break;
-
-      case "PluginFusioninventoryUnmanaged";
-         $array = array();
-         if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-            $array["plugin_fusioninventory_unknown_import"]    = __('Import');
-         }
-         if(Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
-            $array["plugin_fusioninventory_assign_auth"]       =
-                                          __('Assign SNMP authentication', 'fusioninventory');
-         }
-         if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
-            $array["plugin_fusioninventory_assign_model"]      =
-                                          __('Assign SNMP model', 'fusioninventory');
-         }
-
-         return $array;
-         break;
-
       case "PluginFusioninventoryTask";
          return array (
             'plugin_fusioninventory_transfert' => __('Transfer')
@@ -1076,11 +1055,6 @@ function plugin_fusioninventory_MassiveActions($type) {
                __('Force the end', 'fusioninventory')
 
          );
-         break;
-
-      case 'PluginFusioninventoryDeployPackage';
-         $array['plugin_fusioninventory_transfert'] = __('Transfer');
-         return $array;
          break;
 
       case 'PluginFusioninventoryDeployMirror';
@@ -1251,12 +1225,6 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
                "value='".__('Post')."'>";
          break;
 
-      case "plugin_fusioninventory_transfert" :
-               Dropdown::show('Entity');
-               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-                     "value='".__('Post')."'>";
-         break;
-
       case 'plugin_fusioninventory_task_forceend':
          echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
                "value='".__('Post')."'>";
@@ -1264,17 +1232,6 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
    }
 
-   if (strstr($options['action'], 'plugin_fusioninventory_agentmodule')) {
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $pfAgentmodule->find();
-      foreach ($a_modules as $data) {
-         if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
-            Dropdown::showYesNo($options['action']);
-            echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"".
-                    __('Post') . "\" >";
-         }
-      }
-   }
    return "";
 }
 
@@ -1387,26 +1344,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             }
          break;
 
-      case "plugin_fusioninventory_unknown_import" :
-         if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-            $Import = 0;
-            $NoImport = 0;
-            $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-            foreach ($data['item'] as $key => $val) {
-               if ($val == 1) {
-                  list($Import, $NoImport) = $pfUnmanaged->import($key, $Import, $NoImport);
-               }
-            }
-             Session::addMessageAfterRedirect(
-                        __('Number of imported devices', 'fusioninventory')." : ".$Import
-                     );
-             Session::addMessageAfterRedirect(
-                   __('Number of devices not imported because type not defined', 'fusioninventory').
-                     " : ".$NoImport
-                );
-         }
-         break;
-
       case "plugin_fusioninventory_transfert" :
          if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
             foreach ($data["item"] as $key => $val) {
@@ -1418,19 +1355,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                      $input['id'] = $key;
                      $input['entities_id'] = $data['entities_id'];
                      $pfAgent->update($input);
-                  }
-               }
-            }
-         } else if ($data['itemtype'] == 'PluginFusioninventoryDeployPackage') {
-            foreach ($data["item"] as $key => $val) {
-               if ($val == 1) {
-
-                  $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-                  if ($pfDeployPackage->getFromDB($key)) {
-                     $input = array();
-                     $input['id'] = $key;
-                     $input['entities_id'] = $data['entities_id'];
-                     $pfDeployPackage->update($input);
                   }
                }
             }
@@ -1590,40 +1514,8 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
          break;
 
-
    }
 
-   if (strstr($data['action'], 'plugin_fusioninventory_agentmodule')) {
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $pfAgentmodule->find();
-      foreach ($a_modules as $data2) {
-         if ($data['action'] == "plugin_fusioninventory_agentmodule".$data2['modulename']) {
-            foreach ($data['item'] as $items_id => $val) {
-               if ($data["plugin_fusioninventory_agentmodule".$data2['modulename']] ==
-                        $data2['is_active']) {
-                  // Remove from exceptions
-                  $a_exceptions = importArrayFromDB($data2['exceptions']);
-                  if (in_array($items_id, $a_exceptions)) {
-                     foreach ($a_exceptions as $key=>$value) {
-                        if ($value == $items_id) {
-                           unset($a_exceptions[$key]);
-                        }
-                     }
-                  }
-                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
-               } else {
-                  // Add to exceptions
-                  $a_exceptions = importArrayFromDB($data2['exceptions']);
-                  if (!in_array($items_id, $a_exceptions)) {
-                     $a_exceptions[] = (string)$items_id;
-                  }
-                  $data2['exceptions'] = exportArrayToDB($a_exceptions);
-               }
-            }
-            $pfAgentmodule->update($data2);
-         }
-      }
-   }
    return TRUE;
 }
 
@@ -2829,6 +2721,11 @@ function plugin_fusioninventory_registerMethods() {
    $WEBSERVICES_METHOD['fusioninventory.test'] = array(
                      'PluginFusioninventoryInventoryComputerWebservice',
                      'methodTest');
+   $WEBSERVICES_METHOD['fusioninventory.computerextendedinfo'] = array(
+       'PluginFusioninventoryInventoryComputerWebservice',
+		 'methodExtendedInfo');
+
+
 }
 
 ?>

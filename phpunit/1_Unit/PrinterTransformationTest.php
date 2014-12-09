@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -175,5 +175,51 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
           );
       $this->assertEquals($a_reference, $a_return);
    }
+
+
+
+   /**
+    * @test
+    */
+   public function PrinterCartridge() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_printer = array();
+      $a_printer['INFO'] = array(
+                'ID'             => '54',
+                'NAME'           => 'ARC12-B09-N',
+                'TYPE'           => 'PRINTER'
+            );
+      $a_printer['CARTRIDGES'] = array(
+                'CARTRIDGEBLACK'   => 90,       // percentage
+                'CARTRIDGECYAN'    => '',       // unknown value
+                'CARTRIDGEMAGENTA' => 'OK',     // only known if ok or not
+                'CARTRIDGEYELLOW'  => '30pages' //define number pages remaining
+            );
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $pfMapping       = new PluginFusioninventoryMapping();
+
+      $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
+
+      $a_reference = array();
+      $a_id = $pfMapping->get("Printer", strtolower('CARTRIDGEBLACK'));
+      $a_reference[$a_id['id']] = 90;
+
+      $a_id = $pfMapping->get("Printer", strtolower('CARTRIDGEMAGENTA'));
+      $a_reference[$a_id['id']] = 100000;
+
+      $a_id = $pfMapping->get("Printer", strtolower('CARTRIDGEYELLOW'));
+      $a_reference[$a_id['id']] = -30;
+
+      $this->assertEquals($a_reference, $a_return['cartridge']);
+
+   }
+
 }
 ?>

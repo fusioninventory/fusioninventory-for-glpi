@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -796,7 +796,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             }
             echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".
                     $checked."/>";
-         } else if (PluginMonitoringSession::haveRight("config_components_catalogs", 'r')) {
+         } else if (Session::haveRight("plugin_monitoring_componentscatalog", READ)) {
             echo Dropdown::getYesNo($state);
          }
          echo "</td>";
@@ -874,7 +874,17 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                break;
 
             case 10:
-               echo "<td>".$pfNetworkPort->fields["portduplex"]."</td>";
+               if ($pfNetworkPort->fields["portduplex"] == 2) {
+                  echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
+                  echo __('Half', 'fusioninventory');
+                  echo '</td>';
+               } else if ($pfNetworkPort->fields["portduplex"] == 3) {
+                  echo '<td>';
+                  echo __('Full', 'fusioninventory');
+                  echo '</td>';
+               } else {
+                  echo "<td></td>";
+               }
                break;
 
             case 11:

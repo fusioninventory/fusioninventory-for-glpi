@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+   Copyright (C) 2010-2014 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Walid Nouh
    @co-author
-   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @copyright Copyright (c) 2010-2014 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -240,40 +240,6 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
    }
 
 
-
-   static function getOrderDetails($status = array(), $order_type = self::INSTALLATION_ORDER) {
-
-      //get all jobstatus for this task
-      $package_id = $status['items_id'];
-      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployorders',
-                                  "`plugin_fusioninventory_deploypackages_id`='$package_id'" .
-                                        " AND `type`='$order_type'");
-
-      $orders =  array();
-      if (!empty($results)) {
-         $related_classes = array('PluginFusioninventoryDeployCheck'  => 'checks',
-                                  'PluginFusioninventoryDeployFile'   => 'associatedFiles',
-                                  'PluginFusioninventoryDeployAction' => 'actions');
-
-         foreach ($related_classes as $class => $key) {
-            foreach ($results as $result) {
-               $tmp            = call_user_func(array($class, 'getForOrder'), $result['id']);
-               if ($key == 'associatedFiles') {
-                  $orders[$key] = $tmp;
-               } else {
-                  $orders[$key] = $tmp;
-               }
-            }
-         }
-      }
-
-      //set uuid order to jobstatus[id]
-      if (!empty($orders)) {
-         $orders['uuid'] = $status['id'];
-      }
-
-      return $orders;
-   }
 }
 
 ?>
