@@ -111,6 +111,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "      <span></span></div>";
       echo "   </div>"; // end of fusinv_form
 
+      echo "<input type='checkbox' class='include_old_jobs' id='include_old_jobs'";
+      if (isset($_SESSION['fi_include_old_jobs']) 
+         && $_SESSION['fi_include_old_jobs']) {
+         echo "checked='checked'";
+      }
+      echo " />";
+      echo __("Include old jobs",'fusioninventory');
       echo "</div>";
 
       //$pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -202,8 +209,17 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       /*
        * List of counter names
        */
+      
+      if (!isset($_SESSION['fi_include_old_jobs'])) {
+         $_SESSION['fi_include_old_jobs'] = false;
+      }
+      
       echo implode("\n", array(
+         $_SESSION['fi_include_old_jobs']?"true":"false",
          "<script type='text/javascript'>",
+         //$_SESSION['fi_include_old_jobs'] = true,
+         "  include_old_jobs = ".(isset($_SESSION['fi_include_old_jobs']) && $_SESSION['fi_include_old_jobs']?
+                                        "true":"false").";",
          "  taskjobs.statuses_order = {",
          "     last_executions : [",
          "        'agents_prepared',",
@@ -285,6 +301,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $task_ids = array();
       }
+
+      if (isset($options['include_old_jobs']) && $options['include_old_jobs'] == "true") {
+         $_SESSION['fi_include_old_jobs'] = true;
+      } else {
+         $_SESSION['fi_include_old_jobs'] = false;
+      }
+
+      Toolbox::logDebug($options, $_SESSION['fi_include_old_jobs'] === true);
+
       $logs = $this->getJoblogs($task_ids);
       echo json_encode($logs);
       return;

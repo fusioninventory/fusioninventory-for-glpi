@@ -1,4 +1,4 @@
-var taskjobs = {}
+var taskjobs = {};
 
 taskjobs.show_form = function( data, textStatus, jqXHR) {
    $('#taskjobs_form')
@@ -1130,7 +1130,8 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         .toggleClass('computing', false);
 
     var data = {
-        "task_id" : task_id
+        "task_id"         : task_id, 
+        "include_old_jobs": include_old_jobs
     };
 
     $.ajax({
@@ -1145,6 +1146,7 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         },
         complete: function( ) {
             taskjobs.update_refresh_buttons( ajax_url, task_id);
+            taskjobs.init_include_old_jobs_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
             $('.refresh_button')
                 .find('span')
@@ -1164,6 +1166,16 @@ taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
          taskjobs.queue_refresh_logs( ajax_url, task_id )
       });
 
+}
+
+taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
+   $('.include_old_jobs')
+      .off("click");
+   $('.include_old_jobs')
+      .on('click', function(e) {
+         include_old_jobs = !include_old_jobs;
+         taskjobs.queue_refresh_logs( ajax_url, task_id )
+      });
 }
 
 taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {

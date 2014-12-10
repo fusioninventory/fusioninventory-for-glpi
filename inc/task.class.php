@@ -879,8 +879,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "     MAX(log.`id`) AS max_log_id",
          "  FROM `glpi_plugin_fusioninventory_taskjobstates` AS run",
          "  LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log",
-         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
-         "  GROUP BY",
+         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`"));
+      if ($_SESSION['fi_include_old_jobs']) {
+         $query_joins['max_run'].= implode("\n",array(
+            "  WHERE run.`state` NOT IN ( ".
+               implode(",", array(
+                  PluginFusioninventoryTaskjobstate::FINISHED,
+                  PluginFusioninventoryTaskjobstate::IN_ERROR,
+               )),
+               " )",));
+      }
+      $query_joins['max_run'].= implode("\n",array(
+        "  GROUP BY",
          "     run.`plugin_fusioninventory_agents_id`,",
          "     run.`plugin_fusioninventory_taskjobs_id`,",
          "     run.`items_id`, run.`itemtype`",
@@ -943,8 +953,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          " )",
          "  GROUP BY",
          "     run.`plugin_fusioninventory_agents_id`,",
-         "     run.`plugin_fusioninventory_taskjobs_id`,",
-         "     run.`items_id`, run.`itemtype`",
+         "     run.`plugin_fusioninventory_taskjobs_id`,"));
+      if ($_SESSION['fi_include_old_jobs']) {
+         $query_joins['max_run'].= implode("\n",array(
+            "     run.`id`"));
+      } else {
+         $query_joins['max_run'].= implode("\n",array(
+            "     run.`items_id`, run.`itemtype`"));
+      }
+      $query_joins['max_run'].= implode("\n",array(
          ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
       ));
       $queries['2_finished_runs'] = array(
@@ -955,9 +972,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             implode( "\n", $query_joins),
             implode( "\n", $query_where),
             "GROUP BY job.`id`, agent.`id`, run.`id`",
+            "ORDER BY run.`id` DESC",
          )),
          'result' => null
       );
+
 
 
       $query_chrono = array(
