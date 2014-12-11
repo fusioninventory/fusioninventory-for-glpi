@@ -273,9 +273,11 @@ function agents_chart(chart_id) {
                   classes.push('pinned');
                }
                var num_classes = d[1].length;
-               for(i=1; i <= num_classes; i++) {
+               /*for(i=1; i <= num_classes; i++) {
                   classes.push('agent_' + d[1][num_classes - i]['state']);
-               }
+               }*/
+
+               classes.push('agent_' + d[1][0]['state']);
                return classes.join(' ');
             }).each( function(d) {
                 //TODO: instead of using d3.selection.each, we should prepare
@@ -338,7 +340,6 @@ function agents_chart(chart_id) {
                 runs
                    .each( function(d) {
                       var rows = [];
-                      console.debug(d);
                          // TODO: replace this with proper templating
                          $.each(d.logs, function(run_id, run) {
                            rows.push(

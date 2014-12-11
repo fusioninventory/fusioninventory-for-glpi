@@ -972,7 +972,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             implode( "\n", $query_joins),
             implode( "\n", $query_where),
             "GROUP BY job.`id`, agent.`id`, run.`id`",
-            "ORDER BY run.`id` DESC",
+            "ORDER BY run.`id` ASC",
          )),
          'result' => null
       );
@@ -1119,6 +1119,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'timestamp' => $result[$fieldmap['log.last_timestamp']],
                   'last_log' => $result[$fieldmap['log.last_comment']]
                );
+               //reverse order of logs (inverse of sql order)
+               $targets[$target_id]['agents'][$agent_id] 
+                        = array_reverse($targets[$target_id]['agents'][$agent_id]);
             }
          }
       }
@@ -1127,14 +1130,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       if ($debug_mode) {
 
          function tmp_display_log($log) { return "ID:". $log['task_id'] . "(".$log['task_name'].")";}
-         Toolbox::logDebug(
+         /*Toolbox::logDebug(
             array(
                "tasks" => implode(',',array_map('tmp_display_log', $logs)),
                "row count" => count($logs),
                "Joblogs Query"=>self::FormatChrono($query_chrono),
                "Format logs results" => self::FormatChrono($format_chrono),
             )
-         );
+         );*/
       }
       return array('tasks' => $logs, 'agents' => $agents);
    }

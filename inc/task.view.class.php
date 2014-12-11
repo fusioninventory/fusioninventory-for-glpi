@@ -215,9 +215,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
       
       echo implode("\n", array(
-         $_SESSION['fi_include_old_jobs']?"true":"false",
          "<script type='text/javascript'>",
-         //$_SESSION['fi_include_old_jobs'] = true,
          "  include_old_jobs = ".(isset($_SESSION['fi_include_old_jobs']) && $_SESSION['fi_include_old_jobs']?
                                         "true":"false").";",
          "  taskjobs.statuses_order = {",
@@ -307,8 +305,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $_SESSION['fi_include_old_jobs'] = false;
       }
-
-      Toolbox::logDebug($options, $_SESSION['fi_include_old_jobs'] === true);
 
       $logs = $this->getJoblogs($task_ids);
       echo json_encode($logs);
