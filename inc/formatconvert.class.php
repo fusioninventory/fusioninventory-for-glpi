@@ -334,6 +334,15 @@ class PluginFusioninventoryFormatconvert {
             && $array['HARDWARE']['VMSYSTEM'] != ''
                && $array['HARDWARE']['VMSYSTEM'] != 'Physical') {
          $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+         // HACK FOR BSDJail, remove serial and UUID (because it's of host, not contener)
+         if ($array['HARDWARE']['VMSYSTEM'] == 'BSDJail') {
+            if (isset($a_inventory['Computer']['serial'])) {
+               $a_inventory['Computer']['serial'] = '';
+            }
+            if (isset($a_inventory['Computer']['uuid'])) {
+               $a_inventory['Computer']['uuid'] = '';
+            }
+         }
       } else {
          //It's not a virtual machine, then check :
          //1 - HARDWARE/CHASSIS_TYPE
