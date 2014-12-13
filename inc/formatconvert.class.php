@@ -339,9 +339,8 @@ class PluginFusioninventoryFormatconvert {
             if (isset($a_inventory['Computer']['serial'])) {
                $a_inventory['Computer']['serial'] = '';
             }
-            if (isset($a_inventory['Computer']['uuid'])) {
-               $a_inventory['Computer']['uuid'] = '';
-            }
+
+            $a_inventory['Computer']['uuid'] .= "-".$a_inventory['Computer']['name'];
          }
       } else {
          //It's not a virtual machine, then check :
@@ -1054,6 +1053,11 @@ class PluginFusioninventoryFormatconvert {
                                                  'STATUS'      => 'virtualmachinestates_id',
                                                  'UUID'        => 'uuid'));
                $array_tmp['is_dynamic'] = 1;
+               // Hack for BSD jails
+               if ($array_tmp['virtualmachinetypes_id'] == 'jail') {
+                  $array_tmp['uuid'] = $a_inventory['Computer']['uuid']."-".$array_tmp['name'];
+               }
+
                $a_inventory['virtualmachine'][] = $array_tmp;
             }
          }
