@@ -1384,5 +1384,98 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
       parent::post_updateItem($history);
    }
+
+   static function csvExport($params) {
+
+      function last(&$array, $key) {
+          end($array);
+          return $key === key($array);
+      }
+
+      define('DEBUG_CSV', true);
+
+      if (!DEBUG_CSV) {
+         header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
+         header('Pragma: private'); /// IE BUG + SSL
+         header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
+         header("Content-disposition: attachment; filename=export.csv");
+         header("Content-type: text/csv");
+      }
+
+      $params['display'] = false;
+      $pfTask = new PluginFusioninventoryTask();
+      $data = json_decode($pfTask->ajaxGetJobLogs($params), true);
+
+      if (!DEBUG_CSV) {
+         define('SEP', ';');
+         define('NL', "\r\n");
+      } else {
+         define('SEP', '</td><td>');
+         define('NL', '</tr><tr><td>');
+         echo "<table border=1><tr><td>";
+      }
+
+      //cols title
+      echo "Task_name".SEP;
+      echo "Job_name".SEP;
+      echo "Method".SEP;
+      echo "Target".SEP;
+      echo "Agent".SEP;
+      echo "Computer name".SEP;
+      echo "Date".SEP;
+      echo "Status".NL;
+
+      $agent_obj = new PluginFusioninventoryAgent;
+      $computer = new Computer;
+
+      //lines
+      $csv_array = array();
+      $tab = 0;
+      foreach ($data['tasks'] as $task_id => $task) {
+         echo $task['task_name'].SEP;
+
+         foreach ($task['jobs'] as $job_id => $job) {
+            echo $job['name'].SEP;
+            echo $job['method'].SEP;
+
+            foreach ($job['targets'] as $target_id => $target) {
+               echo $target['name'].SEP;
+
+               foreach ($target['agents'] as $agent_id => $agent) {
+                  $agent_obj->getFromDB($agent_id);
+                  echo $agent_obj->getName().SEP;
+                  $computer->getFromDB($agent_obj->fields['computers_id']);
+                  echo $computer->getname().SEP;
+
+                  foreach ($agent as $exec_id => $exec) {
+                     echo $exec['last_log_date'].SEP;
+                     echo $exec['state'].NL;
+
+                     if (!last($agent, $exec_id)) {
+                        echo SEP.SEP.SEP.SEP.SEP.SEP;
+                     }
+                  }
+
+                  if (!last($target['agents'], $agent_id)) {
+                     echo SEP.SEP.SEP.SEP;
+                  }
+               }
+               if (!last($job['targets'], $target_id)) {
+                  echo SEP.SEP.SEP;
+               }
+            }
+            if (!last($task['jobs'], $job_id)) {
+               echo SEP.SEP;
+            }
+         }
+         if (!last($data['tasks'], $task_id)) {
+            echo SEP;
+         }
+      }
+      if (DEBUG_CSV) {
+         echo "</td></tr></table>";
+         Html::printCleanArray($data['tasks']);
+      }
+   }
 }
 

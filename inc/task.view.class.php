@@ -84,6 +84,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
    function showJobLogs() {
+      global $CFG_GLPI;
 
       $refresh_intervals = array(
          "off" => __('Off', 'fusioninventory'),
@@ -111,6 +112,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "      <span></span></div>";
       echo "   </div>"; // end of fusinv_form
 
+      // add a checkbox for include old jobs
       echo "<input type='checkbox' class='include_old_jobs' id='include_old_jobs'";
       if (isset($_SESSION['fi_include_old_jobs']) 
          && $_SESSION['fi_include_old_jobs']) {
@@ -213,11 +215,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if (!isset($_SESSION['fi_include_old_jobs'])) {
          $_SESSION['fi_include_old_jobs'] = false;
       }
+
+      $include_old_jobs = (isset($_SESSION['fi_include_old_jobs']) && $_SESSION['fi_include_old_jobs']?
+                                        "true":"false");
       
       echo implode("\n", array(
          "<script type='text/javascript'>",
-         "  include_old_jobs = ".(isset($_SESSION['fi_include_old_jobs']) && $_SESSION['fi_include_old_jobs']?
-                                        "true":"false").";",
+         "  include_old_jobs = $include_old_jobs;",
          "  taskjobs.statuses_order = {",
          "     last_executions : [",
          "        'agents_prepared',",
@@ -285,6 +289,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  );",
          "</script>"
       ));
+
+      echo implode( "\n", array(
+         "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/export_task.php", 
+         "?task_id=$task_id&include_old_jobs=$include_old_jobs'>",
+         _sx('button', 'Export'), 
+         "</a>",
+         "<br /><br />"
+      ));
    }
 
    // TODO: Move this method in task.class
@@ -300,6 +312,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $task_ids = array();
       }
 
+      if (!isset($options['display'])) {
+         $options['display'] = true;
+      }
+
       if (isset($options['include_old_jobs']) && $options['include_old_jobs'] == "true") {
          $_SESSION['fi_include_old_jobs'] = true;
       } else {
@@ -307,9 +323,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
 
       $logs = $this->getJoblogs($task_ids);
-      echo json_encode($logs);
-      return;
-
+      $out = json_encode($logs);
+      if ($options['display']) {
+         echo $out;
+      } else {
+         return $out;
+      }
    }
 
    function getCounterTypeName($type = "") {

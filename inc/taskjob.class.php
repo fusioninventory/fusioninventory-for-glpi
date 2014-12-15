@@ -1666,7 +1666,7 @@ function edit_subtype(id,el) {
 
    var row = null;
    if (el) {
-      // get parent row of the selected element
+      // get parent row of the seagent_blocklected element
       row = jQuery(el).parents('tr:first')
    }
 
