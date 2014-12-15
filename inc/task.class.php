@@ -1396,7 +1396,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
           return $key === key($array);
       }
 
-      define('DEBUG_CSV', true);
+      define('DEBUG_CSV', false);
 
       if (!DEBUG_CSV) {
          header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
