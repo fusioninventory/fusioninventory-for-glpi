@@ -972,7 +972,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             implode( "\n", $query_joins),
             implode( "\n", $query_where),
             "GROUP BY job.`id`, agent.`id`, run.`id`",
-            "ORDER BY run.`id` ASC",
+            "ORDER BY agent.`id` ASC, run.`id` ASC",
          )),
          'result' => null
       );
@@ -1119,9 +1119,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'timestamp' => $result[$fieldmap['log.last_timestamp']],
                   'last_log' => $result[$fieldmap['log.last_comment']]
                );
-               //reverse order of logs (inverse of sql order)
-               $targets[$target_id]['agents'][$agent_id] 
-                        = array_reverse($targets[$target_id]['agents'][$agent_id]);
+               // get jobs in DESC order
+               usort($targets[$target_id]['agents'][$agent_id], function($a, $b) {
+                  if ($a['timestamp'] == $b['timestamp']) {
+                     return 0;
+                  }
+                  return ($a['timestamp'] > $b['timestamp']) ? -1 : 1;
+               });
             }
          }
       }
