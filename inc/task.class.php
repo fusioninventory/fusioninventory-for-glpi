@@ -1107,15 +1107,19 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $format_chrono['end'] = microtime(true);
       if ($debug_mode) {
 
-         function tmp_display_log($log) { return "ID:". $log['task_id'] . "(".$log['task_name'].")";}
-         Toolbox::logDebug(
-            array(
-               "tasks" => implode(',',array_map('tmp_display_log', $logs)),
-               "row count" => count($logs),
-               "Joblogs Query"=>self::FormatChrono($query_chrono),
-               "Format logs results" => self::FormatChrono($format_chrono),
-            )
-         );
+         function tmp_display_log($log) {
+            return "ID:". $log['task_id'] . "(".$log['task_name'].")";
+         }
+         if (PluginFusioninventoryConfig::isExtradebugActive()) {
+            Toolbox::logDebug(
+               array(
+                  "tasks" => implode(',',array_map('tmp_display_log', $logs)),
+                  "row count" => count($logs),
+                  "Joblogs Query"=>self::FormatChrono($query_chrono),
+                  "Format logs results" => self::FormatChrono($format_chrono),
+               )
+            );
+         }
       }
       return array('tasks' => $logs, 'agents' => $agents);
    }
