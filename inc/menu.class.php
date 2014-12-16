@@ -263,7 +263,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
-      if (Session::haveRight('plugin_fusioninventory_importxml', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_importxml', CREATE)) {
          $a_menu[0]['name'] = __('Import agent XML file', 'fusioninventory');
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_importxml.png";

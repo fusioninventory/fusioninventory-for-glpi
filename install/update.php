@@ -5116,9 +5116,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    foreach ($tables as $table) {
       $query = "UPDATE `".$table."` ".
                "SET `itemtype`='PluginFusioninventoryUnmanaged'".
-               "WHERE `itemtype` = 'glpi_plugin_fusioninventory_unknowndevices'";
+               "WHERE `itemtype` = 'PluginFusioninventoryUnknowndevice'";
       $DB->query($query);
    }
+   $query = "UPDATE `glpi_ipaddresses` ".
+            "SET `mainitemtype`='PluginFusioninventoryUnmanaged'".
+            "WHERE `mainitemtype` = 'PluginFusioninventoryUnknowndevice'";
+   $DB->query($query);
 
 
 

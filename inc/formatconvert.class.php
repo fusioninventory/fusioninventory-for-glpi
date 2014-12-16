@@ -334,6 +334,14 @@ class PluginFusioninventoryFormatconvert {
             && $array['HARDWARE']['VMSYSTEM'] != ''
                && $array['HARDWARE']['VMSYSTEM'] != 'Physical') {
          $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+         // HACK FOR BSDJail, remove serial and UUID (because it's of host, not contener)
+         if ($array['HARDWARE']['VMSYSTEM'] == 'BSDJail') {
+            if (isset($a_inventory['Computer']['serial'])) {
+               $a_inventory['Computer']['serial'] = '';
+            }
+
+            $a_inventory['Computer']['uuid'] .= "-".$a_inventory['Computer']['name'];
+         }
       } else {
          //It's not a virtual machine, then check :
          //1 - HARDWARE/CHASSIS_TYPE
@@ -1072,6 +1080,11 @@ class PluginFusioninventoryFormatconvert {
                                                  'STATUS'      => 'virtualmachinestates_id',
                                                  'UUID'        => 'uuid'));
                $array_tmp['is_dynamic'] = 1;
+               // Hack for BSD jails
+               if ($array_tmp['virtualmachinetypes_id'] == 'jail') {
+                  $array_tmp['uuid'] = $a_inventory['Computer']['uuid']."-".$array_tmp['name'];
+               }
+
                $a_inventory['virtualmachine'][] = $array_tmp;
             }
          }
