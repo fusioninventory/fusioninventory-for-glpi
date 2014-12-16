@@ -375,10 +375,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          $run_id = $result[$fields['run.id']];
          $logs['run']  = $run_id;
          $logs['logs'][] = array(
-            'log.id' => $result[$fields['log.id']],
-            'log.comment' => $result[$fields['log.comment']],
-            'log.date' => $result[$fields['log.date']],
-            'log.state' => $result[$fields['log.state']]
+            'log.id'      => $result[$fields['log.id']],
+            'log.comment' => PluginFusioninventoryTaskjoblog::convertComment($result[$fields['log.comment']]),
+            'log.date'    => $result[$fields['log.date']],
+            'log.state'   => $result[$fields['log.state']]
          );
       }
       return $logs;
