@@ -316,10 +316,10 @@ class PluginFusioninventoryCommunication {
     * Manage communication with old protocol (XML over POST)
     *
     **/
-   function handleOCSCommunication($xml='', $output='ext') {
+   function handleOCSCommunication($rawdata, $xml='', $output='ext') {
 
       // ***** For debug only ***** //
-      //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
+      //$rawdata = gzcompress('');
       // ********** End ********** //
 
       $config = new PluginFusioninventoryConfig();
@@ -354,22 +354,22 @@ class PluginFusioninventoryCommunication {
       if (!empty($xml)) {
             $compressmode = 'none';
       } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
-            $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+            $xml = gzuncompress($rawdata);
             $compressmode = "zlib";
       } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
-            $xml = $pfToolbox->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]);
+            $xml = $pfToolbox->gzdecode($rawdata);
             $compressmode = "gzip";
       } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
-            $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+            $xml = $rawdata;
             $compressmode = 'none';
       } else {
 
          # try each algorithm successively
-         if (($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
+         if (($xml = gzuncompress($rawdata))) {
             $compressmode = "zlib";
-         } else if (($xml = $pfToolbox->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]))) {
+         } else if (($xml = $pfToolbox->gzdecode($rawdata))) {
             $compressmode = "gzip";
-         } else if (($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2)))) {
+         } else if (($xml = gzinflate (substr($rawdata, 2)))) {
             // accept deflate for OCS agent 2.0 compatibility,
             // but use zlib for answer
             if (strstr($xml, "<QUERY>PROLOG</QUERY>")
@@ -379,7 +379,7 @@ class PluginFusioninventoryCommunication {
                $compressmode = "deflate";
             }
          } else {
-            $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+            $xml = $rawdata;
             $compressmode = 'none';
          }
       }
