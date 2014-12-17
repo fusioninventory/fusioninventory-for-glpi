@@ -50,6 +50,17 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
 
+if (isset($_GET['resetrules'])) {
+   $pfSetup = new PluginFusioninventorySetup();
+   $pfSetup->initRules(1);
+   Html::back();
+}
+
+echo "<center><a href='".$CFG_GLPI['root_doc'] .
+         "/plugins/fusioninventory/front/inventoryruleimport.php?resetrules=1' class='vsubmit'>";
+echo __('Reset import rules (define only default rules)', 'fusioninventory');
+echo "</a></center><br/>";
+
 include (GLPI_ROOT . "/front/rule.common.php");
 
 ?>
