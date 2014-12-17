@@ -91,6 +91,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
           'collectrule'                => 'PluginFusioninventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
+          'ruletaskpostaction'         => 'PluginFusioninventoryTaskpostactionRule',
           'configsecurity'             => 'PluginFusioninventoryConfigSecurity',
           'credential'                 => 'PluginFusioninventoryCredential',
           'credentialip'               => 'PluginFusioninventoryCredentialIp',
@@ -345,6 +346,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
          $a_menu[7]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
+      }
+
+      if (Session::haveRight("plugin_fusioninventory_taskpostactionrule", READ)) {
+         $a_menu[8]['name'] = __('Tasks post actions', 'fusioninventory');
+         $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[8]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/taskpostactionrule.php";
       }
 
       if (!empty($a_menu)) {
