@@ -814,6 +814,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $zip->addFromString('information.json', $json_string);
          }
          $zip->close();
+         Session::addMessageAfterRedirect(__("Package exported in", "fusioninventory")." ".GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/export/".$this->fields['uuid'].".".$name.".zip");
       }
    }
 
@@ -912,8 +913,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<th>";
       echo __('Package to update');
       echo "</th>";
-      echo "<th>";
-      echo "</th>";
       echo "</tr>";
 
       foreach (glob(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/*.zip") as $file) {
@@ -930,21 +929,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo $split[0].".".$split[1];
          echo "</td>";
          echo "<td>";
-         $import_create = __('Import (create)', 'fusioninventory');
          $a_packages = current($this->find("`uuid`='".$split[0].".".$split[1]."'", '', 1));
          if (count($a_packages) > 1) {
             $this->getFromDB($a_packages['id']);
             echo $this->getLink();
-            $import_create = __('Import (update)', 'fusioninventory');
          }
-         echo "</td>";
-         echo "<td>";
-
-         echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
-         echo Html::hidden('importfile', array('value' => $file));
-         echo "<input type='submit' value='".$import_create."' class='submit' />";
-         Html::closeForm();
-
          echo "</td>";
          echo "</tr>";
       }
