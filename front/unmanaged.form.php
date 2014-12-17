@@ -111,7 +111,7 @@ if (isset ($_POST["add"])) {
    }
 }
 
-$pfUnmanaged->showForm($id);
+$pfUnmanaged->display($_GET);
 
 Html::footer();
 
