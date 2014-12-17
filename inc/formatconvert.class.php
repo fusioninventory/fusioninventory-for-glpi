@@ -580,7 +580,8 @@ class PluginFusioninventoryFormatconvert {
                                                     'SSID'        => 'ssid',
                                                     'IPGATEWAY'   => 'gateway',
                                                     'IPMASK'      => 'netmask',
-                                                    'IPDHCP'      => 'dhcpserver'));
+                                                    'IPDHCP'      => 'dhcpserver',
+                                                    'SPEED'       => 'speed'));
 
                   if ((isset($array_tmp['name'])
                           && $array_tmp['name'] != '')
@@ -632,6 +633,10 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
+                        if (isset($array_tmp['speed'])) {
+                           $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
+                        }
+
                         $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
                      }
                   }
