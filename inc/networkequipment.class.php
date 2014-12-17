@@ -122,6 +122,19 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          $_SESSION['plugin_fusioninventory_networkportview'] = 'fusioninventory';
       }
 
+      // Display glpi network port view if no fusionnetworkport
+      $query = "SELECT glpi_plugin_fusioninventory_networkports.id
+      FROM glpi_plugin_fusioninventory_networkports
+      LEFT JOIN glpi_networkports
+      ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+      WHERE glpi_networkports.items_id='".$id."'
+         AND glpi_networkports.itemtype='NetworkEquipment'";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == 0) {
+         NetworkPort::showForItem($item);
+         return;
+      }
+
       echo "<form action='".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/networkport.display.php' method='post'>";
       echo __('Display the view', 'fusioninventory');
