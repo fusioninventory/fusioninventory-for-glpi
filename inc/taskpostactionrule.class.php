@@ -25,12 +25,12 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
 
       $criteria = array ();
 
-      $criteria['task']['field']             = 'name';
+      $criteria['task']['field']             = 'plugin_fusioninventory_tasks_id';
       $criteria['task']['name']              = __('Task', 'fusioninventory');
       $criteria['task']['table']             = 'glpi_plugin_fusioninventory_tasks';
       $criteria['task']['type']              = 'dropdown';
 
-      $criteria['agent']['field']             = 'name';
+      $criteria['agent']['field']             = 'plugin_fusioninventory_agents_id';
       $criteria['agent']['name']              = __('Agent', 'fusioninventory');
       $criteria['agent']['table']             = 'glpi_plugin_fusioninventory_agents';
       $criteria['agent']['type']              = 'dropdown';
@@ -50,9 +50,9 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
       $criteria['actor']['field']            = 'actor';
       $criteria['actor']['name']             = __('Actor Item', 'fusioninventory');
 
-      $criteria['result']['field']           = 'result';
-      $criteria['result']['name']            = __('Job result', 'fusioninventory');
-      $criteria['result']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
+      $criteria['state']['field']           = 'state';
+      $criteria['state']['name']            = __('Job result', 'fusioninventory');
+      $criteria['state']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
 
       return $criteria;
@@ -109,9 +109,9 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
             return true;
             break;
 
-         case 'result':
-            $results = array('OK', 'KO');
-            Dropdown::showFromArray($name, $results, array('value' => $value));
+         case 'state':
+            $states = PluginFusioninventoryTaskjobstate::getStateNames();
+            Dropdown::showFromArray($name, $states, array('value' => $value));
 
             return true;
             break;

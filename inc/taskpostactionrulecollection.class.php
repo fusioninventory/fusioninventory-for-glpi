@@ -18,6 +18,33 @@ class PluginFusioninventoryTaskpostactionRuleCollection extends RuleCollection {
    function prepareInputDataForProcess($input, $params) {
       return $input;
    }
+
+   static function launchProcess($input, $pfTaskjobstate) {
+      if ($input['itemtype'] != 'PluginFusioninventoryDeployPackage') {
+         return false;
+      }
+
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']);
+
+      $input['plugin_fusioninventory_agents_id'] = $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'];
+      $input['plugin_fusioninventory_tasks_id'] = $pfTaskjob->fields['plugin_fusioninventory_tasks_id'];
+      $input['method'] = $pfTaskjob->fields['method'];
+
+      Toolbox::logDebug($input);
+
+      $rulepostaction_col = new self;
+      $output = $rulepostaction_col->processAllRules($input, array());
+      
+      Toolbox::logDebug($output);
+
+      $agent = new PluginFusioninventoryAgent;
+      $agent->getFromDB($input['plugin_fusioninventory_agents_id']);
+
+      $computer = new Computer;
+      $update = array_merge(array('id' => $agent->fields['computers_id']), $output);
+      return $computer->update($update);
+   }
 }
 
 ?>
