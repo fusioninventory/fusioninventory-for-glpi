@@ -69,7 +69,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
       $content = base64_decode($params['base64']);
 
       $pfCommunication = new PluginFusioninventoryCommunication();
-      $pfCommunication->handleOCSCommunication($content);
+      $pfCommunication->handleOCSCommunication('', $content);
 
       $msg = __('Computer injected into GLPI', 'fusioninventory');
 

@@ -43,9 +43,10 @@
 include ("../../inc/includes.php");
 
 //Agent posting an inventory or asking for orders using REST
+$rawdata = file_get_contents("php://input");
 if ((isset($_GET['action'])
    && isset($_GET['machineid']))
-      || isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+      || !empty($rawdata)) {
 
    include_once("front/communication.php");
 
