@@ -622,7 +622,7 @@ class PluginFusioninventoryFormatconvert {
                                 AND $array_tmp["instantiation_type"] == 'Ethernet') {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
                         } else if (isset($array_tmp["instantiation_type"])
-                                AND ($array_tmp["instantiation_type"] == 'Wifi'
+                                AND ($array_tmp["instantiation_type"] == 'wifi'
                                      OR $array_tmp["instantiation_type"] == 'IEEE')) {
                            $array_tmp["instantiation_type"] = 'NetworkPortWifi';
                         } else if ($array_tmp['mac'] != '') {
