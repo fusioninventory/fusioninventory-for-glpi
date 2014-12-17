@@ -279,7 +279,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       if(Session::haveRight('plugin_fusioninventory_task', READ)) {
          $a_menu[12]['name'] = __('Time slot', 'fusioninventory');
-         $a_menu[12]['pic']  = "";
+         $a_menu[12]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_timeslot.png";
          $a_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
       }
 
