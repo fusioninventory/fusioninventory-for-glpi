@@ -1291,8 +1291,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['is_deleted'] = array('type'    => 'bool',
                                                'value'   => NULL);
-      $a_table['fields']['is_template']= array('type'    => 'bool',
-                                               'value'   => NULL);
       $a_table['fields']['users_id']   = array('type'    => 'integer',
                                                'value'   => NULL);
       $a_table['fields']['serial']     = array('type'    => 'string',
@@ -1335,7 +1333,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'mac',
          'ifmac',
          'plugin_fusinvsnmp_models_id',
-         'plugin_fusioninventory_snmpmodels_id'
+         'plugin_fusioninventory_snmpmodels_id',
+          'is_template'
          );
 
       $a_table['renamefields'] = array(
