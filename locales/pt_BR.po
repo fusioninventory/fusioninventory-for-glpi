@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# carlos gomes <crlsgms@guerrilhagig.com>, 2014
 # Thiago Passamnai <thiagopassamani@gmail.com>, 2014
 # Thiago Passamnai <thiagopassamani@gmail.com>, 2014
 msgid ""
@@ -10,8 +11,8 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-12-18 17:52+0000\n"
+"Last-Translator: carlos gomes <crlsgms@guerrilhagig.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/FusionInventory/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,19 +36,19 @@ msgstr "Último inventário"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "Nome do Antivirus"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "Versão do Antivirus"
 
 #: hook.php:78
 msgid "Antivirus enabled"
-msgstr ""
+msgstr "Antivirus habilitado"
 
 #: hook.php:88
 msgid "Antivirus up to date"
-msgstr ""
+msgstr "Antivirus atualizado"
 
 #: hook.php:97 hook.php:106
 msgid "BIOS"
@@ -99,15 +100,15 @@ msgstr ""
 
 #: hook.php:179
 msgid "Local inventory"
-msgstr ""
+msgstr "Inventário local"
 
 #: hook.php:186
 msgid "ESX/VMWare"
-msgstr ""
+msgstr "ESX/VMWare"
 
 #: hook.php:193
 msgid "Network inventory"
-msgstr ""
+msgstr "Inventário de rede"
 
 #: hook.php:200 inc/agent.class.php:143 inc/agent.class.php:419
 #: inc/agent.class.php:436 inc/config.class.php:601 inc/config.class.php:623
@@ -117,7 +118,7 @@ msgstr "Descoberta de rede"
 
 #: hook.php:207
 msgid "Collect"
-msgstr ""
+msgstr "Recuperar"
 
 #: hook.php:211 inc/computer.class.php:55 inc/deploygroup.class.php:73
 msgid "Static group"
@@ -125,7 +126,7 @@ msgstr "Grupo estático"
 
 #: hook.php:247
 msgid "Agent base URL"
-msgstr ""
+msgstr "URL do agente"
 
 #: hook.php:276 hook.php:284 hook.php:316 inc/menu.class.php:382
 #: inc/networkequipment.class.php:482 inc/printer.class.php:168
@@ -157,7 +158,7 @@ msgstr "Mirar em uma tarefa"
 
 #: hook.php:900
 msgid "Add to static group"
-msgstr ""
+msgstr "Adicionar ao grupo estático"
 
 #: hook.php:908 hook.php:919
 msgid "Load the correct SNMP model"
@@ -181,8 +182,8 @@ msgstr "Forçar ao final"
 #: inc/task.view.class.php:126
 msgid "Task"
 msgid_plural "Tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tarefa"
+msgstr[1] "Tarefas"
 
 #: hook.php:1049 inc/deploygroup.class.php:138 inc/deploypackage.class.php:56
 msgid "Package"
@@ -245,7 +246,7 @@ msgstr "Computadores não inventariados desde xx dias"
 
 #: setup.php:503
 msgid "Your GLPI version not compatible, require 0.85"
-msgstr ""
+msgstr "A versão do seu GLPI não é compatível; requer 0.85"
 
 #: setup.php:508
 msgid "fileinfo extension (PHP) is required..."
@@ -278,7 +279,7 @@ msgstr "Impossível se comunicar com um agente!"
 
 #: front/collect.form.php:45
 msgid "Collect management"
-msgstr ""
+msgstr "Gerenciamento de recuperação"
 
 #: front/config.form.php:47 front/configlogfield.form.php:47
 msgid "Features"
@@ -424,7 +425,7 @@ msgstr ""
 
 #: inc/collect.class.php:65
 msgid "Registry"
-msgstr ""
+msgstr "Registro"
 
 #: inc/collect.class.php:66
 msgid "WMI"
@@ -433,28 +434,28 @@ msgstr ""
 #: inc/collect.class.php:67 inc/collect_file.class.php:55
 #: inc/collect_file.class.php:62
 msgid "Find file"
-msgstr ""
+msgstr "Buscar arquivo"
 
 #: inc/collect_file.class.php:86
 msgid "Find file associated"
-msgstr ""
+msgstr "Buscar arquivo associado"
 
 #: inc/collect_file.class.php:90 inc/collect_file.class.php:160
 msgid "Limit"
-msgstr ""
+msgstr "Limite"
 
 #: inc/collect_file.class.php:91 inc/collect_file.class.php:126
 #: inc/collect_file.class.php:246
 msgid "Folder"
-msgstr ""
+msgstr "Pasta"
 
 #: inc/collect_file.class.php:92
 msgid "Recursive"
-msgstr ""
+msgstr "Recursivo"
 
 #: inc/collect_file.class.php:93 inc/collect_file.class.php:194
 msgid "Regex"
-msgstr ""
+msgstr "Regex"
 
 #: inc/collect_file.class.php:94 inc/collect_file.class.php:200
 #: inc/collect_file_content.class.php:189
@@ -464,11 +465,11 @@ msgstr "Tamanho"
 
 #: inc/collect_file.class.php:95 inc/collect_file.class.php:215
 msgid "Checksum SHA512"
-msgstr ""
+msgstr "Checksum SHA512"
 
 #: inc/collect_file.class.php:96 inc/collect_file.class.php:221
 msgid "Checksum SHA2"
-msgstr ""
+msgstr "Checksum SHA2"
 
 #: inc/collect_file.class.php:97
 msgid "Name"
@@ -497,11 +498,11 @@ msgstr[1] "Filtros"
 
 #: inc/collect_file.class.php:179
 msgid "Base folder"
-msgstr ""
+msgstr "Pasta Base"
 
 #: inc/collect_file.class.php:185
 msgid "Folder recursive"
-msgstr ""
+msgstr "Recursivo por pasta"
 
 #: inc/collect_file.class.php:204 inc/collect_file.class.php:234
 msgid "Disabled"
@@ -1090,11 +1091,11 @@ msgstr ""
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #: inc/deploypackage.class.php:72
 msgid "Export"
-msgstr ""
+msgstr "Exportar"
 
 #: inc/deploypackage.class.php:174
 msgid "Modification Denied"
@@ -1215,11 +1216,11 @@ msgstr ""
 
 #: inc/inventorycomputercomputer.class.php:188
 msgid "Unlock it"
-msgstr ""
+msgstr "Destravar"
 
 #: inc/inventorycomputercomputer.class.php:192
 msgid "Lock it"
-msgstr ""
+msgstr "Travar"
 
 #: inc/inventorycomputercomputer.class.php:238
 #: inc/networkequipment.class.php:1121 inc/printer.class.php:217
@@ -1262,7 +1263,7 @@ msgstr "Regras de entidade"
 
 #: inc/inventoryruleentity.class.php:136
 msgid "IP Address"
-msgstr ""
+msgstr "Endereço IP"
 
 #: inc/inventoryruleentity.class.php:139
 msgid "Computer's name"
@@ -1276,12 +1277,12 @@ msgstr "Ignore na importação FusionInventory"
 #: inc/inventoryruleentity.class.php:212
 #: inc/inventoryrulelocation.class.php:215
 msgid "is CIDR"
-msgstr ""
+msgstr "É CIDR"
 
 #: inc/inventoryruleentity.class.php:213
 #: inc/inventoryrulelocation.class.php:216
 msgid "is not CIDR"
-msgstr ""
+msgstr "Não é CIDR"
 
 #: inc/inventoryruleimport.class.php:86 inc/inventoryruleimport.class.php:111
 #: inc/inventoryruleimport.class.php:114 inc/inventoryruleimport.class.php:117
@@ -1302,7 +1303,7 @@ msgstr "Pesquisa equipamentos GLPI com o status"
 
 #: inc/inventoryruleimport.class.php:169
 msgid "Restrict search in defined entity"
-msgstr ""
+msgstr "Restringir a busca na entidade definida"
 
 #: inc/inventoryruleimport.class.php:181
 msgid "FusionInventory link"
@@ -1310,7 +1311,7 @@ msgstr "Vinculação com FustionInventory"
 
 #: inc/inventoryruleimport.class.php:194
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
@@ -1386,7 +1387,7 @@ msgstr ""
 
 #: inc/iprange_configsecurity.class.php:149
 msgid "Version"
-msgstr ""
+msgstr "Versão"
 
 #: inc/lock.class.php:177
 msgid "Values GLPI"
@@ -2335,7 +2336,7 @@ msgstr ""
 #: inc/menu.class.php:281 inc/timeslot.class.php:61 inc/timeslot.class.php:70
 #: inc/timeslotentry.class.php:70
 msgid "Time slot"
-msgstr ""
+msgstr "Intervalo de tempo"
 
 #: inc/menu.class.php:287
 msgid "Tasks"
@@ -2380,7 +2381,7 @@ msgstr "Conectividade"
 
 #: inc/menu.class.php:484 inc/menu.class.php:558
 msgid "Statistics"
-msgstr ""
+msgstr "Estatísticas"
 
 #: inc/menu.class.php:484 inc/menu.class.php:874
 msgid "Number of computer inventories of last hours"

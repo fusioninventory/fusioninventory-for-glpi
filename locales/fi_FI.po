@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-12-18 18:58+0000\n"
+"Last-Translator: Ilkka Yläkoski <iylakoski@learn-it2.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/projects/p/FusionInventory/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,19 +34,19 @@ msgstr "Edellinen kartoitus"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "Antivirus-nimi"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "Antivirus-versio"
 
 #: hook.php:78
 msgid "Antivirus enabled"
-msgstr ""
+msgstr "Antivirus käytössä"
 
 #: hook.php:88
 msgid "Antivirus up to date"
-msgstr ""
+msgstr "Antivirus ajan tasalla"
 
 #: hook.php:97 hook.php:106
 msgid "BIOS"
@@ -189,11 +189,11 @@ msgstr "Paketti"
 
 #: hook.php:1063
 msgid "Create a job for each computer"
-msgstr ""
+msgstr "Luo tehtävä jokaiselle tietokoneelle"
 
 #: hook.php:1065 inc/deploygroup.class.php:151
 msgid "Create a job for each group"
-msgstr ""
+msgstr "Luo tehtävä jokaiselle ryhmälle"
 
 #: index.php:55 front/agent.form.php:47 front/agent.php:45
 #: front/agentmodule.form.php:45 front/collect.php:45
@@ -220,40 +220,40 @@ msgstr ""
 #: report/not_queried_recently.php:51 report/ports_date_connections.php:49
 #: report/switch_ports.history.php:50
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: setup.php:383 inc/printerlog.class.php:476
 msgid "Printed page counter"
-msgstr ""
+msgstr "Tulosteiden laskuri"
 
 #: setup.php:387
 msgid "Switchs ports history"
-msgstr ""
+msgstr "Kytkinporttien historia"
 
 #: setup.php:389
 msgid "Unused switchs ports"
-msgstr ""
+msgstr "Käyttämättömät kytkinportit"
 
 #: setup.php:391
 msgid "Number of days since last inventory"
-msgstr ""
+msgstr "Päivien lukumäärä edellisestä kartoituksesta"
 
 #: setup.php:395 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
-msgstr ""
+msgstr "Kartoittamattomat tietokoneet sitten xx päivää"
 
 #: setup.php:503
 msgid "Your GLPI version not compatible, require 0.85"
-msgstr ""
+msgstr "Käyttämäsi GLPI-versio ei ole yhteensopiva.Vaadittu versio on 0.85."
 
 #: setup.php:508
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "PHP:n fileinfo-laajennos on välttämätön …"
 
 #: setup.php:521
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Poista hakemisto %s hakemistosta glpi/plugins/"
 
 #: ajax/configurationamanagement_action.php:55
 msgid "In referentiel + alert"
@@ -269,27 +269,27 @@ msgstr ""
 
 #: front/agent.form.php:58
 msgid "The agent is running"
-msgstr ""
+msgstr "Agentti on käynnissä"
 
 #: front/agent.form.php:61 inc/agent.class.php:790
 msgid "Impossible to communicate with agent!"
-msgstr ""
+msgstr "Agenttiin ei saada yhteyttä!"
 
 #: front/collect.form.php:45
 msgid "Collect management"
-msgstr ""
+msgstr "Keräyksen hallinta"
 
 #: front/config.form.php:47 front/configlogfield.form.php:47
 msgid "Features"
-msgstr ""
+msgstr "Piirteet"
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
-msgstr ""
+msgstr "Pakattua zip-tiedostoa ei voi lukea!"
 
 #: front/inventorycomputerimportxml.php:93
 msgid "No file to import!"
-msgstr ""
+msgstr "Ei tuotavia tiedostoja!"
 
 #: front/inventoryruleimport.php:61
 msgid "Reset import rules (define only default rules)"
@@ -297,33 +297,33 @@ msgstr ""
 
 #: front/popup.php:64
 msgid "Cache informations"
-msgstr ""
+msgstr "Piilotiedot"
 
 #: front/popup.php:69
 msgid "Network ports display options"
-msgstr ""
+msgstr "Verkkoporttien näyttöasetukset"
 
 #: front/printerlogreport.php:92 inc/statediscovery.class.php:141
 #: inc/stateinventory.class.php:94
 msgid "Starting date"
-msgstr ""
+msgstr "Aloituspäivä"
 
 #: front/printerlogreport.php:100 inc/statediscovery.class.php:142
 #: inc/stateinventory.class.php:95
 msgid "Ending date"
-msgstr ""
+msgstr "Lopetuspäivä"
 
 #: front/rule.common.php:176
 msgid "Rules applied"
-msgstr ""
+msgstr "Käytetyt säännöt"
 
 #: front/rule.common.php:187
 msgid "Local rules"
-msgstr ""
+msgstr "Paikalliset säännöt"
 
 #: front/unmanaged.form.php:82
 msgid "restoration of the item"
-msgstr ""
+msgstr "Palauta kohde"
 
 #: front/unmanaged.form.php:103 inc/unmanaged.class.php:291
 msgid "Number of imported devices"
@@ -348,15 +348,15 @@ msgstr ""
 
 #: inc/agent.class.php:96 inc/agent.class.php:404
 msgid "locked"
-msgstr ""
+msgstr "Lukittu"
 
 #: inc/agent.class.php:102 inc/agent.class.php:377
 msgid "Device_id"
-msgstr ""
+msgstr "Laitetunnus"
 
 #: inc/agent.class.php:108 inc/agent.class.php:384
 msgid "Computer link"
-msgstr ""
+msgstr "Liitetty tietokoneeseen"
 
 #: inc/agent.class.php:142 inc/agent.class.php:149 inc/agent.class.php:418
 #: inc/agent.class.php:452 inc/config.class.php:600 inc/config.class.php:610
@@ -373,7 +373,7 @@ msgstr "Verkon kartoitus (SNMP)"
 
 #: inc/agent.class.php:157 inc/agent.class.php:482 inc/config.class.php:320
 msgid "Agent port"
-msgstr ""
+msgstr "Agentin portti"
 
 #: inc/agent.class.php:435 inc/agent.class.php:467 inc/config.class.php:622
 #: inc/config.class.php:631
@@ -382,170 +382,170 @@ msgstr ""
 
 #: inc/agent.class.php:483
 msgid "if empty use port configured in general options"
-msgstr ""
+msgstr "jos tyhjä niin käytä porttia, joka on asetettu yleisissä asetuksissa"
 
 #: inc/agent.class.php:759
 msgid "Agent state"
-msgstr ""
+msgstr "Agentin tila"
 
 #: inc/agent.class.php:815
 msgid "Force inventory"
-msgstr ""
+msgstr "Pakota kartoitus"
 
 #: inc/agent.class.php:1130
 msgid "Informations for agent configuration"
-msgstr ""
+msgstr "Tiedot agentin konfiguraatioon"
 
 #: inc/agent.class.php:1140
 msgid "Communication url of the server"
-msgstr ""
+msgstr "Palvelimen url-yhteys"
 
 #: inc/agentmodule.class.php:62 inc/agentmodule.class.php:64
 #: inc/configuration.class.php:57
 msgid "Agents modules"
-msgstr ""
+msgstr "Agenttien moduulit"
 
 #: inc/agentmodule.class.php:111
 msgid "Activation (by default)"
-msgstr ""
+msgstr "Aktivointi (oletuksena)"
 
 #: inc/agentmodule.class.php:112
 msgid "Exceptions"
-msgstr ""
+msgstr "Poikkeukset"
 
 #: inc/agentmodule.class.php:140 inc/agentmodule.class.php:253
 msgid "Package deployment"
-msgstr ""
+msgstr "Paketin käyttöönotto"
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
-msgstr ""
+msgstr "Keräystiedot"
 
 #: inc/collect.class.php:65
 msgid "Registry"
-msgstr ""
+msgstr "Rekisteri"
 
 #: inc/collect.class.php:66
 msgid "WMI"
-msgstr ""
+msgstr "WMI"
 
 #: inc/collect.class.php:67 inc/collect_file.class.php:55
 #: inc/collect_file.class.php:62
 msgid "Find file"
-msgstr ""
+msgstr "Tiedoston haku"
 
 #: inc/collect_file.class.php:86
 msgid "Find file associated"
-msgstr ""
+msgstr "Hae yhdistetty tiedosto"
 
 #: inc/collect_file.class.php:90 inc/collect_file.class.php:160
 msgid "Limit"
-msgstr ""
+msgstr "Raja"
 
 #: inc/collect_file.class.php:91 inc/collect_file.class.php:126
 #: inc/collect_file.class.php:246
 msgid "Folder"
-msgstr ""
+msgstr "Hakemisto"
 
 #: inc/collect_file.class.php:92
 msgid "Recursive"
-msgstr ""
+msgstr "Rekursiivinen"
 
 #: inc/collect_file.class.php:93 inc/collect_file.class.php:194
 msgid "Regex"
-msgstr ""
+msgstr "Säännönmukainen lauseke"
 
 #: inc/collect_file.class.php:94 inc/collect_file.class.php:200
 #: inc/collect_file_content.class.php:189
 #: inc/collect_file_content.class.php:227
 msgid "Size"
-msgstr ""
+msgstr "Koko"
 
 #: inc/collect_file.class.php:95 inc/collect_file.class.php:215
 msgid "Checksum SHA512"
-msgstr ""
+msgstr "Tarkistussumma SHA512"
 
 #: inc/collect_file.class.php:96 inc/collect_file.class.php:221
 msgid "Checksum SHA2"
-msgstr ""
+msgstr "Tarkistussumma SHA2"
 
 #: inc/collect_file.class.php:97
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: inc/collect_file.class.php:98
 msgid "Iname"
-msgstr ""
+msgstr "Iname"
 
 #: inc/collect_file.class.php:99 inc/collect_file.class.php:241
 #: inc/deployaction.class.php:258 inc/deploycheck.class.php:235
 msgid "Type"
-msgstr ""
+msgstr "Tyyppi"
 
 #: inc/collect_file.class.php:124 inc/collect_file.class.php:245
 #: inc/deploycheck.class.php:291 inc/deploycheck.class.php:297
 #: inc/deploycheck.class.php:302 inc/deployfile.class.php:393
 msgid "File"
-msgstr ""
+msgstr "Tiedosto"
 
 #: inc/collect_file.class.php:173
 msgid "Filter"
 msgid_plural "Filters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Suodatin"
+msgstr[1] "Suodattimet"
 
 #: inc/collect_file.class.php:179
 msgid "Base folder"
-msgstr ""
+msgstr "Juurikansio"
 
 #: inc/collect_file.class.php:185
 msgid "Folder recursive"
-msgstr ""
+msgstr "Rekursiivinen kansio"
 
 #: inc/collect_file.class.php:204 inc/collect_file.class.php:234
 msgid "Disabled"
-msgstr ""
+msgstr "Poistettu käytöstä"
 
 #: inc/collect_file.class.php:230
 msgid "Filename"
-msgstr ""
+msgstr "Tiedoston nimi"
 
 #: inc/collect_file.class.php:235
 msgid "Non sentitive case"
-msgstr ""
+msgstr "Kirjainkoolla ei merkitystä"
 
 #: inc/collect_file.class.php:236
 msgid "Sentitive case"
-msgstr ""
+msgstr "Merkkikokoriippuvainen"
 
 #: inc/collect_file_content.class.php:52 inc/collect_file_content.class.php:73
 #: inc/collect_file_content.class.php:79
 msgid "Find file content"
-msgstr ""
+msgstr "Löydetyn tiedoston sisältö"
 
 #: inc/collect_file_content.class.php:188
 msgid "Path/file"
-msgstr ""
+msgstr "Polku/tiedosto"
 
 #: inc/collect_file_content.class.php:226
 msgid "pathfile"
-msgstr ""
+msgstr "tiedostopolku"
 
 #: inc/collect_registry.class.php:52 inc/collect_registry.class.php:61
 msgid "Windows registry"
-msgstr ""
+msgstr "Windows-rekisteri"
 
 #: inc/collect_registry.class.php:101
 msgid "Windows registry associated"
-msgstr ""
+msgstr "Yhdistetty Windows-rekisteriin"
 
 #: inc/collect_registry.class.php:105 inc/collect_registry.class.php:147
 msgid "Hive"
-msgstr ""
+msgstr "Avain"
 
 #: inc/collect_registry.class.php:106
 msgid "Path/key"
-msgstr ""
+msgstr "Polku/avain"
 
 #: inc/collect_registry.class.php:107
 #: inc/collect_registry_content.class.php:179
@@ -554,28 +554,28 @@ msgstr ""
 #: inc/deploycheck.class.php:298 inc/deploycheck.class.php:303
 #: inc/deploycheck.class.php:308
 msgid "Value"
-msgstr ""
+msgstr "Arvo"
 
 #: inc/collect_registry.class.php:155
 #: inc/collect_registry_content.class.php:178
 msgid "Path"
-msgstr ""
+msgstr "Polku"
 
 #: inc/collect_registry.class.php:161 inc/deploycheck.class.php:282
 #: inc/deploycheck.class.php:286
 msgid "Key"
-msgstr ""
+msgstr "Avain"
 
 #: inc/collect_registry_content.class.php:52
 #: inc/collect_registry_content.class.php:73
 #: inc/collect_registry_content.class.php:79
 msgid "Windows registry content"
-msgstr ""
+msgstr "Windows-rekisterin sisältö"
 
 #: inc/collect_registry_content.class.php:180
 #: inc/collect_registry_content.class.php:224
 msgid "Data"
-msgstr ""
+msgstr "Tiedot"
 
 #: inc/collect_wmi.class.php:52 inc/collect_wmi.class.php:61
 msgid "Windows WMI"
