@@ -137,16 +137,22 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
       $actions['states_id']['name']           = __('Status');
       $actions['states_id']['type']           = 'dropdown';
       $actions['states_id']['table']          = 'glpi_states';
-
+      
       $actions['users_id_tech']['name']       = __('Technician in charge of the hardware');
       $actions['users_id_tech']['type']       = 'dropdown_users';
-
+      
       $actions['groups_id_tech']['name']      = __('Group in charge of the hardware');
       $actions['groups_id_tech']['type']      = 'dropdown';
       $actions['groups_id_tech']['table']     = 'glpi_groups';
       $actions['groups_id_tech']['condition'] = '`is_assign`';
-
+      
+      $actions['groups_id']['name']           = __('Group');
+      $actions['groups_id']['type']           = 'dropdown';
+      $actions['groups_id']['table']          = 'glpi_groups';
+      
       $actions['comment']['name']             = __('Comment');
+      
+      $actions['otherserial']['name']         = __('Inventory number');
 
       return $actions;
    }
