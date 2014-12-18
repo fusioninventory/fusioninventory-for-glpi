@@ -57,16 +57,13 @@ class PluginFusioninventoryTaskpostactionRuleCollection extends RuleCollection {
       $input['actor_type'] = $actortypes;
       $input['actor']      = implode(",", $actoritems);
 
-      Toolbox::logDebug($input);
-
+      // execute rule engine
       $rulepostaction_col = new self;
       $output = $rulepostaction_col->processAllRules($input, array());
       
-      Toolbox::logDebug($output);
-
+      // alter computer with the rule engin results
       $agent = new PluginFusioninventoryAgent;
       $agent->getFromDB($input['plugin_fusioninventory_agents_id']);
-
       $computer = new Computer;
       $update = array_merge(array('id' => $agent->fields['computers_id']), $output);
       return $computer->update($update);
