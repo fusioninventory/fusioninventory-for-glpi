@@ -31,6 +31,32 @@ class PluginFusioninventoryTaskpostactionRuleCollection extends RuleCollection {
       $input['plugin_fusioninventory_tasks_id'] = $pfTaskjob->fields['plugin_fusioninventory_tasks_id'];
       $input['method'] = $pfTaskjob->fields['method'];
 
+      // decode targets
+      $targets = importArrayFromDB($pfTaskjob->fields['targets']);
+      $targettypes = $targetitems = array();
+      foreach ($targets as $num => $data) {
+         $itemtype = key($data);
+         $items_id = current($data);
+         $targettypes[$num] = $itemtype;
+         $targetitems[$num] = Dropdown::getDropdownName(getTableForItemType($itemtype), $items_id).
+                              " ($items_id)";
+      }
+      $input['target_type'] = $targettypes;
+      $input['target']      = implode(",", $targetitems);
+
+      // decode actors
+      $actors = importArrayFromDB($pfTaskjob->fields['actors']);
+      $actortypes = $actoritems = array();
+      foreach ($actors as $num => $data) {
+         $itemtype = key($data);
+         $items_id = current($data);
+         $actortypes[$num] = $itemtype;
+         $actoritems[$num] = Dropdown::getDropdownName(getTableForItemType($itemtype), $items_id).
+                             " ($items_id)";
+      }
+      $input['actor_type'] = $actortypes;
+      $input['actor']      = implode(",", $actoritems);
+
       Toolbox::logDebug($input);
 
       $rulepostaction_col = new self;

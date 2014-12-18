@@ -25,34 +25,44 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
 
       $criteria = array ();
 
-      $criteria['task']['field']             = 'plugin_fusioninventory_tasks_id';
-      $criteria['task']['name']              = __('Task', 'fusioninventory');
-      $criteria['task']['table']             = 'glpi_plugin_fusioninventory_tasks';
-      $criteria['task']['type']              = 'dropdown';
+      $criteria['plugin_fusioninventory_tasks_id']['field']     = 'name';
+      $criteria['plugin_fusioninventory_tasks_id']['name']      = __('Task', 'fusioninventory');
+      $criteria['plugin_fusioninventory_tasks_id']['table']     = 'glpi_plugin_fusioninventory_tasks';
+      $criteria['plugin_fusioninventory_tasks_id']['type']      = 'dropdown';
+      $criteria['plugin_fusioninventory_tasks_id']['linkfield'] = 'plugin_fusioninventory_tasks_id';
 
-      $criteria['agent']['field']             = 'plugin_fusioninventory_agents_id';
-      $criteria['agent']['name']              = __('Agent', 'fusioninventory');
-      $criteria['agent']['table']             = 'glpi_plugin_fusioninventory_agents';
-      $criteria['agent']['type']              = 'dropdown';
+      $criteria['plugin_fusioninventory_agents_id']['field']     = 'name';
+      $criteria['plugin_fusioninventory_agents_id']['name']      = __('Agent', 'fusioninventory');
+      $criteria['plugin_fusioninventory_agents_id']['table']     = 'glpi_plugin_fusioninventory_agents';
+      $criteria['plugin_fusioninventory_agents_id']['type']      = 'dropdown';
+      $criteria['plugin_fusioninventory_agents_id']['linkfield'] = 'plugin_fusioninventory_agents_id';
 
-      $criteria['method']['field']           = 'method';
-      $criteria['method']['name']            = __('Module method', 'fusioninventory');
+      $criteria['method']['field']                = 'method';
+      $criteria['method']['name']                 = __('Module method', 'fusioninventory');
 
-      $criteria['target_type']['field']      = 'target_type';
-      $criteria['target_type']['name']       = __('Target Type', 'fusioninventory');
+      $criteria['target_type']['field']           = 'target_type';
+      $criteria['target_type']['name']            = __('Target Type', 'fusioninventory');
+      $criteria['target_type']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
-      $criteria['target']['field']           = 'target';
-      $criteria['target']['name']            = __('Target Item', 'fusioninventory');
+      $criteria['target']['field']                = 'target';
+      $criteria['target']['name']                 = __('Target Item', 'fusioninventory');
+      $criteria['target']['allow_condition']      = array(Rule::PATTERN_CONTAIN, Rule::PATTERN_NOT_CONTAIN,
+                                                     Rule::PATTERN_BEGIN,   Rule::PATTERN_END,
+                                                     Rule::REGEX_MATCH,     Rule::REGEX_NOT_MATCH);
 
-      $criteria['actor_type']['field']       = 'actor_type';
-      $criteria['actor_type']['name']        = __('Actor Type', 'fusioninventory');
+      $criteria['actor_type']['field']            = 'actor_type';
+      $criteria['actor_type']['name']             = __('Actor Type', 'fusioninventory');
+      $criteria['actor_type']['allow_condition']  = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
-      $criteria['actor']['field']            = 'actor';
-      $criteria['actor']['name']             = __('Actor Item', 'fusioninventory');
+      $criteria['actor']['field']                 = 'actor';
+      $criteria['actor']['name']                  = __('Actor Item', 'fusioninventory');
+      $criteria['actor']['allow_condition']       = array(Rule::PATTERN_CONTAIN, Rule::PATTERN_NOT_CONTAIN,
+                                                     Rule::PATTERN_BEGIN,   Rule::PATTERN_END,
+                                                     Rule::REGEX_MATCH,     Rule::REGEX_NOT_MATCH);
 
-      $criteria['state']['field']           = 'state';
-      $criteria['state']['name']            = __('Job result', 'fusioninventory');
-      $criteria['state']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
+      $criteria['state']['field']                 = 'state';
+      $criteria['state']['name']                  = __('Job result', 'fusioninventory');
+      $criteria['state']['allow_condition']       = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
 
       return $criteria;
@@ -141,23 +151,6 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
       return $actions;
    }
 
-
-   function executeActions($output, $params) {
-      if (count($this->actions)) {
-         foreach ($this->actions as $action) {
-            switch ($action->fields["action_type"]) {
-               case "assign" :
-                  $output[$action->fields["field"]] = $action->fields["value"];
-                  break;
-
-               case "regex_result" :
-                  
-                  break;
-            }
-         }
-      }
-      return $output;
-   }
 }
 
 ?>
