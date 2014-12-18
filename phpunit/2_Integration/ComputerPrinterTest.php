@@ -304,7 +304,7 @@ class ComputerPrinter extends Common_TestCase {
 
       $a_printers = getAllDatasFromTable("glpi_printers");
 
-      $this->assertEquals(1, countElementsInTable('glpi_printers'),
+      $this->assertEquals(0, countElementsInTable('glpi_printers'),
               'Printer p2 may be ignored ('.print_r($a_printers, TRUE).')');
 
       $printer = new Printer();
@@ -343,17 +343,17 @@ class ComputerPrinter extends Common_TestCase {
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
-      $this->assertEquals(2, countElementsInTable('glpi_printers'),
-              'May have 2 printers in DB (1)');
+      $this->assertEquals(1, countElementsInTable('glpi_printers'),
+              'May have 1 printer in DB (1)');
 
       // Test re-inventory to see if not have more than 2 printers
       $pfici->sendCriteria("toto", $this->a_computer1_beforeformat);
 
-      $this->assertEquals(2, countElementsInTable('glpi_printers'),
-              'May have 2 printers in DB (2)');
+      $this->assertEquals(1, countElementsInTable('glpi_printers'),
+              'May have 1 printer in DB (2)');
 
       $printer = new Printer();
-      $printer->getFromDB(2);
+      $printer->getFromDB(1);
       $this->assertEquals('p3bis', $printer->fields['name'], 'Printer p3 may be renamed p3bis');
 
    }
@@ -369,7 +369,7 @@ class ComputerPrinter extends Common_TestCase {
       $DB->connect();
 
       $printer = new Printer();
-      $printer->getFromDB(2);
+      $printer->getFromDB(1);
       $this->assertEquals('1',
          $printer->fields['manufacturers_id'], 'Printer p3 may have manufacturer with id=1'
       );
