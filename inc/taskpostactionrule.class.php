@@ -61,7 +61,7 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
                                                      Rule::REGEX_MATCH,     Rule::REGEX_NOT_MATCH);
 
       $criteria['state']['field']                 = 'state';
-      $criteria['state']['name']                  = __('Job result', 'fusioninventory');
+      $criteria['state']['name']                  = __('Tasks running result', 'fusioninventory');
       $criteria['state']['allow_condition']       = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
 
