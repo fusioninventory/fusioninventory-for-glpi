@@ -1654,6 +1654,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $input['items_devicenetworkcards_id'] = $networkcard['id'];
                         }
                      }
+                     $input['_no_history'] = $no_history;
                      if (isset($input['id'])) {
                         $networkPortEthernet->update($input);
                      } else {
@@ -1785,6 +1786,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $input['items_devicenetworkcards_id'] = $networkcard['id'];
                         }
                      }
+                     $input['_no_history'] = $no_history;
                      $networkPortEthernet->add($input);
                   }
                }
