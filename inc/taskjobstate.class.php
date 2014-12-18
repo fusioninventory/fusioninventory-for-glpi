@@ -423,6 +423,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $pfTaskjoblog->add($log_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
+
+      // launch taskpostaction
+      $postaction_input = array_merge($input, $log_input);
+      PluginFusioninventoryTaskpostactionRuleCollection::launchProcess($postaction_input, $this);
    }
 
 
