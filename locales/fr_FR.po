@@ -7,12 +7,14 @@
 # Asmodojo <asmodojo@outlook.com>, 2013
 # David Durieux <d.durieux@siprossii.com>, 2014
 # EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
+# Frédéric MOHIER <frederic.mohier@gmail.com>, 2014
 # Gonéri Le Bouder <goneri@rulezlan.org>, 2013
 # kiniou <kiniou@gmail.com>, 2014
 # kiniou <kiniou@gmail.com>, 2013-2014
 # Alexandre Brianceau <lostprophet91@gmail.com>, 2013
 # Mathieu Simon <mathieu.sim@gmail.com>, 2013
 # Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# Raphaël Threis <webmaster@malmedy.be>, 2014
 # Sebastien <sebastien.janez@free.fr>, 2014
 # Tamatoa Davio <tamaoviri@gmail.com>, 2013
 # Walid Nouh, 2014
@@ -22,8 +24,8 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-12-18 07:36+0000\n"
+"Last-Translator: Raphaël Threis <webmaster@malmedy.be>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,19 +49,19 @@ msgstr "Dernier inventaire"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "Nom de l'antivirus"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "Version antivirus"
 
 #: hook.php:78
 msgid "Antivirus enabled"
-msgstr ""
+msgstr "Antivirus activé"
 
 #: hook.php:88
 msgid "Antivirus up to date"
-msgstr ""
+msgstr "Antivirus à jour"
 
 #: hook.php:97 hook.php:106
 msgid "BIOS"
@@ -137,7 +139,7 @@ msgstr "Groupe statique"
 
 #: hook.php:247
 msgid "Agent base URL"
-msgstr ""
+msgstr "URL utilisée par l'agent"
 
 #: hook.php:276 hook.php:284 hook.php:316 inc/menu.class.php:382
 #: inc/networkequipment.class.php:482 inc/printer.class.php:168
@@ -306,7 +308,7 @@ msgstr "Fichier manquant !"
 
 #: front/inventoryruleimport.php:61
 msgid "Reset import rules (define only default rules)"
-msgstr ""
+msgstr "Réinitialiser les règles d'import (règles par défaut)"
 
 #: front/popup.php:64
 msgid "Cache informations"
@@ -395,7 +397,7 @@ msgstr "Timeout SNMP"
 
 #: inc/agent.class.php:483
 msgid "if empty use port configured in general options"
-msgstr ""
+msgstr "Si vide, utiliser le port défini dans les options générales"
 
 #: inc/agent.class.php:759
 msgid "Agent state"
@@ -1102,11 +1104,11 @@ msgstr "Le JSON modifié contient une erreur de syntaxe : <br/>"
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: inc/deploypackage.class.php:72
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #: inc/deploypackage.class.php:174
 msgid "Modification Denied"
@@ -1136,11 +1138,11 @@ msgstr "Objet correctement ajouté"
 
 #: inc/deploypackage.class.php:817
 msgid "Package exported in"
-msgstr ""
+msgstr "Paquet exporté dans"
 
 #: inc/deploypackage.class.php:901
 msgid "Packages to import"
-msgstr ""
+msgstr "Paquets à importer"
 
 #: inc/deploytask.class.php:54
 msgid "Group of computers"
@@ -1219,19 +1221,19 @@ msgstr "Transfer automatique d'entité"
 
 #: inc/inventorycomputercomputer.class.php:183
 msgid "No, locked (by entity configuration)"
-msgstr ""
+msgstr "Non, verrouillé (configuration entité)"
 
 #: inc/inventorycomputercomputer.class.php:186
 msgid "No, locked manually"
-msgstr ""
+msgstr "Non, verrouillé manuellement"
 
 #: inc/inventorycomputercomputer.class.php:188
 msgid "Unlock it"
-msgstr ""
+msgstr "Déverrouiller"
 
 #: inc/inventorycomputercomputer.class.php:192
 msgid "Lock it"
-msgstr ""
+msgstr "Verrouiller"
 
 #: inc/inventorycomputercomputer.class.php:238
 #: inc/networkequipment.class.php:1121 inc/printer.class.php:217
@@ -1326,7 +1328,7 @@ msgstr "Liaison"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
-msgstr ""
+msgstr "Importation refusée (pas de log)"
 
 #: inc/inventoryruleimport.class.php:224
 msgid "equal"
@@ -1390,7 +1392,7 @@ msgstr "IP incorrecte"
 
 #: inc/iprange_configsecurity.class.php:64
 msgid "Associated SNMP authentications"
-msgstr ""
+msgstr "Authentification SNMP associée"
 
 #: inc/iprange_configsecurity.class.php:146
 msgid "SNMP Authentication"
@@ -2368,7 +2370,7 @@ msgstr "Règles de lieu ordinateur"
 #: inc/menu.class.php:336 inc/ruledictionnarycomputerarch.class.php:53
 #: inc/ruledictionnarycomputerarchcollection.class.php:50
 msgid "Dictionnary of computer architectures"
-msgstr ""
+msgstr "Dictionnaire des architectures ordinateurs"
 
 #: inc/menu.class.php:351
 msgid "Rules"
@@ -2405,7 +2407,7 @@ msgstr ""
 
 #: inc/menu.class.php:502
 msgid "Configure frequency of agent contact (and so each inventory)"
-msgstr ""
+msgstr "Configurer la fréquence de contact avec les agents (et par conséquent la fréquence des inventaires)"
 
 #: inc/menu.class.php:507
 msgid "Configure inventory options"
@@ -2439,15 +2441,15 @@ msgstr ""
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
-msgstr ""
+msgstr "Définissez les règles pour l'import : fusionner et créer un nouvel ordinateur (ATTENTION: règles identiques pour l'inventaire SNMP) "
 
 #: inc/menu.class.php:599
 msgid "`Network Discovery`, used to discover the devices on the network"
-msgstr ""
+msgstr "'Découverte réseau', utiliser pour décourvir les équipements du réseau"
 
 #: inc/menu.class.php:604
 msgid "Define IP Ranges of your network + related SNMP authentication"
-msgstr ""
+msgstr "Définissez les plages IP de votre réseau + authentification SNMP liées"
 
 #: inc/menu.class.php:609
 msgid "Define an agent allowed to discover the network"
@@ -2478,7 +2480,7 @@ msgstr ""
 
 #: inc/menu.class.php:879
 msgid "Deployment"
-msgstr ""
+msgstr "Déploiement"
 
 #: inc/networkequipment.class.php:54 inc/printer.class.php:65
 msgid "FusionInventory SNMP"
@@ -2612,7 +2614,7 @@ msgstr "Cartouche(s)"
 
 #: inc/printercartridge.class.php:86
 msgid "remaining pages"
-msgstr ""
+msgstr "pages restantes"
 
 #: inc/printerlog.class.php:53 inc/printerlog.class.php:323
 msgid "History meter printer"
@@ -2696,7 +2698,7 @@ msgstr "SNMP des imprimantes"
 
 #: inc/profile.class.php:260
 msgid "Unmanaged devices"
-msgstr ""
+msgstr "Périphériques non-gérés"
 
 #: inc/profile.class.php:263
 msgid "computer XML manual import"
@@ -2874,7 +2876,7 @@ msgstr ""
 
 #: inc/task.class.php:1364
 msgid "Task has been disabled"
-msgstr ""
+msgstr "La tâche a été désactivée"
 
 #: inc/task.view.class.php:81
 msgid "To Be Done"
@@ -2954,7 +2956,7 @@ msgstr "Impossible de lancer la tâche car il reste des actions en cours!"
 
 #: inc/taskjob.class.php:798
 msgid "Action on this device"
-msgstr "Action sur ce matériel"
+msgstr "Action sur cet équipement"
 
 #: inc/taskjob.class.php:826 inc/taskjob.class.php:1179
 msgid "Scheduled date"
@@ -3154,7 +3156,7 @@ msgstr "Heure de fin"
 
 #: inc/unmanaged.class.php:56 inc/unmanaged.class.php:90
 msgid "Unmanaged device"
-msgstr ""
+msgstr "Equipement non-géré"
 
 #: inc/unmanaged.class.php:128 inc/unmanaged.class.php:388
 msgid "Network hub"
@@ -3166,7 +3168,7 @@ msgstr "Matériel approuvé"
 
 #: inc/unmanaged.class.php:462
 msgid "Import unmanaged device into asset"
-msgstr ""
+msgstr "Equipement non-géré à importer dans l'inventaire"
 
 #: inc/wizard.class.php:74
 msgid "Breadcrumb"
@@ -3180,7 +3182,7 @@ msgstr "Choix de l'action"
 #: inc/wizard.class.php:339 inc/wizard.class.php:357 inc/wizard.class.php:375
 #: inc/wizard.class.php:410
 msgid "Type of device to inventory"
-msgstr "Type de matériel à inventorier"
+msgstr "Type d'équipement à inventorier"
 
 #: inc/wizard.class.php:343
 msgid "Agent configuration"
@@ -3232,4 +3234,4 @@ msgstr ""
 
 #: report/computer_last_inventory.php:73
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "Nombre de jours (minimum) depuis le dernier inventaire"
