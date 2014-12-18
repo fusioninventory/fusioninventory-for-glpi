@@ -158,11 +158,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
       $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
 
-      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
-      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
-
-      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
-      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
+//      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
+//      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
+//
+//      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
+//      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
       return $menu;
    }
 
@@ -558,10 +558,23 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo __('Statistics', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
-//      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      $networkequipment = countElementsInTable('glpi_plugin_fusioninventory_networkequipments');
+      $printer    = countElementsInTable('glpi_plugin_fusioninventory_printers');
+
+      $dataSNMP = array();
+      $dataSNMP[] = array(
+          'key' => 'NetworkEquipments (SNMP) : '.$networkequipment,
+          'y'   => $networkequipment,
+          'color' => '#3d94ff'
+      );
+      $dataSNMP[] = array(
+          'key' => 'Printers (SNMP) : '.$printer,
+          'y'   => $printer,
+          'color' => '#3dff7d'
+      );
       echo "<tr class='tab_bg_1' height='100'>";
-      echo "<td colspan='2' height='100'>";
-//      self::showChartBar('nbinventory', $dataInventory, '', 940);
+      echo "<td colspan='2' height='220'>";
+      self::showChart('snmp', $dataSNMP, '', 940);
       echo "</td>";
       echo "</tr>";
 
@@ -588,7 +601,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
               'title'=> TRUE
           ),
           array(
-              'text' => __('Define IP Ranges of your network', 'fusioninventory'),
+              'text' => __('Define IP Ranges of your network + related SNMP authentication', 'fusioninventory'),
               'url'  => $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/iprange.php"
           ),
