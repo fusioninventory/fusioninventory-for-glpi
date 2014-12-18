@@ -6,13 +6,14 @@
 # Alexey Petukhov <lexx015@gmail.com>, 2014
 # Evgeny Dedenev <jek@hotbox.ru>, 2014
 # sayanvd <sayanvd@yandex.ru>, 2013
+# sayanvd <sayanvd@yandex.ru>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-12-18 05:56+0000\n"
+"Last-Translator: sayanvd <sayanvd@yandex.ru>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/FusionInventory/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,19 +37,19 @@ msgstr "Последняя инвентаризация"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "Название антивируса"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "Версия антивируса"
 
 #: hook.php:78
 msgid "Antivirus enabled"
-msgstr ""
+msgstr "Антивирус включен"
 
 #: hook.php:88
 msgid "Antivirus up to date"
-msgstr ""
+msgstr "Антивирус обновлен"
 
 #: hook.php:97 hook.php:106
 msgid "BIOS"
@@ -126,7 +127,7 @@ msgstr "Статическая группа"
 
 #: hook.php:247
 msgid "Agent base URL"
-msgstr ""
+msgstr "Ссылка на агент"
 
 #: hook.php:276 hook.php:284 hook.php:316 inc/menu.class.php:382
 #: inc/networkequipment.class.php:482 inc/printer.class.php:168
@@ -261,15 +262,15 @@ msgstr "Пожалуйста, удалите папку %s из glpi/plugins/"
 
 #: ajax/configurationamanagement_action.php:55
 msgid "In referentiel + alert"
-msgstr ""
+msgstr "В referentiel + предупреждения"
 
 #: ajax/configurationamanagement_action.php:56
 msgid "In referentiel - alert"
-msgstr ""
+msgstr "В referentiel - предупреждения"
 
 #: ajax/configurationamanagement_action.php:57
 msgid "Not in referentiel"
-msgstr ""
+msgstr "Без referentiel"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -297,7 +298,7 @@ msgstr "Нет файла для импорта!"
 
 #: front/inventoryruleimport.php:61
 msgid "Reset import rules (define only default rules)"
-msgstr ""
+msgstr "Сброс правил импорта (определяются только правилами по умолчанию)"
 
 #: front/popup.php:64
 msgid "Cache informations"
@@ -386,7 +387,7 @@ msgstr "Тайм-аут SNMP"
 
 #: inc/agent.class.php:483
 msgid "if empty use port configured in general options"
-msgstr ""
+msgstr "если пустое, то используется порт из основных настроек"
 
 #: inc/agent.class.php:759
 msgid "Agent state"
@@ -1094,11 +1095,11 @@ msgstr "Модифицированный JSON содержит синтакси�
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
 msgid "Import"
-msgstr ""
+msgstr "Импорт"
 
 #: inc/deploypackage.class.php:72
 msgid "Export"
-msgstr ""
+msgstr "Экспорт"
 
 #: inc/deploypackage.class.php:174
 msgid "Modification Denied"
@@ -1129,11 +1130,11 @@ msgstr "Элемент добавлен успешно"
 
 #: inc/deploypackage.class.php:817
 msgid "Package exported in"
-msgstr ""
+msgstr "Пакет экспортируется в"
 
 #: inc/deploypackage.class.php:901
 msgid "Packages to import"
-msgstr ""
+msgstr "Пакеты для импорта"
 
 #: inc/deploytask.class.php:54
 msgid "Group of computers"
@@ -1281,12 +1282,12 @@ msgstr "Игнорировать при импорте FusionInventory"
 #: inc/inventoryruleentity.class.php:212
 #: inc/inventoryrulelocation.class.php:215
 msgid "is CIDR"
-msgstr ""
+msgstr "CIDR"
 
 #: inc/inventoryruleentity.class.php:213
 #: inc/inventoryrulelocation.class.php:216
 msgid "is not CIDR"
-msgstr ""
+msgstr "не CIDR"
 
 #: inc/inventoryruleimport.class.php:86 inc/inventoryruleimport.class.php:111
 #: inc/inventoryruleimport.class.php:114 inc/inventoryruleimport.class.php:117
@@ -1319,7 +1320,7 @@ msgstr "Ссылка"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
-msgstr ""
+msgstr "Импорт запрещен (без лога)"
 
 #: inc/inventoryruleimport.class.php:224
 msgid "equal"
@@ -2361,7 +2362,7 @@ msgstr "Правила местоположения компьютера"
 #: inc/menu.class.php:336 inc/ruledictionnarycomputerarch.class.php:53
 #: inc/ruledictionnarycomputerarchcollection.class.php:50
 msgid "Dictionnary of computer architectures"
-msgstr ""
+msgstr "Словарь компьютерных архитектур"
 
 #: inc/menu.class.php:351
 msgid "Rules"
@@ -2422,7 +2423,7 @@ msgstr "Задайте правила для импорта: слияние и �
 msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
-msgstr ""
+msgstr "Это шаги по настройке плагина FusionInventory для SNMP инвентаризации (коммутатор, маршрутизатор, сетевой принтер)"
 
 #: inc/menu.class.php:589
 msgid "Configure SNMP credentials"
@@ -2440,7 +2441,7 @@ msgstr "`Сетевое обнаружение`, используется для
 
 #: inc/menu.class.php:604
 msgid "Define IP Ranges of your network + related SNMP authentication"
-msgstr ""
+msgstr "Ввод диапазонов IP вашей сети + аутентификация через SNMP "
 
 #: inc/menu.class.php:609
 msgid "Define an agent allowed to discover the network"
@@ -2453,7 +2454,7 @@ msgstr "Создать новую задачу с модулем обнаруж�
 
 #: inc/menu.class.php:619
 msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr ""
+msgstr "Если у вас есть устройства без типа, импортировать их из неуправляемых устройств"
 
 #: inc/menu.class.php:624
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
@@ -2471,7 +2472,7 @@ msgstr "Создать новую задачу с модулем инвента�
 
 #: inc/menu.class.php:879
 msgid "Deployment"
-msgstr ""
+msgstr "Развертывания"
 
 #: inc/networkequipment.class.php:54 inc/printer.class.php:65
 msgid "FusionInventory SNMP"
@@ -2555,11 +2556,11 @@ msgstr "Порт не подключен с"
 
 #: inc/networkequipment.class.php:892
 msgid "Half"
-msgstr ""
+msgstr "Половина"
 
 #: inc/networkequipment.class.php:896
 msgid "Full"
-msgstr ""
+msgstr "Полная"
 
 #: inc/networkport.class.php:89
 msgid "Last change"
@@ -2605,7 +2606,7 @@ msgstr "Картридж(и)"
 
 #: inc/printercartridge.class.php:86
 msgid "remaining pages"
-msgstr ""
+msgstr "осталось страниц"
 
 #: inc/printerlog.class.php:53 inc/printerlog.class.php:323
 msgid "History meter printer"
@@ -2689,7 +2690,7 @@ msgstr "Принтер SNMP"
 
 #: inc/profile.class.php:260
 msgid "Unmanaged devices"
-msgstr ""
+msgstr "Неуправляемые устройства"
 
 #: inc/profile.class.php:263
 msgid "computer XML manual import"
@@ -2756,7 +2757,7 @@ msgstr "Уникальный id"
 
 #: inc/statediscovery.class.php:138 inc/stateinventory.class.php:91
 msgid "Task job"
-msgstr ""
+msgstr "Задания для выполнения"
 
 #: inc/statediscovery.class.php:145
 msgid "Total discovery devices"
@@ -2863,11 +2864,11 @@ msgstr "Этот агент больше не относится к актёра
 
 #: inc/task.class.php:563
 msgid "Device no longer defined in definition of job"
-msgstr ""
+msgstr "Устройство больше не определено в заданиях на выполнение "
 
 #: inc/task.class.php:1364
 msgid "Task has been disabled"
-msgstr ""
+msgstr "Задача была отключена"
 
 #: inc/task.view.class.php:81
 msgid "To Be Done"
@@ -3147,7 +3148,7 @@ msgstr "Время окончания"
 
 #: inc/unmanaged.class.php:56 inc/unmanaged.class.php:90
 msgid "Unmanaged device"
-msgstr ""
+msgstr "Неуправляемое устройство"
 
 #: inc/unmanaged.class.php:128 inc/unmanaged.class.php:388
 msgid "Network hub"
@@ -3159,7 +3160,7 @@ msgstr "Подтверждённые устройства"
 
 #: inc/unmanaged.class.php:462
 msgid "Import unmanaged device into asset"
-msgstr ""
+msgstr "Импорт неуправляемого устройства в актив"
 
 #: inc/wizard.class.php:74
 msgid "Breadcrumb"
@@ -3225,4 +3226,4 @@ msgstr "Учетные данные"
 
 #: report/computer_last_inventory.php:73
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "Число дней (минимум) с последней инвентаризации"
