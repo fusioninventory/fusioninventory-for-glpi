@@ -10,7 +10,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "7.24.0_1"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyzz" }
       },
       "AGENT" : {
         "name" : "pc1-2013-02-13",
@@ -33,7 +34,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "7.24.0_1"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyz1" }
       },
       "AGENT" : {
         "name" : "pc-2013-02-13",
@@ -56,7 +58,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "7.24.0_1-Beta"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyz2" }
       },
       "AGENT" : {
         "name" : "pc-2013-02-13",
@@ -79,7 +82,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "7.24.0_1-Beta"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyz3" }
       },
       "AGENT" : {
         "name" : "pc-2013-02-13",
@@ -102,7 +106,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "7.24.0_1-Beta"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyz4" }
       },
       "AGENT" : {
         "name" : "pc-2013-02-13",
@@ -125,7 +130,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "2.3.2 (x86 edition)"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyz5" }
       },
       "AGENT" : {
         "name" : "pc-2013-02-13",
@@ -148,7 +154,8 @@
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "2.3.2 (x86 edition)"
           }
-        ]
+        ],
+        "BIOS" : { "SSN" : "xxyyz6" }
       },
       "AGENT" : {
         "name" : "pc-2013-02-13",
