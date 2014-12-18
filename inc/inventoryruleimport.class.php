@@ -904,6 +904,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       $types["PluginFusioninventoryUnmanaged"] =
                      PluginFusioninventoryUnmanaged::getTypeName();
+      $types[""] = __('No itemtype defined', 'fusioninventory');
       return $types;
    }
 
