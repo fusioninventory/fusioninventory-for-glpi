@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 18:58+0000\n"
+"PO-Revision-Date: 2014-12-19 10:48+0000\n"
 "Last-Translator: Ilkka Yläkoski <iylakoski@learn-it2.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/projects/p/FusionInventory/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -587,124 +587,124 @@ msgstr ""
 
 #: inc/collect_wmi.class.php:91 inc/collect_wmi_content.class.php:178
 msgid "Moniker"
-msgstr ""
+msgstr "Monikeri"
 
 #: inc/collect_wmi.class.php:92 inc/collect_wmi.class.php:141
 #: inc/collect_wmi_content.class.php:179
 msgid "Class"
-msgstr ""
+msgstr "Luokka"
 
 #: inc/collect_wmi.class.php:93 inc/collect_wmi.class.php:147
 msgid "Properties"
-msgstr ""
+msgstr "Ominaisuudet"
 
 #: inc/collect_wmi.class.php:133
 msgid "moniker"
-msgstr ""
+msgstr "Monikeri"
 
 #: inc/collect_wmi_content.class.php:52 inc/collect_wmi_content.class.php:73
 #: inc/collect_wmi_content.class.php:79
 msgid "Windows WMI content"
-msgstr ""
+msgstr "Windows WMI:n sisältö"
 
 #: inc/collect_wmi_content.class.php:180 inc/collect_wmi_content.class.php:225
 msgid "Property"
-msgstr ""
+msgstr "Ominaisuus"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
 #: inc/menu.class.php:329 inc/profile.class.php:213
 msgid "Additional computer information rules"
-msgstr ""
+msgstr "Tietokonetietojen lisäsäännöt"
 
 #: inc/collectrule.class.php:125
 msgid "Registry key"
-msgstr ""
+msgstr "Rekisteriavain"
 
 #: inc/collectrule.class.php:129
 msgid "Registry value"
-msgstr ""
+msgstr "Rekisteriarvo"
 
 #: inc/collectrule.class.php:132
 msgid "WMI property"
-msgstr ""
+msgstr "WMI-ominaisuus"
 
 #: inc/collectrule.class.php:136
 msgid "WMI value"
-msgstr ""
+msgstr "WMI-arvo"
 
 #: inc/collectrule.class.php:139
 msgid "File name"
-msgstr ""
+msgstr "Tiedoston nimi "
 
 #: inc/collectrule.class.php:142
 msgid "File path"
-msgstr ""
+msgstr "Tiedostopolku "
 
 #: inc/collectrule.class.php:145
 msgid "File size"
-msgstr ""
+msgstr "Tiedoston koko "
 
 #: inc/common.view.class.php:188
 msgid "Warning:"
-msgstr ""
+msgstr "Varoitus"
 
 #: inc/common.view.class.php:192
 msgid "Error:"
-msgstr ""
+msgstr "Virhe "
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:215
 #: inc/communicationnetworkinventory.class.php:295
 msgid "Unattended element in"
-msgstr ""
+msgstr "Odottamaton elementti kohteessa"
 
 #: inc/computerlicenseinfo.class.php:63
 msgid "Software licenses"
-msgstr ""
+msgstr "Ohjelmistolisenssit"
 
 #: inc/computerlicenseinfo.class.php:117
 msgid "Serial number"
-msgstr ""
+msgstr "Sarjanumero"
 
 #: inc/computerlicenseinfo.class.php:122
 msgid "Full name"
-msgstr ""
+msgstr "Täydellinen nimi"
 
 #: inc/computerlicenseinfo.class.php:124
 msgid "Option"
-msgstr ""
+msgstr "Asetus"
 
 #: inc/computerlicenseinfo.class.php:148
 msgid "Union between computer and license"
-msgstr ""
+msgstr "Yhteys tietokoneen ja lisenssin välillä"
 
 #: inc/config.class.php:199 inc/staticmisc.class.php:70
 msgid "Computer Inventory"
-msgstr ""
+msgstr "Tietokonekartoitus"
 
 #: inc/config.class.php:201
 msgid "Network Inventory"
-msgstr ""
+msgstr "Verkkokartoitus"
 
 #: inc/config.class.php:203 inc/menu.class.php:439
 msgid "Package management"
-msgstr ""
+msgstr "Paketin hallinta"
 
 #: inc/config.class.php:295
 msgid "SSL-only for agent"
-msgstr ""
+msgstr "Yhteys agenttin vain SSL:än avulla"
 
 #: inc/config.class.php:299
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "Kartoitustiheys (tunteina)"
 
 #: inc/config.class.php:310
 msgid "Delete tasks after"
-msgstr ""
+msgstr "Poista päättyneet tehtävät, kun on kulunut "
 
 #: inc/config.class.php:327
 msgid "Extra-debug"
-msgstr ""
+msgstr "Extra-debug"
 
 #: inc/config.class.php:360
 msgid "Clean agents not have contacted server since (in days)"
@@ -712,22 +712,22 @@ msgstr ""
 
 #: inc/config.class.php:399 inc/wizard.class.php:340
 msgid "Import options"
-msgstr ""
+msgstr "Tuonnin asetukset"
 
 #: inc/config.class.php:447 inc/inventorycomputerantivirus.class.php:53
 #: inc/inventorycomputerantivirus.class.php:80
 #: inc/inventorycomputerantivirus.class.php:136
 #: inc/inventorycomputerbatteries.class.php:117
 msgid "Antivirus"
-msgstr ""
+msgstr "Antivirus"
 
 #: inc/config.class.php:490
 msgid "Virtual network card"
-msgstr ""
+msgstr "Virtuaalinen verkkokortti"
 
 #: inc/config.class.php:499
 msgid "Default status"
-msgstr ""
+msgstr "Oletustila"
 
 #: inc/config.class.php:533
 msgid ""
@@ -737,96 +737,96 @@ msgstr "Luo tietokone perustuen virtuaalikoneen tietoihin (vain kun virtuaalikon
 
 #: inc/config.class.php:550
 msgid "Network drives"
-msgstr ""
+msgstr "Verkkoasemat"
 
 #: inc/config.class.php:595
 msgid "Network options"
-msgstr ""
+msgstr "Verkkoasetukset"
 
 #: inc/config.class.php:672
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Siirtohakemisto tiedostojen lähetykseen"
 
 #: inc/config.class.php:680
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Käytä tätä GLPI-palvelinta peilipalvelimena"
 
 #: inc/configlogfield.class.php:145
 msgid "History configuration"
-msgstr ""
+msgstr "Historiatietojen asetukset"
 
 #: inc/configlogfield.class.php:152
 msgid "List of fields for which to keep history"
-msgstr ""
+msgstr "Luettelo talletettavista kentistä"
 
 #: inc/configlogfield.class.php:156
 msgid "Retention in days"
-msgstr ""
+msgstr "Säilytysaika päivinä"
 
 #: inc/configsecurity.class.php:82
 msgid "SNMP version"
-msgstr ""
+msgstr "SNMP-versio"
 
 #: inc/configsecurity.class.php:94
 msgid "Community"
-msgstr ""
+msgstr "Yhteisö"
 
 #: inc/configsecurity.class.php:107
 msgid "Encryption protocol for authentication "
-msgstr ""
+msgstr "Kirjautumisen salausprotokolla"
 
 #: inc/configsecurity.class.php:124
 msgid "Encryption protocol for data"
-msgstr ""
+msgstr "Tietojen salausprotokolla"
 
 #: inc/credential.class.php:56 inc/credential.class.php:143
 #: inc/credentialip.class.php:97 inc/credentialip.class.php:110
 #: inc/credentialip.class.php:130 inc/menu.class.php:392
 #: inc/profile.class.php:242
 msgid "Authentication for remote devices (VMware)"
-msgstr ""
+msgstr "Kirjautuminen etälaitteille (Vmware)"
 
 #: inc/credential.class.php:229 inc/credential.class.php:244
 #: inc/profile.class.php:248
 msgid "VMware host"
-msgstr ""
+msgstr "Vmware-isäntä"
 
 #: inc/credential.class.php:349 inc/menu.class.php:373
 #: inc/profile.class.php:245 inc/wizard.class.php:1014
 msgid "Remote devices to inventory (VMware)"
-msgstr ""
+msgstr "Kartoitettavat etälaitteet (Vmware)"
 
 #: inc/credentialip.class.php:56
 msgid "Remote device inventory"
-msgstr ""
+msgstr "Etälaitteen kartoitus"
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Paluuarvo on yhtä suuri kuin"
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Paluuarvo on eri suuri kuin"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
-msgstr ""
+msgstr "Komennon tulos sisältää"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "Komennon tulos ei sisällä"
 
 #: inc/deployaction.class.php:63
 msgid "Command"
-msgstr ""
+msgstr "Komento"
 
 #: inc/deployaction.class.php:64
 msgid "Move"
-msgstr ""
+msgstr "Siirrä"
 
 #: inc/deployaction.class.php:65
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 #: inc/deployaction.class.php:66 inc/deployaction.class.php:222
 #: inc/deploycheck.class.php:206 inc/deployfile.class.php:293
@@ -837,250 +837,250 @@ msgstr ""
 #: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:443
 #: inc/taskjob.view.class.php:455
 msgid "Delete"
-msgstr ""
+msgstr "Poista "
 
 #: inc/deployaction.class.php:67
 msgid "Make directory"
-msgstr ""
+msgstr "Luo hakemisto"
 
 #: inc/deployaction.class.php:180
 msgid "Command to execute"
-msgstr ""
+msgstr "Suoritettava komento"
 
 #: inc/deployaction.class.php:194
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "tämän komennon paluuarvot talletettu "
 
 #: inc/deployaction.class.php:207 inc/deploycheck.class.php:191
 #: inc/deployfile.class.php:279 inc/taskjob.class.php:1789
 msgid "drag"
-msgstr ""
+msgstr "raahaa"
 
 #: inc/deployaction.class.php:330
 msgid "From"
-msgstr ""
+msgstr "Alkaen"
 
 #: inc/deployaction.class.php:332
 msgid "To"
-msgstr ""
+msgstr "Asti"
 
 #: inc/deployaction.class.php:340
 msgid "exec"
-msgstr ""
+msgstr "exec"
 
 #: inc/deployaction.class.php:353
 msgid "path"
-msgstr ""
+msgstr "Polku "
 
 #: inc/deployaction.class.php:392
 msgid "Execution checks"
-msgstr ""
+msgstr "Tarkistusten suoritus"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "Rekisteriavain on olemassa"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "Rekisteriavain ei ole olemassa"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "Rekisteriavain on sama kuin"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
-msgstr ""
+msgstr "Tiedosto on olemassa"
 
 #: inc/deploycheck.class.php:55
 msgid "File is missing"
-msgstr ""
+msgstr "Tiedosto ei ole olemassa"
 
 #: inc/deploycheck.class.php:56
 msgid "File size is greater than"
-msgstr ""
+msgstr "Tiedoston koko on suurempi kuin "
 
 #: inc/deploycheck.class.php:57
 msgid "File size is equal to"
-msgstr ""
+msgstr "Tiedoston koko on yhtä suuri kuin "
 
 #: inc/deploycheck.class.php:58
 msgid "File size is lower than"
-msgstr ""
+msgstr "Tiedoston koko on pienempi kuin "
 
 #: inc/deploycheck.class.php:59
 msgid "SHA-512 hash value is"
-msgstr ""
+msgstr "SHA-512-tiiviste on "
 
 #: inc/deploycheck.class.php:60
 msgid "Free space is greater than"
-msgstr ""
+msgstr "Vapaa tila suuret mpi kuin "
 
 #: inc/deploycheck.class.php:80
 msgid "B"
-msgstr ""
+msgstr "t"
 
 #: inc/deploycheck.class.php:81
 msgid "KiB"
-msgstr ""
+msgstr "kt"
 
 #: inc/deploycheck.class.php:82
 msgid "MiB"
-msgstr ""
+msgstr "Mt"
 
 #: inc/deploycheck.class.php:83
 msgid "GiB"
-msgstr ""
+msgstr "Gt"
 
 #: inc/deploycheck.class.php:287
 msgid "Key value"
-msgstr ""
+msgstr "Avaimen arvo"
 
 #: inc/deploycheck.class.php:307
 msgid "Disk or directory"
-msgstr ""
+msgstr "Levy tai hakemisto"
 
 #: inc/deploycheck.class.php:395
 msgid "Unit"
-msgstr ""
+msgstr "Yksikkö"
 
 #: inc/deploycheck.class.php:421
 msgid "In case of error"
-msgstr ""
+msgstr "Virhetilanteessa"
 
 #: inc/deploycheck.class.php:424 inc/taskjobstate.class.php:78
 msgid "Error"
-msgstr ""
+msgstr "Virhe "
 
 #: inc/deploycheck.class.php:425
 msgid "Ignore"
-msgstr ""
+msgstr "Sivuuta"
 
 #: inc/deployfile.class.php:56
 msgid "Upload from computer"
-msgstr ""
+msgstr "Lataa tietokoneelta"
 
 #: inc/deployfile.class.php:57
 msgid "Upload from server"
-msgstr ""
+msgstr "Lataa palvelimelta"
 
 #: inc/deployfile.class.php:226
 msgid "p2p"
-msgstr ""
+msgstr "p2p"
 
 #: inc/deployfile.class.php:227
 msgid "retention"
-msgstr ""
+msgstr "säilytysaika"
 
 #: inc/deployfile.class.php:229
 msgid "days"
-msgstr ""
+msgstr "päivää"
 
 #: inc/deployfile.class.php:242
 msgid "uncompress"
-msgstr ""
+msgstr "pura"
 
 #: inc/deployfile.class.php:326
 msgid "Source"
-msgstr ""
+msgstr "Lähde"
 
 #: inc/deployfile.class.php:399
 msgid "filename"
-msgstr ""
+msgstr "Tiedoston nimi "
 
 #: inc/deployfile.class.php:405
 msgid "Choose"
-msgstr ""
+msgstr "Valitse"
 
 #: inc/deployfile.class.php:409
 msgid "Select the file on server"
-msgstr ""
+msgstr "Valitse palvelimen tiedosto"
 
 #: inc/deployfile.class.php:424
 msgid "Uncompress"
-msgstr ""
+msgstr "Pura"
 
 #: inc/deployfile.class.php:429
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:436
 msgid "retention days"
-msgstr ""
+msgstr "Säilytyspäivät"
 
 #: inc/deployfile.class.php:707
 msgid "Transfer error: the file size is too big"
-msgstr ""
+msgstr "Siirtovirhe: tiedosto on liian suuri."
 
 #: inc/deployfile.class.php:710
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Tiedosto ladattiin vain osittain"
 
 #: inc/deployfile.class.php:713
 msgid "No file was uploaded"
-msgstr ""
+msgstr "Yhtään tiedostoa ei ladattu"
 
 #: inc/deployfile.class.php:716
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Väliaikaiskansio puuttuu"
 
 #: inc/deployfile.class.php:719
 msgid "Failed to write file to disk"
-msgstr ""
+msgstr "Tiedostoa ei voida kirjoittaa levylle "
 
 #: inc/deployfile.class.php:722
 msgid "PHP extension stopped the file upload"
-msgstr ""
+msgstr "PHP-laajennus keskeytti tiedoston latauksen"
 
 #: inc/deployfile.class.php:752 inc/deployfile.class.php:800
 msgid "File saved!"
-msgstr ""
+msgstr "Tiedoston tallennus onnistui"
 
 #: inc/deployfile.class.php:755 inc/deployfile.class.php:803
 msgid "Failed to copy file"
-msgstr ""
+msgstr "Tiedoston kopiointi epäonnistui"
 
 #: inc/deployfile.class.php:759 inc/deployfile.class.php:807
 msgid "File missing"
-msgstr ""
+msgstr "Tiedosto puuttuu"
 
 #: inc/deployfile.class.php:1047
 msgid "Max file size"
-msgstr ""
+msgstr "Tiedoston enimmäiskoko"
 
 #: inc/deployfile.class.php:1049
 msgid "Mio"
-msgstr ""
+msgstr "Mt"
 
 #: inc/deploygroup.class.php:64 inc/deploytaskjob.class.php:170
 #: inc/menu.class.php:227 inc/profile.class.php:302
 msgid "Groups of computers"
-msgstr ""
+msgstr "Tietokoneryhmät"
 
 #: inc/deploygroup.class.php:74
 msgid "Dynamic group"
-msgstr ""
+msgstr "Dynaaminen ryhmä"
 
 #: inc/deploygroup.class.php:298
 msgid "Add group"
-msgstr ""
+msgstr "Lisää ryhmä"
 
 #: inc/deployinstall.class.php:50 inc/deployinstall.class.php:60
 msgid "Installation"
-msgstr ""
+msgstr "Asennus"
 
 #: inc/deploymirror.class.php:54 inc/menu.class.php:448
 #: inc/profile.class.php:228
 msgid "Mirror servers"
-msgstr ""
+msgstr "Peilipalvelimet"
 
 #: inc/deploymirror.class.php:135 inc/deploymirror.class.php:196
 msgid "Mirror server address"
-msgstr ""
+msgstr "Peilipalvelimen osoite"
 
 #: inc/deploymirror.class.php:141
 msgid "Mirror location"
-msgstr ""
+msgstr "Peilipalvelimen sijainti"
 
 #: inc/deployorder.class.php:196
 msgid "The modified JSON contained a syntax error :"
@@ -1089,15 +1089,15 @@ msgstr ""
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
 msgid "Import"
-msgstr ""
+msgstr "Tuonti"
 
 #: inc/deploypackage.class.php:72
 msgid "Export"
-msgstr ""
+msgstr "Vienti"
 
 #: inc/deploypackage.class.php:174
 msgid "Modification Denied"
-msgstr ""
+msgstr "Muokkaus estetty"
 
 #: inc/deploypackage.class.php:179
 msgid "The following task is running with this package"
@@ -1107,31 +1107,31 @@ msgstr[1] ""
 
 #: inc/deploypackage.class.php:395
 msgid "Audits"
-msgstr ""
+msgstr "Tarkastukset"
 
 #: inc/deploypackage.class.php:396
 msgid "Files"
-msgstr ""
+msgstr "Tiedostot"
 
 #: inc/deploypackage.class.php:397
 msgid "Actions"
-msgstr ""
+msgstr "Toiminnot"
 
 #: inc/deploypackage.class.php:729
 msgid "Item successfully added"
-msgstr ""
+msgstr "Kohteen lisäys onnistui"
 
 #: inc/deploypackage.class.php:817
 msgid "Package exported in"
-msgstr ""
+msgstr "Paketin käyttöönotto"
 
 #: inc/deploypackage.class.php:901
 msgid "Packages to import"
-msgstr ""
+msgstr "Tuotavat paketit"
 
 #: inc/deploytask.class.php:54
 msgid "Group of computers"
-msgstr ""
+msgstr "Tietokoneryhmät"
 
 #: inc/deploytask.class.php:85
 msgid "Order list"
@@ -1139,7 +1139,7 @@ msgstr ""
 
 #: inc/deploytask.class.php:118
 msgid "Add task"
-msgstr ""
+msgstr "Lisää tehtävä"
 
 #: inc/deploytask.class.php:145
 msgid "Edit impossible, this task is active"
@@ -1151,87 +1151,87 @@ msgstr ""
 
 #: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:60
 msgid "Uninstallation"
-msgstr ""
+msgstr "Asennuksen poisto"
 
 #: inc/display.class.php:174
 msgid "Progress"
-msgstr ""
+msgstr "Edistyminen"
 
 #: inc/entity.class.php:110
 msgid "Model for automatic computers transfer in an other entity"
-msgstr ""
+msgstr "Malli tietokoneiden automaattiselle siirrolle toiseen yksikköön"
 
 #: inc/entity.class.php:156
 msgid "Service URL"
-msgstr ""
+msgstr "Palvelun URL"
 
 #: inc/ignoredimportdevice.class.php:52
 msgid "Equipment ignored on import"
-msgstr ""
+msgstr "Tuonnissa sivuutettu laite"
 
 #: inc/inventorycomputerantivirus.class.php:165
 #: inc/inventorycomputerbatteries.class.php:146
 msgid "Up to date"
-msgstr ""
+msgstr "Ajan tasalla"
 
 #: inc/inventorycomputerbatteries.class.php:53
 #: inc/inventorycomputerbatteries.class.php:80
 msgid "Batterie"
-msgstr ""
+msgstr "Akku"
 
 #: inc/inventorycomputerblacklist.class.php:68
 #: inc/inventorycomputerblacklist.class.php:118
 msgid "blacklisted value"
-msgstr ""
+msgstr "Kielletty arvo"
 
 #: inc/inventorycomputerchemistry.class.php:55
 msgid "Chemistry"
-msgstr ""
+msgstr "Kemia"
 
 #: inc/inventorycomputercomputer.class.php:105
 msgid "Public contact address"
-msgstr ""
+msgstr "Kontaktin julkinen osoite"
 
 #: inc/inventorycomputercomputer.class.php:115
 msgid "BIOS date"
-msgstr ""
+msgstr "BIOS:in päiväys"
 
 #: inc/inventorycomputercomputer.class.php:122
 msgid "BIOS version"
-msgstr ""
+msgstr "BIOS:in versio"
 
 #: inc/inventorycomputercomputer.class.php:179
 msgid "Automatic entity transfer"
-msgstr ""
+msgstr "Yksikön automaattinen siirto"
 
 #: inc/inventorycomputercomputer.class.php:183
 msgid "No, locked (by entity configuration)"
-msgstr ""
+msgstr "Ei, lukittu (yksikön määrityksissä)"
 
 #: inc/inventorycomputercomputer.class.php:186
 msgid "No, locked manually"
-msgstr ""
+msgstr "Ei, lukittu manuaalisesti"
 
 #: inc/inventorycomputercomputer.class.php:188
 msgid "Unlock it"
-msgstr ""
+msgstr "Vapauta se"
 
 #: inc/inventorycomputercomputer.class.php:192
 msgid "Lock it"
-msgstr ""
+msgstr "Lukitse se"
 
 #: inc/inventorycomputercomputer.class.php:238
 #: inc/networkequipment.class.php:1121 inc/printer.class.php:217
 msgid "Download"
-msgstr ""
+msgstr "Lataa "
 
 #: inc/inventorycomputercomputer.class.php:247
 msgid "PHP Array"
-msgstr ""
+msgstr "PHP-taulukko"
 
 #: inc/inventorycomputerimportxml.class.php:79
 msgid "Import XML file from an Agent"
-msgstr ""
+msgstr "Tuo agentin XML-tiedosto"
 
 #: inc/inventorycomputerimportxml.class.php:85
 msgid ""
@@ -1239,48 +1239,48 @@ msgid ""
 "have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
-msgstr ""
+msgstr "Lataa agentin luoma XML-tiedosto tällä toiminnolla. Tiedostopäätteen on oltava joko .xml tai .ocs. XML-tiedostot voidaan myös ladata <b>ZIP</b>-tiedostona. Katso agentin dokumentaatiosta, miten tällainen XML-tiedosto luodaan."
 
 #: inc/inventorycomputerstorage.class.php:53
 #: inc/inventorycomputerstorage_storage.class.php:53
 msgid "Storage"
-msgstr ""
+msgstr "Tallennus"
 
 #: inc/inventorycomputerstoragetype.class.php:53
 msgid "Storage type"
-msgstr ""
+msgstr "Tallennustyyppi"
 
 #: inc/inventorycomputerwebservice.class.php:74
 msgid "Computer injected into GLPI"
-msgstr ""
+msgstr "Tietokone tuotu GLPI:hin"
 
 #: inc/inventoryruleentity.class.php:61
 #: inc/inventoryruleentitycollection.class.php:57 inc/profile.class.php:201
 msgid "Entity rules"
-msgstr ""
+msgstr "Yksiköiden säännöt"
 
 #: inc/inventoryruleentity.class.php:136
 msgid "IP Address"
-msgstr ""
+msgstr "IP-osoite"
 
 #: inc/inventoryruleentity.class.php:139
 msgid "Computer's name"
-msgstr ""
+msgstr "Tietokoneen nimi"
 
 #: inc/inventoryruleentity.class.php:168
 #: inc/inventoryrulelocation.class.php:172
 msgid "Ignore in FusionInventory import"
-msgstr ""
+msgstr "Sivuuta FusionInventoryn tuonnissa "
 
 #: inc/inventoryruleentity.class.php:212
 #: inc/inventoryrulelocation.class.php:215
 msgid "is CIDR"
-msgstr ""
+msgstr "on CIDR"
 
 #: inc/inventoryruleentity.class.php:213
 #: inc/inventoryrulelocation.class.php:216
 msgid "is not CIDR"
-msgstr ""
+msgstr "ei ole CIDR"
 
 #: inc/inventoryruleimport.class.php:86 inc/inventoryruleimport.class.php:111
 #: inc/inventoryruleimport.class.php:114 inc/inventoryruleimport.class.php:117
@@ -1289,39 +1289,39 @@ msgstr ""
 #: inc/inventoryruleimport.class.php:142 inc/inventoryruleimport.class.php:146
 #: inc/inventoryruleimport.class.php:150 inc/inventoryruleimport.class.php:160
 msgid "Assets to import"
-msgstr ""
+msgstr "Tuotavat laitteet"
 
 #: inc/inventoryruleimport.class.php:87
 msgid "Destination of equipment entity"
-msgstr ""
+msgstr "Laitteen määränpääyksikkö"
 
 #: inc/inventoryruleimport.class.php:103
 msgid "Search GLPI equipment with the status"
-msgstr ""
+msgstr "Hae GLPI:n tietokoneet, joilla on tila"
 
 #: inc/inventoryruleimport.class.php:169
 msgid "Restrict search in defined entity"
-msgstr ""
+msgstr "Rajoita haku määritettyyn yksikköön"
 
 #: inc/inventoryruleimport.class.php:181
 msgid "FusionInventory link"
-msgstr ""
+msgstr "FusinInventory-linkki"
 
 #: inc/inventoryruleimport.class.php:194
 msgid "Link"
-msgstr ""
+msgstr "Linkki"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
-msgstr ""
+msgstr "Tuonti estetty (ei lokia)"
 
 #: inc/inventoryruleimport.class.php:224
 msgid "equal"
-msgstr ""
+msgstr "yhtä suuri"
 
 #: inc/inventoryruleimport.class.php:226
 msgid "empty"
-msgstr ""
+msgstr "tyhjä"
 
 #: inc/inventoryruleimport.class.php:949
 #: inc/inventoryruleimportcollection.class.php:110
@@ -1332,30 +1332,30 @@ msgstr "Laite luotu"
 #: inc/inventoryruleimportcollection.class.php:115
 #: inc/taskjoblog.class.php:1133
 msgid "Import denied"
-msgstr ""
+msgstr "Tuonti estetty"
 
 #: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:299
 msgid "Equipment import and link rules"
-msgstr ""
+msgstr "Laitteiden tuonnin ja yhdistämisen säännöt"
 
 #: inc/inventoryrulelocation.class.php:61
 #: inc/inventoryrulelocationcollection.class.php:58
 msgid "Location rules"
-msgstr ""
+msgstr "Sijaintien säännöt"
 
 #: inc/iprange.class.php:63
 msgid "Communication mode"
-msgstr ""
+msgstr "Yhteystapa"
 
 #: inc/iprange.class.php:67
 msgid "See all informations of task"
-msgstr ""
+msgstr "Katso tehtävien kaikki tiedot"
 
 #: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:364
 #: inc/staticmisc.class.php:366 inc/staticmisc.class.php:387
 #: inc/wizard.class.php:376 inc/wizard.class.php:425 inc/wizard.class.php:955
 msgid "IP Ranges"
-msgstr ""
+msgstr "IP-osoitealueet"
 
 #: inc/iprange.class.php:91 inc/profile.class.php:239
 msgid "IP range configuration"
