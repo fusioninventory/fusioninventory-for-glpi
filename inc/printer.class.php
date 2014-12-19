@@ -238,6 +238,38 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       // Manage locks pictures
       PluginFusioninventoryLock::showLockIcon('Printer');
 
+      $pfPrinter = new PluginFusioninventoryPrinter();
+      $a_printerextend = current($pfPrinter->find(
+                                              "`printers_id`='".$item->getID()."'",
+                                              "", 1));
+      if (empty($a_printerextend)) {
+         return;
+      }
+
+      echo '<table class="tab_glpi" width="100%">';
+      echo '<tr>';
+      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '</tr>';
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>';
+      echo __('Last inventory', 'fusioninventory');
+      echo '</td>';
+      echo '<td>';
+      echo Html::convDateTime($a_printerextend['last_fusioninventory_update']);
+      echo '</td>';
+      echo '</tr>';
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>';
+      echo __('Type');
+      echo '</td>';
+      echo '<td>';
+      echo "SNMP";
+      echo '</td>';
+      echo '</tr>';
+
+      echo "</table>";
    }
 }
 
