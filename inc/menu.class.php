@@ -152,11 +152,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $menu = array();
 
-      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
-      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
-
-      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
-      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
+//      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
+//      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
+//
+//      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
+//      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
 
 //      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
 //      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
@@ -457,6 +457,31 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                                              $width_status);
       }
 
+      /*
+       * Guide
+       */
+      $a_menu = array();
+
+         $a_menu[] = array(
+            'name' => "FI> ".__('Computer inv.', 'fusioninventory'),
+            'pic'  => "",
+            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/menu_inventory.php"
+         );
+
+         $a_menu[] = array(
+            'name' => "FI> ".__('SNMP inv.', 'fusioninventory'),
+            'pic'  => "",
+            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/menu_snmpinventory.php"
+         );
+
+      if (!empty($a_menu)) {
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Guide', 'fusioninventory'),
+                                                             $a_menu,
+                                                             $type,
+                                                             $width_status);
+      }
+
+
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -721,7 +746,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             echo "<img src='".$menu_id['pic']."' width='16' height='16'/>";
          }
          echo "</th>";
-         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."'>
+         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."' style='text-align: left'>
                   <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
          echo "</tr>";
       }
