@@ -325,6 +325,9 @@ class PluginFusioninventoryFormatconvert {
                                                              $a_inventory['Computer']['serial']));
             }
          }
+         if (isset($array['BIOS']['MSN'])){
+            $a_inventory['Computer']['mserial'] = trim($array['BIOS']['MSN']);
+         }
       }
 
       // * Type of computer
