@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Gabroz <g8marsili@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-12-19 15:14+0000\n"
+"Last-Translator: Gabroz <g8marsili@gmail.com>\n"
 "Language-Team: Italian (Italy) (http://www.transifex.com/projects/p/FusionInventory/language/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 #: hook.php:275 hook.php:283 hook.php:294 hook.php:315 hook.php:322
 #: hook.php:330 inc/agent.class.php:191 inc/task.view.class.php:59
 msgid "FusInv"
-msgstr ""
+msgstr "FusInv"
 
 #: hook.php:52 hook.php:295 hook.php:323
 #: inc/inventorycomputercomputer.class.php:96
@@ -33,23 +34,23 @@ msgstr "Ultimo inventario"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "Nome dell'Antivirus"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "Versione dell'Antivirus"
 
 #: hook.php:78
 msgid "Antivirus enabled"
-msgstr ""
+msgstr "Antivirus attivato"
 
 #: hook.php:88
 msgid "Antivirus up to date"
-msgstr ""
+msgstr "Antivirus aggiornato"
 
 #: hook.php:97 hook.php:106
 msgid "BIOS"
-msgstr "UItimo inventario"
+msgstr "BIOS"
 
 #: hook.php:121 inc/inventorycomputercomputer.class.php:157
 msgid "Owner"
@@ -70,14 +71,14 @@ msgstr ""
 #: inc/inventoryruleimport.class.php:143
 #: inc/inventoryrulelocation.class.php:130
 msgid "FusionInventory tag"
-msgstr ""
+msgstr "Tag FusionInventory"
 
 #: hook.php:143 inc/computerarch.class.php:51
 #: inc/inventorycomputercomputer.class.php:139
 #: inc/ruledictionnarycomputerarch.class.php:65
 #: inc/ruledictionnarycomputerarch.class.php:77
 msgid "Architecture"
-msgstr ""
+msgstr "Architettura"
 
 #: hook.php:165 hook.php:172 hook.php:179 hook.php:186 hook.php:193
 #: hook.php:200 hook.php:207 inc/agent.class.php:166 inc/agent.class.php:245
@@ -93,33 +94,33 @@ msgstr ""
 
 #: hook.php:172
 msgid "WakeOnLan"
-msgstr ""
+msgstr "WakeOnLan"
 
 #: hook.php:179
 msgid "Local inventory"
-msgstr ""
+msgstr "Inventorio locale"
 
 #: hook.php:186
 msgid "ESX/VMWare"
-msgstr ""
+msgstr "ESX/VMWare"
 
 #: hook.php:193
 msgid "Network inventory"
-msgstr ""
+msgstr "Inventorio di rete"
 
 #: hook.php:200 inc/agent.class.php:143 inc/agent.class.php:419
 #: inc/agent.class.php:436 inc/config.class.php:601 inc/config.class.php:623
 #: inc/staticmisc.class.php:86
 msgid "Network discovery"
-msgstr ""
+msgstr "Scoperta della rete"
 
 #: hook.php:207
 msgid "Collect"
-msgstr ""
+msgstr "Raccogli"
 
 #: hook.php:211 inc/computer.class.php:55 inc/deploygroup.class.php:73
 msgid "Static group"
-msgstr ""
+msgstr "Gruppo statico"
 
 #: hook.php:247
 msgid "Agent base URL"
@@ -155,7 +156,7 @@ msgstr ""
 
 #: hook.php:900
 msgid "Add to static group"
-msgstr ""
+msgstr "Aggiungi ad un gruppo statico"
 
 #: hook.php:908 hook.php:919
 msgid "Load the correct SNMP model"
@@ -179,8 +180,8 @@ msgstr "Chiusura forzata"
 #: inc/task.view.class.php:126
 msgid "Task"
 msgid_plural "Tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "compito"
+msgstr[1] "Compiti"
 
 #: hook.php:1049 inc/deploygroup.class.php:138 inc/deploypackage.class.php:56
 msgid "Package"
@@ -188,11 +189,11 @@ msgstr ""
 
 #: hook.php:1063
 msgid "Create a job for each computer"
-msgstr ""
+msgstr "Crea un lavoro per ogni computer"
 
 #: hook.php:1065 inc/deploygroup.class.php:151
 msgid "Create a job for each group"
-msgstr ""
+msgstr "Crea un lavoro per ogni gruppo"
 
 #: index.php:55 front/agent.form.php:47 front/agent.php:45
 #: front/agentmodule.form.php:45 front/collect.php:45
@@ -219,11 +220,11 @@ msgstr ""
 #: report/not_queried_recently.php:51 report/ports_date_connections.php:49
 #: report/switch_ports.history.php:50
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: setup.php:383 inc/printerlog.class.php:476
 msgid "Printed page counter"
-msgstr ""
+msgstr "Contatore di pagine stampate"
 
 #: setup.php:387
 msgid "Switchs ports history"
@@ -235,24 +236,24 @@ msgstr ""
 
 #: setup.php:391
 msgid "Number of days since last inventory"
-msgstr ""
+msgstr "Numero di giorni dall'ultimo inventario"
 
 #: setup.php:395 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
-msgstr ""
+msgstr "Computer non inventoriati da xx giorni"
 
 #: setup.php:503
 msgid "Your GLPI version not compatible, require 0.85"
-msgstr ""
+msgstr "La tua versione di GLPI non è compativile, richiede la 0.85"
 
 #: setup.php:508
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "l'estensione del fileinfo (PHP) è richiesta"
 
 #: setup.php:521
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Si prega di eliminare la cartella %s in glpi/plugins/"
 
 #: ajax/configurationamanagement_action.php:55
 msgid "In referentiel + alert"
@@ -284,7 +285,7 @@ msgstr "Caratteristiche"
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
-msgstr ""
+msgstr "Non puoi leggere i file zip!"
 
 #: front/inventorycomputerimportxml.php:93
 msgid "No file to import!"
@@ -296,16 +297,16 @@ msgstr ""
 
 #: front/popup.php:64
 msgid "Cache informations"
-msgstr ""
+msgstr "Informazioni cache"
 
 #: front/popup.php:69
 msgid "Network ports display options"
-msgstr ""
+msgstr "Mostra le opzioni delle porte network"
 
 #: front/printerlogreport.php:92 inc/statediscovery.class.php:141
 #: inc/stateinventory.class.php:94
 msgid "Starting date"
-msgstr ""
+msgstr "Data d'inizio"
 
 #: front/printerlogreport.php:100 inc/statediscovery.class.php:142
 #: inc/stateinventory.class.php:95
@@ -314,15 +315,15 @@ msgstr "Data di fine"
 
 #: front/rule.common.php:176
 msgid "Rules applied"
-msgstr ""
+msgstr "Regole applicate"
 
 #: front/rule.common.php:187
 msgid "Local rules"
-msgstr ""
+msgstr "Regole locali"
 
 #: front/unmanaged.form.php:82
 msgid "restoration of the item"
-msgstr ""
+msgstr "Restauro dell'oggetto "
 
 #: front/unmanaged.form.php:103 inc/unmanaged.class.php:291
 msgid "Number of imported devices"
@@ -343,7 +344,7 @@ msgstr "Agente"
 
 #: inc/agent.class.php:90 inc/agent.class.php:223 inc/agent.class.php:444
 msgid "Last contact"
-msgstr ""
+msgstr "Ultimo contatto"
 
 #: inc/agent.class.php:96 inc/agent.class.php:404
 msgid "locked"
@@ -351,7 +352,7 @@ msgstr "bloccato"
 
 #: inc/agent.class.php:102 inc/agent.class.php:377
 msgid "Device_id"
-msgstr ""
+msgstr "Device_id"
 
 #: inc/agent.class.php:108 inc/agent.class.php:384
 msgid "Computer link"
@@ -361,14 +362,14 @@ msgstr "Collegato al computer"
 #: inc/agent.class.php:452 inc/config.class.php:600 inc/config.class.php:610
 #: inc/statediscovery.class.php:144 inc/stateinventory.class.php:98
 msgid "Threads number"
-msgstr ""
+msgstr "Numero di thread"
 
 #: inc/agent.class.php:150 inc/agent.class.php:453 inc/agent.class.php:468
 #: inc/agentmodule.class.php:135 inc/agentmodule.class.php:248
 #: inc/config.class.php:611 inc/config.class.php:632
 #: inc/staticmisc.class.php:92
 msgid "Network inventory (SNMP)"
-msgstr ""
+msgstr "Inventario della rete (SNMP)"
 
 #: inc/agent.class.php:157 inc/agent.class.php:482 inc/config.class.php:320
 msgid "Agent port"
@@ -381,11 +382,11 @@ msgstr ""
 
 #: inc/agent.class.php:483
 msgid "if empty use port configured in general options"
-msgstr ""
+msgstr "Se vuoto, usare la porta configurata nelle opzioni generali"
 
 #: inc/agent.class.php:759
 msgid "Agent state"
-msgstr ""
+msgstr "Stato dell'agente"
 
 #: inc/agent.class.php:815
 msgid "Force inventory"
@@ -418,7 +419,7 @@ msgstr ""
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
-msgstr ""
+msgstr "Raccogli informazione"
 
 #: inc/collect.class.php:65
 msgid "Registry"
@@ -426,29 +427,29 @@ msgstr ""
 
 #: inc/collect.class.php:66
 msgid "WMI"
-msgstr ""
+msgstr "WMI"
 
 #: inc/collect.class.php:67 inc/collect_file.class.php:55
 #: inc/collect_file.class.php:62
 msgid "Find file"
-msgstr ""
+msgstr "Trova un file"
 
 #: inc/collect_file.class.php:86
 msgid "Find file associated"
-msgstr ""
+msgstr "Trova un file associato"
 
 #: inc/collect_file.class.php:90 inc/collect_file.class.php:160
 msgid "Limit"
-msgstr ""
+msgstr "Limite"
 
 #: inc/collect_file.class.php:91 inc/collect_file.class.php:126
 #: inc/collect_file.class.php:246
 msgid "Folder"
-msgstr ""
+msgstr "Cartella"
 
 #: inc/collect_file.class.php:92
 msgid "Recursive"
-msgstr ""
+msgstr "Ricorsivo"
 
 #: inc/collect_file.class.php:93 inc/collect_file.class.php:194
 msgid "Regex"
@@ -458,7 +459,7 @@ msgstr ""
 #: inc/collect_file_content.class.php:189
 #: inc/collect_file_content.class.php:227
 msgid "Size"
-msgstr ""
+msgstr "Dimensione"
 
 #: inc/collect_file.class.php:95 inc/collect_file.class.php:215
 msgid "Checksum SHA512"
@@ -470,7 +471,7 @@ msgstr ""
 
 #: inc/collect_file.class.php:97
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: inc/collect_file.class.php:98
 msgid "Iname"
@@ -479,35 +480,35 @@ msgstr ""
 #: inc/collect_file.class.php:99 inc/collect_file.class.php:241
 #: inc/deployaction.class.php:258 inc/deploycheck.class.php:235
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: inc/collect_file.class.php:124 inc/collect_file.class.php:245
 #: inc/deploycheck.class.php:291 inc/deploycheck.class.php:297
 #: inc/deploycheck.class.php:302 inc/deployfile.class.php:393
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: inc/collect_file.class.php:173
 msgid "Filter"
 msgid_plural "Filters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Filtro"
+msgstr[1] "Filtri"
 
 #: inc/collect_file.class.php:179
 msgid "Base folder"
-msgstr ""
+msgstr "Cartella base"
 
 #: inc/collect_file.class.php:185
 msgid "Folder recursive"
-msgstr ""
+msgstr "Cartella ricorsiva"
 
 #: inc/collect_file.class.php:204 inc/collect_file.class.php:234
 msgid "Disabled"
-msgstr ""
+msgstr "Disattivato"
 
 #: inc/collect_file.class.php:230
 msgid "Filename"
-msgstr ""
+msgstr "Nome del file"
 
 #: inc/collect_file.class.php:235
 msgid "Non sentitive case"
@@ -520,19 +521,19 @@ msgstr ""
 #: inc/collect_file_content.class.php:52 inc/collect_file_content.class.php:73
 #: inc/collect_file_content.class.php:79
 msgid "Find file content"
-msgstr ""
+msgstr "Trova contenuto del file"
 
 #: inc/collect_file_content.class.php:188
 msgid "Path/file"
-msgstr ""
+msgstr "Percorso/file"
 
 #: inc/collect_file_content.class.php:226
 msgid "pathfile"
-msgstr ""
+msgstr "Percorso del file"
 
 #: inc/collect_registry.class.php:52 inc/collect_registry.class.php:61
 msgid "Windows registry"
-msgstr ""
+msgstr "Registro windows"
 
 #: inc/collect_registry.class.php:101
 msgid "Windows registry associated"
@@ -544,7 +545,7 @@ msgstr ""
 
 #: inc/collect_registry.class.php:106
 msgid "Path/key"
-msgstr ""
+msgstr "Percorso/chiave"
 
 #: inc/collect_registry.class.php:107
 #: inc/collect_registry_content.class.php:179
@@ -553,36 +554,36 @@ msgstr ""
 #: inc/deploycheck.class.php:298 inc/deploycheck.class.php:303
 #: inc/deploycheck.class.php:308
 msgid "Value"
-msgstr ""
+msgstr "Valore"
 
 #: inc/collect_registry.class.php:155
 #: inc/collect_registry_content.class.php:178
 msgid "Path"
-msgstr ""
+msgstr "Percorso"
 
 #: inc/collect_registry.class.php:161 inc/deploycheck.class.php:282
 #: inc/deploycheck.class.php:286
 msgid "Key"
-msgstr ""
+msgstr "Chiave"
 
 #: inc/collect_registry_content.class.php:52
 #: inc/collect_registry_content.class.php:73
 #: inc/collect_registry_content.class.php:79
 msgid "Windows registry content"
-msgstr ""
+msgstr "Contenuto dei registri windows"
 
 #: inc/collect_registry_content.class.php:180
 #: inc/collect_registry_content.class.php:224
 msgid "Data"
-msgstr ""
+msgstr "Dati"
 
 #: inc/collect_wmi.class.php:52 inc/collect_wmi.class.php:61
 msgid "Windows WMI"
-msgstr ""
+msgstr "WMI Windows"
 
 #: inc/collect_wmi.class.php:87
 msgid "Windows WMI associated"
-msgstr ""
+msgstr "WMI Windows associato"
 
 #: inc/collect_wmi.class.php:91 inc/collect_wmi_content.class.php:178
 msgid "Moniker"
@@ -591,11 +592,11 @@ msgstr ""
 #: inc/collect_wmi.class.php:92 inc/collect_wmi.class.php:141
 #: inc/collect_wmi_content.class.php:179
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: inc/collect_wmi.class.php:93 inc/collect_wmi.class.php:147
 msgid "Properties"
-msgstr ""
+msgstr "Proprietà"
 
 #: inc/collect_wmi.class.php:133
 msgid "moniker"
@@ -604,86 +605,86 @@ msgstr ""
 #: inc/collect_wmi_content.class.php:52 inc/collect_wmi_content.class.php:73
 #: inc/collect_wmi_content.class.php:79
 msgid "Windows WMI content"
-msgstr ""
+msgstr "Contenuto WMI Windows "
 
 #: inc/collect_wmi_content.class.php:180 inc/collect_wmi_content.class.php:225
 msgid "Property"
-msgstr ""
+msgstr "Proprietà"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
 #: inc/menu.class.php:329 inc/profile.class.php:213
 msgid "Additional computer information rules"
-msgstr ""
+msgstr "Regole informative addizionali del computer"
 
 #: inc/collectrule.class.php:125
 msgid "Registry key"
-msgstr ""
+msgstr "Chiave di registro"
 
 #: inc/collectrule.class.php:129
 msgid "Registry value"
-msgstr ""
+msgstr "Valore del registro"
 
 #: inc/collectrule.class.php:132
 msgid "WMI property"
-msgstr ""
+msgstr "Proprietà del WMI"
 
 #: inc/collectrule.class.php:136
 msgid "WMI value"
-msgstr ""
+msgstr "Valore del WMI"
 
 #: inc/collectrule.class.php:139
 msgid "File name"
-msgstr ""
+msgstr "Nome del file"
 
 #: inc/collectrule.class.php:142
 msgid "File path"
-msgstr ""
+msgstr "Percorso del file"
 
 #: inc/collectrule.class.php:145
 msgid "File size"
-msgstr ""
+msgstr "Dimensione del file"
 
 #: inc/common.view.class.php:188
 msgid "Warning:"
-msgstr ""
+msgstr "Attenzione:"
 
 #: inc/common.view.class.php:192
 msgid "Error:"
-msgstr ""
+msgstr "Errore:"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:215
 #: inc/communicationnetworkinventory.class.php:295
 msgid "Unattended element in"
-msgstr ""
+msgstr "Elemento inaspettato in"
 
 #: inc/computerlicenseinfo.class.php:63
 msgid "Software licenses"
-msgstr ""
+msgstr "Licenza software"
 
 #: inc/computerlicenseinfo.class.php:117
 msgid "Serial number"
-msgstr ""
+msgstr "Numero seriale"
 
 #: inc/computerlicenseinfo.class.php:122
 msgid "Full name"
-msgstr ""
+msgstr "Nome completo"
 
 #: inc/computerlicenseinfo.class.php:124
 msgid "Option"
-msgstr ""
+msgstr "Opzione"
 
 #: inc/computerlicenseinfo.class.php:148
 msgid "Union between computer and license"
-msgstr ""
+msgstr "Unione tra computer e licenza"
 
 #: inc/config.class.php:199 inc/staticmisc.class.php:70
 msgid "Computer Inventory"
-msgstr ""
+msgstr "Inventario dei computer"
 
 #: inc/config.class.php:201
 msgid "Network Inventory"
-msgstr ""
+msgstr "Inventorio di rete"
 
 #: inc/config.class.php:203 inc/menu.class.php:439
 msgid "Package management"
@@ -695,7 +696,7 @@ msgstr "SSL unicamente per l'agente"
 
 #: inc/config.class.php:299
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "Frequenza dell'inventario (in ore)"
 
 #: inc/config.class.php:310
 msgid "Delete tasks after"
@@ -703,11 +704,11 @@ msgstr "Cancellare i compiti completati dopo (mn)"
 
 #: inc/config.class.php:327
 msgid "Extra-debug"
-msgstr ""
+msgstr "Extra-debug"
 
 #: inc/config.class.php:360
 msgid "Clean agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Pulisci gli agenti che non sono stati contattati da (in giorni)"
 
 #: inc/config.class.php:399 inc/wizard.class.php:340
 msgid "Import options"
@@ -718,7 +719,7 @@ msgstr "Opzioni d'importo"
 #: inc/inventorycomputerantivirus.class.php:136
 #: inc/inventorycomputerbatteries.class.php:117
 msgid "Antivirus"
-msgstr ""
+msgstr "Antivirus"
 
 #: inc/config.class.php:490
 msgid "Virtual network card"
@@ -732,7 +733,7 @@ msgstr "Stato predefinito"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Crea un computer basato sulle informazioni di una macchina virtuale ( solo se la macchina virtuale non ha agenti inventoriati ! )"
 
 #: inc/config.class.php:550
 msgid "Network drives"
@@ -740,23 +741,23 @@ msgstr "Unità di rete"
 
 #: inc/config.class.php:595
 msgid "Network options"
-msgstr ""
+msgstr "Opzioni di rete"
 
 #: inc/config.class.php:672
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Cartella radice per mandare file dal server"
 
 #: inc/config.class.php:680
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Usa questo server GLPI come un server specchio"
 
 #: inc/configlogfield.class.php:145
 msgid "History configuration"
-msgstr ""
+msgstr "Configurazione della cronologia"
 
 #: inc/configlogfield.class.php:152
 msgid "List of fields for which to keep history"
-msgstr ""
+msgstr "Lista dei campi per i quali tenere la cronologia"
 
 #: inc/configlogfield.class.php:156
 msgid "Retention in days"
@@ -764,11 +765,11 @@ msgstr "Conservazione in giorni"
 
 #: inc/configsecurity.class.php:82
 msgid "SNMP version"
-msgstr ""
+msgstr "Versione SNMP"
 
 #: inc/configsecurity.class.php:94
 msgid "Community"
-msgstr ""
+msgstr "Comunità"
 
 #: inc/configsecurity.class.php:107
 msgid "Encryption protocol for authentication "
@@ -797,15 +798,15 @@ msgstr "Dispositivi remoti da inventariare (VMware)"
 
 #: inc/credentialip.class.php:56
 msgid "Remote device inventory"
-msgstr ""
+msgstr "Inventorio dei device remoti"
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Il codice di ritorno è "
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Il codice di ritorno non è "
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
@@ -817,15 +818,15 @@ msgstr ""
 
 #: inc/deployaction.class.php:63
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: inc/deployaction.class.php:64
 msgid "Move"
-msgstr ""
+msgstr "Muovi"
 
 #: inc/deployaction.class.php:65
 msgid "Copy"
-msgstr ""
+msgstr "Copia"
 
 #: inc/deployaction.class.php:66 inc/deployaction.class.php:222
 #: inc/deploycheck.class.php:206 inc/deployfile.class.php:293
@@ -836,76 +837,76 @@ msgstr ""
 #: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:443
 #: inc/taskjob.view.class.php:455
 msgid "Delete"
-msgstr ""
+msgstr "Elimina"
 
 #: inc/deployaction.class.php:67
 msgid "Make directory"
-msgstr ""
+msgstr "Crea cartella"
 
 #: inc/deployaction.class.php:180
 msgid "Command to execute"
-msgstr ""
+msgstr "Comando da eseguire"
 
 #: inc/deployaction.class.php:194
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "Codice di ritorno salvato per questo comando"
 
 #: inc/deployaction.class.php:207 inc/deploycheck.class.php:191
 #: inc/deployfile.class.php:279 inc/taskjob.class.php:1789
 msgid "drag"
-msgstr ""
+msgstr "trascina"
 
 #: inc/deployaction.class.php:330
 msgid "From"
-msgstr ""
+msgstr "Da"
 
 #: inc/deployaction.class.php:332
 msgid "To"
-msgstr ""
+msgstr "A"
 
 #: inc/deployaction.class.php:340
 msgid "exec"
-msgstr ""
+msgstr "exec"
 
 #: inc/deployaction.class.php:353
 msgid "path"
-msgstr ""
+msgstr "percorso"
 
 #: inc/deployaction.class.php:392
 msgid "Execution checks"
-msgstr ""
+msgstr "Controllo di esecuzione"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "La chiave di registro esiste"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "Chiave di registro mancante"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "La chiave di registro è"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
-msgstr ""
+msgstr "Il file esiste"
 
 #: inc/deploycheck.class.php:55
 msgid "File is missing"
-msgstr ""
+msgstr "File mancante"
 
 #: inc/deploycheck.class.php:56
 msgid "File size is greater than"
-msgstr ""
+msgstr "La dimensione del file è superiore a "
 
 #: inc/deploycheck.class.php:57
 msgid "File size is equal to"
-msgstr ""
+msgstr "La dimensione del file è"
 
 #: inc/deploycheck.class.php:58
 msgid "File size is lower than"
-msgstr ""
+msgstr "La dimensione del file è inferiore a "
 
 #: inc/deploycheck.class.php:59
 msgid "SHA-512 hash value is"
@@ -913,99 +914,99 @@ msgstr ""
 
 #: inc/deploycheck.class.php:60
 msgid "Free space is greater than"
-msgstr ""
+msgstr "Lo spazio libero è superiore a"
 
 #: inc/deploycheck.class.php:80
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: inc/deploycheck.class.php:81
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: inc/deploycheck.class.php:82
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #: inc/deploycheck.class.php:83
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #: inc/deploycheck.class.php:287
 msgid "Key value"
-msgstr ""
+msgstr "Valore della chiave"
 
 #: inc/deploycheck.class.php:307
 msgid "Disk or directory"
-msgstr ""
+msgstr "Disco o cartella"
 
 #: inc/deploycheck.class.php:395
 msgid "Unit"
-msgstr ""
+msgstr "Unità"
 
 #: inc/deploycheck.class.php:421
 msgid "In case of error"
-msgstr ""
+msgstr "In caso di errore"
 
 #: inc/deploycheck.class.php:424 inc/taskjobstate.class.php:78
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 #: inc/deploycheck.class.php:425
 msgid "Ignore"
-msgstr ""
+msgstr "Ignora"
 
 #: inc/deployfile.class.php:56
 msgid "Upload from computer"
-msgstr ""
+msgstr "Upload dal computer"
 
 #: inc/deployfile.class.php:57
 msgid "Upload from server"
-msgstr ""
+msgstr "Upload dal server"
 
 #: inc/deployfile.class.php:226
 msgid "p2p"
-msgstr ""
+msgstr "p2p"
 
 #: inc/deployfile.class.php:227
 msgid "retention"
-msgstr ""
+msgstr "Conservazione"
 
 #: inc/deployfile.class.php:229
 msgid "days"
-msgstr ""
+msgstr "giorni"
 
 #: inc/deployfile.class.php:242
 msgid "uncompress"
-msgstr ""
+msgstr "scompatta"
 
 #: inc/deployfile.class.php:326
 msgid "Source"
-msgstr ""
+msgstr "Fonte"
 
 #: inc/deployfile.class.php:399
 msgid "filename"
-msgstr ""
+msgstr "nome del file"
 
 #: inc/deployfile.class.php:405
 msgid "Choose"
-msgstr ""
+msgstr "Scegli"
 
 #: inc/deployfile.class.php:409
 msgid "Select the file on server"
-msgstr ""
+msgstr "Scegli il file sul server"
 
 #: inc/deployfile.class.php:424
 msgid "Uncompress"
-msgstr ""
+msgstr "Scompatta"
 
 #: inc/deployfile.class.php:429
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:436
 msgid "retention days"
-msgstr ""
+msgstr "Giorni di conservazione"
 
 #: inc/deployfile.class.php:707
 msgid "Transfer error: the file size is too big"

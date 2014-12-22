@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 17:52+0000\n"
+"PO-Revision-Date: 2014-12-19 20:57+0000\n"
 "Last-Translator: carlos gomes <crlsgms@guerrilhagig.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/FusionInventory/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -421,7 +421,7 @@ msgstr "Implantação de pacote"
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
-msgstr ""
+msgstr "Coletar Informação"
 
 #: inc/collect.class.php:65
 msgid "Registry"
@@ -429,7 +429,7 @@ msgstr "Registro"
 
 #: inc/collect.class.php:66
 msgid "WMI"
-msgstr ""
+msgstr "WMI"
 
 #: inc/collect.class.php:67 inc/collect_file.class.php:55
 #: inc/collect_file.class.php:62
@@ -477,7 +477,7 @@ msgstr "Nome"
 
 #: inc/collect_file.class.php:98
 msgid "Iname"
-msgstr ""
+msgstr "Iname"
 
 #: inc/collect_file.class.php:99 inc/collect_file.class.php:241
 #: inc/deployaction.class.php:258 inc/deploycheck.class.php:235
@@ -514,11 +514,11 @@ msgstr "Nome do arquivo"
 
 #: inc/collect_file.class.php:235
 msgid "Non sentitive case"
-msgstr ""
+msgstr "Não sensível a maíusculas"
 
 #: inc/collect_file.class.php:236
 msgid "Sentitive case"
-msgstr ""
+msgstr "Sensível a maiúsculas"
 
 #: inc/collect_file_content.class.php:52 inc/collect_file_content.class.php:73
 #: inc/collect_file_content.class.php:79
@@ -527,7 +527,7 @@ msgstr ""
 
 #: inc/collect_file_content.class.php:188
 msgid "Path/file"
-msgstr ""
+msgstr "Caminho/arquivo"
 
 #: inc/collect_file_content.class.php:226
 msgid "pathfile"
@@ -594,11 +594,11 @@ msgstr ""
 #: inc/collect_wmi.class.php:92 inc/collect_wmi.class.php:141
 #: inc/collect_wmi_content.class.php:179
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: inc/collect_wmi.class.php:93 inc/collect_wmi.class.php:147
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #: inc/collect_wmi.class.php:133
 msgid "moniker"
@@ -611,7 +611,7 @@ msgstr ""
 
 #: inc/collect_wmi_content.class.php:180 inc/collect_wmi_content.class.php:225
 msgid "Property"
-msgstr ""
+msgstr "Propriedade"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
 #: inc/menu.class.php:329 inc/profile.class.php:213
@@ -620,19 +620,19 @@ msgstr ""
 
 #: inc/collectrule.class.php:125
 msgid "Registry key"
-msgstr ""
+msgstr "Chave de Registro"
 
 #: inc/collectrule.class.php:129
 msgid "Registry value"
-msgstr ""
+msgstr "Valor da chave de registro"
 
 #: inc/collectrule.class.php:132
 msgid "WMI property"
-msgstr ""
+msgstr "Propriedade WMI"
 
 #: inc/collectrule.class.php:136
 msgid "WMI value"
-msgstr ""
+msgstr "Valor WMI"
 
 #: inc/collectrule.class.php:139
 msgid "File name"
@@ -640,7 +640,7 @@ msgstr "Nome do arquivo"
 
 #: inc/collectrule.class.php:142
 msgid "File path"
-msgstr ""
+msgstr "Caminho do arquivo"
 
 #: inc/collectrule.class.php:145
 msgid "File size"
@@ -648,11 +648,11 @@ msgstr "Tamanho do arquivo"
 
 #: inc/common.view.class.php:188
 msgid "Warning:"
-msgstr ""
+msgstr "Atenção:"
 
 #: inc/common.view.class.php:192
 msgid "Error:"
-msgstr ""
+msgstr "Erro:"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:215
@@ -710,7 +710,7 @@ msgstr "depuração-extra"
 
 #: inc/config.class.php:360
 msgid "Clean agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Agentes de limpeza não acessaram o servidor desde (em dias)"
 
 #: inc/config.class.php:399 inc/wizard.class.php:340
 msgid "Import options"
@@ -735,7 +735,7 @@ msgstr "Status padrão"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Criar computador baseado na informação da máquina virtual (apenas quando a VM não tem agente de inventário ! )"
 
 #: inc/config.class.php:550
 msgid "Network drives"
@@ -1086,7 +1086,7 @@ msgstr "Localização do mirror"
 
 #: inc/deployorder.class.php:196
 msgid "The modified JSON contained a syntax error :"
-msgstr ""
+msgstr "O JSON modificado continha um erro de sintaxe:"
 
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
@@ -1125,11 +1125,11 @@ msgstr "Item adicionado com sucesso"
 
 #: inc/deploypackage.class.php:817
 msgid "Package exported in"
-msgstr ""
+msgstr "Pacote exportado em"
 
 #: inc/deploypackage.class.php:901
 msgid "Packages to import"
-msgstr ""
+msgstr "Pacotes para importar"
 
 #: inc/deploytask.class.php:54
 msgid "Group of computers"
@@ -1204,15 +1204,15 @@ msgstr "Versão da BIOS"
 
 #: inc/inventorycomputercomputer.class.php:179
 msgid "Automatic entity transfer"
-msgstr ""
+msgstr "Transferência de entidade automática"
 
 #: inc/inventorycomputercomputer.class.php:183
 msgid "No, locked (by entity configuration)"
-msgstr ""
+msgstr "Não, travado (pela configuração da entidade)"
 
 #: inc/inventorycomputercomputer.class.php:186
 msgid "No, locked manually"
-msgstr ""
+msgstr "Não, travado manualmente"
 
 #: inc/inventorycomputercomputer.class.php:188
 msgid "Unlock it"
@@ -1267,7 +1267,7 @@ msgstr "Endereço IP"
 
 #: inc/inventoryruleentity.class.php:139
 msgid "Computer's name"
-msgstr ""
+msgstr "Nome do computador"
 
 #: inc/inventoryruleentity.class.php:168
 #: inc/inventoryrulelocation.class.php:172
@@ -1315,7 +1315,7 @@ msgstr "Link"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
-msgstr ""
+msgstr "Importação negada (sem log)"
 
 #: inc/inventoryruleimport.class.php:224
 msgid "equal"
@@ -1379,11 +1379,11 @@ msgstr "IP incorreto"
 
 #: inc/iprange_configsecurity.class.php:64
 msgid "Associated SNMP authentications"
-msgstr ""
+msgstr "Autenticações SNMP associadas"
 
 #: inc/iprange_configsecurity.class.php:146
 msgid "SNMP Authentication"
-msgstr ""
+msgstr "Autenticação SNMP"
 
 #: inc/iprange_configsecurity.class.php:149
 msgid "Version"
@@ -2293,17 +2293,17 @@ msgstr "Número total de páginas grandes impressas"
 
 #: inc/menu.class.php:155
 msgid "Computer inv."
-msgstr ""
+msgstr "Inventário de computadores"
 
 #: inc/menu.class.php:158
 msgid "SNMP inv."
-msgstr ""
+msgstr "Inventário SNMP"
 
 #: inc/menu.class.php:197
 msgid ""
 "The server needs to kown the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
-msgstr ""
+msgstr "O servidor precisa saber a URL dos agentes usam para acessar o servidor. Por favor, configure-a na página de Configuração geral."
 
 #: inc/menu.class.php:221
 msgid "Agents management"
@@ -2323,7 +2323,7 @@ msgstr "Gerenciamento de tarefas"
 
 #: inc/menu.class.php:260
 msgid "Monitoring / Logs"
-msgstr ""
+msgstr "Monitoramento / Logs"
 
 #: inc/menu.class.php:267
 msgid "Import agent XML file"
@@ -2331,7 +2331,7 @@ msgstr "Importar arquivo XML de agente"
 
 #: inc/menu.class.php:275 inc/profile.class.php:305
 msgid "Additional computer information"
-msgstr ""
+msgstr "Informação adicional do computador"
 
 #: inc/menu.class.php:281 inc/timeslot.class.php:61 inc/timeslot.class.php:70
 #: inc/timeslotentry.class.php:70
@@ -2357,7 +2357,7 @@ msgstr "Regras de localização de computador"
 #: inc/menu.class.php:336 inc/ruledictionnarycomputerarch.class.php:53
 #: inc/ruledictionnarycomputerarchcollection.class.php:50
 msgid "Dictionnary of computer architectures"
-msgstr ""
+msgstr "Dicionário de arquitetura de computadores"
 
 #: inc/menu.class.php:351
 msgid "Rules"
@@ -2385,12 +2385,12 @@ msgstr "Estatísticas"
 
 #: inc/menu.class.php:484 inc/menu.class.php:874
 msgid "Number of computer inventories of last hours"
-msgstr ""
+msgstr "Número de computadores inventariados na última hora"
 
 #: inc/menu.class.php:496
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
-msgstr ""
+msgstr "Estes são os passos para configurar o plugin FusionInventory para inventário de computadores"
 
 #: inc/menu.class.php:502
 msgid "Configure frequency of agent contact (and so each inventory)"
@@ -2891,32 +2891,32 @@ msgstr ""
 
 #: inc/task.view.class.php:222 inc/task.view.class.php:298
 msgid "Successful"
-msgstr ""
+msgstr "Sucesso"
 
 #: inc/task.view.class.php:223 inc/task.view.class.php:299
 msgid "Running"
-msgstr ""
+msgstr "Executando"
 
 #: inc/task.view.class.php:225 inc/task.view.class.php:301
 #: inc/taskjobstate.class.php:79
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #: inc/task.view.class.php:307
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 #: inc/task.view.class.php:335
 msgid "Show/Hide Agent details"
-msgstr ""
+msgstr "Mostar/Ocultar detalhes do agente"
 
 #: inc/task.view.class.php:362
 msgid "Execution"
-msgstr ""
+msgstr "Execução"
 
 #: inc/task.view.class.php:437
 msgid "Timeslot"
-msgstr ""
+msgstr "Intervalo"
 
 #: inc/taskjob.class.php:144 inc/taskjob.class.php:1181
 #: inc/taskjob.class.php:1753 inc/taskjoblog.class.php:569
@@ -2926,7 +2926,7 @@ msgstr "Definição"
 #: inc/taskjob.class.php:146 inc/taskjob.class.php:1182
 #: inc/taskjob.class.php:1770
 msgid "Action"
-msgstr ""
+msgstr "Ação"
 
 #: inc/taskjob.class.php:182 inc/taskjob.class.php:507
 #: inc/taskjob.class.php:1247 inc/taskjob.view.class.php:420
@@ -2951,7 +2951,7 @@ msgstr "Data de agendamento"
 
 #: inc/taskjob.class.php:1180
 msgid "Periodicity"
-msgstr ""
+msgstr "Frequência"
 
 #: inc/taskjob.class.php:1405 inc/taskjob.class.php:1438
 msgid "Force start"
@@ -2975,27 +2975,27 @@ msgstr "Executar esta tarefa novamente"
 
 #: inc/taskjob.view.class.php:60
 msgid "Jobs configuration"
-msgstr ""
+msgstr "Configuração de trabalhos"
 
 #: inc/taskjob.view.class.php:183
 msgid "Add a job"
-msgstr ""
+msgstr "Adicionar um trabalho"
 
 #: inc/taskjob.view.class.php:310
 msgid "Actor Type"
-msgstr ""
+msgstr "Tipo de ator"
 
 #: inc/taskjob.view.class.php:314
 msgid "Target Type"
-msgstr ""
+msgstr "Tipo de alvo"
 
 #: inc/taskjob.view.class.php:346
 msgid "Actor Item"
-msgstr ""
+msgstr "Item do ator"
 
 #: inc/taskjob.view.class.php:350
 msgid "Target Item"
-msgstr ""
+msgstr "Item alvo"
 
 #: inc/taskjob.view.class.php:609 inc/taskjob.view.class.php:613
 msgid "New action"
@@ -3003,35 +3003,35 @@ msgstr "Nova ação"
 
 #: inc/taskjob.view.class.php:666
 msgid "Module method"
-msgstr ""
+msgstr "Método do módulo"
 
 #: inc/taskjob.view.class.php:708 inc/taskjob.view.class.php:738
 msgid "Targets"
-msgstr ""
+msgstr "Alvos"
 
 #: inc/taskjob.view.class.php:713
 msgid "The items that should be applied for this job."
-msgstr ""
+msgstr "Os itens que devem ser aplicados neste trabalho"
 
 #: inc/taskjob.view.class.php:719 inc/taskjob.view.class.php:760
 msgid "Actors"
-msgstr ""
+msgstr "Atores"
 
 #: inc/taskjob.view.class.php:723
 msgid "The items that should carry out those targets."
-msgstr ""
+msgstr "Os itens que devem carregar estes alvos."
 
 #: inc/taskjob.view.class.php:746 inc/taskjob.view.class.php:768
 msgid "Clear list"
-msgstr ""
+msgstr "Limpar lista"
 
 #: inc/taskjob.view.class.php:750 inc/taskjob.view.class.php:772
 msgid "Delete selected items"
-msgstr ""
+msgstr "Remover itens selecionados"
 
 #: inc/taskjob.view.class.php:875
 msgid "Cancel modifications"
-msgstr ""
+msgstr "Cancelar modificações"
 
 #: inc/taskjob.view.class.php:881
 msgid "Purge"
@@ -3053,7 +3053,7 @@ msgstr "Erro / replanejado"
 
 #: inc/taskjoblog.class.php:80 inc/taskjoblog.class.php:711
 msgid "Info"
-msgstr ""
+msgstr "Informações"
 
 #: inc/taskjoblog.class.php:271 inc/taskjoblog.class.php:531
 msgid "Process number"
@@ -3111,7 +3111,7 @@ msgstr "Agente parou/travou"
 
 #: inc/taskjoblog.class.php:1204
 msgid "Completion"
-msgstr ""
+msgstr "Realização"
 
 #: inc/taskjobstate.class.php:75
 msgid "Server has sent data to the agent"
