@@ -5527,11 +5527,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
-   if (!$crontask->getFromDBbyName('PluginFusioninventoryConfigurationManagement', 'checkdevices')) {
-      Crontask::Register('PluginFusioninventoryConfigurationManagement', 'checkdevices', 86400,
-                         array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                               'hourmin' =>22, 'hourmax'=>6,
-                               'comment'=>'Check configuration management'));
+   if ($crontask->getFromDBbyName('PluginFusioninventoryConfigurationManagement', 'checkdevices')) {
+      $crontask->delete($crontask->fields);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryAgent', 'cleanoldagents')) {
       Crontask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,
