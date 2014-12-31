@@ -52,8 +52,6 @@ Session::checkRight('plugin_fusioninventory_blacklist', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target']="blacklist.php";
-
 Search::show('PluginFusioninventoryInventoryComputerBlacklist');
 
 Html::footer();
