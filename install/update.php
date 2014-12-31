@@ -1699,6 +1699,36 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
 
+         // * ip
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`
+            WHERE `name`='IP'";
+         $result=$DB->query($query);
+         if ($DB->numrows($result) == 0) {
+            $DB->query("INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
+               (`id`, `name`, `comment`) VALUES
+               (11, 'IP', 'IP')");
+         }
+         $a_criteria = array();
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $a_criteria[$data['comment']] = $data['id'];
+         }
+
+         $a_input = array(
+            '0.0.0.0');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['IP']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['IP']."', '".$value."')";
+               $DB->query($query);
+            }
+         }
 
 
    /*

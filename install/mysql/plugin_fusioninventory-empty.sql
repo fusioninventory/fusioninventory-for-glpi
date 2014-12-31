@@ -1145,7 +1145,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
 (7, 'drives serial', 'drivesSerial'),
 (8, 'Asset Tag', 'assetTag'),
 (9, 'Computer name', 'name'),
-(10, 'Manufacturer', 'manufacturer');
+(10, 'Manufacturer', 'manufacturer'),
+(11, 'IP', 'IP');
 
 INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES

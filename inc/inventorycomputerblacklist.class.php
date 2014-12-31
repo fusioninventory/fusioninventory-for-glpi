@@ -337,6 +337,20 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                }
               break;
 
+            case 'IP':
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               
+               foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                  foreach ($a_computerinventory['networkport'] as $key=>$netport_data) {
+                     foreach ($netport_data['ipaddress'] as $num_ip=>$ip) {
+                        if ($ip == $blacklist_data['value']) {
+                           unset($a_computerinventory['networkport'][$key]['ipaddress'][$num_ip]);
+                        }
+                     }
+                  }
+               }
+               break;
+
          }
       }
       // Blacklist mac of "miniport*" for windows because have same mac as principal network ports
