@@ -602,10 +602,18 @@ class PluginFusioninventoryFormatconvert {
 
                      $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
-                        if (isset($array_tmp['ip'])) {
+                        if (isset($array_tmp['ip'])
+                                && $array_tmp['ip'] != '') {
                            if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) {
                               $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
                                       = $array_tmp['ip'];
+                           }
+                        }
+                        if (isset($a_networks['IPADDRESS6'])
+                                && $a_networks['IPADDRESS6'] != '') {
+                           if (!in_array($a_networks['IPADDRESS6'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) {
+                              $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
+                                      = $a_networks['IPADDRESS6'];
                            }
                         }
                      } else {
