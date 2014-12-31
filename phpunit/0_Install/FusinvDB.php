@@ -291,7 +291,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
        */
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`";
       $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 10, "Number of criteria not right in table".
+      $this->assertEquals($DB->numrows($result), 11, "Number of criteria not right in table".
               " glpi_plugin_fusioninventory_inventorycomputercriterias ".$when);
 
 
