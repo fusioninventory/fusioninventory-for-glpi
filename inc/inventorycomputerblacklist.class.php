@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $tab[2]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercriterias';
       $tab[2]['field']     = 'name';
       $tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
-      $tab[2]['name']      = __('Name');
+      $tab[2]['name']      = __('Type');
       $tab[2]['datetype']  = "itemlink";
 
       return $tab;
@@ -119,7 +119,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       echo "<td>";
       Html::autocompletionTextField($this,'value');
       echo "</td>";
-      echo "<td>".__('Name')."</td>";
+      echo "<td>".__('Type')."</td>";
       echo "<td>";
       Dropdown::show('PluginFusioninventoryInventoryComputerCriteria',
                      array('name' => 'plugin_fusioninventory_criterium_id',
@@ -339,7 +339,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
             case 'IP':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
-               
+
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   foreach ($a_computerinventory['networkport'] as $key=>$netport_data) {
                      foreach ($netport_data['ipaddress'] as $num_ip=>$ip) {
