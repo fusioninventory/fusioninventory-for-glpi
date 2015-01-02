@@ -68,14 +68,14 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["delete"])) {
    Session::checkRight('plugin_fusioninventory_unmanaged', PURGE);
 
-   $pfUnmanaged->check($_POST['id'], 'w');
+   $pfUnmanaged->check($_POST['id'], DELETE);
 
    $pfUnmanaged->delete($_POST);
 
    $pfUnmanaged->redirectToList();
 } else if (isset($_POST["restore"])) {
 
-   $pfUnmanaged->check($_POST['id'], 'd');
+   $pfUnmanaged->check($_POST['id'], DELETE);
 
    if ($pfUnmanaged->restore($_POST)) {
       Event::log($_POST["id"], "PluginFusioninventoryUnmanaged", 4, "inventory",
@@ -87,12 +87,12 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
    Session::checkRight('plugin_fusioninventory_unmanaged', PURGE);
 
-   $pfUnmanaged->check($_POST['id'], 'w');
+   $pfUnmanaged->check($_POST['id'], PURGE);
 
    $pfUnmanaged->delete($_POST, 1);
    $pfUnmanaged->redirectToList();
 } else if (isset($_POST["update"])) {
-   $pfUnmanaged->check($_POST['id'], 'w');
+   $pfUnmanaged->check($_POST['id'], UPDATE);
    $pfUnmanaged->update($_POST);
    Html::back();
 } else if (isset($_POST["import"])) {
