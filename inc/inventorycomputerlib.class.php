@@ -1683,6 +1683,8 @@ FALSE);
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();
       $iPNetwork   = new IPNetwork();
+      $networkPortEthernet = new NetworkPortEthernet();
+      $item_DeviceNetworkCard = new Item_DeviceNetworkCard();
 
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
@@ -1770,6 +1772,43 @@ FALSE);
                   $input['id'] = $keydb;
                   $input['logical_number'] = $inventory_networkports[$key]['logical_number'];
                   $networkPort->update($input, !$no_history);
+               }
+
+               // Add / update instantiation_type
+               if (isset($inventory_networkports[$key]['instantiation_type'])) {
+                  if ($inventory_networkports[$key]['instantiation_type'] == 'NetworkPortEthernet') {
+                     $portsethernet = $networkPortEthernet->find("`networkports_id`='".$keydb."'", '', 1);
+                     if (count($portsethernet) == 1) {
+                        $portethernet = current($portsethernet);
+                        $input = $portethernet;
+                     } else {
+                        $input = array(
+                           'networkports_id' => $keydb
+                        );
+                     }
+                     if (isset($inventory_networkports[$key]['speed'])) {
+                        $input['speed'] = $inventory_networkports[$key]['speed'];
+                        $input['speed_other_value'] = $inventory_networkports[$key]['speed'];
+                     }
+                     if (isset($inventory_networkports[$key]['mac'])) {
+                        $networkcards = $item_DeviceNetworkCard->find(
+                                "`mac`='".$inventory_networkports[$key]['mac']."' "
+                                . " AND `itemtype`='Computer'"
+                                . " AND `items_id`='".$computers_id."'",
+                                '',
+                                1);
+                        if (count($networkcards) == 1) {
+                           $networkcard = current($networkcards);
+                           $input['items_devicenetworkcards_id'] = $networkcard['id'];
+                        }
+                     }
+                     $input['_no_history'] = $no_history;
+                     if (isset($input['id'])) {
+                        $networkPortEthernet->update($input);
+                     } else {
+                        $networkPortEthernet->add($input);
+                     }
+                  }
                }
 
                // Get networkname
@@ -1873,6 +1912,31 @@ FALSE);
                   $input['is_dynamic'] = 1;
                   $input['_no_history'] = $no_history;
                   $iPAddress->add($input, array(), !$no_history);
+               }
+               if (isset($a_networkport['instantiation_type'])) {
+                  if ($a_networkport['instantiation_type'] == 'NetworkPortEthernet') {
+                     $input = array(
+                        'networkports_id' => $a_networkport['items_id']
+                     );
+                     if (isset($a_networkport['speed'])) {
+                        $input['speed'] = $a_networkport['speed'];
+                        $input['speed_other_value'] = $a_networkport['speed'];
+                     }
+                     if (isset($a_networkport['mac'])) {
+                        $networkcards = $item_DeviceNetworkCard->find(
+                                "`mac`='".$a_networkport['mac']."' "
+                                . " AND `itemtype`='Computer'"
+                                . " AND `items_id`='".$computers_id."'",
+                                '',
+                                1);
+                        if (count($networkcards) == 1) {
+                           $networkcard = current($networkcards);
+                           $input['items_devicenetworkcards_id'] = $networkcard['id'];
+                        }
+                     }
+                     $input['_no_history'] = $no_history;
+                     $networkPortEthernet->add($input);
+                  }
                }
             }
          }

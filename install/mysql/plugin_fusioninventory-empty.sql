@@ -203,7 +203,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `locations_id` int(11) NOT NULL DEFAULT '0',
    `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-   `is_template` tinyint(1) NOT NULL DEFAULT '0',
    `users_id` int(11) NOT NULL DEFAULT '0',
    `serial` varchar(255) DEFAULT NULL,
    `otherserial` varchar(255) DEFAULT NULL,
@@ -1232,7 +1231,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
 (7, 'drives serial', 'drivesSerial'),
 (8, 'Asset Tag', 'assetTag'),
 (9, 'Computer name', 'name'),
-(10, 'Manufacturer', 'manufacturer');
+(10, 'Manufacturer', 'manufacturer'),
+(11, 'IP', 'IP');
 
 INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
@@ -1297,7 +1297,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (59, 1, 'MB-1234567890'),
 (60, 1, '0'),
 (61, 1, 'empty'),
-(62, 3, '24:b6:20:52:41:53');
+(62, 3, '24:b6:20:52:41:53'),
+(63, 1, 'Not Specified');
 
 
 

@@ -79,10 +79,13 @@ if (!class_exists("PluginFusioninventoryConfig")) {
 
 $pfCommunication  = new PluginFusioninventoryCommunication();
 
+if (!isset($rawdata)) {
+   $rawdata = file_get_contents("php://input");
+}
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
    PluginFusioninventoryCommunicationRest::handleFusionCommunication();
-} else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-   $pfCommunication->handleOCSCommunication();
+} else if (!empty($rawdata)) {
+   $pfCommunication->handleOCSCommunication($rawdata);
 }
 
 session_destroy();

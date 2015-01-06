@@ -1297,8 +1297,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['is_deleted'] = array('type'    => 'bool',
                                                'value'   => NULL);
-      $a_table['fields']['is_template']= array('type'    => 'bool',
-                                               'value'   => NULL);
       $a_table['fields']['users_id']   = array('type'    => 'integer',
                                                'value'   => NULL);
       $a_table['fields']['serial']     = array('type'    => 'string',
@@ -1341,7 +1339,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'mac',
          'ifmac',
          'plugin_fusinvsnmp_models_id',
-         'plugin_fusioninventory_snmpmodels_id'
+         'plugin_fusioninventory_snmpmodels_id',
+          'is_template'
          );
 
       $a_table['renamefields'] = array(
@@ -1607,7 +1606,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'System Serial Number',
          'MB-1234567890',
          '0',
-         'empty');
+         'empty',
+         'Not Specified');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['ssn']."'
@@ -1705,6 +1705,36 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
 
+         // * ip
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`
+            WHERE `name`='IP'";
+         $result=$DB->query($query);
+         if ($DB->numrows($result) == 0) {
+            $DB->query("INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
+               (`id`, `name`, `comment`) VALUES
+               (11, 'IP', 'IP')");
+         }
+         $a_criteria = array();
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`";
+         $result = $DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $a_criteria[$data['comment']] = $data['id'];
+         }
+
+         $a_input = array(
+            '0.0.0.0');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['IP']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['IP']."', '".$value."')";
+               $DB->query($query);
+            }
+         }
 
 
    /*
@@ -5603,11 +5633,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
-   if (!$crontask->getFromDBbyName('PluginFusioninventoryConfigurationManagement', 'checkdevices')) {
-      Crontask::Register('PluginFusioninventoryConfigurationManagement', 'checkdevices', 86400,
-                         array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                               'hourmin' =>22, 'hourmax'=>6,
-                               'comment'=>'Check configuration management'));
+   if ($crontask->getFromDBbyName('PluginFusioninventoryConfigurationManagement', 'checkdevices')) {
+      $crontask->delete($crontask->fields);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryAgent', 'cleanoldagents')) {
       Crontask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,

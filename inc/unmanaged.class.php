@@ -56,6 +56,18 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       return __('Unmanaged device', 'fusioninventory');
    }
 
+
+   /**
+    * @see CommonDBTM::useDeletedToLockIfDynamic()
+    *
+    * @since version 0.85+1.0
+   **/
+   function useDeletedToLockIfDynamic() {
+      return false;
+   }
+
+
+
    static function getMenuName() {
       return self::getTypeName();
    }
@@ -205,8 +217,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       if ($tabnum == 1) {
          $pfUnmanaged = new self();
          $pfUnmanaged->importForm($CFG_GLPI['root_doc'] .
-               '/plugins/fusioninventory/front/unmanaged.form.php?id='.$_POST["id"],
-                                   $_POST["id"]);
+               '/plugins/fusioninventory/front/unmanaged.form.php?id='.$item->fields["id"],
+                                   $item->fields["id"]);
       }
       return TRUE;
    }
@@ -216,6 +228,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    function defineTabs($options=array()) {
 
       $ong = array();
+      $this->addDefaultFormTab($ong);
       $this->addStandardTab('NetworkPort', $ong, $options);
       $this->addStandardTab('PluginFusioninventoryUnmanaged', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
@@ -297,28 +310,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    **/
    function showForm($id, $options=array()) {
 
-      //PluginFusioninventoryProfile::checkRight("networking", "r");
-
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
-
-      $this->showTabs($options);
+      $this->initForm($id, $options);
       $this->showFormHeader($options);
-
-      $datestring = __('Last update').": ";
-      $date = Html::convDateTime($this->fields["date_mod"]);
-      echo "<tr>";
-      echo "<th align='center' width='450' colspan='2'>";
-      echo __('ID')." ".$this->fields["id"];
-      echo "</th>";
-
-      echo "<th align='center' colspan='2' width='50'>";
-      echo $datestring.$date;
-      echo "</th>";
-      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Name') . "&nbsp;:</td>";
@@ -445,9 +438,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
       $this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return TRUE;
    }

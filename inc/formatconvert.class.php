@@ -325,6 +325,9 @@ class PluginFusioninventoryFormatconvert {
                                                              $a_inventory['Computer']['serial']));
             }
          }
+         if (isset($array['BIOS']['MSN'])){
+            $a_inventory['Computer']['mserial'] = trim($array['BIOS']['MSN']);
+         }
       }
 
       // * Type of computer
@@ -584,7 +587,8 @@ class PluginFusioninventoryFormatconvert {
                                                     'SSID'        => 'ssid',
                                                     'IPGATEWAY'   => 'gateway',
                                                     'IPMASK'      => 'netmask',
-                                                    'IPDHCP'      => 'dhcpserver'));
+                                                    'IPDHCP'      => 'dhcpserver',
+                                                    'SPEED'       => 'speed'));
 
                   if ((isset($array_tmp['name'])
                           && $array_tmp['name'] != '')
@@ -602,10 +606,18 @@ class PluginFusioninventoryFormatconvert {
 
                      $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
-                        if (isset($array_tmp['ip'])) {
+                        if (isset($array_tmp['ip'])
+                                && $array_tmp['ip'] != '') {
                            if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) {
                               $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
                                       = $array_tmp['ip'];
+                           }
+                        }
+                        if (isset($a_networks['IPADDRESS6'])
+                                && $a_networks['IPADDRESS6'] != '') {
+                           if (!in_array($a_networks['IPADDRESS6'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) {
+                              $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
+                                      = $a_networks['IPADDRESS6'];
                            }
                         }
                      } else {
@@ -625,7 +637,7 @@ class PluginFusioninventoryFormatconvert {
                                 AND $array_tmp["instantiation_type"] == 'Ethernet') {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
                         } else if (isset($array_tmp["instantiation_type"])
-                                AND ($array_tmp["instantiation_type"] == 'Wifi'
+                                AND ($array_tmp["instantiation_type"] == 'wifi'
                                      OR $array_tmp["instantiation_type"] == 'IEEE')) {
                            $array_tmp["instantiation_type"] = 'NetworkPortWifi';
                         } else if ($array_tmp['mac'] != '') {
@@ -636,6 +648,10 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
+                        if (isset($array_tmp['speed'])) {
+                           $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
+                        }
+
                         $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
                      }
                   }

@@ -152,18 +152,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       global $CFG_GLPI;
 
       $menu = array();
-      /*
-      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
-      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
 
-      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
-      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
+//      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
+//      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
+//
+//      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
+//      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
 
-      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
-      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
-
-      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
-      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';*/
+//      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
+//      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
+//
+//      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
+//      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
       return $menu;
    }
 
@@ -280,7 +280,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       if(Session::haveRight('plugin_fusioninventory_task', READ)) {
          $a_menu[12]['name'] = __('Time slot', 'fusioninventory');
-         $a_menu[12]['pic']  = "";
+         $a_menu[12]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_timeslot.png";
          $a_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
       }
 
@@ -466,6 +466,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       /*
+<<<<<<< HEAD
        * Configuration management
        */
       $a_menu = array();
@@ -494,11 +495,35 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
+=======
+       * Guide
+       */
+      $a_menu = array();
+
+         $a_menu[] = array(
+            'name' => "FI> ".__('Computer inv.', 'fusioninventory'),
+            'pic'  => "",
+            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/menu_inventory.php"
+         );
+
+         $a_menu[] = array(
+            'name' => "FI> ".__('SNMP inv.', 'fusioninventory'),
+            'pic'  => "",
+            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/menu_snmpinventory.php"
+         );
+
+      if (!empty($a_menu)) {
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Guide', 'fusioninventory'),
+>>>>>>> master
                                                              $a_menu,
                                                              $type,
                                                              $width_status);
       }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -600,10 +625,23 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo __('Statistics', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
-//      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      $networkequipment = countElementsInTable('glpi_plugin_fusioninventory_networkequipments');
+      $printer    = countElementsInTable('glpi_plugin_fusioninventory_printers');
+
+      $dataSNMP = array();
+      $dataSNMP[] = array(
+          'key' => 'NetworkEquipments (SNMP) : '.$networkequipment,
+          'y'   => $networkequipment,
+          'color' => '#3d94ff'
+      );
+      $dataSNMP[] = array(
+          'key' => 'Printers (SNMP) : '.$printer,
+          'y'   => $printer,
+          'color' => '#3dff7d'
+      );
       echo "<tr class='tab_bg_1' height='100'>";
-      echo "<td colspan='2' height='100'>";
-//      self::showChartBar('nbinventory', $dataInventory, '', 940);
+      echo "<td colspan='2' height='220'>";
+      self::showChart('snmp', $dataSNMP, '', 940);
       echo "</td>";
       echo "</tr>";
 
@@ -630,7 +668,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
               'title'=> TRUE
           ),
           array(
-              'text' => __('Define IP Ranges of your network', 'fusioninventory'),
+              'text' => __('Define IP Ranges of your network + related SNMP authentication', 'fusioninventory'),
               'url'  => $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/iprange.php"
           ),
@@ -750,7 +788,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             echo "<img src='".$menu_id['pic']."' width='16' height='16'/>";
          }
          echo "</th>";
-         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."'>
+         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."' style='text-align: left'>
                   <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
          echo "</tr>";
       }

@@ -179,11 +179,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       $actions = array();
       $actions['_fusion']['name']        = __('FusionInventory link', 'fusioninventory');
-
       $actions['_fusion']['type']        = 'fusion_type';
 
-      $actions['_ignore_import']['name'] = __('To be unaware of import');
-
+      $actions['_ignore_import']['name'] = __('To be unaware of import (with log)');
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;
@@ -193,11 +191,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    static function getRuleActionValues() {
 
-      return array(self::RULE_ACTION_LINK =>
-                           __('Link', 'fusioninventory'),
-
-                   self::RULE_ACTION_DENIED            => __('Import denied', 'fusioninventory'));
-
+      return array(self::RULE_ACTION_LINK   => __('Link', 'fusioninventory'),
+                   self::RULE_ACTION_DENIED => __('Import denied (no log)', 'fusioninventory'));
    }
 
 
@@ -909,6 +904,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       $types["PluginFusioninventoryUnmanaged"] =
                      PluginFusioninventoryUnmanaged::getTypeName();
+      $types[""] = __('No itemtype defined', 'fusioninventory');
       return $types;
    }
 

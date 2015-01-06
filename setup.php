@@ -160,8 +160,6 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryConfigurationManagement',
-              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryCollect');
       Plugin::registerClass('PluginFusioninventoryCollect_Registry',
               array('addtabon' => array('PluginFusioninventoryCollect')));
