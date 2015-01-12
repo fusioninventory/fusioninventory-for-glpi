@@ -112,14 +112,27 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "      <span></span></div>";
       echo "   </div>"; // end of fusinv_form
 
-      // add a checkbox for include old jobs
-      echo "<input type='checkbox' class='include_old_jobs' id='include_old_jobs'";
-      if (isset($_SESSION['fi_include_old_jobs']) 
-         && $_SESSION['fi_include_old_jobs']) {
-         echo "checked='checked'";
+      // add a list limit for include old jobs
+      echo __("Include old jobs",'fusioninventory')." : ";
+      $limit_options = array(-1  => _('All'),
+                              1  => _('Last'), 
+                              2  => 2,
+                              5  => 5,
+                              10 => 10,
+                              25 => 25,
+                              50 => 50,
+                              100 => 100,
+                              250 => 250
+                              );
+      echo "<select class='include_old_jobs' id='include_old_jobs'>";
+      foreach ($limit_options as $value => $label) {
+         $selected = "";
+         if ($value == $_SESSION['fi_include_old_jobs']) {
+            $selected = "selected='selected'";
+         }
+         echo "<option value='$value' $selected>$label</option>";
       }
-      echo " />";
-      echo __("Include old jobs",'fusioninventory');
+      echo "</select>";
       echo "</div>";
 
       //$pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -213,11 +226,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
        */
       
       if (!isset($_SESSION['fi_include_old_jobs'])) {
-         $_SESSION['fi_include_old_jobs'] = false;
+         $_SESSION['fi_include_old_jobs'] = 1;
       }
 
-      $include_old_jobs = (isset($_SESSION['fi_include_old_jobs']) && $_SESSION['fi_include_old_jobs']?
-                                        "true":"false");
+      $include_old_jobs = isset($_SESSION['fi_include_old_jobs'])?$_SESSION['fi_include_old_jobs']:1;
       
       echo implode("\n", array(
          "<script type='text/javascript'>",
@@ -316,10 +328,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $options['display'] = true;
       }
 
-      if (isset($options['include_old_jobs']) && $options['include_old_jobs'] == "true") {
-         $_SESSION['fi_include_old_jobs'] = true;
+      if (isset($options['include_old_jobs'])) {
+         $_SESSION['fi_include_old_jobs'] = $options['include_old_jobs'];
       } else {
-         $_SESSION['fi_include_old_jobs'] = false;
+         $_SESSION['fi_include_old_jobs'] = 1;
       }
 
       $logs = $this->getJoblogs($task_ids);

@@ -880,7 +880,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "  FROM `glpi_plugin_fusioninventory_taskjobstates` AS run",
          "  LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log",
          "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`"));
-      if ($_SESSION['fi_include_old_jobs']) {
+      if ($_SESSION['fi_include_old_jobs'] != 1) {
          $query_joins['max_run'].= implode("\n",array(
             "  WHERE run.`state` NOT IN ( ".
                implode(",", array(
@@ -954,7 +954,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "  GROUP BY",
          "     run.`plugin_fusioninventory_agents_id`,",
          "     run.`plugin_fusioninventory_taskjobs_id`,"));
-      if ($_SESSION['fi_include_old_jobs']) {
+      if ($_SESSION['fi_include_old_jobs'] != 1) {
          $query_joins['max_run'].= implode("\n",array(
             "     run.`id`"));
       } else {
@@ -1448,9 +1448,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $computer->getFromDB($agent_obj->fields['computers_id']);
                   echo $computer->getname().SEP;
 
+                  $log_cpt = 0;
                   foreach ($agent as $exec_id => $exec) {
                      echo $exec['last_log_date'].SEP;
                      echo $exec['state'].NL;
+                     $log_cpt++;
+
+                     if ($log_cpt >= $_SESSION['fi_include_old_jobs']) {
+                        break;
+                     }
 
                      if (!last($agent, $exec_id)) {
                         echo SEP.SEP.SEP.SEP.SEP.SEP;

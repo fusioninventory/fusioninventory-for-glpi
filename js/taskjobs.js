@@ -213,7 +213,11 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
    $.each(chart.pinned_agents, function(agent_id, agent) {
 
       if (agent) {
-         for (i=0; i< agent.length;i++) {
+         var max_iteration = Math.min(agent.length, include_old_jobs);
+         if (max_iteration == -1) {
+            max_iteration = agent.length;
+         }
+         for (i=0; i< max_iteration; i++) {
             if(   i > 0
                   && agent.length > 1
                   && agent[i].jobstate_id == agent[i-1].jobstate_id
@@ -1173,9 +1177,9 @@ taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
    $('.include_old_jobs')
       .off("click");
    $('.include_old_jobs')
-      .on('click', function(e) {
-         include_old_jobs = !include_old_jobs;
-         taskjobs.queue_refresh_logs( ajax_url, task_id )
+      .on('change', function(e) {
+         include_old_jobs = $(this).val();
+         taskjobs.queue_refresh_logs( ajax_url, task_id)
       });
 }
 
