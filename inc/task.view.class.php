@@ -114,16 +114,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // add a list limit for include old jobs
       echo __("Include old jobs",'fusioninventory')." : ";
-      $limit_options = array(-1  => _('All'),
-                              1  => _('Last'), 
+      $limit_options = array( 1  => __('Last'), 
                               2  => 2,
                               5  => 5,
                               10 => 10,
                               25 => 25,
                               50 => 50,
                               100 => 100,
-                              250 => 250
-                              );
+                              250 => 250,
+                              -1  => __('All'));
       echo "<select class='include_old_jobs' id='include_old_jobs'>";
       foreach ($limit_options as $value => $label) {
          $selected = "";
