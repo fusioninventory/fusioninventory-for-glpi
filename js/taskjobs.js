@@ -240,7 +240,7 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
 
 
 function unpin_agent(args) {
-   console.debug(arguments);
+   //console.debug(arguments);
    var chart_id = args.chart_id;
    var agent_id = args.data[0];
    delete taskjobs.agents_chart[chart_id].pinned_agents[agent_id];
