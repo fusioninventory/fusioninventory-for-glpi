@@ -3080,6 +3080,10 @@ msgstr "Voir les logs de cette exécution"
 msgid "See all executions"
 msgstr "Voir toutes les exécutions"
 
+#: inc/task.view.class.php
+msgid "Include old jobs"
+msgstr "Afficher les anciennes exécutions"
+
 #: inc/taskjoblog.class.php:1053
 msgid "unknown"
 msgstr "Inconnu"
