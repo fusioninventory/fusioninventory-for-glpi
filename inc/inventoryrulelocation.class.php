@@ -148,6 +148,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       $criterias['serial']['field']     = 'name';
       $criterias['serial']['name']      = __('Serial Number');
 
+      $criterias['oscomment']['field']     = 'name';
+      $criterias['oscomment']['name']      = __('Operating system').'/'.__('Comment');
 
       return $criterias;
    }

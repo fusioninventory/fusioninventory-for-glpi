@@ -169,6 +169,15 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['entityrestrict']['name']      = __('Restrict search in defined entity', 'fusioninventory');
       $criterias['entityrestrict']['allow_condition'] = array(PluginFusioninventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT);
 
+      $criterias['oscomment']['name']      = __('Operating system').'/'.__('Comment');
+      $criterias['oscomment']['allow_condition'] = array(Rule::PATTERN_IS,
+                                                           Rule::PATTERN_IS_NOT,
+                                                           Rule::PATTERN_CONTAIN,
+                                                           Rule::PATTERN_NOT_CONTAIN,
+                                                           Rule::PATTERN_BEGIN,
+                                                           Rule::PATTERN_END,
+                                                           Rule::REGEX_MATCH,
+                                                           Rule::REGEX_NOT_MATCH);
 
       return $criterias;
    }
@@ -355,7 +364,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                  'name',
                                  'itemtype',
                                  'domains_id',
-                                 'entityrestrict');
+                                 'entityrestrict',
+                                 'oscomment');
       $nb_crit_find = 0;
       foreach ($global_criteria as $criterion) {
          $criteria = $this->getCriteriaByID($criterion);
