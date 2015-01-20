@@ -255,7 +255,10 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ((isset($a_computerinventory['Computer']['operatingsystems_id']))
                AND (!empty($a_computerinventory['Computer']['operatingsystems_id']))) {
             $input['osname'] = $a_computerinventory['Computer']['operatingsystems_id'];
-
+         }
+         if ((isset($a_inventory['fusioninventorycomputer']['oscomment']))
+               AND (!empty($a_inventory['fusioninventorycomputer']['oscomment']))) {
+            $input['oscomment'] = $a_inventory['fusioninventorycomputer']['oscomment'];
          }
          if ((isset($a_computerinventory['Computer']['computermodels_id']))
                  AND (!empty($a_computerinventory['Computer']['computermodels_id']))) {
