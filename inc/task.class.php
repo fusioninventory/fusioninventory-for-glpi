@@ -977,8 +977,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'result' => null
       );
 
-
-
       $query_chrono = array(
          "start" => microtime(true),
          "end"   => 0
@@ -1388,12 +1386,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
    static function csvExport($params) {
 
-      function last(&$array, $key) {
-          end($array);
-          return $key === key($array);
+      $agent_state_types = array('prepared', 'cancelled', 'running','success', 'error' );
+      if (isset($_REQUEST['agent_state_types'])) {
+         $agent_state_types = $_REQUEST['agent_state_types'];
       }
-
-      define('DEBUG_CSV', false);
+      
+      // 0 : no debug (really export to csv, 
+      // 1 : display final table, 
+      // 2 : also display json
+      define('DEBUG_CSV', 0);
 
       if (!DEBUG_CSV) {
          header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
@@ -1401,11 +1402,29 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
          header("Content-disposition: attachment; filename=export.csv");
          header("Content-type: text/csv");
+      } else {
+         echo "fi_include_old_jobs : ".$_SESSION['fi_include_old_jobs']."<br />";
+         Html::printCleanArray($agent_state_types);
       }
 
       $params['display'] = false;
       $pfTask = new PluginFusioninventoryTask();
       $data = json_decode($pfTask->ajaxGetJobLogs($params), true);
+
+      //clean line with state_types with unwanted states
+      foreach ($data['tasks'] as $task_id => &$task) {
+         foreach ($task['jobs'] as $job_id => &$job) {
+            foreach ($job['targets'] as $target_id => &$target) {
+               foreach ($target['agents'] as $agent_id => &$agent) {
+                  foreach ($agent as $exec_id => $exec) {
+                     if (!in_array($exec['state'], $agent_state_types)) {
+                        unset($agent[$exec_id]);
+                     }
+                  }
+               }
+            }
+         }
+      }
 
       if (!DEBUG_CSV) {
          define('SEP', ';');
@@ -1416,7 +1435,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          echo "<table border=1><tr><td>";
       }
 
-      //cols title
+      //cols titles
       echo "Task_name".SEP;
       echo "Job_name".SEP;
       echo "Method".SEP;
@@ -1429,7 +1448,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $agent_obj = new PluginFusioninventoryAgent;
       $computer = new Computer;
 
-      //lines
+      //prepare a temp function for test if an element is the last of an array
+      function last(&$array, $key) {
+          end($array);
+          return $key === key($array);
+      }
+
+      // display lines
       $csv_array = array();
       $tab = 0;
       foreach ($data['tasks'] as $task_id => $task) {
@@ -1479,9 +1504,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo SEP;
          }
       }
-      if (DEBUG_CSV) {
+
+      if (DEBUG_CSV === 2) {
          echo "</td></tr></table>";
-         Html::printCleanArray($data['tasks']);
+
+         //echo original datas 
+         echo "<pre>".json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)."</pre>";
       }
    }
 }

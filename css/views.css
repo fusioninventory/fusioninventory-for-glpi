@@ -760,3 +760,20 @@ table.runs td.comment {
    background-repeat: no-repeat; 
    background-position: right;
 }
+
+
+.openExportDialog {
+   cursor: pointer;
+}
+.task_export_form .agent_state_type_checkbox {
+   width: 135px;
+   float: left;
+   margin-left: 15px;
+}
+
+.task_export_form .submit {
+   margin:15px 150px; 
+   clear:left;
+   width: 150px;
+   height: 25px;
+}

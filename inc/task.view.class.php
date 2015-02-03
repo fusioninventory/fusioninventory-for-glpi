@@ -301,13 +301,53 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "</script>"
       ));
 
-      echo implode( "\n", array(
-         "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/export_task.php", 
-         "?task_id=$task_id&include_old_jobs=$include_old_jobs'>",
-         _sx('button', 'Export'), 
-         "</a>",
-         "<br /><br />"
-      ));
+      echo "<a class='openExportDialog'>"._sx('button', 'Export')."</a><br /><br />";
+      
+      echo "<div id='fiTaskExport_modalWindow'>";
+      echo "<form method='GET' class='task_export_form' action='".$CFG_GLPI['root_doc'].
+           "/plugins/fusioninventory/front/export_task.php'>";
+
+      $agent_state_types = array(
+         'agents_prepared', 'agents_cancelled', 'agents_running',
+         'agents_success', 'agents_error'
+      );
+      foreach ($agent_state_types as $agent_state_type) {
+         $agent_state_type = str_replace("agents_", "", $agent_state_type);
+         $locale = __(ucfirst($agent_state_type), 'fusioninventory');
+         echo "<div class='agent_state_type_checkbox'>";
+         echo "<input type='checkbox' checked='checked' name='agent_state_types[]' ".
+              "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+         echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+         echo "</div>";
+      }
+
+      echo "<input type='hidden' name='task_id' value='$task_id' />";
+      echo "<input class='submit' type='submit' value='"._sx('button', 'Export')."'>";
+      Html::closeForm();
+      echo "</div>";
+
+      echo "<script type='text/javascript'>
+            $('#fiTaskExport_modalWindow').dialog({
+               modal: true,
+               autoOpen: false,
+               height: 150,
+               position: ['center', 20],
+               width: 500,
+               resizeable: true,
+               title: \""._sx('button', 'Export')."\"
+            });
+
+            $('.openExportDialog').click(function(e) {
+               var x = e.pageX - $(document).scrollLeft() - 250;
+               var y = e.pageY - $(document).scrollTop() - 75;
+               $('#fiTaskExport_modalWindow').dialog('option', 'position', [x,y]);
+               $('#fiTaskExport_modalWindow').dialog('open');
+            });
+
+            $('.task_export_form .submit').click(function(e) {
+               $('#fiTaskExport_modalWindow').dialog('close');
+            });
+            </script>";
    }
 
    // TODO: Move this method in task.class
@@ -329,7 +369,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       if (isset($options['include_old_jobs'])) {
          $_SESSION['fi_include_old_jobs'] = $options['include_old_jobs'];
-      } else {
+      } else if (!isset($_SESSION['fi_include_old_jobs'])) {
          $_SESSION['fi_include_old_jobs'] = 1;
       }
 
