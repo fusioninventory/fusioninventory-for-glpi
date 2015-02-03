@@ -114,7 +114,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
               'page'  => $itemtype::getSearchURL(false));
          $options[$type]['links']['search'] = $itemtype::getSearchURL(false);
          if ($itemtype::canCreate()) {
-            $options[$type]['links']['add'] = $itemtype::getFormURL(false);
+            if ($type != 'ignoredimportdevice') {
+               $options[$type]['links']['add'] = $itemtype::getFormURL(false);
+            }
          }
          if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
             $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
