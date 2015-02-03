@@ -125,13 +125,25 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $ong = array();
       $this->addDefaultFormTab($ong);
-      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = _n('Task', 'Tasks', 2);
-         //$pfTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
-      }
+      $ong[$this->getType().'$task'] = _n('Task', 'Tasks', 2);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
+
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      if ($tabnum == 'task') {
+         $pfTask = new PluginFusioninventoryTask();
+            $pfTask->showJobLogs();
+         $pfTaskjob = new PluginFusioninventoryTaskjob();
+         $a_taskjobs = $pfTaskjob->find('`targets` LIKE \'%"PluginFusioninventoryIPRange":"'.$item->getID().'"%\'');
+         foreach ($a_taskjobs as $data) {
+            //$pfTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
+         }
+      }
+   }
+
 
 
 
