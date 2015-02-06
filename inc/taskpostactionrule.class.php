@@ -120,8 +120,8 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
             break;
 
          case 'state':
-            $states = PluginFusioninventoryTaskjobstate::getStateNames();
-            Dropdown::showFromArray($name, $states, array('value' => $value));
+            $joblog_states = PluginFusioninventoryTaskjoblog::dropdownStateValues();
+            Dropdown::showFromArray($name, $joblog_states, array('value' => $value));
 
             return true;
             break;
