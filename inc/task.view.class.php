@@ -307,15 +307,41 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<form method='GET' class='task_export_form' action='".$CFG_GLPI['root_doc'].
            "/plugins/fusioninventory/front/export_task.php'>";
 
-      $agent_state_types = array(
-         'agents_prepared', 'agents_cancelled', 'agents_running',
-         'agents_success', 'agents_error'
+      // INCLUDE OLD JOBS SELECT
+      echo "<div>";
+      echo "<label for='include_old_jobs'>".
+           __("Include old jobs",'fusioninventory')." : </label>"; 
+      echo "<select class='include_old_jobs' id='include_old_jobs'>";
+      foreach ($limit_options as $value => $label) {
+         $selected = "";
+         if (isset($_SESSION['fi_include_old_jobs']) && $value == $_SESSION['fi_include_old_jobs']) {
+            $selected = "selected='selected'";
+         }
+         echo "<option value='$value' $selected>$label</option>";
+      }
+      echo "</select>";
+      echo "</div>";
+
+      // STATES CHECKBOXES
+      echo "<hr />"; 
+      echo "<label for='include_old_jobs'>".__("Agent state",'fusioninventory')." : </label>"; 
+      echo "<div>";
+      $agent_state_types = array( // true : checked by default
+         'agents_prepared'  => false, 
+         'agents_cancelled' => false,
+         'agents_running'   => true,
+         'agents_success'   => true, 
+         'agents_error'     => true
       );
-      foreach ($agent_state_types as $agent_state_type) {
+      foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
          $agent_state_type = str_replace("agents_", "", $agent_state_type);
          $locale = __(ucfirst($agent_state_type), 'fusioninventory');
+         $checked = "";
+         if ($agent_state_checked) {
+            $checked = "checked='checked'";
+         }
          echo "<div class='agent_state_type_checkbox'>";
-         echo "<input type='checkbox' checked='checked' name='agent_state_types[]' ".
+         echo "<input type='checkbox' $checked name='agent_state_types[]' ".
               "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
          echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
          echo "</div>";
@@ -325,14 +351,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<input class='submit' type='submit' value='"._sx('button', 'Export')."'>";
       Html::closeForm();
       echo "</div>";
+      echo "</div>";
 
       echo "<script type='text/javascript'>
             $('#fiTaskExport_modalWindow').dialog({
                modal: true,
                autoOpen: false,
-               height: 150,
+               height: 200,
                position: ['center', 20],
-               width: 500,
+               width: 480,
                resizeable: true,
                title: \""._sx('button', 'Export')."\"
             });
