@@ -311,7 +311,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<div>";
       echo "<label for='include_old_jobs'>".
            __("Include old jobs",'fusioninventory')." : </label>"; 
-      echo "<select class='include_old_jobs' id='include_old_jobs'>";
+      echo "<select class='include_old_jobs'>";
       foreach ($limit_options as $value => $label) {
          $selected = "";
          if (isset($_SESSION['fi_include_old_jobs']) && $value == $_SESSION['fi_include_old_jobs']) {
