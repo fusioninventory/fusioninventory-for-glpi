@@ -1496,7 +1496,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      echo $exec['state'].NL;
                      $log_cpt++;
 
-                     if ($log_cpt >= $_SESSION['fi_include_old_jobs']) {
+                     if ($_SESSION['fi_include_old_jobs'] != -1 
+                         && $log_cpt >= $_SESSION['fi_include_old_jobs']) {
                         break;
                      }
 
