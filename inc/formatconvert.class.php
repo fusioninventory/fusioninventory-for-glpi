@@ -427,6 +427,11 @@ class PluginFusioninventoryFormatconvert {
       // otherserial (on tag) if defined in config
       if ($pfConfig->getValue('otherserial') == 1) {
          if (isset($array['ACCOUNTINFO'])) {
+            //In very rare case, ACCOUNTINFO section is present twice in the XML file...
+            if (isset($array['ACCOUNTINFO'][0])) {
+               $tmpacc = $array['ACCOUNTINFO'][0];
+               $array['ACCOUNTINFO'] = $tmpacc;
+            }
             if (isset($array['ACCOUNTINFO']['KEYNAME'])
                     && $array['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
                if (isset($array['ACCOUNTINFO']['KEYVALUE'])
