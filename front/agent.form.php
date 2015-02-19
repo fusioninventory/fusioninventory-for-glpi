@@ -44,12 +44,7 @@ include ("../../../inc/includes.php");
 
 $agent = new PluginFusioninventoryAgent();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-             "pluginfusioninventorymenu", "agent");
-
 Session::checkRight('plugin_fusioninventory_agent', READ);
-
-PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['startagent'])) {
    $agent = new PluginFusioninventoryAgent();
@@ -81,6 +76,10 @@ if (isset($_POST['startagent'])) {
 }
 
 
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+             "pluginfusioninventorymenu", "agent");
+
+PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_GET["id"])) {
    $agent->display(
