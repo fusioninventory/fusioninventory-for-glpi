@@ -1678,7 +1678,8 @@ class PluginFusioninventoryFormatconvert {
                                                                 $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isset($this->foreignkey_itemtype[$key])) {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                             $value);
+                                                             $value,
+                                                             $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isForeignKeyField($key)
                           && $key != "users_id") {
                      $this->foreignkey_itemtype[$key] =
@@ -1688,14 +1689,15 @@ class PluginFusioninventoryFormatconvert {
                            $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
                            $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                                    $value,
-                                                                   '-1',
+                                                                   $_SESSION["plugin_fusioninventory_entity"],
                                                                    array('manufacturer' => $manufacturer));
                         } else {
                            $array[$key] = 0;
                         }
                      } else {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value);
+                                                                $value,
+                                                                $_SESSION["plugin_fusioninventory_entity"]);
                      }
                   }
                }
