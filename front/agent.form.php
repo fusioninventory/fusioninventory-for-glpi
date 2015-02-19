@@ -71,9 +71,9 @@ if (isset($_POST['startagent'])) {
    }
    $agent->update($_POST);
    Html::back();
-} else if (isset ($_POST["delete"])) {
+} else if (isset ($_POST["purge"])) {
    Session::checkRight('plugin_fusioninventory_agent', PURGE);
-   $agent->delete($_POST);
+   $agent->delete($_POST, true);
    $agent->redirectToList();
 } else if (isset ($_POST["startagent"])) {
 
