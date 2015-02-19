@@ -90,16 +90,37 @@ class PluginFusioninventoryCommunicationRest {
    static function getConfigByAgent($params = array()) {
       $schedule = array();
 
+      $pfAgentModule = new PluginFusioninventoryAgentmodule();
+
       $a_agent = PluginFusioninventoryAgent::getByDeviceID($params['machineid']);
 
       if (isset($params['task'])) {
          foreach (array_keys($params['task']) as $task) {
             foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
+               $classname = '';
+               if (strtolower($task) == 'deploy') {
+                  $classname = 'PluginFusioninventoryDeployPackage';
+               } else if (strtolower($task) == 'esx') {
+                  $classname = 'PluginFusioninventoryCredentialIp';
+               } else if (strtolower($task) == 'collect') {
+                  $classname = 'PluginFusioninventoryCollect';
+               }
+
+               $taskname = $method['method'];
+               if (strstr($taskname, 'deploy')) {
+                  $taskname = $method['task'];
+               }
                $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
+
                if (
                      (isset($method['task']) && strtolower($method['task']) == strtolower($task))
                   && (isset($method['use_rest']) && $method['use_rest'])
                   && method_exists($class, self::getMethodForParameters($task))
+                  && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
+                  && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
+                          "`plugin_fusioninventory_agents_id`='".$a_agent['id']."' "
+                          . " AND `itemtype`='".$classname."'"
+                          . " AND `state`='0'") > 0
                ) {
                   /*
                    * Since migration, there is only one plugin in one directory
