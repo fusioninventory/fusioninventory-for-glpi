@@ -662,7 +662,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $instances = $class->find("`$key_field`='$id'");
       $input = array();
       if (count($instances) > 0) {
-         $input = current($instances);
+         $input = Toolbox::addslashes_deep(current($instances));
       } else {
          $input[$key_field] = $id;
          $id = $class->add($input);
