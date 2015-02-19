@@ -801,7 +801,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             break;
 
          default:
-            echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
+            if (strstr($agentStatus['message'], 'running')) {
+               echo $agentStatus['message'];
+            } else {
+               echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
+            }
             break;
 
       }
