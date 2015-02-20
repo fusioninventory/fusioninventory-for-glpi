@@ -112,7 +112,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
-      Toolbox::logDebug($mirrors);
 
       return $mirrors;
    }
