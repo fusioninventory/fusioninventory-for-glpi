@@ -405,14 +405,14 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.ip':
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.mac':
-         $array = importArrayFromDB($data['ITEM_'.$num]);
+         $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          return implode("<br/>", $array);
          break;
 
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.method':
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
-            if ($mdata['method'] == $data['ITEM_'.$num]) {
+            if ($mdata['method'] == $data['raw']['ITEM_'.$num]) {
                return $mdata['name'];
             }
          }
