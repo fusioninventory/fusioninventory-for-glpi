@@ -705,7 +705,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Интервал инвентаризации (в часах)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks after"
+msgid "Delete tasks logs after"
 msgstr "Удалять задачи спустя"
 
 #: inc/config.class.php:327
