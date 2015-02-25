@@ -701,7 +701,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Frequência de inventário (em horas)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks after"
+msgid "Delete tasks logs after"
 msgstr "Excluir tarefas após"
 
 #: inc/config.class.php:327
