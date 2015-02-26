@@ -130,6 +130,21 @@ class PluginFusioninventoryTaskpostactionRule extends Rule {
       return false;
    }
 
+   function displayAdditionalRuleAction(array $action, $value='') {
+      switch ($action['type']) {
+         case 'date':
+            Html::showDateField('value', array('value' => $value));
+            return true;
+            break;
+         case 'datetime':
+            Html::showDateTimeField('value', array('value' => $value));
+            return true;
+            break;
+
+      }
+      return false;
+   }
+
 
    function getActions() {
       $actions                             = array();
