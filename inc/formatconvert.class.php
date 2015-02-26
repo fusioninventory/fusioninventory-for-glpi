@@ -431,6 +431,11 @@ class PluginFusioninventoryFormatconvert {
       // otherserial (on tag) if defined in config
       if ($pfConfig->getValue('otherserial') == 1) {
          if (isset($array['ACCOUNTINFO'])) {
+            //In very rare case, ACCOUNTINFO section is present twice in the XML file...
+            if (isset($array['ACCOUNTINFO'][0])) {
+               $tmpacc = $array['ACCOUNTINFO'][0];
+               $array['ACCOUNTINFO'] = $tmpacc;
+            }
             if (isset($array['ACCOUNTINFO']['KEYNAME'])
                     && $array['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
                if (isset($array['ACCOUNTINFO']['KEYVALUE'])
@@ -1757,7 +1762,8 @@ class PluginFusioninventoryFormatconvert {
                                                                 $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isset($this->foreignkey_itemtype[$key])) {
                      $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                             $value);
+                                                             $value,
+                                                             $_SESSION["plugin_fusioninventory_entity"]);
                   } else if (isForeignKeyField($key)
                           && $key != "users_id") {
                      $this->foreignkey_itemtype[$key] =
@@ -1767,14 +1773,15 @@ class PluginFusioninventoryFormatconvert {
                            $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
                            $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                                    $value,
-                                                                   '-1',
+                                                                   $_SESSION["plugin_fusioninventory_entity"],
                                                                    array('manufacturer' => $manufacturer));
                         } else {
                            $array[$key] = 0;
                         }
                      } else {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value);
+                                                                $value,
+                                                                $_SESSION["plugin_fusioninventory_entity"]);
                      }
                   }
                }

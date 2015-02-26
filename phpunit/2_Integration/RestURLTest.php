@@ -84,6 +84,11 @@ class RestURLTest extends RestoreDatabase_TestCase {
               'entities_id'    => $entities_id,
               'agent_base_url' => 'http://10.0.2.2/glpi085');
       $pfEntity->add($input);
+
+      // active all modules
+      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`"
+              . " SET `is_active`='1'";
+      $DB->query($query);
    }
 
 
@@ -102,6 +107,13 @@ class RestURLTest extends RestoreDatabase_TestCase {
 
       $entities_id = 1;
       $agents_id = 1;
+
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $input = array(
+         'itemtype'                         => 'PluginFusioninventoryCollect',
+         'plugin_fusioninventory_agents_id' => 1
+      );
+      $pfTaskjobstate->add($input);
 
       // Get answer
       $input = array(
@@ -134,6 +146,13 @@ class RestURLTest extends RestoreDatabase_TestCase {
       $entities_id = 1;
       $agents_id = 1;
 
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $input = array(
+         'itemtype'                         => 'PluginFusioninventoryDeployPackage',
+         'plugin_fusioninventory_agents_id' => 1
+      );
+      $pfTaskjobstate->add($input);
+
       // Get answer
       $input = array(
           'action'    => 'getConfig',
@@ -164,6 +183,13 @@ class RestURLTest extends RestoreDatabase_TestCase {
 
       $entities_id = 1;
       $agents_id = 1;
+
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $input = array(
+         'itemtype'                         => 'PluginFusioninventoryCredentialIp',
+         'plugin_fusioninventory_agents_id' => 1
+      );
+      $pfTaskjobstate->add($input);
 
       // Get answer
       $input = array(

@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -49,8 +49,9 @@ $PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
-define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.1 SNAPSHOT");
+
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
@@ -291,9 +292,9 @@ function plugin_init_fusioninventory() {
             )
          );
       }
-
       if (  script_endswith("task.form.php")
          or script_endswith("taskjob.php")
+         OR (script_endswith("iprange.form.php"))
       )
       {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(

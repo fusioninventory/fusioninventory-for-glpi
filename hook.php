@@ -398,10 +398,9 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       } else {
          $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
          $sopt[5191]['field']='name';
-         $sopt[5191]['linkfield']='id';
+         $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
          $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
             __('SNMP authentication', 'fusioninventory');
-
          $sopt[5191]['datatype'] = 'itemlink';
          $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
          $sopt[5191]['massiveaction'] = FALSE;
@@ -433,6 +432,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
                              __('SNMP authentication', 'fusioninventory');
+      $sopt[5191]['datatype'] = 'itemlink';
+      $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = FALSE;
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_networkequipments';
@@ -523,14 +524,14 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.ip':
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.mac':
-         $array = importArrayFromDB($data['ITEM_'.$num]);
+         $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          return implode("<br/>", $array);
          break;
 
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.method':
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          foreach ($a_methods as $mdata) {
-            if ($mdata['method'] == $data['ITEM_'.$num]) {
+            if ($mdata['method'] == $data['raw']['ITEM_'.$num]) {
                return $mdata['name'];
             }
          }
@@ -1908,7 +1909,8 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                break;
 
             // ** FusionInventory - SNMP authentification
-            case "glpi_plugin_fusioninventory_configsecurities.id":
+            case "glpi_plugin_fusioninventory_configsecurities.".
+                    "plugin_fusioninventory_configsecurities_id":
                $return = "";
                if ($leftjoin_fusioninventory_printers == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusioninventory_printers

@@ -711,7 +711,7 @@ table.runs td.comment {
 /*
  * submit class grabbed from GLPI core
  */
-
+/*
 .submit {
    cursor:pointer;
    height: auto;
@@ -726,9 +726,9 @@ table.runs td.comment {
    background-image: linear-gradient(top, #fddb6f, #ffb94b);
 
    /* For Internet Explorer 5.5 - 7 */
-   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#fddb6f, endColorstr=#ffb94b);
+/*   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#fddb6f, endColorstr=#ffb94b);
    /* For Internet Explorer 8 */
-   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#fddb6f, endColorstr=#ffb94b)";
+/*   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#fddb6f, endColorstr=#ffb94b)";
    border-radius: 3px;
    -moz-border-radius: 3px;
    -webkit-border-radius: 3px;
@@ -741,7 +741,8 @@ table.runs td.comment {
    border-color: #d69e31 #e3a037 #d5982d #e3a037
 
 }
-
+*/
+/*
 .submit:hover {
 
    border: 1px inset #888888;
@@ -754,7 +755,7 @@ table.runs td.comment {
    background-image: linear-gradient(top, #ffb94b, #fddb6f);
 
 }
-
+*/
 .lockfield {
    background-image: url('../../../plugins/fusioninventory/pics/lock.png');
    background-repeat: no-repeat; 
