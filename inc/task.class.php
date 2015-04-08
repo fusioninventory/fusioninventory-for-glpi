@@ -1401,6 +1401,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   foreach ($agent as $exec_id => $exec) {
                      if (!in_array($exec['state'], $agent_state_types)) {
                         unset($agent[$exec_id]);
+                        if (count($agent) === 0) {
+                           unset($target['agents'][$agent_id]);
+                        }
                      }
                   }
                }
