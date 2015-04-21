@@ -973,8 +973,21 @@ class PluginFusioninventoryFormatconvert {
                // it's cd-rom / dvd
 //               if ($pfConfig->getValue(,
 //                    "component_drive") =! 0) {
-//// TODO ***
-//                }
+               if ($pfConfig->getValue('component_drive') == 1) {
+                  $array_tmp = $thisc->addValues($a_storage,
+                                                 array(
+                                                    'SERIALNUMBER' => 'serial',
+                                                    'NAME'         => 'designation',
+                                                    'TYPE'         => 'interfacetypes_id',
+                                                    'MANUFACTURER' => 'manufacturers_id',
+                                                     ));
+                  if ($array_tmp['designation'] == '') {
+                     if (isset($a_storage['DESCRIPTION'])) {
+                        $array_tmp['designation'] = $a_storage['DESCRIPTION'];
+                     }
+                  }
+                  $a_inventory['drive'][] = $array_tmp;
+                }
             } else {
                // it's harddisk
 //               if ($pfConfig->getValue(,
