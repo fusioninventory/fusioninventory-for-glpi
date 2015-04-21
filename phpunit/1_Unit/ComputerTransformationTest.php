@@ -779,6 +779,66 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
    }
 
+
+
+   /**
+    * @test
+    */
+   public function ComputerCDROM() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['STORAGES'] = array(
+            array(
+               'DESCRIPTION'  => 'Lecteur de CD-ROM',
+               'MANUFACTURER' => '(Lecteurs de CD-ROM standard)',
+               'MODEL'        => 'hp DVD RW AD-7251H5 ATA Device',
+               'NAME'         => 'hp DVD RW AD-7251H5 ATA Device',
+               'SCSI_COID'    => '3',
+               'SCSI_LUN'     => '0',
+               'SCSI_UNID'    => '0',
+               'SERIALNUMBER' => '',
+               'TYPE'         => 'DVD Writer',
+                )
+      );
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+
+      $a_reference = array();
+      $a_reference[0] = array(
+            'serial'            => '',
+            'designation'       => 'hp DVD RW AD-7251H5 ATA Device',
+            'interfacetypes_id' => 'DVD Writer',
+            'manufacturers_id'  => '(Lecteurs de CD-ROM standard)'
+          );
+      $this->assertEquals($a_reference, $a_return['drive']);
+   }
+
+
 }
 
 ?>
