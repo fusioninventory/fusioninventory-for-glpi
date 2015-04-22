@@ -86,6 +86,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
+      $item_DeviceDrive             = new Item_DeviceDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
@@ -315,7 +316,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("component_harddrive") != 0) {
             $db_harddrives = array();
             if ($no_history === FALSE) {
-               $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`
+               $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`,
+                     `capacity`
                      FROM `glpi_items_deviceharddrives`
                   WHERE `items_id` = '$computers_id'
                      AND `itemtype`='Computer'
@@ -339,6 +341,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $arrayslower = array_map('strtolower', $arrays);
                   foreach ($db_harddrives as $keydb => $arraydb) {
                      if ($arrayslower['serial'] == $arraydb['serial']) {
+                        if ($arraydb['capacity'] == 0
+                                AND $arrayslower['capacity'] > 0) {
+                           $input = array(
+                              'id'       => $keydb,
+                              'capacity' => $arrayslower['capacity']
+                           );
+                           $item_DeviceHardDrive->update($input);
+                        }
                         unset($a_computerinventory['harddrive'][$key]);
                         unset($db_harddrives[$keydb]);
                         break;
@@ -359,6 +369,72 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($a_computerinventory['harddrive']) != 0) {
                      foreach($a_computerinventory['harddrive'] as $a_harddrive) {
                         $this->addHardDisk($a_harddrive, $computers_id, $no_history);
+                     }
+                  }
+               }
+            }
+         }
+
+      // * drive
+         if ($pfConfig->getValue("component_drive") != 0) {
+            $db_drives = array();
+            if ($no_history === FALSE) {
+               $query = "SELECT `glpi_items_devicedrives`.`id`, `serial`,
+                     `glpi_devicedrives`.`designation`
+                     FROM `glpi_items_devicedrives`
+                  LEFT JOIN `glpi_devicedrives` ON `devicedrives_id`=`glpi_devicedrives`.`id`
+                  WHERE `items_id` = '$computers_id'
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_drives[$idtmp] = $data2;
+               }
+            }
+
+            if (count($db_drives) == 0) {
+               foreach ($a_computerinventory['drive'] as $a_drive) {
+                  $this->addDrive($a_drive, $computers_id, $no_history);
+               }
+            } else {
+               foreach ($a_computerinventory['drive'] as $key => $arrays) {
+                  $arrayslower = array_map('strtolower', $arrays);
+                  if ($arrayslower['serial'] == '') {
+                     foreach ($db_drives as $keydb => $arraydb) {
+                        if ($arrayslower['designation'] == $arraydb['designation']) {
+                           unset($a_computerinventory['drive'][$key]);
+                           unset($db_drives[$keydb]);
+                           break;
+                        }
+                     }
+                  } else {
+                     foreach ($db_drives as $keydb => $arraydb) {
+                        if ($arrayslower['serial'] == $arraydb['serial']) {
+                           unset($a_computerinventory['drive'][$key]);
+                           unset($db_drives[$keydb]);
+                           break;
+                        }
+                     }
+                  }
+               }
+
+               if (count($a_computerinventory['drive']) == 0
+                  AND count($db_drives) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_drives) != 0) {
+                     // Delete drive in DB
+                     foreach ($db_drives as $idtmp => $data) {
+                        $item_DeviceDrive->delete(array('id'=>$idtmp), 1);
+                     }
+                  }
+                  if (count($a_computerinventory['drive']) != 0) {
+                     foreach($a_computerinventory['drive'] as $a_drive) {
+                        $this->addDrive($a_drive, $computers_id, $no_history);
                      }
                   }
                }
@@ -2013,6 +2089,30 @@ FALSE);
       $data['is_dynamic']           = 1;
       $data['_no_history']          = $no_history;
       $item_DeviceHardDrive->add($data, array(), !$no_history);
+   }
+
+
+
+   /**
+    * Add a new drive component
+    *
+    * @param type $data
+    * @param type $computers_id
+    * @param type $no_history
+    *
+    * @return nothing
+    */
+   function addDrive($data, $computers_id, $no_history) {
+      $item_DeviceDrive         = new Item_DeviceDrive();
+      $deviceDrive              = new DeviceDrive();
+
+      $drives_id = $deviceDrive->import($data);
+      $data['devicedrives_id']      = $drives_id;
+      $data['itemtype']             = 'Computer';
+      $data['items_id']             = $computers_id;
+      $data['is_dynamic']           = 1;
+      $data['_no_history']          = $no_history;
+      $item_DeviceDrive->add($data, array(), !$no_history);
    }
 
 

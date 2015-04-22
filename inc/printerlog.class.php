@@ -484,13 +484,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</td>";
       echo "<td class='left'>".__('Time unit', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elementsTime=array('day'=>__('day'),
-
-                          'week'=>__('week'),
-
-                          'month'=>__('month'),
-
-                          'year'=>__('year', 'fusioninventory'));
+      $elementsTime=array('day'  => _n('Day', 'Days', 1),
+                          'week' => __('Week'),
+                          'month'=> _n('Month', 'Months', 1),
+                          'year' => __('Year', 'fusioninventory'));
 
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));

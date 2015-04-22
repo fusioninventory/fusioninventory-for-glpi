@@ -702,7 +702,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Periodizität des Inventars (in Stunden)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks after"
+msgid "Delete tasks logs after"
 msgstr "Agent-Aufgabe am Ende löschen"
 
 #: inc/config.class.php:327

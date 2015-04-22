@@ -309,7 +309,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Delete tasks after', 'fusioninventory')." :</td>";
+      echo "<td>".__('Delete tasks logs after', 'fusioninventory')." :</td>";
       echo "<td>";
       Dropdown::showNumber("delete_task", array(
              'value' => $this->getValue('delete_task'),
