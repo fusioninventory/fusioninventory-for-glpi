@@ -1045,7 +1045,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      $used[]=$line["vlans_id"];
                      $vlan = new Vlan();
                      $vlan->getFromDB($line["vlans_id"]);
-                     echo "<tr><td>" . $vlan->fields['name']." [".$vlan->fields['tag']."]";
+                     if ($line['tagged'] == '1') {
+                        $state = 'T';
+                     } else {
+                        $state = 'U';
+                     }
+                     echo "<tr><td>" . $vlan->fields['name']." [".$vlan->fields['tag']."] " . $state;
                      echo "</td><td>";
                      if ($canedit) {
                         echo "<a href='" . $CFG_GLPI["root_doc"].
