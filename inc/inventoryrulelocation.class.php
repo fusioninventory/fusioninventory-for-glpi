@@ -164,6 +164,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
+      $actions['locations_id']['force_actions'] = array('assign', 'regex_result');
+
 /*
       $actions['_affect_entity_by_tag']['name'] = __('Entity from TAG');
 
