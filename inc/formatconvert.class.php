@@ -649,7 +649,8 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
-                        if (isset($array_tmp['speed'])) {
+                        if (isset($array_tmp['speed'])
+                                && is_numeric($array_tmp['speed'])) {
                            $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
                         }
 
