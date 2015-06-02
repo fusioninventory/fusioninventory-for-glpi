@@ -67,6 +67,10 @@ if (isset($_GET['action'])) {
                            $out = $class->run($data, $a_agent);
                            if (count($out) > 0) {
                               $response['jobs'][] = $out;
+                              // Inform agent we request POST method, agent will then submit result
+                              // in POST request if it supports the method or it will continue with GET
+                              $response['postmethod'] = 'POST';
+                              $response['token'] = Session::getNewCSRFToken();
                            }
                            $pfTaskjobstate->changeStatus(
                                    $data['id'],
@@ -104,6 +108,12 @@ if (isset($_GET['action'])) {
             $computers_id = $pfAgent->fields['computers_id'];
 
             $a_values = $_GET;
+            // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
+            if (isset($_GET['method']) && $_GET['method'] == 'POST') {
+                $a_values =  $_POST;
+                $response['token'] = Session::getNewCSRFToken();
+                unset($a_values['_glpi_csrf_token']);
+            }
             unset($a_values['action']);
             unset($a_values['uuid']);
 
