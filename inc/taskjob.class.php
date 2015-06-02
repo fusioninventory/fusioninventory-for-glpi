@@ -1811,6 +1811,44 @@ function new_subtype(id) {
       echo "</table>";
    }
 
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'fusioninventory');
+
+      return $actions;
+   }
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+
+      switch ($ma->getAction()) {
+         case "plugin_fusioninventory_transfert" :
+            
+            foreach($ids as $key) {
+               $pfTaskjob->getFromDB($key);
+               $pfTaskjob->forceEnd();
+
+               //set action massive ok for this item
+                $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+
+            break;
+      } 
+   }
+
 }
 
 ?>

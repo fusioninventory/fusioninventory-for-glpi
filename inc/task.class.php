@@ -1497,6 +1497,163 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          //echo original datas 
          echo "<pre>".json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)."</pre>";
       }
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+
+      return $actions;
+   }
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      global $CFG_GLPI;
+
+      switch ($ma->getAction()) {
+         case "transfert": 
+            Dropdown::show('Entity');
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            return true;
+            break;
+
+         case 'target_task' :
+            echo "<table class='tab_cadre' width='600'>";
+            echo "<tr>";
+            echo "<td>";
+            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo "</td>";
+            echo "<td>";
+            $rand = mt_rand();
+            Dropdown::show('PluginFusioninventoryTask', array(
+                  'name'      => "tasks_id",
+                  'condition' => "is_active = 0",
+                  'toupdate'  => array(
+                        'value_fieldname' => "id",
+                        'to_update'       => "dropdown_packages_id$rand",
+                        'url'             => $CFG_GLPI["root_doc"].
+                                                "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
+               )
+            ));
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>";
+            echo __('Package', 'fusioninventory')."&nbsp;:";
+            echo "</td>";
+            echo "<td>";
+            Dropdown::show('PluginFusioninventoryDeployPackage', array(
+                     'name' => "packages_id",
+                     'rand' => $rand
+            ));
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td colspan='2'>";
+            echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
+            echo __('Create a job for each group', 'fusioninventory');
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td colspan='2' align='center'>";
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+            return true;
+      }
+   }
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+
+
+      $pfTask    = new self();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+
+      switch ($ma->getAction()) {
+         case "transfert" :
+            
+            foreach($ids as $key) {
+
+               if ($pfTask->getFromDB($key)) {
+                  $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
+
+                  foreach ($a_taskjobs as $data1) {
+                     $input = array();
+                     $input['id'] = $data1['id'];
+                     $input['entities_id'] = $_POST['entities_id'];
+                     $pfTaskjob->update($input);
+                  }
+
+                  $input = array();
+                  $input['id'] = $key;
+                  $input['entities_id'] = $_POST['entities_id'];
+
+                  if ($pfTask->update($input)) {
+                     //set action massive ok for this item
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     // KO
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
+               }
+            }
+         
+            break;
+
+
+         case 'target_task' :
+            $taskjob = new PluginFusioninventoryTaskjob();
+            $tasks = array();
+
+            // prepare base insertion
+            $input = array(
+               'plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'],
+               'entities_id'                     => 0,
+               'name'                            => 'deploy',
+               'method'                          => 'deployinstall',
+               'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$ma->POST['packages_id'].'"}]',
+               'actor'                           => array()
+            );
+            
+            if (array_key_exists('separate_jobs', $_POST)) {
+               foreach ($ids as $key) {
+                  $input['actors'] = '[{"Computer":"'.$key.'"}]';
+                  if ($pfTaskjob->add($input)) {
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
+               }
+            } else {
+               foreach ($ids as $key) {
+                  $input['actors'][] = array('Computer' => $key);
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               }
+               $input['actors'] = json_encode($input['actors']);
+               $pfTaskjob->add($input);
+            }
+            
+            break;
+      } 
    }
 }
 
