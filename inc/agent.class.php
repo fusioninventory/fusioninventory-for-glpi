@@ -285,18 +285,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
+      $pfAgent = new self();
+
       switch ($ma->getAction()) {
 
          case 'transfert' :
-            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
             foreach ($ids as $key) {
-               if ($pfDeployPackage->getFromDB($key)) {
+               if ($pfAgent->getFromDB($key)) {
                   $input = array();
                   $input['id'] = $key;
-                  $input['entities_id'] = $ma->POST['entities_id'];
-                  $pfDeployPackage->update($input);
+                  $input['entities_id'] = $_POST['entities_id'];
+                  if ($pfAgent->update($input)) {
+                     //set action massive ok for this item
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     // KO
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
                }
-               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
             }
             return;
             break;

@@ -228,6 +228,66 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       return $tab;
    }
+
+
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+
+      return $actions;
+   }
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      switch ($ma->getAction()) {
+         case "transfert": 
+            Dropdown::show('Entity');
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            return true;
+            break;
+      }
+   }
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      $pfDeployMirror = new self();
+
+      switch ($ma->getAction()) {
+         case "transfert" :
+            
+            foreach($ids as $key) {
+               if ($pfDeployMirror->getFromDB($key)) {
+                  $input = array();
+                  $input['id'] = $key;
+                  $input['entities_id'] = $_POST['entities_id'];
+                  if ($pfDeployMirror->update($input)) {
+                     //set action massive ok for this item
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     // KO
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
+               }
+            }
+
+            break;
+      } 
+   }
 }
 
 ?>

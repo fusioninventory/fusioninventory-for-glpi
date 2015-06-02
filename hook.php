@@ -891,61 +891,40 @@ function plugin_fusioninventory_uninstall() {
 
 function plugin_fusioninventory_MassiveActions($type) {
 
+   $sep = MassiveAction::CLASS_ACTION_SEPARATOR;
+   $ma = array ();
+
    switch ($type) {
 
       case "Computer":
-         return array (
-            "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
-            "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory'),
-            'PluginFusioninventoryDeployGroup'.MassiveAction::CLASS_ACTION_SEPARATOR."add_to_static_group"
-               => __('Add to static group', 'fusioninventory')
-         );
+         if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
+            $ma["PluginFusioninventoryLock".$sep."manage_locks"] 
+               = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
+         }
+         if(Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
+            $ma["PluginFusioninventoryTask".$sep."target_task"] 
+               = __('Target a task', 'fusioninventory');
+         }
+         if(Session::haveRight('plugin_fusioninventory_group', UPDATE)) {
+            $ma["PluginFusioninventoryDeployGroup".$sep."add_to_static_group"]
+               = __('Add to static group', 'fusioninventory');
+         }
          break;
 
       case "NetworkEquipment":
-         return array (
-            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
-            "plugin_fusioninventory_get_model"     =>
-                                          __('Load the correct SNMP model', 'fusioninventory'),
-            "plugin_fusioninventory_assign_model"  => __('Assign SNMP model', 'fusioninventory'),
-            "plugin_fusioninventory_assign_auth"   =>
-                                          __('Assign SNMP authentication', 'fusioninventory')
-         );
-         break;
-
       case "Printer":
-         return array (
-            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
-            "plugin_fusioninventory_get_model"     =>
-                                          __('Load the correct SNMP model', 'fusioninventory'),
-            "plugin_fusioninventory_assign_model"  => __('Assign SNMP model', 'fusioninventory'),
-            "plugin_fusioninventory_assign_auth"   =>
-                                          __('Assign SNMP authentication', 'fusioninventory')
-         );
+         if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
+            $ma["PluginFusioninventoryLock".$sep."manage_locks"] 
+               = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
+         }
+         if(Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
+            $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"] 
+               = __('Assign SNMP authentication', 'fusioninventory');
+         }
+
          break;
-
-      case "PluginFusioninventoryTask";
-         return array (
-            'plugin_fusioninventory_transfert' => __('Transfer')
-
-         );
-         break;
-
-      case 'PluginFusioninventoryTaskjob':
-         return array(
-            'plugin_fusioninventory_task_forceend' =>
-               __('Force the end', 'fusioninventory')
-
-         );
-         break;
-
-      case 'PluginFusioninventoryDeployMirror';
-         $array['plugin_fusioninventory_transfert'] = __('Transfer');
-         return $array;
-         break;
-
    }
-   return array ();
+   return $ma;
 }
 
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
@@ -1015,137 +994,11 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 
 
-function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
-   global $DB, $CFG_GLPI;
-
-      switch ($options['action']) {
-         case "plugin_fusioninventory_manage_locks" :
-            $pfil = new PluginFusioninventoryLock;
-            $pfil->showForm($_SERVER["PHP_SELF"], $options['itemtype']);
-            break;
-
-       case 'plugin_fusioninventory_deploy_target_task' :
-          echo "<table class='tab_cadre'>";
-          echo "<tr>";
-          echo "<td>";
-          echo __('Task', 'fusioninventory')."&nbsp;:";
-          echo "</td>";
-          echo "<td>";
-         $rand = mt_rand();
-         Dropdown::show('PluginFusioninventoryTask', array(
-               'name'      => "tasks_id",
-               'condition' => "is_active = 0",
-               'toupdate'  => array(
-                     'value_fieldname' => "id",
-                     'to_update'       => "dropdown_packages_id$rand",
-                     'url'             => $CFG_GLPI["root_doc"].
-                                             "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
-            )
-         ));
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr>";
-         echo "<td>";
-         echo __('Package', 'fusioninventory')."&nbsp;:";
-         echo "</td>";
-         echo "<td>";
-         Dropdown::show('PluginFusioninventoryDeployPackage', array(
-                  'name' => "packages_id",
-                  'rand' => $rand
-         ));
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr>";
-         echo "<td colspan='2'>";
-         echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
-         if ($options['itemtype'] == 'Computer') {
-               echo __('Create a job for each computer', 'fusioninventory');
-         } else if ($options['itemtype'] == 'PluginFusioninventoryDeployGroup') {
-               echo __('Create a job for each group', 'fusioninventory');
-         }
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr>";
-         echo "<td colspan='2' align='center'>";
-         echo "<input type='submit' name='massiveaction' class='submit' value='".
-               __('Post')."'/>";
-         echo "</td>";
-         echo "</tr>";
-         echo "</table>";
-         break;
-
-      case "plugin_fusioninventory_get_model" :
-         if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
-             echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-               __('Post') . "\" >";
-         }
-         break;
-
-      case "plugin_fusioninventory_assign_auth" :
-         if(Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
-            PluginFusioninventoryConfigSecurity::auth_dropdown();
-            echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-               __('Post') . "\" >";
-         }
-         break;
-
-      case "plugin_fusioninventory_unknown_import" :
-         if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
-            if ($options['itemtype'] == 'PluginFusioninventoryUnmanaged') {
-               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"".
-                       __('Post') . "\" >";
-            }
-         }
-         break;
-
-      case 'plugin_fusioninventory_transfert':
-         Dropdown::show('Entity');
-         echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-               "value='".__('Post')."'>";
-         break;
-
-      case 'plugin_fusioninventory_task_forceend':
-         echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-               "value='".__('Post')."'>";
-         break;
-
-   }
-
-   return "";
-}
-
 function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $DB;
 
    switch ($data['action']) {
 
-
-      case "add_to_static_group":
-
-      case "plugin_fusioninventory_manage_locks" :
-         if (($data['itemtype'] == "NetworkEquipment")
-                 OR ($data['itemtype'] == "Printer")
-                 OR ($data['itemtype'] == "Computer")) {
-
-            foreach ($data['item'] as $key => $val) {
-               if ($val == 1) {
-                  if (isset($data["lockfield_fusioninventory"])
-                          && count($data["lockfield_fusioninventory"])){
-                     $tab=PluginFusioninventoryLock::exportChecksToArray(
-                                $data["lockfield_fusioninventory"]
-                             );
-                        PluginFusioninventoryLock::setLockArray($data['type'],
-                                                                $key,
-                                                                $tab,
-                                                                $data['actionlock']);
-                  }
-               }
-            }
-         }
-         break;
 
       case 'plugin_fusioninventory_deploy_target_task' :
          $taskjob = new PluginFusioninventoryDeployTaskjob();
@@ -1224,134 +1077,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
                $DB->query($sql);
             }
-         break;
-
-      case "plugin_fusioninventory_transfert" :
-         if ($data['itemtype'] == 'PluginFusioninventoryAgent') {
-            foreach ($data["item"] as $key => $val) {
-               if ($val == 1) {
-
-                  $pfAgent = new PluginFusioninventoryAgent();
-                  if ($pfAgent->getFromDB($key)) {
-                     $input = array();
-                     $input['id'] = $key;
-                     $input['entities_id'] = $data['entities_id'];
-                     $pfAgent->update($input);
-                  }
-               }
-            }
-         } else if ($data['itemtype'] == 'PluginFusioninventoryDeployMirror') {
-            foreach ($data["item"] as $key => $val) {
-               if ($val == 1) {
-
-                  $pfDeployMirror = new PluginFusioninventoryDeployMirror();
-                  if ($pfDeployMirror->getFromDB($key)) {
-                     $input = array();
-                     $input['id'] = $key;
-                     $input['entities_id'] = $data['entities_id'];
-                     $pfDeployMirror->update($input);
-                  }
-               }
-            }
-         } else if ($data['itemtype'] == 'PluginFusioninventoryTask') {
-            $pfTask = new PluginFusioninventoryTask();
-            $pfTaskjob = new PluginFusioninventoryTaskjob();
-            foreach ($data["item"] as $key => $val) {
-               if ($val == 1) {
-                  if ($pfTask->getFromDB($key)) {
-                     $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
-                     foreach ($a_taskjobs as $data1) {
-                        $input = array();
-                        $input['id'] = $data1['id'];
-                        $input['entities_id'] = $data['entities_id'];
-                        $pfTaskjob->update($input);
-                     }
-                     $input = array();
-                     $input['id'] = $key;
-                     $input['entities_id'] = $data['entities_id'];
-                     $pfTask->update($input);
-                  }
-               }
-            }
-         }
-         break;
-
-      case 'plugin_fusioninventory_task_forceend':
-
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         foreach( $data["item"] as $key => $val) {
-            $pfTaskjob->getFromDB($key);
-            $pfTaskjob->forceEnd();
-         }
-         break;
-
-      case "plugin_fusioninventory_assign_auth" :
-         if ($data['itemtype'] == 'NetworkEquipment') {
-            foreach ($data['item'] as $items_id => $val) {
-               if ($val == 1) {
-                  $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-                  $a_networkequipments = $pfNetworkEquipment->find(
-                             "`networkequipments_id`='".$items_id."'"
-                          );
-                  $input = array();
-                  if (count($a_networkequipments) > 0) {
-                     $a_networkequipment = current($a_networkequipments);
-                     $pfNetworkEquipment->getFromDB($a_networkequipment['id']);
-                     $input['id'] = $pfNetworkEquipment->fields['id'];
-                     $input['plugin_fusioninventory_configsecurities_id'] =
-                                 $data['plugin_fusioninventory_configsecurities_id'];
-                     $pfNetworkEquipment->update($input);
-                  } else {
-                     $input['networkequipments_id'] = $items_id;
-                     $input['plugin_fusioninventory_configsecurities_id'] =
-                                 $data['plugin_fusioninventory_configsecurities_id'];
-                     $pfNetworkEquipment->add($input);
-                  }
-               }
-            }
-         } else if($data['itemtype'] == 'Printer') {
-            foreach ($data['item'] as $items_id => $val) {
-               if ($val == 1) {
-                  $pfPrinter = new PluginFusioninventoryPrinter();
-                  $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
-                  $input = array();
-                  if (count($a_printers) > 0) {
-                     $a_printer = current($a_printers);
-                     $pfPrinter->getFromDB($a_printer['id']);
-                     $input['id'] = $pfPrinter->fields['id'];
-                     $input['plugin_fusioninventory_configsecurities_id'] =
-                                 $data['plugin_fusioninventory_configsecurities_id'];
-                     $pfPrinter->update($input);
-                  } else {
-                     $input['printers_id'] = $items_id;
-                     $input['plugin_fusioninventory_configsecurities_id'] =
-                                 $data['plugin_fusioninventory_configsecurities_id'];
-                     $pfPrinter->add($input);
-                  }
-                }
-            }
-         } else if($data['itemtype'] == 'PluginFusioninventoryUnmanaged') {
-            foreach ($data['item'] as $items_id => $val) {
-               if ($val == 1) {
-                  $pfUnmanaged = new PluginFusinvsnmpUnmanaged();
-                  $a_snmps = $pfUnmanaged->find(
-                             "`plugin_fusioninventory_unmanageds_id`='".$items_id."'"
-                          );
-                  $input = array();
-                  if (count($a_snmps) > 0) {
-                     $input = current($a_snmps);
-                     $input['plugin_fusioninventory_configsecurities_id'] =
-                                 $data['plugin_fusioninventory_configsecurities_id'];
-                     $pfUnmanaged->update($input);
-                  } else {
-                     $input['plugin_fusioninventory_unmanageds_id'] = $items_id;
-                     $input['plugin_fusioninventory_configsecurities_id'] =
-                                 $data['plugin_fusioninventory_configsecurities_id'];
-                     $pfUnmanaged->add($input);
-                  }
-                }
-            }
-         }
          break;
 
       case "plugin_fusioninventory_set_discovery_threads" :

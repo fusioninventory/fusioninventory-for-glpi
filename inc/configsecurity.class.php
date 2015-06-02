@@ -396,6 +396,79 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                            'value' => $selected,
                            'comment' => FALSE));
    }
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      switch ($ma->getAction()) {
+         case "assign_auth": 
+            PluginFusioninventoryConfigSecurity::auth_dropdown();
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            return true;
+            break;
+      }
+   }
+
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      $itemtype = $item->getType();
+
+      switch ($ma->getAction()) {
+         case "assign_auth" :
+            switch($itemtype) {
+               case 'NetworkEquipment':
+                  $equipement = new PluginFusioninventoryNetworkEquipment();
+                  break;
+               case 'Printer':
+                  $equipement = new PluginFusioninventoryPrinter();
+                  break;
+               case 'PluginFusioninventoryUnmanaged':
+                  $equipement = new PluginFusinvsnmpUnmanaged();
+                  break;
+            }
+
+            $fk = getForeignKeyFieldForItemType($itemtype);
+
+
+            foreach($ids as $key) {
+               $found = $equipement->find("`$fk`='".$key."'");
+               $input = array();
+               if (count($found) > 0) {
+                  $current = current($found);
+                  $equipement->getFromDB($current['id']);
+                  $input['id'] = $equipement->fields['id'];
+                  $input['plugin_fusioninventory_configsecurities_id'] =
+                              $_POST['plugin_fusioninventory_configsecurities_id'];
+                  $return = $equipement->update($input);
+               } else {
+                  $input[$fk] = $key;
+                  $input['plugin_fusioninventory_configsecurities_id'] =
+                              $_POST['plugin_fusioninventory_configsecurities_id'];
+                  $return = $equipement->add($input);
+               }
+
+               if ($return) {
+                  //set action massive ok for this item
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               } else {
+                  // KO
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               }
+            }
+         break;
+      } 
+   }
 }
 
 ?>
