@@ -241,10 +241,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
          $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
-            $actions['PluginFusioninventoryAgent'.MassiveAction::CLASS_ACTION_SEPARATOR.$data["modulename"]] =
+            $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.$data["modulename"]] =
                      __('Module', 'fusioninventory')." - ".$data['modulename'];
          }
-         $actions['PluginFusioninventoryAgent'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+         $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
       }
 
       return $actions;
@@ -306,7 +306,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             }
             return;
             break;
-
       }
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
