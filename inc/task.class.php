@@ -1386,6 +1386,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @see CommonDBTM::showMassiveActionsSubForm()
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
+      global $CFG_GLPI;
+
       switch ($ma->getAction()) {
          case "transfert": 
             Dropdown::show('Entity');
@@ -1451,6 +1453,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
+
+
       $pfTask    = new self();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
@@ -1490,73 +1494,34 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $taskjob = new PluginFusioninventoryTaskjob();
             $tasks = array();
 
-            //get old datas
-            $oldjobs = $taskjob->find("plugin_fusioninventory_tasks_id = '".$ma->POST['tasks_id']."'");
-
-            // TODO: rename 'tasks' variables into 'job'
-            // The 'separate jobs' option allows to create a taskjob for each computer
-            // (I can't see the point but it may be
-            // usefull for some people ... even if it creates 500 jobs for just a
-            // single deployment package targetted ... i prefer not to comment
-            // furthermore :) ).
-
-            if (array_key_exists('separate_jobs', $_POST)) {
-               foreach ($ids as $key => $val) {
-                  $task = new StdClass;
-                  $task->package_id = $ma->POST['packages_id'];
-                  $task->method = 'deployinstall';
-                  $task->retry_nb = 3;
-                  $task->retry_time = 0;
-                  //add new datas
-                  $task->action = array(array('PluginFusioninventoryDeployGroup' => $key));
-                  $tasks[] = $task;
-               }
-            } else {
-               $task = new StdClass;
-               $task->package_id = $ma->POST['packages_id'];
-               $task->method = 'deployinstall';
-               $task->retry_nb = 3;
-               $task->retry_time = 0;
-               $task->action = array();
-               //add new datas
-               foreach ($ids as $key => $val) {
-                  $task->action[] = array('PluginFusioninventoryDeployGroup' => $key);
-               }
-               $tasks[] = $task;
-
-            }
-            if ($_POST['tasks_id'] == 0) {
-               $pfTask = new PluginFusioninventoryTask();
-               $input = array();
-               $input['name'] = 'Deploy';
-               $input['communication'] = 'push';
-               $input['date_scheduled'] = date("Y-m-d H:i:s");
-               $_POST['tasks_id'] = $pfTask->add($input);
-            }
-            $params = array(
-               'tasks_id' => $_POST['tasks_id'],
-               'tasks'    => json_encode($tasks)
+            // prepare base insertion
+            $input = array(
+               'plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'],
+               'entities_id'                     => 0,
+               'name'                            => 'deploy',
+               'method'                          => 'deployinstall',
+               'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$ma->POST['packages_id'].'"}]',
+               'actor'                           => array()
             );
-            $taskjob->saveDatas($params);
-
-            //reimport old jobs
-            foreach($oldjobs as $job) {
-               $sql = "INSERT INTO glpi_plugin_fusioninventory_taskjobs (";
-               foreach ($job as $key => $val) {
-                  $sql .= "`$key`, ";
-               }
-               $sql = substr($sql, 0, -2).") VALUES (";
-               foreach ($job as $val) {
-                  if (is_numeric($val) && (int)$val == $val) {
-                     $sql .= "$val, ";
+            
+            if (array_key_exists('separate_jobs', $_POST)) {
+               foreach ($ids as $key) {
+                  $input['actors'] = '[{"Computer":"'.$key.'"}]';
+                  if ($pfTaskjob->add($input)) {
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
-                     $sql .= "'$val', ";
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                   }
                }
-               $sql = substr($sql, 0, -2).");";
-
-               $DB->query($sql);
+            } else {
+               foreach ($ids as $key) {
+                  $input['actors'][] = array('Computer' => $key);
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               }
+               $input['actors'] = json_encode($input['actors']);
+               $pfTaskjob->add($input);
             }
+            
             break;
       } 
    }
