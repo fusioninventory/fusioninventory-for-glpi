@@ -104,6 +104,10 @@ switch (filter_input(INPUT_GET, "action")) {
 
                   if (count($order->jobs > 0)) {
                      $response = $order;
+                     // Inform agent we request POST method, agent will then submit result
+                     // in POST request if it supports the method or it will continue with GET
+                     $response->postmethod = 'POST';
+                     $response->token = Session::getNewCSRFToken();
                   }
                }
             }
@@ -125,6 +129,12 @@ switch (filter_input(INPUT_GET, "action")) {
          $computers_id = $pfAgent->fields['computers_id'];
 
          $a_values = $_GET;
+         // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
+         if (isset($_GET['method']) && $_GET['method'] == 'POST') {
+             $a_values =  $_POST;
+             $response['token'] = Session::getNewCSRFToken();
+             unset($a_values['_glpi_csrf_token']);
+         }
          $sid = isset($a_values['_sid'])?$a_values['_sid']:0;
          $cpt = isset($a_values['_cpt'])?$a_values['_cpt']:0;
          unset($a_values['action']);
@@ -170,17 +180,17 @@ switch (filter_input(INPUT_GET, "action")) {
          if ($add_value) {
             // add collected informations to computer
             $pfCollect_subO->updateComputer(
-            $computers_id,
-            $a_values,
-            $sid
+               $computers_id,
+               $a_values,
+               $sid
             );
          }
 
-            // change status of state table row
-            $pfTaskjobstate->changeStatus($jobstate['id'],
-                       PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+         // change status of state table row
+         $pfTaskjobstate->changeStatus($jobstate['id'],
+                    PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
-            // add logs to job
+         // add logs to job
          if (count($a_values)) {
             $flag    = PluginFusioninventoryTaskjoblog::TASK_INFO;
             $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
@@ -194,7 +204,7 @@ switch (filter_input(INPUT_GET, "action")) {
                                          $flag,
                                          $message);
       }
-         break;
+      break;
 
 
 
