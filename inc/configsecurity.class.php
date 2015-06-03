@@ -463,7 +463,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                   $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                } else {
                   // KO
-                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                }
             }
          break;
