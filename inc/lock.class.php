@@ -781,6 +781,65 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
    }
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      switch ($ma->getAction()) {
+         case "manage_locks": 
+            //detect itemtype
+            $itemtype = str_replace("massform", "", $_POST['container']);
+
+            $pfil = new self;
+            $pfil->showForm($_SERVER["PHP_SELF"], $itemtype);
+            return true;
+            break;
+      }
+   }
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+
+      $itemtype = $item->getType();
+
+      switch ($ma->getAction()) {
+         case "manage_locks":
+            if ($itemtype == "NetworkEquipment" 
+                || $itemtype == "Printer" 
+                || $itemtype == "Computer") {
+
+               foreach($ids as $key) {
+                  if (isset($_POST["lockfield_fusioninventory"])
+                      && count($_POST["lockfield_fusioninventory"])){
+                     $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
+
+                     //lock current item
+                     if (PluginFusioninventoryLock::setLockArray($_POST['type'],
+                                                             $key,
+                                                             $tab,
+                                                             $_POST['actionlock'])) {
+
+                        //set action massive ok for this item
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                     } else {
+                        // KO
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                     }
+               
+                  }
+               }
+            }
+            break;
+      } 
+   }
 }
 
 ?>
