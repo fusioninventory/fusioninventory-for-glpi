@@ -194,7 +194,7 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
       echo $this->fields['zone_cpu_cap'];
       echo "</td>";
 
-      echo "<td>".__('cpu_share')."</td>";
+      echo "<td>".__('Zone cpu_share')."</td>";
       echo "<td>";
       echo $this->fields['zone_cpu_share'];
       echo "</td></tr>";

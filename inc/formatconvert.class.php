@@ -1091,7 +1091,7 @@ class PluginFusioninventoryFormatconvert {
                                                  'ZONEMAXLOCKEDMEMORY' => 'zone_max_locked_memory',
                                                  'ZONEMAXSHMMEMORY' => 'zone_max_shm_memory',
                                                  'ZONECPUCAP'  => 'zone_cpu_cap',
-                                                 'ZONECPUSHARE'=> 'zone_dedicated_cpu',
+                                                 'ZONECPUSHARE'=> 'zone_cpu_share',
                                                  'UUID'        => 'uuid'));
                $array_tmp['is_dynamic'] = 1;
                $a_inventory['solariszone'][] = $array_tmp;
