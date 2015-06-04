@@ -449,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_inventorycomputersolaris
   `zone_max_locked_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `zone_max_shm_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `zone_cpu_cap` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `zone_dedicated_cpu` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_cpu_share` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text COLLATE utf8_unicode_ci,
@@ -464,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_inventorycomputersolaris
   KEY `zone_max_locked_memory` (`zone_max_locked_memory`),
   KEY `zone_max_shm_memory` (`zone_max_shm_memory`),
   KEY `zone_cpu_cap` (`zone_cpu_cap`),
-  KEY `zone_dedicated_cpu` (`zone_dedicated_cpu`),
+  KEY `zone_cpu_share` (`zone_cpu_share`),
   KEY `is_deleted` (`is_deleted`),
   KEY `is_dynamic` (`is_dynamic`),
   KEY `uuid` (`uuid`)

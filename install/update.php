@@ -5743,7 +5743,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       `zone_max_locked_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
       `zone_max_shm_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
       `zone_cpu_cap` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-      `zone_dedicated_cpu` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+      `zone_cpu_share` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
       `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
       `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
       `comment` text COLLATE utf8_unicode_ci,
@@ -5758,7 +5758,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       KEY `zone_max_locked_memory` (`zone_max_locked_memory`),
       KEY `zone_max_shm_memory` (`zone_max_shm_memory`),
       KEY `zone_cpu_cap` (`zone_cpu_cap`),
-      KEY `zone_dedicated_cpu` (`zone_dedicated_cpu`),
+      KEY `zone_cpu_share` (`zone_cpu_share`),
       KEY `is_deleted` (`is_deleted`),
       KEY `is_dynamic` (`is_dynamic`),
       KEY `uuid` (`uuid`)
@@ -5853,11 +5853,17 @@ DEFAULT '0',
 AUTO_INCREMENT=1;";
    $DB->query($query);
    }
+
    //Migrate search params for dynamic groups
    doDynamicDataSearchParamsMigration();
    if (FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
       $migration->dropField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
    }
+ 
+  $migration->changeField("glpi_plugin_fusioninventory_inventorycomputersolariszones", 
+                          "zone_dedicated_cpu", "zone_cpu_share", 
+                          "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+  $migration->migrationOneTable("glpi_plugin_fusioninventory_inventorycomputersolariszones");
 }
 
 /**
