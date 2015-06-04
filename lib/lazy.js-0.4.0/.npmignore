@@ -1,0 +1,8 @@
+docs/
+lib/
+site/
+spec/
+Gemfile*
+Rakefile*
+*.mustache
+lazy.browser.js
