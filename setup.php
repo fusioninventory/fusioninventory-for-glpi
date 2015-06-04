@@ -302,7 +302,6 @@ function plugin_init_fusioninventory() {
             array(
                "lib/lazy.js-0.3.2/lazy.js",
                "lib/mustache.js-0.8.1/mustache.js",
-               "lib/plusbutton.js",
                "js/taskjobs.js",
             )
          );
