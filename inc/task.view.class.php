@@ -123,7 +123,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo implode("\n", array(
          "<script id='template_task' type='x-tmpl-mustache'>",
          "<div id='{{task_id}}' class='task_block'>",
-         "  <h3>".__("Task",'fusioninventory')." <span class='task_name'></span></h3>",
+         "  <h3>".__("Task",'fusioninventory')." <span class='task_name'>{{task_name}}</span></h3>",
          "  <div class='jobs_block'></div>",
          "</div>",
          "</script>"
@@ -134,7 +134,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "<script id='template_job' type='x-tmpl-mustache'>",
          "<div id='{{job_id}}' class='job_block'>",
          "  <div class='refresh_button submit'><span></span></div>",
-         "  <h3 class='job_name'></h3>",
+         "  <h3 class='job_name'>{{job_name}}</h3>",
          "  <div class='targets_block'></div>",
          "</div>",
          "</script>"
@@ -147,6 +147,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  <div class='target_details'>",
          "  <div class='target_infos'>",
          "     <h4 class='target_name'>",
+         "        <a target='_blank' href={{target_link}}>",
+         "          {{target_name}}",
+         "        </a>",
          "     </h4>",
          "     <div class='target_stats'>",
          "     </div>",
@@ -167,14 +170,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "</script>",
       ));
 
-      // Template content for targets' name
-      echo implode("\n", array(
-         "<script id='template_target_name' type='x-tmpl-mustache'>",
-         "<a target='_blank' href={{target_link}}>",
-         "  {{target_name}}",
-         "</a>",
-         "</script>",
-      ));
 
       // Template for counters' blocks
       echo implode("\n", array(
@@ -186,16 +181,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  title='".__("Show/Hide details","fusioninventory")."'",
          "  onclick='taskjobs.toggle_details_type(this, \"{{counter_type}}\", \"{{chart_id}}\")'",
          ">",
-         "</a>",
-         "</div>",
-         "</script>"
-      ));
-
-      echo implode("\n", array(
-         "<script id='template_counter_content' type='x-tmpl-mustache'>",
          "<div class='fold'></div>",
          "<span class='counter_name'>{{counter_type_name}}</span>",
          "<span class='counter_value'>{{counter_value}}</span>",
+         "</div>",
+         "</a>",
          "</script>"
       ));
 
