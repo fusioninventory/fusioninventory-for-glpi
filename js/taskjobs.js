@@ -215,7 +215,7 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
    $.each(chart.pinned_agents, function(agent_id, agent) {
 
       if (agent) {
-         var max_iteration = Math.min(agent.length, include_old_jobs);
+         var max_iteration = Math.min(agent.length);
          if (max_iteration == -1) {
             max_iteration = agent.length;
          }
@@ -1048,8 +1048,7 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         .removeClass('computing');
 
     var data = {
-        "task_id"         : task_id, 
-        "include_old_jobs": include_old_jobs
+        "task_id"         : task_id
     };
 
     $.ajax({
@@ -1068,7 +1067,6 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         },
         complete: function( ) {
             taskjobs.update_refresh_buttons( ajax_url, task_id);
-            taskjobs.init_include_old_jobs_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
         }
     });
