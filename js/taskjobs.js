@@ -13,9 +13,9 @@ taskjobs.hide_form = function () {
 taskjobs.register_update_method = function (rand_id) {
 
    //reset onchange event
-   $("#" + rand_id ).off("change", "*");
-   $("#" + rand_id ).on("change",
-      function(e) {
+   $("#" + rand_id )
+      .off("change", "*")
+      .on("change", function(e) {
          $("#method_selected").text(e.val);
          //reset targets and actors dropdown
          taskjobs.hide_moduletypes_dropdown();
@@ -28,8 +28,9 @@ taskjobs.register_update_method = function (rand_id) {
 
 taskjobs.register_update_items = function (rand_id, moduletype, ajax_url) {
    //reset onchange event
-   $("#" + rand_id ).off("change", "*");
-   $("#" + rand_id ).on("change",
+   $("#" + rand_id )
+      .off("change", "*")
+      .on("change",
          function(e) {
             //$("#taskjob_moduleitems_dropdown").text(e.val);
             taskjobs.show_moduleitems(ajax_url, moduletype, e.val)
@@ -39,8 +40,9 @@ taskjobs.register_update_items = function (rand_id, moduletype, ajax_url) {
 
 taskjobs.register_form_changed = function () {
    //reset onchange event
-   $("form[name=form_taskjob]" ).off("change", "*");
-   $("form[name=form_taskjob]" ).on("change",
+   $("form[name=form_taskjob]" )
+      .off("change", "*")
+      .on("change",
          function(e) {
             $('#cancel_job_changes_button').show();
          }
@@ -522,50 +524,7 @@ taskjobs.create_block = function(selector, parent_selector, content) {
    element = $(selector);
 
    if (element.length == 0) {
-      $(parent_selector).append($(content).hide());
-   }
-}
-
-// Update some block's content if it changed
-taskjobs.update_block_content = function(selector, content, class_toggle) {
-   element = $(selector);
-   if ( element.length == 0 ) {
-         element.html(content);
-   } else {
-      if ( element.html().length == 0 ) {
-         element.html(content);
-      } else {
-         if ($(content).length > 0) {
-            new_content = $(content).text().trim();
-         } else {
-            new_content = content.trim();
-         }
-         if (element.text().trim() !== new_content) {
-            if ( class_toggle ) {
-               element.html(content);
-               classes_to_remove = Lazy(class_toggle)
-                  .filter(function(d) { return d.toggle == false})
-                  .map(function(d) { return d.classname })
-                  .toArray().join();
-               classes_to_add = Lazy(class_toggle)
-                  .filter(function(d) { return d.toggle == true})
-                  .map(function(d) { return d.classname })
-                  .toArray().join();
-
-               //console.debug(classes_to_remove);
-               //console.debug(classes_to_add);
-               element
-                  .toggleClass(classes_to_add, true, 500)
-                  .toggleClass(classes_to_remove,false, 500);
-            } else {
-               element.fadeOut(200, function() {
-                  $(this).html(content).fadeIn(500, function() { $(this).css('display','')});
-               })
-            }
-         } else {
-            element[0].innerHTML = content;
-         }
-      }
+      $(parent_selector).append($(content));
    }
 }
 
@@ -610,61 +569,46 @@ taskjobs.update_logs = function (data) {
       task_id = 'task_' + task_v.task_id;
 
       task_name = task_v.task_name;
-      task_selector = [tasks_selector, '#' + task_id].join(' > ');
+      task_selector = '#' + task_id;
 
       blocks_seen.tasks.push(task_selector);
-
-      //console.debug(task_selector);
 
       taskjobs.create_block(
          task_selector,
          tasks_selector,
          Mustache.render(templates.task, {
-            'task_id': task_id
+            'task_id': task_id,
+            'task_name': task_name
          })
       );
 
-      task_name_selector = [task_selector, 'h3', 'span.task_name'].join(' > ');
-      taskjobs.update_block_content(
-         task_name_selector,
-         task_name
-      );
-
       // Display Jobs
-      jobs_selector = [task_selector, '.jobs_block'].join(' > ');
-
-      //console.debug(jobs_selector);
+      jobs_selector = task_selector + ' .jobs_block';
 
       $.each( task_v.jobs, function(job_i, job_v) {
          job_id = job_v.id;
 
          job_name = job_v.name;
-         job_selector = [jobs_selector, '#job_'+job_id].join(' > ');
+         job_selector = '#job_'+job_id;
          blocks_seen.jobs.push(job_selector);
 
          taskjobs.create_block(
             job_selector,
             jobs_selector,
             Mustache.render(templates.job, {
-               'job_id': 'job_' + job_id
+               'job_id': 'job_' + job_id,
+               'job_name': job_name
             })
-         );
-         job_name_selector = [job_selector,"h3.job_name"].join(' > ');
-         taskjobs.update_block_content(
-            job_name_selector,
-            job_name
          );
 
          //Display Targets
-         targets_selector = [job_selector, '.targets_block'].join(' > ');
-
-         //console.debug(targets_selector);
+         targets_selector = job_selector + ' .targets_block';
 
          $.each( job_v.targets, function( target_i, target_v) {
             target_id = target_i;
             target_name = target_v.name;
             target_link = target_v.item_link;
-            target_selector = [targets_selector, '#'+target_id].join(' > ');
+            target_selector = '#'+target_id;
             blocks_seen.targets.push(target_selector);
 
 
@@ -676,26 +620,14 @@ taskjobs.update_logs = function (data) {
                target_selector,
                targets_selector,
                Mustache.render(templates.target, {
-                  'target_id': target_id
-               })
-            );
-            target_name_selector = [
-               target_selector,
-               ".target_details",
-               ".target_infos",
-               ".target_name"
-            ].join(' > ');
-
-            taskjobs.update_block_content(
-               target_name_selector,
-               Mustache.render(templates.target_name, {
+                  'target_id': target_id,
                   'target_link' : target_link,
                   'target_name' : target_name
                })
             );
 
             // Create agents' chart data
-            agents_selector = [target_selector, ".agents_block"].join(' > ');
+            agents_selector = target_selector +  " .agents_block";
 
             var agents = null;
             if (Object.keys(target_v.agents).length > 0) {
@@ -722,15 +654,10 @@ taskjobs.update_logs = function (data) {
             taskjobs.refresh_pinned_agents(chart_id);
             agents_dispatch.view(chart_id);
 
-            counters_selector = [
-               target_selector,
-               ".target_details",
-               ".target_infos",
-               ".target_stats"
-            ].join(' > ');
+            counters_selector = target_selector + " .target_stats";
             $.each( taskjobs.statuses_order, function( stats_idx, stats_key) {
 
-               stats_type_selector = [counters_selector, "." + stats_idx].join(' > ');
+               stats_type_selector = target_selector + " ." + stats_idx;               
                taskjobs.create_block(
                      stats_type_selector,
                      counters_selector,
@@ -745,35 +672,19 @@ taskjobs.update_logs = function (data) {
                   counter_type = counter_key;
                   counter_empty = (counter_value.length == 0);
                   counter_type_name = taskjobs.statuses_names[counter_type];
-                  counter_selector = stats_type_selector + ' .' + counter_type;
+                  counter_selector = target_selector + ' .' + counter_type;
 
-                  //console.debug("counter_selector : " + counter_selector);
-
-                  //task_job
                   taskjobs.create_block(
                      counter_selector,
                      stats_type_selector,
                      Mustache.render(templates.counter_block, {
                         'counter_empty' : counter_empty,
                         'counter_type' : counter_type,
-                        'chart_id' : chart_id
-                     })
-                  );
-
-                  counter_content_selector = counter_selector + " > a";
-
-                  taskjobs.update_block_content(
-                     counter_content_selector,
-                     Mustache.render(templates.counter_content, {
+                        'chart_id' : chart_id,
                         'counter_type_name' : counter_type_name,
                         'counter_value' : counter_value.length
                      })
                   );
-                  $(counter_selector)
-                     .toggleClass('empty', counter_empty);
-
-                  $(counter_selector).fadeIn(500);
-                  $(stats_type_selector).fadeIn(500);
                });
             });
 
@@ -801,18 +712,23 @@ taskjobs.update_logs = function (data) {
             ];
 
             if ( ! d3.sum(taskjobs.charts[chart_id].new_data) > 0) {
-               $(progressbar_selector).toggleClass('empty',true);
+               $(progressbar_selector).addClass('empty');
             } else {
-               $(progressbar_selector).toggleClass('empty',false);
+               $(progressbar_selector).removeClass('empty');
             }
 
-            $(counters_selector).fadeIn(500);
-            $(target_selector).fadeIn(500);
+            $(counters_selector).show();
+            $(target_selector).show();
          });
-         $(job_selector).fadeIn(500);
+
+
+         $(job_selector).show();
       });
-      $(task_selector).fadeIn(500);
+      $(task_selector).show();
    });
+
+   //stop loading icon rotation
+   $('.refresh_button span').removeClass('computing');
 
    if (taskjobs.blocks_seen) {
       cache = taskjobs.blocks_seen;
@@ -822,9 +738,7 @@ taskjobs.update_logs = function (data) {
          .concat(Lazy(cache.targets).without(blocks_seen.targets).toArray())
          .concat(Lazy(cache.charts).without(blocks_seen.charts).toArray())
       $.each(node_to_drop.toArray(), function(i,d) {
-         $(d).fadeOut(500, function() {
-            $(this).remove()
-         });
+         $(d).remove()
       });
    }
 
@@ -1129,10 +1043,9 @@ taskjobs.update_progressbar = function( chart ) {
 
 
 taskjobs.get_logs = function( ajax_url, task_id ) {
-    $('.refresh_button')
-        .find('span')
-        .toggleClass('fetching', true)
-        .toggleClass('computing', false);
+    $('.refresh_button > span')
+        .addClass('fetching')
+        .removeClass('computing');
 
     var data = {
         "task_id"         : task_id, 
@@ -1143,20 +1056,20 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         url: ajax_url,
         data: data,
         success: function( data, textStatus, jqXHR) {
-            $('.refresh_button')
-                .find('span')
-                .toggleClass('fetching', false)
-                .toggleClass('computing', true);
-            taskjobs.update_logs(data);
+            $('.refresh_button > span')
+                .addClass('computing')
+                .removeClass('fetching');
+
+            //small timeout to view icon changing
+            setTimeout(function() {
+                taskjobs.update_logs(data);
+            }, 50);   
+            
         },
         complete: function( ) {
             taskjobs.update_refresh_buttons( ajax_url, task_id);
             taskjobs.init_include_old_jobs_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
-            $('.refresh_button')
-                .find('span')
-                .toggleClass('loading', false)
-                .toggleClass('computing', false);
         }
     });
 }
@@ -1175,8 +1088,7 @@ taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
 
 taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
    $('.include_old_jobs')
-      .off("click");
-   $('.include_old_jobs')
+      .off("click")
       .on('change', function(e) {
          include_old_jobs = $(this).val();
          taskjobs.queue_refresh_logs( ajax_url, task_id)
@@ -1186,8 +1098,7 @@ taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
 taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
 
    $("#"+ refresh_id)
-      .off("change");
-   $("#"+ refresh_id)
+      .off("change")
       .on("change", function() {
          taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
       }
