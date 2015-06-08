@@ -537,10 +537,11 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       foreach ($running_tasks as $task) {
          $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic', 'Group');
-         $pfTaskjob->getFromDB($task['taskjob']['id']);
-         $pfTaskjob->prepareRunTaskjob(
-            $task['taskjob']
-         );
+         if ($pfTaskjob->getFromDB($task['taskjob']['id'])) {
+            $pfTaskjob->prepareRunTaskjob(
+               $task['taskjob']
+            );
+         }
       }
 
       if(isset($_SESSION['glpi_plugin_fusioninventory']['agents']) ) {
@@ -1602,11 +1603,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $uniqid = 0;
 //      if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
-
-         $input = array();
-         $input['id'] = $a_taskjob['id'];
-         $input['execution_id'] = $a_taskjob['execution_id'] + 1;
-         $pfTaskjob->update($input);
 
          $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
          $item = new $itemtype;
