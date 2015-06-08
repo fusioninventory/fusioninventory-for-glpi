@@ -1184,6 +1184,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $select['taskjobs'] = "taskjob.*";
             }
          }
+         $where[] = "`taskjob`.`id` IS NOT NULL";
       }
 
       //Filter by definition classes
@@ -1275,6 +1276,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                "WHERE\n    ".implode("\nAND ", $where)
             )
          );
+      Toolbox::logDebug($query);
 
       $results = array();
       $r = $DB->query($query);
