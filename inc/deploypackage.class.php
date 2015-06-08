@@ -182,12 +182,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                ).
             "</h4>\n";
 
-//         $taskurl_list_ids = implode( ', ',
-//            array_map(
-//               create_function('$task', 'return $task["task"]["id"];'),
-//               $this->running_tasks
-//            )
-//         );
 
          $taskurl_list_names = implode(', ',
             array_map(

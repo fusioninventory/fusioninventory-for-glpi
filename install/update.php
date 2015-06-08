@@ -5643,13 +5643,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                'comment'=>'Clean agents not contacted since xxx days'));
    }
 
-   /*
-    * Update task's agents list from dynamic group periodically in order to automatically target new
-    * computer.
-    */
+   // remove old crontasks
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'updatedynamictasks')) {
-      CronTask::Register('PluginFusioninventoryTaskjob', 'updatedynamictasks', '60',
-                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30, 'state' => 0));
+      $DB->query("DELETE FROM glpi_crontasks WHERE itemtype = 'glpi_crontasks' 
+                                             AND name = 'updatedynamictasks'");
    }
 
    if (!$crontask->getFromDBbyName('PluginFusioninventoryAgentWakeup', 'wakeupAgents')) {
@@ -5658,15 +5655,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                'comment'=>'Wake agents ups'));
    }
 
-   /**
-   * Add field to manage which group can be refreshed by updatedynamictasks crontask
-   */
-   /*
-   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
-      $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
-      $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-   }*/
    
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();

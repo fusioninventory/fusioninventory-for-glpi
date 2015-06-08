@@ -982,10 +982,10 @@ taskjobs.update_progressbar = function( chart ) {
          return ((d.data.value > 0) ? '' : 'none');
       })
 
-   cursor.each(function(d) {
-      //console.debug(JSON.stringify(this._current));
-      //console.debug(JSON.stringify(this.getBBox()));
-   });
+   /*cursor.each(function(d) {
+      console.debug(JSON.stringify(this._current));
+      console.debug(JSON.stringify(this.getBBox()));
+   });*/
 
    cursor.transition().duration(500)
       .attrTween('transform', cursorposTween);

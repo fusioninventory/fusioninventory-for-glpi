@@ -516,43 +516,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-   /*
-    * @function cronUpdateDynamicTasks
-    * This function update already running tasks with dynamic groups
-    */
-   static function cronUpdateDynamicTasks() {
-      global $DB;
-
-      $pfTask = new PluginFusioninventoryTask();
-
-      //Get every running tasks with dynamic groups
-      $running_tasks = $pfTask->getItemsFromDB(
-         array(
-            'is_running'  => TRUE,
-            'is_active'   => TRUE,
-            'actors' => array('PluginFusioninventoryDeployGroup' => "")
-         )
-      );
-
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      foreach ($running_tasks as $task) {
-         $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic', 'Group');
-         $pfTaskjob->getFromDB($task['taskjob']['id']);
-         $pfTaskjob->prepareRunTaskjob(
-            $task['taskjob']
-         );
-      }
-
-      if(isset($_SESSION['glpi_plugin_fusioninventory']['agents']) ) {
-         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
-            $pfTaskjob->startAgentRemotly($agents_id);
-         }
-         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
-      }
-
-      return 1;
-   }
-
 
    /**
    * re initialize all taskjob of a taskjob
