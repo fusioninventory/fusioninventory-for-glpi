@@ -183,8 +183,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $checked = '';
       $a_exclude = $this->excludeFields();
       $serialized = $this->getSerialized_InventoryArray($p_itemtype, $p_items_id);
-      $array = search::getOptions($p_itemtype);
+      $options = Search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
+         $name = "";
          if (isset($serialized[$key])) {
             $key_source = $key;
             if (!in_array($key, $a_exclude)) {
@@ -195,9 +196,17 @@ class PluginFusioninventoryLock extends CommonDBTM{
                }
 
                // Get name of field
-               $num = search::getOptionNumber($p_itemtype, $key);
-               if (isset($array[$num]['name'])) {
-                  $name = $array[$num]['name'];
+               $num = Search::getOptionNumber($p_itemtype, $key);
+               if (isset($options[$num]['name'])) {
+                  $name = $options[$num]['name'];
+               } else {
+                  // Get name by search in linkfields
+                  foreach ($options as $opt) {
+                     if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
+                        $name = $opt['name'];
+                        break;
+                     } 
+                  }
                }
                $css_glpi_value = '';
                if ($val != $serialized[$key]) {
@@ -207,7 +216,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                $val = $this->getValueForKey($val, $key);
                echo "<tr class='tab_bg_1'>";
                $table = getTableNameForForeignKeyField($key);
-               if ($table != "") {
+               if ($name == "" && $table != "") {
                   $linkItemtype = getItemTypeForTable($table);
                   $class = new $linkItemtype();
                   $name = $class->getTypeName();
@@ -229,21 +238,31 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
          }
       }
+
       if ($p_items_id == '0') {
          foreach ($item->fields as $key=>$val) {
+            $name = "";
             $key_source = $key;
             if (!in_array($key, $a_exclude)) {
                // Get name of field
-               $num = search::getOptionNumber($p_itemtype, $key);
-               if (isset($array[$num]['name'])) {
-                  $name = $array[$num]['name'];
+               $num = Search::getOptionNumber($p_itemtype, $key);
+               if (isset($options[$num]['name'])) {
+                  $name = $options[$num]['name'];
+               } else {
+                  // Get name by search in linkfields
+                  foreach ($options as $opt) {
+                     if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
+                        $name = $opt['name'];
+                        break;
+                     } 
+                  }
                }
                $css_glpi_value = '';
                // Get value of field
                $val = $this->getValueForKey($val, $key);
                echo "<tr class='tab_bg_1'>";
                $table = getTableNameForForeignKeyField($key);
-               if ($table != "") {
+               if ($name == "" && $table != "") {
                   $linkItemtype = getItemTypeForTable($table);
                   $class = new $linkItemtype();
                   $name = $class->getTypeName();
@@ -289,7 +308,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    function showFormItemtype($p_itemtype) {
 
       $can = 0;
@@ -328,8 +346,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $checked = '';
       $a_exclude = $this->excludeFields();
       $serialized = $this->getSerialized_InventoryArray($p_itemtype, 0);
-      $array = search::getOptions($p_itemtype);
+      $options = search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
+         $name = "";
          $key_source = $key;
          if (!in_array($key, $a_exclude)) {
             if (in_array($key, $locked)) {
@@ -338,16 +357,24 @@ class PluginFusioninventoryLock extends CommonDBTM{
                $checked = '';
             }
             // Get name of field
-            $num = search::getOptionNumber($p_itemtype, $key);
-            if (isset($array[$num]['name'])) {
-               $name = $array[$num]['name'];
+            $num = Search::getOptionNumber($p_itemtype, $key);
+            if (isset($options[$num]['name'])) {
+               $name = $options[$num]['name'];
+            } else {
+               //Get name by search in linkfields
+               foreach ($options as $opt) {
+                  if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
+                     $name = $opt['name'];
+                     break;
+                  } 
+               }
             }
             $css_glpi_value = '';
             // Get value of field
             $val = $this->getValueForKey($val, $key);
             echo "<tr class='tab_bg_1'>";
             $table = getTableNameForForeignKeyField($key);
-            if ($table != "") {
+            if ($name == "" && $table != "") {
                $linkItemtype = getItemTypeForTable($table);
                $class = new $linkItemtype();
                $name = $class->getTypeName();
