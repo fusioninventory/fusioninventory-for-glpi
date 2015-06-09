@@ -269,7 +269,7 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
             "lib/d3-3.4.3/d3".($debug_mode?"":".min").".js",
             "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
-            "lib/expanding".($debug_mode?"":".min").".js"
+            "lib/expanding/expanding".($debug_mode?"":".min").".js"
          );
       }
       if (script_endswith("timeslot.form.php")) {
