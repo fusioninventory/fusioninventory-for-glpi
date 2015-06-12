@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.1+TECLIB_1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -274,7 +274,7 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
             "lib/d3-3.4.3/d3".($debug_mode?"":".min").".js",
             "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
-            "lib/expanding".($debug_mode?"":".min").".js"
+            "lib/expanding/expanding".($debug_mode?"":".min").".js"
          );
       }
       if (script_endswith("timeslot.form.php")) {
