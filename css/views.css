@@ -531,6 +531,7 @@ a.expanded > div.fold {
 }
 
 .agent_block.pinned > a.name{
+   margin-left: 20px;
    padding-left: 20px;
    background: url('../../../pics/menu_show.png');
    background-repeat: no-repeat;
