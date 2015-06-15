@@ -292,6 +292,11 @@ function agents_chart(chart_id) {
                 //speed things up and getting translated element from
                 //templates.
 
+                var names = d3.select(this).selectAll('a.link').data([d]);
+                  names.enter().append('a')
+                  .attr('class', 'link')
+                  .attr('href', d[1][0].link);
+
                 var names = d3.select(this).selectAll('a.name').data([d]);
 
                 names.enter().append('a')
@@ -314,6 +319,8 @@ function agents_chart(chart_id) {
                 //    .text(taskjobs.data.agents[d[0]]);
                 names.attr('href', 'javascript:void(0)')
                     .text(taskjobs.data.agents[d[0]]);
+
+               
 
                 var dates = d3.select(this).selectAll('span.date').data([d]);
                 dates.enter().append('span')

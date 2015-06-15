@@ -530,7 +530,7 @@ a.expanded > div.fold {
     margin: 5px;
 }
 
-.agent_block.pinned > a{
+.agent_block.pinned > a.name{
    padding-left: 20px;
    background: url('../../../pics/menu_show.png');
    background-repeat: no-repeat;
@@ -542,8 +542,23 @@ a.expanded > div.fold {
 }
 
 .agent_block:hover > * {
-   color: black;
    opacity: 1.0;
+}
+
+.agent_block a.name:hover {
+   color: black;
+}
+
+.agent_block > a.link {
+   background: url(../pics/green_link.png) no-repeat;
+   display: inline-block;
+   width: 14px;
+   height: 14px;
+   float: left;
+}
+
+.agent_block > a.link:hover {
+   opacity: .7;
 }
 
 .agent_block > span.date {
