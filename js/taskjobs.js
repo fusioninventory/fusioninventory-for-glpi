@@ -608,7 +608,7 @@ taskjobs.update_logs = function (data) {
             target_id = target_i;
             target_name = target_v.name;
             target_link = target_v.item_link;
-            target_selector = '#'+target_id;
+            target_selector = task_selector + ' #'+target_id;
             blocks_seen.targets.push(target_selector);
 
 
