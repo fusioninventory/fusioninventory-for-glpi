@@ -1361,10 +1361,8 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
          break;
 
       case 'Printer':
-         $already_link_tables_tmp = $already_link_tables;
-         array_pop($already_link_tables_tmp);
          $leftjoin_fusioninventory_printers = 1;
-         if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables_tmp))) {
+         if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables))) {
 
             $leftjoin_fusioninventory_printers = 0;
          }
