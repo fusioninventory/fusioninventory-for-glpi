@@ -533,13 +533,14 @@ a.expanded > div.fold {
 .agent_block.pinned > a.name{
    margin-left: 20px;
    padding-left: 20px;
-   background: url('../../../pics/menu_show.png');
+   background: url('../pics/pinned.png');
    background-repeat: no-repeat;
 }
 
 .agent_block > span.comment {
    opacity: 0.8;
    font-weight: lighter;
+   min-height: 10px;
 }
 
 .agent_block:hover > * {
@@ -551,14 +552,22 @@ a.expanded > div.fold {
 }
 
 .agent_block > a.link {
-   background: url(../pics/green_link.png) no-repeat;
+   background: url(../pics/link.png) no-repeat;
    display: inline-block;
    width: 14px;
    height: 14px;
    float: left;
 }
 
-.agent_block > a.link:hover {
+.agent_block > a.restart {
+   background: url(../pics/red_bolt.png) no-repeat;
+   display: inline-block;
+   width: 14px;
+   height: 14px;
+   float: right;
+}
+
+.agent_block > a.btn:hover {
    opacity: .7;
 }
 
