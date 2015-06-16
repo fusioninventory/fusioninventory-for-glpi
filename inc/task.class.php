@@ -904,6 +904,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       $query_joins = array();
+
+      //sub queries r & t needed to have limited set of jobs for each agent_id (with fi_include_old_jobs session var)
       $query_joins['max_run'] = "
          INNER JOIN (
             SELECT
@@ -982,6 +984,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "end"   => 0
       );
       ksort($queries);
+
+      //init mysql variables
+      $DB->query("SET @num := ".$_SESSION['fi_include_old_jobs']);
+      $DB->query("SET @agent_id := ".$_SESSION['fi_include_old_jobs']);
+      
+      //executed stored queries
       foreach($queries as $query_name => $contents) {
          $queries[$query_name]['result'] = $DB->query($contents['query']);
 
