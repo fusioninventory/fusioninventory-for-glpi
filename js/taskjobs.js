@@ -292,15 +292,19 @@ function agents_chart(chart_id) {
                 //speed things up and getting translated element from
                 //templates.
 
-                var names = d3.select(this).selectAll('a.link').data([d]);
-                  names.enter().append('a')
-                  .attr('class', 'link')
+
+                // add a link to another page
+                var links = d3.select(this).selectAll('a.link').data([d]);
+                  links.enter().append('a')
+                  .attr('class', 'link btn')
                   .attr('href', d[1][0].link);
 
-                var names = d3.select(this).selectAll('a.name').data([d]);
 
+                // display name
+                var names = d3.select(this).selectAll('a.name').data([d]);
                 names.enter().append('a')
-                  .attr('class', 'name').on('click', function(d) {
+                  .attr('class', 'name')
+                  .on('click', function(d) {
                      var args = {
                         chart_id: chart_id,
                         data: d
@@ -313,29 +317,50 @@ function agents_chart(chart_id) {
                   })
 
                 names.exit().remove();
-
-                //names.attr('href', taskjobs.agents_url + '?id='+ d[0])
-                //    .attr('target', '_blank')
-                //    .text(taskjobs.data.agents[d[0]]);
                 names.attr('href', 'javascript:void(0)')
                     .text(taskjobs.data.agents[d[0]]);
 
+                //add date
                 var dates = d3.select(this).selectAll('span.date').data([d]);
                 dates.enter().append('span')
                     .attr('class', 'date');
                 dates.html( [
                     d[1][0].last_log_date,
-//                    [d[1][0].last_log_id,d[1][0].timestamp].join(','),
                 ].join("<br/>"));
 
+
+                //add comment
                 var log = d3.select(this).selectAll('span.comment').data([d]);
                 log.enter().append('span')
                     .attr('class', 'comment');
                 log.text(function(d) { return [
-//                    d[1][0].jobstate_id,
-                    d[1][0].last_log
+                    d[1][0].last_log + " "
                 ].join(',');});
                 log.exit().remove();
+
+
+                // if agent in error, add a control to relanch it
+                if (d[1][0]['state'] == 'error') {
+                    var restarts =  d3.select(this).selectAll('a.restart').data([d]);
+                    names.enter().append('a')
+                        .attr('class', 'restart btn')
+                        .attr('title', 'restart')
+                        .on('click', function(d) {
+                            $.ajax({
+                               url: '../ajax/restart_job.php',
+                               data: {
+                                  'jobstate_id': d[1][0].jobstate_id,
+                                  'agents_id':   d[1][0].agent_id
+                               },
+                               complete: function() {
+                                 taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id )
+                               }
+                            });
+                        })
+                    names.exit().remove();
+                    names.attr('href', 'javascript:void(0)');
+                }
+
 
                 // add executions logs for pinned agents
                 args = {

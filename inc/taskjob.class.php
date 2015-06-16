@@ -1308,6 +1308,37 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $uniqid;
    }
 
+   static function restartJob($params) {
+      $jobstate = new PluginFusioninventoryTaskjobstate();
+      $joblog   = new PluginFusioninventoryTaskjoblog();
+      $agent    = new PluginFusioninventoryAgent();
+
+      // get old state
+      $jobstate->getFromDB($params['jobstate_id']);
+
+      // prepare new state (copy from old)
+      $run = $jobstate->fields;
+      unset($run['id']);
+      $run['state']  = PluginFusioninventoryTaskjobstate::PREPARED;
+      $run['uniqid'] = uniqid();
+
+      // add this new state and first log 
+      if($run_id = $jobstate->add($run)) {
+         $log = array(
+            'date'    => date("Y-m-d H:i:s"),
+            'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+            'plugin_fusioninventory_taskjobstates_id' => $run_id,
+            'comment' => ''
+         );
+         if ($joblog->add($log)) {
+
+            //wake up agent
+            $agent->getFromDB($params['agents_id']);
+            $agent->wakeUp();
+         }
+      }
+   }
+
 
 
    /**
