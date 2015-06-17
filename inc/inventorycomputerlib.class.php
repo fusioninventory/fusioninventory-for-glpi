@@ -396,6 +396,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
+            if (!isset($a_computerinventory['drive'])) {
+               $a_computerinventory['drive'] = array();
+            }
             if (count($db_drives) == 0) {
                foreach ($a_computerinventory['drive'] as $a_drive) {
                   $this->addDrive($a_drive, $computers_id, $no_history);
