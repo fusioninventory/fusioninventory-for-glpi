@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.1+TECLIB_1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.1+TECLIB_3");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
