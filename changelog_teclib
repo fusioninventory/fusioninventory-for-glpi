@@ -6,6 +6,7 @@ New Features :
 - New rules engine : post actions for tasks
 - Wake up agents by a glpi crontask (push mode in tasks)
 - More informations for Virtual machines (comment, CPU Core & Threads)
+- link on device_id
 
 
 TO complete : 
