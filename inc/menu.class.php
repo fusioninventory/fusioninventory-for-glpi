@@ -772,7 +772,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    static function board() {
       global $DB;
-      /*
+      
       // Computers
       $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
       $allComputers    = countElementsInTable('glpi_computers',
@@ -926,7 +926,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      */
+      
    }
 
 
