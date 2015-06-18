@@ -52,8 +52,10 @@ Session::checkRight('plugin_fusioninventory_task', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
+echo "<div class='monitoring-logs'>";
 $pfTask = new PluginFusioninventoryTask();
 $pfTask->showJobLogs();
+echo "</div>";
 
 Html::footer();
 

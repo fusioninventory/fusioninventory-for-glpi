@@ -780,6 +780,8 @@ taskjobs.update_logs = function (data) {
 
    taskjobs.blocks_seen = blocks_seen;
 //   taskjobs.update_folds(tasks_placeholder);
+   
+   taskjobs.init_tasks_expand_buttons();
 }
 
 
@@ -1122,6 +1124,15 @@ taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
       .on('change', function(e) {
          include_old_jobs = $(this).val();
          taskjobs.queue_refresh_logs( ajax_url, task_id)
+      });
+}
+
+taskjobs.init_tasks_expand_buttons = function() {
+   console.log("init_tasks_expand_buttons");
+   $('.monitoring-logs .task_block > h3')
+      .off("click")
+      .on('click', function(e) {
+         $(this).parent().toggleClass('expand');
       });
 }
 
