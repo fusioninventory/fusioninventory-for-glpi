@@ -122,7 +122,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       // Template structure for tasks' blocks
       echo implode("\n", array(
          "<script id='template_task' type='x-tmpl-mustache'>",
-         "<div id='{{task_id}}' class='task_block'>",
+         "<div id='{{task_id}}' class='task_block {{expanded}}'>",
          "  <h3>".__("Task",'fusioninventory')." <span class='task_name'>{{task_name}}</span></h3>",
          "  <div class='jobs_block'></div>",
          "</div>",
