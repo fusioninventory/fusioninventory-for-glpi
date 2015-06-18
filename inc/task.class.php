@@ -741,6 +741,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    function getJoblogs($task_ids = array()) {
       global $DB, $CFG_GLPI;
 
+      if (!isset($_SESSION['fi_include_old_jobs'])) {
+         $_SESSION['fi_include_old_jobs'] = 1;
+      }
+
       $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
 
       $runclass = new PluginFusioninventoryTaskjobstate();
