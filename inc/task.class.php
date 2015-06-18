@@ -795,6 +795,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       //Target cache (used to speed up data formatting)
       $targets_cache = array();
+      $expanded     = array();
+      if (isset($_SESSION['plugin_fusioninventory_tasks_expanded'])) {
+         $expanded = $_SESSION['plugin_fusioninventory_tasks_expanded'];
+      }
 
       while( $result = $data_structure['result']->fetch_row() ) {
          $task_id = $result[$fieldmap['task.id']];
@@ -802,9 +806,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $logs[$task_id] = array(
                'task_name' => $result[$fieldmap['task.name']],
                'task_id'   => $result[$fieldmap['task.id']],
+               'expanded'  => false,
                'jobs'      => array()
             );
          }
+
+
+         if (isset($expanded[$task_id])) {
+            $logs[$task_id]['expanded'] = $expanded[$task_id];
+         }
+
          $job_id = $result[$fieldmap['job.id']];
          $jobs_handle = &$logs[$task_id]['jobs'];
          if ( !array_key_exists($job_id, $jobs_handle) ) {
