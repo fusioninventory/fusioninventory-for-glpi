@@ -472,6 +472,13 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
    $field = $searchopt[$id]["field"];
 
    switch ($table.'.'.$field) {
+      case "glpi_rules.name":
+         if ($type == 'PluginFusioninventoryIgnoredimportdevice') {
+            $page = $CFG_GLPI['root_doc'].
+                    "/plugins/fusioninventory/front/inventoryruleimport.form.php?id=".$data[$num][0]['id'];
+            return "<a href='$page'>".$data['raw']['ITEM_'.$num]."</a>";
+         }
+         break;
 
       case "glpi_plugin_fusioninventory_taskjobs.status":
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
