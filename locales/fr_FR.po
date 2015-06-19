@@ -780,7 +780,7 @@ msgstr "Rétention en jours"
 
 #: inc/configsecurity.class.php:82
 msgid "SNMP version"
-msgstr "Rétention en jours"
+msgstr "Version SNMP"
 
 #: inc/configsecurity.class.php:94
 msgid "Community"
