@@ -1128,7 +1128,6 @@ taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
 }
 
 taskjobs.init_tasks_expand_buttons = function() {
-   console.log("init_tasks_expand_buttons");
    $('.monitoring-logs .task_block > h3')
       .off("click")
       .on('click', function(e) {
