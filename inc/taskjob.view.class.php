@@ -301,6 +301,15 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          )
       );
       echo "<td class='rowhandler control'><div class='drag'/></td>";
+
+      if (isset($_REQUEST['edit_job'])) {
+         echo "<script type=\"text/javascript\">
+         taskjobs.edit(
+           \"".$this->getBaseUrlFor('fi.job.edit')."\", 
+           ".$_REQUEST['edit_job']."
+         );
+         </script>";
+      }
    }
 
    public function ajaxModuleTypesDropdown($options) {
@@ -958,6 +967,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * Submit Form values
     */
    public function submitForm($postvars) {
+      global $CFG_GLPI;
+
       if (isset($postvars['definition_add'])) {
          // * Add a definition
          $mytaskjob->getFromDB($postvars['id']);
@@ -1132,7 +1143,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                $postvars['entities_id'] = $pfTask->fields['entities_id'];
             }
             //$postvars['execution_id'] = $pfTask->fields['execution_id'];
-            $this->add($postvars);
+            $jobs_id = $this->add($postvars);
          } else {
             if (isset($postvars['method_id'])) {
                $postvars['method']  = $postvars['method_id'];
@@ -1168,7 +1179,13 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             //TODO: get rid of plugins_id and just use method
             //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
             $this->update($postvars);
+            $jobs_id = $postvars['id'];
          }
+
+         Html::redirect($CFG_GLPI["url_base"]."/plugins/fusioninventory/front/task.form.php?id=".
+                        $postvars['plugin_fusioninventory_tasks_id']."&edit_job=".$jobs_id.
+                        "#taskjobs_form");
+         exit;
 
       } else if (isset($postvars["delete"])) {
          // * delete taskjob

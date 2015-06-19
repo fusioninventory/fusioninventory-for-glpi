@@ -419,7 +419,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    }
 
    function getAgentsLogs($agents = array(), $counters = array(), $target_id = "") {
-      Toolbox::logDebug($agents);
       $display_list = array();
       $display_list[] = "<div class='job_agents'>";
       $display_list[] = "<ul>";
