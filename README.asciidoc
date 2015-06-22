@@ -1,6 +1,7 @@
 == Fusioninventory Plugin
 
-https://coveralls.io/r/fusioninventory/fusioninventory-for-glpi[image:https://coveralls.io/repos/fusioninventory/fusioninventory-for-glpi/badge.svg]
+image:https://travis-ci.org/fusioninventory/fusioninventory-for-glpi.svg?branch=master["Build Status", link="https://travis-ci.org/fusioninventory/fusioninventory-for-glpi"]
+image:https://coveralls.io/repos/fusioninventory/fusioninventory-for-glpi/badge.svg["Coverage Status", link="https://coveralls.io/r/fusioninventory/fusioninventory-for-glpi"]
 
 This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
 
