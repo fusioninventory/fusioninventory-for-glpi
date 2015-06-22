@@ -294,6 +294,22 @@ function agents_chart(chart_id) {
                   .attr('class', 'link btn')
                   .attr('href', d[1][0].link);
 
+                // add a checkbox for bulk actions
+                var checkb = d3.select(this).selectAll('input').data([d]);
+                  checkb.enter().append('input')
+                  .attr('type', 'checkbox')
+                  .attr('class', 'check_restart')
+                  .attr('value', d[0])
+                  .on('click', function(d) {
+                     var chart = taskjobs.agents_chart[chart_id];
+                     var agent_id = d[1][0].agent_id;
+                     if ($(this).is(':checked')) {
+                        chart.checked_agents[agent_id] = agent_id;
+                     } else {
+                        delete chart.checked_agents[agent_id];
+                     }
+                     taskjobs.update_agents_view(chart_id);
+                  });
 
                 // display name
                 var names = d3.select(this).selectAll('a.name').data([d]);
@@ -345,7 +361,7 @@ function agents_chart(chart_id) {
                                url: '../ajax/restart_job.php',
                                data: {
                                   'jobstate_id': d[1][0].jobstate_id,
-                                  'agents_id':   d[1][0].agent_id
+                                  'agent_id':   d[1][0].agent_id
                                },
                                complete: function() {
                                  taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
@@ -481,11 +497,49 @@ taskjobs.display_agents_view = function(chart_id) {
          ];
          var chart_anchor = $(chart.selector).parent()[0];
 
+         var restart = d3.select(chart_anchor).selectAll("div.show_more")
+            .selectAll('input.restart')
+            .data(button_text);
+         restart.enter().append('input');
+         restart.exit().remove();
+         restart
+               .attr('type', 'button')
+               .attr('class', 'submit restart')
+               .attr('value', 'Restart selected jobs')
+               .style('display', function(d) {
+                  return (Object.keys(chart.checked_agents).length > 0)?null:'none'; 
+               })
+               .on('click', function(e) {
+                  $('.refresh_button > span').addClass('fetching');
+                  var params = [];
+                  $("input.check_restart:checked").each(function(index) {
+                     var position = $(this).parent().index();
+                     var agents = chart.agents.toArray();
+                     params.push({
+                        'agent_id': agents[position][1][0].agent_id, 
+                        'jobstate_id': agents[position][1][0].jobstate_id
+                     });
+                  });
+
+                  $.ajax({
+                      url: '../ajax/restart_job.php',
+                      method: 'post',
+                      data: {
+                         'params': params
+                      }, 
+                      complete: function() {
+                        taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
+                        $("input.check_restart:checked").each(function() {
+                           $(this).attr('checked', false);
+                        });
+                        $('.refresh_button > span').removeClass('fetching');
+                      }
+                   }); 
+               });
+
          var show_more = d3.select(chart_anchor).selectAll("div.show_more")
              .selectAll('input.more_button')
              .data(button_text);
-
-
          show_more.enter().append('input')
              .attr('type', 'button')
              .attr('class', 'submit more_button')
@@ -671,6 +725,7 @@ taskjobs.update_logs = function (data) {
                   selector : agents_selector,
                   type_selected : {},
                   pinned_agents : {},
+                  checked_agents : {},
                   view_limit : 10,
                };
                d3.timer(function() {

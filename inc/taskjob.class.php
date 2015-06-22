@@ -1333,7 +1333,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          if ($joblog->add($log)) {
 
             //wake up agent
-            $agent->getFromDB($params['agents_id']);
+            $agent->getFromDB($params['agent_id']);
             $agent->wakeUp();
          }
       }

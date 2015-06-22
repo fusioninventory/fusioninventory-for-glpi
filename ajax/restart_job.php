@@ -46,4 +46,11 @@ Session::checkCentralAccess();
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
-PluginFusioninventoryTaskjob::restartJob($_REQUEST);
+if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
+   foreach ($_REQUEST['params'] as $params) {
+      Toolbox::logDebug($params);
+      PluginFusioninventoryTaskjob::restartJob($params);
+   }
+} else {
+   PluginFusioninventoryTaskjob::restartJob($_REQUEST);
+}
