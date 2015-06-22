@@ -555,7 +555,7 @@ a.expanded > div.fold {
 }
 
 .agent_block.pinned > a.name{
-   margin-left: 20px;
+   margin-left: 42px;
    padding-left: 20px;
    background: url('../pics/pinned.png');
    background-repeat: no-repeat;
@@ -582,6 +582,13 @@ a.expanded > div.fold {
    height: 14px;
    float: left;
 }
+
+.agent_block input[type=checkbox] { 
+   margin-top: 5px;
+   margin-right: 5px;
+   float: left;
+}
+
 
 .agent_block > a.restart {
    background: url(../pics/red_bolt.png) no-repeat;
@@ -719,20 +726,12 @@ table.runs td.comment {
    display: block;
 }
 
-.show_more > .more_button {
+.show_more > .submit {
    display: block;
    float: left;
    margin: 2px;
    padding: 5px;
 }
-
-.show_more > .reset_button {
-   display: block;
-   float: right;
-   margin: 2px;
-   padding: 5px;
-}
-
 .refresh_button {
    padding: 5px;
    display: block;
