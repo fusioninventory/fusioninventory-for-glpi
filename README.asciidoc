@@ -1,5 +1,7 @@
 == Fusioninventory Plugin
 
+https://coveralls.io/r/fusioninventory/fusioninventory-for-glpi[image:https://coveralls.io/repos/fusioninventory/fusioninventory-for-glpi/badge.svg]
+
 This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
 
 * Computer inventory
