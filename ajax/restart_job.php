@@ -48,7 +48,6 @@ Html::header_nocache();
 
 if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
    foreach ($_REQUEST['params'] as $params) {
-      Toolbox::logDebug($params);
       PluginFusioninventoryTaskjob::restartJob($params);
    }
 } else {
