@@ -667,6 +667,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (!isset($params['file_entries'])) {
          return FALSE;
       }
+
+      $shasToRemove = [];
+
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
 
@@ -683,13 +686,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             //array_splice($datas['jobs']['associatedFiles'], $index, 1);
             unset($datas['associatedFiles'][$sha512]);
 
-            //$shasToRemove[] = $sha512;
+            $shasToRemove[] = $sha512;
          }
       }
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
-      return TRUE;
+
+      //remove files in repo
+      foreach ($shasToRemove as $sha512) {
+         self::removeFileInRepo($sha512);
+      }
+
+      return true;
    }
 
 
@@ -1056,36 +1065,53 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Remove file from the repository
     *
     * @param string $sha512 sha512 of the file
-    * @param integer $packages_id id of the package
     * @return boolean
     */
-   static function removeFileInRepo($sha512, $packages_id) {
-
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
-      //$manifestsPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
-
+   static function removeFileInRepo($sha512) {
+      $repoPath        = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
+      $manifestsPath   = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $rows = $pfDeployPackage->find("id != '$packages_id'
-            AND json LIKE '%".substr($sha512, 0, 6 )."%'
-            AND json LIKE '%$sha512%'"
-      );
+
+      // try to find file in other packages
+      $rows = $pfDeployPackage->find("`json` LIKE '".substr($sha512, 0, 6 )."%'
+                                  AND `json` LIKE '%$sha512%'" );
+
       if (count($rows) > 0) {
-         //file found in other order, do not remove part in repo
-         return FALSE;
+         //file found in other packages, do not remove parts in repo
+         return false;
       }
 
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($packages_id), TRUE);
-      $multiparts = $datas['associatedFiles'][$sha512]['multiparts'];
+      //get sha512 parts in manifest
+      $multiparts = file($manifestsPath.$sha512);
 
       //parse all files part
       foreach ($multiparts as $part_sha512) {
+         $firstdir = $repoPath.substr($part_sha512, 0, 1)."/";
          $dir = $repoPath.self::getDirBySha512($part_sha512).'/';
 
          //delete file parts
-         unlink($dir.$part_sha512);
+         unlink(trim($dir.$part_sha512));
+
+         //delete folders if empty
+         if (is_dir($dir)) {
+            $count_second_folder = count(scandir($dir)) - 2;
+            if ($count_second_folder === 0) {
+               rmdir($dir);
+            }
+         }
+         if (is_dir($firstdir)) {
+            $count_first_folder = count(scandir($firstdir)) - 2; // -2 for . and ..
+            if ($count_first_folder === 0) {
+               rmdir($firstdir);
+            }
+         }
       }
-      return TRUE;
+
+
+      //remove manifest
+      unlink($manifestsPath.$sha512);
+
+      return true;
    }
 
 

@@ -403,9 +403,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function cleanDBonPurge() {
       global $DB;
 
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_deployorders`
-                WHERE `plugin_fusioninventory_deploypackages_id`=".$this->fields['id'];
-      $DB->query($query);
+      // remove file in repo
+      $json = json_decode($this->fields['json'], true);
+      foreach ($json['associatedFiles'] as $sha512 => $file) {
+         PluginFusioninventoryDeployFile::removeFileInRepo($sha512);
+      }
    }
 
 
