@@ -1219,14 +1219,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       //Filter by definition classes
-      if (     isset($filter['definitions'])
-            && is_array($filter['definitions']) ) {
+      if (isset($filter['targets'])
+            && is_array($filter['targets']) ) {
          $where_tmp = array();
          //check classes existence and append them to the query filter
-         foreach($filter['definitions'] as $itemclass => $itemid) {
+         foreach($filter['targets'] as $itemclass => $itemid) {
             if ( class_exists($itemclass) ) {
 
-               $cond = "taskjob.`definition` LIKE '%\"".$itemclass."\"";
+               $cond = "taskjob.`targets` LIKE '%\"".$itemclass."\"";
 
                //adding itemid if not empty
                if (!empty($itemid)) {

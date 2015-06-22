@@ -235,13 +235,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                array(
                   'is_active' => TRUE,
                   'is_running' => TRUE,
-                  'definitions' => array(
+                  'targets' => array(
                      __CLASS__ => $this->fields['id']
                   ),
                   'by_entities' => FALSE,
                )
             );
-
    }
 
    function getSearchOptions() {
@@ -321,9 +320,24 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function cleanDBonPurge() {
       global $DB;
 
+      // find order associated to this Package
+      $deployOrder = new PluginFusioninventoryDeployOrder;
+      $found_order = $deployOrder->find("`plugin_fusioninventory_deploypackages_id`=".
+                                          $this->fields['id']);
+      
+      // remove orders
       $query = "DELETE FROM `glpi_plugin_fusioninventory_deployorders`
                 WHERE `plugin_fusioninventory_deploypackages_id`=".$this->fields['id'];
       $DB->query($query);
+
+      //delete unused fileparts (from previous found orders)
+      foreach ($found_order as $order) {
+         $json = json_decode($order['json'], true);
+         foreach ($json['associatedFiles'] as $sha512 => $file) {
+            PluginFusioninventoryDeployFile::removeFileInRepo($sha512);
+         }
+      }
+
    }
 
 
