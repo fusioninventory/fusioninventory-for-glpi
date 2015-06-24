@@ -125,7 +125,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                           WHERE `tasks`.`id`='".$task['id']."' 
                              AND `taskjobs`.`id`=`taskjobstates`.`plugin_fusioninventory_taskjobs_id` 
                              AND `taskjobstates`.`state`='".PluginFusioninventoryTaskjobstate::PREPARED."' 
-                          ORDER BY `taskjobstates`.`id' ASC LIMIT ".$task['wakeup_agent_counter'];
+                          ORDER BY `taskjobstates`.`id` ASC LIMIT ".$task['wakeup_agent_counter'];
          foreach ($DB->request($query_states) as $state) {
             //Check if agent is already added to the list of agents to wake up
             if (!in_array($state['plugin_fusioninventory_agents_id'], $wakeupArray)) {
