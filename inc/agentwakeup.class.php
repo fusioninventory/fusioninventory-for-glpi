@@ -73,7 +73,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    static function cronWakeupAgents($crontask) {
       global $DB;
 
-      
+
       $wakeupArray = array();
       $tasks       = array();
       //Get the maximum number of agent to wakeup, 
@@ -127,10 +127,11 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                              AND `taskjobstates`.`state`='".PluginFusioninventoryTaskjobstate::PREPARED."' 
                           ORDER BY `taskjobstates`.`id` ASC LIMIT ".$task['wakeup_agent_counter'];
          foreach ($DB->request($query_states) as $state) {
+            $agents_id = $state['plugin_fusioninventory_agents_id'];
             //Check if agent is already added to the list of agents to wake up
-            if (!in_array($state['plugin_fusioninventory_agents_id'], $wakeupArray)) {
+            if (!isset($wakeupArray[$agents_id])) {
                //This agent must be woken up
-               $wakeupArray[$state['plugin_fusioninventory_agents_id']] = $state['plugin_fusioninventory_agents_id'];
+               $wakeupArray[$agents_id] = $agents_id;
                $counter++;
             }
             //Store task ID
@@ -140,7 +141,9 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
             
             //Do not process more than the maximum number of wakeup allowed in the configuration
             if ($counter >= $maxWakeUp) {
-               Toolbox::logDebug(__("Maximum number of agent wakeup reached", 'fusioninventory').":".$maxWakeUp);
+               if (PluginFusioninventoryConfig::isExtradebugActive()) {
+                  Toolbox::logDebug(__("Maximum number of agent wakeup reached", 'fusioninventory').":".$maxWakeUp);
+               }
                $continue = false;
                break;
             }
@@ -149,7 +152,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
          if (!$continue) {
             break;
          }
-
       }
 
       //Number of agents successfully woken up
