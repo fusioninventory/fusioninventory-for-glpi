@@ -921,22 +921,29 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                MAX(log.`id`) AS max_log_id
             FROM (
                SELECT 
-                 r.*
+                 *
                FROM (
                  SELECT
                      *,
-                     @num := if(@agent_id = plugin_fusioninventory_agents_id, @num:= @num + 1, 1) AS row_num,
-                     @agent_id:=plugin_fusioninventory_agents_id AS c
+                     @num := IF(@agent_id = plugin_fusioninventory_agents_id 
+                                && @taskjob_id = plugin_fusioninventory_taskjobs_id
+                                && @items_id = items_id
+                                && @itemtype = itemtype,
+                                @num:= @num + 1, 1) AS row_num,
+                     @agent_id:=plugin_fusioninventory_agents_id AS tmp_var1,
+                     @taskjob_id:=plugin_fusioninventory_taskjobs_id AS tmp_var2,
+                     @items_id:=items_id AS tmp_var3,
+                     @itemtype:=itemtype AS tmp_var4
                   FROM glpi_plugin_fusioninventory_taskjobstates
                   ORDER BY plugin_fusioninventory_taskjobs_id, 
                      plugin_fusioninventory_agents_id, 
+                     itemtype, 
+                     items_id,
                      id DESC 
-               ) AS r, (
-                  SELECT @agent_id:='',@num:=0
-               ) AS t";
+               ) AS limited_states";
       if ($_SESSION['fi_include_old_jobs'] >= 1) {
          $query_joins['max_run'].= "
-              HAVING row_num <= ".$_SESSION['fi_include_old_jobs'];
+              WHERE row_num <= ".$_SESSION['fi_include_old_jobs'];
       }
       $query_joins['max_run'].= "
             ) AS run
@@ -991,9 +998,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ksort($queries);
 
       //init mysql variables
-      $DB->query("SET @num := ".$_SESSION['fi_include_old_jobs']);
-      $DB->query("SET @agent_id := ".$_SESSION['fi_include_old_jobs']);
-      
+      $DB->query("SET @num := 0");
+      $DB->query("SET @agent_id := 0");
+      $DB->query("SET @taskjob_id := 0");
+      $DB->query("SET @items_id := 0");
+      $DB->query("SET @itemtype := 0");
+
       //executed stored queries
       foreach($queries as $query_name => $contents) {
          $queries[$query_name]['result'] = $DB->query($contents['query']);
