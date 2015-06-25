@@ -119,7 +119,7 @@ class PluginFusioninventoryCommunicationRest {
                   && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
                   && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
                           "`plugin_fusioninventory_agents_id`='".$a_agent['id']."' "
-                          . " AND `itemtype`='".$classname."'"
+                          . " AND `itemtype` LIKE '".$classname."%'"
                           . " AND `state`='0'") > 0
                ) {
                   /*

@@ -66,11 +66,13 @@ if (isset($_GET['action'])) {
                         foreach ($array as $data) {
                            $out = $class->run($data, $a_agent);
                            if (count($out) > 0) {
-                              $response[] = $out;
+                              $response['jobs'] = $out;
+                              $response['postmethod'] = 'POST';
+                              $response['token'] = Session::getNewCSRFToken();
                            }
-                           $pfTaskjobstate->changeStatus(
+                           /*$pfTaskjobstate->changeStatus(
                                    $data['id'],
-                                   PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
+                                   PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);*/
 
                            $a_input = array();
                            $a_input['plugin_fusioninventory_taskjobstates_id'] = $data['id'];
@@ -104,73 +106,58 @@ if (isset($_GET['action'])) {
             $computers_id = $pfAgent->fields['computers_id'];
 
             $a_values = $_GET;
+            if (isset($_GET['method']) && $_GET['method'] == 'POST') {
+                $a_values =  $_POST;
+                $response['token'] = Session::getNewCSRFToken();
+                unset($a_values['_glpi_csrf_token']);
+            }
             unset($a_values['action']);
             unset($a_values['uuid']);
 
             switch ($jobstate['itemtype']) {
-
                case 'PluginFusioninventoryCollect_Registry':
-                  // update registry content
-                  $pfCRC = new PluginFusioninventoryCollect_Registry_Content();
-                  $pfCRC->updateComputer($computers_id,
-                                         $a_values,
-                                         $jobstate['items_id']);
-                  $pfTaskjobstate->changeStatus(
-                          $jobstate['id'],
-                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if (isset($a_values['_cpt'])
-                          && $a_values['_cpt'] == 0) { // it not find the path
-                     $pfTaskjobstate->changeStatusFinish(
-                          $jobstate['id'],
-                          $jobstate['items_id'],
-                          $jobstate['itemtype'],
-                          1,
-                          'Path not found');
-                  }
-                  if (isset($a_values['_cpt'])
-                          && $a_values['_cpt'] == 1) { // it last value
-                     $pfTaskjobstate->changeStatusFinish(
-                          $jobstate['id'],
-                          $jobstate['items_id'],
-                          $jobstate['itemtype']);
-                  }
+                  $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();                  
                   break;
 
                case 'PluginFusioninventoryCollect_Wmi':
-                  // update registry content
-                  $pfCWC = new PluginFusioninventoryCollect_Wmi_Content();
-                  $pfCWC->updateComputer($computers_id,
-                                         $a_values,
-                                         $jobstate['items_id']);
-                  $pfTaskjobstate->changeStatus(
-                          $jobstate['id'],
-                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if ($a_values['_cpt'] == 1) { // it last value
-                     $pfTaskjobstate->changeStatusFinish(
-                          $jobstate['id'],
-                          $jobstate['items_id'],
-                          $jobstate['itemtype']);
-                  }
+                  $pfCollect_subO = new PluginFusioninventoryCollect_Wmi_Content();                 
                   break;
 
                case 'PluginFusioninventoryCollect_File':
-                  // update registry content
-                  $pfCFC = new PluginFusioninventoryCollect_File_Content();
-                  $pfCFC->storeTempFilesFound($jobstate['id'], $a_values);
-                  $pfTaskjobstate->changeStatus(
-                          $jobstate['id'],
-                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if ($a_values['_cpt'] == 1) { // it last value
-                     $pfCFC->updateComputer($computers_id,
+                  $pfCollect_subO = new PluginFusioninventoryCollect_File_Content();
+                  $pfCollect_subO->storeTempFilesFound($jobstate['id'], $a_values);
+                  break;
+            }
+
+            if (!isset($pfCollect_subO)) {
+               die("collect type not found");
+            }
+
+            // update datas in table 
+            $pfCollect_subO->updateComputer($computers_id,
                                             $jobstate['items_id'],
                                             $jobstate['id']);
-                     $pfTaskjobstate->changeStatusFinish(
-                          $jobstate['id'],
-                          $jobstate['items_id'],
-                          $jobstate['itemtype']);
-                  }
-                  break;
 
+            // change status of state table row
+            $pfTaskjobstate->changeStatus($jobstate['id'],
+                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+
+            if (isset($a_values['_cpt'])) {
+               // last value return by agent
+               if ($a_values['_cpt'] == 1) { 
+                  $pfTaskjobstate->changeStatusFinish($jobstate['id'],
+                                                      $jobstate['items_id'],
+                                                      $jobstate['itemtype']);
+               } else 
+
+               // path not found by agent
+               if ($a_values['_cpt'] == 0) { 
+                  $pfTaskjobstate->changeStatusFinish($jobstate['id'],
+                                                      $jobstate['items_id'],
+                                                      $jobstate['itemtype'],
+                                                      1,
+                                                      'Path not found');
+               }
             }
          }
          break;

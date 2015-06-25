@@ -522,6 +522,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $targets = array_merge($targets, $deviceList);
                }
             }
+         } else if ( $result['job']['method'] == 'collect') {
+            $pfCollect_objects = array(
+               'PluginFusioninventoryCollect_Wmi'      => new PluginFusioninventoryCollect_Wmi,
+               'PluginFusioninventoryCollect_Registry' => new PluginFusioninventoryCollect_Registry,
+               'PluginFusioninventoryCollect_File'     => new PluginFusioninventoryCollect_File
+            );
+            foreach($targets as $keyt=>$target) {
+               $items_id = current($target);
+               unset($targets[$keyt]);
+               foreach ($pfCollect_objects as $pfCollect_obj_name => $pfCollect_obj) {
+                  $found = $pfCollect_obj->find("plugin_fusioninventory_collects_id = $items_id");
+                  foreach ($found as $pfCollect_obj_data) {
+                     $targets[] = array($pfCollect_obj_name => $pfCollect_obj_data['id']);
+                  }
+               }
+
+            }
          }
 
          $limit = 0;
@@ -836,7 +853,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          );
 
 
-
+         // expand specific methods
          if ( $result[ $fieldmap['job.method']] == 'networkinventory') {
             $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
             foreach($targets as $keyt=>$target) {
@@ -1027,6 +1044,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach($queries as $query_name => $contents) {
          if (!is_null($contents['result'])) {
             while( $result = $contents['result']->fetch_row()) {
+
+               if (strpos($result[$fieldmap['run.itemtype']], "PluginFusioninventoryCollect") !== false) {
+                  $pfCollect_obj = new $result[$fieldmap['run.itemtype']];
+                  $pfCollect_obj->getFromDB($result[$fieldmap['run.items_id']]);
+                  $result[$fieldmap['run.itemtype']] = "PluginFusioninventoryCollect";
+                  $result[$fieldmap['run.items_id']] = $pfCollect_obj->fields['plugin_fusioninventory_collects_id'];;
+               }
 
                // We need to check if the results are consistent with the view's structure gathered
                // by the first query
