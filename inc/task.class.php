@@ -1047,9 +1047,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
                if (strpos($result[$fieldmap['run.itemtype']], "PluginFusioninventoryCollect") !== false) {
                   $pfCollect_obj = new $result[$fieldmap['run.itemtype']];
-                  $pfCollect_obj->getFromDB($result[$fieldmap['run.items_id']]);
-                  $result[$fieldmap['run.itemtype']] = "PluginFusioninventoryCollect";
-                  $result[$fieldmap['run.items_id']] = $pfCollect_obj->fields['plugin_fusioninventory_collects_id'];;
+                  if ($pfCollect_obj->getFromDB($result[$fieldmap['run.items_id']])) {
+                     $result[$fieldmap['run.itemtype']] = "PluginFusioninventoryCollect";
+                     $result[$fieldmap['run.items_id']] = $pfCollect_obj->fields['plugin_fusioninventory_collects_id'];
+                  }
                }
 
                // We need to check if the results are consistent with the view's structure gathered
