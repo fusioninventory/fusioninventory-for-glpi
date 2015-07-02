@@ -1398,7 +1398,7 @@ function plugin_fusioninventory_addOrderBy($type, $id, $order, $key=0) {
 }
 
 
-function plugin_fusioninventory_addDefaulWtcomhere($type) {
+function plugin_fusioninventory_addDefaultWhere($type) {
    if ($type == 'PluginFusioninventoryTaskjob') {
       return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
