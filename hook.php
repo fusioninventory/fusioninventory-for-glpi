@@ -1173,6 +1173,19 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
          }
          break;
 
+      case 'Computer':
+         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();       
+         foreach ($a_agent_modules as $module) {      
+            if ($table.".".$field ==      
+                    'glpi_plugin_fusioninventory_agentmodules.'.$module) {       
+      
+               return " `FUSION_".$module."`.`is_active` AS ITEM_$num, ".     
+                          "`FUSION_".$module."`.`exceptions`  AS ITEM_".$num."_0, ".      
+                          "`agent".strtolower($module)."`.`id`  AS ITEM_".$num."_1, ";       
+            }     
+         }     
+         break;
+
       case 'PluginFusioninventoryUnmanaged' :
          switch ($table.".".$field) {
             case "glpi_networkequipments.device" :
