@@ -514,11 +514,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
          break;
 
-      case "glpi_plugin_fusioninventory_taskjobs.status":
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-         return $pfTaskjobstate->stateTaskjob($data['raw']['id'], '200', 'htmlvar', 'simple');
-         break;
-
       case "glpi_plugin_fusioninventory_agents.version":
          $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          $input = "";
@@ -537,31 +532,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
            return '';
         }
         break;
-
-     case 'glpi_plugin_fusioninventory_taskjoblogs.state':
-        $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-        return $pfTaskjoblog->getDivState($data['raw']['ITEM_'.$num]);
-        break;
-
-      case 'glpi_plugin_fusioninventory_taskjoblogs.comment':
-         $comment = $data['raw']['ITEM_'.$num];
-         return PluginFusioninventoryTaskjoblog::convertComment($comment);
-         break;
-
-      case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':
-         $pfAgent = new PluginFusioninventoryAgent();
-         $pfAgent->getFromDB($data['raw']['ITEM_'.$num]);
-         if (!isset($pfAgent->fields['name'])) {
-            return NOT_AVAILABLE;
-         }
-         $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['raw']['ITEM_0']);
-         if ($itemtype == 'PluginFusioninventoryDeployPackage') {
-            $computer = new Computer();
-            $computer->getFromDB($pfAgent->fields['computers_id']);
-            return $computer->getLink(1);
-         }
-         return $pfAgent->getLink(1);
-         break;
 
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.ip':
       case 'glpi_plugin_fusioninventory_ignoredimportdevices.mac':
@@ -955,32 +925,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
 
 
-function plugin_fusioninventory_searchOptionsValues($item) {
-   global $DB;
-
-   if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjoblogs'
-           AND $item['searchoption']['field'] == 'state') {
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $elements = $pfTaskjoblog->dropdownStateValues();
-      Dropdown::showFromArray($item['name'], $elements, array('value'=>$item['value']));
-      return TRUE;
-   } else if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjobstates'
-           AND $item['searchoption']['field'] == 'uniqid') {
-      $elements = array();
-      $query = "SELECT * FROM `".$item['searchoption']['table']."`
-      GROUP BY `uniqid`
-      ORDER BY `uniqid`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $elements[$data['uniqid']] = $data['uniqid'];
-      }
-      Dropdown::showFromArray($item['name'], $elements, array('value'=>$item['value']));
-      return TRUE;
-   }
-}
-
-
-
 // Define Dropdown tables to be manage in GLPI :
 function plugin_fusioninventory_getDropdown() {
    return array ();
@@ -1263,78 +1207,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
          }
          break;
 
-
-      case 'PluginFusioninventoryTaskjoblog':
-//         echo $new_table.".".$linkfield."<br/>";
-         $taskjob = 0;
-         $already_link_tables_tmp = $already_link_tables;
-         array_pop($already_link_tables_tmp);
-         foreach ($already_link_tables_tmp AS $tmp_table) {
-            if ($tmp_table == "glpi_plugin_fusioninventory_tasks"
-                    OR $tmp_table == "glpi_plugin_fusioninventory_taskjobs"
-                    OR $tmp_table == "glpi_plugin_fusioninventory_taskjobstates") {
-               $taskjob = 1;
-            }
-         }
-
-         switch ($new_table.".".$linkfield) {
-
-            case 'glpi_plugin_fusioninventory_tasks.plugin_fusioninventory_tasks_id':
-               $ret = '';
-               if ($taskjob == '0') {
-                  $ret = ' LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON
-                     (`plugin_fusioninventory_taskjobstates_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobstates`.`id` )
-                  LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON
-                     (`plugin_fusioninventory_taskjobs_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobs`.`id` ) ';
-               }
-               $ret .= ' LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON
-                  (`plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`) ';
-               return $ret;
-               break;
-
-            case 'glpi_plugin_fusioninventory_taskjobs.plugin_fusioninventory_taskjobs_id':
-            case 'glpi_plugin_fusioninventory_taskjobstates.'.
-                    'plugin_fusioninventory_taskjobstates_id':
-               if ($taskjob == '0') {
-                  return ' LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON
-                     (`plugin_fusioninventory_taskjobstates_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobstates`.`id` )
-                  LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON
-                     (`plugin_fusioninventory_taskjobs_id` = '.
-                          '`glpi_plugin_fusioninventory_taskjobs`.`id` ) ';
-               }
-               return ' ';
-               break;
-
-         }
-         break;
-
-      case 'PluginFusioninventoryTask':
-         if ($new_table.".".$linkfield == 'glpi_plugin_fusioninventory_taskjoblogs.'.
-                 'plugin_fusioninventory_taskjoblogs_id') {
-            return "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs
-                     ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
-                     ON taskjobstates.`id` =
-                  (SELECT MAX(`id`)
-                     FROM glpi_plugin_fusioninventory_taskjobstates
-                   WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
-                   ORDER BY id DESC
-                   LIMIT 1
-                  )
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
-                  ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
-                  (SELECT MAX(`id`)
-                     FROM `glpi_plugin_fusioninventory_taskjoblogs`
-                   WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
-                   ORDER BY id DESC LIMIT 1
-                  )";
-         }
-
-         break;
-
       case 'Computer':
 
          $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
@@ -1411,14 +1283,6 @@ function plugin_fusioninventory_addOrderBy($type, $id, $order, $key=0) {
 }
 
 
-function plugin_fusioninventory_addDefaultWhere($type) {
-   if ($type == 'PluginFusioninventoryTaskjob') {
-      return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
-         WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
-         AND `state`!='3' )";
-   }
-}
-
 
 function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
@@ -1427,46 +1291,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
    $field = $searchopt[$id]["field"];
 
    switch ($type) {
-
-      case 'PluginFusioninventoryTaskjob' :
-         /*
-          * WARNING: The following is some minor hack in order to select a range of ids.
-          *
-          * More precisely, when using the ID filter, you can now put IDs separated by commas.
-          * This is used by the DeployPackage class when it comes to check running tasks on some
-          * packages.
-          */
-         if ($table == 'glpi_plugin_fusioninventory_tasks') {
-            if ($field == 'id') {
-               //check if this range is numeric
-               $ids = explode(',', $val);
-               foreach($ids as $k=>$i) {
-                  if (!is_numeric($i)) {
-                     unset($ids[$k]);
-                  }
-               }
-
-               if (count($ids) >= 1) {
-                  return $link." `$table`.`id` IN (".implode(',', $ids).")";
-               } else {
-                  return "";
-               }
-            } elseif ($field == 'name') {
-               $val = stripslashes($val);
-               //decode a json query to match task names in taskjobs list
-               $names = json_decode($val);
-               if ($names !== NULL && is_array($names)) {
-                  $names = array_map(
-                     create_function('$a', 'return "\"".$a."\"";'),
-                     $names
-                  );
-                  return $link." `$table`.`name` IN (".implode(',', $names) . ")";
-               } else {
-                  return "";
-               }
-            }
-         }
-      break;
 
       case 'PluginFusioninventoryAgent':
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -1502,12 +1326,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                   }
                }
             }
-         }
-         break;
-
-      case 'PluginFusioninventoryTaskjoblog':
-         if ($field == 'uniqid') {
-            return $link." (`".$table."`.`uniqid`='".$val."') ";
          }
          break;
 

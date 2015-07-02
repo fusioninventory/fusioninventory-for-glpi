@@ -78,44 +78,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       );
    }
 
-   function getSearchOptions() {
-
-      $tab = array();
-
-      $tab['common'] = __('Task');
-
-
-      $tab[1]['table']          = $this->getTable();
-      $tab[1]['field']          = 'name';
-      $tab[1]['linkfield']      = '';
-      $tab[1]['name']           = __('Name');
-      $tab[1]['datatype']       = 'itemlink';
-
-      $tab[2]['table']           = 'glpi_entities';
-      $tab[2]['field']           = 'completename';
-      $tab[2]['linkfield']       = 'entities_id';
-      $tab[2]['name']            = __('Entity');
-
-      $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
-      $tab[4]['field']          = 'name';
-      $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
-      $tab[4]['name']           = __('Task');
-      $tab[4]['datatype']       = 'itemlink';
-      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
-
-      $tab[5]['table']          = $this->getTable();
-      $tab[5]['field']          = 'status';
-      $tab[5]['linkfield']      = '';
-      $tab[5]['name']           = __('Status');
-
-      $tab[6]['table']          = $this->getTable();
-      $tab[6]['field']          = 'id';
-      $tab[6]['linkfield']      = '';
-      $tab[6]['name']           = __('ID');
-
-      return $tab;
-   }
-
    function getTask() {
       $pfTask = new PluginFusioninventoryTask();
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
