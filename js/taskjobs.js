@@ -1145,11 +1145,11 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
             //small timeout to view icon changing
             setTimeout(function() {
                 taskjobs.update_logs(data);
+                taskjobs.update_refresh_buttons( ajax_url, task_id);
             }, 50);   
             
         },
         complete: function( ) {
-            taskjobs.update_refresh_buttons( ajax_url, task_id);
             taskjobs.init_include_old_jobs_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
         }
@@ -1158,14 +1158,11 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
 
 
 taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
-
    $('.refresh_button')
-      .off("click");
-   $('.refresh_button')
+      .off("click")
       .on('click', function(e) {
          taskjobs.queue_refresh_logs( ajax_url, task_id );
       });
-
 };
 
 taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
