@@ -599,7 +599,6 @@ taskjobs.toggle_details_type = function(element, counter_type, chart_id) {
 
 // Create block element if it does not already exists
 taskjobs.create_block = function(selector, parent_selector, content) {
-   $(selector).remove();
    element = $(selector);
 
    if (element.length === 0) {
@@ -753,6 +752,8 @@ taskjobs.update_logs = function (data) {
                   counter_empty = (counter_value.length === 0);
                   counter_type_name = taskjobs.statuses_names[counter_type];
                   counter_selector = target_selector + ' .' + counter_type;
+
+                  $(counter_selector).remove();
 
                   taskjobs.create_block(
                      counter_selector,
