@@ -469,7 +469,6 @@ taskjobs.update_agents_view = function (chart_id) {
 };
 
 taskjobs.display_agents_view = function(chart_id) {
-
       if(taskjobs.agents_chart[chart_id].display_agents) {
          var chart = taskjobs.agents_chart[chart_id];
          var agents = chart.agents_to_view;
@@ -600,6 +599,7 @@ taskjobs.toggle_details_type = function(element, counter_type, chart_id) {
 
 // Create block element if it does not already exists
 taskjobs.create_block = function(selector, parent_selector, content) {
+   $(selector).remove();
    element = $(selector);
 
    if (element.length === 0) {
@@ -826,7 +826,7 @@ taskjobs.update_logs = function (data) {
       taskjobs.update_progressbar(taskjobs.charts[v]);
    });
 
-   //taskjobs.update_agents_view()
+   //taskjobs.update_agents_view();
 
    taskjobs.blocks_seen = blocks_seen;
 //   taskjobs.update_folds(tasks_placeholder);
