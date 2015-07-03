@@ -51,6 +51,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['name']          = __('FusInv', 'fusioninventory')." - ".
                                         __('Last inventory', 'fusioninventory');
          $sopt[5150]['datatype']      = 'datetime';
+         $sopt[5150]['joinparams']    = array('jointype' => 'child');
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
          $sopt[5150]['massiveaction'] = FALSE;
 
@@ -473,6 +474,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5194]['linkfield']     = '';
       $sopt[5194]['name']          = __('FusInv', 'fusioninventory')." - ".
                                      __('Last inventory', 'fusioninventory');
+      $sopt[5194]['joinparams']    = array('jointype' => 'child');
       $sopt[5194]['datatype']      =  'datetime';
       $sopt[5194]['massiveaction'] =  FALSE;
 
@@ -482,6 +484,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5195]['linkfield']     = '';
       $sopt[5195]['name']          = __('FusInv', 'fusioninventory')." - ".
                                      __('CPU usage (in %)', 'fusioninventory');
+      $sopt[5195]['joinparams']    = array('jointype' => 'child');
       $sopt[5195]['datatype']      =  'number';
 
 
@@ -490,6 +493,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5196]['linkfield']     = '';
       $sopt[5196]['name']          = __('FusInv', 'fusioninventory')." - ".
                                      __('Sysdescr', 'fusioninventory');
+      $sopt[5196]['joinparams']    = array('jointype' => 'child');
       $sopt[5196]['datatype']      = 'text';
 
    }
