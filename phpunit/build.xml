@@ -166,7 +166,7 @@
     >
     <arg value="--verbose" />
     <arg value="--debug" />
-    <arg line="--coverage-clover ${basedir}/build/coverage/clover.xml" />
+    <arg line="--coverage-clover ${basedir}/build/logs/clover.xml" />
     <arg line="${phpunit.arg.coverage.html}" />
     <arg line="--configuration @{configuration}" />
     <testfile />
