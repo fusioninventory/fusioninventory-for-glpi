@@ -1,0 +1,7 @@
+repo_token: P6DzrHMbq17CybgVcwUhJEh1fq4se3qdi
+service_name: travis-ci
+
+# for php-coveralls
+src_dir: /var/www/fi_testsuite/glpi
+coverage_clover: /var/www/fi_testsuite/build/logs/clover.xml
+

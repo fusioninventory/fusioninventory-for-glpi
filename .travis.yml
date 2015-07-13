@@ -44,7 +44,7 @@ install:
 script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
- - php vendor/bin/coveralls -c /var/www/fi_testsuite/build/coverage/clover.xml
+ - php vendor/bin/coveralls -c /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
 
 branches:
   only:
