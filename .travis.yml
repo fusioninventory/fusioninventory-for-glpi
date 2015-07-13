@@ -24,21 +24,22 @@ addons:
     - xsltproc
 
 before_install:
- - composer self-update
- - composer require satooshi/php-coveralls
  - git clone git://github.com/fusioninventory/glpi.git glpi
  - cd glpi && git reset --hard 8fd8ef905227b83af8532e027a35223b8a117b99 && cd ..
- - sudo mkdir /var/www/fi_testsuite/
- - sudo mv glpi /var/www/fi_testsuite/glpi
+ - mkdir /var/www/fi_testsuite/
+ - mv glpi /var/www/fi_testsuite/glpi
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
  - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
  - mysql -u root -e "FLUSH PRIVILEGES;"
- - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fi_testsuite/glpi/config/config_db.php
- - sudo mkdir /var/www/fi_testsuite/glpi/plugins/fusioninventory
- - sudo cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
- - sudo chown -R travis:www-data /var/www/fi_testsuite
- - sudo chmod -R g+w /var/www/fi_testsuite
+ - echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fi_testsuite/glpi/config/config_db.php
+ - mkdir /var/www/fi_testsuite/glpi/plugins/fusioninventory
+ - cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
+ - chown -R travis:www-data /var/www/fi_testsuite
+ - chmod -R g+w /var/www/fi_testsuite
  - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
+
+install:
+ - composer require satooshi/php-coveralls
 
 script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
