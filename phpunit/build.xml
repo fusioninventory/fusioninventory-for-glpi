@@ -136,13 +136,6 @@
   <exec dir="${basedir}" executable="./vendor/bin/phpdox" />
  </target>
 
- <!-- check for clover coverage reporting option -->
- <condition property='phpunit.arg.coverage.clover'
-  value='--coverage-clover ${basedir}/build/coverage/clover.xml'
-  else=''>
-  <isset property='with.coverage.clover'/>
- </condition>
-
  <!-- check for HTML coverage reporting option -->
  <condition property='phpunit.arg.coverage.html'
   value='--coverage-html ${basedir}/build/coverage/'
@@ -173,7 +166,7 @@
     >
     <arg value="--verbose" />
     <arg value="--debug" />
-    <arg line="${phpunit.arg.coverage.clover}" />
+    <arg line="--coverage-clover ${basedir}/build/coverage/clover.xml" />
     <arg line="${phpunit.arg.coverage.html}" />
     <arg line="--configuration @{configuration}" />
     <testfile />
