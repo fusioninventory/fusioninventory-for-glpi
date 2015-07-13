@@ -39,12 +39,12 @@ before_install:
  - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
 install:
- - composer require satooshi/php-coveralls
+ - cd /var/www/fi_testsuite && composer require satooshi/php-coveralls
 
 script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
- - php vendor/bin/coveralls -v -c /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
+ - cd /var/www/fi_testsuite && php vendor/bin/coveralls -v -c /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
 
 branches:
   only:
