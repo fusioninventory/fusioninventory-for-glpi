@@ -37,15 +37,13 @@ before_install:
  - sudo cp .coveralls.yml /var/www/fi_testsuite/glpi/plugins/fusioninventory/
  - sudo chown -R travis:www-data /var/www/fi_testsuite
  - sudo chmod -R g+w /var/www/fi_testsuite
- - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
-
-install:
  - cd /var/www/fi_testsuite && composer require satooshi/php-coveralls
+ - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
 script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
- - cd /var/www/fi_testsuite && php vendor/bin/coveralls -v
+ - cat /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
  - cd /var/www/fi_testsuite && php vendor/bin/coveralls -v -c /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
 
 branches:
