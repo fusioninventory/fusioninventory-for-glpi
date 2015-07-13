@@ -1,4 +1,4 @@
-sudo: required
+sudo: false
 language: php
 php:
   - 5.3
@@ -24,28 +24,28 @@ addons:
     - xsltproc
 
 before_install:
+ - cd ..
  - git clone git://github.com/fusioninventory/glpi.git glpi
  - cd glpi && git reset --hard 8fd8ef905227b83af8532e027a35223b8a117b99 && cd ..
- - sudo mkdir /var/www/fi_testsuite/
- - sudo mv glpi /var/www/fi_testsuite/glpi
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
  - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
  - mysql -u root -e "FLUSH PRIVILEGES;"
- - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fi_testsuite/glpi/config/config_db.php
- - sudo mkdir /var/www/fi_testsuite/glpi/plugins/fusioninventory
- - sudo cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
- - sudo cp .coveralls.yml /var/www/fi_testsuite/glpi/plugins/fusioninventory/
- - sudo chown -R travis:www-data /var/www/fi_testsuite
- - sudo chmod -R g+w /var/www/fi_testsuite
- - cd /var/www/fi_testsuite && composer require satooshi/php-coveralls
- - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
+ - echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > glpi/config/config_db.php
+ - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
+ - composer self-update
+ - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
-script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
+install:
+ - composer require satooshi/php-coveralls
+
+script: ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
- - cat /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
- - cd /var/www/fi_testsuite && php vendor/bin/coveralls -v -c /var/www/fi_testsuite/glpi/plugins/fusioninventory/.coveralls.yml
+ - cp -fr build glpi/plugins/fusioninventory/
+ - cd glpi/plugins/fusioninventory/
+ - composer require satooshi/php-coveralls
+ - php vendor/bin/coveralls -v
 
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
