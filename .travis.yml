@@ -24,6 +24,9 @@ before_install:
 
 script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
+after_script:
+  - php vendor/bin/coveralls
+
 branches:
   only:
     - master
