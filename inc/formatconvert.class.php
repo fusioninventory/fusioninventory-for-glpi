@@ -190,7 +190,30 @@ class PluginFusioninventoryFormatconvert {
    static function computerInventoryTransformation($array) {
       global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
 
-      $a_inventory = array();
+      // Initialize
+      $a_inventory = array(
+         'Computer'                => array(),
+         'fusioninventorycomputer' => array(),
+         'processor'               => array(),
+         'memory'                  => array(),
+         'harddrive'               => array(),
+         'drive'                   => array(),
+         'graphiccard'             => array(),
+         'networkcard'             => array(),
+         'soundcard'               => array(),
+         'controller'              => array(),
+         'SOFTWARES'               => array(),
+         'virtualmachine'          => array(),
+         'computerdisk'            => array(),
+         'networkport'             => array(),
+         'antivirus'               => array(),
+         'licenseinfo'             => array(),
+         'batteries'               => array(),
+         'monitor'                 => array(),
+         'printer'                 => array(),
+         'peripheral'              => array(),
+         'storage'                 => array()
+      );
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
 

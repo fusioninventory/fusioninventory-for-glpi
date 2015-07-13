@@ -77,13 +77,15 @@ class ComputerLog extends RestoreDatabase_TestCase {
           'printer'        => array(),
           'peripheral'     => array(),
           'networkport'    => array(),
-          'software'       => array(),
+          'SOFTWARES'      => array(),
           'harddrive'      => array(),
           'virtualmachine' => array(),
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
           );
       $this->a_inventory['Computer'] = array(

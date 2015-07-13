@@ -44,10 +44,9 @@ class GLPIlogs extends PHPUnit_Framework_TestCase {
 
    public function testSQLlogs() {
 
-      $filecontent = '';
       $filecontent = file_get_contents(GLPI_ROOT."/files/_log/sql-errors.log");
 
-      $this->assertEquals($filecontent, '', 'sql-errors.log not empty');
+      $this->assertEquals('', $filecontent, 'sql-errors.log not empty');
       // Reinitialize file
       file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
    }
@@ -56,10 +55,9 @@ class GLPIlogs extends PHPUnit_Framework_TestCase {
 
    public function testPHPlogs() {
 
-      $filecontent = '';
       $filecontent = file_get_contents(GLPI_ROOT."/files/_log/php-errors.log");
 
-      $this->assertEquals($filecontent, '', 'php-errors.log not empty');
+      $this->assertEquals('', $filecontent, 'php-errors.log not empty');
       // Reinitialize file
       file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
    }

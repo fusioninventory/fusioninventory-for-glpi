@@ -84,6 +84,8 @@ class ComputerPrinter extends Common_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
 
@@ -145,6 +147,8 @@ class ComputerPrinter extends Common_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
 
@@ -185,6 +189,8 @@ class ComputerPrinter extends Common_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
    }
