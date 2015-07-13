@@ -34,6 +34,7 @@ before_install:
  - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fi_testsuite/glpi/config/config_db.php
  - sudo mkdir /var/www/fi_testsuite/glpi/plugins/fusioninventory
  - sudo cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
+ - sudo cp .coveralls.yml /var/www/fi_testsuite/glpi/plugins/fusioninventory/
  - sudo chown -R travis:www-data /var/www/fi_testsuite
  - sudo chmod -R g+w /var/www/fi_testsuite
  - cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
