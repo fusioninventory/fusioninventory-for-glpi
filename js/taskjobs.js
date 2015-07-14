@@ -231,7 +231,7 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
                url: '../ajax/jobstates_logs.php',
                data: {
                   'id': agent[i].jobstate_id,
-               'last_date': agent[i].last_log_date
+                  'last_date': agent[i].last_log_date
                },
                success : add_runlogs({ 'i':i, 'agent_id':agent_id, 'chart_id':chart_id})
             } );
@@ -525,6 +525,9 @@ taskjobs.create_block = function(selector, parent_selector, content) {
 
    if (element.length == 0) {
       $(parent_selector).append($(content));
+   } else {
+      $(selector).remove(); 
+      $(parent_selector).append($(content));
    }
 }
 
@@ -657,7 +660,7 @@ taskjobs.update_logs = function (data) {
             counters_selector = target_selector + " .target_stats";
             $.each( taskjobs.statuses_order, function( stats_idx, stats_key) {
 
-               stats_type_selector = target_selector + " ." + stats_idx;               
+               stats_type_selector = target_selector + " ." + stats_idx;   
                taskjobs.create_block(
                      stats_type_selector,
                      counters_selector,
