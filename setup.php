@@ -256,58 +256,51 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnmanaged';
 
-      $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
-      $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
-
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         $debug_mode?"lib/d3-3.4.3/d3.js":"lib/d3-3.4.3/d3.min.js";
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         $debug_mode?"lib/nvd3/nv.d3.js":"lib/nvd3/nv.d3.min.js";
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         "lib/timeslot.js";
-
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         "js/expanding.js";
+      
       /**
-       * Load the relevant javascript files only on pages that need them.
-       */
-      if (  script_endswith("deploypackage.form.php") ) {
+       * Load the relevant javascript/css files only on pages that need them.
+       */ 
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
+      if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";      
 
+         array_push(
+            $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
+            "lib/d3-3.4.3/d3".($debug_mode?"":".min").".js",
+            "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
+            "lib/expanding/expanding".($debug_mode?"":".min").".js"
+         );
+      }
+      if (script_endswith("timeslot.form.php")) {
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/timeslot.js";
+      }
+      if (script_endswith("deploypackage.form.php")) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="lib/extjs/resources/css/ext-all.css";
 
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+         array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            array(
-               "lib/extjs/adapter/ext/ext-base.js",
-               "lib/extjs/ext-all-debug.js",
-               "lib/REDIPS_drag/redips-drag-source.js",
-               "lib/REDIPS_drag/drag_table_rows.js",
-               "lib/plusbutton.js",
-               "lib/deploy_editsubtype.js",
-            )
+            "lib/extjs/adapter/ext/ext-base.js",
+            "lib/extjs/ext-all-debug.js",
+            "lib/REDIPS_drag/redips-drag-source.js",
+            "lib/REDIPS_drag/drag_table_rows.js",
+            "lib/plusbutton.js",
+            "lib/deploy_editsubtype.js"
          );
       }
-      if (  script_endswith("task.form.php")
-         or script_endswith("taskjob.php")
-         OR (script_endswith("iprange.form.php"))
-      )
-      {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+      if (script_endswith("task.form.php")
+         || script_endswith("taskjob.php")
+         || script_endswith("iprange.form.php")) {
+         array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            array(
-               "lib/lazy.js-0.3.2/lazy.js",
-               "lib/mustache.js-0.8.1/mustache.js",
-               "lib/REDIPS_drag/redips-drag-source.js",
-               "lib/REDIPS_drag/drag_table_rows.js",
-               "lib/plusbutton.js",
-               "js/taskjobs.js",
-            )
+            "lib/lazy.js-0.4.0/lazy".($debug_mode?"":".min").".js",
+            "lib/mustache.js-2.0.0/mustache".($debug_mode?"":".min").".js",
+            "js/taskjobs.js"
          );
       }
-
-
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-              "js/stats.js";
+      if (script_endswith("menu.php")) {
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats.js";
+      }
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page

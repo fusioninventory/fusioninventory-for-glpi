@@ -766,6 +766,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $query_joins['task'] = implode( "\n", array(
          "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task",
          "  ON job.`plugin_fusioninventory_tasks_id` = task.`id`",
+         "  AND task.`is_active` = 1",
       ));
 
       $data_structure = array(
@@ -812,6 +813,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             'agents_prepared', 'agents_cancelled', 'agents_running',
             'agents_success', 'agents_error', 'agents_notdone'
          );
+
+
+
+         if ( $result[ $fieldmap['job.method']] == 'networkinventory') {
+            $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
+            foreach($targets as $keyt=>$target) {
+               $item_type = key($target);
+               $items_id = current($target);
+               if ($item_type == 'PluginFusioninventoryIPRange') {
+                  unset($targets[$keyt]);
+                  // In this case get devices of this iprange
+                  $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
+                  $targets = array_merge($targets, $deviceList);
+               }
+            }
+         }
+
          foreach( $targets as $target) {
             $item_type = key($target);
             $item_id = current($target);
@@ -903,6 +921,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task",
          "  ON job.`plugin_fusioninventory_tasks_id` = task.`id`",
       ));
+
 
       $queries = array();
 

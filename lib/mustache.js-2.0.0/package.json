@@ -1,0 +1,49 @@
+{
+  "name": "mustache",
+  "version": "2.0.0",
+  "description": "Logic-less {{mustache}} templates with JavaScript",
+  "author": "mustache.js Authors <http://github.com/janl/mustache.js>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janl/mustache.js.git"
+  },
+  "keywords": [
+    "mustache",
+    "template",
+    "templates",
+    "ejs"
+  ],
+  "main": "./mustache.js",
+  "bin": {
+    "mustache": "./bin/mustache"
+  },
+  "files": [
+    "mustache.js",
+    "mustache.min.js",
+    "bin",
+    "wrappers",
+    "LICENSE"
+  ],
+  "volo": {
+    "url": "https://raw.github.com/janl/mustache.js/{version}/mustache.js"
+  },
+  "engines": {
+    "npm": ">=1.4.0"
+  },
+  "scripts": {
+    "pretest": "jshint mustache.js",
+    "test": "mocha --reporter spec",
+    "test-render": "mocha  --reporter spec test/render-test"
+  },
+  "devDependencies": {
+    "jshint": "~2.4.4",
+    "mocha": "~2.1.0"
+  },
+  "spm": {
+    "main": "mustache.js",
+    "ignore": [
+      "test",
+      "wrappers"
+    ]
+  }
+}

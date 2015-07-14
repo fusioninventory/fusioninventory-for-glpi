@@ -704,7 +704,7 @@ table.runs td.comment {
    background-image: url('../pics/monitoring_fetching.gif');
 }
 .refresh_button > span.computing {
-   background-image: url('../pics/monitoring_fetching.gif');
+   background-image: url('../pics/monitoring_computing.gif');
 }
 
 
