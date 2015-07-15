@@ -107,6 +107,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                         $target_entity = Entity::getEntityIDByTag($res);
                         if ($target_entity != '') {
                            $output["entities_id"]=$target_entity;
+                        } else {
+                           $output['pass_rule'] = True;
                         }
                      }
                   }
@@ -289,6 +291,46 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
       return $res;
    }
+
+
+
+   /**
+    * Process the rule
+    *
+    * @param &$input          the input data used to check criterias
+    * @param &$output         the initial ouput array used to be manipulate by actions
+    * @param &$params         parameters for all internal functions
+    * @param &options   array options:
+    *                     - only_criteria : only react on specific criteria
+    *
+    * @return the output array updated by actions.
+    *         If rule matched add field _rule_process to return value
+   **/
+   function process(&$input, &$output, &$params, &$options=array()) {
+
+      if ($this->validateCriterias($options)) {
+         $this->regex_results     = array();
+         $this->criterias_results = array();
+         $input = $this->prepareInputDataForProcess($input, $params);
+
+         if ($this->checkCriterias($input)) {
+            unset($output["_no_rule_matches"]);
+            $refoutput = $output;
+            $output = $this->executeActions($output, $params);
+            if (!isset($output['pass_rule'])) {
+               $this->updateOnlyCriteria($options, $refoutput, $output);
+               //Hook
+               $hook_params["sub_type"] = $this->getType();
+               $hook_params["ruleid"]   = $this->fields["id"];
+               $hook_params["input"]    = $input;
+               $hook_params["output"]   = $output;
+               Plugin::doHook("rule_matched", $hook_params);
+               $output["_rule_process"] = true;
+            }
+         }
+      }
+   }
+
 }
 
 ?>
