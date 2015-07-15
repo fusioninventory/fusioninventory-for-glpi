@@ -1305,7 +1305,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                "WHERE\n    ".implode("\nAND ", $where)
             )
          );
-      Toolbox::logDebug($query);
 
       $results = array();
       $r = $DB->query($query);
