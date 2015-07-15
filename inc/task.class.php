@@ -721,6 +721,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
    }
 
+
+
+   /**
+    * Get logs of job
+    *
+    * @param array $task_ids list of tasks id
+    * @return array
+    */
    function getJoblogs($task_ids = array()) {
       global $DB;
 
@@ -793,7 +801,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if (!array_key_exists($task_id, $logs)) {
             $logs[$task_id] = array(
                'task_name' => $result[$fieldmap['task.name']],
-               'task_id' => $result[$fieldmap['task.id']],
+               'task_id'   => $result[$fieldmap['task.id']],
                'jobs'      => array()
             );
          }
@@ -1143,6 +1151,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return array('tasks' => $logs, 'agents' => $agents);
    }
 
+
+
    function getTasksPlanned($tasks_id=0) {
       global $DB;
 
@@ -1408,7 +1418,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       global $CFG_GLPI;
 
       switch ($ma->getAction()) {
-         case "transfert": 
+         case "transfert":
             Dropdown::show('Entity');
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return true;
@@ -1479,7 +1489,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       switch ($ma->getAction()) {
          case "transfert" :
-            
+
             foreach($ids as $key) {
 
                if ($pfTask->getFromDB($key)) {
@@ -1505,7 +1515,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
                }
             }
-         
+
             break;
 
 
@@ -1522,7 +1532,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$ma->POST['packages_id'].'"}]',
                'actor'                           => array()
             );
-            
+
             if (array_key_exists('separate_jobs', $_POST)) {
                foreach ($ids as $key) {
                   $input['actors'] = '[{"Computer":"'.$key.'"}]';
@@ -1540,9 +1550,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $input['actors'] = json_encode($input['actors']);
                $pfTaskjob->add($input);
             }
-            
+
             break;
-      } 
+      }
    }
 }
 
