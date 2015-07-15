@@ -74,7 +74,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'name'               => 'ARC12-B09-N',
          'id'                 => 54,
          'serial'             => 'VRG5XUT5',
-         'otherserial'        => 'chr(hex(fd))chr(hex(e8))',
          'manufacturers_id'   => 10,
          'locations_id'       => 102,
          'printermodels_id'   => 15,
@@ -129,7 +128,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $a_reference = array(
          'name'                 => 'ARC12-B09-N',
          'serial'               => 'VRG5XUT5',
-         'otherserial'          => 'chr(hex(fd))chr(hex(e8))',
+         'otherserial'          => NULL,
          'id'                   => '1',
          'manufacturers_id'     => '10',
          'locations_id'         => '102',
