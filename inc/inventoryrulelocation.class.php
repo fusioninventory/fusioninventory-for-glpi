@@ -96,23 +96,27 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
                   break;
 
                case "regex_result" :
-                  //Assign entity using the regex's result
-                  if ($action->fields["field"] == "_affect_entity_by_tag") {
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-locationrules",
-                        "value ".$action->fields["value"]."\n"
-                     );
-                     //Get the TAG from the regex's results
-                     $res = RuleAction::getRegexResultById($action->fields["value"],
-                                                           $this->regex_results[0]);
-                     if (!is_null($res)) {
-                        //Get the entity associated with the TAG
-                        $target_entity = Entity::getEntityIDByTag($res);
-                        if ($target_entity != '') {
-                           $output["locations_id"]=$target_entity;
-                        }
-                     }
+                  $res = '';
+                  if (isset($this->regex_results[0])) {
+                     $res .= RuleAction::getRegexResultById($action->fields["value"],
+                                                            $this->regex_results[0]);
+                  } else {
+                     $res .= $action->fields["value"];
                   }
+                  if ($res != '') {
+                     $entities_id = 0;
+                     if (isset($_SESSION["plugin_fusioninventory_entity"])
+                             && $_SESSION["plugin_fusioninventory_entity"] > 0) {
+                        $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                     }
+                     $res = Dropdown::importExternal(
+                             getItemTypeForTable(
+                                     getTableNameForForeignKeyField(
+                                             $action->fields['field'])),
+                             $res,
+                             $entities_id);
+                  }
+                  $output[$action->fields["field"]] = $res;
                   break;
             }
          }
@@ -164,6 +168,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
+      $actions['locations_id']['force_actions'] = array('assign', 'regex_result');
+
 /*
       $actions['_affect_entity_by_tag']['name'] = __('Entity from TAG');
 
