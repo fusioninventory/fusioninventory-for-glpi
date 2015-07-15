@@ -672,8 +672,14 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
-                        if (isset($array_tmp['speed'])) {
-                           $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
+                        if (isset($array_tmp['speed'])
+                                && is_numeric($array_tmp['speed'])) {
+                           // Old agent version have speed in b/s instead Mb/s
+                           if ($array_tmp['speed'] > 100000) {
+                              $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
+                           }
+                        } else {
+                           $array_tmp['speed'] = 0;
                         }
 
                         $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;

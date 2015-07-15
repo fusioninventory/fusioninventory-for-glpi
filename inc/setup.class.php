@@ -369,7 +369,7 @@ class PluginFusioninventorySetup {
       $rules[] = array(
          'name'      => 'Computer import (by name)',
          'match'     => 'AND',
-         'is_active' => 0,
+         'is_active' => 1,
          'criteria'  => array(
             array(
                'criteria'  => 'itemtype',
