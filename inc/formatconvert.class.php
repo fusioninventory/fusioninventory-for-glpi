@@ -1762,7 +1762,6 @@ class PluginFusioninventoryFormatconvert {
                                      array(
                                         'NAME'         => 'name',
                                         'SERIAL'       => 'serial',
-                                        'OTHERSERIAL'  => 'otherserial',
                                         'ID'           => 'id',
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
@@ -1918,7 +1917,6 @@ class PluginFusioninventoryFormatconvert {
                                      array(
                                         'NAME'         => 'name',
                                         'SERIAL'       => 'serial',
-                                        'OTHERSERIAL'  => 'otherserial',
                                         'ID'           => 'id',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'LOCATION'     => 'locations_id',

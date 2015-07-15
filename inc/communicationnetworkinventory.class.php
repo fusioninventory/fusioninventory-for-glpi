@@ -498,9 +498,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (!empty($a_inventory[$a_inventory['itemtype']]['serial'])) {
             $input['serial'] = $a_inventory[$a_inventory['itemtype']]['serial'];
          }
-         if (!empty($a_inventory[$a_inventory['itemtype']]['otherserial'])) {
-            $input['otherserial'] = $a_inventory[$a_inventory['itemtype']]['otherserial'];
-         }
          if (!empty($a_inventory['itemtype'])) {
             $input['itemtype'] = $a_inventory['itemtype'];
          }

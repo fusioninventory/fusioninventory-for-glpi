@@ -79,7 +79,6 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
                'name'               => 'switchr2d2',
                'id'                 => 96,
                'serial'             => 'FOC147UJEU4',
-               'otherserial'        => '',
                'manufacturers_id'   => 29,
                'locations_id'       => 3,
                'networkequipmentmodels_id' => 3,

@@ -63,7 +63,6 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                 'MODEL'          => 'HP LaserJet P1505n',
                 'NAME'           => 'ARC12-B09-N',
                 'SERIAL'         => 'VRG5XUT4',
-                'OTHERSERIAL'    => 'chr(hex(fd))chr(hex(e8))',
                 'TYPE'           => 'PRINTER',
                 'MEMORY'         => 64
             );
@@ -89,7 +88,6 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $a_reference['Printer'] = array(
                'name'               => 'ARC12-B09-N',
                'serial'             => 'VRG5XUT4',
-               'otherserial'        => 'chr(hex(fd))chr(hex(e8))',
                'id'                 => 54,
                'manufacturers_id'   => 'Hewlett Packard',
                'locations_id'       => 'Room 102',
@@ -150,7 +148,6 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                'name'               => 'ARC12-B09-N',
                'id'                 => 54,
                'serial'             => '',
-               'otherserial'        => '',
                'manufacturers_id'   => '',
                'locations_id'       => '',
                'printermodels_id'   => '',
