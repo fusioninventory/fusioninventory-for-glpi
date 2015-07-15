@@ -1213,6 +1213,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $select['taskjobs'] = "taskjob.*";
             }
          }
+         $where[] = "`taskjob`.`id` IS NOT NULL";
       }
 
       //Filter by definition classes
