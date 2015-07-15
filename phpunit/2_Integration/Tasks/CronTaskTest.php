@@ -272,7 +272,6 @@ class CronTaskTest extends RestoreDatabase_TestCase {
    public function prepareTaskDisabled() {
       global $DB;
 
-      // Verify cancel agent prepared when one computer not verify dynamic group in deploy task
       $DB->connect();
 
       $pfTask = new PluginFusioninventoryTask();
@@ -283,22 +282,15 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       PluginFusioninventoryTask::cronTaskscheduler();
 
-      $pfTask = new PluginFusioninventoryTask();
-
       $data = $pfTask->getJoblogs(array(1));
 
-      $ref = array(
-          1 => 'portdavid',
-          2 => 'computer2',
-          3 => 'computer3',
-          4 => 'computer4'
-      );
+      $ref = array();
 
-      $this->assertEquals($ref, $data['agents']);
+      $this->assertEquals($ref, $data['agents'], 'Task inactive, so no agent prepared');
 
       $ref_prepared = array();
 
-      $this->assertEquals($ref_prepared, $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters']['agents_prepared']);
+      $this->assertEquals($ref_prepared, $data['tasks']);
    }
 
 
