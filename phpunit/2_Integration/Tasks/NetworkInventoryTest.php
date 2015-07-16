@@ -374,21 +374,48 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       // Agent will get data
 
       $communication->getTaskAgent(1);
-      $message = PluginFusioninventoryToolbox::formatXML($communication->getMessage());
+      $message = $communication->getMessage();
+      $json = json_encode($message);
+      $array = json_decode($json,TRUE);
 
-      $ref = '<?xml version="1.0" encoding="UTF-8"?>
-<REPLY>
-   <OPTION>
-      <NAME>SNMPQUERY</NAME>
-      <PARAM THREADS_QUERY="1" TIMEOUT="0" PID="1"/>
-      <DEVICE TYPE="PRINTER" ID="1" IP="192.168.200.124" AUTHSNMP_ID="2"/>
-      <AUTHENTICATION ID="1" VERSION="1" COMMUNITY="public"/>
-      <AUTHENTICATION ID="2" VERSION="2c" COMMUNITY="public"/>
-   </OPTION>
-</REPLY>
-';
+      $ref = array(
+         'OPTION' => array(
+            'NAME' => 'SNMPQUERY',
+            'PARAM' => array(
+               '@attributes' => array(
+                  'THREADS_QUERY' => 1,
+                  'TIMEOUT'       => 0,
+                  'PID'           => 1
+               )
+            ),
+            'DEVICE' => array(
+               '@attributes' => array(
+                  'TYPE'        => 'PRINTER',
+                  'ID'          => 1,
+                  'IP'          => '192.168.200.124',
+                  'AUTHSNMP_ID' => 2
+               )
+            ),
+            'AUTHENTICATION' => array(
+               0 => array(
+                  '@attributes' => array(
+                     'ID'        => 1,
+                     'VERSION'   => 1,
+                     'COMMUNITY' => 'public'
+                  )
+               ),
+               1 => array(
+                  '@attributes' => array(
+                     'ID'        => 2,
+                     'VERSION'   => '2c',
+                     'COMMUNITY' => 'public'
+                  ),
+               )
+            )
+         )
+      );
 
-      $this->assertEquals($ref, $message, 'XML of SNMP inventory task');
+      $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
 
    }
 
@@ -404,7 +431,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $printer       = new Printer();
       $networkport   = new NetworkPort();
       $networkName   = new NetworkName();
-      $iPAddress     = new IPAddress();
       $pfPrinter     = new PluginFusioninventoryPrinter();
       $pfTask        = new PluginFusioninventoryTask();
       $pfTaskjob     = new PluginFusioninventoryTaskjob();
@@ -449,12 +475,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
           'itemtype'    => 'NetworkPort',
           'items_id'    => $networkports_id
       ));
-//      $iPAddress->add(array(
-//          'entities_id' => 0,
-//          'itemtype' => 'NetworkName',
-//          'items_id' => $networknames_id,
-//          'name' => '192.168.200.124'
-//      ));
       $input = array(
           'printers_id'                                => 1,
           'plugin_fusioninventory_configsecurities_id' => 2
@@ -488,13 +508,13 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       // Agent will get data
 
       $communication->getTaskAgent(1);
-      $message = PluginFusioninventoryToolbox::formatXML($communication->getMessage());
+      $message = $communication->getMessage();
+      $json = json_encode($message);
+      $array = json_decode($json,TRUE);
 
-      $ref = '<?xml version="1.0" encoding="UTF-8"?>
-<REPLY/>
-';
+      $ref = array();
 
-      $this->assertEquals($ref, $message, 'XML of SNMP inventory task');
+      $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
 
    }
 }
