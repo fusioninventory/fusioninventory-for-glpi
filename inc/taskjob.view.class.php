@@ -281,6 +281,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       global $CFG_GLPI;
       $id = $taskjob_data['id'];
       $name = $taskjob_data['name'];
+      if ($name == '') {
+         $name = "($id)";
+      }
       echo implode( "\n",
          array(
             "<td class='control'>",
