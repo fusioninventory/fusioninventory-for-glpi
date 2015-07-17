@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.2");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -49,8 +49,8 @@ $PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
-define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.1 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.2 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
