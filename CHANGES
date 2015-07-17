@@ -1,0 +1,103 @@
+Changelog
+=========
+
+Here you can see the full list of changes between each release.
+
+In Development
+--------------
+
+Version 0.85+1.2
+~~~~~~~~~~~~~~~~
+
+- Fix: Size of disk of computer
+- Fix: Translation in printer SNMP tab for day, week, month and year
+- Fix: PHP error in blacklist in some cases
+- Fix: Right for link with plugin monitoring
+- Fix: Massive actions (some has been broken)
+- Fix: SQL error on printer search list when search / display FusionInventory fields 
+- Fix: PHP notices on computer inventory in some cases
+- Fix: Display networkInventory in task logs (monitoring)
+- Fix: Display of several task using same target in task logs (monitoring)
+- Fix: Update list (prepared, to do, finished...) in task logs (monitoring)
+- Fix: PHP errors in task / task job preparing
+- Fix: Remove otherserial in networkinventory because removed from specs
+- Fix: Fix fatal error on computer inventory for networkport speed
+- Fix: In default rules import, computer name import is now enable
+- Fix: List of job in task when job have no name
+- Fix: Network inventory with printer / networkequipment without IP
+
+- Enhanced: Rename "delete tasks after n days" into "delete tasks logs after n days" in configuration form
+- Enhanced: Add cdrom / dvd import
+- Enhanced: Network equipment display ports tagged
+- Enhanced: Update travis to use new infrastructure + add test coverage (dev part, but important)
+- Enhanced: Optimize task logs (monitoring) rendering
+- Enhanced: Upgrade js lib and optimize js/css loading
+- Enhanced: Don't display inactive task in monitoring/log
+- Enhanced: Add regex in action of location rules
+- Enhanced: Manage entity rule with regexp and entity tag (2 different rules with regexp + action by entity tag)
+
+
+Version 0.85+1.1
+~~~~~~~~~~~~~~~~
+
+- Fix: Remove + button in ingored import rules
+- Fix: Remove cron checkdevices
+- Fix: 'Security die. trying to load an forbidden class name' in task tab in IPrange form
+- Fix: Blacklisted values 'name' property should be called 'type'
+- Fix: In blacklist list, go in next page is a 404 error
+- Fix: When have computer networkport with many IP, IPv6 is dropped and sometime have empty ip
+- Fix: right problem in unmanaged devices
+- Fix: Problème de traitement des serialized_inventory
+- Fix: printer search problem when have column "FusInv - SNMP authentication" and search on 'items seen'
+- Fix: SQL error on deploy
+- Fix: css overload in ocsinventory when FI is enable
+- Fix: [0.85+1.0] Mirrors URLs in json->associatedFiles is always empty
+- Fix: useless indirection in REST API
+- Fix: TAG nut updated if ACCOUNTINFO section is present twice in the inventory
+- Fix: Remove wizzard files
+- Fix: problem on glpi_domains where domains are added with entities_id = -1
+- Fix: display "SELinux..." when display page to force run agent remotely from server
+- Fix: Unable to delete agents from the server's list of agents
+
+- Enhanced: Add a IP type for excluded values
+- Enhanced: Add oscomment in entity rules, location rule and import rule
+
+
+Version 0.85+1.0
+~~~~~~~~~~~~~~~~
+
+- Fix: The dustbin icon has not sense in Unknown Devices section.
+- Fix: Import sans nom de domaine
+- Fix: The 'Automatic inventory' information is empty for printers.
+- Fix: not using MSN field when SSN blacklisted
+- Fix: activating plugin kills networkports
+- Fix: Strange menus
+- Fix: Icon missing.
+- Fix: compat PHP 5.6
+
+- Enhanced: Have possibility to lock a field for an itemtype
+- Enhanced: Add possibility to recreate default rules for import devices
+- Enhanced: Add cron to delete agent not have contact since xx weeks/months
+- Enhanced: Use import rules for Devices, Printers, Monitors for a computer inventory
+- Enhanced: Add SNMP authentication to IP ranges and define order
+- Enhanced: Add field 'domain' in global criteria in import rules
+- Enhanced: Multi TaskJob sequencing
+- Enhanced: server-driven mode (legacy) tasks
+- Enhanced: agent-driven mode (ondemand) tasks
+- Enhanced: Modify taskjob Statuses
+- Enhanced: Monitoring / Logs of tasks
+- Enhanced: Add criterias for search computer have agent available or not for each modules (NETINVENTORY, DEPLOY, WOL...)
+- Enhanced: Export / import full packages
+- Enhanced: Add lock icon for fields locked in computer, networkequipment and printer form
+- Enhanced: Add "Not Specified" to Fusion inventory blacklist
+- Enhanced: Dictionnary on computer architecture
+- Enhanced: Define new import rule (better) at install plugin
+
+- Task: Review right management
+- Task: Review tasks
+- Task: Update hook (giveitem) to be compatible with new engine search of GLPI
+- Task: Add code to retrieve the speed of computer network devices.
+- Task: Remove SNMP model management
+
+
+
