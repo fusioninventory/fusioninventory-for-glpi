@@ -412,31 +412,30 @@ function plugin_init_fusioninventory() {
          }
          // Load nvd3 for printerpage counter graph
          if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
-                 || strstr($_SERVER['PHP_SELF'], '/front/menu.php')) {
-            echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/nv.d3.css" rel="stylesheet" type="text/css" />
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/lib/d3.v2.min.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/nv.d3.min.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/tooltip.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/utils.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/legend.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/axis.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/scatter.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/line.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/multiBar.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/multiBarChart.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
-                    '/src/models/lineChart.js"></script>';
+                 || strstr($_SERVER['PHP_SELF'], 'fusioninventory/front/menu.php')) {
+            
+            // Add graph javascript
+            $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+                  $PLUGIN_HOOKS['add_javascript']['fusioninventory'], array(
+                     "lib/nvd3/lib/d3.v2.min.js",
+                     "lib/nvd3/nv.d3.min.js",
+                     "lib/nvd3/src/tooltip.js",
+                     "lib/nvd3/src/utils.js",
+                     "lib/nvd3/src/models/legend.js",
+                     "lib/nvd3/src/models/axis.js",
+                     "lib/nvd3/src/models/scatter.js",
+                     "lib/nvd3/src/models/line.js",
+                     "lib/nvd3/src/models/multiBar.js",
+                     "lib/nvd3/src/models/multiBarChart.js",
+                     "lib/nvd3/src/models/lineChart.js"
+                  )
+            );
+            // Add graph css
+            $PLUGIN_HOOKS['add_css']['fusioninventory'] = array_merge(
+                  $PLUGIN_HOOKS['add_css']['fusioninventory'], array(
+                     "lib/nvd3/src/nv.d3.css"
+                  )
+            );
          }
       }
 
