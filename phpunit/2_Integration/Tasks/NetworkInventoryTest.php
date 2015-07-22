@@ -260,8 +260,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function getDevicesToInventory() {
-
-
       global $DB;
 
       // Verify prepare a network discovery task
@@ -280,5 +278,244 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
 
    }
 
+
+
+   /**
+    * @test
+    */
+   public function PrinterToInventoryWithIP() {
+
+      self::restore_database();
+
+      $printer       = new Printer();
+      $networkport   = new NetworkPort();
+      $networkName   = new NetworkName();
+      $iPAddress     = new IPAddress();
+      $pfPrinter     = new PluginFusioninventoryPrinter();
+      $pfTask        = new PluginFusioninventoryTask();
+      $pfTaskjob     = new PluginFusioninventoryTaskjob();
+      $computer      = new Computer();
+      $pfAgent       = new PluginFusioninventoryAgent();
+      $communication = new PluginFusioninventoryCommunication();
+
+
+      // Create computers + agents
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'computer1'
+      );
+      $computers_id = $computer->add($input);
+
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'computer1',
+          'version'     => '{"INVENTORY":"v2.3.11"}',
+          'device_id'   => 'computer1',
+          'useragent'   => 'FusionInventory-Agent_v2.3.11',
+          'computers_id'=> $computers_id
+      );
+      $pfAgent->add($input);
+
+      // Create printer
+      $input = array(
+         'name'        => 'printer 001',
+         'entities_id' => 0
+      );
+      $printers_id = $printer->add($input);
+
+      // Add port
+      $networkports_id = $networkport->add(array(
+          'itemtype'          => 'Printer',
+          'instantiation_type'=> 'NetworkPortEthernet',
+          'items_id'          => $printers_id,
+          'entities_id'       => 0
+      ));
+      $networknames_id = $networkName->add(array(
+          'entities_id' => 0,
+          'itemtype'    => 'NetworkPort',
+          'items_id'    => $networkports_id
+      ));
+      $iPAddress->add(array(
+          'entities_id' => 0,
+          'itemtype' => 'NetworkName',
+          'items_id' => $networknames_id,
+          'name' => '192.168.200.124'
+      ));
+      $input = array(
+          'printers_id'                                => 1,
+          'plugin_fusioninventory_configsecurities_id' => 2
+      );
+      $pfPrinter->add($input);
+
+      // Add task
+      // create task
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'network inventory',
+          'is_active'   => 1
+      );
+      $tasks_id = $pfTask->add($input);
+
+      // create taskjob
+      $input = array(
+          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'entities_id'                     => 0,
+          'name'                            => 'inventory',
+          'method'                          => 'networkinventory',
+          'targets'                         => '[{"Printer":"'.$printers_id.'"}]',
+          'actors'                          => '[{"PluginFusioninventoryAgent":"1"}]'
+      );
+      $pfTaskjob->add($input);
+
+      PluginFusioninventoryTask::cronTaskscheduler();
+      $data = $pfTask->getJoblogs(array(1));
+
+      // Task is prepared
+      // Agent will get data
+
+      $communication->getTaskAgent(1);
+      $message = $communication->getMessage();
+      $json = json_encode($message);
+      $array = json_decode($json,TRUE);
+
+      $ref = array(
+         'OPTION' => array(
+            'NAME' => 'SNMPQUERY',
+            'PARAM' => array(
+               '@attributes' => array(
+                  'THREADS_QUERY' => 1,
+                  'TIMEOUT'       => 0,
+                  'PID'           => 1
+               )
+            ),
+            'DEVICE' => array(
+               '@attributes' => array(
+                  'TYPE'        => 'PRINTER',
+                  'ID'          => 1,
+                  'IP'          => '192.168.200.124',
+                  'AUTHSNMP_ID' => 2
+               )
+            ),
+            'AUTHENTICATION' => array(
+               0 => array(
+                  '@attributes' => array(
+                     'ID'        => 1,
+                     'VERSION'   => 1,
+                     'COMMUNITY' => 'public'
+                  )
+               ),
+               1 => array(
+                  '@attributes' => array(
+                     'ID'        => 2,
+                     'VERSION'   => '2c',
+                     'COMMUNITY' => 'public'
+                  ),
+               )
+            )
+         )
+      );
+
+      $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
+
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function PrinterToInventoryWithoutIP() {
+
+      self::restore_database();
+
+      $printer       = new Printer();
+      $networkport   = new NetworkPort();
+      $networkName   = new NetworkName();
+      $pfPrinter     = new PluginFusioninventoryPrinter();
+      $pfTask        = new PluginFusioninventoryTask();
+      $pfTaskjob     = new PluginFusioninventoryTaskjob();
+      $computer      = new Computer();
+      $pfAgent       = new PluginFusioninventoryAgent();
+      $communication = new PluginFusioninventoryCommunication();
+
+
+      // Create computers + agents
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'computer1'
+      );
+      $computers_id = $computer->add($input);
+
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'computer1',
+          'version'     => '{"INVENTORY":"v2.3.11"}',
+          'device_id'   => 'computer1',
+          'useragent'   => 'FusionInventory-Agent_v2.3.11',
+          'computers_id'=> $computers_id
+      );
+      $pfAgent->add($input);
+
+      // Create printer
+      $input = array(
+         'name'        => 'printer 001',
+         'entities_id' => 0
+      );
+      $printers_id = $printer->add($input);
+
+      // Add port
+      $networkports_id = $networkport->add(array(
+          'itemtype'          => 'Printer',
+          'instantiation_type'=> 'NetworkPortEthernet',
+          'items_id'          => $printers_id,
+          'entities_id'       => 0
+      ));
+      $networknames_id = $networkName->add(array(
+          'entities_id' => 0,
+          'itemtype'    => 'NetworkPort',
+          'items_id'    => $networkports_id
+      ));
+      $input = array(
+          'printers_id'                                => 1,
+          'plugin_fusioninventory_configsecurities_id' => 2
+      );
+      $pfPrinter->add($input);
+
+      // Add task
+      // create task
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'network inventory',
+          'is_active'   => 1
+      );
+      $tasks_id = $pfTask->add($input);
+
+      // create taskjob
+      $input = array(
+          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'entities_id'                     => 0,
+          'name'                            => 'inventory',
+          'method'                          => 'networkinventory',
+          'targets'                         => '[{"Printer":"'.$printers_id.'"}]',
+          'actors'                          => '[{"PluginFusioninventoryAgent":"1"}]'
+      );
+      $pfTaskjob->add($input);
+
+      PluginFusioninventoryTask::cronTaskscheduler();
+      $data = $pfTask->getJoblogs(array(1));
+
+      // Task is prepared
+      // Agent will get data
+
+      $communication->getTaskAgent(1);
+      $message = $communication->getMessage();
+      $json = json_encode($message);
+      $array = json_decode($json,TRUE);
+
+      $ref = array();
+
+      $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
+
+   }
 }
 ?>

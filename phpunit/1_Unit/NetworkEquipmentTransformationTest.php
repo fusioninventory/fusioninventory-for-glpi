@@ -388,7 +388,6 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'SERIAL'         => 'CAT1109RGVK',
                 'TYPE'           => 'NETWORKING',
                 'UPTIME'         => '41 days, 06:53:36.46',
-                'OTHERSERIAL'    => 'SW003',
                 'MANUFACTURER'   => 'Cisco'
             );
 
@@ -425,7 +424,6 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                'networkequipmentmodels_id'      => 'WS-C3750G-24T-S',
                'ram'                            => 128,
                'serial'                         => 'CAT1109RGVK',
-               'otherserial'                    => 'SW003',
                'manufacturers_id'               => 'Cisco',
                'is_dynamic'                     => 1
 

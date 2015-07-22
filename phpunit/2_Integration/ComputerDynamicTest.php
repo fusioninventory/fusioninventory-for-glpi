@@ -68,11 +68,11 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          "computerdisk" => array(
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          "computerdisk"   => array(
               array(
                  "freesize"   => 259327,
                  "totalsize"  => 290143,
@@ -93,6 +93,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
 
@@ -177,6 +179,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
 
@@ -296,6 +300,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
           );
 

@@ -190,7 +190,30 @@ class PluginFusioninventoryFormatconvert {
    static function computerInventoryTransformation($array) {
       global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
 
-      $a_inventory = array();
+      // Initialize
+      $a_inventory = array(
+         'Computer'                => array(),
+         'fusioninventorycomputer' => array(),
+         'processor'               => array(),
+         'memory'                  => array(),
+         'harddrive'               => array(),
+         'drive'                   => array(),
+         'graphiccard'             => array(),
+         'networkcard'             => array(),
+         'soundcard'               => array(),
+         'controller'              => array(),
+         'SOFTWARES'               => array(),
+         'virtualmachine'          => array(),
+         'computerdisk'            => array(),
+         'networkport'             => array(),
+         'antivirus'               => array(),
+         'licenseinfo'             => array(),
+         'batteries'               => array(),
+         'monitor'                 => array(),
+         'printer'                 => array(),
+         'peripheral'              => array(),
+         'storage'                 => array()
+      );
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -653,8 +676,14 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
-                        if (isset($array_tmp['speed'])) {
-                           $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
+                        if (isset($array_tmp['speed'])
+                                && is_numeric($array_tmp['speed'])) {
+                           // Old agent version have speed in b/s instead Mb/s
+                           if ($array_tmp['speed'] > 100000) {
+                              $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
+                           }
+                        } else {
+                           $array_tmp['speed'] = 0;
                         }
 
                         $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
@@ -1824,7 +1853,6 @@ class PluginFusioninventoryFormatconvert {
                                      array(
                                         'NAME'         => 'name',
                                         'SERIAL'       => 'serial',
-                                        'OTHERSERIAL'  => 'otherserial',
                                         'ID'           => 'id',
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
@@ -1980,7 +2008,6 @@ class PluginFusioninventoryFormatconvert {
                                      array(
                                         'NAME'         => 'name',
                                         'SERIAL'       => 'serial',
-                                        'OTHERSERIAL'  => 'otherserial',
                                         'ID'           => 'id',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'LOCATION'     => 'locations_id',

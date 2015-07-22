@@ -114,7 +114,9 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'antivirus'               => array(),
           'storage'                 => array(),
           'licenseinfo'             => array(),
-          'networkcard'             => array()
+          'networkcard'             => array(),
+          'drive'                   => array(),
+          'batteries'               => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -174,23 +176,25 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ),
-          'soundcard'               => array(),
-          'graphiccard'             => array(),
-          'controller'              => array(),
-          'processor'               => array(),
-          'computerdisk'            => array(),
-          'memory'                  => array(),
-          'monitor'                 => array(),
-          'printer'                 => array(),
-          'peripheral'              => array(),
-          'networkport'             => array(),
-          'SOFTWARES'               => array(),
-          'harddrive'               => array(),
-          'virtualmachine'          => array(),
-          'antivirus'               => array(),
-          'storage'                 => array(),
-          'licenseinfo'             => array(),
-          'networkcard'             => array()
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'SOFTWARES'      => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
+          'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -270,23 +274,25 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'plugin_fusioninventory_computerarchs_id'  => '32 bits',
               'oscomment'                                => ''
           ),
-          'soundcard'               => array(),
-          'graphiccard'             => array(),
-          'controller'              => array(),
-          'processor'               => array(),
-          'computerdisk'            => array(),
-          'memory'                  => array(),
-          'monitor'                 => array(),
-          'printer'                 => array(),
-          'peripheral'              => array(),
-          'networkport'             => array(),
-          'SOFTWARES'               => array(),
-          'harddrive'               => array(),
-          'virtualmachine'          => array(),
-          'antivirus'               => array(),
-          'storage'                 => array(),
-          'licenseinfo'             => array(),
-          'networkcard'             => array()
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'SOFTWARES'      => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
+          'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -354,23 +360,25 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'last_fusioninventory_update'     => $date,
               'oscomment'                       => ''
           ),
-          'soundcard'               => array(),
-          'graphiccard'             => array(),
-          'controller'              => array(),
-          'processor'               => array(),
-          'computerdisk'            => array(),
-          'memory'                  => array(),
-          'monitor'                 => array(),
-          'printer'                 => array(),
-          'peripheral'              => array(),
-          'networkport'             => array(),
-          'SOFTWARES'               => array(),
-          'harddrive'               => array(),
-          'virtualmachine'          => array(),
-          'antivirus'               => array(),
-          'storage'                 => array(),
-          'licenseinfo'             => array(),
-          'networkcard'             => array()
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'SOFTWARES'      => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
+          'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -636,23 +644,25 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'bios_manufacturers_id'                    => 'Dell Inc.',
               'oscomment'                                => ''
           ),
-          'soundcard'               => array(),
-          'graphiccard'             => array(),
-          'controller'              => array(),
-          'processor'               => array(),
-          'computerdisk'            => array(),
-          'memory'                  => array(),
-          'monitor'                 => array(),
-          'printer'                 => array(),
-          'peripheral'              => array(),
-          'networkport'             => array(),
-          'SOFTWARES'               => array(),
-          'harddrive'               => array(),
-          'virtualmachine'          => array(),
-          'antivirus'               => array(),
-          'storage'                 => array(),
-          'licenseinfo'             => array(),
-          'networkcard'             => array()
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'SOFTWARES'      => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
+          'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -739,23 +749,25 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'bios_manufacturers_id'                    => 'Dell Inc.',
               'oscomment'                                => ''
           ),
-          'soundcard'               => array(),
-          'graphiccard'             => array(),
-          'controller'              => array(),
-          'processor'               => array(),
-          'computerdisk'            => array(),
-          'memory'                  => array(),
-          'monitor'                 => array(),
-          'printer'                 => array(),
-          'peripheral'              => array(),
-          'networkport'             => array(),
-          'SOFTWARES'               => array(),
-          'harddrive'               => array(),
-          'virtualmachine'          => array(),
-          'antivirus'               => array(),
-          'storage'                 => array(),
-          'licenseinfo'             => array(),
-          'networkcard'             => array()
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'SOFTWARES'      => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
+          'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -838,6 +850,148 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return['drive']);
    }
 
+
+
+   /**
+    * @test
+    */
+   public function ComputerNetworkport() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['NETWORKS'] = array(
+         0 => array(
+            'DESCRIPTION' => 'Connexion réseau Intel(R) 82566DM-2 Gigabit',
+            'IPADDRESS'   => '192.168.20.49',
+            'IPDHCP'      => '192.168.20.1',
+            'IPGATEWAY'   => '192.168.20.1',
+            'IPMASK'      => '255.255.255.0',
+            'IPSUBNET'    => '192.168.20.0',
+            'MACADDR'     => '00:0F:FE:9C:FA:5D',
+            'PCIID'       => '8086:10BD:2818:103C',
+            'PNPDEVICEID' => 'PCI\VEN_8086&amp;DEV_10BD&amp;SUBSYS_2818103C&amp;REV_02\3&amp;21436425&amp;0&amp;C8',
+            'SPEED'       => '100',
+            'STATUS'      => 'Up',
+            'TYPE'        => 'ethernet',
+            'VIRTUALDEV'  => '0'
+         )
+      );
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $a_reference = array(
+         'Connexion réseau Intel(R) 82566DM-2 Gigabit-00:0f:fe:9c:fa:5d' => array(
+            'name'               => 'Connexion réseau Intel(R) 82566DM-2 Gigabit',
+            'mac'                => '00:0f:fe:9c:fa:5d',
+            'instantiation_type' => 'NetworkPortEthernet',
+            'ipaddress'          => array('192.168.20.49'),
+            'virtualdev'         => 0,
+            'subnet'             => '192.168.20.0',
+            'ssid'               => '',
+            'gateway'            => '192.168.20.1',
+            'netmask'            => '255.255.255.0',
+            'dhcpserver'         => '192.168.20.1',
+            'speed'              => 100,
+            'logical_number'     => 1
+         )
+      );
+      $this->assertEquals($a_reference, $a_return['networkport']);
+   }
+
+
+
+   /**
+    * @test
+    *
+    * Old agent have networkport speed in b/s and new in Mb/s
+    */
+   public function ComputerNetworkportOldFormat() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['NETWORKS'] = array(
+         0 => array(
+            'DESCRIPTION' => 'Intel(R) 82577LM Gigabit Network Connection',
+            'IPADDRESS'   => '192.168.20.50',
+            'IPDHCP'      => '192.168.20.1',
+            'IPGATEWAY'   => '192.168.20.1',
+            'IPMASK'      => '255.255.255.0',
+            'IPSUBNET'    => '192.168.20.0',
+            'MACADDR'     => '5C:26:0A:38:C4:8B',
+            'PNPDEVICEID' => 'PCI\VEN_8086&amp;DEV_10EA&amp;SUBSYS_040B1028&amp;REV_05\3&amp;11583659&amp;0&amp;C8',
+            'SPEED'       => '100000000',
+            'STATUS'      => 'Up',
+            'TYPE'        => 'ethernet',
+            'VIRTUALDEV'  => '0'
+         )
+      );
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $a_reference = array(
+         'Intel(R) 82577LM Gigabit Network Connection-5c:26:0a:38:c4:8b' => array(
+            'name'               => 'Intel(R) 82577LM Gigabit Network Connection',
+            'mac'                => '5c:26:0a:38:c4:8b',
+            'instantiation_type' => 'NetworkPortEthernet',
+            'ipaddress'          => array('192.168.20.50'),
+            'virtualdev'         => 0,
+            'subnet'             => '192.168.20.0',
+            'ssid'               => '',
+            'gateway'            => '192.168.20.1',
+            'netmask'            => '255.255.255.0',
+            'dhcpserver'         => '192.168.20.1',
+            'speed'              => 100,
+            'logical_number'     => 1
+         )
+      );
+      $this->assertEquals($a_reference, $a_return['networkport']);
+   }
 
 }
 

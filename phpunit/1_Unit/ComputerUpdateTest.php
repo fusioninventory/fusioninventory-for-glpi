@@ -80,13 +80,15 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'printer'        => array(),
           'peripheral'     => array(),
           'networkport'    => array(),
-          'software'       => array(),
+          'SOFTWARES'      => array(),
           'harddrive'      => array(),
           'virtualmachine' => array(),
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(
@@ -1113,13 +1115,15 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'printer'        => array(),
           'peripheral'     => array(),
           'networkport'    => array(),
-          'software'       => array(),
+          'SOFTWARES'      => array(),
           'harddrive'      => array(),
           'virtualmachine' => array(),
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(

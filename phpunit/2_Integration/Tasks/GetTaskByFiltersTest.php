@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,49 +30,48 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   @since     2015
 
    ------------------------------------------------------------------------
  */
 
-class GLPIlogs extends PHPUnit_Framework_TestCase {
+class GetTaskByFiltersTest extends RestoreDatabase_TestCase {
 
-   public function testSQLlogs() {
 
-      $filecontent = file_get_contents(GLPI_ROOT."/files/_log/sql-errors.log");
+   /**
+    * @test
+    */
+   public function GetTaskWithoutJobs() {
+      global $DB;
 
-      $this->assertEquals('', $filecontent, 'sql-errors.log not empty');
-      // Reinitialize file
-      file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
+      // Verify prepare a deploy task
+      $DB->connect();
+
+      $pfTask = new PluginFusioninventoryTask();
+
+      // create task
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'deploy',
+          'is_active'   => 1
+      );
+      $pfTask->add($input);
+
+      $running_tasks = $pfTask->getItemsFromDB(
+         array(
+            'is_running'  => TRUE,
+            'is_active'   => TRUE
+         )
+      );
+
+      $this->assertEquals(array(), $running_tasks, 'Not find task because not have job');
    }
 
-
-
-   public function testPHPlogs() {
-
-      $filecontent = file_get_contents(GLPI_ROOT."/files/_log/php-errors.log");
-
-      $this->assertEquals('', $filecontent, 'php-errors.log not empty');
-      // Reinitialize file
-      file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
-   }
 
 }
-
-
-
-class GLPIlogs_AllTests  {
-
-   public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('GLPIlogs');
-      return $suite;
-   }
-}
-
 ?>

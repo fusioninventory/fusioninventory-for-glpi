@@ -1506,11 +1506,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $uniqid = 0;
 //      if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
 
-         $input = array();
-         $input['id'] = $a_taskjob['id'];
-         $input['execution_id'] = $a_taskjob['execution_id'] + 1;
-         $pfTaskjob->update($input);
-
          $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
          $item = new $itemtype;
 

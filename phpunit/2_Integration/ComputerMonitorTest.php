@@ -81,6 +81,8 @@ class ComputerMonitor extends Common_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
 
@@ -136,6 +138,8 @@ class ComputerMonitor extends Common_TestCase {
           'storage'        => array(),
           'licenseinfo'    => array(),
           'networkcard'    => array(),
+          'drive'          => Array(),
+          'batteries'      => Array(),
           'itemtype'       => 'Computer'
       );
    }

@@ -166,10 +166,10 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       //
       //      spl_autoload_register('glpiautoload');
 
-      restore_error_handler();
+//      restore_error_handler();
 
-      error_reporting(E_ALL | E_STRICT);
-      ini_set('display_errors', 'On');
+//      error_reporting(E_ALL | E_STRICT);
+//      ini_set('display_errors', 'On');
       ini_set("memory_limit", "-1");
       ini_set("max_execution_time", "0");
 
