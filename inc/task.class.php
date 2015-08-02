@@ -122,15 +122,32 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    * @return nothing
    *
    **/
-   static function purgeTask($parm) {
-      // $parm["id"]
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+   static function purgeTask($param) {
+      global $DB;
 
-      // all taskjobs
-      $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$parm->fields["id"]."'");
-      foreach($a_taskjobs as $a_taskjob) {
-         $pfTaskjob->delete($a_taskjob, 1);
-      }
+      $tasks_id = $param->fields['id'];
+
+      //clean jobslogs
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs 
+                  WHERE plugin_fusioninventory_taskjobstates_id IN (
+                     SELECT states.id
+                     FROM glpi_plugin_fusioninventory_taskjobstates AS states
+                     INNER JOIN glpi_plugin_fusioninventory_taskjobs AS jobs
+                        ON jobs.id = states.plugin_fusioninventory_taskjobs_id
+                        AND jobs.plugin_fusioninventory_tasks_id = '$tasks_id'
+                  ) ");
+
+      //clean states
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobstates 
+                  WHERE plugin_fusioninventory_taskjobs_id IN (
+                     SELECT jobs.id
+                     FROM glpi_plugin_fusioninventory_taskjobs AS jobs
+                     WHERE jobs.plugin_fusioninventory_tasks_id = '$tasks_id'
+                  )");
+
+      //clean jobs
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobs 
+                  WHERE plugin_fusioninventory_tasks_id = '$tasks_id'");
    }
 
 
