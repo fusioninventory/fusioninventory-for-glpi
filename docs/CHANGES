@@ -10,6 +10,7 @@ In Development
 - Fix: graph javascript and Css load
 
 - Enhanced: Improve task deletion performance
+- Enhanced: clean docs folder and move this changelog file to docs folder
 
 Version 0.85+1.2
 ~~~~~~~~~~~~~~~~
