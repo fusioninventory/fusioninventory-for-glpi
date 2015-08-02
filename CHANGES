@@ -6,6 +6,8 @@ Here you can see the full list of changes between each release.
 In Development
 --------------
 
+- Fix: fix sql error when display printer list when use some fields of plugin FusionInventory
+
 Version 0.85+1.2
 ~~~~~~~~~~~~~~~~
 

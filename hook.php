@@ -898,11 +898,11 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Computer":
          if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
-            $ma["PluginFusioninventoryLock".$sep."manage_locks"] 
+            $ma["PluginFusioninventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
          if(Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
-            $ma["PluginFusioninventoryTask".$sep."target_task"] 
+            $ma["PluginFusioninventoryTask".$sep."target_task"]
                = __('Target a task', 'fusioninventory');
          }
          if(Session::haveRight('plugin_fusioninventory_group', UPDATE)) {
@@ -914,11 +914,11 @@ function plugin_fusioninventory_MassiveActions($type) {
       case "NetworkEquipment":
       case "Printer":
          if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
-            $ma["PluginFusioninventoryLock".$sep."manage_locks"] 
+            $ma["PluginFusioninventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
          if(Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
-            $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"] 
+            $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"]
                = __('Assign SNMP authentication', 'fusioninventory');
          }
 
@@ -1361,8 +1361,14 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
          break;
 
       case 'Printer':
+         $already_link_tables_tmp = $already_link_tables;
+         array_pop($already_link_tables_tmp);
+
          $leftjoin_fusioninventory_printers = 1;
-         if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables))) {
+         if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusioninventory_configsecurities',
+                         $already_link_tables_tmp))
+            ) {
 
             $leftjoin_fusioninventory_printers = 0;
          }
@@ -1370,7 +1376,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 
             // ** FusionInventory - last inventory
             case "glpi_plugin_fusioninventory_printers.plugin_fusioninventory_printers_id" :
-               if ($leftjoin_fusioninventory_printers == "1") {
+               if ($leftjoin_fusioninventory_printers == 1) {
                   return " LEFT JOIN glpi_plugin_fusioninventory_printers
                      ON (glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id) ";
                }
