@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
 "PO-Revision-Date: 2014-12-19 15:14+0000\n"
 "Last-Translator: Gabroz <g8marsili@gmail.com>\n"
-"Language-Team: Italian (Italy) (http://www.transifex.com/projects/p/FusionInventory/language/it_IT/)\n"
+"Language-Team: Italian (Italy) (http://www.transifex.com/ddurieux/FusionInventory/language/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -699,7 +699,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Frequenza dell'inventario (in ore)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Cancellare i compiti completati dopo (mn)"
 
 #: inc/config.class.php:327

@@ -3,7 +3,9 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Andreas Reichel, 2015
 # Andre <spindoctor@gmx.li>, 2014
+# Janosch, 2015
 # Mathieu Simon <mathieu.sim@gmail.com>, 2014
 # Megachip <www.transifex.com@megskywalker.de>, 2014
 # Megachip <www.transifex.com@megskywalker.de>, 2014
@@ -12,9 +14,9 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: German (Germany) (http://www.transifex.com/projects/p/FusionInventory/language/de_DE/)\n"
+"PO-Revision-Date: 2015-07-19 21:12+0000\n"
+"Last-Translator: Andreas Reichel\n"
+"Language-Team: German (Germany) (http://www.transifex.com/ddurieux/FusionInventory/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,19 +39,19 @@ msgstr "Letzte Inventarisierung"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "AntiVirus Programm"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "AntiVirus Version"
 
 #: hook.php:78
 msgid "Antivirus enabled"
-msgstr ""
+msgstr "AntiVirus aktiviert"
 
 #: hook.php:88
 msgid "Antivirus up to date"
-msgstr ""
+msgstr "AntiVirus aktuell"
 
 #: hook.php:97 hook.php:106
 msgid "BIOS"
@@ -127,7 +129,7 @@ msgstr "Statische Gruppe"
 
 #: hook.php:247
 msgid "Agent base URL"
-msgstr ""
+msgstr "Agent Basis URL"
 
 #: hook.php:276 hook.php:284 hook.php:316 inc/menu.class.php:382
 #: inc/networkequipment.class.php:482 inc/printer.class.php:168
@@ -183,8 +185,8 @@ msgstr "Beendigung erzwingen"
 #: inc/task.view.class.php:126
 msgid "Task"
 msgid_plural "Tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aufgabe"
+msgstr[1] "Aufgaben"
 
 #: hook.php:1049 inc/deploygroup.class.php:138 inc/deploypackage.class.php:56
 msgid "Package"
@@ -251,7 +253,7 @@ msgstr "Ihre glpi Version ist nicht kompatibel, es wird Version 0.85 benötigt"
 
 #: setup.php:508
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "fileinfo Erweiterung (PHP) wird benötigt..."
 
 #: setup.php:521
 #, php-format
@@ -422,7 +424,7 @@ msgstr "Paketverteilung"
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
-msgstr ""
+msgstr "Informationen sammeln"
 
 #: inc/collect.class.php:65
 msgid "Registry"
@@ -435,7 +437,7 @@ msgstr "WMI"
 #: inc/collect.class.php:67 inc/collect_file.class.php:55
 #: inc/collect_file.class.php:62
 msgid "Find file"
-msgstr ""
+msgstr "Finde Datei"
 
 #: inc/collect_file.class.php:86
 msgid "Find file associated"
@@ -528,11 +530,11 @@ msgstr "Finde Dateiinhalt"
 
 #: inc/collect_file_content.class.php:188
 msgid "Path/file"
-msgstr ""
+msgstr "Pfad/Datei"
 
 #: inc/collect_file_content.class.php:226
 msgid "pathfile"
-msgstr ""
+msgstr "Dateipfad"
 
 #: inc/collect_registry.class.php:52 inc/collect_registry.class.php:61
 msgid "Windows registry"
@@ -573,7 +575,7 @@ msgstr "Schlüssel"
 #: inc/collect_registry_content.class.php:73
 #: inc/collect_registry_content.class.php:79
 msgid "Windows registry content"
-msgstr ""
+msgstr "Windows Registry Kommentar"
 
 #: inc/collect_registry_content.class.php:180
 #: inc/collect_registry_content.class.php:224
@@ -617,7 +619,7 @@ msgstr "Eigenschaft"
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
 #: inc/menu.class.php:329 inc/profile.class.php:213
 msgid "Additional computer information rules"
-msgstr ""
+msgstr "Zusätzliche Computer Informations Regeln"
 
 #: inc/collectrule.class.php:125
 msgid "Registry key"
@@ -649,11 +651,11 @@ msgstr "Dateigrösse"
 
 #: inc/common.view.class.php:188
 msgid "Warning:"
-msgstr ""
+msgstr "Warnung:"
 
 #: inc/common.view.class.php:192
 msgid "Error:"
-msgstr ""
+msgstr "Fehler:"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:215
@@ -702,7 +704,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Periodizität des Inventars (in Stunden)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Agent-Aufgabe am Ende löschen"
 
 #: inc/config.class.php:327
@@ -877,7 +879,7 @@ msgstr "Pfad"
 
 #: inc/deployaction.class.php:392
 msgid "Execution checks"
-msgstr ""
+msgstr "Ausführungsprüfung"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
@@ -965,7 +967,7 @@ msgstr "Von Computer heraufladen"
 
 #: inc/deployfile.class.php:57
 msgid "Upload from server"
-msgstr ""
+msgstr "Hochgeladen vom Server"
 
 #: inc/deployfile.class.php:226
 msgid "p2p"
@@ -997,7 +999,7 @@ msgstr "Auswählen"
 
 #: inc/deployfile.class.php:409
 msgid "Select the file on server"
-msgstr ""
+msgstr "Datei auf dem Server wählen"
 
 #: inc/deployfile.class.php:424
 msgid "Uncompress"
@@ -1017,7 +1019,7 @@ msgstr "Übertragunsfehler: Die Datei ist zu groß"
 
 #: inc/deployfile.class.php:710
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Die hochgeladene Datei ist unvollständig"
 
 #: inc/deployfile.class.php:713
 msgid "No file was uploaded"
@@ -1025,7 +1027,7 @@ msgstr "Dateien wurde nicht heraufgeladen"
 
 #: inc/deployfile.class.php:716
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Temporäres Verzeichnis fehlt"
 
 #: inc/deployfile.class.php:719
 msgid "Failed to write file to disk"
@@ -1092,11 +1094,11 @@ msgstr ""
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: inc/deploypackage.class.php:72
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #: inc/deploypackage.class.php:174
 msgid "Modification Denied"
@@ -1122,7 +1124,7 @@ msgstr "Aktionen"
 
 #: inc/deploypackage.class.php:729
 msgid "Item successfully added"
-msgstr ""
+msgstr "Eintrag erfolgreich hinzugefügt"
 
 #: inc/deploypackage.class.php:817
 msgid "Package exported in"
