@@ -5,7 +5,7 @@
 # Translators:
 # Julio <jmartelo@asic.udl.cat>, 2013
 # Julio <jmartelo@asic.udl.cat>, 2013
-# Luis A. Uriarte <luisuriarte@gmail.com>, 2013-2014
+# Luis A. Uriarte <luisuriarte@gmail.com>, 2013-2015
 # Luis A. Uriarte <luisuriarte@gmail.com>, 2013
 # Tomás Abad <tabadgp@gmail.com>, 2013
 msgid ""
@@ -13,9 +13,9 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 19:07+0000\n"
+"PO-Revision-Date: 2015-05-08 17:40+0000\n"
 "Last-Translator: Luis A. Uriarte <luisuriarte@gmail.com>\n"
-"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/FusionInventory/language/es_AR/)\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/ddurieux/FusionInventory/language/es_AR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -261,11 +261,11 @@ msgstr "Por favor, elimine la carpeta %s del directorio 'glpi/plugins'"
 
 #: ajax/configurationamanagement_action.php:55
 msgid "In referentiel + alert"
-msgstr ""
+msgstr "En repositorio + alerta"
 
 #: ajax/configurationamanagement_action.php:56
 msgid "In referentiel - alert"
-msgstr ""
+msgstr "En repositorio + alerta"
 
 #: ajax/configurationamanagement_action.php:57
 msgid "Not in referentiel"
@@ -297,7 +297,7 @@ msgstr "¡No hay fichero para importar!"
 
 #: front/inventoryruleimport.php:61
 msgid "Reset import rules (define only default rules)"
-msgstr ""
+msgstr "Restablecer reglas importadas (sólo definir reglas por defecto)"
 
 #: front/popup.php:64
 msgid "Cache informations"
@@ -386,7 +386,7 @@ msgstr "SNMP Tiempo de espera largo"
 
 #: inc/agent.class.php:483
 msgid "if empty use port configured in general options"
-msgstr ""
+msgstr "si el puerto uso vacío configurar en las opciones generales"
 
 #: inc/agent.class.php:759
 msgid "Agent state"
@@ -703,7 +703,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Frecuencia de inventario (en horas)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Eliminar el registro de las tareas terminadas después de"
 
 #: inc/config.class.php:327
@@ -712,7 +712,7 @@ msgstr "Depuración extra"
 
 #: inc/config.class.php:360
 msgid "Clean agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Los agentes no se han comunicado con el servidor desde (en días)"
 
 #: inc/config.class.php:399 inc/wizard.class.php:340
 msgid "Import options"
@@ -737,7 +737,7 @@ msgstr "Estado por defecto"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Crear computadora basada en información de la máquina virtual (¡sólo cuando la máquina virtual no tiene agente de inventario!)"
 
 #: inc/config.class.php:550
 msgid "Network drives"
@@ -1243,7 +1243,7 @@ msgid ""
 "have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
-msgstr ""
+msgstr "Puede utilizar este menú para cargar XML generado por un agente. El archivo debe tener extensión .xml o .ocs. También es posible subir archivos <b> ZIP </ b> directamente con una colección de archivos XML. ¿Ha leído la documentación agente para ver cómo generar dicho archivo XML"
 
 #: inc/inventorycomputerstorage.class.php:53
 #: inc/inventorycomputerstorage_storage.class.php:53
@@ -1279,12 +1279,12 @@ msgstr "Ignorar en importación de FusionInventory"
 #: inc/inventoryruleentity.class.php:212
 #: inc/inventoryrulelocation.class.php:215
 msgid "is CIDR"
-msgstr ""
+msgstr "es CIDR"
 
 #: inc/inventoryruleentity.class.php:213
 #: inc/inventoryrulelocation.class.php:216
 msgid "is not CIDR"
-msgstr ""
+msgstr "no es CIDR"
 
 #: inc/inventoryruleimport.class.php:86 inc/inventoryruleimport.class.php:111
 #: inc/inventoryruleimport.class.php:114 inc/inventoryruleimport.class.php:117
@@ -1305,7 +1305,7 @@ msgstr "Buscar equipo GLPI con estado"
 
 #: inc/inventoryruleimport.class.php:169
 msgid "Restrict search in defined entity"
-msgstr ""
+msgstr "Restringir la búsqueda en entidad definida"
 
 #: inc/inventoryruleimport.class.php:181
 msgid "FusionInventory link"
@@ -1317,7 +1317,7 @@ msgstr "Vínculo"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
-msgstr ""
+msgstr "Importación denegada (sin registro)"
 
 #: inc/inventoryruleimport.class.php:224
 msgid "equal"
@@ -1381,11 +1381,11 @@ msgstr "IP Inválida"
 
 #: inc/iprange_configsecurity.class.php:64
 msgid "Associated SNMP authentications"
-msgstr ""
+msgstr "Autenticaciones SNMP asociadas"
 
 #: inc/iprange_configsecurity.class.php:146
 msgid "SNMP Authentication"
-msgstr ""
+msgstr "Autenticación SNMP"
 
 #: inc/iprange_configsecurity.class.php:149
 msgid "Version"
@@ -2295,17 +2295,17 @@ msgstr "Número total de páginas grandes impresas"
 
 #: inc/menu.class.php:155
 msgid "Computer inv."
-msgstr ""
+msgstr "Inv. de computadora"
 
 #: inc/menu.class.php:158
 msgid "SNMP inv."
-msgstr ""
+msgstr "Inv. de SNMP"
 
 #: inc/menu.class.php:197
 msgid ""
 "The server needs to kown the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
-msgstr ""
+msgstr "El servidor necesita conocer la URL que los agentes utilizan para acceder al servidor. Por favor, agregarlo en la página Configuración general."
 
 #: inc/menu.class.php:221
 msgid "Agents management"
@@ -2325,7 +2325,7 @@ msgstr "Gestión de tareas"
 
 #: inc/menu.class.php:260
 msgid "Monitoring / Logs"
-msgstr ""
+msgstr "Monitoreo/Registros"
 
 #: inc/menu.class.php:267
 msgid "Import agent XML file"
@@ -2338,7 +2338,7 @@ msgstr "Información adicional del computadora"
 #: inc/menu.class.php:281 inc/timeslot.class.php:61 inc/timeslot.class.php:70
 #: inc/timeslotentry.class.php:70
 msgid "Time slot"
-msgstr ""
+msgstr "Intervalo de tiempo"
 
 #: inc/menu.class.php:287
 msgid "Tasks"
@@ -2359,7 +2359,7 @@ msgstr "Reglas de localización de computadoras"
 #: inc/menu.class.php:336 inc/ruledictionnarycomputerarch.class.php:53
 #: inc/ruledictionnarycomputerarchcollection.class.php:50
 msgid "Dictionnary of computer architectures"
-msgstr ""
+msgstr "Diccionario de arquitecturas de computadora"
 
 #: inc/menu.class.php:351
 msgid "Rules"
@@ -2387,20 +2387,20 @@ msgstr "Estadísticas"
 
 #: inc/menu.class.php:484 inc/menu.class.php:874
 msgid "Number of computer inventories of last hours"
-msgstr ""
+msgstr "Número de inventarios de equipos en las últimas horas"
 
 #: inc/menu.class.php:496
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
-msgstr ""
+msgstr "Se trata de los pasos para configurar FusionInventory plugin para inventario de equipos"
 
 #: inc/menu.class.php:502
 msgid "Configure frequency of agent contact (and so each inventory)"
-msgstr ""
+msgstr "Configure la frecuencia de contacto del agente (y así cada inventario)"
 
 #: inc/menu.class.php:507
 msgid "Configure inventory options"
-msgstr ""
+msgstr "Configurar las opciones de inventario"
 
 #: inc/menu.class.php:512
 msgid "Define rules for entity"
@@ -2414,44 +2414,44 @@ msgstr "Define reglas para lugar"
 msgid ""
 "Define rules for import : merge and create new computer (CAUTION: same rules"
 " for SNMP inventory)"
-msgstr ""
+msgstr "Definir reglas para la importación: fusionar y crear nuevo equipo (CUIDADO: mismas reglas para el inventario SNMP)"
 
 #: inc/menu.class.php:583
 msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
-msgstr ""
+msgstr "Se trata de los pasos para configurar FusionInventory para inventario SNMP (swicth, router, impresora de red)"
 
 #: inc/menu.class.php:589
 msgid "Configure SNMP credentials"
-msgstr ""
+msgstr "Configurar credenciales SNMP"
 
 #: inc/menu.class.php:594
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
-msgstr ""
+msgstr "Definir reglas para la importación: fusionar y crear nuevos dispositivos (CUIDADO: mismas reglas para inventario de equipo)"
 
 #: inc/menu.class.php:599
 msgid "`Network Discovery`, used to discover the devices on the network"
-msgstr ""
+msgstr "`Descubrimiento de Red`, utilizado para descubrir los dispositivos de la red"
 
 #: inc/menu.class.php:604
 msgid "Define IP Ranges of your network + related SNMP authentication"
-msgstr ""
+msgstr "Definir rangos IP de su red + autentificación SNMP relacionados"
 
 #: inc/menu.class.php:609
 msgid "Define an agent allowed to discover the network"
-msgstr ""
+msgstr "Definir un agente permitido para descubrir la red"
 
 #: inc/menu.class.php:614
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
-msgstr ""
+msgstr "Crear nueva Tarea con el módulo de descubrimiento y el agente definido previamente"
 
 #: inc/menu.class.php:619
 msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr ""
+msgstr "Si tiene dispositivos que no agregados, importarlos desde dispositivos no administrados"
 
 #: inc/menu.class.php:624
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
@@ -2869,7 +2869,7 @@ msgstr "Se ha deshabilitado la tarea"
 
 #: inc/task.view.class.php:81
 msgid "To Be Done"
-msgstr ""
+msgstr "Para hacer"
 
 #: inc/task.view.class.php:89
 msgid "Off"
@@ -2881,7 +2881,7 @@ msgstr ""
 
 #: inc/task.view.class.php:186
 msgid "Show/Hide details"
-msgstr ""
+msgstr "Mostrar/Ocultar detalle"
 
 #: inc/task.view.class.php:220 inc/task.view.class.php:296
 msgid "Not done yet"

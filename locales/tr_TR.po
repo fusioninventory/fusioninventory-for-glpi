@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
 "PO-Revision-Date: 2014-12-19 04:24+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
-"Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/ddurieux/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -696,7 +696,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Envanter sıklığı (saat)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Şundan sonra görevler silinsin"
 
 #: inc/config.class.php:327

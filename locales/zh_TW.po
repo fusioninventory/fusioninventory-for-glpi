@@ -12,7 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
 "PO-Revision-Date: 2014-12-18 00:25+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/FusionInventory/language/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/ddurieux/FusionInventory/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -697,7 +697,7 @@ msgid "Inventory frequency (in hours)"
 msgstr ""
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr ""
 
 #: inc/config.class.php:327
