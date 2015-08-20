@@ -434,10 +434,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    //Push task functionnality
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'last_agent_wakeup', 'datetime');
-   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', 'int');
-   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', 'int');
+   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', "int(11) NOT NULL DEFAULT '0'");
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter');
-   $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time');
    $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
    /*
     *  Table glpi_plugin_fusioninventory_agents
@@ -5653,6 +5652,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'comment'=>'Wake agents ups'));
+   }
+
+   /**
+   * Add field to manage which group can be refreshed by updatedynamictasks crontask
+   */
+   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
+      $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
+      $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
    }
 
    

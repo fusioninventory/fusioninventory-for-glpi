@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
 "PO-Revision-Date: 2014-12-18 00:25+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: Estonian (Estonia) (http://www.transifex.com/projects/p/FusionInventory/language/et_EE/)\n"
+"Language-Team: Estonian (Estonia) (http://www.transifex.com/ddurieux/FusionInventory/language/et_EE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -699,7 +699,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Inventeerimise sagedus (tundides)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Kustuta tegevused pärast"
 
 #: inc/config.class.php:327

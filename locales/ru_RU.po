@@ -14,12 +14,12 @@ msgstr ""
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
 "PO-Revision-Date: 2014-12-18 05:56+0000\n"
 "Last-Translator: sayanvd <sayanvd@yandex.ru>\n"
-"Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/FusionInventory/language/ru_RU/)\n"
+"Language-Team: Russian (Russia) (http://www.transifex.com/ddurieux/FusionInventory/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru_RU\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: hook.php:51 hook.php:231 hook.php:238 hook.php:257 hook.php:264
 #: hook.php:275 hook.php:283 hook.php:294 hook.php:315 hook.php:322
@@ -153,6 +153,7 @@ msgid_plural "Locks"
 msgstr[0] "Блокировка"
 msgstr[1] "Блокировок"
 msgstr[2] "Блокировки"
+msgstr[3] "Блокировки"
 
 #: hook.php:898 inc/deploygroup.class.php:94
 msgid "Target a task"
@@ -187,6 +188,7 @@ msgid_plural "Tasks"
 msgstr[0] "Задача"
 msgstr[1] "Задач"
 msgstr[2] "Задачи"
+msgstr[3] "Задачи"
 
 #: hook.php:1049 inc/deploygroup.class.php:138 inc/deploypackage.class.php:56
 msgid "Package"
@@ -499,6 +501,7 @@ msgid_plural "Filters"
 msgstr[0] "Фильтр"
 msgstr[1] "Фильтр"
 msgstr[2] "Фильтры"
+msgstr[3] "Фильтры"
 
 #: inc/collect_file.class.php:179
 msgid "Base folder"
@@ -705,7 +708,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Интервал инвентаризации (в часах)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Удалять задачи спустя"
 
 #: inc/config.class.php:327
@@ -1111,6 +1114,7 @@ msgid_plural "The following tasks are running with this package"
 msgstr[0] "Следующая задача выполняется с этим пакетом"
 msgstr[1] "Следующие задачи выполняются с этим пакетом"
 msgstr[2] "Следующие задачи выполняются с этим пакетом"
+msgstr[3] "Следующие задачи выполняются с этим пакетом"
 
 #: inc/deploypackage.class.php:395
 msgid "Audits"

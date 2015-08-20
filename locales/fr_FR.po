@@ -14,9 +14,11 @@
 # Alexandre Brianceau <lostprophet91@gmail.com>, 2013
 # Mathieu Simon <mathieu.sim@gmail.com>, 2013
 # Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# quent1 <quentin@quent1.fr>, 2015
 # Raphaël Threis <webmaster@malmedy.be>, 2014
 # Sebastien <sebastien.janez@free.fr>, 2014
 # Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# CDuv <transifex.accounts@claude.duvergier.fr>, 2015
 # Walid Nouh, 2014
 # Walid Nouh, 2014
 msgid ""
@@ -24,9 +26,9 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-22 13:39+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
+"PO-Revision-Date: 2015-05-26 11:50+0000\n"
+"Last-Translator: quent1 <quentin@quent1.fr>\n"
+"Language-Team: French (France) (http://www.transifex.com/ddurieux/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -714,8 +716,8 @@ msgid "Inventory frequency (in hours)"
 msgstr "Fréquence des inventaire (en heures)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
-msgstr "Effacer les logs des tâches terminées après"
+msgid "Delete tasks after"
+msgstr "Effacer les tâches terminées après"
 
 #: inc/config.class.php:327
 msgid "Extra-debug"
@@ -2548,7 +2550,7 @@ msgstr "Monitoring"
 
 #: inc/networkequipment.class.php:700
 msgid "Traffic received/sent"
-msgstr "Trafic reçu/envoyer"
+msgstr "Trafic reçu/envoyé"
 
 #: inc/networkequipment.class.php:704
 msgid "Errors received/sent"

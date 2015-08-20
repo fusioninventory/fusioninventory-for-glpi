@@ -550,15 +550,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             );
 
          $this->showIntegerField( __('Agent wakeup interval (in minutes)'), "wakeup_agent_time", 
-                                 array('value' => ((isset($this->fields['wakeup_agent_time']))?$this->fields['wakeup_agent_time']:0), 
+                                 array('value' => $this->fields['wakeup_agent_time'], 
                                        'toadd' => array('0' => __('Never')),
                                        'min'   => 1,
                                        'step'  => 1) );
 
          $this->showIntegerField( __('Number of agents to wake up'), "wakeup_agent_counter", 
-                                 array('value' => ((isset($this->fields['wakeup_agent_counter']))?$this->fields['wakeup_agent_counter']:0), 
+                                 array('value' => $this->fields['wakeup_agent_counter'], 
                                        'toadd' => array('0' => __('None')),
-                                       'min'   => 1,
+                                       'min'   => 0,
                                        'step'  => 1) );
 
          echo "</div>";

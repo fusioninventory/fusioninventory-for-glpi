@@ -1,4 +1,4 @@
-﻿/*
+/*
    ------------------------------------------------------------------------
    FusionInventory
    Copyright (C) 2010-2014 by the FusionInventory Development Team.
@@ -38,14 +38,7 @@
    ------------------------------------------------------------------------
  */
 
-Author : David DURIEUX
-
 Installation
 
-Récupérez l'archive tar.gz du plugin
-Décompressez la dans le répertoire plugins de votre installation de glpi
-
-Une fois copié dans le répertoire, dans l'onglet plugin vous verrez apparaître "FusionInventory".
-Règlez les droits sur le plugin en fonction des profils.
-Le plugin est ensuite prêt à l'emploi : il est accessible via le menu "Plugins"->"FusionInventory".
+See documentation: http://fusioninventory.org/documentation/documentation/fi4g/installation.html
 

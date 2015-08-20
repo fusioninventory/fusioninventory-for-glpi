@@ -6,6 +6,13 @@ Here you can see the full list of changes between each release.
 In Development
 --------------
 
+- Fix: SQL error when display printer list when use some fields of plugin FusionInventory
+- Fix: graph javascript and Css load
+
+- Enhanced: Improve task deletion performance
+- Enhanced: clean docs folder and move this changelog file to docs folder
+- ENhanced: Add wake up option in task to force GLPI wake up agent to do the task
+
 Version 0.85+1.2
 ~~~~~~~~~~~~~~~~
 

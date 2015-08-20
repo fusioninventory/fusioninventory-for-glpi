@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Ilkka Yläkoski <iylakoski@learn-it2.fi>, 2014
+# Ilkka Yläkoski <iylakoski@learn-it2.fi>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-19 14:44+0000\n"
+"PO-Revision-Date: 2015-01-15 10:54+0000\n"
 "Last-Translator: Ilkka Yläkoski <iylakoski@learn-it2.fi>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/projects/p/FusionInventory/language/fi_FI/)\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/ddurieux/FusionInventory/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -699,7 +699,7 @@ msgid "Inventory frequency (in hours)"
 msgstr "Kartoitustiheys (tunteina)"
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr "Poista päättyneet tehtävät, kun on kulunut "
 
 #: inc/config.class.php:327
@@ -1182,7 +1182,7 @@ msgstr "Akku"
 #: inc/inventorycomputerblacklist.class.php:68
 #: inc/inventorycomputerblacklist.class.php:118
 msgid "blacklisted value"
-msgstr "Kielletty arvo"
+msgstr "Kielletyt arvot"
 
 #: inc/inventorycomputerchemistry.class.php:55
 msgid "Chemistry"
@@ -2388,7 +2388,7 @@ msgstr "Edellisten tuntien tietokonekartoitusten lukumäärä"
 #: inc/menu.class.php:496
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
-msgstr "FusionInventory-liitännäinen konfiguroidaan tekemään tietokonekartoitus seuraavilla vaiheilla"
+msgstr "FusionInventory-liitännäinen konfiguroidaan tekemään tietokonekartoitus seuraavien vaiheiden avulla."
 
 #: inc/menu.class.php:502
 msgid "Configure frequency of agent contact (and so each inventory)"
@@ -2416,7 +2416,7 @@ msgstr "Määritä säännöt tuonnille: yhdistä ja luo uusi tietokone. (Huomaa
 msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
-msgstr "FusionInventory-liitännäinen konfiguroidaan tekemään SNMP-kartoitus (kytkimet, reittimet, verkkotulostimet)  seuraavilla vaiheilla"
+msgstr "FusionInventory-liitännäinen konfiguroidaan tekemään SNMP-kartoitus (kytkimet, reittimet, verkkotulostimet)  seuraavien vaiheiden avulla."
 
 #: inc/menu.class.php:589
 msgid "Configure SNMP credentials"
@@ -2447,7 +2447,7 @@ msgstr "Luo uusi tehtävä käyttäen aikaisemmin määriteltyä löytämismoduu
 
 #: inc/menu.class.php:619
 msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr "Jos sinulla on laitteita, joita ei ole määritetty. Tuo ne ei-hallituista laitteista"
+msgstr "Jos sinulla on laitteita, joita ei ole määritetty, tuo ne ei-hallituista laitteista"
 
 #: inc/menu.class.php:624
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
@@ -2973,7 +2973,7 @@ msgstr "Aja uudestaan tämä tehtävä"
 
 #: inc/taskjob.view.class.php:60
 msgid "Jobs configuration"
-msgstr "Töiden konfiguraatio"
+msgstr "Töiden hallinta"
 
 #: inc/taskjob.view.class.php:183
 msgid "Add a job"

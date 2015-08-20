@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Sebastien <sebastien.janez@free.fr>, 2014
+# Sebastien <sebastien.janez@free.fr>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 00:25+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: Slovenian (Slovenia) (http://www.transifex.com/projects/p/FusionInventory/language/sl_SI/)\n"
+"PO-Revision-Date: 2015-03-29 15:11+0000\n"
+"Last-Translator: Sebastien <sebastien.janez@free.fr>\n"
+"Language-Team: Slovenian (Slovenia) (http://www.transifex.com/ddurieux/FusionInventory/language/sl_SI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +34,7 @@ msgstr "Zadnja inventura"
 
 #: hook.php:59
 msgid "Antivirus name"
-msgstr ""
+msgstr "Ime antivirusa"
 
 #: hook.php:68
 msgid "Antivirus version"
@@ -94,7 +94,7 @@ msgstr "Postavitev"
 
 #: hook.php:172
 msgid "WakeOnLan"
-msgstr ""
+msgstr "WakeOnLan"
 
 #: hook.php:179
 msgid "Local inventory"
@@ -102,7 +102,7 @@ msgstr ""
 
 #: hook.php:186
 msgid "ESX/VMWare"
-msgstr ""
+msgstr "ESX/VMWare"
 
 #: hook.php:193
 msgid "Network inventory"
@@ -705,7 +705,7 @@ msgid "Inventory frequency (in hours)"
 msgstr ""
 
 #: inc/config.class.php:310
-msgid "Delete tasks logs after"
+msgid "Delete tasks after"
 msgstr ""
 
 #: inc/config.class.php:327

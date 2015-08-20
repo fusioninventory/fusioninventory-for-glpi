@@ -1006,11 +1006,11 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Computer":
          if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
-            $ma["PluginFusioninventoryLock".$sep."manage_locks"] 
+            $ma["PluginFusioninventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
          if(Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
-            $ma["PluginFusioninventoryTask".$sep."target_task"] 
+            $ma["PluginFusioninventoryTask".$sep."target_task"]
                = __('Target a task', 'fusioninventory');
          }
          if(Session::haveRight('plugin_fusioninventory_group', UPDATE)) {
@@ -1022,11 +1022,11 @@ function plugin_fusioninventory_MassiveActions($type) {
       case "NetworkEquipment":
       case "Printer":
          if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
-            $ma["PluginFusioninventoryLock".$sep."manage_locks"] 
+            $ma["PluginFusioninventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
          if(Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
-            $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"] 
+            $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"]
                = __('Assign SNMP authentication', 'fusioninventory');
          }
 
@@ -1224,7 +1224,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
             }
          }
          break;
-
 
       case 'PluginFusioninventoryPrinterLogReport':
 //echo $new_table.".".$linkfield."<br/>";

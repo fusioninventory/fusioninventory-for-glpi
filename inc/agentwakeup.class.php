@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    David Durieux
+   @author    Walid Nouh
    @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -93,15 +93,13 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       }
       //Get all active task requiring an agent wakeup
       //Check all tasks without timeslot or task with a current active timeslot 
-      //We get the results in a randomized way, in order not to always launched the same tasks
       $query  = "SELECT `id`, `wakeup_agent_counter`, `wakeup_agent_time`, `last_agent_wakeup` 
                  FROM `glpi_plugin_fusioninventory_tasks` 
                  WHERE `wakeup_agent_time` > 0 
                     AND `wakeup_agent_counter` > 0
                     AND `is_active`='1' 
                     AND ((`plugin_fusioninventory_timeslots_id`='0') 
-                    $query_timeslot)
-                 ORDER BY RAND()";
+                    $query_timeslot)";
 
       foreach ($DB->request($query) as $task) {
          if (!is_null($task['wakeup_agent_time'])) {
