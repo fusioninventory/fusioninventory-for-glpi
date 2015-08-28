@@ -206,7 +206,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $width_status = 0;
 
-      echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
+      echo "<div align='center' style='z-index: 1;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
 
       echo "<tr>";
