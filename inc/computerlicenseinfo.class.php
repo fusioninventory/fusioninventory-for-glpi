@@ -97,7 +97,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          foreach ($a_licenseInfo as $licenseInfo) {
             $licence_link = $licence_endlink = "";
             if (!empty($licenseInfo['softwarelicenses_id'])) {
-               $licence_link = "<a href='".GLPI_ROOT."/front/softwarelicense.form.php?id=".
+               $licence_link = "<a href='".$CFG_GLPI['root_doc']."/front/softwarelicense.form.php?id=".
                   $licenseInfo['softwarelicenses_id']."'>";
                $licence_endlink = "</a>";
                $licence_endlink .= "<form method='post' action='".$CFG_GLPI['root_doc'].
