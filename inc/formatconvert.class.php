@@ -274,7 +274,21 @@ class PluginFusioninventoryFormatconvert {
                                         'WINOWNER'       => 'winowner',
                                         'WINCOMPANY'     => 'wincompany'));
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
-      if (isset($_SERVER['REMOTE_ADDR'])) {
+
+      // * Determine "Public contact address"
+      if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) { // Try "X-Forwarded-For" HTTP header
+         // Parse "X-Forwarded-For" header (can contain multiple IP addresses, client should be first)
+         $forwarded_for_ip_tmp = explode(', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+         $forwarded_for_ip_tmp = new IPAddress($forwarded_for_ip_tmp[0]);
+         if ($forwarded_for_ip_tmp->is_valid()) {
+            $array_tmp['remote_addr'] = $forwarded_for_ip_tmp->getTextual();
+         }
+      } elseif (isset($_SERVER['HTTP_X_REAL_IP'])) { // Then try "X-Real-IP" HTTP header
+         $real_ip_tmp = new IPAddress($_SERVER['HTTP_X_REAL_IP']);
+         if ($real_ip_tmp->is_valid()) {
+            $array_tmp['remote_addr'] = $real_ip_tmp->getTextual();
+         }
+      } elseif (isset($_SERVER['REMOTE_ADDR'])) { // Fall back on the currently connected IP
          $array_tmp['remote_addr'] = $_SERVER['REMOTE_ADDR'];
       }
 
