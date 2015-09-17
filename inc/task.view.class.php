@@ -72,7 +72,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $ong = array();
 
       $this->addDefaultFormTab($ong);
-
+      
       return $ong;
    }
 
