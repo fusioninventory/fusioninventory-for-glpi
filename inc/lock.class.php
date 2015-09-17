@@ -180,7 +180,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 
-      $checked = '';
+      $checked = false;
       $a_exclude = $this->excludeFields();
       $serialized = $this->getSerialized_InventoryArray($p_itemtype, $p_items_id);
       $options = Search::getOptions($p_itemtype);
@@ -189,9 +189,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $key_source = $key;
          if (!in_array($key, $a_exclude)) {
             if (in_array($key, $locked)) {
-               $checked = 'checked';
+               $checked = true;
             } else {
-               $checked = '';
+               $checked = false;
             }
 
             // Get name of field
@@ -204,8 +204,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
                      $name = $opt['name'];
                      break;
-                  } 
+                  }
                }
+               echo "</td>";
+               echo "<td align='center'>";
+               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+                                        'checked' => $checked));
+               echo "</td>";
+               echo "</tr>";
             }
             $css_glpi_value = '';
             if (isset($serialized[$key]) && $val != $serialized[$key]) {
@@ -252,7 +258,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                      if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
                         $name = $opt['name'];
                         break;
-                     } 
+                     }
                   }
                }
                $css_glpi_value = '';
@@ -341,7 +347,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 
-      $checked = '';
+      $checked = false;
       $a_exclude = $this->excludeFields();
       $serialized = $this->getSerialized_InventoryArray($p_itemtype, 0);
       $options = search::getOptions($p_itemtype);
@@ -350,9 +356,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $key_source = $key;
          if (!in_array($key, $a_exclude)) {
             if (in_array($key, $locked)) {
-               $checked = 'checked';
+               $checked = true;
             } else {
-               $checked = '';
+               $checked = false;
             }
             // Get name of field
             $num = Search::getOptionNumber($p_itemtype, $key);
@@ -364,7 +370,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
                      $name = $opt['name'];
                      break;
-                  } 
+                  }
                }
             }
             $css_glpi_value = '';
@@ -378,8 +384,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
                $name = $class->getTypeName();
             }
             echo "<td>".$name."</td>";
-            echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
-                    $key_source."]' ".$checked."></td>";
+            echo "<td align='center'>";
+            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+                                     'checked' => $checked));
+            echo "</td>";
             echo "</tr>";
          }
       }
@@ -814,7 +822,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
-         case "manage_locks": 
+         case "manage_locks":
             //detect itemtype
             $itemtype = str_replace("massform", "", $_POST['container']);
 
@@ -837,8 +845,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       switch ($ma->getAction()) {
          case "manage_locks":
-            if ($itemtype == "NetworkEquipment" 
-                || $itemtype == "Printer" 
+            if ($itemtype == "NetworkEquipment"
+                || $itemtype == "Printer"
                 || $itemtype == "Computer") {
 
                foreach($ids as $key) {
@@ -858,12 +866,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
                         // KO
                         $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                      }
-               
+
                   }
                }
             }
             break;
-      } 
+      }
    }
 }
 
