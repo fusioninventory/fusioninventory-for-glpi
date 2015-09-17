@@ -137,6 +137,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5161]['table']         = 'glpi_plugin_fusioninventory_agents';
          $sopt[5161]['field']         = 'tag';
          $sopt[5161]['linkfield']     = '';
+         $sopt[5161]['joinparams']    = array('jointype' => 'child');
          $sopt[5161]['name']          = __('FusionInventory tag', 'fusioninventory');
 
          $sopt[5162]['table']         = 'glpi_plugin_fusioninventory_computerarchs';
