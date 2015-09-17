@@ -206,7 +206,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $width_status = 0;
 
-      echo "<div align='center' style='z-index: 1;width: 100%; margin: 0 auto;'>";
+      echo "<div align='center' style='height: 35px; display: inline-block; width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
 
       echo "<tr>";
@@ -731,7 +731,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
       $width_status = ($width + $width_status);
 
-      echo "<table class='tab_cadre'
+      echo "<table class='tab_cadre' style='position: relative; z-index: 30;'
          onMouseOver='document.getElementById(\"menu".$menu_name."\").style.display=\"block\"'
          onMouseOut='document.getElementById(\"menu".$menu_name."\").style.display=\"none\"'>";
 
@@ -743,9 +743,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       </th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none'>";
+      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none; position: relative; z-index: 30;'>";
       echo "<td>";
-
       echo "<table>";
       foreach ($a_menu as $menu_id) {
          echo "<tr>";

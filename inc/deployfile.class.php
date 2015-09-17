@@ -193,7 +193,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
-            echo "<input type='checkbox' name='file_entries[]' value='$i' />";
+            Html::showCheckbox(array('name' => 'file_entries[]', 'value' => $i));
             echo "</td>";
          }
          echo "<td class='filename'>";
@@ -423,15 +423,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<tr>";
       echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
          "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory//pics/uncompress.png' /></th>";
-      $uncompress_check = $uncompress==1?"checked=checked":"";
-      echo "<td><input type='checkbox' name='uncompress' {$uncompress_check} /></td>";
+      Html::showCheckbox(array('name' => 'uncompress', 'checked' => $uncompress));
       echo "</tr><tr>";
       echo "<th>".__("P2P", 'fusioninventory').
               "<img style='float:right' src='".$CFG_GLPI["root_doc"].
               "/plugins/fusioninventory//pics/p2p.png' /></th>";
 
-      $p2p_check = $p2p==1?"checked=checked":"";
-      echo "<td><input type='checkbox' name='p2p' $p2p_check /></td>";
+      Html::showCheckbox(array('name' => 'action_entries[]', 'checked' => $p2p));
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
       echo "<td>";

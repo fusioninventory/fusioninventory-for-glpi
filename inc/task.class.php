@@ -1641,7 +1641,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             echo "<tr>";
             echo "<td colspan='2'>";
-            echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
+            Html::showCheckbox(array('name' => 'separate_jobs', 'value' => 1));
             echo __('Create a job for each group', 'fusioninventory');
             echo "</td>";
             echo "</tr>";

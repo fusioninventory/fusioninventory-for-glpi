@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.2+TECLIB_1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.90+1.0+TECLIB_1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -49,9 +49,9 @@ $PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
-define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.2 SNAPSHOT");
 
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.90+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
@@ -495,7 +495,7 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.91', 'ge')) {
+   if (version_compare(GLPI_VERSION, '0.85', 'lt')) {
       echo __('Your GLPI version not compatible, require 0.85 or higher', 'fusioninventory');
       return FALSE;
    }
