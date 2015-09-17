@@ -213,7 +213,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       return implode("\n", array(
          "<div class='taskjob_item' id='" . $item_fullid . "'",
          "  >" ,
-         "  <input type='checkbox'>" ,
+         Html::getCheckbox(), 
          "  </input>" ,
          "  <span class='" . $itemtype ."'></span>",
          "  <label>",
@@ -287,7 +287,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       echo implode( "\n",
          array(
             "<td class='control'>",
-            "<input type='checkbox' name='taskjobs[]' value='$id' />",
+            Html::getCheckbox(array('name' => 'taskjobs[]', 'value' => $id)),
             "</td>"
          )
       );
@@ -429,7 +429,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                }
                echo "<tr>";
                echo "<td style='padding: 1px 2px;'>";
-               echo "<input type='checkbox' name='".$name."item' value='".$key."'>";
+               Html::showCheckbox(array('name' => $name."item", 'value' => $key));
                echo "</td>";
                echo "<td style='padding: 1px 2px;'>";
                echo $display;

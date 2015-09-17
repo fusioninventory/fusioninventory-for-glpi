@@ -180,7 +180,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 
-      $checked = '';
+      $checked = false;
       $a_exclude = $this->excludeFields();
       $serialized = $this->getSerialized_InventoryArray($p_itemtype, $p_items_id);
       $array = search::getOptions($p_itemtype);
@@ -189,9 +189,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $key_source = $key;
             if (!in_array($key, $a_exclude)) {
                if (in_array($key, $locked)) {
-                  $checked = 'checked';
+                  $checked = true;
                } else {
-                  $checked = '';
+                  $checked = false;
                }
 
                // Get name of field
@@ -223,8 +223,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   echo  $this->getValueForKey($serialized[$key_source], $key);
                }
                echo "</td>";
-               echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
-                       $key_source."]' $checked></td>";
+               echo "<td align='center'>";
+               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]", 
+                                        'checked' => $checked));
+               echo "</td>";
                echo "</tr>";
             }
          }
@@ -325,7 +327,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 
-      $checked = '';
+      $checked = false;
       $a_exclude = $this->excludeFields();
       $serialized = $this->getSerialized_InventoryArray($p_itemtype, 0);
       $array = search::getOptions($p_itemtype);
@@ -333,9 +335,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $key_source = $key;
          if (!in_array($key, $a_exclude)) {
             if (in_array($key, $locked)) {
-               $checked = 'checked';
+               $checked = true;
             } else {
-               $checked = '';
+               $checked = false;
             }
             // Get name of field
             $num = search::getOptionNumber($p_itemtype, $key);
@@ -353,8 +355,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
                $name = $class->getTypeName();
             }
             echo "<td>".$name."</td>";
-            echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
-                    $key_source."]' ".$checked."></td>";
+            echo "<td align='center'>";
+            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]", 
+                                     'checked' => $checked));
+            echo "</td>";
             echo "</tr>";
          }
       }
