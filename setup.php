@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.3");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.90+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -50,7 +50,7 @@ $PF_ESXINVENTORY = FALSE;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.2 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.90+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
@@ -256,14 +256,14 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnmanaged';
 
-      
+
       /**
        * Load the relevant javascript/css files only on pages that need them.
-       */ 
+       */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
-         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";      
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
@@ -413,7 +413,7 @@ function plugin_init_fusioninventory() {
          // Load nvd3 for printerpage counter graph
          if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
                  || strstr($_SERVER['PHP_SELF'], 'fusioninventory/front/menu.php')) {
-            
+
             // Add graph javascript
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
                   $PLUGIN_HOOKS['add_javascript']['fusioninventory'], array(
@@ -489,8 +489,8 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.86', 'ge')) {
-      echo __('Your GLPI version not compatible, require 0.85', 'fusioninventory');
+   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.91', 'ge')) {
+      echo __('Your GLPI version not compatible, require >= 0.85', 'fusioninventory');
       return FALSE;
    }
 
