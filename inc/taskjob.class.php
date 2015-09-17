@@ -1435,8 +1435,11 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $data = current($a_tasksjobs);
          $pfTaskjob->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
-         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' ".
-                 "checked /></td>";
+         echo "<td>";
+         Html::showCheckbox(array('name'    => 'taskjobstoforcerun[]', 
+                                  'value'   => $data['id'], 
+                                  'checked' => true));
+         echo "</td>";
          $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
          $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
@@ -1446,8 +1449,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          foreach ($a_list as $data) {
             $pfTaskjob->getFromDB($data['id']);
             echo "<tr class='tab_bg_1'>";
-            echo "<td><input type='checkbox' name='taskjobstoforcerun[]' ".
-                    "value='".$data['id']."' /></td>";
+            echo "<td>";
+            Html::showCheckbox(array('name'    => 'taskjobstoforcerun[]', 
+                                     'value'   => $data['id']));
+            echo "</td>";
             $link_item = $pfTaskjob->getFormURL();
             $link  = $link_item;
             $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
@@ -1759,7 +1764,8 @@ function new_subtype(id) {
       foreach ($a_taskjobs as $data) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'>";
-         echo "<input type='checkbox' name='taskjob_entries[]' value='$i' />";
+         Html::showCheckbox(array('name'    => 'taskjob_entries[]', 
+                                  'value'   => $i));
          echo "</td>";
          echo "<td>";
          echo "<a class='edit' ".
