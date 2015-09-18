@@ -277,7 +277,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
       $data = $DB->fetch_assoc($result);
-      $this->assertEquals($data['value'], '0.85+1.2', "Field 'version' not with right version");
+      $this->assertEquals($data['value'], '0.90+1.0', "Field 'version' not with right version");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='otherserial'";
