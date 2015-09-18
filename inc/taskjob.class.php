@@ -1323,6 +1323,9 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       unset($run['id']);
       $run['state']  = PluginFusioninventoryTaskjobstate::PREPARED;
       $run['uniqid'] = uniqid();
+      if ($run['specificity'] == "") {
+         $run['specificity'] = "NULL";
+      }
 
       // add this new state and first log 
       if($run_id = $jobstate->add($run)) {
