@@ -213,7 +213,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       return implode("\n", array(
          "<div class='taskjob_item' id='" . $item_fullid . "'",
          "  >" ,
-         Html::getCheckbox(), 
+         Html::getCheckbox(array()), 
          "  </input>" ,
          "  <span class='" . $itemtype ."'></span>",
          "  <label>",
