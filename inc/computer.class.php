@@ -150,10 +150,14 @@ class PluginFusioninventoryComputer extends Computer {
          case 'deleteitem':
 
             foreach ($ids as $key) {
-               $group_item->deleteByCriteria(array('items_id' => $key,
-                                                   'itemtype' => 'Computer',
-                                                   'plugin_fusioninventory_deploygroups_id'
-                                                      => $_POST['id']));
+               if ($group_item->deleteByCriteria(array('items_id' => $key,
+                                                       'itemtype' => 'Computer',
+                                                       'plugin_fusioninventory_deploygroups_id'
+                                                          => $_POST['id']))) {
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               } else {
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+               }
          }
       }
    }
