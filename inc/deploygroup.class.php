@@ -147,7 +147,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                }
             }
          }
-        parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+         parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
       }
    }
 
