@@ -1309,6 +1309,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
    static function restartJob($params) {
+      $task     = new PluginFusioninventoryTask();
+      $job      = new PluginFusioninventoryTaskjob();
       $jobstate = new PluginFusioninventoryTaskjobstate();
       $joblog   = new PluginFusioninventoryTaskjoblog();
       $agent    = new PluginFusioninventoryAgent();
@@ -1332,9 +1334,15 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          );
          if ($joblog->add($log)) {
 
-            //wake up agent
-            $agent->getFromDB($params['agent_id']);
-            $agent->wakeUp();
+            //wake up agent (only if task support wakeup)
+            $job->getFromDB($jobstate->fields['plugin_fusioninventory_taskjobs_id']);
+            $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+
+            if ($task->fields['wakeup_agent_counter'] > 0
+                && $task->fields['wakeup_agent_time'] > 0) {
+               $agent->getFromDB($params['agent_id']);
+               $agent->wakeUp();
+            }
          }
       }
    }
