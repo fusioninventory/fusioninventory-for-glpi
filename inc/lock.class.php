@@ -633,8 +633,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    static function exportChecksToArray($p_checksArray) {
       $array = array();
-      foreach (array_keys($p_checksArray) as $key) {
-         array_push($array, $key);
+      foreach ($p_checksArray as $key => $value) {
+         if ($value > 0 || $value == "on") {
+            array_push($array, $key);
+         }
       }
       return $array;
    }
