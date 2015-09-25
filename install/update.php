@@ -5643,7 +5643,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
    // remove old crontasks
-   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'updatedynamictasks')) {
+   if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'updatedynamictasks')) {
       $DB->query("DELETE FROM glpi_crontasks WHERE itemtype = 'glpi_crontasks' 
                                              AND name = 'updatedynamictasks'");
    }
