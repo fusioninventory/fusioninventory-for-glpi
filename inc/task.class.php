@@ -1538,21 +1538,29 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach ($data['tasks'] as $task_id => $task) {
          echo $task['task_name'].SEP;
 
-         foreach ($task['jobs'] as $job_id => $job) {
+         if (count($task['jobs']) == 0) {
+            echo NL;
+         } foreach ($task['jobs'] as $job_id => $job) {
             echo $job['name'].SEP;
             echo $job['method'].SEP;
 
-            foreach ($job['targets'] as $target_id => $target) {
+            if (count($job['targets']) == 0) {
+               echo NL;
+            } else foreach ($job['targets'] as $target_id => $target) {
                echo $target['name'].SEP;
 
-               foreach ($target['agents'] as $agent_id => $agent) {
+               if (count($target['agents']) == 0) {
+                  echo NL;
+               } else foreach ($target['agents'] as $agent_id => $agent) {
                   $agent_obj->getFromDB($agent_id);
                   echo $agent_obj->getName().SEP;
                   $computer->getFromDB($agent_obj->fields['computers_id']);
                   echo $computer->getname().SEP;
 
                   $log_cpt = 0;
-                  foreach ($agent as $exec_id => $exec) {
+                  if (count($agent) == 0) {
+                     echo NL;
+                  } else foreach ($agent as $exec_id => $exec) {
                      echo $exec['last_log_date'].SEP;
                      echo $exec['state'].NL;
                      $log_cpt++;
@@ -1575,12 +1583,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   echo SEP.SEP.SEP;
                }
             }
+
             if (!last($task['jobs'], $job_id)) {
-               echo SEP.SEP;
+               echo SEP;
             }
-         }
-         if (!last($data['tasks'], $task_id)) {
-            echo SEP;
          }
       }
 
