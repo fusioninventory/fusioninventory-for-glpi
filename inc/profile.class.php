@@ -85,7 +85,8 @@ class PluginFusioninventoryProfile extends Profile {
                       'credentialip'           => 'plugin_fusioninventory_credentialip',
                       'existantrule'           => array('plugin_fusioninventory_ruleimport',
                                                          'plugin_fusioninventory_ruleentity',
-                                                         'plugin_fusioninventory_rulelocation'),
+                                                         'plugin_fusioninventory_rulelocation',
+                                                         'plugin_fusioninventory_ruletaskpostaction'),
                       'importxml'              => 'plugin_fusioninventory_importxml',
                       'blacklist'              => 'plugin_fusioninventory_blacklist',
                       'ESX'                    => 'plugin_fusioninventory_esx',
@@ -212,7 +213,11 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryCollectRule',
                 'label'     => __('Additional computer information rules', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_rulecollect'
-          )
+          ),
+          array('itemtype'  => 'PluginFusioninventoryTaskpostactionRule',
+                'label'     => __('Tasks post actions', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_taskpostactionrule'
+          ),
       );
       return $rights;
    }

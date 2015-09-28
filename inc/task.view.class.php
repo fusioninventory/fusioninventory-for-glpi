@@ -84,6 +84,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
    function showJobLogs() {
+      global $CFG_GLPI;
 
       $refresh_intervals = array(
          "off" => __('Off', 'fusioninventory'),
@@ -111,6 +112,26 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "      <span></span></div>";
       echo "   </div>"; // end of fusinv_form
 
+      // add a list limit for include old jobs
+      echo __("Include old jobs",'fusioninventory')." : ";
+      $limit_options = array( 1  => __('Last'), 
+                              2  => 2,
+                              5  => 5,
+                              10 => 10,
+                              25 => 25,
+                              50 => 50,
+                              100 => 100,
+                              250 => 250,
+                              -1  => __('All'));
+      echo "<select class='include_old_jobs' id='include_old_jobs'>";
+      foreach ($limit_options as $value => $label) {
+         $selected = "";
+         if (isset($_SESSION['fi_include_old_jobs']) && $value == $_SESSION['fi_include_old_jobs']) {
+            $selected = "selected='selected'";
+         }
+         echo "<option value='$value' $selected>$label</option>";
+      }
+      echo "</select>";
       echo "</div>";
 
       //$pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -192,8 +213,16 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       /*
        * List of counter names
        */
+      
+      if (!isset($_SESSION['fi_include_old_jobs'])) {
+         $_SESSION['fi_include_old_jobs'] = 1;
+      }
+
+      $include_old_jobs = isset($_SESSION['fi_include_old_jobs'])?$_SESSION['fi_include_old_jobs']:1;
+      
       echo implode("\n", array(
          "<script type='text/javascript'>",
+         "  include_old_jobs = $include_old_jobs;",
          "  taskjobs.statuses_order = {",
          "     last_executions : [",
          "        'agents_prepared',",
@@ -246,6 +275,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $Computer = new Computer();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
+         "  taskjobs.task_id = '".$task_id."'",
+         "  taskjobs.ajax_url = '".$this->getBaseUrlFor('fi.job.logs')."'",
          "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
          "  taskjobs.computers_url = '". $Computer->getFormUrl()."'",
          "  taskjobs.init_templates();",
@@ -261,6 +292,81 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  );",
          "</script>"
       ));
+
+      echo "<a class='openExportDialog'>"._sx('button', 'Export')."</a><br /><br />";
+      
+      echo "<div id='fiTaskExport_modalWindow'>";
+      echo "<form method='GET' class='task_export_form' action='".$CFG_GLPI['root_doc'].
+           "/plugins/fusioninventory/front/export_task.php'>";
+
+      // INCLUDE OLD JOBS SELECT
+      echo "<div>";
+      echo "<label for='include_old_jobs'>".
+           __("Include old jobs",'fusioninventory')." : </label>"; 
+      echo "<select class='include_old_jobs'>";
+      foreach ($limit_options as $value => $label) {
+         $selected = "";
+         if (isset($_SESSION['fi_include_old_jobs']) && $value == $_SESSION['fi_include_old_jobs']) {
+            $selected = "selected='selected'";
+         }
+         echo "<option value='$value' $selected>$label</option>";
+      }
+      echo "</select>";
+      echo "</div>";
+
+      // STATES CHECKBOXES
+      echo "<hr />"; 
+      echo "<label for='include_old_jobs'>".__("Agent state",'fusioninventory')." : </label>"; 
+      echo "<div>";
+      $agent_state_types = array( // true : checked by default
+         'agents_prepared'  => false, 
+         'agents_cancelled' => false,
+         'agents_running'   => true,
+         'agents_success'   => true, 
+         'agents_error'     => true
+      );
+      foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+         $agent_state_type = str_replace("agents_", "", $agent_state_type);
+         $locale = __(ucfirst($agent_state_type), 'fusioninventory');
+         $checked = "";
+         if ($agent_state_checked) {
+            $checked = "checked='checked'";
+         }
+         echo "<div class='agent_state_type_checkbox'>";
+         echo "<input type='checkbox' $checked name='agent_state_types[]' ".
+              "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+         echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+         echo "</div>";
+      }
+
+      echo "<input type='hidden' name='task_id' value='$task_id' />";
+      echo "<input class='submit' type='submit' value='"._sx('button', 'Export')."'>";
+      Html::closeForm();
+      echo "</div>";
+      echo "</div>";
+
+      echo "<script type='text/javascript'>
+            $('#fiTaskExport_modalWindow').dialog({
+               modal: true,
+               autoOpen: false,
+               height: 200,
+               position: ['center', 20],
+               width: 480,
+               resizeable: true,
+               title: \""._sx('button', 'Export')."\"
+            });
+
+            $('.openExportDialog').click(function(e) {
+               var x = e.pageX - $(document).scrollLeft() - 250;
+               var y = e.pageY - $(document).scrollTop() - 75;
+               $('#fiTaskExport_modalWindow').dialog('option', 'position', [x,y]);
+               $('#fiTaskExport_modalWindow').dialog('open');
+            });
+
+            $('.task_export_form .submit').click(function(e) {
+               $('#fiTaskExport_modalWindow').dialog('close');
+            });
+            </script>";
    }
 
    // TODO: Move this method in task.class
@@ -275,10 +381,24 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $task_ids = array();
       }
-      $logs = $this->getJoblogs($task_ids);
-      echo json_encode($logs);
-      return;
 
+      if (!isset($options['display'])) {
+         $options['display'] = true;
+      }
+
+      if (isset($options['include_old_jobs'])) {
+         $_SESSION['fi_include_old_jobs'] = $options['include_old_jobs'];
+      } else if (!isset($_SESSION['fi_include_old_jobs'])) {
+         $_SESSION['fi_include_old_jobs'] = 1;
+      }
+
+      $logs = $this->getJoblogs($task_ids);
+      $out = json_encode($logs);
+      if ($options['display']) {
+         echo $out;
+      } else {
+         return $out;
+      }
    }
 
    function getCounterTypeName($type = "") {

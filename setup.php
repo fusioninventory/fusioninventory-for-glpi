@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.2");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.2+TECLIB_1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -49,8 +49,9 @@ $PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
-define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.2 SNAPSHOT");
+
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
@@ -153,6 +154,8 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerSolariszone',
+              array('addtabon' => array('ComputerVirtualMachine', 'Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
@@ -220,6 +223,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
       Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerOracledb',
+              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryDeployGroup');
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
@@ -260,6 +265,7 @@ function plugin_init_fusioninventory() {
       /**
        * Load the relevant javascript/css files only on pages that need them.
        */ 
+      $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
@@ -489,8 +495,8 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.86', 'ge')) {
-      echo __('Your GLPI version not compatible, require 0.85', 'fusioninventory');
+   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.91', 'ge')) {
+      echo __('Your GLPI version not compatible, require 0.85 or higher', 'fusioninventory');
       return FALSE;
    }
 

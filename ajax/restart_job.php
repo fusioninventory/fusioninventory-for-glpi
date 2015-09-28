@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -28,9 +28,9 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    David Durieux
+   @author    Kevin Roy
    @co-author
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2011 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -41,19 +41,15 @@
  */
 
 include ("../../../inc/includes.php");
+Session::checkCentralAccess();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
-        "plugins", "pluginfusioninventorymenu", "taskjoblog");
+header("Content-Type: text/json; charset=UTF-8");
+Html::header_nocache();
 
-Session::checkRight('plugin_fusioninventory_task', READ);
-
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$pfTask = new PluginFusioninventoryTask();
-$pfTask->menuTasksLogs();
-
-Search::show('PluginFusioninventoryTaskjoblog');
-
-Html::footer();
-
-?>
+if (isset($_REQUEST['params']) && is_array($_REQUEST['params'])) {
+   foreach ($_REQUEST['params'] as $params) {
+      PluginFusioninventoryTaskjob::restartJob($params);
+   }
+} else {
+   PluginFusioninventoryTaskjob::restartJob($_REQUEST);
+}

@@ -1,0 +1,19 @@
+New Features : 
+==============
+
+- Export joblist in tasks (filtered by status)
+- New dropdown to select number of displayed jobs in a task
+- New rules engine : post actions for tasks
+- Wake up agents by a glpi crontask (push mode in tasks)
+- More informations for Virtual machines (comment, CPU Core & Threads)
+- link on device_id
+
+
+TO complete : 
+recursivesoftawres ???
+orabledb ???
+solariszone ???
+newhostid ???
+fixlockmigration ???
+fixgroupmigration ???
+fixpager ???

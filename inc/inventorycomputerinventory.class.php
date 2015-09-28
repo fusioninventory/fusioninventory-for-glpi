@@ -213,6 +213,9 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['Computer']['uuid'];
          }
+         if (isset($this->device_id) && !empty($this->device_id)) {
+            $input['device_id'] = $this->device_id;
+         }
          foreach($a_computerinventory['networkport'] as $network) {
             if (((isset($network['virtualdev']))
                     && ($network['virtualdev'] != 1))

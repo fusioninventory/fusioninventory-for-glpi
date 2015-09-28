@@ -377,6 +377,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo "</td>";
+      echo "<td></td>";
       echo "</tr>";
 
       $options['candel'] = FALSE;

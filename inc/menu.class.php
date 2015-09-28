@@ -91,6 +91,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
           'collectrule'                => 'PluginFusioninventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
+          'ruletaskpostaction'         => 'PluginFusioninventoryTaskpostactionRule',
           'configsecurity'             => 'PluginFusioninventoryConfigSecurity',
           'credential'                 => 'PluginFusioninventoryCredential',
           'credentialip'               => 'PluginFusioninventoryCredentialIp',
@@ -205,7 +206,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $width_status = 0;
 
-      echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
+      echo "<div align='center' style='z-index: 1;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
 
       echo "<tr>";
@@ -349,6 +350,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
+      if (Session::haveRight("plugin_fusioninventory_taskpostactionrule", READ)) {
+         $a_menu[8]['name'] = __('Tasks post actions', 'fusioninventory');
+         $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[8]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/taskpostactionrule.php";
+      }
+
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Rules', 'fusioninventory'),
                                                              $a_menu,
@@ -482,7 +490,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                                              $type,
                                                              $width_status);
       }
-
 
       echo "</td>";
       echo "</tr>";
@@ -765,7 +772,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    static function board() {
       global $DB;
-
+      
       // Computers
       $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
       $allComputers    = countElementsInTable('glpi_computers',
@@ -919,7 +926,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-
+      
    }
 
 

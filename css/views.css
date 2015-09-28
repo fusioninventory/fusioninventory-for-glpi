@@ -232,6 +232,30 @@ td:not(#foo) > input[type=radio]:checked + label {
    margin: 0 auto;
 }
 
+.monitoring-logs .tasks_block {
+   width: 90%;
+   margin: 0 auto;
+}
+
+.monitoring-logs .task_block .jobs_block {
+   display: none;
+}
+
+.monitoring-logs .task_block.expand .jobs_block {
+   display: block;
+}
+
+.monitoring-logs .task_block > h3 {
+   color: #659900;
+   cursor: pointer; 
+   background: url(../../../pics/expand.gif) no-repeat left center;
+   padding-left: 20px;
+}
+
+.monitoring-logs .task_block.expand > h3 {
+   background: url(../../../pics/collapse.gif) no-repeat left center;
+}
+
 .jobs_block .job_block {
    border: #AAA solid 1px;
    border-radius: 5px;
@@ -530,20 +554,52 @@ a.expanded > div.fold {
     margin: 5px;
 }
 
-.agent_block.pinned > a{
+.agent_block.pinned > a.name{
+   margin-left: 42px;
    padding-left: 20px;
-   background: url('../../../pics/menu_show.png');
+   background: url('../pics/pinned.png');
    background-repeat: no-repeat;
 }
 
 .agent_block > span.comment {
    opacity: 0.8;
    font-weight: lighter;
+   min-height: 10px;
 }
 
 .agent_block:hover > * {
-   color: black;
    opacity: 1.0;
+}
+
+.agent_block a.name:hover {
+   color: black;
+}
+
+.agent_block > a.link {
+   background: url(../pics/link.png) no-repeat;
+   display: inline-block;
+   width: 14px;
+   height: 14px;
+   float: left;
+}
+
+.agent_block input[type=checkbox] { 
+   margin-top: 5px;
+   margin-right: 5px;
+   float: left;
+}
+
+
+.agent_block > a.restart {
+   background: url(../pics/red_bolt.png) no-repeat;
+   display: inline-block;
+   width: 14px;
+   height: 14px;
+   float: right;
+}
+
+.agent_block > a.btn:hover {
+   opacity: .7;
 }
 
 .agent_block > span.date {
@@ -670,20 +726,12 @@ table.runs td.comment {
    display: block;
 }
 
-.show_more > .more_button {
+.show_more > .submit {
    display: block;
    float: left;
    margin: 2px;
    padding: 5px;
 }
-
-.show_more > .reset_button {
-   display: block;
-   float: right;
-   margin: 2px;
-   padding: 5px;
-}
-
 .refresh_button {
    padding: 5px;
    display: block;
@@ -760,4 +808,21 @@ table.runs td.comment {
    background-image: url('../../../plugins/fusioninventory/pics/lock.png');
    background-repeat: no-repeat; 
    background-position: right;
+}
+
+
+.openExportDialog {
+   cursor: pointer;
+}
+.task_export_form .agent_state_type_checkbox {
+   width: 135px;
+   float: left;
+   margin-left: 15px;
+}
+
+.task_export_form .submit {
+   margin:15px 150px; 
+   clear:left;
+   width: 150px;
+   height: 25px;
 }

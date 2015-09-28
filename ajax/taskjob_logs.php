@@ -46,7 +46,7 @@ if (strpos($_SERVER['PHP_SELF'], "taskjob_logs.php")) {
 }
 
 //unlock session since access checks have been done
-session_write_close();
+//session_write_close();
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 

@@ -69,8 +69,8 @@ class PluginFusioninventoryFormatconvert {
                            'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS',
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS');
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'LICENSEINFOS', 'STORAGES', 'ORACLEDB');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -235,7 +235,7 @@ class PluginFusioninventoryFormatconvert {
                                         'UUID'           => 'uuid',
                                         'LASTLOGGEDUSER' => 'users_id',
                                         'operatingsystemservicepacks_id' =>
-                                                      'operatingsystemservicepacks_id',
+                                               'operatingsystemservicepacks_id',
                                         'manufacturers_id' => 'manufacturers_id',
                                         'computermodels_id' => 'computermodels_id',
                                         'serial' => 'serial',
@@ -422,6 +422,10 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['BIOS']['BMANUFACTURER'])) {
          $a_inventory['fusioninventorycomputer']['bios_manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
       }
+      if (isset($array['HARDWARE']['HOSTID'])) {
+         $a_inventory['fusioninventorycomputer']['hostid'] = $array['HARDWARE']['HOSTID'];
+      }
+
 
       $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
 
@@ -1115,6 +1119,35 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      // * SOLARISZONES
+      $a_inventory['solariszone'] = array();
+      if ($pfConfig->getValue('import_vm') == 1) {
+         if (isset($array['SOLARISZONES'])) {
+            foreach ($array['SOLARISZONES'] as $a_solariszones) {
+               //Temporary hack because ZONEDEDICATEDCPU has been renamed in ZONECPUCAP
+               if (isset($a_solariszones['ZONEDEDICATEDCPU'])) {
+                  $cpu_share_field = 'ZONEDEDICATEDCPU';
+               } else {
+                  $cpu_share_field = 'ZONECPUSHARE';                
+               }
+               $array_tmp = $thisc->addValues($a_solariszones,
+                                              array(
+                                                 'NAME'        => 'name',
+                                                 'VCPU'        => 'vcpu',
+                                                 'MEMORY'      => 'ram',
+                                                 'ZONENUMBER'  => 'zone_number',
+                                                 'ZONEMAXSWAP' => 'zone_max_swap',
+                                                 'ZONEMAXLOCKEDMEMORY' => 'zone_max_locked_memory',
+                                                 'ZONEMAXSHMMEMORY' => 'zone_max_shm_memory',
+                                                 'ZONECPUCAP'  => 'zone_cpu_cap',
+                                                 $cpu_share_field => 'zone_cpu_share',
+                                                 'UUID'        => 'uuid'));
+               $array_tmp['is_dynamic'] = 1;
+               $a_inventory['solariszone'][] = $array_tmp;
+            }
+         }
+      }
+
       // * VIRTUALMACHINES
       $a_inventory['virtualmachine'] = array();
       if ($pfConfig->getValue('import_vm') == 1) {
@@ -1220,8 +1253,60 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
+      
+      // * ORACLE DB
+      $a_inventory['oracledb'] = array();
+	if (isset($array['ORACLEDB'])) {
+	  foreach ($array['ORACLEDB'] as $a_oracledb) {
+	    $values = array('NAME' => 'name',
+			    'VERSION'      => 'version',
+			    'MEMORYTARGET' => 'memory_target',
+			    'SGATARGET'    => 'sga_target',
+			    'ADVANCEDCOMPRESSION' 
+			       => 'has_advanced_compression', 
+			    'ACTIVEDATAGUARD' 
+			       => 'has_active_data_guard',
+			    'CHANGEMANAGEMENTPACK' 
+			       => 'has_change_management_pack',
+			    'CONFIGURATIONMANAGEMENT' 
+			       => 'has_configuration_management',
+			    'DATAMASKINGPACK' 
+			       => 'has_data_masking_pack',
+			    'DATAMINING' 
+			       => 'has_data_mining',
+			    'DATAVAULT' 
+			       => 'has_data_vault',
+			    'DIAGNOSTICPACK' 
+			       => 'has_diagnostic_pack',
+			    'EXADATA' 
+			       => 'has_exadata',
+			    'LABELSECURITY' 
+			       => 'has_label_security',
+			    'OLAP' => 'has_olap',
+			    'PARTINIONNING' => 'has_paritionning',
+			    'PROVISIONNINGPAPACK' 
+			       => 'has_provisionning_patch_automation_pack',
+			    'PROVISIONNINGPAPFORDB' 
+			       => 
+'has_provisionning_patch_automation_pack_for_database',
+			    'REALAPPLICATIONCLUSTER' 
+			       => 'has_real_application_cluster',
+			    'REALAPPLICATIONTESTING' 
+			       => 'has_real_application_testing',
+			    'SPATIAL' => 'has_spatial',
+			    'TOTALRECALL' => 'has_total_recall',
+			    'TUNINGPACK' => 'has_tuning_pack',
+			    'WEBLOGICSERVERMANAGEMENTPACK' 
+			       => 'has_weblogic_server_management_pack'
+			    );
+			    
+	    $array_tmp = $thisc->addValues($a_oracledb, $values);
+	    $array_tmp['is_dynamic'] = 1;
+	    $a_inventory['oracledb'][] = $array_tmp;
+	}
+      }
 
-      // * STORAGE/VOLUMES
+// * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
 /* begin code, may works at 90%
       if (isset($array['PHYSICAL_VOLUMES'])) {
