@@ -782,7 +782,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $query_where[] = getEntitiesRestrictRequest("AND", 'task');
       }
 
-      if ( is_array($task_ids) and count($task_ids) > 0 ) {
+      if (is_array($task_ids) 
+          && count($task_ids) > 0 
+          && $task_ids[0] != "[]") {
          $query_where[] = "AND task.`id` IN (" . implode(",",$task_ids) . ")";
       }
 
