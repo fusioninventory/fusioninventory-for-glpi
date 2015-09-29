@@ -86,12 +86,41 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             
             $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true)."?id=".$item->getID();
             
-            Search::showList('PluginFusioninventoryComputer', $params, array('2'));
+            self::showList('PluginFusioninventoryComputer', $params, array('2'));
             break;
       }
 
       return true;
    }
+
+   // override Search method to gain performance and decrease memory usage
+   // we dont need to display search criteria result
+   static function showList($itemtype, $params) {
+      $data = Search::prepareDatasForSearch($itemtype, $params);
+      Search::constructSQL($data);
+      $data['search']['criteria'] = array();
+      $data['search']['metacriteria'] = array();
+      Search::constructDatas($data);
+      if (Session::isMultiEntitiesMode()) {
+         $data['data']['cols'] = array_slice($data['data']['cols'], 0, 2);
+      } else {
+         $data['data']['cols'] = array_slice($data['data']['cols'], 0, 1);
+      }
+      Search::displayDatas($data);
+   }
+
+   // override Search method to gain performance and decrease memory usage
+   // we dont need to display search criteria result
+   static function getDatas($itemtype, $params, array $forcedisplay=array()) {
+      $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
+      Search::constructSQL($data);
+      $data['search']['criteria'] = array();
+      $data['search']['metacriteria'] = array();
+      Search::constructDatas($data);
+
+      return $data;
+   }
+
 
    /**
    * Get computers belonging to a dynamic group
@@ -104,10 +133,12 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
          unset($search_params['metacriteria']);
       }
+
+      //force no sort (Search engine will sort by id) for better performance 
       $search_params['sort'] = '';
 
       //Only retrieve computers IDs
-      $results = Search::getDatas(
+      $results = self::getDatas(
          'PluginFusioninventoryComputer',
          $search_params,
          array('2')
