@@ -98,8 +98,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function showList($itemtype, $params) {
       $data = Search::prepareDatasForSearch($itemtype, $params);
       Search::constructSQL($data);
-      $data['search']['criteria'] = array();
-      $data['search']['metacriteria'] = array();
       Search::constructDatas($data);
       if (Session::isMultiEntitiesMode()) {
          $data['data']['cols'] = array_slice($data['data']['cols'], 0, 2);
@@ -114,8 +112,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function getDatas($itemtype, $params, array $forcedisplay=array()) {
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
-      $data['search']['criteria'] = array();
-      $data['search']['metacriteria'] = array();
       Search::constructDatas($data);
 
       return $data;
