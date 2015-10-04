@@ -165,7 +165,7 @@ class PluginFusioninventoryDeployCheck {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
-            echo "<input type='checkbox' name='check_entries[]' value='$i' />";
+            Html::showCheckbox(array('name' => 'check_entries[]', 'value' => $i));
             echo "</td>";
          }
          echo "<td>";

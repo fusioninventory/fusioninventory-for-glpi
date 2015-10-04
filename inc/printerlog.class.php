@@ -330,7 +330,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       for ($i=0 ; $i<$limit ; $i++) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         echo "<input type='checkbox' name='checked_$i' value='1'>";
+         Html::showCheckbox(array('name' => "checked_$i", 'value' => 1));
          echo "</td>";
          echo "<td align='center'>".$data["$i"]['date']."</td>";
          echo "<td align='center'>".$data["$i"]['pages']."</td>";
