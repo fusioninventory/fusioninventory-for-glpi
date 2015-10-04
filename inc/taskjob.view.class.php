@@ -1194,7 +1194,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          $input = array();
          $input['plugin_fusioninventory_tasks_id'] = $task_id;
          $input['name']                            = $method;
-         $input['date_scheduled']                  = $postvars['date_scheduled'];
+         $input['datetime_start']                  = $postvars['datetime_start'];
 
          $input['plugins_id']                      = PluginFusioninventoryModule::getModuleId($module);
          $input['method']                          = $method;
