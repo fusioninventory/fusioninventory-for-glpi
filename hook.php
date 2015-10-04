@@ -1220,6 +1220,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
          break;
 
       case 'Computer':
+      case 'PluginFusioninventoryComputer':
 
           switch ($new_table.".".$linkfield) {
 
