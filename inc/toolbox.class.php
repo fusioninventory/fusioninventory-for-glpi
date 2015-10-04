@@ -645,7 +645,7 @@ class PluginFusioninventoryToolbox {
       $values   = array();
 
       $p['step'] = $p['step'] * 60; // to have in seconds
-      for ($s=$p['begin'] ; $s<$p['end'] ; $s+=$p['step']) {
+      for ($s=$p['begin'] ; $s<=$p['end'] ; $s+=$p['step']) {
          $values[$s] = PluginFusioninventoryToolbox::getHourMinute($s);
       }
       return Dropdown::showFromArray($name, $values, $p);
