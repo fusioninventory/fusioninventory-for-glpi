@@ -436,7 +436,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $domain = new Domain();
                if (!in_array('domains_id', $a_lockable)) {
                   $input['domains_id'] = $domain->import(
-                            array('name'=>$arrayinventory['WORKGROUP'])
+                            array('name' => $arrayinventory['WORKGROUP'],
+                                  'entities_id' => $item->fields['entities_id'])
                           );
                }
             }
