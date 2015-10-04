@@ -117,41 +117,43 @@ function pluginFusioninventoryGetCurrentVersion() {
             return $data['value'];
          }
       }
-      $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
-         WHERE `modulename`='WAKEONLAN'
-         LIMIT 1";
-      if ($result=$DB->query($query)) {
-         if ($DB->numrows($result) == "1") {
-            $ex_pluginid = $DB->fetch_assoc($result);
+      if (FieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')){
+         $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
+            WHERE `modulename`='WAKEONLAN'
+            LIMIT 1";
+         if ($result=$DB->query($query)) {
+            if ($DB->numrows($result) == "1") {
+               $ex_pluginid = $DB->fetch_assoc($result);
 
-            $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
-                  WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
-            $DB->query($query);
-            $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
-               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
-                  WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
-            $DB->query($query);
-            $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
-               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
-                  WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
-            $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
+                  SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+                     WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
+                  SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+                     WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+                  SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+                     WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
+               $DB->query($query);
 
-            $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
-               WHERE `type`='version'
-               LIMIT 1";
+               $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
+                  WHERE `type`='version'
+                  LIMIT 1";
 
-            $data = array();
-            if ($result=$DB->query($query)) {
-               if ($DB->numrows($result) == "1") {
-                  $data = $DB->fetch_assoc($result);
-                  return $data['value'];
+               $data = array();
+               if ($result=$DB->query($query)) {
+                  if ($DB->numrows($result) == "1") {
+                     $data = $DB->fetch_assoc($result);
+                     return $data['value'];
+                  }
                }
             }
          }
       }
    }
-
+   return "1.1.0";
 }
 
 
