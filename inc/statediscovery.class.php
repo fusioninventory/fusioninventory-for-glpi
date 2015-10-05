@@ -162,7 +162,11 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
          $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
-         echo "<td>".$pfTaskjob->getLink()."</td>";
+         echo "<td>";
+         $link = $pfTaskjob->getLink();
+         $link = str_replace('.form', '', $link);
+         echo $link;
+         echo "</td>";
          $pfAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
          echo "<td>".$pfAgent->getLink(1)."</td>";
          $nb_found = 0;
