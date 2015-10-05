@@ -319,12 +319,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
          } else {
             // Delete the port
-            $a_ports_DB = current($networkPort->find(
+            $a_ports_DB = $networkPort->find(
                        "`itemtype`='NetworkEquipment'
                           AND `items_id`='".$items_id."'
-                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
+                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1);
             if (count($a_ports_DB) > 0) {
-               $networkPort->delete($a_ports_DB);
+               $networkPort->delete(current($a_ports_DB));
             }
          }
       }
