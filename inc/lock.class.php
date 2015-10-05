@@ -237,8 +237,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
                echo  $this->getValueForKey($serialized[$key_source], $key);
             }
             echo "</td>";
-            echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
-                    $key_source."]' $checked></td>";
+            echo "<td align='center'>";
+            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+                                     'checked' => $checked));
+            echo "</td>";
             echo "</tr>";
          }
       }
@@ -272,6 +274,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   $name = $class->getTypeName();
                }
                echo "<td>".$name."</td>";
+               echo "<td align='center'>";
+               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+                                        'checked' => $checked));
+               echo "</td>";
                echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
                        $key_source."]' ></td>";
                echo "</tr>";
