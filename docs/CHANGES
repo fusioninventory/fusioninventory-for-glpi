@@ -6,6 +6,9 @@ Here you can see the full list of changes between each release.
 In Development
 --------------
 
+Version 0.85+1.3
+~~~~~~~~~~~~~~~~
+
 - Fix: SQL error when display printer list when use some fields of plugin FusionInventory
 - Fix: graph javascript and Css load
 - Fix: software license link in licenses tab of computer
