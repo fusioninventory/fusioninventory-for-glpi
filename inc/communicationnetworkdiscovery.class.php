@@ -592,11 +592,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
          $port_id = $port['id'];
       } else {
+         $item = new $item_type;
+         $item->getFromDB($id);
          $input = array();
          $input['itemtype']           = $item_type;
          $input['items_id']           = $id;
          $input['instantiation_type'] = $instanciation_type;
          $input['name']               = "management";
+         $input['entities_id']        = $item->fields['entities_id'];
          if (isset($arrayinventory['MAC'])
                  && !empty($arrayinventory['MAC'])) {
             $input['mac'] = $arrayinventory['MAC'];
