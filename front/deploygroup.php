@@ -43,7 +43,7 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('Groups of computers'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('Groups of computers', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
              "pluginfusioninventorymenu", "deploygroup");
 
 
