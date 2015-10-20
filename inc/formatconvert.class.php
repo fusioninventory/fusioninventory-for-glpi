@@ -727,6 +727,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'IPGATEWAY'   => 'gateway',
                                                     'IPMASK'      => 'netmask',
                                                     'IPDHCP'      => 'dhcpserver',
+                                                    'WWN'         => 'wwn',
                                                     'SPEED'       => 'speed'));
 
                   if ((isset($array_tmp['name'])
@@ -779,6 +780,11 @@ class PluginFusioninventoryFormatconvert {
                                 AND ($array_tmp["instantiation_type"] == 'wifi'
                                      OR $array_tmp["instantiation_type"] == 'IEEE')) {
                            $array_tmp["instantiation_type"] = 'NetworkPortWifi';
+                        } else if (isset($array_tmp["instantiation_type"])
+                                AND ($array_tmp["instantiation_type"] == 'fibrechannel'
+                                    OR $array_tmp["instantiation_type"] == 'fiberchannel')
+                                OR !empty($array_tmp['wwn']) ) {
+                           $array_tmp["instantiation_type"] = 'NetworkPortFiberchannel';
                         } else if ($array_tmp['mac'] != '') {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
                         } else {
