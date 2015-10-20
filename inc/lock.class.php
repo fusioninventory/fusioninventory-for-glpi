@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author David Durieux
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -204,8 +204,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
                      $name = $opt['name'];
                      break;
-                  } 
+                  }
                }
+               echo "</td>";
+               echo "<td align='center'>";
+               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+                                        'checked' => $checked));
+               echo "</td>";
+               echo "</tr>";
             }
             $css_glpi_value = '';
             if (isset($serialized[$key]) && $val != $serialized[$key]) {
@@ -232,7 +238,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
             echo "</td>";
             echo "<td align='center'>";
-            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]", 
+            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
                                      'checked' => $checked));
             echo "</td>";
             echo "</tr>";
@@ -254,7 +260,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                      if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
                         $name = $opt['name'];
                         break;
-                     } 
+                     }
                   }
                }
                $css_glpi_value = '';
@@ -268,6 +274,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   $name = $class->getTypeName();
                }
                echo "<td>".$name."</td>";
+               echo "<td align='center'>";
+               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+                                        'checked' => $checked));
+               echo "</td>";
                echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
                        $key_source."]' ></td>";
                echo "</tr>";
@@ -366,7 +376,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
                      $name = $opt['name'];
                      break;
-                  } 
+                  }
                }
             }
             $css_glpi_value = '';
@@ -820,7 +830,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
-         case "manage_locks": 
+         case "manage_locks":
             //detect itemtype
             $itemtype = str_replace("massform", "", $_POST['container']);
 
@@ -843,8 +853,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       switch ($ma->getAction()) {
          case "manage_locks":
-            if ($itemtype == "NetworkEquipment" 
-                || $itemtype == "Printer" 
+            if ($itemtype == "NetworkEquipment"
+                || $itemtype == "Printer"
                 || $itemtype == "Computer") {
 
                foreach($ids as $key) {
@@ -864,12 +874,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
                         // KO
                         $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                      }
-               
+
                   }
                }
             }
             break;
-      } 
+      }
    }
 }
 

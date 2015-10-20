@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -117,41 +117,43 @@ function pluginFusioninventoryGetCurrentVersion() {
             return $data['value'];
          }
       }
-      $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
-         WHERE `modulename`='WAKEONLAN'
-         LIMIT 1";
-      if ($result=$DB->query($query)) {
-         if ($DB->numrows($result) == "1") {
-            $ex_pluginid = $DB->fetch_assoc($result);
+      if (FieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')){
+         $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
+            WHERE `modulename`='WAKEONLAN'
+            LIMIT 1";
+         if ($result=$DB->query($query)) {
+            if ($DB->numrows($result) == "1") {
+               $ex_pluginid = $DB->fetch_assoc($result);
 
-            $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
-                  WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
-            $DB->query($query);
-            $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
-               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
-                  WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
-            $DB->query($query);
-            $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
-               SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
-                  WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
-            $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
+                  SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+                     WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
+                  SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+                     WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
+               $DB->query($query);
+               $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+                  SET `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusioninventory')."'
+                     WHERE `plugins_id`='".$ex_pluginid['plugins_id']."'";
+               $DB->query($query);
 
-            $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
-               WHERE `type`='version'
-               LIMIT 1";
+               $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
+                  WHERE `type`='version'
+                  LIMIT 1";
 
-            $data = array();
-            if ($result=$DB->query($query)) {
-               if ($DB->numrows($result) == "1") {
-                  $data = $DB->fetch_assoc($result);
-                  return $data['value'];
+               $data = array();
+               if ($result=$DB->query($query)) {
+                  if ($DB->numrows($result) == "1") {
+                     $data = $DB->fetch_assoc($result);
+                     return $data['value'];
+                  }
                }
             }
          }
       }
    }
-
+   return "1.1.0";
 }
 
 

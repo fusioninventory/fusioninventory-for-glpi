@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -48,7 +48,6 @@ $PF_CONFIG = array();
 $PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
-
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.90+1.0 SNAPSHOT");
@@ -261,15 +260,16 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnmanaged';
 
-      
+
       /**
        * Load the relevant javascript/css files only on pages that need them.
        */ 
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
+      $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
-         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";      
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
@@ -279,19 +279,19 @@ function plugin_init_fusioninventory() {
          );
       }
       if (script_endswith("timeslot.form.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/timeslot.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/timeslot".($debug_mode?"":".min").".js";
       }
       if (script_endswith("deploypackage.form.php")) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="lib/extjs/resources/css/ext-all.css";
 
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            "lib/extjs/adapter/ext/ext-base.js",
-            "lib/extjs/ext-all-debug.js",
-            "lib/REDIPS_drag/redips-drag-source.js",
+            "lib/extjs/adapter/ext/ext-base".($debug_mode?"-debug":"").".js",
+            "lib/extjs/ext-all".($debug_mode?"-debug":"").".js",
+            "lib/REDIPS_drag/redips-drag".($debug_mode?"-source":"-min").".js",
             "lib/REDIPS_drag/drag_table_rows.js",
-            "lib/plusbutton.js",
-            "lib/deploy_editsubtype.js"
+            "lib/plusbutton".($debug_mode?"":".min").".js",
+            "lib/deploy_editsubtype".($debug_mode?"":".min").".js"
          );
       }
       if (script_endswith("task.form.php")
@@ -301,11 +301,11 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
             "lib/lazy.js-0.4.0/lazy".($debug_mode?"":".min").".js",
             "lib/mustache.js-2.0.0/mustache".($debug_mode?"":".min").".js",
-            "js/taskjobs.js"
+            "js/taskjobs".($debug_mode?"":".min").".js"
          );
       }
       if (script_endswith("menu.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats".($debug_mode?"":".min").".js";
       }
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
@@ -419,7 +419,7 @@ function plugin_init_fusioninventory() {
          // Load nvd3 for printerpage counter graph
          if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
                  || strstr($_SERVER['PHP_SELF'], 'fusioninventory/front/menu.php')) {
-            
+
             // Add graph javascript
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
                   $PLUGIN_HOOKS['add_javascript']['fusioninventory'], array(

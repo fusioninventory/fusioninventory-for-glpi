@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -319,10 +319,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
          } else {
             // Delete the port
-            $a_ports_DB = current($networkPort->find(
+            $a_ports_DB = $networkPort->find(
                        "`itemtype`='NetworkEquipment'
                           AND `items_id`='".$items_id."'
-                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
+                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1);
             if ($a_ports_DB !== false && count($a_ports_DB) > 0) {
                $networkPort->delete($a_ports_DB);
             }

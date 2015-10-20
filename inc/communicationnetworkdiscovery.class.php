@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author David Durieux
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -436,7 +436,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $domain = new Domain();
                if (!in_array('domains_id', $a_lockable)) {
                   $input['domains_id'] = $domain->import(
-                            array('name'=>$arrayinventory['WORKGROUP'])
+                            array('name' => $arrayinventory['WORKGROUP'],
+                                  'entities_id' => $item->fields['entities_id'])
                           );
                }
             }
@@ -591,11 +592,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
          $port_id = $port['id'];
       } else {
+         $item = new $item_type;
+         $item->getFromDB($id);
          $input = array();
          $input['itemtype']           = $item_type;
          $input['items_id']           = $id;
          $input['instantiation_type'] = $instanciation_type;
          $input['name']               = "management";
+         $input['entities_id']        = $item->fields['entities_id'];
          if (isset($arrayinventory['MAC'])
                  && !empty($arrayinventory['MAC'])) {
             $input['mac'] = $arrayinventory['MAC'];

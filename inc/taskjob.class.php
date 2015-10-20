@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2014 by the FusionInventory Development Team.
+   Copyright (C) 2010-2015 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2014 FusionInventory team
+   @copyright Copyright (c) 2010-2015 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -494,7 +494,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjob      = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
-      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+      $query = "SELECT *, UNIX_TIMESTAMP(datetime_start) as date_scheduled_timestamp
             FROM `".$pfTask->getTable()."`
          WHERE `id`='".$tasks_id."'
          LIMIT 1";
@@ -584,13 +584,13 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
                   $periodtotal = $period * $i;
                }
-               $data['date_scheduled'] = date("Y-m-d H:i:s",
+               $data['datetime_start'] = date("Y-m-d H:i:s",
                                               $data['date_scheduled_timestamp'] + $periodtotal);
             } else if ($data['date_scheduled_timestamp'] > date('U')) {
                // Don't update date next execution
 
             } else {
-               $data['date_scheduled'] = date("Y-m-d H:i:s",
+               $data['datetime_start'] = date("Y-m-d H:i:s",
                                               $data['date_scheduled_timestamp'] + $period);
             }
          }
@@ -625,7 +625,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
          $query = "SELECT `".$pfTaskjob->getTable()."`.*,
                `glpi_plugin_fusioninventory_tasks`.`communication`,
-               UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+               UNIX_TIMESTAMP(datetime_start) as date_scheduled_timestamp
             FROM ".$pfTaskjob->getTable()."
             LEFT JOIN `glpi_plugin_fusioninventory_tasks`
                ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
@@ -751,7 +751,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo __('Scheduled date', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
-      Html::showDateTimeFormItem("date_scheduled", date("Y-m-d H:i:s"), 1);
+      Html::showDateTimeFormItem("datetime_start", date("Y-m-d H:i:s"), 1);
       echo "</td>";
       echo "</tr>";
 
@@ -1116,7 +1116,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
          echo "<td>".Dropdown::getYesNo($pfTask->fields['is_active'])."</td>";
-         echo "<td>".$pfTask->fields['date_scheduled']."</td>";
+         echo "<td>".$pfTask->fields['datetime_start']."</td>";
          $a_time = '';
          switch ($pfTask->fields['periodicity_type']) {
 
@@ -1804,7 +1804,7 @@ function new_subtype(id) {
 
       switch ($ma->getAction()) {
          case "plugin_fusioninventory_transfert" :
-            
+
             foreach($ids as $key) {
                $pfTaskjob->getFromDB($key);
                $pfTaskjob->forceEnd();
@@ -1814,7 +1814,7 @@ function new_subtype(id) {
             }
 
             break;
-      } 
+      }
    }
 
 }

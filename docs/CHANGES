@@ -6,12 +6,34 @@ Here you can see the full list of changes between each release.
 In Development
 --------------
 
+
+Version 0.90+1.0
+~~~~~~~~~~~~~~~~
+
+- Enhanced: udpate checkbox to 0.90 style
+
+
+Version 0.85+1.3
+~~~~~~~~~~~~~~~~
+
 - Fix: SQL error when display printer list when use some fields of plugin FusionInventory
 - Fix: graph javascript and Css load
+- Fix: software license link in licenses tab of computer
+- Fix: ok message on remove item from static group
+- Fix: missing fields in computer lock field
+- Fix: dynamic computer groups sql query
+- Fix: timeslot can now select 24:00 instead 23:45
+- Fix: task job link in networkdiscovery and networkinventory state page
+- Fix: entity creation of ports when inventory / discovery create unmanaged devices
+- Fix: various SQL and PHP errors
 
 - Enhanced: Improve task deletion performance
 - Enhanced: clean docs folder and move this changelog file to docs folder
-- ENhanced: Add wake up option in task to force GLPI wake up agent to do the task
+- Enhanced: Add wake up option in task to force GLPI wake up agent to do the task
+- Enhanced: update translations
+- Enhanced: get real contact IP when use proxy-related HTTP
+- Enhanced: display of monitoring log tasks
+- Enhanced: minify js
 
 Version 0.85+1.2
 ~~~~~~~~~~~~~~~~
