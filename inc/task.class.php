@@ -428,10 +428,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       global $DB;
 
       $agent = new PluginFusioninventoryAgent();
-
       $timeslot = new PluginFusioninventoryTimeslot();
-
       $now = new DateTime();
+      $maxexecutiontime = ini_get('max_execution_time');
+
 
       //transform methods array into string for database query
       $methods = "'" . implode("','", $methods) . "'";
@@ -492,6 +492,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $jobstate = new PluginFusioninventoryTaskjobstate();
       $joblog   = new PluginFusioninventoryTaskjoblog();
 
+      $time_start = microtime(true);
       foreach($results as $index => $result) {
 
          $actors = importArrayFromDB($result['job']['actors']);
@@ -541,7 +542,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
          }
 
-         $limit = 0;
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;
             $item_type = key($target);
@@ -601,9 +601,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
                if( $agent_not_running) {
 
-                  $limit += 1;
-                  if ($limit > 500) {
-                     $limit = 0;
+                  $time_current = microtime(true);
+                  if (($time2-$time1) > 0.9 * $maxexecutiontime) {
                      break;
                   }
                   $run = array_merge(
