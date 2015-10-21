@@ -78,12 +78,48 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          case 1:
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-            $params['sort'] = '';
-            Search::showList('PluginFusioninventoryComputer', $params, array('2'));
+            foreach (array('sort', 'order', 'start') as $field) {
+               if (isset($_GET[$field])) {
+                  $params[$field] = $_GET[$field];
+               }
+            }
+
+            if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
+               $params['metacriteria'] = array();
+            }
+            
+            $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
+                                "?id=".$item->getID();
+            self::showList('PluginFusioninventoryComputer', $params, array('2', '1'));
             break;
       }
 
       return true;
+   }
+
+   // override Search method to gain performance and decrease memory usage
+   // we dont need to display search criteria result
+   static function showList($itemtype, $params, $forcedisplay) {
+      $_GET['_in_modal'] = true;
+      $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
+      Search::constructSQL($data);
+      Search::constructDatas($data);
+      if (Session::isMultiEntitiesMode()) {
+         $data['data']['cols'] = array_slice($data['data']['cols'], 0, 2);
+      } else {
+         $data['data']['cols'] = array_slice($data['data']['cols'], 0, 1);
+      }
+      Search::displayDatas($data);
+   }
+
+   // override Search method to gain performance and decrease memory usage
+   // we dont need to display search criteria result
+   static function getDatas($itemtype, $params, array $forcedisplay=array()) {
+      $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
+      Search::constructSQL($data);
+      Search::constructDatas($data);
+
+      return $data;
    }
 
    /**
