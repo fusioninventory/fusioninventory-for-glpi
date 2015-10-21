@@ -83,10 +83,14 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                   $params[$field] = $_GET[$field];
                }
             }
+
+            if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
+               $params['metacriteria'] = array();
+            }
             
-            $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true)."?id=".$item->getID();
-            
-            self::showList('PluginFusioninventoryComputer', $params, array('2'));
+            $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
+                                "?id=".$item->getID();
+            self::showList('PluginFusioninventoryComputer', $params, array('2', '1'));
             break;
       }
 
@@ -95,8 +99,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
    // override Search method to gain performance and decrease memory usage
    // we dont need to display search criteria result
-   static function showList($itemtype, $params) {
-      $data = Search::prepareDatasForSearch($itemtype, $params);
+   static function showList($itemtype, $params, $forcedisplay) {
+      $_GET['_in_modal'] = true;
+      $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
       Search::constructDatas($data);
       if (Session::isMultiEntitiesMode()) {
