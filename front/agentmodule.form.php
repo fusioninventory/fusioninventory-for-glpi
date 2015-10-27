@@ -76,7 +76,8 @@ if (isset($_POST["agent_add"])) {
    foreach ($a_modules as $data) {
       $a_agentList        = importArrayFromDB($data['exceptions']);
       $agentModule        = 0;
-      if (isset($_POST['activation-'.$data['modulename']])) {
+      if (isset($_POST['activation-'.$data['modulename']]) 
+          && $_POST['activation-'.$data['modulename']] != 0) {
          $agentModule     = 1;
       }
       $agentModuleBase    = 0;
@@ -120,7 +121,8 @@ if (isset($_POST["agent_add"])) {
 } else if (isset ($_POST["update"])) {
    $agentmodule->getFromDB($_POST['id']);
    $input = array();
-   if (isset($_POST['activation'])) {
+   if (isset($_POST['activation']) 
+      && $_POST['activation']) {
       $input['is_active'] = 1;
    } else {
       $input['is_active'] = 0;
