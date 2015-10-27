@@ -121,7 +121,8 @@ if (isset($_POST["agent_add"])) {
 } else if (isset ($_POST["update"])) {
    $agentmodule->getFromDB($_POST['id']);
    $input = array();
-   if (isset($_POST['activation'])) {
+   if (isset($_POST['activation']) 
+      && $_POST['activation']) {
       $input['is_active'] = 1;
    } else {
       $input['is_active'] = 0;
