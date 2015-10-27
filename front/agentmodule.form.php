@@ -76,7 +76,8 @@ if (isset($_POST["agent_add"])) {
    foreach ($a_modules as $data) {
       $a_agentList        = importArrayFromDB($data['exceptions']);
       $agentModule        = 0;
-      if (isset($_POST['activation-'.$data['modulename']])) {
+      if (isset($_POST['activation-'.$data['modulename']]) 
+          && $_POST['activation-'.$data['modulename']] != 0) {
          $agentModule     = 1;
       }
       $agentModuleBase    = 0;
