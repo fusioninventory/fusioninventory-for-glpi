@@ -467,6 +467,9 @@ function plugin_init_fusioninventory() {
 
    // Add unmanaged devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnmanaged";
+
+   // exclude some pages from splitted layout
+   array_push($CFG_GLPI['layout_excluded_pages'], "timeslot.form.php");
 }
 
 
