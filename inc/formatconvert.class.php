@@ -686,9 +686,9 @@ class PluginFusioninventoryFormatconvert {
                         } else if (isset($array_tmp["instantiation_type"])
                                 AND ($array_tmp["instantiation_type"] == 'fibrechannel'
                                     OR $array_tmp["instantiation_type"] == 'fiberchannel')
-                                AND class_exists("NetworkPortFiberchannel"
+                                AND class_exists("NetworkPortFiberchannel")
                                 OR isset($array_tmp['wwn'])
-                                  AND !empty($array_tmp['wwn'])) ) {
+                                  AND !empty($array_tmp['wwn']))  {
                            $array_tmp["instantiation_type"] = 'NetworkPortFiberchannel';
                         } else if ($array_tmp['mac'] != '') {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
