@@ -432,7 +432,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
               "/plugins/fusioninventory//pics/p2p.png' /></th>";
 
       echo "<td>";
-      Html::showCheckbox(array('name' => 'action_entries[]', 'checked' => $p2p));
+      Html::showCheckbox(array('name' => 'p2p', 'checked' => $p2p));
       echo "</td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
