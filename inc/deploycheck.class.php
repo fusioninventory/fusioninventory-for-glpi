@@ -165,7 +165,7 @@ class PluginFusioninventoryDeployCheck {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'check_entries[]', 'value' => $i));
+            Html::showCheckbox(array('name' => 'check_entries[]'));
             echo "</td>";
          }
          echo "<td>";
@@ -531,8 +531,10 @@ class PluginFusioninventoryDeployCheck {
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //remove selected checks
-      foreach ($params['check_entries'] as $index) {
-         unset($datas['jobs']['checks'][$index]);
+      foreach ($params['check_entries'] as $index => $checked) {
+         if ($checked >= "1" || $checked == "on") {
+            unset($datas['jobs']['checks'][$index]);
+         }
       }
 
       //Ensure checks is an array and not a dictionnary

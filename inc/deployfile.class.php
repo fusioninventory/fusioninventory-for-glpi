@@ -193,7 +193,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'file_entries[]', 'value' => $i));
+            Html::showCheckbox(array('name' => 'file_entries[]'));
             echo "</td>";
          }
          echo "<td class='filename'>";
@@ -625,19 +625,18 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $files = $datas['jobs']['associatedFiles'];
       //remove selected checks
-      foreach ($params['file_entries'] as $index) {
-         //get sha512
-         $sha512 = $datas['jobs']['associatedFiles'][$index];
+      foreach ($params['file_entries'] as $index => $checked) {
+         if ($checked >= "1" || $checked == "on") {
+            //get sha512
+            $sha512 = $datas['jobs']['associatedFiles'][$index];
 
-         //remove file
-         // I've commented the following piece of code because
-         // if you remove the first line in the files list,
-         // PHP will transform these table as a json dictionnary instead of json list.
-         unset($files[$index]);
-         //array_splice($datas['jobs']['associatedFiles'], $index, 1);
-         unset($datas['associatedFiles'][$sha512]);
+            //remove file
+            unset($files[$index]);
+            //array_splice($datas['jobs']['associatedFiles'], $index, 1);
+            unset($datas['associatedFiles'][$sha512]);
 
-         $shasToRemove[] = $sha512;
+            $shasToRemove[] = $sha512;
+         }
       }
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
