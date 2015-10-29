@@ -423,13 +423,17 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<tr>";
       echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
          "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory//pics/uncompress.png' /></th>";
+      echo "<td>";
       Html::showCheckbox(array('name' => 'uncompress', 'checked' => $uncompress));
+      echo "</td>";
       echo "</tr><tr>";
       echo "<th>".__("P2P", 'fusioninventory').
               "<img style='float:right' src='".$CFG_GLPI["root_doc"].
               "/plugins/fusioninventory//pics/p2p.png' /></th>";
 
+      echo "<td>";
       Html::showCheckbox(array('name' => 'action_entries[]', 'checked' => $p2p));
+      echo "</td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
       echo "<td>";
