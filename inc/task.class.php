@@ -602,7 +602,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                if( $agent_not_running) {
 
                   $time_current = microtime(true);
-                  if (($time2-$time1) > 0.9 * $maxexecutiontime) {
+                  if (($time_current-$time_start) > 0.9 * $maxexecutiontime) {
                      break;
                   }
                   $run = array_merge(
