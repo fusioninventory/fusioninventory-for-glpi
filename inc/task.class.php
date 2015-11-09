@@ -430,7 +430,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $agent = new PluginFusioninventoryAgent();
       $timeslot = new PluginFusioninventoryTimeslot();
       $now = new DateTime();
-      $maxexecutiontime = ini_get('max_execution_time');
+      $maxexecutiontime = intval(get_cfg_var('max_execution_time'));
 
 
       //transform methods array into string for database query
@@ -602,7 +602,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                if( $agent_not_running) {
 
                   $time_current = microtime(true);
-                  if (($time_current-$time_start) > 0.9 * $maxexecutiontime) {
+                  if (($time_current-$time_start) > (0.9 * $maxexecutiontime)) {
                      break;
                   }
                   $run = array_merge(
