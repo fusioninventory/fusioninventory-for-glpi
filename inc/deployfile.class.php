@@ -740,18 +740,18 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //prepare file data for insertion in repo
          $data = array(
-            'file_tmp_name' => $file_tmp_name,
-            'mime_type' => $_FILES['file']['type'],
-            'filesize' => $_FILES['file']['size'],
-            'filename' => $filename,
-            'p2p' => isset($params['p2p']) ? $params['p2p'] : 0,
-            'uncompress' => isset($params['uncompress']) ? $params['uncompress'] : 0,
+            'file_tmp_name'          => $file_tmp_name,
+            'mime_type'              => $_FILES['file']['type'],
+            'filesize'               => $_FILES['file']['size'],
+            'filename'               => $filename,
+            'p2p'                    => isset($params['p2p']) ? $params['p2p'] : 0,
+            'uncompress'             => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
                : 0
             ),
-            'orders_id' => $params['orders_id']
+            'orders_id'              => $params['orders_id']
          );
 
          //Add file in repo
@@ -788,18 +788,18 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //prepare file data for insertion in repo
          $data = array(
-            'file_tmp_name' => $file_path,
-            'mime_type' => $mime_type,
-            'filesize' => $filesize,
-            'filename' => $filename,
-            'p2p' => isset($params['p2p']) ? 1 : 0,
-            'uncompress' => isset($params['uncompress']) ? 1 : 0,
+            'file_tmp_name'          => $file_path,
+            'mime_type'              => $mime_type,
+            'filesize'               => $filesize,
+            'filename'               => $filename,
+            'p2p'                    => isset($params['p2p']) ? 1 : 0,
+            'uncompress'             => isset($params['uncompress']) ? 1 : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
                : 0
             ),
-            'orders_id' => $params['orders_id']
+            'orders_id'              => $params['orders_id']
          );
 
          //Add file in repo
