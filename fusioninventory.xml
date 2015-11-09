@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : plugin.xml.xml
+    Created on : July 24, 2009, 11:16 PM
+    Author     : ddurieux
+    Description:
+        Purpose of the document follows.
+-->
+
+<root>
+   <name>Fusioninventory for GLPI</name>
+   <key>fusioninventory</key>
+   <state>stable</state>
+   <logo>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/fusioninventory_logo_square.png</logo>
+   <description>
+      <short>
+         <fr><![CDATA[FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent)]]></fr>
+         <en><![CDATA[FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers]]></en>
+      </short>
+      <long>
+	<fr>
+   FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent).  
+
+	* FusionInventory Core, fournit les fonctionnalités centrales :
+
+	  1. Communication avec les agents d'inventaire et de découverte;
+	  2. Gestion et planifications des tâches ;
+	  3. Wake on lan (réveil des ordinateurs) ;
+	  4. Règles centralisées pour ces plugins d'import de matériel ;
+	  5. Gestion du matériel inconnu (zone tampon entre vos matériels gérés dans GLPI et ceux présents réellement sur le réseau).
+
+	* FusionInventory Inventory :
+
+      1. Inventaire local des ordinateurs (matériel, logiciel, antivirus) ;
+	   2. Prise en charge et mise à jour des ordinateurs déjà dans GLPI.
+
+	* FusionInventory SNMP :
+
+	   1. Découverte réseau avec gestion des matériels inconnus ;
+	   2. Inventaire distant des switchs et imprimantes (grâce au protocole SNMP) ;
+	   3. Récupération des informations sur les ports, les VLANs et liaison entre ports des switchs et matériels présents dans GLPI (ordinateurs, imprimantes réseau, switchs...) ;
+	   4. Historique des changements sur chaque port de switch et rapports ;
+	   5. Niveau des cartouches des imprimantes, relevé journalier des compteurs de pages et rapports ;
+   </fr>
+	<en>
+   FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers<br/>
+	
+   - FusionInventory Core: provides core functionnalities:
+	
+	   1. Communication with inventory and network discovery agents
+	   2. Tasks management and scheduling
+	   3. Wake on LAN
+	   4. Centralized rules for assets import in GLPI
+	   5. Unknown devices management (temporary zone, in GLPI, before real asset management)
+
+   - FusionInventory Inventory:
+	   1. Local inventory for computers (hardware, software, antivirus)
+	   2. Handle and update computers already in GLPI.
+      
+	- FusionInventory SNMP:
+	  
+		1. Network discovery, unknown devices management (using FusionInventory core plugin)
+		2. Remote network devices and printers (thanks to the SNMP protocol)
+		3. Get network port informations, VLANs, link between switchs network ports and assets already in GLPI (computers, network printers, network devices, etc.)
+		4. Change history and reports for each network port
+		5. Printers cartridges' ink levels, daily page counters and reports.
+      </en>
+      </long>
+   </description>
+   <homepage>http://fusioninventory.org/</homepage>
+   <download>https://github.com/fusioninventory/fusioninventory-for-glpi/releases</download>
+   <issues>https://github.com/fusioninventory/fusioninventory-for-glpi/issues</issues>
+   <readme>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/README.asciidoc</readme>
+   <authors>
+      <author>David DURIEUX</author>
+      <author>FusionInventory team</author>
+   </authors>
+   <versions>
+      <version>
+        <num>0.90+1.0</num>
+        <compatibility>0.90</compatibility>
+      </version>
+      <version>
+        <num>0.85+1.3</num>
+        <compatibility>0.85</compatibility>
+      </version>
+      <version>
+        <num>0.85+1.2</num>
+        <compatibility>0.85</compatibility>
+      </version>
+      <version>
+        <num>0.85+1.1</num>
+        <compatibility>0.85</compatibility>
+      </version>
+      <version>
+        <num>0.85+1.0</num>
+        <compatibility>0.85.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+3.5</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+3.4</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+3.3</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+3.2</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+3.1</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+3.0</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+2.2</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+2.1</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+2.0</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+1.2</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+1.1</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.84+1.0</num>
+        <compatibility>0.84.x</compatibility>
+      </version>
+      <version>
+        <num>0.83+2.3</num>
+        <compatibility>0.83.3 mini</compatibility>
+      </version>
+      <version>
+        <num>0.83+2.2.1</num>
+        <compatibility>0.83.3 mini</compatibility>
+      </version>
+      <version>
+        <num>0.83+2.2</num>
+        <compatibility>0.83.3 mini</compatibility>
+      </version>
+      <version>
+        <num>0.83+2.1</num>
+        <compatibility>0.83.3 mini</compatibility>
+      </version>
+      <version>
+        <num>0.83+2.0</num>
+        <compatibility>0.83.3 mini</compatibility>
+      </version>
+      <version>
+        <num>0.83+1.0</num>
+        <compatibility>0.83.3 mini</compatibility>
+      </version>
+      <version>
+        <num>0.80+1.5</num>
+        <compatibility>0.80.x</compatibility>
+      </version>
+      <version>
+        <num>0.80+1.4</num>
+        <compatibility>0.80.x</compatibility>
+      </version>
+      <version>
+        <num>0.80+1.3</num>
+        <compatibility>0.80.x</compatibility>
+      </version>
+      <version>
+        <num>0.80+1.2</num>
+        <compatibility>0.80.x</compatibility>
+      </version>
+      <version>
+        <num>0.80+1.1</num>
+        <compatibility>0.80.x</compatibility>
+      </version>
+      <version>
+        <num>2.4.0</num>
+        <compatibility>0.80.x</compatibility>
+      </version>
+      <version>
+        <num>2.3.6</num>
+        <compatibility>0.78.x</compatibility>
+      </version>
+      <version>
+        <num>2.3.5</num>
+        <compatibility>0.78.x</compatibility>
+      </version> 
+      <version>
+        <num>2.3.4</num>
+        <compatibility>0.78.x</compatibility>
+      </version>
+      <version>
+        <num>2.3.3</num>
+        <compatibility>0.78.x</compatibility>
+      </version>
+      <version>
+        <num>2.3.2</num>
+        <compatibility>0.78.x</compatibility>
+      </version>
+      <version>
+        <num>2.2.2</num>
+        <compatibility>0.72.1</compatibility>
+      </version>
+      <version>
+        <num>2.2.1</num>
+        <compatibility>0.72.1</compatibility>
+      </version>
+      <version>
+        <num>2.2.0</num>
+        <compatibility>0.72</compatibility>
+      </version>
+      <version>
+        <num>2.1.3</num>
+        <compatibility>0.72</compatibility>
+      </version>
+      <version>
+          <num>2.1.2</num>
+          <compatibility>0.72</compatibility>
+      </version>
+      <version>
+          <num>2.1.1</num>
+          <compatibility>0.72</compatibility>
+      </version>
+      <version>
+          <num>2.1.0</num>
+          <compatibility>0.72</compatibility>
+      </version>
+      <version>
+          <num>2.0.2</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>2.0.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>1.1.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>1.0.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
+   </versions>
+   <langs>
+      <lang>fr_FR</lang>
+      <lang>en_GB</lang>
+      <lang>de_DE</lang>
+      <lang>es_ES</lang>
+      <lang>it_IT</lang>
+      <lang>pl_PL</lang>
+      <lang>pt_BR</lang>
+      <lang>ru_RU</lang>
+      <lang>tr_TR</lang>
+      <lang>es_AR</lang>
+      <lang>et_EE</lang>
+      <lang>fi_FI</lang>
+      <lang>he_IL</lang>
+      <lang>pt_PT</lang>
+      <lang>sl_SI</lang>
+      <lang>zh_TW</lang>
+   </langs>
+   <license>AGPLv3+</license>
+   <tags>
+         <fr>
+            <tag>réseau</tag>
+            <tag>SNMP</tag>
+            <tag>Switchs</tag>
+            <tag>imprimantes</tag>
+            <tag>inventaire</tag>
+            <tag>tracker</tag>
+            <tag>WakeOnLan</tag>
+            <tag>VMWare</tag>
+            <tag>télédéploiement</tag>
+         </fr>
+         <en>
+            <tag>network</tag>
+            <tag>SNMP</tag>
+            <tag>switchs</tag>
+            <tag>printers</tag>
+            <tag>inventory</tag>
+            <tag>tracker</tag>
+            <tag>WakeOnLan</tag>
+            <tag>VMWare</tag>
+            <tag>softwaredeployment</tag>
+         </en>
+   </tags>
+   <screenshots>
+      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-central.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-deploypackage.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-monitoring.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-rules.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-tasks.png</screenshot>
+   </screenshots>
+</root>
