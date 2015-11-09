@@ -206,12 +206,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
                      break;
                   }
                }
-               echo "</td>";
-               echo "<td align='center'>";
-               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
-                                        'checked' => $checked));
-               echo "</td>";
-               echo "</tr>";
             }
             $css_glpi_value = '';
             if (isset($serialized[$key]) && $val != $serialized[$key]) {
