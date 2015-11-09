@@ -193,7 +193,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'file_entries[]'));
+            Html::showCheckbox(array('name' => 'file_entries[]', 'value' => 0));
             echo "</td>";
          }
          echo "<td class='filename'>";
@@ -676,9 +676,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       unset($datas['associatedFiles'][$sha512]);
 
       //update values
-      $file['p2p']                    = isset($params['p2p']) ? 1 : 0;
+      $file['p2p']                    = isset($params['p2p']) ? $params['p2p'] : 0;
       $file['p2p-retention-duration'] = $params['p2p-retention-duration'];
-      $file['uncompress']             = isset($params['uncompress']) ? 1 : 0;
+      $file['uncompress']             = isset($params['uncompress']) ? $params['uncompress'] : 0;
 
       //add modified entry
       $datas['associatedFiles'][$sha512] = $file;
@@ -738,8 +738,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'mime_type' => $_FILES['file']['type'],
             'filesize' => $_FILES['file']['size'],
             'filename' => $filename,
-            'p2p' => isset($params['p2p']) ? 1 : 0,
-            'uncompress' => isset($params['uncompress']) ? 1 : 0,
+            'p2p' => isset($params['p2p']) ? $params['p2p'] : 0,
+            'uncompress' => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
