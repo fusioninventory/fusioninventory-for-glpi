@@ -12,59 +12,61 @@
    <name>Fusioninventory for GLPI</name>
    <key>fusioninventory</key>
    <state>stable</state>
-   <logo>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/fusioninventory_logo_square.png</logo>
+   <logo>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/pics/fusioninventory_logo_square.png</logo>
    <description>
       <short>
          <fr><![CDATA[FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent)]]></fr>
          <en><![CDATA[FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers]]></en>
       </short>
       <long>
-	<fr>
-   FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent).  
+   <fr>
+   FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI.  
+   "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent).  
 
-	* FusionInventory Core, fournit les fonctionnalités centrales :
+   - FusionInventory Core, fournit les fonctionnalités centrales :
 
-	  1. Communication avec les agents d'inventaire et de découverte;
-	  2. Gestion et planifications des tâches ;
-	  3. Wake on lan (réveil des ordinateurs) ;
-	  4. Règles centralisées pour ces plugins d'import de matériel ;
-	  5. Gestion du matériel inconnu (zone tampon entre vos matériels gérés dans GLPI et ceux présents réellement sur le réseau).
+      1. Communication avec les agents d'inventaire et de découverte.
+      2. Gestion et planifications des tâches.
+      3. Wake on lan (réveil des ordinateurs).
+      4. Règles centralisées pour ces plugins d'import de matériel.
+      5. Gestion du matériel inconnu (zone tampon entre vos matériels gérés dans GLPI et ceux présents réellement sur le réseau).
 
-	* FusionInventory Inventory :
+   - FusionInventory Inventory :
 
-      1. Inventaire local des ordinateurs (matériel, logiciel, antivirus) ;
-	   2. Prise en charge et mise à jour des ordinateurs déjà dans GLPI.
+      1. Inventaire local des ordinateurs (matériel, logiciel, antivirus).
+      2. Prise en charge et mise à jour des ordinateurs déjà dans GLPI.
 
-	* FusionInventory SNMP :
+   - FusionInventory SNMP :
 
-	   1. Découverte réseau avec gestion des matériels inconnus ;
-	   2. Inventaire distant des switchs et imprimantes (grâce au protocole SNMP) ;
-	   3. Récupération des informations sur les ports, les VLANs et liaison entre ports des switchs et matériels présents dans GLPI (ordinateurs, imprimantes réseau, switchs...) ;
-	   4. Historique des changements sur chaque port de switch et rapports ;
-	   5. Niveau des cartouches des imprimantes, relevé journalier des compteurs de pages et rapports ;
+      1. Découverte réseau avec gestion des matériels inconnus.
+      2. Inventaire distant des switchs et imprimantes (grâce au protocole SNMP).
+      3. Récupération des informations sur les ports, les VLANs et liaison entre ports des switchs et matériels présents dans GLPI (ordinateurs, imprimantes réseau, switchs...).
+      4. Historique des changements sur chaque port de switch et rapports.
+      5. Niveau des cartouches des imprimantes, relevé journalier des compteurs de pages et rapports.
    </fr>
-	<en>
-   FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers<br/>
-	
+   <en>
+   FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI.  
+   "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers
+   
    - FusionInventory Core: provides core functionnalities:
-	
-	   1. Communication with inventory and network discovery agents
-	   2. Tasks management and scheduling
-	   3. Wake on LAN
-	   4. Centralized rules for assets import in GLPI
-	   5. Unknown devices management (temporary zone, in GLPI, before real asset management)
+   
+      1. Communication with inventory and network discovery agents.
+      2. Tasks management and scheduling.
+      3. Wake on LAN.
+      4. Centralized rules for assets import in GLPI.
+      5. Unknown devices management (temporary zone, in GLPI, before real asset management).
 
    - FusionInventory Inventory:
-	   1. Local inventory for computers (hardware, software, antivirus)
-	   2. Handle and update computers already in GLPI.
+      1. Local inventory for computers (hardware, software, antivirus).
+      2. Handle and update computers already in GLPI.
       
-	- FusionInventory SNMP:
-	  
-		1. Network discovery, unknown devices management (using FusionInventory core plugin)
-		2. Remote network devices and printers (thanks to the SNMP protocol)
-		3. Get network port informations, VLANs, link between switchs network ports and assets already in GLPI (computers, network printers, network devices, etc.)
-		4. Change history and reports for each network port
-		5. Printers cartridges' ink levels, daily page counters and reports.
+   - FusionInventory SNMP:
+     
+      1. Network discovery, unknown devices management (using FusionInventory core plugin).
+      2. Remote network devices and printers (thanks to the SNMP protocol).
+      3. Get network port informations, VLANs, link between switchs network ports and assets already in GLPI (computers, network printers, network devices, etc.).
+      4. Change history and reports for each network port.
+      5. Printers cartridges' ink levels, daily page counters and reports.
       </en>
       </long>
    </description>
