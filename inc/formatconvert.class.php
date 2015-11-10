@@ -1132,12 +1132,6 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('import_vm') == 1) {
          if (isset($array['SOLARISZONES'])) {
             foreach ($array['SOLARISZONES'] as $a_solariszones) {
-               //Temporary hack because ZONEDEDICATEDCPU has been renamed in ZONECPUCAP
-               if (isset($a_solariszones['ZONEDEDICATEDCPU'])) {
-                  $cpu_share_field = 'ZONEDEDICATEDCPU';
-               } else {
-                  $cpu_share_field = 'ZONECPUSHARE';                
-               }
                $array_tmp = $thisc->addValues($a_solariszones,
                                               array(
                                                  'NAME'        => 'name',
@@ -1148,7 +1142,7 @@ class PluginFusioninventoryFormatconvert {
                                                  'ZONEMAXLOCKEDMEMORY' => 'zone_max_locked_memory',
                                                  'ZONEMAXSHMMEMORY' => 'zone_max_shm_memory',
                                                  'ZONECPUCAP'  => 'zone_cpu_cap',
-                                                 $cpu_share_field => 'zone_cpu_share',
+                                                 'ZONEDEDICATEDCPU' => 'zone_dedicated_cpu',
                                                  'UUID'        => 'uuid'));
                $array_tmp['is_dynamic'] = 1;
                $a_inventory['solariszone'][] = $array_tmp;

@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
 
    static $rightname = 'computer';
-   
+
    static function getTypeName($nb=0) {
       return __('Solaris', 'fusioninventory');
    }
@@ -101,7 +101,7 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
 
       if ($item->getType() == 'ComputerVirtualMachine') {
          if (Session::haveRight('computer', READ)) {
-            $condition = "`computers_id`=".$item->fields['computers_id']." 
+            $condition = "`computers_id`=".$item->fields['computers_id']."
                            AND `uuid`='".$item->fields['uuid']."'";
             if (countElementsInTable($this->getTable(), $condition) > 0) {
                return self::createTabEntry(__('Solaris', 'fusioninventory'));
@@ -111,7 +111,7 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
       } elseif ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', READ)) {
             if (isset($item->fields['uuid']) && ($item->fields['uuid'] != '')) {
-	       $where = 
+	       $where =
 "LOWER(`uuid`)".ComputerVirtualMachine::getUUIDRestrictRequest($item->fields[
 'uuid']);
                if (countElementsInTable($this->getTable(), $where) > 0) {
@@ -120,8 +120,8 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
 	     }
             }
          }
-      
-      
+
+
       return '';
    }
 
@@ -129,11 +129,11 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
          $pfSolarisZone = new self();
-    
-      if (($item->getType() == 'ComputerVirtualMachine' 
+
+      if (($item->getType() == 'ComputerVirtualMachine'
           || $item->getType() == 'Computer') && $item->getID() > 0) {
          $condition = "`uuid`='".$item->fields['uuid']."'";
-         $zones = getAllDatasFromTable(self::getTable(), $condition); 
+         $zones = getAllDatasFromTable(self::getTable(), $condition);
          if (!empty($zones)) {
 	    $zone = array_pop($zones);
             $pfSolarisZone->showForm($zone['id']);
@@ -157,7 +157,7 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
 
       $computer = new Computer();
       $computer->getFromDB($this->fields['computers_id']);
-      
+
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th colspan='2'>".__('Solaris Zone', 'fusioninventory')."</th>";
@@ -194,9 +194,9 @@ class PluginFusioninventoryInventoryComputerSolariszone extends CommonDBTM {
       echo $this->fields['zone_cpu_cap'];
       echo "</td>";
 
-      echo "<td>".__('Zone cpu_share')."</td>";
+      echo "<td>".__('Zone Dedicated CPU')."</td>";
       echo "<td>";
-      echo $this->fields['zone_cpu_share'];
+      echo $this->fields['zone_dedicated_cpu'];
       echo "</td></tr>";
 
       echo "</table>";

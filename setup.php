@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.90+1.0+TECLIB_5");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.90+1.0+TECLIB_8");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -263,7 +263,7 @@ function plugin_init_fusioninventory() {
 
       /**
        * Load the relevant javascript/css files only on pages that need them.
-       */ 
+       */
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
