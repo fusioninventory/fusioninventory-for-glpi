@@ -28,6 +28,17 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
          GLPI_ROOT ."/install/mysql/glpi-0.90-empty.sql"
       );
 
+      $output = array();
+      $returncode = 0;
+      exec(
+         "php -f ".GLPI_ROOT. "/tools/cliupdate.php -- --upgrade",
+         $output, $returncode
+      );
+      $this->assertEquals(0,$returncode,
+         "Error when update GLPI in CLI mode\n".
+         implode("\n",$output)
+      );
+
       $this->assertEquals( 0, $result['returncode'],
          "Failed to install GLPI database:\n".
          implode("\n", $result['output'])
