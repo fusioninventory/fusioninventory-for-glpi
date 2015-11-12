@@ -193,7 +193,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'file_entries[]', 'value' => $i));
+            Html::showCheckbox(array('name' => 'file_entries[]', 'value' => 0));
             echo "</td>";
          }
          echo "<td class='filename'>";
@@ -423,13 +423,17 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<tr>";
       echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
          "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory//pics/uncompress.png' /></th>";
+      echo "<td>";
       Html::showCheckbox(array('name' => 'uncompress', 'checked' => $uncompress));
+      echo "</td>";
       echo "</tr><tr>";
       echo "<th>".__("P2P", 'fusioninventory').
               "<img style='float:right' src='".$CFG_GLPI["root_doc"].
               "/plugins/fusioninventory//pics/p2p.png' /></th>";
 
-      Html::showCheckbox(array('name' => 'action_entries[]', 'checked' => $p2p));
+      echo "<td>";
+      Html::showCheckbox(array('name' => 'p2p', 'checked' => $p2p));
+      echo "</td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
       echo "<td>";
@@ -619,20 +623,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $files = $datas['jobs']['associatedFiles'];
       //remove selected checks
-      foreach ($params['file_entries'] as $index) {
-         //get sha512
-         $sha512 = $datas['jobs']['associatedFiles'][$index];
 
-         //remove file
-         // I've commented the following piece of code because
-         // if you remove the first line in the files list,
-         // PHP will transform these table as a json dictionnary instead of json list.
-         unset($files[$index]);
-         //array_splice($datas['jobs']['associatedFiles'], $index, 1);
-         unset($datas['associatedFiles'][$sha512]);
+      foreach ($params['file_entries'] as $index => $checked) {
+         if ($checked >= "1" || $checked == "on") {
+            //get sha512
+            $sha512 = $datas['jobs']['associatedFiles'][$index];
 
-         //remove file in repo
-         //self::removeFileInRepo($sha512, $params['orders_id']);
+            //remove file
+            unset($files[$index]);
+            //array_splice($datas['jobs']['associatedFiles'], $index, 1);
+            unset($datas['associatedFiles'][$sha512]);
+
+            $shasToRemove[] = $sha512;
+         }
       }
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
@@ -673,9 +676,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       unset($datas['associatedFiles'][$sha512]);
 
       //update values
-      $file['p2p']                    = isset($params['p2p']) ? 1 : 0;
+      $file['p2p']                    = isset($params['p2p']) ? $params['p2p'] : 0;
       $file['p2p-retention-duration'] = $params['p2p-retention-duration'];
-      $file['uncompress']             = isset($params['uncompress']) ? 1 : 0;
+      $file['uncompress']             = isset($params['uncompress']) ? $params['uncompress'] : 0;
 
       //add modified entry
       $datas['associatedFiles'][$sha512] = $file;
@@ -735,8 +738,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'mime_type' => $_FILES['file']['type'],
             'filesize' => $_FILES['file']['size'],
             'filename' => $filename,
-            'p2p' => isset($params['p2p']) ? 1 : 0,
-            'uncompress' => isset($params['uncompress']) ? 1 : 0,
+            'p2p' => isset($params['p2p']) ? $params['p2p'] : 0,
+            'uncompress' => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
