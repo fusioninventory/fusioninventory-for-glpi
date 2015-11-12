@@ -766,7 +766,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       global $DB;
 
       // Computers
-      $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`"
+              . " LEFT JOIN `glpi_computers` "
+              . "    ON (`glpi_plugin_fusioninventory_inventorycomputercomputers`.`id`=`glpi_computers`.`id` "
+              . "       AND `glpi_computers`.`is_deleted`='0')"
+              . " WHERE `glpi_computers`.`id` IS NOT NULL";
+      $result = $DB->query($query);
+      $fusionComputers = $DB->numrows($result);
       $allComputers    = countElementsInTable('glpi_computers',
                                               "`is_deleted`='0' AND `is_template`='0'");
 
