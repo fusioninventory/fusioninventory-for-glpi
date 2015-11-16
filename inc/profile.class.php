@@ -212,7 +212,11 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryCollectRule',
                 'label'     => __('Additional computer information rules', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_rulecollect'
-          )
+          ),
+          array('itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
+                'label'     =>  __('Equipment ignored on import', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_ignoredimportdevice'
+          ),
       );
       return $rights;
    }
