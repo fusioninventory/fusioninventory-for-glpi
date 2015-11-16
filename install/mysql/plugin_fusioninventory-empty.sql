@@ -448,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_inventorycomputersolaris
   `zone_max_locked_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `zone_max_shm_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `zone_cpu_cap` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `zone_decicated_cpu` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_dedicated_cpu` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text COLLATE utf8_unicode_ci,
