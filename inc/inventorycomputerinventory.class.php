@@ -477,9 +477,11 @@ class PluginFusioninventoryInventoryComputerInventory {
                }
             }
          }
-         $a_computerinventory = $pfFormatconvert->extraCollectInfo(
-                                                $a_computerinventory,
-                                                $items_id);
+         if ($items_id > 0) {
+            $a_computerinventory = $pfFormatconvert->extraCollectInfo(
+                                                   $a_computerinventory,
+                                                   $items_id);
+         }
          $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                                 $a_computerinventory,
                                                 $entities_id);
