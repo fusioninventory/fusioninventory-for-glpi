@@ -1001,7 +1001,8 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['peripheraltypes_id'] = 'keyboard';
             }
 
-            if (isset($a_peripheral_name[$array_tmp['name']])) {
+            if (isset($array_tmp['name']) 
+                && isset($a_peripheral_name[$array_tmp['name']])) {
                $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
             } else {
                $a_inventory['peripheral'][] = $array_tmp;
@@ -1623,7 +1624,7 @@ class PluginFusioninventoryFormatconvert {
       }
       foreach ($softwareWithoutManufacturer as $key=>$array_tmp) {
          if (!isset($softwareWithManufacturer[$key])) {
-            $comp_key = strtolower($array_tmp['name']).
+            $comp_key = (isset($array_tmp['name'])?strtolower($array_tmp['name']):"").
                          "$$$$".strtolower($array_tmp['version']).
                          "$$$$".$array_tmp['manufacturers_id'].
                          "$$$$".$array_tmp['entities_id'];
