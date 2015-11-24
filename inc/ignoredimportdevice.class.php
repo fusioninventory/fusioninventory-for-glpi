@@ -82,7 +82,6 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $tab[4]['name']          = __('Item type');
       $tab[4]['massiveaction'] = false;
       $tab[4]['datatype']      = 'itemtypename';
-      $tab[4]['massiveaction']  = false;
 
       $tab[5]['table']     = 'glpi_entities';
       $tab[5]['field']     = 'completename';
@@ -118,6 +117,13 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $tab[10]['name']            = __('Module', 'fusioninventory');
       $tab[10]['datatype']        = 'string';
       $tab[10]['massiveaction']  = false;
+
+      $tab[11]['table']           = 'glpi_plugin_fusioninventory_agents';
+      $tab[11]['field']           = 'name';
+      $tab[11]['name']            = __('Agent', 'fusioninventory');
+      $tab[11]['datatype']        = 'itemlink';
+      $tab[11]['massiveaction']  = false;
+      $tab[11]['itemlink_type'] = 'PluginFusioninventoryAgent';
 
       return $tab;
    }

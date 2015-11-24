@@ -314,6 +314,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -524,7 +525,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputeroracledbs`;
 
-CREATE TABLE IF NOT EXISTS 
+CREATE TABLE IF NOT EXISTS
 `glpi_plugin_fusioninventory_inventorycomputeroracledbs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -549,7 +550,7 @@ CREATE TABLE IF NOT EXISTS
   `has_olap` tinyint(1) NOT NULL DEFAULT '0',
   `has_paritionning` tinyint(1) NOT NULL DEFAULT '0',
   `has_provisionning_patch_automation_pack` tinyint(1) NOT NULL DEFAULT '0',
-  `has_provisionning_patch_automation_pack_for_database` tinyint(1) NOT NULL 
+  `has_provisionning_patch_automation_pack_for_database` tinyint(1) NOT NULL
 DEFAULT '0',
   `has_real_application_cluster` tinyint(1) NOT NULL DEFAULT '0',
   `has_real_application_testing` tinyint(1) NOT NULL DEFAULT '0',
