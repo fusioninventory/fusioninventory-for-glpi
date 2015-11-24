@@ -220,8 +220,7 @@ class PluginFusioninventoryProfile extends Profile {
           ),
           array('itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
                 'label'     =>  __('Equipment ignored on import', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_ignoredimportdevice'
-          ),
+                'field'     => 'plugin_fusioninventory_ignoredimportdevice'),
       );
       return $rights;
    }
@@ -279,7 +278,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
           array('itemtype'  => 'PluginFusioninventoryLock',
                 'label'     => __('Lock', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_lock')
+                'field'     => 'plugin_fusioninventory_lock'),
       );
       return $rights;
    }

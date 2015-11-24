@@ -398,7 +398,17 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $inputdb['rules_id'] = $data['_ruleid'];
          $inputdb['method'] = 'inventory';
-         $pfIgnoredimportdevice->add($inputdb);
+         $inputdb['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+
+         $sql = "`plugin_fusioninventory_agents_id`='".$inputdb['plugin_fusioninventory_agents_id']."'
+                  AND `serial`='".$inputdb['serial']."'";
+         if ($found = $pfIgnoredimportdevice->find($sql)) {
+            $agent = array_pop($found);
+            $inputdb['id'] = $agent['id'];
+            $pfIgnoredimportdevice->update($inputdb);
+         } else {
+            $pfIgnoredimportdevice->add($inputdb);
+         }
       }
    }
 
