@@ -117,7 +117,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
             }
          }
          $search_params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true)."?id=".$item->getID()."&preview=1";
-         Toolbox::logDebug($search_params);
          Search::showList('PluginFusioninventoryComputer', $search_params);
       }
    }
