@@ -412,9 +412,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td rowspan='2'>";
-      echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"].
-              "</textarea>";
-
+      echo "<textarea name='sysdescr'  cols='45' rows='5'>".$this->fields["sysdescr"]."</textarea>";
       echo "<td align='center'></td>";
       echo "<td align='center'>";
       echo "</td>";
