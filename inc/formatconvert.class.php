@@ -1001,7 +1001,8 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['peripheraltypes_id'] = 'keyboard';
             }
 
-            if (isset($a_peripheral_name[$array_tmp['name']])) {
+            if (isset($array_tmp['name']) 
+                && isset($a_peripheral_name[$array_tmp['name']])) {
                $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
             } else {
                $a_inventory['peripheral'][] = $array_tmp;
@@ -1132,12 +1133,6 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('import_vm') == 1) {
          if (isset($array['SOLARISZONES'])) {
             foreach ($array['SOLARISZONES'] as $a_solariszones) {
-               //Temporary hack because ZONEDEDICATEDCPU has been renamed in ZONECPUCAP
-               if (isset($a_solariszones['ZONEDEDICATEDCPU'])) {
-                  $cpu_share_field = 'ZONEDEDICATEDCPU';
-               } else {
-                  $cpu_share_field = 'ZONECPUSHARE';                
-               }
                $array_tmp = $thisc->addValues($a_solariszones,
                                               array(
                                                  'NAME'        => 'name',
@@ -1148,7 +1143,7 @@ class PluginFusioninventoryFormatconvert {
                                                  'ZONEMAXLOCKEDMEMORY' => 'zone_max_locked_memory',
                                                  'ZONEMAXSHMMEMORY' => 'zone_max_shm_memory',
                                                  'ZONECPUCAP'  => 'zone_cpu_cap',
-                                                 $cpu_share_field => 'zone_cpu_share',
+                                                 'ZONEDEDICATEDCPU' => 'zone_dedicated_cpu',
                                                  'UUID'        => 'uuid'));
                $array_tmp['is_dynamic'] = 1;
                $a_inventory['solariszone'][] = $array_tmp;
@@ -1629,7 +1624,7 @@ class PluginFusioninventoryFormatconvert {
       }
       foreach ($softwareWithoutManufacturer as $key=>$array_tmp) {
          if (!isset($softwareWithManufacturer[$key])) {
-            $comp_key = strtolower($array_tmp['name']).
+            $comp_key = (isset($array_tmp['name'])?strtolower($array_tmp['name']):"").
                          "$$$$".strtolower($array_tmp['version']).
                          "$$$$".$array_tmp['manufacturers_id'].
                          "$$$$".$array_tmp['entities_id'];

@@ -772,9 +772,23 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function board() {
       global $DB;
       
-      // Computers
-      $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
-      $allComputers    = countElementsInTable('glpi_computers',
+      // FI Computers
+      $fusionComputers    = 0;
+      $restrict_entity    = getEntitiesRestrictRequest(" AND", 'comp');
+      $query_fi_computers = "SELECT COUNT(comp.`id`) as nb_computers
+                             FROM glpi_computers comp
+                             INNER JOIN glpi_plugin_fusioninventory_inventorycomputercomputers fi_comp
+                               ON fi_comp.`computers_id` = comp.`id`
+                             WHERE comp.`is_deleted`  = '0' 
+                               AND comp.`is_template` = '0'
+                               $restrict_entity";
+      $res_fi_computers = $DB->query($query_fi_computers);
+      if ($data_fi_computers = $DB->fetch_assoc($res_fi_computers)) {
+         $fusionComputers = $data_fi_computers['nb_computers'];
+      }
+
+      // All Computers
+      $allComputers    = countElementsInTableForMyEntities('glpi_computers',
                                               "`is_deleted`='0' AND `is_template`='0'");
 
       $dataComputer = array();
@@ -791,8 +805,33 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
       // SNMP
-      $networkequipment = countElementsInTable('glpi_plugin_fusioninventory_networkequipments');
-      $printer    = countElementsInTable('glpi_plugin_fusioninventory_printers');
+      $networkequipment = 0;
+      $restrict_entity  = getEntitiesRestrictRequest(" AND", 'net');
+      $query_fi_net = "SELECT COUNT(net.`id`) as nb_net
+                             FROM glpi_networkequipments net
+                             INNER JOIN glpi_plugin_fusioninventory_networkequipments fi_net
+                               ON fi_net.`networkequipments_id` = net.`id`
+                             WHERE net.`is_deleted`  = '0' 
+                               AND net.`is_template` = '0'
+                               $restrict_entity";
+      $res_fi_net = $DB->query($query_fi_net);
+      if ($data_fi_net = $DB->fetch_assoc($res_fi_net)) {
+         $networkequipment = $data_fi_net['nb_net'];
+      }
+
+      $printer         = 0;
+      $restrict_entity = getEntitiesRestrictRequest(" AND", 'printers');
+      $query_fi_printers = "SELECT COUNT(printers.`id`) as nb_printers
+                             FROM glpi_printers printers
+                             INNER JOIN glpi_plugin_fusioninventory_printers fi_printer
+                               ON fi_printer.`printers_id` = printers.`id`
+                             WHERE printers.`is_deleted`  = '0' 
+                               AND printers.`is_template` = '0'
+                               $restrict_entity";
+      $res_fi_printers = $DB->query($query_fi_printers);
+      if ($data_fi_printers = $DB->fetch_assoc($res_fi_printers)) {
+         $printer = $data_fi_printers['nb_printers'];
+      }
 
       $dataSNMP = array();
       $dataSNMP[] = array(
@@ -808,7 +847,20 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
       // switches ports
-      $allSwitchesPortSNMP = countElementsInTable('glpi_plugin_fusioninventory_networkports');
+      $allSwitchesPortSNMP = 0;
+      $restrict_entity     = getEntitiesRestrictRequest(" AND", 'networkports');
+      $query_fi_networkports = "SELECT COUNT(networkports.`id`) as nb_networkports
+                             FROM glpi_networkports networkports
+                             INNER JOIN glpi_plugin_fusioninventory_networkports fi_networkports
+                               ON fi_networkports.`networkports_id` = networkports.`id`
+                             WHERE networkports.`is_deleted`  = '0' 
+                               $restrict_entity";
+      $res_fi_networkports = $DB->query($query_fi_networkports);
+      if ($data_fi_networkports = $DB->fetch_assoc($res_fi_networkports)) {
+         $allSwitchesPortSNMP = $data_fi_networkports['nb_networkports'];
+      }
+
+
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
               LEFT JOIN `glpi_plugin_fusioninventory_networkports`
                  ON `glpi_plugin_fusioninventory_networkports`.`networkports_id` = `glpi_networkports`.`id`
@@ -816,7 +868,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                   ON (`networkports_id_1`=`glpi_networkports`.`id`
                      OR `networkports_id_2`=`glpi_networkports`.`id`)
               WHERE `glpi_plugin_fusioninventory_networkports`.`id` IS NOT NULL
-                  AND `glpi_networkports_networkports`.`id` IS NOT NULL";
+                  AND `glpi_networkports_networkports`.`id` IS NOT NULL
+                  $restrict_entity";
       $result = $DB->query($query);
       $networkPortsLinked = $DB->numrows($result);
 
@@ -833,8 +886,21 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       );
 
       // Ports connected at last SNMP inventory
-      $networkPortsConnected = countElementsInTable('glpi_plugin_fusioninventory_networkports',
-                                                    "`ifstatus`='1' OR `ifstatus`='up'");
+      $networkPortsConnected = 0;
+      $restrict_entity     = getEntitiesRestrictRequest(" AND", 'networkports');
+      $query_fi_networkports = "SELECT COUNT(networkports.`id`) as nb_networkports
+                             FROM glpi_networkports networkports
+                             INNER JOIN glpi_plugin_fusioninventory_networkports fi_networkports
+                               ON fi_networkports.`networkports_id` = networkports.`id`
+                             WHERE networkports.`is_deleted`  = '0' 
+                               AND (fi_networkports.`ifstatus`='1' 
+                                    OR fi_networkports.`ifstatus`='up')
+                               $restrict_entity";
+      $res_fi_networkports = $DB->query($query_fi_networkports);
+      if ($data_fi_networkports = $DB->fetch_assoc($res_fi_networkports)) {
+         $networkPortsConnected = $data_fi_networkports['nb_networkports'];
+      }
+
       $dataPortC = array();
       $dataPortC[] = array(
           'key' => 'Ports connected : '.$networkPortsConnected,
@@ -852,9 +918,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
 
       // Deploy
-      $query = "SELECT `plugin_fusioninventory_tasks_id` FROM glpi_plugin_fusioninventory_taskjobs"
-              . " WHERE method LIKE '%deploy%'"
-              . " GROUP BY `plugin_fusioninventory_tasks_id`";
+      $restrict_entity = getEntitiesRestrictRequest(" AND", 'glpi_plugin_fusioninventory_taskjobs');
+      $query = "SELECT `plugin_fusioninventory_tasks_id` 
+                FROM glpi_plugin_fusioninventory_taskjobs
+                WHERE method LIKE '%deploy%'
+                  $restrict_entity
+                GROUP BY `plugin_fusioninventory_tasks_id`";
       $result = $DB->query($query);
       $a_tasks = array();
       while ($data=$DB->fetch_array($result)) {
