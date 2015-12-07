@@ -25,7 +25,7 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
          $DBvars['dbhost'],
          $DBvars['dbdefault'],
          $DBvars['dbpassword'],
-         GLPI_ROOT ."/install/mysql/glpi-0.90-empty.sql"
+         GLPI_ROOT ."/install/mysql/glpi-0.91-empty.sql"
       );
 
       $output = array();
