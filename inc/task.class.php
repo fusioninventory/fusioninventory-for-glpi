@@ -429,9 +429,17 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $agent = new PluginFusioninventoryAgent();
 
-      $timeslot = new PluginFusioninventoryTimeslot();
 
       $now = new DateTime();
+
+      //Get all active timeslots
+      $timeslot = new PluginFusioninventoryTimeslot();
+      $timeslots = $timeslot->getCurrentActiveTimeslots();
+      if (empty($timeslots)) {
+         $query_timeslot = '';
+      } else {
+         $query_timeslot = "OR (`plugin_fusioninventory_timeslots_id` IN (".implode(',', $timeslots)."))";
+      }      
 
       //transform methods array into string for database query
       $methods = "'" . implode("','", $methods) . "'";
@@ -462,7 +470,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // both null)
          "        ( task.`datetime_start` IS NULL AND task.`datetime_end` IS NULL )",
          ")",
-         "AND job.`method` IN (".$methods.")",
+         "AND job.`method` IN (".$methods.")
+         AND (`plugin_fusioninventory_timeslots_id`='0'
+              $query_timeslot)",
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
          // feature will be properly activated in the taskjobs list.
