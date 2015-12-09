@@ -375,9 +375,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    function run($taskjob, $agent) {
       $output = array();
 
-      $this->getFromDB($taskjob['items_id']);
+      $subclass = getItemForItemtype($taskjob['itemtype']);
+      $subclass->getFromDB($taskjob['items_id']);
 
-      $sql_where = "plugin_fusioninventory_collects_id =".$taskjob['items_id'];
+      $this->getFromDB($subclass->fields['plugin_fusioninventory_collects_id']);
+
+      $sql_where = "id =".$taskjob['items_id'];
       switch ($this->fields['type']) {
 
          case 'registry':

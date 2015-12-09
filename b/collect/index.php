@@ -116,11 +116,11 @@ if (isset($_GET['action'])) {
 
             switch ($jobstate['itemtype']) {
                case 'PluginFusioninventoryCollect_Registry':
-                  $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();                  
+                  $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();
                   break;
 
                case 'PluginFusioninventoryCollect_Wmi':
-                  $pfCollect_subO = new PluginFusioninventoryCollect_Wmi_Content();                 
+                  $pfCollect_subO = new PluginFusioninventoryCollect_Wmi_Content();
                   break;
 
                case 'PluginFusioninventoryCollect_File':
@@ -135,8 +135,8 @@ if (isset($_GET['action'])) {
 
             // update datas in table 
             $pfCollect_subO->updateComputer($computers_id,
-                                            $jobstate['items_id'],
-                                            $jobstate['id']);
+                                            $a_values,
+                                            $jobstate['items_id']);
 
             // change status of state table row
             $pfTaskjobstate->changeStatus($jobstate['id'],
