@@ -57,16 +57,15 @@ if (isset($_GET['action'])) {
             $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
             if (isset($a_agent['id'])) {
                $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
-
                foreach ($moduleRun as $className => $array) {
                   if (class_exists($className)) {
                      if ($className == "PluginFusioninventoryCollect") {
-
                         $class = new PluginFusioninventoryCollect();
+                        $response['jobs'] = array();
                         foreach ($array as $data) {
                            $out = $class->run($data, $a_agent);
                            if (count($out) > 0) {
-                              $response['jobs'] = $out;
+                              $response['jobs'] = array_merge($response['jobs'], $out);
                               $response['postmethod'] = 'POST';
                               $response['token'] = Session::getNewCSRFToken();
                            }
