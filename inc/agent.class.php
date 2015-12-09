@@ -396,7 +396,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                            array('value' => $this->fields["computers_id"]));
          echo "&nbsp;<a class='pointer' onclick='submitGetLink(\"".
                $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agent.form.php\", ".
-               "{\"update\": \"update\", \"computers_id\": 0, \"id\": ".$this->fields['id']."});'>".
+               "{\"update\": \"update\",
+                 \"computers_id\": 0,
+                 \"id\": ".$this->fields['id'].", 
+                 \"_glpi_csrf_token\": \"".Session::getNewCSRFToken()."\"});'>".
                "<img src='".$CFG_GLPI['root_doc']."/pics/delete.png' /></a>";
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
