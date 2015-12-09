@@ -801,9 +801,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                       'computers_id'        => $computers_id,
                       'softwareversions_id' => $softwareversions_id,
                       'is_dynamic'          => 1,
-                      'entities_id'         => $a_software['entities_id']
+                      'entities_id'         => $a_software['entities_id'],
                       );
-                  $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+                  $tmp = "('".implode("','", $a_tmp);
+                  if ($a_software['date_install'] == '') {
+                     $tmp.= "',NULL)";
+                  } else {
+                     $tmp.= "','".$a_software['date_install']."')";
+                  }
+                  $a_toinsert[] = $tmp;
                }
                if (count($a_toinsert) > 0) {
                   $this->addSoftwareVersionsComputer($a_toinsert);
@@ -969,11 +975,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $db_computersolariszone[$idtmp] = $data1;
                }
             }
-         
+
             $simplecomputersolariszone = array();
             if (isset($a_computerinventory['solariszone'])) {
                foreach ($a_computerinventory['solariszone'] as $key=>$a_computersolariszone) {
-                  $a_field = array('name', 'uuid', 'zone_number', 'zone_max_swap', 'zone_max_locked_memory', 
+                  $a_field = array('name', 'uuid', 'zone_number', 'zone_max_swap', 'zone_max_locked_memory',
 				   'zone_max_shm_memory', 'zone_cpu_cap', 'zone_dedicated_cpu');
                   foreach ($a_field as $field) {
                      if (isset($a_computersolariszone[$field])) {
@@ -983,7 +989,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
             }
-         
+
             foreach ($simplecomputersolariszone as $key => $arrays) {
                foreach ($db_computersolariszone as $keydb => $arraydb) {
                   if ($arrays == $arraydb) {
@@ -1015,7 +1021,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-      
+
       // * Virtualmachines
          if ($pfConfig->getValue("import_vm") == 1) {
             $db_computervirtualmachine = array();
@@ -1135,7 +1141,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Oracle DB
             $db_computeroracledb = array();
             if ($no_history === FALSE) {
-               $query = "SELECT * FROM 
+               $query = "SELECT * FROM
 `glpi_plugin_fusioninventory_inventorycomputeroracledbs`
                   WHERE `computers_id` = '$computers_id'
                      AND `is_dynamic`='1'";
@@ -1150,10 +1156,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
             $simplecomputersoracledb= array();
             if (isset($a_computerinventory['oracledb'])) {
-               foreach ($a_computerinventory['oracledb'] as 
+               foreach ($a_computerinventory['oracledb'] as
 $key=>$a_computersoracledb) {
             $a_field = array('name', 'version','memory_target',
-                            'sga_target', 'has_advanced_compression', 
+                            'sga_target', 'has_advanced_compression',
                             'has_active_data_guard',
                             'has_change_management_pack',
                             'has_configuration_management',
@@ -1207,10 +1213,10 @@ $key=>$a_computersoracledb) {
                   }
                }
                if (count($a_computerinventory['oracledb']) != 0) {
-                  foreach($a_computerinventory['oracledb'] as 
+                  foreach($a_computerinventory['oracledb'] as
 $a_oracledb) {
                      $a_oracledb['computers_id'] = $computers_id;
-                     $pfComputerOracledb->add($a_oracledb, array(), 
+                     $pfComputerOracledb->add($a_oracledb, array(),
 FALSE);
                   }
                }
@@ -1856,7 +1862,7 @@ FALSE);
                // Add / update instantiation_type
                if (isset($inventory_networkports[$key]['instantiation_type'])) {
                   $instantiation_type = $inventory_networkports[$key]['instantiation_type'];
-                  if (in_array($instantiation_type, array('NetworkPortEthernet', 
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
                                                           'NetworkPortFiberchannel'))) {
                      $instance = new $instantiation_type;
                      $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
@@ -2000,7 +2006,7 @@ FALSE);
                }
                if (isset($a_networkport['instantiation_type'])) {
                   $instantiation_type = $a_networkport['instantiation_type'];
-                  if (in_array($instantiation_type, array('NetworkPortEthernet', 
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
                                                           'NetworkPortFiberchannel'))) {
                      $instance = new $instantiation_type;
                      $input = array(
@@ -2379,7 +2385,11 @@ FALSE);
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
-      $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`) ';
+      if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`,`date_install`) ';
+      } else {
+         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`)';
+      }
       $query .= ' VALUES '.implode(',', $a_input);
       $DB->query($query);
    }
@@ -2401,6 +2411,7 @@ FALSE);
       $a_software['is_deleted_computer']  = FALSE;
       $a_software['_no_history']          = TRUE;
       $a_software['entities_id']          = $a_software['entities_id'];
+      $a_software['date_install']         = $a_software['date_install'];
 
       if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
          if (!$no_history) {
