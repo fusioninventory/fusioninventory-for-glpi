@@ -374,80 +374,75 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
    function run($taskjob, $agent) {
       $output = array();
+      $sql_where = "plugin_fusioninventory_collects_id =".$taskjob['items_id'];
 
-      $subclass = getItemForItemtype($taskjob['itemtype']);
-      $subclass->getFromDB($taskjob['items_id']);
+      foreach (self::getTypes() as $collectype => $label) {
+         switch ($collectype) {
 
-      $this->getFromDB($subclass->fields['plugin_fusioninventory_collects_id']);
-
-      $sql_where = "id =".$taskjob['items_id'];
-      switch ($this->fields['type']) {
-
-         case 'registry':
-            $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-            $found = $pfCollect_Registry->find($sql_where);
-            foreach ($found as $current) {
-               $output[] = array('function' => 'getFromRegistry', 
-                                 'path'     => $current['hive'].
-                                               $current['path'].
-                                               $current['key'], 
-                                 'uuid'     => $taskjob['uniqid']);
-            }
-
-            break;
-
-         case 'wmi':
-            $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-            $found = $pfCollect_Wmi->find($sql_where);
-            foreach ($found as $current) {
-               $output[] = array('function'   => 'getFromWMI', 
-                            //   'moniker'    => $current['moniker'], 
-                                 'class'      => $current['class'], 
-                                 'properties' => array($current['properties']), 
-                                 'uuid'       => $taskjob['uniqid']);
-            }
-            break;
-
-         case 'file':
-            $pfCollect_File = new PluginFusioninventoryCollect_File();
-            $found = $pfCollect_File->find($sql_where);
-            foreach ($found as $current) {
-               $tmp_array = array('function'  => 'findFile', 
-                                  'dir'       => $found['dir'], 
-                                  'limit'     => $found['limit'], 
-                                  'recursive' => $found['recursive'], 
-                                  'filter'    => array('is_file' => $found['is_file'],
-                                                       'is_dir'  => $found['is_dir']),
-                                  'uuid'      =>  $taskjob['uniqid']);
-               if ($found['filter_regex'] != '') {
-                  $tmp_array['filter']['regex'] = $found['filter_regex'];
-               }
-               if ($found['filter_sizeequals'] > 0) {
-                  $tmp_array['filter']['sizeEquals'] = $found['filter_sizeequals'];
-               } else if ($found['filter_sizegreater'] > 0) {
-                  $tmp_array['filter']['sizeGreater'] = $found['filter_sizegreater'];
-               } else if ($found['filter_sizelower'] > 0) {
-                  $tmp_array['filter']['sizeLower'] = $found['filter_sizelower'];
-               }
-               if ($found['filter_checksumsha512'] != '') {
-                  $tmp_array['filter']['checkSumSHA512'] = $found['filter_checksumsha512'];
-               }
-               if ($found['filter_checksumsha2'] != '') {
-                  $tmp_array['filter']['checkSumSHA2'] = $found['filter_checksumsha2'];
-               }
-               if ($found['filter_name'] != '') {
-                  $tmp_array['filter']['name'] = $found['filter_name'];
-               }
-               if ($found['filter_iname'] != '') {
-                  $tmp_array['filter']['iname'] = $found['filter_iname'];
+            case 'registry':
+               $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+               $found = $pfCollect_Registry->find($sql_where);
+               foreach ($found as $current) {
+                  $output[] = array('function' => 'getFromRegistry',
+                                    'path'     => $current['hive'].
+                                                  $current['path'].
+                                                  $current['key'],
+                                    'uuid'     => $taskjob['uniqid']);
                }
 
-               $output[] = $tmp_array;
-            }
+               break;
 
-            break;
+            case 'wmi':
+               $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+               $found = $pfCollect_Wmi->find($sql_where);
+               foreach ($found as $current) {
+                  $output[] = array('function'   => 'getFromWMI',
+                               //   'moniker'    => $current['moniker'],
+                                    'class'      => $current['class'],
+                                    'properties' => array($current['properties']),
+                                    'uuid'       => $taskjob['uniqid']);
+               }
+               break;
 
+            case 'file':
+               $pfCollect_File = new PluginFusioninventoryCollect_File();
+               $found = $pfCollect_File->find($sql_where);
+               foreach ($found as $current) {
+                  $tmp_array = array('function'  => 'findFile',
+                                     'dir'       => $found['dir'],
+                                     'limit'     => $found['limit'],
+                                     'recursive' => $found['recursive'],
+                                     'filter'    => array('is_file' => $found['is_file'],
+                                                          'is_dir'  => $found['is_dir']),
+                                     'uuid'      =>  $taskjob['uniqid']);
+                  if ($found['filter_regex'] != '') {
+                     $tmp_array['filter']['regex'] = $found['filter_regex'];
+                  }
+                  if ($found['filter_sizeequals'] > 0) {
+                     $tmp_array['filter']['sizeEquals'] = $found['filter_sizeequals'];
+                  } else if ($found['filter_sizegreater'] > 0) {
+                     $tmp_array['filter']['sizeGreater'] = $found['filter_sizegreater'];
+                  } else if ($found['filter_sizelower'] > 0) {
+                     $tmp_array['filter']['sizeLower'] = $found['filter_sizelower'];
+                  }
+                  if ($found['filter_checksumsha512'] != '') {
+                     $tmp_array['filter']['checkSumSHA512'] = $found['filter_checksumsha512'];
+                  }
+                  if ($found['filter_checksumsha2'] != '') {
+                     $tmp_array['filter']['checkSumSHA2'] = $found['filter_checksumsha2'];
+                  }
+                  if ($found['filter_name'] != '') {
+                     $tmp_array['filter']['name'] = $found['filter_name'];
+                  }
+                  if ($found['filter_iname'] != '') {
+                     $tmp_array['filter']['iname'] = $found['filter_iname'];
+                  }
 
+                  $output[] = $tmp_array;
+               }
+
+               break;
+         }
       }
       return $output;
    }

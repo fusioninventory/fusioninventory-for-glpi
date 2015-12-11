@@ -542,16 +542,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             );
             foreach($targets as $keyt=>$target) {
                $items_id = current($target);
-               unset($targets[$keyt]);
+               /*unset($targets[$keyt]);
                foreach ($pfCollect_objects as $pfCollect_obj_name => $pfCollect_obj) {
                   $found = $pfCollect_obj->find("plugin_fusioninventory_collects_id = $items_id");
                   foreach ($found as $pfCollect_obj_data) {
                      $targets[] = array($pfCollect_obj_name => $pfCollect_obj_data['id']);
                   }
-               }
+               }*/
 
             }
          }
+
+         Toolbox::logDebug($targets);
 
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;

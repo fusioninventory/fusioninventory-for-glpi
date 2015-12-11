@@ -95,6 +95,7 @@ if (isset($_GET['action'])) {
          // example
          // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
          $pfAgent = new PluginFusioninventoryAgent();
 
          $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
@@ -132,7 +133,7 @@ if (isset($_GET['action'])) {
                die("collect type not found");
             }
 
-            // update datas in table 
+            // update datas in table
             $pfCollect_subO->updateComputer($computers_id,
                                             $a_values,
                                             $jobstate['items_id']);
@@ -141,21 +142,28 @@ if (isset($_GET['action'])) {
             $pfTaskjobstate->changeStatus($jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
+            $keys = $a_values;
+            unset($keys['_cpt']);
+            if (count($keys)) {
+               $pfTaskjoblog->addTaskjoblog($jobstate['id'],
+                                            $jobstate['items_id'],
+                                            $jobstate['itemtype'],
+                                            PluginFusioninventoryTaskjoblog::TASK_INFO,
+                                            json_encode($keys, JSON_UNESCAPED_SLASHES));
+            } else {
+               $pfTaskjoblog->addTaskjoblog($jobstate['id'],
+                                            $jobstate['items_id'],
+                                            $jobstate['itemtype'],
+                                            PluginFusioninventoryTaskjoblog::TASK_ERROR,
+                                            __('Path not found', 'fusioninventory'));
+            }
+
+
             if (isset($a_values['_cpt'])) {
-               // last value return by agent
-               if ($a_values['_cpt'] == 1) { 
+               if ($a_values['_cpt'] <= 0) {
                   $pfTaskjobstate->changeStatusFinish($jobstate['id'],
                                                       $jobstate['items_id'],
                                                       $jobstate['itemtype']);
-               } else 
-
-               // path not found by agent
-               if ($a_values['_cpt'] == 0) { 
-                  $pfTaskjobstate->changeStatusFinish($jobstate['id'],
-                                                      $jobstate['items_id'],
-                                                      $jobstate['itemtype'],
-                                                      1,
-                                                      'Path not found');
                }
             }
          }
