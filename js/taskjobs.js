@@ -253,14 +253,8 @@ function agent_is_pinned(args) {
 }
 
 function agents_chart(chart_id) {
-
-   var chart_id = chart_id;
-
    function chart(selection) {
       selection.each( function(data,i) {
-
-         //var data = data;
-
          var div = d3.select(this)
             .selectAll("div.agent_block")
             .data(data);//, function(d) { return d[0];})
@@ -280,7 +274,6 @@ function agents_chart(chart_id) {
                }*/
 
                classes.push('agent_' + d[1][0].state);
-               classes.push('agent_' + d[1][0]['state']);
                return classes.join(' ');
             }).each( function(d) {
                 //TODO: instead of using d3.selection.each, we should prepare
@@ -288,7 +281,6 @@ function agents_chart(chart_id) {
                 //code) and use jquery .clone() and .repaceWith() in order to
                 //speed things up and getting translated element from
                 //templates.
-
 
                 // add a link to another page
                 var links = d3.select(this).selectAll('a.link').data([d]);
@@ -415,8 +407,6 @@ function agents_chart(chart_id) {
 
             });
          div.exit().remove();
-
-         //div.order();
 
       });
    }

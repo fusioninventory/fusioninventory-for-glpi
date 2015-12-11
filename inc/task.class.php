@@ -553,8 +553,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
          }
 
-         Toolbox::logDebug($targets);
-
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;
             $item_type = key($target);
