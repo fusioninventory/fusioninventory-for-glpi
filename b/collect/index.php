@@ -45,33 +45,33 @@ include ("../../../../inc/includes.php");
 ob_end_clean();
 
 $response = array();
+
 //Agent communication using REST protocol
 if (isset($_GET['action'])) {
+   $pfAgent        = new PluginFusioninventoryAgent();
+   $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+   $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
+   $plCollect      = new PluginFusioninventoryCollect();
+
    switch ($_GET['action']) {
 
       case 'getJobs':
          if(isset($_GET['machineid'])) {
-            $pfAgent        = new PluginFusioninventoryAgent();
-            $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-            $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
+
             $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
             if (isset($a_agent['id'])) {
                $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
                foreach ($moduleRun as $className => $array) {
                   if (class_exists($className)) {
                      if ($className == "PluginFusioninventoryCollect") {
-                        $class = new PluginFusioninventoryCollect();
                         $response['jobs'] = array();
                         foreach ($array as $data) {
-                           $out = $class->run($data, $a_agent);
+                           $out = $plCollect->run($data, $a_agent);
                            if (count($out) > 0) {
                               $response['jobs'] = array_merge($response['jobs'], $out);
                               $response['postmethod'] = 'POST';
                               $response['token'] = Session::getNewCSRFToken();
                            }
-                           /*$pfTaskjobstate->changeStatus(
-                                   $data['id'],
-                                   PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);*/
 
                            $a_input = array();
                            $a_input['plugin_fusioninventory_taskjobstates_id'] = $data['id'];
@@ -94,10 +94,6 @@ if (isset($_GET['action'])) {
       case 'setAnswer':
          // example
          // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-         $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-         $pfAgent = new PluginFusioninventoryAgent();
-
          $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
             AND `state`!='".PluginFusioninventoryTaskjobstate::FINISHED."'", '', 1));
 
@@ -114,16 +110,18 @@ if (isset($_GET['action'])) {
             unset($a_values['action']);
             unset($a_values['uuid']);
 
-            switch ($jobstate['itemtype']) {
-               case 'PluginFusioninventoryCollect_Registry':
+            $plCollect->getFromDB($jobstate['items_id']);
+
+            switch ($plCollect->fields['type']) {
+               case 'registry':
                   $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();
                   break;
 
-               case 'PluginFusioninventoryCollect_Wmi':
+               case 'wmi':
                   $pfCollect_subO = new PluginFusioninventoryCollect_Wmi_Content();
                   break;
 
-               case 'PluginFusioninventoryCollect_File':
+               case 'file':
                   $pfCollect_subO = new PluginFusioninventoryCollect_File_Content();
                   $pfCollect_subO->storeTempFilesFound($jobstate['id'], $a_values);
                   break;
@@ -157,20 +155,23 @@ if (isset($_GET['action'])) {
                                             PluginFusioninventoryTaskjoblog::TASK_ERROR,
                                             __('Path not found', 'fusioninventory'));
             }
-
-
-            if (isset($a_values['_cpt'])) {
-               if ($a_values['_cpt'] <= 0) {
-                  $pfTaskjobstate->changeStatusFinish($jobstate['id'],
-                                                      $jobstate['items_id'],
-                                                      $jobstate['itemtype']);
-               }
-            }
          }
          break;
 
+
+
+       case 'jobsDone':
+         $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
+            AND `state`!='".PluginFusioninventoryTaskjobstate::FINISHED."'", '', 1));
+         $pfTaskjobstate->changeStatusFinish($jobstate['id'],
+                                             $jobstate['items_id'],
+                                             $jobstate['itemtype']);
+
+         break;
    }
 
+
+   // send response
    if (count($response) > 0) {
       echo json_encode($response);
    } else {
