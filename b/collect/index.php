@@ -51,7 +51,7 @@ if (isset($_GET['action'])) {
    $pfAgent        = new PluginFusioninventoryAgent();
    $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
    $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
-   $plCollect      = new PluginFusioninventoryCollect();
+   $pfCollect      = new PluginFusioninventoryCollect();
 
    switch ($_GET['action']) {
 
@@ -66,7 +66,7 @@ if (isset($_GET['action'])) {
                      if ($className == "PluginFusioninventoryCollect") {
                         $response['jobs'] = array();
                         foreach ($array as $data) {
-                           $out = $plCollect->run($data, $a_agent);
+                           $out = $pfCollect->run($data, $a_agent);
                            if (count($out) > 0) {
                               $response['jobs'] = array_merge($response['jobs'], $out);
                               $response['postmethod'] = 'POST';
@@ -110,9 +110,9 @@ if (isset($_GET['action'])) {
             unset($a_values['action']);
             unset($a_values['uuid']);
 
-            $plCollect->getFromDB($jobstate['items_id']);
+            $pfCollect->getFromDB($jobstate['items_id']);
 
-            switch ($plCollect->fields['type']) {
+            switch ($pfCollect->fields['type']) {
                case 'registry':
                   $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();
                   break;
