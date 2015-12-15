@@ -93,7 +93,7 @@ if (isset($_GET['action'])) {
 
       case 'setAnswer':
          // example
-         // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
+         // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&sid=1&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
          $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
             AND `state`!='".PluginFusioninventoryTaskjobstate::FINISHED."'", '', 1));
 
@@ -107,8 +107,12 @@ if (isset($_GET['action'])) {
                 $response['token'] = Session::getNewCSRFToken();
                 unset($a_values['_glpi_csrf_token']);
             }
+            $sid = isset($a_values['_sid'])?$a_values['_sid']:0;
+            $cpt = isset($a_values['_cpt'])?$a_values['_cpt']:0;
             unset($a_values['action']);
             unset($a_values['uuid']);
+            unset($a_values['_cpt']);
+            unset($a_values['_sid']);
 
             $pfCollect->getFromDB($jobstate['items_id']);
 
@@ -123,7 +127,7 @@ if (isset($_GET['action'])) {
 
                case 'file':
                   $pfCollect_subO = new PluginFusioninventoryCollect_File_Content();
-                  $pfCollect_subO->storeTempFilesFound($jobstate['id'], $a_values);
+                  $a_values = array($sid => $a_values);
                   break;
             }
 
@@ -131,30 +135,28 @@ if (isset($_GET['action'])) {
                die("collect type not found");
             }
 
-            // update datas in table
+            // add collected informations to computer
             $pfCollect_subO->updateComputer($computers_id,
                                             $a_values,
-                                            $jobstate['items_id']);
+                                            $sid);
 
             // change status of state table row
             $pfTaskjobstate->changeStatus($jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
-            $keys = $a_values;
-            unset($keys['_cpt']);
-            if (count($keys)) {
-               $pfTaskjoblog->addTaskjoblog($jobstate['id'],
-                                            $jobstate['items_id'],
-                                            $jobstate['itemtype'],
-                                            PluginFusioninventoryTaskjoblog::TASK_INFO,
-                                            json_encode($keys, JSON_UNESCAPED_SLASHES));
+            // add logs to job
+            if (count($a_values)) {
+               $flag    = PluginFusioninventoryTaskjoblog::TASK_INFO;
+               $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
             } else {
-               $pfTaskjoblog->addTaskjoblog($jobstate['id'],
-                                            $jobstate['items_id'],
-                                            $jobstate['itemtype'],
-                                            PluginFusioninventoryTaskjoblog::TASK_ERROR,
-                                            __('Path not found', 'fusioninventory'));
+               $flag    = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+               $message = __('Path not found', 'fusioninventory');
             }
+            $pfTaskjoblog->addTaskjoblog($jobstate['id'],
+                                         $jobstate['items_id'],
+                                         $jobstate['itemtype'],
+                                         $flag,
+                                         $message);
          }
          break;
 
