@@ -122,6 +122,11 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       return $tab;
    }
 
+   static function getDefaultSearchRequest() {
+      return array('sort'  => 3,
+                   'order' => 'DESC');
+   }
+
 }
 
 ?>
