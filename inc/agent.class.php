@@ -402,7 +402,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                  \"_glpi_csrf_token\": \"".Session::getNewCSRFToken()."\"});'>".
                "<img src='".$CFG_GLPI['root_doc']."/pics/delete.png' /></a>";
       } else {
-         Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id');
+         Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
+                                        $this->fields['entities_id']);
       }
       echo "</td>";
       echo "<td>".__('Token')."&nbsp:</td>";
