@@ -133,6 +133,9 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
          $this->delete(array('id' => $id), true);
       }
       foreach($registry_data as $key => $value) {
+         if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
+            $value = hexdec($value);
+         }
          $input = array(
             'computers_id' => $computers_id,
             'plugin_fusioninventory_collects_registries_id' => $collects_registries_id,
