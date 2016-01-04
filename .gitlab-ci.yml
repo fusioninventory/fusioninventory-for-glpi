@@ -1,5 +1,6 @@
 'copy to people mirror on tags':
   script:
+  - pwd
   - git submodule update --init
   - ls -la
   - ''
