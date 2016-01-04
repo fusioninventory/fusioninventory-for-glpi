@@ -20,3 +20,6 @@
   tags: 
   except:
   - master
+  only:
+  - tags
+
