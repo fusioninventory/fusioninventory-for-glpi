@@ -1,24 +1,11 @@
-'copy to people mirror on tags':
+'copy to people mirror only on tags':
   script:
-  - pwd
   - git submodule update --init
-  - ls -la
-  - ''
+  - ls -l
   - '# detect last tag of repo, if this build is a tag, so we can upload archive at
     the end'
-  - LAST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-  - echo $LAST_TAG
-  - LAST_TAG_REF=$(git rev-list $LAST_TAG | head -n 1)
-  - echo $LAST_TAG_REF
-  - VERSION=$CI_BUILD_REF
-  - echo $CI_BUILD_REF
-  - if [ "$LAST_TAG_REF" = "$CI_BUILD_REF" ]; then
-  - VERSION=$LAST_TAG
-  - fi
+  - VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
   - echo $VERSION
-  - ''
-  - '# archive, and copy it to final build dir (only for tags),'
-  - if [ "$VERSION" = "$LAST_TAG" ]; then
   - '#remove previous archive (if exists)'
   - rm -f fusioninventory-for-glpi_$VERSION.tar.gz
   - ''
@@ -34,4 +21,6 @@
   tags: 
   except:
   - master
+  only:
+  - tags
 
