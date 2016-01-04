@@ -6,9 +6,9 @@
     the end'
   - VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
   - echo $VERSION
-  - 'prepare filename'
+  - '# prepare filename'
   - FI_FILENAME=fusioninventory-for-glpi_$VERSION.tar.gz
-  - '#remove previous archive (if exists)'
+  - '# remove previous archive (if exists)'
   - rm -f 
   - '# prepare archive'
   - git archive --format=tar --prefix=fusioninventory/ $VERSION | gzip > $FI_FILENAME
@@ -20,3 +20,6 @@
   tags: 
   except:
   - master
+  only:
+  - tags
+
