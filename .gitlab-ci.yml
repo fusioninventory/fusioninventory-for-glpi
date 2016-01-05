@@ -10,7 +10,7 @@
   - '# prepare filename'
   - FI_FILENAME=fusioninventory-for-glpi_$VERSION.tar.gz
   - '# remove previous archive (if exists)'
-  - rm -f 
+  - rm -f $FI_FILENAME
   - '# prepare archive'
   - git archive --format=tar --prefix=fusioninventory/ $VERSION | gzip > $FI_FILENAME
   - '# copy to mirror'
