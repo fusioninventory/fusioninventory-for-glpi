@@ -697,7 +697,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                           `glpi_softwares`.`manufacturers_id`,
                           `glpi_softwareversions`.`entities_id`,
                           `glpi_computers_softwareversions`.`is_template_computer`,
-                          `glpi_computers_softwareversions`.`is_deleted_computer`
+                          `glpi_computers_softwareversions`.`is_deleted_computer`,
+                          `glpi_computers_softwareversions`.`date_install`
                    FROM `glpi_computers_softwareversions`
                    LEFT JOIN `glpi_softwareversions`
                         ON (`glpi_computers_softwareversions`.`softwareversions_id`
@@ -719,7 +720,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $comp_key = strtolower($data['name']).
                                "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
-                               "$$$$".$data['entities_id'];
+                               "$$$$".$data['entities_id'].
+                               "$$$$".$data['date_install'];
                   $db_software[$comp_key] = $idtmp;
                }
             }
@@ -930,7 +932,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                             'computers_id'        => $computers_id,
                             'softwareversions_id' => $softwareversions_id,
                             'is_dynamic'          => 1,
-                            'entities_id'         => $a_software['entities_id']
+                            'entities_id'         => $a_software['entities_id'],
+                            'date_install'        => $a_software['date_install']
                             );
                         $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                      }
