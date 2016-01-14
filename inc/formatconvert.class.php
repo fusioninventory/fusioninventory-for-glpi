@@ -69,7 +69,7 @@ class PluginFusioninventoryFormatconvert {
                            'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS',
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
                            'LICENSEINFOS', 'STORAGES', 'ORACLEDB');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
@@ -1005,7 +1005,7 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['peripheraltypes_id'] = 'keyboard';
             }
 
-            if (isset($array_tmp['name']) 
+            if (isset($array_tmp['name'])
                 && isset($a_peripheral_name[$array_tmp['name']])) {
                $a_inventory['peripheral'][$a_peripheral_name[$array_tmp['name']]]['peripheraltypes_id'] = $array_tmp['peripheraltypes_id'];
             } else {
@@ -1260,7 +1260,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
-      
+
       // * ORACLE DB
       $a_inventory['oracledb'] = array();
 	if (isset($array['ORACLEDB'])) {
@@ -1269,44 +1269,44 @@ class PluginFusioninventoryFormatconvert {
 			    'VERSION'      => 'version',
 			    'MEMORYTARGET' => 'memory_target',
 			    'SGATARGET'    => 'sga_target',
-			    'ADVANCEDCOMPRESSION' 
-			       => 'has_advanced_compression', 
-			    'ACTIVEDATAGUARD' 
+			    'ADVANCEDCOMPRESSION'
+			       => 'has_advanced_compression',
+			    'ACTIVEDATAGUARD'
 			       => 'has_active_data_guard',
-			    'CHANGEMANAGEMENTPACK' 
+			    'CHANGEMANAGEMENTPACK'
 			       => 'has_change_management_pack',
-			    'CONFIGURATIONMANAGEMENT' 
+			    'CONFIGURATIONMANAGEMENT'
 			       => 'has_configuration_management',
-			    'DATAMASKINGPACK' 
+			    'DATAMASKINGPACK'
 			       => 'has_data_masking_pack',
-			    'DATAMINING' 
+			    'DATAMINING'
 			       => 'has_data_mining',
-			    'DATAVAULT' 
+			    'DATAVAULT'
 			       => 'has_data_vault',
-			    'DIAGNOSTICPACK' 
+			    'DIAGNOSTICPACK'
 			       => 'has_diagnostic_pack',
-			    'EXADATA' 
+			    'EXADATA'
 			       => 'has_exadata',
-			    'LABELSECURITY' 
+			    'LABELSECURITY'
 			       => 'has_label_security',
 			    'OLAP' => 'has_olap',
 			    'PARTINIONNING' => 'has_paritionning',
-			    'PROVISIONNINGPAPACK' 
+			    'PROVISIONNINGPAPACK'
 			       => 'has_provisionning_patch_automation_pack',
-			    'PROVISIONNINGPAPFORDB' 
-			       => 
+			    'PROVISIONNINGPAPFORDB'
+			       =>
 'has_provisionning_patch_automation_pack_for_database',
-			    'REALAPPLICATIONCLUSTER' 
+			    'REALAPPLICATIONCLUSTER'
 			       => 'has_real_application_cluster',
-			    'REALAPPLICATIONTESTING' 
+			    'REALAPPLICATIONTESTING'
 			       => 'has_real_application_testing',
 			    'SPATIAL' => 'has_spatial',
 			    'TOTALRECALL' => 'has_total_recall',
 			    'TUNINGPACK' => 'has_tuning_pack',
-			    'WEBLOGICSERVERMANAGEMENTPACK' 
+			    'WEBLOGICSERVERMANAGEMENTPACK'
 			       => 'has_weblogic_server_management_pack'
 			    );
-			    
+
 	    $array_tmp = $thisc->addValues($a_oracledb, $values);
 	    $array_tmp['is_dynamic'] = 1;
 	    $a_inventory['oracledb'][] = $array_tmp;
@@ -1536,11 +1536,24 @@ class PluginFusioninventoryFormatconvert {
             $a_softwares['PUBLISHER'] = current($a_softwares['PUBLISHER']);
          }
 
+         if (!isset($a_softwares['INSTALLDATE']) || $a_softwares['INSTALLDATE'] == '') {
+            $a_softwares['INSTALLDATE'] = null;
+         } else {
+            $a_split = explode("/", $a_softwares['INSTALLDATE']);
+            // 2011-06-29 13:19:48
+            if (isset($a_split[0])
+                    AND isset($a_split[1])
+                    AND isset($a_split[2])) {
+               $a_softwares['INSTALLDATE'] = $a_split[2]."-".$a_split[1]."-".$a_split[0];
+            }
+         }
+
          $array_tmp = $this->addValues($a_softwares,
                                         array(
                                            'PUBLISHER'   => 'manufacturers_id',
                                            'NAME'        => 'name',
-                                           'VERSION'     => 'version'));
+                                           'VERSION'     => 'version',
+                                           'INSTALLDATE' => 'date_install'));
          if (!isset($array_tmp['name'])
                  || $array_tmp['name'] == '') {
             if (isset($a_softwares['GUID'])
@@ -1608,11 +1621,13 @@ class PluginFusioninventoryFormatconvert {
                   $comp_key = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
-                               "$$$$".$array_tmp['entities_id'];
+                               "$$$$".$array_tmp['entities_id'].
+                               "$$$$".$array_tmp['date_install'];
 
                   $comp_key_simple = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['entities_id'];
+                               "$$$$".$array_tmp['entities_id'].
+                               "$$$$".$array_tmp['date_install'];
 
                   if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
