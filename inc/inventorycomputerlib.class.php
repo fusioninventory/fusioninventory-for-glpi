@@ -691,14 +691,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
             $db_software = array();
             if ($no_history === FALSE) {
+               if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+                  $dateInstallField = ",`glpi_computers_softwareversions`.`date_install`";
+               } else {
+                  $dateInstallField = '';
+               }
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                           `glpi_softwares`.`name`,
                           `glpi_softwareversions`.`name` AS version,
                           `glpi_softwares`.`manufacturers_id`,
                           `glpi_softwareversions`.`entities_id`,
                           `glpi_computers_softwareversions`.`is_template_computer`,
-                          `glpi_computers_softwareversions`.`is_deleted_computer`,
-                          `glpi_computers_softwareversions`.`date_install`
+                          `glpi_computers_softwareversions`.`is_deleted_computer`
+                          $dateInstallField
                    FROM `glpi_computers_softwareversions`
                    LEFT JOIN `glpi_softwareversions`
                         ON (`glpi_computers_softwareversions`.`softwareversions_id`
@@ -721,7 +726,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
                                "$$$$".$data['entities_id'].
-                               "$$$$".$data['date_install'];
+                               (isset($data['date_install']) ? "$$$$".$data['date_install'] : '');
                   $db_software[$comp_key] = $idtmp;
                }
             }
@@ -806,10 +811,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                       'entities_id'         => $a_software['entities_id'],
                       );
                   $tmp = "('".implode("','", $a_tmp);
-                  if ($a_software['date_install'] == '') {
-                     $tmp.= "',NULL)";
+                  if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+                     if ($a_software['date_install'] == '') {
+                        $tmp.= "',NULL)";
+                     } else {
+                        $tmp.= "','".$a_software['date_install']."')";
+                     }
                   } else {
-                     $tmp.= "','".$a_software['date_install']."')";
+                     $tmp = $tmp . "')";
                   }
                   $a_toinsert[] = $tmp;
                }
@@ -934,11 +943,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                             'is_dynamic'          => 1,
                             'entities_id'         => $a_software['entities_id'],
                             );
-                       $tmp = "('".implode("','", $a_tmp);
-                        if ($a_software['date_install'] == '') {
-                           $tmp.= "',NULL)";
+                        $tmp = "('".implode("','", $a_tmp);
+                        if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+                           if ($a_software['date_install'] == '') {
+                              $tmp.= "',NULL)";
+                           } else {
+                              $tmp.= "','".$a_software['date_install']."')";
+                           }
                         } else {
-                           $tmp.= "','".$a_software['date_install']."')";
+                           $tmp = $tmp . "')";
                         }
                         $a_toinsert[] = $tmp;
                      }
