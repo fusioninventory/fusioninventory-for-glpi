@@ -542,13 +542,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             );
             foreach($targets as $keyt=>$target) {
                $items_id = current($target);
-               unset($targets[$keyt]);
+               /*unset($targets[$keyt]);
                foreach ($pfCollect_objects as $pfCollect_obj_name => $pfCollect_obj) {
                   $found = $pfCollect_obj->find("plugin_fusioninventory_collects_id = $items_id");
                   foreach ($found as $pfCollect_obj_data) {
                      $targets[] = array($pfCollect_obj_name => $pfCollect_obj_data['id']);
                   }
-               }
+               }*/
 
             }
          }
@@ -1082,7 +1082,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $pfCollect_obj = new $result[$fieldmap['run.itemtype']];
                   if ($pfCollect_obj->getFromDB($result[$fieldmap['run.items_id']])) {
                      $result[$fieldmap['run.itemtype']] = "PluginFusioninventoryCollect";
-                     $result[$fieldmap['run.items_id']] = $pfCollect_obj->fields['plugin_fusioninventory_collects_id'];
+                     if (isset($pfCollect_obj->fields['plugin_fusioninventory_collects_id'])) {
+                        $result[$fieldmap['run.items_id']] = $pfCollect_obj->fields['plugin_fusioninventory_collects_id'];
+                     }
                   }
                }
 
