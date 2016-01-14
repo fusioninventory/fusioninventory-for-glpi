@@ -1885,15 +1885,17 @@ FALSE);
                   $instantiation_type = $inventory_networkports[$key]['instantiation_type'];
                   if (in_array($instantiation_type, array('NetworkPortEthernet',
                                                           'NetworkPortFiberchannel'))) {
-                     $instance = new $instantiation_type;
-                     $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
-                     if (count($portsinstance) == 1) {
-                        $portinstance = current($portsinstance);
-                        $input = $portinstance;
-                     } else {
-                        $input = array(
-                           'networkports_id' => $keydb
-                        );
+                     $input = array(
+                        'networkports_id' => $keydb
+                     );
+
+                     if (class_exists($instantiation_type)) {
+                        $instance = new $instantiation_type;
+                        $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
+                        if (count($portsinstance) == 1) {
+                           $portinstance = current($portsinstance);
+                           $input = $portinstance;
+                        } 
                      }
                      if (isset($inventory_networkports[$key]['speed'])) {
                         $input['speed'] = $inventory_networkports[$key]['speed'];

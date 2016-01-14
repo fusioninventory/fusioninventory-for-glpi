@@ -226,7 +226,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "<a title='".__('p2p', 'fusioninventory').", "
             .__("retention", 'fusioninventory')." : ".
                $file_p2p_retention_duration." ".
-               __("days", 'fusioninventory')."' class='more'>";
+               __("Minute(s)", 'fusioninventory')."' class='more'>";
                echo  "<img src='".$pics_path.
                      "p2p.png' />";
                echo "<sup>".$file_p2p_retention_duration."</sup>";
@@ -435,16 +435,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       Html::showCheckbox(array('name' => 'p2p', 'checked' => $p2p));
       echo "</td>";
       echo "</tr><tr>";
-      echo "<th>".__("retention days", 'fusioninventory')."</th>";
+      echo "<th>".__("retention", 'fusioninventory').
+                  " - ".__("Minute(s)", 'fusioninventory')."</th>";
       echo "<td>";
-      /*
-       * TODO: use task periodicity input to propose days, months and years
-       */
-      Dropdown::showNumber('p2p-retention-duration', array(
-             'value' => $p2p_retention_duration,
-             'min'   => 0,
-             'max'   => 400)
-      );
+      
+      echo "<input type='number' name='p2p-retention-duration' value='$p2p_retention_duration' />";
       echo "</td>";
       echo "</tr><tr>";
       echo "<td>";
