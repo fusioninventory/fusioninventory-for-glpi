@@ -776,8 +776,7 @@ class PluginFusioninventoryFormatconvert {
                         OR isset($a_drives['FILESYSTEM'])
                        AND $a_drives['FILESYSTEM'] == 'nfs'))
                 OR ((isset($a_drives['TYPE'])) AND
-                    (($a_drives['TYPE'] == "Removable Disk")
-                   OR ($a_drives['TYPE'] == "Compact Disc")))) {
+                    ($a_drives['TYPE'] == "Removable Disk"))) {
 
             } else {
                if ($pfConfig->getValue('import_volume') == 1) {
