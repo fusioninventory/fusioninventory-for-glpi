@@ -50,6 +50,37 @@ class PluginFusioninventoryComputerArch extends CommonDropdown {
    static function getTypeName($nb=0) {
       return __('Architecture', 'fusioninventory');
    }
+
+   function importExternal($value, $entities_id=-1, $external_params=array(), $comment="",
+                           $add=true) {
+
+      $value = trim($value);
+      if (strlen($value) == 0) {
+         return 0;
+      }
+
+      $ruleinput      = array("name" => stripslashes($value));
+      $rulecollection = getItemForItemtype("PluginFusioninventoryRuleDictionnaryComputerArchCollection");
+
+      foreach ($this->additional_fields_for_dictionnary as $field) {
+         if (isset($external_params[$field])) {
+            $ruleinput[$field] = $external_params[$field];
+         } else {
+            $ruleinput[$field] = '';
+         }
+      }
+
+      $input["name"]        = $value;
+      $input["comment"]     = $comment;
+
+      if ($rulecollection) {
+         $res_rule = $rulecollection->processAllRules(Toolbox::stripslashes_deep($ruleinput), array(), array());
+         if (isset($res_rule["name"])) {
+            $input["name"] = $res_rule["name"];
+         }
+      }
+      return ($add ? $this->import($input) : $this->findID($input));
+   }
 }
 
 ?>

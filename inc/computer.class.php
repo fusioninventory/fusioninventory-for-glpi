@@ -48,6 +48,11 @@ class PluginFusioninventoryComputer extends Computer {
 
    static $rightname = "plugin_fusioninventory_group";
 
+   /*
+   static function getSearchURL($full=true) {
+      return Toolbox::getItemTypeSearchURL("PluginFusioninventoryDeployGroup" , $full);
+   }*/
+
    function getSearchOptions() {
       $computer = new Computer();
       $options  = $computer->getSearchOptions();

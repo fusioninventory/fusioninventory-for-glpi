@@ -97,6 +97,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerSolariszone        = new PluginFusioninventoryInventoryComputerSolariszone();
+      $pfComputerOracledb           = new PluginFusioninventoryInventoryComputerOracledb();
       $computer_Item                = new Computer_Item();
       $monitor                      = new Monitor();
       $printer                      = new Printer();
@@ -394,6 +396,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
+            if (!isset($a_computerinventory['drive'])) {
+               $a_computerinventory['drive'] = array();
+            }
             if (count($db_drives) == 0) {
                foreach ($a_computerinventory['drive'] as $a_drive) {
                   $this->addDrive($a_drive, $computers_id, $no_history);
@@ -686,6 +691,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
             $db_software = array();
             if ($no_history === FALSE) {
+               if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+                  $dateInstallField = ",`glpi_computers_softwareversions`.`date_install`";
+               } else {
+                  $dateInstallField = '';
+               }
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                           `glpi_softwares`.`name`,
                           `glpi_softwareversions`.`name` AS version,
@@ -693,6 +703,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                           `glpi_softwareversions`.`entities_id`,
                           `glpi_computers_softwareversions`.`is_template_computer`,
                           `glpi_computers_softwareversions`.`is_deleted_computer`
+                          $dateInstallField
                    FROM `glpi_computers_softwareversions`
                    LEFT JOIN `glpi_softwareversions`
                         ON (`glpi_computers_softwareversions`.`softwareversions_id`
@@ -714,7 +725,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $comp_key = strtolower($data['name']).
                                "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
-                               "$$$$".$data['entities_id'];
+                               "$$$$".$data['entities_id'].
+                               (isset($data['date_install']) ? "$$$$".$data['date_install'] : '');
                   $db_software[$comp_key] = $idtmp;
                }
             }
@@ -796,9 +808,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                       'computers_id'        => $computers_id,
                       'softwareversions_id' => $softwareversions_id,
                       'is_dynamic'          => 1,
-                      'entities_id'         => $a_software['entities_id']
+                      'entities_id'         => $a_software['entities_id'],
                       );
-                  $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+                  $tmp = "('".implode("','", $a_tmp);
+                  if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+                     if ($a_software['date_install'] == '') {
+                        $tmp.= "',NULL)";
+                     } else {
+                        $tmp.= "','".$a_software['date_install']."')";
+                     }
+                  } else {
+                     $tmp = $tmp . "')";
+                  }
+                  $a_toinsert[] = $tmp;
                }
                if (count($a_toinsert) > 0) {
                   $this->addSoftwareVersionsComputer($a_toinsert);
@@ -919,9 +941,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                             'computers_id'        => $computers_id,
                             'softwareversions_id' => $softwareversions_id,
                             'is_dynamic'          => 1,
-                            'entities_id'         => $a_software['entities_id']
+                            'entities_id'         => $a_software['entities_id'],
                             );
-                        $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+                        $tmp = "('".implode("','", $a_tmp);
+                        if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+                           if ($a_software['date_install'] == '') {
+                              $tmp.= "',NULL)";
+                           } else {
+                              $tmp.= "','".$a_software['date_install']."')";
+                           }
+                        } else {
+                           $tmp = $tmp . "')";
+                        }
+                        $a_toinsert[] = $tmp;
                      }
                      $this->addSoftwareVersionsComputer($a_toinsert);
 
@@ -944,6 +976,68 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         Log::HISTORY_INSTALL_SOFTWARE);
                         }
                      }
+                  }
+               }
+            }
+         }
+
+      // * Solaris zones
+         if ($pfConfig->getValue("import_vm") == 1) {
+            $db_computersolariszone = array();
+            if ($no_history === FALSE) {
+               $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputersolariszones`
+                  WHERE `computers_id` = '$computers_id'
+                     AND `is_dynamic`='1'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_computersolariszone[$idtmp] = $data1;
+               }
+            }
+
+            $simplecomputersolariszone = array();
+            if (isset($a_computerinventory['solariszone'])) {
+               foreach ($a_computerinventory['solariszone'] as $key=>$a_computersolariszone) {
+                  $a_field = array('name', 'uuid', 'zone_number', 'zone_max_swap', 'zone_max_locked_memory',
+				   'zone_max_shm_memory', 'zone_cpu_cap', 'zone_dedicated_cpu');
+                  foreach ($a_field as $field) {
+                     if (isset($a_computersolariszone[$field])) {
+                        $simplecomputersolariszone[$key][$field] =
+                                    $a_computersolariszone[$field];
+                     }
+                  }
+               }
+            }
+
+            foreach ($simplecomputersolariszone as $key => $arrays) {
+               foreach ($db_computersolariszone as $keydb => $arraydb) {
+                  if ($arrays == $arraydb) {
+                     $input = array();
+                     $input['id'] = $keydb;
+                     $pfComputerSolariszone->update($input);
+                     unset($simplecomputersolariszone[$key]);
+                     unset($a_computerinventory['solariszone'][$key]);
+                     unset($db_computersolariszone[$keydb]);
+                     break;
+                  }
+               }
+            }
+            if (count($a_computerinventory['solariszone']) == 0
+               && count($db_computersolariszone) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_computersolariszone) != 0) {
+                  // Delete virtualmachine in DB
+                  foreach ($db_computersolariszone as $idtmp => $data) {
+                     $pfComputerSolariszone->delete(array('id'=>$idtmp), 1);
+                  }
+               }
+               if (count($a_computerinventory['solariszone']) != 0) {
+                  foreach($a_computerinventory['solariszone'] as $a_solariszone) {
+                     $a_solariszone['computers_id'] = $computers_id;
+                     $pfComputerSolariszone->add($a_solariszone, array(), FALSE);
                   }
                }
             }
@@ -1064,6 +1158,90 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+
+      // * Oracle DB
+            $db_computeroracledb = array();
+            if ($no_history === FALSE) {
+               $query = "SELECT * FROM
+`glpi_plugin_fusioninventory_inventorycomputeroracledbs`
+                  WHERE `computers_id` = '$computers_id'
+                     AND `is_dynamic`='1'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_computeroracledb[$idtmp] = $data1;
+               }
+            }
+
+            $simplecomputersoracledb= array();
+            if (isset($a_computerinventory['oracledb'])) {
+               foreach ($a_computerinventory['oracledb'] as
+$key=>$a_computersoracledb) {
+            $a_field = array('name', 'version','memory_target',
+                            'sga_target', 'has_advanced_compression',
+                            'has_active_data_guard',
+                            'has_change_management_pack',
+                            'has_configuration_management',
+                            'has_data_masking_pack',
+                            'has_data_mining',
+                            'has_data_vault',
+                            'has_diagnostic_pack',
+                            'has_exadata',
+                            'has_label_security',
+                            'has_olap',
+                            'has_paritionning',
+                            'has_provisionning_patch_automation_pack',
+                         'has_provisionning_patch_automation_pack_for_database',
+                            'has_real_application_cluster',
+                            'has_real_application_testing',
+                            'has_spatial',
+                            'has_total_recall',
+                            'has_tuning_pack',
+                            'has_weblogic_server_management_pack'
+                            );
+                  foreach ($a_field as $field) {
+                     if (isset($a_computersoracledb[$field])) {
+                        $simplecomputersoracledb[$key][$field] =
+                                    $a_computersoracledb[$field];
+                     }
+                  }
+               }
+            }
+
+            foreach ($simplecomputersoracledb as $key => $arrays) {
+               foreach ($db_computeroracledb as $keydb => $arraydb) {
+                  if ($arrays == $arraydb) {
+                     $input = array();
+                     $input['id'] = $keydb;
+                     $pfComputerOracledb->update($input);
+                     unset($simplecomputersoracledb[$key]);
+                     unset($a_computerinventory['oracledb'][$key]);
+                     unset($db_computeroracledb[$keydb]);
+                     break;
+                  }
+               }
+            }
+            if (count($a_computerinventory['oracledb']) == 0
+               && count($db_computeroracledb) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_computeroracledb) != 0) {
+                  // Delete virtualmachine in DB
+                  foreach ($db_computeroracledb as $idtmp => $data) {
+                     $pfComputerOracledb->delete(array('id' => $idtmp), 1);
+                  }
+               }
+               if (count($a_computerinventory['oracledb']) != 0) {
+                  foreach($a_computerinventory['oracledb'] as
+$a_oracledb) {
+                     $a_oracledb['computers_id'] = $computers_id;
+                     $pfComputerOracledb->add($a_oracledb, array(),
+FALSE);
+                  }
+               }
+            }
 
       // * ComputerDisk
          if ($pfConfig->getValue("import_volume") != 0) {
@@ -1704,19 +1882,27 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                // Add / update instantiation_type
                if (isset($inventory_networkports[$key]['instantiation_type'])) {
-                  if ($inventory_networkports[$key]['instantiation_type'] == 'NetworkPortEthernet') {
-                     $portsethernet = $networkPortEthernet->find("`networkports_id`='".$keydb."'", '', 1);
-                     if (count($portsethernet) == 1) {
-                        $portethernet = current($portsethernet);
-                        $input = $portethernet;
-                     } else {
-                        $input = array(
-                           'networkports_id' => $keydb
-                        );
+                  $instantiation_type = $inventory_networkports[$key]['instantiation_type'];
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
+                                                          'NetworkPortFiberchannel'))) {
+                     $input = array(
+                        'networkports_id' => $keydb
+                     );
+
+                     if (class_exists($instantiation_type)) {
+                        $instance = new $instantiation_type;
+                        $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
+                        if (count($portsinstance) == 1) {
+                           $portinstance = current($portsinstance);
+                           $input = $portinstance;
+                        } 
                      }
                      if (isset($inventory_networkports[$key]['speed'])) {
                         $input['speed'] = $inventory_networkports[$key]['speed'];
                         $input['speed_other_value'] = $inventory_networkports[$key]['speed'];
+                     }
+                     if (isset($inventory_networkports[$key]['wwn'])) {
+                        $input['wwn'] = $inventory_networkports[$key]['wwn'];
                      }
                      if (isset($inventory_networkports[$key]['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
@@ -1732,9 +1918,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      $input['_no_history'] = $no_history;
                      if (isset($input['id'])) {
-                        $networkPortEthernet->update($input);
+                        $instance->update($input);
                      } else {
-                        $networkPortEthernet->add($input);
+                        $instance->add($input);
                      }
                   }
                }
@@ -1842,13 +2028,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $iPAddress->add($input, array(), !$no_history);
                }
                if (isset($a_networkport['instantiation_type'])) {
-                  if ($a_networkport['instantiation_type'] == 'NetworkPortEthernet') {
+                  $instantiation_type = $a_networkport['instantiation_type'];
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
+                                                          'NetworkPortFiberchannel'))) {
+                     $instance = new $instantiation_type;
                      $input = array(
                         'networkports_id' => $a_networkport['items_id']
                      );
                      if (isset($a_networkport['speed'])) {
                         $input['speed'] = $a_networkport['speed'];
                         $input['speed_other_value'] = $a_networkport['speed'];
+                     }
+                     if (isset($a_networkport['wwn'])) {
+                        $input['wwn'] = $a_networkport['wwn'];
                      }
                      if (isset($a_networkport['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
@@ -1863,7 +2055,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         }
                      }
                      $input['_no_history'] = $no_history;
-                     $networkPortEthernet->add($input);
+                     $instance->add($input);
                   }
                }
             }
@@ -2216,7 +2408,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
-      $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`) ';
+      if (FieldExists('glpi_computers_softwareversions', 'date_install')) {
+         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`,`date_install`) ';
+      } else {
+         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`)';
+      }
       $query .= ' VALUES '.implode(',', $a_input);
       $DB->query($query);
    }
@@ -2238,6 +2434,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['is_deleted_computer']  = FALSE;
       $a_software['_no_history']          = TRUE;
       $a_software['entities_id']          = $a_software['entities_id'];
+      $a_software['date_install']         = $a_software['date_install'];
 
       if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
          if (!$no_history) {

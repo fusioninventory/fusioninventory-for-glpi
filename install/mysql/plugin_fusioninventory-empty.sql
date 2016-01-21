@@ -314,6 +314,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -414,6 +415,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `bios_date` datetime DEFAULT NULL,
+  `hostid` varchar(255) DEFAULT NULL,
   `bios_version` varchar(255) DEFAULT NULL,
   `bios_assettag` varchar(255) DEFAULT NULL,
   `bios_manufacturers_id` int(11) NOT NULL DEFAULT '0',
@@ -432,6 +434,41 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputersolariszones`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_inventorycomputersolariszones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `uuid` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `vcpu` int(11) NOT NULL DEFAULT '0',
+  `ram` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_max_swap` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_max_locked_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_max_shm_memory` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_cpu_cap` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `zone_dedicated_cpu` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
+  `comment` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`),
+  KEY `entities_id` (`entities_id`),
+  KEY `name` (`name`),
+  KEY `vcpu` (`vcpu`),
+  KEY `ram` (`ram`),
+  KEY `zone_number` (`zone_number`),
+  KEY `zone_max_swap` (`zone_max_swap`),
+  KEY `zone_max_locked_memory` (`zone_max_locked_memory`),
+  KEY `zone_max_shm_memory` (`zone_max_shm_memory`),
+  KEY `zone_cpu_cap` (`zone_cpu_cap`),
+  KEY `zone_dedicated_cpu` (`zone_dedicated_cpu`),
+  KEY `is_deleted` (`is_deleted`),
+  KEY `is_dynamic` (`is_dynamic`),
+  KEY `uuid` (`uuid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstats`;
 
@@ -486,6 +523,51 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputeroracledbs`;
+
+CREATE TABLE IF NOT EXISTS
+`glpi_plugin_fusioninventory_inventorycomputeroracledbs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `memory_target` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `sga_target` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
+  `comment` text COLLATE utf8_unicode_ci,
+  `has_advanced_compression` tinyint(1) NOT NULL DEFAULT '0',
+  `has_active_data_guard` tinyint(1) NOT NULL DEFAULT '0',
+  `has_change_management_pack` tinyint(1) NOT NULL DEFAULT '0',
+  `has_configuration_management` tinyint(1) NOT NULL DEFAULT '0',
+  `has_data_masking_pack` tinyint(1) NOT NULL DEFAULT '0',
+  `has_data_mining` tinyint(1) NOT NULL DEFAULT '0',
+  `has_data_vault` tinyint(1) NOT NULL DEFAULT '0',
+  `has_diagnostic_pack` tinyint(1) NOT NULL DEFAULT '0',
+  `has_exadata` tinyint(1) NOT NULL DEFAULT '0',
+  `has_label_security` tinyint(1) NOT NULL DEFAULT '0',
+  `has_olap` tinyint(1) NOT NULL DEFAULT '0',
+  `has_paritionning` tinyint(1) NOT NULL DEFAULT '0',
+  `has_provisionning_patch_automation_pack` tinyint(1) NOT NULL DEFAULT '0',
+  `has_provisionning_patch_automation_pack_for_database` tinyint(1) NOT NULL
+DEFAULT '0',
+  `has_real_application_cluster` tinyint(1) NOT NULL DEFAULT '0',
+  `has_real_application_testing` tinyint(1) NOT NULL DEFAULT '0',
+  `has_spatial` tinyint(1) NOT NULL DEFAULT '0',
+  `has_total_recall` tinyint(1) NOT NULL DEFAULT '0',
+  `has_tuning_pack` tinyint(1) NOT NULL DEFAULT '0',
+  `has_weblogic_server_management_pack` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`),
+  KEY `entities_id` (`entities_id`),
+  KEY `name` (`name`),
+  KEY `version` (`version`),
+  KEY `memory_target` (`memory_target`),
+  KEY `actived_options` (`sga_target`),
+  KEY `is_deleted` (`is_deleted`),
+  KEY `is_dynamic` (`is_dynamic`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configlogfields`;
 

@@ -1,0 +1,25 @@
+'copy to people mirror only on tags':
+  script:
+  - pwd
+  - git submodule update --init
+  - ls -l
+  - '# detect last tag of repo, if this build is a tag, so we can upload archive at
+    the end'
+  - VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
+  - echo $VERSION
+  - '# prepare filename'
+  - FI_FILENAME=fusioninventory-for-glpi_$VERSION.tar.gz
+  - '# remove previous archive (if exists)'
+  - rm -f $FI_FILENAME
+  - '# prepare archive'
+  - git archive --format=tar --prefix=fusioninventory/ $VERSION | gzip > $FI_FILENAME
+  - '# copy to mirror'
+  - scp $FI_FILENAME root@people.teclib.net:/home/glebouder/public_html/mirror
+  - '# fix rights'
+  - ssh root@people.teclib.net chown glebouder:users /home/glebouder/public_html/mirror/$FI_FILENAME
+  tags: 
+  except:
+  - master
+  only:
+  - tags
+
