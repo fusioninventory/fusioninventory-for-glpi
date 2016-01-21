@@ -76,12 +76,16 @@ class PluginFusioninventoryInventoryComputerInventory {
       $time = 600;
       $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventorynames` "
               . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $DB->query($query);
       $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventories` "
               . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $DB->query($query);
       $query = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares` "
               . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $DB->query($query);
       $query = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions` "
               . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
+      $DB->query($query);
 
       // DB LOCK
       $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventorynames`
