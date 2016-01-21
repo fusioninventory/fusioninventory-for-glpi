@@ -500,8 +500,8 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '0.85', 'lt')) {
-      echo __('Your GLPI version not compatible, require 0.85 or higher', 'fusioninventory');
+   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.92', 'ge')) {
+      echo __('Your GLPI version not compatible, require >= 0.85', 'fusioninventory');
       return FALSE;
    }
 
