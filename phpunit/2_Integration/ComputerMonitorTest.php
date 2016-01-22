@@ -83,7 +83,9 @@ class ComputerMonitor extends Common_TestCase {
           'networkcard'    => array(),
           'drive'          => Array(),
           'batteries'      => Array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => Array(),
+          'oracledb'       => Array(),
       );
 
       $this->a_computer1_beforeformat = array(
@@ -140,7 +142,9 @@ class ComputerMonitor extends Common_TestCase {
           'networkcard'    => array(),
           'drive'          => Array(),
           'batteries'      => Array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => Array(),
+          'oracledb'       => Array(),
       );
    }
 

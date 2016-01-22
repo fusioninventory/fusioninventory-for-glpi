@@ -101,6 +101,13 @@ if (isset($_POST['save'])) {
       $id = $_GET['id'];
    }
    $values['id'] = $id;
+
+   foreach (array('sort', 'order', 'start', 'preview') as $field) {
+      if (isset($_GET[$field])) {
+         $values[$field] = $_GET[$field];
+      }
+   }
+   
    $group->display($values);
    Html::footer();
 }

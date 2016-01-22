@@ -74,7 +74,9 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',

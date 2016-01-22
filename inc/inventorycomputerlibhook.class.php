@@ -101,6 +101,12 @@ class PluginFusioninventoryInventoryComputerLibhook {
        $opt[$i]['glpiField']        = 'os_license_number';
 
        $i++;
+       $opt[$i]['xmlSection']       = 'OPERATINGSYSTEM';
+       $opt[$i]['xmlSectionChild']  = 'KERNEL_VERSION';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'os_kernel_version';
+
+       $i++;
        $opt[$i]['xmlSection']       = 'HARDWARE';
        $opt[$i]['xmlSectionChild']  = 'WORKGROUP';
        $opt[$i]['glpiItemtype']     = 'Computer';

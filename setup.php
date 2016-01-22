@@ -49,7 +49,7 @@ $PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
-define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.90+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
@@ -153,6 +153,8 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerSolariszone',
+              array('addtabon' => array('ComputerVirtualMachine', 'Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
@@ -220,6 +222,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
       Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerOracledb',
+              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryDeployGroup');
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
@@ -260,6 +264,7 @@ function plugin_init_fusioninventory() {
       /**
        * Load the relevant javascript/css files only on pages that need them.
        */
+      $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
@@ -462,6 +467,11 @@ function plugin_init_fusioninventory() {
 
    // Add unmanaged devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnmanaged";
+
+   // exclude some pages from splitted layout
+   if (isset($CFG_GLPI['layout_excluded_pages'])) {
+      array_push($CFG_GLPI['layout_excluded_pages'], "timeslot.form.php");
+   }
 }
 
 

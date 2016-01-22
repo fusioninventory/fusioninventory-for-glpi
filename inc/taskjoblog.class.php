@@ -147,69 +147,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       return '';
    }
 
-
-
-   function getSearchOptions() {
-
-      $sopt = array();
-
-      $sopt['common'] = __('Logs');
-
-      $sopt[1]['table']         = $this->getTable();
-      $sopt[1]['field']         = 'id';
-      $sopt[1]['name']          = __('ID');
-      $sopt[1]['massiveaction'] = FALSE; // implicit field is id
-
-      $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
-      $sopt[2]['field']          = 'name';
-      $sopt[2]['name']           = _n('Task', 'Tasks', 2);
-      $sopt[2]['datatype']       = 'itemlink';
-      $sopt[2]['itemlink_type']  = "PluginFusioninventoryTask";
-
-      $sopt[3]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
-      $sopt[3]['field']          = 'name';
-      $sopt[3]['name']           = __('Job', 'fusioninventory');
-      $sopt[3]['datatype']       = 'itemlink';
-      $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
-
-      $sopt[4]['table']          = $this->getTable();
-      $sopt[4]['field']          = 'state';
-      $sopt[4]['name']           = __('Status');
-      $sopt[4]['searchtype']     = 'equals';
-
-      $sopt[5]['table']         = $this->getTable();
-      $sopt[5]['field']         = 'date';
-      $sopt[5]['name']          = __('Date');
-      $sopt[5]['datatype']      = 'datetime';
-      $sopt[5]['massiveaction'] = FALSE;
-
-      $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
-      $sopt[6]['field']          = 'uniqid';
-      $sopt[6]['name']           = __('Unique id', 'fusioninventory');
-      $sopt[6]['datatype']       = 'string';
-
-      $sopt[7]['table']          = $this->getTable();
-      $sopt[7]['field']          = 'comment';
-      $sopt[7]['name']           = __('Comments');
-      $sopt[7]['datatype']       = 'string';
-
-      $sopt[8]['table']          = "glpi_plugin_fusioninventory_agents";
-      $sopt[8]['field']          = 'name';
-      $sopt[8]['name']           = __('Agent', 'fusioninventory');
-      $sopt[8]['datatype']       = 'itemlink';
-      $sopt[8]['forcegroupby']   = TRUE;
-      $sopt[8]['joinparams']     = array(
-         'beforejoin' => array(
-            'table'      => 'glpi_plugin_fusioninventory_taskjobstates',
-            'joinparams' => array('jointype' => 'child')
-         )
-      );
-
-      return $sopt;
-   }
-
-
-
    /**
    * Display history of taskjob
    *

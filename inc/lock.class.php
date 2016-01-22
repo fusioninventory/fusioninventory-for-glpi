@@ -385,7 +385,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
             echo "<td>".$name."</td>";
             echo "<td align='center'>";
-            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
+            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]", 
                                      'checked' => $checked));
             echo "</td>";
             echo "</tr>";
@@ -699,6 +699,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
          }
       }
+
+      //delete all lock case (no more lock)
+      if (!isset($item->updates)) {
+         $a_fieldList = array();
+      }
+
       $item_device = new $itemtype();
       $item_device->getFromDB($items_id);
       $a_serialized = $pfLock->getSerialized_InventoryArray($itemtype, $items_id);

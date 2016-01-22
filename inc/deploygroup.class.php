@@ -129,30 +129,25 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       switch ($ma->getAction()) {
 
         case 'add_to_static_group' :
-           if ($item->getType() == 'Computer') {
-              $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
-              foreach ($ids as $id) {
-                 //if ($group_item->can($id, UPDATE)) {
-                    if (!countElementsInTable($group_item->getTable(),
-                                            "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
-                                               AND `itemtype`='Computer'
-                                               AND `items_id`='$id'")) {
-                       $values = array(
-                          'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
-                          'itemtype' => 'Computer',
-                          'items_id' => $id);
-                       $group_item->add($values);
-                       $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
-                    } else {
-                       $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
-                    }
-              //} else {
-              //   $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_NORIGHT);
-              //   $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
-              //}
-           }
-        }
-        parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+            if ($item->getType() == 'Computer') {
+               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+               foreach ($ids as $id) {
+                  if (!countElementsInTable($group_item->getTable(),
+                       "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
+                          AND `itemtype`='Computer'
+                          AND `items_id`='$id'")) {
+                     $values = array(
+                        'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                        'itemtype' => 'Computer',
+                        'items_id' => $id);
+                  $group_item->add($values);
+                  $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+               } else {
+                  $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+               }
+            }
+         }
+         parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
       }
    }
 

@@ -95,7 +95,9 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => Array(),
           'batteries'      => Array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => array(),
+          'oracledb'       => array(),
       );
 
       $a_computer = $a_computerinventory['Computer'];
@@ -181,7 +183,9 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => Array(),
           'batteries'      => Array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => array(),
+          'oracledb'       => array(),
       );
 
       $a_computer = $a_computerinventory['Computer'];
@@ -302,7 +306,9 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => Array(),
           'batteries'      => Array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => Array(),
+          'oracledb'       => Array(),
           );
 
       $computer         = new Computer();

@@ -226,7 +226,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "<a title='".__('p2p', 'fusioninventory').", "
             .__("retention", 'fusioninventory')." : ".
                $file_p2p_retention_duration." ".
-               __("days", 'fusioninventory')."' class='more'>";
+               __("Minute(s)", 'fusioninventory')."' class='more'>";
                echo  "<img src='".$pics_path.
                      "p2p.png' />";
                echo "<sup>".$file_p2p_retention_duration."</sup>";
@@ -435,16 +435,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       Html::showCheckbox(array('name' => 'p2p', 'checked' => $p2p));
       echo "</td>";
       echo "</tr><tr>";
-      echo "<th>".__("retention days", 'fusioninventory')."</th>";
+      echo "<th>".__("retention", 'fusioninventory').
+                  " - ".__("Minute(s)", 'fusioninventory')."</th>";
       echo "<td>";
-      /*
-       * TODO: use task periodicity input to propose days, months and years
-       */
-      Dropdown::showNumber('p2p-retention-duration', array(
-             'value' => $p2p_retention_duration,
-             'min'   => 0,
-             'max'   => 400)
-      );
+      
+      echo "<input type='number' name='p2p-retention-duration' value='$p2p_retention_duration' />";
       echo "</td>";
       echo "</tr><tr>";
       echo "<td>";
@@ -618,12 +613,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          return FALSE;
       }
 
+      $shasToRemove = array();
+
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       $files = $datas['jobs']['associatedFiles'];
       //remove selected checks
-
       foreach ($params['file_entries'] as $index => $checked) {
          if ($checked >= "1" || $checked == "on") {
             //get sha512
@@ -640,6 +636,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+         
+      //remove files in repo
+      foreach ($shasToRemove as $sha512) {
+         self::removeFileInRepo($sha512);
+      }
    }
 
 
@@ -734,18 +735,18 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //prepare file data for insertion in repo
          $data = array(
-            'file_tmp_name' => $file_tmp_name,
-            'mime_type' => $_FILES['file']['type'],
-            'filesize' => $_FILES['file']['size'],
-            'filename' => $filename,
-            'p2p' => isset($params['p2p']) ? $params['p2p'] : 0,
-            'uncompress' => isset($params['uncompress']) ? $params['uncompress'] : 0,
+            'file_tmp_name'          => $file_tmp_name,
+            'mime_type'              => $_FILES['file']['type'],
+            'filesize'               => $_FILES['file']['size'],
+            'filename'               => $filename,
+            'p2p'                    => isset($params['p2p']) ? $params['p2p'] : 0,
+            'uncompress'             => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
                : 0
             ),
-            'orders_id' => $params['orders_id']
+            'orders_id'              => $params['orders_id']
          );
 
          //Add file in repo
@@ -782,18 +783,18 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //prepare file data for insertion in repo
          $data = array(
-            'file_tmp_name' => $file_path,
-            'mime_type' => $mime_type,
-            'filesize' => $filesize,
-            'filename' => $filename,
-            'p2p' => isset($params['p2p']) ? 1 : 0,
-            'uncompress' => isset($params['uncompress']) ? 1 : 0,
+            'file_tmp_name'          => $file_path,
+            'mime_type'              => $mime_type,
+            'filesize'               => $filesize,
+            'filename'               => $filename,
+            'p2p'                    => isset($params['p2p']) ? 1 : 0,
+            'uncompress'             => isset($params['uncompress']) ? 1 : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
                : 0
             ),
-            'orders_id' => $params['orders_id']
+            'orders_id'              => $params['orders_id']
          );
 
          //Add file in repo
@@ -950,32 +951,47 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
-   static function removeFileInRepo($sha512, $orders_id) {
+   static function removeFileInRepo($sha512) {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
       $manifestsPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
 
       $order = new PluginFusioninventoryDeployOrder;
-      $rows = $order->find("id != '$orders_id'
-            AND json LIKE '%".substr($sha512, 0, 6 )."%'
-            AND json LIKE '%$sha512%'"
-      );
+      $rows = $order->find("json LIKE '%$sha512%'");
       if (count($rows) > 0) {
-         //file found in other order, do not remove part in repo
+         //file found in other orders, do not remove part in repo
          return FALSE;
       }
 
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
-      $multiparts = $datas['associatedFiles'][$sha512]['multiparts'];
+      //get sha512 parts in manifest
+      $multiparts = file($manifestsPath.$sha512);
 
       //parse all files part
       foreach ($multiparts as $part_sha512) {
+         $firstdir = $repoPath.substr($part_sha512, 0, 1)."/";
          $dir = $repoPath.self::getDirBySha512($part_sha512).'/';
 
          //delete file parts
-         unlink($dir.$part_sha512);
+         unlink(trim($dir.$part_sha512));
+
+         //delete folders if empty
+         if (is_dir($dir)) {
+            $count_second_folder = count(scandir($dir)) - 2;
+            if ($count_second_folder === 0) {
+               rmdir($dir);
+            }
+         }
+         if (is_dir($firstdir)) {
+            $count_first_folder = count(scandir($firstdir)) - 2; // -2 for . and ..
+            if ($count_first_folder === 0) {
+               rmdir($firstdir);
+            }
+         }
+  
       }
+
+      //remove manifest
+      unlink($manifestsPath.$sha512);
 
       return TRUE;
    }
