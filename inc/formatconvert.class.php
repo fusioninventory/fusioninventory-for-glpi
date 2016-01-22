@@ -70,7 +70,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'ORACLEDB');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'ORACLEDB');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
