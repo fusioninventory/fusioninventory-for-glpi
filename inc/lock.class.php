@@ -406,6 +406,22 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
+   /**
+   * Clean locks for an asset
+   *
+   * @param itemtype asset type
+   * @param items_id asset ID
+   * @return Nothing
+   * @since 0.90
+   */
+   static function cleanForAsset($itemtype, $items_id) {
+      global $DB;
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_locks`
+                       WHERE `tablename`='".getTableForItemType($itemtype)."'
+                          AND `items_id`='$items_id'";
+      $DB->query($query);
+
+   }
 
    /**
     * Unlock a field for a record.
