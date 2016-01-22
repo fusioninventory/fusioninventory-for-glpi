@@ -264,7 +264,6 @@ function plugin_init_fusioninventory() {
       /**
        * Load the relevant javascript/css files only on pages that need them.
        */
-      $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
       if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
