@@ -101,13 +101,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      $itemtype = $item->getType();
-      if ($itemtype == 'NetworkEquipment') {
-         $itemtype = "networking";
-      }
       if ($item->getType()=='PluginFusioninventoryConfig') {
          return PluginFusioninventoryLock::getTypeName(2);
       }
+
+      $items_id = $item->getID();
+      $itemtype = $item->getType();
+      if ($item->getType() == 'NetworkEquipment') {
+         $itemtype = 'networking';
+      }
+
       if (Session::haveRight(strtolower($itemtype), UPDATE)) {
          if ($_SESSION['glpishow_count_on_tabs']) {
             return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),

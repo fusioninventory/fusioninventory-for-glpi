@@ -64,24 +64,20 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       ));
    }
 
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
       $tab_names = array();
-
-      if ($this->can("task", "r")) {
-         if ($item->getType() == 'Computer') {
-            return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
+      if ( $this->can("task", READ) ) {
+         if ($item->getType() == 'Computer'
+            && PluginFusioninventoryInventoryComputerComputer::isAFusionInventoryDevice($item)) {
+            $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
          }
       }
-      return '';
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
    }
 
 
@@ -99,7 +95,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       return $ong;
    }
-
 
 
    /**
