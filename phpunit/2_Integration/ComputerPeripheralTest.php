@@ -184,7 +184,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_global'           => '0',
               'is_deleted'          => '0',
               'is_template'         => '0',
-              'is_dynamic'          => '0'
+              'is_dynamic'          => '1'
           ),
           2 => array(
               'name' => 'H5321 gw Mobile Broadband Device',
@@ -196,7 +196,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_global'           => '0',
               'is_deleted'          => '0',
               'is_template'         => '0',
-              'is_dynamic'          => '0'
+              'is_dynamic'          => '1'
           ),
           3 => array(
               'name' => 'Périphérique d’entrée USB',
@@ -208,7 +208,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_global'           => '0',
               'is_deleted'          => '0',
               'is_template'         => '0',
-              'is_dynamic'          => '0'
+              'is_dynamic'          => '1'
           )
       );
 

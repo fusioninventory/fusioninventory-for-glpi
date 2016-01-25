@@ -67,12 +67,14 @@ class ComputerPrinter extends Common_TestCase {
               array(
                   'name'    => 'p1',
                   'have_usb'=> 0,
-                  'serial'  => ''
+                  'serial'  => '',
+                  'is_dynamic' => 1
               ),
               array(
                   'name'    => 'p2',
                   'have_usb'=> 0,
-                  'serial'  => 's1537'
+                  'serial'  => 's1537',
+                  'is_dynamic' => 1
               )
           ),
           'peripheral'     => array(),
@@ -130,12 +132,14 @@ class ComputerPrinter extends Common_TestCase {
               array(
                   'name'    => 'p1',
                   'have_usb'=> 0,
-                  'serial'  => 'f275'
+                  'serial'  => 'f275',
+                  'is_dynamic' => 1
               ),
               array(
                   'name'    => 'p2',
                   'have_usb'=> 0,
-                  'serial'  => 's1537'
+                  'serial'  => 's1537',
+                  'is_dynamic' => 1
               )
           ),
           'peripheral'     => array(),
@@ -172,12 +176,14 @@ class ComputerPrinter extends Common_TestCase {
               array(
                   'name'    => 'p1',
                   'have_usb'=> 0,
-                  'serial'  => ''
+                  'serial'  => '',
+                  'is_dynamic' => 1
               ),
               array(
                   'name'    => 'p2',
                   'have_usb'=> 0,
-                  'serial'  => ''
+                  'serial'  => '',
+                  'is_dynamic' => 1
               )
           ),
           'peripheral'     => array(),

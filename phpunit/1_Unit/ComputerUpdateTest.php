@@ -191,7 +191,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
             Array(
                     'name'              => 'ThinkPad Display 1280x800',
                     'serial'            => 'UBYVUTFYEIUI',
-                    'manufacturers_id'  => 'Lenovo'
+                    'manufacturers_id'  => 'Lenovo',
+                    'is_dynamic'        => 1
                 )
       );
 
@@ -199,7 +200,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
             Array(
                     'name'      => 'HP Deskjet 5700 Series',
                     'serial'    => 'MY47L1W1JHEB6',
-                    'have_usb'  => 1
+                    'have_usb'  => 1,
+                    'is_dynamic' => 1
                 )
       );
 
@@ -1012,7 +1014,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'groups_id'         => '0',
           'states_id'         => '0',
           'ticket_tco'        => '0.0000',
-          'is_dynamic'        => '0',
+          'is_dynamic'        => '1',
       );
 
       $this->assertEquals($a_reference, $monitor->fields);
@@ -1075,7 +1077,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'groups_id'            => '0',
           'states_id'            => '0',
           'ticket_tco'           => '0.0000',
-          'is_dynamic'           => '0',
+          'is_dynamic'           => '1',
       );
 
       $this->assertEquals($a_reference, $printer->fields);
