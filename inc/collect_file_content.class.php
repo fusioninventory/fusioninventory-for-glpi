@@ -108,6 +108,10 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
    }
 
 
+   static function cleanComputer($computers_id) {
+      $file_content = new self();
+      $file_content->deleteByCriteria(array('computers_id' => $computers_id));
+   }
 
    /**
     * Display the content of the tab

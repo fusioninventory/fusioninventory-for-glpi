@@ -128,7 +128,10 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       return TRUE;
    }
 
-
+   static function cleanComputer($computers_id) {
+      $collect_content = new self();
+      $collect_content->deleteByCriteria(array('computers_id' => $computers_id));
+   }
 
    /**
     * update wmi data to compute (add and update) with data sent by the agent
