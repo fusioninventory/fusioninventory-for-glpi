@@ -1940,9 +1940,15 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                      WHERE `computers_id` = '".$parm->getField('id')."'";
          $DB->query($query);
 
-         PluginFusioninventoryInventoryComputerComputer::cleanComputer($parm->getField('id'));
-         // Remove antivirus if set
-         PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($parm->getField('id'));
+         $clean = array('PluginFusioninventoryInventoryComputerComputer',
+                        'PluginFusioninventoryInventoryComputerAntivirus',
+                        'PluginFusioninventoryComputerLicenseInfo',
+                        'PluginFusioninventoryCollect_File_Content',
+                        'PluginFusioninventoryCollect_Registry_Content',
+                        'PluginFusioninventoryCollect_Wmi_Content');
+         foreach ($clean as $obj) {
+            $obj::cleanComputer($parm->getID());
+         }
          break;
 
       case 'NetworkPort_NetworkPort':
