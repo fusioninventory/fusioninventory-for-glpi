@@ -2087,18 +2087,18 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $nbSoft = 0;
       if (count($this->softList) == 0) {
          foreach ($a_soft as $a_software) {
-            $a_softSearch[] = "(`name`='".$a_software['name']."' AND `manufacturers_id`='".$a_software['manufacturers_id']."')";
+            $a_softSearch[] = "'".$a_software['name']."$$$$".$a_software['manufacturers_id']."'";
             $nbSoft++;
          }
       } else {
          foreach ($a_soft as $a_software) {
             if (!isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
-               $a_softSearch[] = "(`name`='".$a_software['name']."' AND `manufacturers_id`='".$a_software['manufacturers_id']."')";
+               $a_softSearch[] = "'".$a_software['name']."$$$$".$a_software['manufacturers_id']."'";
                $nbSoft++;
             }
          }
       }
-      $whereid .= " AND (".implode(" OR ", $a_softSearch).")";
+      $whereid .= " AND CONCAT_WS('$$$$', `name`, `manufacturers_id`) IN (".implode(",", $a_softSearch).")";
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwares`";
       $result = $DB->query($sql);
@@ -2150,11 +2150,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $nbVersions = 0;
       foreach ($a_versions as $name=>$a_softwares_id) {
-         $arr[] = " (`name`='".$name."' AND `softwares_id` IN ('".  implode("', '", $a_softwares_id)."'))";
+         foreach($a_softwares_id as $softwares_id) {
+            $arr[] = "'".$name."$$$$".$softwares_id."'";
+         }
          $nbVersions++;
       }
-      $whereid .= " AND ( ";
-      $whereid .= implode(' OR ', $arr);
+      $whereid .= " AND CONCAT_WS('$$$$', `name`, `softwares_id`) IN ( ";
+      $whereid .= implode(',', $arr);
       $whereid .= " ) ";
 
 
@@ -2174,6 +2176,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       while ($data = $DB->fetch_assoc($result)) {
          $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']] = $data['id'];
       }
+
       return $lastid;
    }
 
