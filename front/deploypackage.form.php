@@ -81,9 +81,9 @@ if (isset ($data["add"])) {
    Session::checkRight('plugin_fusioninventory_package', UPDATE);
    $package->update($data);
    Html::back();
-} else if (isset ($data["delete"])) {
+} else if (isset ($data["purge"])) {
    Session::checkRight('plugin_fusioninventory_package', PURGE);
-   $package->delete($data);
+   $package->delete($data, 1);
    $package->redirectToList();
 }
 

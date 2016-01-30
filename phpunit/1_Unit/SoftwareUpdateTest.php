@@ -169,14 +169,15 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0"] = array(
+      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0$$$$"] = array(
                'name'                  => 'fusioninventory',
                'manufacturers_id'      => 1,
                'version'               => '0.85+1.0',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
-               'is_recursive'          => 0
+               'is_recursive'          => 0,
+               'date_install'          => ''
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -238,14 +239,15 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
-               'is_recursive'          => 0
+               'is_recursive'          => 0,
+               'date_install'          => ''
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -321,14 +323,15 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$"] = array(
                'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
+               'manufacturers_id'      => '2',
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
-               'is_recursive'          => 0
+               'is_recursive'          => 0,
+               'date_install'          => ''
             );
 
       $this->assertEquals($a_reference, $a_return);

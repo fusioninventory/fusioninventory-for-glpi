@@ -85,7 +85,8 @@ class PluginFusioninventoryProfile extends Profile {
                       'credentialip'           => 'plugin_fusioninventory_credentialip',
                       'existantrule'           => array('plugin_fusioninventory_ruleimport',
                                                          'plugin_fusioninventory_ruleentity',
-                                                         'plugin_fusioninventory_rulelocation'),
+                                                         'plugin_fusioninventory_rulelocation',
+                                                         'plugin_fusioninventory_ruletaskpostaction'),
                       'importxml'              => 'plugin_fusioninventory_importxml',
                       'blacklist'              => 'plugin_fusioninventory_blacklist',
                       'ESX'                    => 'plugin_fusioninventory_esx',
@@ -213,10 +214,13 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Additional computer information rules', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_rulecollect'
           ),
+          array('itemtype'  => 'PluginFusioninventoryTaskpostactionRule',
+                'label'     => __('Tasks post actions', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_taskpostactionrule'
+          ),
           array('itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
                 'label'     =>  __('Equipment ignored on import', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_ignoredimportdevice'
-          ),
+                'field'     => 'plugin_fusioninventory_ignoredimportdevice'),
       );
       return $rights;
    }
@@ -274,7 +278,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
           array('itemtype'  => 'PluginFusioninventoryLock',
                 'label'     => __('Lock', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_lock')
+                'field'     => 'plugin_fusioninventory_lock'),
       );
       return $rights;
    }

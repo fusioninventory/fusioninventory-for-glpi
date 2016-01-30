@@ -138,7 +138,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       if ( !is_null($weekdays) ) {
          $condition[] = "and `day` = '".$weekdays."'";
       }
-
+      
       $results = array();
 
       $timeslot_entries = getAllDatasFromTable(

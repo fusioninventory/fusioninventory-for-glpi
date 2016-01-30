@@ -89,7 +89,9 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
@@ -359,9 +361,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
           'remote_addr'                               => NULL,
-          'plugin_fusioninventory_computerarchs_id'   => 0,
-          'is_entitylocked'                           => 0,
-          'oscomment'                                 => ''
+          'plugin_fusioninventory_computerarchs_id'   => '0',
+          'is_entitylocked'                           => '0',
+          'oscomment'                                 => NULL,
+          'hostid'                                    => NULL
       );
 
       $this->assertEquals($a_reference, $a_computer);
@@ -1124,7 +1127,9 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pcJ1',

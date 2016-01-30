@@ -116,7 +116,9 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'licenseinfo'             => array(),
           'networkcard'             => array(),
           'drive'                   => array(),
-          'batteries'               => array()
+          'batteries'               => array(),
+          'solariszone'             => array(),
+          'oracledb'                => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -195,6 +197,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -293,6 +297,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -308,6 +314,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'serial'                           => '',
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
+          'os_kernel_version'                => '5.1.2600',
      );
       $this->assertEquals($a_reference, $a_return);
    }
@@ -379,6 +386,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -663,6 +672,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -768,6 +779,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'solariszone'    => array(),
+          'oracledb'       => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -914,8 +927,9 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'gateway'            => '192.168.20.1',
             'netmask'            => '255.255.255.0',
             'dhcpserver'         => '192.168.20.1',
-            'speed'              => 100,
-            'logical_number'     => 1
+            'speed'              => '100',
+            'logical_number'     => 1,
+            'wwn'                => '',
          )
       );
       $this->assertEquals($a_reference, $a_return['networkport']);
@@ -987,7 +1001,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'netmask'            => '255.255.255.0',
             'dhcpserver'         => '192.168.20.1',
             'speed'              => 100,
-            'logical_number'     => 1
+            'logical_number'     => 1,
+            'wwn'                => ''
          )
       );
       $this->assertEquals($a_reference, $a_return['networkport']);

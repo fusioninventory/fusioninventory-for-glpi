@@ -153,6 +153,8 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerSolariszone',
+              array('addtabon' => array('ComputerVirtualMachine', 'Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
@@ -220,6 +222,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
       Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerOracledb',
+              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryDeployGroup');
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
@@ -462,6 +466,11 @@ function plugin_init_fusioninventory() {
 
    // Add unmanaged devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnmanaged";
+
+   // exclude some pages from splitted layout
+   if (isset($CFG_GLPI['layout_excluded_pages'])) {
+      array_push($CFG_GLPI['layout_excluded_pages'], "timeslot.form.php");
+   }
 }
 
 

@@ -163,7 +163,9 @@ class UnmanagedManagedTest extends Common_TestCase {
          'networkcard'    => array(),
          'drive'          => Array(),
          'batteries'      => Array(),
-         'itemtype'       => 'Computer'
+         'itemtype'       => 'Computer',
+         'solariszone'    => Array(),
+         'oracledb'       => Array(),
       );
       $a_inventory['Computer'] = array(
          'name'                             => 'pc',

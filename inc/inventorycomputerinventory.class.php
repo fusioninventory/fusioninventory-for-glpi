@@ -213,6 +213,9 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['Computer']['uuid'];
          }
+         if (isset($this->device_id) && !empty($this->device_id)) {
+            $input['device_id'] = $this->device_id;
+         }
          foreach($a_computerinventory['networkport'] as $network) {
             if (((isset($network['virtualdev']))
                     && ($network['virtualdev'] != 1))
@@ -332,6 +335,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                $_SESSION["plugin_fusioninventory_entity"] = 0;
             }
 
+            // force move agent to computer entity (import refused or not)
+            $pfAgent->update(array('id' => $_SESSION['plugin_fusioninventory_agents_id'], 
+                                   'entities_id' => $input['entities_id']));
+
             if (isset($dataEntity['locations_id'])) {
                $_SESSION['plugin_fusioninventory_locations_id'] = $dataEntity['locations_id'];
             }
@@ -395,7 +402,17 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $inputdb['rules_id'] = $data['_ruleid'];
          $inputdb['method'] = 'inventory';
-         $pfIgnoredimportdevice->add($inputdb);
+         $inputdb['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+
+         $sql = "`plugin_fusioninventory_agents_id`='".$inputdb['plugin_fusioninventory_agents_id']."'
+                  AND `serial`='".$inputdb['serial']."'";
+         if ($found = $pfIgnoredimportdevice->find($sql)) {
+            $agent = array_pop($found);
+            $inputdb['id'] = $agent['id'];
+            $pfIgnoredimportdevice->update($inputdb);
+         } else {
+            $pfIgnoredimportdevice->add($inputdb);
+         }
       }
    }
 

@@ -78,44 +78,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       );
    }
 
-   function getSearchOptions() {
-
-      $tab = array();
-
-      $tab['common'] = __('Task');
-
-
-      $tab[1]['table']          = $this->getTable();
-      $tab[1]['field']          = 'name';
-      $tab[1]['linkfield']      = '';
-      $tab[1]['name']           = __('Name');
-      $tab[1]['datatype']       = 'itemlink';
-
-      $tab[2]['table']           = 'glpi_entities';
-      $tab[2]['field']           = 'completename';
-      $tab[2]['linkfield']       = 'entities_id';
-      $tab[2]['name']            = __('Entity');
-
-      $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
-      $tab[4]['field']          = 'name';
-      $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
-      $tab[4]['name']           = __('Task');
-      $tab[4]['datatype']       = 'itemlink';
-      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
-
-      $tab[5]['table']          = $this->getTable();
-      $tab[5]['field']          = 'status';
-      $tab[5]['linkfield']      = '';
-      $tab[5]['name']           = __('Status');
-
-      $tab[6]['table']          = $this->getTable();
-      $tab[6]['field']          = 'id';
-      $tab[6]['linkfield']      = '';
-      $tab[6]['name']           = __('ID');
-
-      return $tab;
-   }
-
    function getTask() {
       $pfTask = new PluginFusioninventoryTask();
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
@@ -515,44 +477,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $array;
    }
 
-
-   /*
-    * @function cronUpdateDynamicTasks
-    * This function update already running tasks with dynamic groups
-    */
-   static function cronUpdateDynamicTasks() {
-      global $DB;
-
-      $pfTask = new PluginFusioninventoryTask();
-
-      //Get every running tasks with dynamic groups
-      $running_tasks = $pfTask->getItemsFromDB(
-         array(
-            'is_running'  => TRUE,
-            'is_active'   => TRUE,
-            'actors' => array('PluginFusioninventoryDeployGroup' => "")
-         )
-      );
-
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      foreach ($running_tasks as $task) {
-         $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic', 'Group');
-         if ($pfTaskjob->getFromDB($task['taskjob']['id'])) {
-            $pfTaskjob->prepareRunTaskjob(
-               $task['taskjob']
-            );
-         }
-      }
-
-      if(isset($_SESSION['glpi_plugin_fusioninventory']['agents']) ) {
-         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
-            $pfTaskjob->startAgentRemotly($agents_id);
-         }
-         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
-      }
-
-      return 1;
-   }
 
 
    /**
@@ -1604,6 +1528,48 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 //      }
    }
 
+   static function restartJob($params) {
+      $task     = new PluginFusioninventoryTask();
+      $job      = new PluginFusioninventoryTaskjob();
+      $jobstate = new PluginFusioninventoryTaskjobstate();
+      $joblog   = new PluginFusioninventoryTaskjoblog();
+      $agent    = new PluginFusioninventoryAgent();
+
+      // get old state
+      $jobstate->getFromDB($params['jobstate_id']);
+
+      // prepare new state (copy from old)
+      $run = $jobstate->fields;
+      unset($run['id']);
+      $run['state']  = PluginFusioninventoryTaskjobstate::PREPARED;
+      $run['uniqid'] = uniqid();
+      if ($run['specificity'] == "") {
+         $run['specificity'] = "NULL";
+      }
+
+      // add this new state and first log 
+      if($run_id = $jobstate->add($run)) {
+         $log = array(
+            'date'    => date("Y-m-d H:i:s"),
+            'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+            'plugin_fusioninventory_taskjobstates_id' => $run_id,
+            'comment' => ''
+         );
+         if ($joblog->add($log)) {
+
+            //wake up agent (only if task support wakeup)
+            $job->getFromDB($jobstate->fields['plugin_fusioninventory_taskjobs_id']);
+            $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+
+            if ($task->fields['wakeup_agent_counter'] > 0
+                && $task->fields['wakeup_agent_time'] > 0) {
+               $agent->getFromDB($params['agent_id']);
+               $agent->wakeUp();
+            }
+         }
+      }
+   }
+
 
 
    static function functionWizardEnd() {
@@ -1667,7 +1633,7 @@ function edit_subtype(id,el) {
 
    var row = null;
    if (el) {
-      // get parent row of the selected element
+      // get parent row of the seagent_blocklected element
       row = jQuery(el).parents('tr:first')
    }
 

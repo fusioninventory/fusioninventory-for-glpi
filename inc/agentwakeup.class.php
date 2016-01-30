@@ -98,7 +98,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                  WHERE `wakeup_agent_time` > 0 
                     AND `wakeup_agent_counter` > 0
                     AND `is_active`='1' 
-                    AND ((`plugin_fusioninventory_timeslots_id`='0') 
+                    AND (`plugin_fusioninventory_timeslots_id`='0'
                     $query_timeslot)";
 
       foreach ($DB->request($query) as $task) {

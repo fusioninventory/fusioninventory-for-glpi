@@ -86,7 +86,9 @@ class ComputerLog extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => Array(),
           'batteries'      => Array(),
-          'itemtype'       => 'Computer'
+          'itemtype'       => 'Computer',
+          'solariszone'    => Array(),
+          'oracledb'       => Array(),
           );
       $this->a_inventory['Computer'] = array(
           'name'                             => 'pc',
