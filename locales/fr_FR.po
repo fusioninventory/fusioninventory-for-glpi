@@ -7,7 +7,7 @@
 # Asmodojo <asmodojo@outlook.com>, 2013
 # David Durieux <d.durieux@siprossii.com>, 2014
 # EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
-# Frédéric MOHIER <frederic.mohier@gmail.com>, 2014
+# Frédéric MOHIER, 2014
 # Gonéri Le Bouder <goneri@rulezlan.org>, 2013
 # kiniou <kiniou@gmail.com>, 2014
 # kiniou <kiniou@gmail.com>, 2013-2014
@@ -21,13 +21,14 @@
 # CDuv <transifex.accounts@claude.duvergier.fr>, 2015
 # Walid Nouh, 2014
 # Walid Nouh, 2014
+# Xavier CAILLAUD <tsmr@thetsmr.fr>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2015-05-26 11:50+0000\n"
-"Last-Translator: quent1 <quentin@quent1.fr>\n"
+"PO-Revision-Date: 2015-10-08 15:06+0000\n"
+"Last-Translator: Xavier CAILLAUD <tsmr@thetsmr.fr>\n"
 "Language-Team: French (France) (http://www.transifex.com/ddurieux/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2862,7 +2863,7 @@ msgstr "La tâche a été désactivée après préparation du job"
 
 #: inc/task.class.php:322
 msgid "This job can not be executed anymore due to the task's schedule."
-msgstr "Le job ne peut pas être exécuté à cause de la planification de la planification de la tâche"
+msgstr "Le job ne peut pas être exécuté à cause de la planification de la tâche"
 
 #: inc/task.class.php:354
 msgid "This job can not be executed anymore due to the task's timeslot."

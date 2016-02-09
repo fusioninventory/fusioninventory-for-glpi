@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2015-03-29 15:11+0000\n"
+"PO-Revision-Date: 2015-10-26 21:58+0000\n"
 "Last-Translator: Sebastien <sebastien.janez@free.fr>\n"
 "Language-Team: Slovenian (Slovenia) (http://www.transifex.com/ddurieux/FusionInventory/language/sl_SI/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Ime antivirusa"
 
 #: hook.php:68
 msgid "Antivirus version"
-msgstr ""
+msgstr "Različica protivirusa"
 
 #: hook.php:78
 msgid "Antivirus enabled"
@@ -666,7 +666,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:63
 msgid "Software licenses"
-msgstr ""
+msgstr "Licence za programsko opremo"
 
 #: inc/computerlicenseinfo.class.php:117
 msgid "Serial number"
@@ -968,7 +968,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:57
 msgid "Upload from server"
-msgstr ""
+msgstr "Prenos iz strežnika"
 
 #: inc/deployfile.class.php:226
 msgid "p2p"
@@ -1095,11 +1095,11 @@ msgstr ""
 #: inc/deploypackage.class.php:68 inc/menu.class.php:126
 #: inc/menu.class.php:131
 msgid "Import"
-msgstr ""
+msgstr "Uvoz"
 
 #: inc/deploypackage.class.php:72
 msgid "Export"
-msgstr ""
+msgstr "Izvoz"
 
 #: inc/deploypackage.class.php:174
 msgid "Modification Denied"
