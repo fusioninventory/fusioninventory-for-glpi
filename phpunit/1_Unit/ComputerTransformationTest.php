@@ -515,12 +515,14 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference[0] = array(
             'manufacturers_id'   => 'NEC Technologies, Inc.',
             'name'               => 'Écran Plug-and-Play',
-            'serial'             => ''
+            'serial'             => '',
+            'is_dynamic'         => 1
           );
       $a_reference[1] = array(
             'manufacturers_id'   => 'Lenovo',
             'name'               => 'ThinkPad Display 1280x800',
             'serial'             => 'UBYVUTFYEIUI',
+            'is_dynamic'         => 1
           );
       $this->assertEquals($a_reference, $a_return['monitor']);
    }

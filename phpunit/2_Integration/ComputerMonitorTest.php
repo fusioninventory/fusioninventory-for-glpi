@@ -68,7 +68,8 @@ class ComputerMonitor extends Common_TestCase {
               array(
                   'name'    => 'DELL E1911',
                   'manufacturers_id'=> 2,
-                  'serial'  => 'W6VPJ1840E7B'
+                  'serial'  => 'W6VPJ1840E7B',
+                  'is_dynamic' => 1
               )
           ),
           'printer'        => array(),
@@ -125,7 +126,8 @@ class ComputerMonitor extends Common_TestCase {
               array(
                   'name'    => 'DELL E1911',
                   'manufacturers_id'=> 2,
-                  'serial'  => 'W6VPJ1840E7B'
+                  'serial'  => 'W6VPJ1840E7B',
+                  'is_dynamic' => 1
               )
           ),
           'printer'        => array(),
