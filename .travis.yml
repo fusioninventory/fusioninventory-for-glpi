@@ -4,21 +4,22 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
 
 addons:
   apt:
     packages:
-    - libapache2-mod-php5
-    - php5-cli
-    - php5-mysql
-    - php5-xmlrpc
-    - php5-xsl
-    - php5-ldap
-    - php5-json
-    - php5-intl
-    - php5-imap
-    - php5-gd
-    - php5-curl
+#    - libapache2-mod-php5
+#    - php5-cli
+#    - php5-mysql
+#    - php5-xmlrpc
+#    - php5-xsl
+#    - php5-ldap
+#    - php5-json
+#    - php5-intl
+#    - php5-imap
+#    - php5-gd
+#    - php5-curl
     - ant
     - xsltproc
 
