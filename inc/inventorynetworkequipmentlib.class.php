@@ -247,6 +247,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          if ($pfNetworkporttype->isImportType($ifType)
                  || isset($a_inventory['aggregate'][$a_port['logical_number']])
                  || $ifType == '') {
+            // ifstatus = 6: notPresent
+            if (isset($a_port['ifstatus']) && $a_port['ifstatus'] == 6) {
+               continue;
+            }
             $a_ports_DB = current($networkPort->find(
                        "`itemtype`='NetworkEquipment'
                           AND `items_id`='".$items_id."'
