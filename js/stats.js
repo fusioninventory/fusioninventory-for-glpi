@@ -34,7 +34,7 @@ function statBar(svgname, jsondata, title, width) {
    
    nv.addGraph(function() {
 
-      var height = 280;
+      var height = 380;
           
       var chart = nv.models.discreteBarChart()
           .x(function(d) { return d.label })
@@ -47,6 +47,7 @@ function statBar(svgname, jsondata, title, width) {
 
       d3.select('#' + svgname)
          .datum([JSON.parse(jsondata)])
+         .attr('height', height)
          .call(chart);
 
       d3.select('#' + svgname)
