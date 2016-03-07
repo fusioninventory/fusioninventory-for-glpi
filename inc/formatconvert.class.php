@@ -892,9 +892,9 @@ class PluginFusioninventoryFormatconvert {
                        AND $a_drives['TYPE'] == 'Network Drive')
                         OR isset($a_drives['FILESYSTEM'])
                        AND $a_drives['FILESYSTEM'] == 'nfs'))
-                OR ((isset($a_drives['TYPE'])) AND
+                /*OR ((isset($a_drives['TYPE'])) AND
                     (($a_drives['TYPE'] == "Removable Disk")
-                   OR ($a_drives['TYPE'] == "Compact Disc")))) {
+                   OR ($a_drives['TYPE'] == "Compact Disc")))*/) {
 
             } else {
                if ($pfConfig->getValue('import_volume') == 1) {
