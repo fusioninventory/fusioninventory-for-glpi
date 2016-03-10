@@ -5377,6 +5377,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['extradebug'] = 0;
       $a_input['users_id'] = $users_id;
       $a_input['agents_old_days'] = 0;
+      $a_input['agents_action']     = 0;
+      $a_input['status']            = 0;
       $config->addValues($a_input, FALSE);
 //      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
 //        WHERE `plugins_id`='0'");
