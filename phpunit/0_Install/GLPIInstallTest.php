@@ -20,12 +20,22 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
          $DBvars['dbpassword']
       );
 
+      $glpi_version = getenv('GLPI');
+      $glpisql = '';
+      if ($glpi_version == '0.90/bugfixes') {
+         $glpisql = '0.90';
+      } else if ($glpi_version == '0.85/bugfixes') {
+         $glpisql = '0.85.5';
+      } else {
+         $glpisql = '0.91';
+      }
+
       $result = load_mysql_file(
          $DBvars['dbuser'],
          $DBvars['dbhost'],
          $DBvars['dbdefault'],
          $DBvars['dbpassword'],
-         GLPI_ROOT ."/install/mysql/glpi-0.91-empty.sql"
+         GLPI_ROOT ."/install/mysql/glpi-".$glpisql."-empty.sql"
       );
 
       $output = array();

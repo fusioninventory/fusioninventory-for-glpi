@@ -6,26 +6,27 @@ php:
   - 5.6
   - 7.0
 
+env:
+  - GLPI=master
+  - GLPI=0.90/bugfixes
+  - GLPI=0.85/bugfixes
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 addons:
   apt:
     packages:
-#    - libapache2-mod-php5
-#    - php5-cli
-#    - php5-mysql
-#    - php5-xmlrpc
-#    - php5-xsl
-#    - php5-ldap
-#    - php5-json
-#    - php5-intl
-#    - php5-imap
-#    - php5-gd
-#    - php5-curl
     - ant
     - xsltproc
 
 before_install:
  - cd ..
  - git clone git://github.com/glpi-project/glpi.git glpi
+ - cd glpi
+ - if [[ $GLPI != 'master' ]]; then git checkout -b $GLPI origin/$GLPI; fi
+ - cd ..
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
  - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
  - mysql -u root -e "FLUSH PRIVILEGES;"
@@ -36,6 +37,10 @@ before_install:
 
 install:
  - composer require satooshi/php-coveralls
+
+before_script:
+  - phpenv version-name | grep ^5.[34] && echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true
+  - phpenv version-name | grep ^5.[34] && echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true
 
 script: ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
