@@ -7,9 +7,9 @@ php:
   - 7.0
 
 env:
-  - GLPI=master
   - GLPI=0.90/bugfixes
   - GLPI=0.85/bugfixes
+#  - GLPI=master
 
 cache:
   directories:

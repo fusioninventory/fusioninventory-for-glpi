@@ -128,7 +128,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $tasks_id = $param->fields['id'];
 
       //clean jobslogs
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs 
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
                   WHERE plugin_fusioninventory_taskjobstates_id IN (
                      SELECT states.id
                      FROM glpi_plugin_fusioninventory_taskjobstates AS states
@@ -138,7 +138,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   ) ");
 
       //clean states
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobstates 
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobstates
                   WHERE plugin_fusioninventory_taskjobs_id IN (
                      SELECT jobs.id
                      FROM glpi_plugin_fusioninventory_taskjobs AS jobs
@@ -146,7 +146,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   )");
 
       //clean jobs
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobs 
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobs
                   WHERE plugin_fusioninventory_tasks_id = '$tasks_id'");
    }
 
@@ -1447,6 +1447,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       global $CFG_GLPI;
 
       switch ($ma->getAction()) {
+
          case "transfert":
             Dropdown::show('Entity');
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
@@ -1500,6 +1501,46 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "</tr>";
             echo "</table>";
             return true;
+            break;
+
+         case 'addtojob_target' :
+            echo "<table class='tab_cadre' width='600'>";
+            echo "<tr>";
+            echo "<td>";
+            echo __('Task', 'fusioninventory')."&nbsp;:";
+            echo "</td>";
+            echo "<td>";
+            $rand = mt_rand();
+            Dropdown::show('PluginFusioninventoryTask', array(
+                  'name'      => "tasks_id",
+                  'toupdate'  => array(
+                        'value_fieldname' => "id",
+                        'to_update'       => "taskjob$rand",
+                        'url'             => $CFG_GLPI["root_doc"].
+                                                "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
+               )
+            ));
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td>";
+            echo __('Job', 'fusioninventory')."&nbsp;:";
+            echo "</td>";
+            echo "<td>";
+            echo "<div id='taskjob$rand'>";
+            echo "</td>";
+            echo "</tr>";
+
+            echo "<tr>";
+            echo "<td colspan='2' align='center'>";
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+            return true;
+            break;
+
       }
    }
 
@@ -1581,6 +1622,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             break;
+
+         case 'addtojob_target':
+            $taskjob = new PluginFusioninventoryTaskjob();
+            foreach($ids as $items_id) {
+               $taskjob->additemtodefatc('targets', $item->getType(), $items_id, $ma->POST['taskjobs_id']);
+               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+            }
+            break;
+
       }
    }
 }

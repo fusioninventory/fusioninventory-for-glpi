@@ -310,6 +310,18 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
+   /**
+    * Massive action ()
+    */
+   function getSpecificMassiveActions($checkitem=NULL) {
+
+      $actions = array();
+      if (Session::haveRight("plugin_fusioninventory_task", UPDATE)) {
+         $actions['PluginFusioninventoryTask'.MassiveAction::CLASS_ACTION_SEPARATOR.'addtojob_target'] = __('Target a task', 'fusioninventory');
+      }
+      return $actions;
+   }
+
 }
 
 ?>
