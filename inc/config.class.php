@@ -50,6 +50,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_configuration';
 
+   CONST ACTION_CLEAN = 0;
+   CONST ACTION_STATUS = 1;
+   
+   
    /**
    * Initialize config values of fusioninventory plugin
    *
@@ -69,6 +73,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $users_id = $pfSetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
       $input['agents_old_days']        = '0';
+      $input['agents_action']          = 0;
+      $input['status']                 = 0;
       $input['wakeup_agent_max']       = '10';
 
       $input['import_software']        = 1;
@@ -329,6 +335,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
       echo "</td>";
+      echo "<td colspan=2></td>";
 /*
       No more parameter in configuration; parameter is now in entity configuration.
 
@@ -358,15 +365,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Clean agents not have contacted server since (in days)', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td width='20%'>";
-      Dropdown::showNumber("agents_old_days", array(
-             'value' => $this->getValue('agents_old_days'),
-             'min' => 1,
-             'max' => 1000,
-             'toadd' => array('0'=>__('Disabled')))
-         );
-      echo "</td>";
+      echo "<td colspan =2></td>";
       echo "<td>".__('Maximum number of agents to wake up in a task', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showNumber("wakeup_agent_max", array(
@@ -375,8 +374,57 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max' => 100)
          );
       echo "</td>";
-      echo "<td>";
+
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan=4 >" . __('Update agents', 'fusioninventory') . "</th></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . __('Update agents not have contacted server since (in days)', 'fusioninventory') . "&nbsp;:</td>";
+      echo "<td width='20%'>";
+      Dropdown::showNumber("agents_old_days", array(
+         'value' => $this->getValue('agents_old_days'),
+         'min'   => 1,
+         'max'   => 1000,
+         'toadd' => array('0' => __('Disabled')))
+      );
       echo "</td>";
+      echo "<td>" . __('Action') . "&nbsp;:</td>";
+      echo "<td width='20%'>";
+      //action 
+      $rand = Dropdown::showFromArray('agents_action', 
+                                      array(self::getActions(self::ACTION_CLEAN), self::getActions(self::ACTION_STATUS)), 
+                                      array('value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();'));
+      //if action == action_status => show blocation else hide blocaction
+      echo Html::scriptBlock("
+         function changestatus(){
+            if($('#dropdown_agents_action$rand').val() != 0){
+               $('#blocaction1').show();
+               $('#blocaction2').show();
+            } else {
+               $('#blocaction1').hide();
+               $('#blocaction2').hide();
+            }
+         }
+         changestatus();
+            
+      ");
+      echo "</td>";
+      echo "</tr>";
+      //blocaction with status
+      echo "<tr class='tab_bg_1'><td colspan=2></td>";
+      echo "<td>";
+      echo "<span id='blocaction1' style='display:none'>";
+      echo __('Change the status', 'fusioninventory') . "&nbsp;:";
+      echo "</span>";
+      echo "</td>";
+      echo "<td width='20%'>";
+      echo "<span id='blocaction2' style='display:none'>";
+      State::dropdown(array('name'   => 'status',
+         'value'  => $this->getValue('status'),
+         'entity' => $_SESSION['glpiactive_entity']));
+      echo "</span>";
+      echo "</td>";
+
       echo "</tr>";
 
       $options['candel'] = FALSE;
@@ -385,7 +433,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return TRUE;
    }
 
-
+   static function getActions($action){
+      switch ($action) {
+         case self::ACTION_STATUS :
+              return __('Change the status', 'fusioninventory');
+            break;
+         case self::ACTION_CLEAN :
+              return __('Clean agents', 'fusioninventory');
+            break;
+      }
+   }
 
    /**
    * Display form for config tab in fusioninventory config form
