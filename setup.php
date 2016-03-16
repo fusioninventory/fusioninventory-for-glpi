@@ -376,9 +376,9 @@ function plugin_init_fusioninventory() {
 
          }
          if (Session::haveRight('plugin_fusioninventory_reportnetworkequipment', READ)) {
-            $report_list["report/switch_ports.history.php"] = __('Switchs ports history', 'fusioninventory');
+            $report_list["report/switch_ports.history.php"] = __('Switch ports history', 'fusioninventory');
 
-            $report_list["report/ports_date_connections.php"] = __('Unused switchs ports', 'fusioninventory');
+            $report_list["report/ports_date_connections.php"] = __('Unused switch ports', 'fusioninventory');
 
             $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory', 'fusioninventory');
 
