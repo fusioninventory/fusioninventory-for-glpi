@@ -1232,23 +1232,25 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $result = $DB->query($sql);
 
       if ($result) {
-         $cron_status = 0;
+         $cron_status = FALSE;
          $action = $pfConfig->getValue('agents_action');
          if ($action == PluginFusioninventoryConfig::ACTION_CLEAN) {
             //delete agents
             while ($data = $DB->fetch_array($result)) {
                $pfAgent->delete($data);
-                $task->addVolume(1);
-                $cron_status = 1;
+               $task->addVolume(1);
+               $cron_status = TRUE;
             }
          } else {
             //change status of agents
             while ($data = $DB->fetch_array($result)) {
                $computer = new Computer();
                if($computer->getFromDB($data['computers_id'])){
-                  $computer->update(array('id' => $data['computers_id'], 'states_id' => $pfConfig->getValue('status')));
-                   $task->addVolume(1);
-                   $cron_status = 1;
+                  $computer->update(array(
+                      'id' => $data['computers_id'],
+                      'states_id' => $pfConfig->getValue('agents_status')));
+                  $task->addVolume(1);
+                  $cron_status = TRUE;
                }
             }
          }

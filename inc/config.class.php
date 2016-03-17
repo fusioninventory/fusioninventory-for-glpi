@@ -52,8 +52,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    CONST ACTION_CLEAN = 0;
    CONST ACTION_STATUS = 1;
-   
-   
+
+
    /**
    * Initialize config values of fusioninventory plugin
    *
@@ -74,7 +74,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agents_old_days']        = '0';
       $input['agents_action']          = 0;
-      $input['status']                 = 0;
+      $input['agents_status']          = 0;
       $input['wakeup_agent_max']       = '10';
 
       $input['import_software']        = 1;
@@ -390,9 +390,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>" . __('Action') . "&nbsp;:</td>";
       echo "<td width='20%'>";
-      //action 
-      $rand = Dropdown::showFromArray('agents_action', 
-                                      array(self::getActions(self::ACTION_CLEAN), self::getActions(self::ACTION_STATUS)), 
+      //action
+      $rand = Dropdown::showFromArray('agents_action',
+                                      array(self::getActions(self::ACTION_CLEAN), self::getActions(self::ACTION_STATUS)),
                                       array('value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();'));
       //if action == action_status => show blocation else hide blocaction
       echo Html::scriptBlock("
@@ -406,7 +406,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
             }
          }
          changestatus();
-            
+
       ");
       echo "</td>";
       echo "</tr>";
@@ -419,8 +419,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td width='20%'>";
       echo "<span id='blocaction2' style='display:none'>";
-      State::dropdown(array('name'   => 'status',
-         'value'  => $this->getValue('status'),
+      State::dropdown(array('name'   => 'agents_status',
+         'value'  => $this->getValue('agents_status'),
          'entity' => $_SESSION['glpiactive_entity']));
       echo "</span>";
       echo "</td>";
