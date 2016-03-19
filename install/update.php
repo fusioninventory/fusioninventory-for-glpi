@@ -4782,6 +4782,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
+    *  Clean SNMP communities orphelin associated to deleted ipranges
+    */
+   $query_select = "SELECT `glpi_plugin_fusioninventory_ipranges_configsecurities`.`id`
+                    FROM `glpi_plugin_fusioninventory_ipranges_configsecurities`
+                          LEFT JOIN `glpi_plugin_fusioninventory_ipranges`
+                          ON `glpi_plugin_fusioninventory_ipranges`.`id` = `plugin_fusioninventory_ipranges_id`
+                    WHERE `glpi_plugin_fusioninventory_ipranges`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_ipranges_configsecurities`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+
+
+
+
+   /*
     * Fix problem with mapping with many entries with same mapping
     */
    $a_mapping = array();
