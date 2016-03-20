@@ -516,45 +516,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-   /*
-    * @function cronUpdateDynamicTasks
-    * This function update already running tasks with dynamic groups
-    */
-   static function cronUpdateDynamicTasks() {
-      global $DB;
-
-      $pfTask = new PluginFusioninventoryTask();
-
-      //Get every running tasks with dynamic groups
-      $running_tasks = $pfTask->getItemsFromDB(
-         array(
-            'is_running'  => TRUE,
-            'is_active'   => TRUE,
-            'actors' => array('PluginFusioninventoryDeployGroup' => "")
-         )
-      );
-
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      foreach ($running_tasks as $task) {
-         $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic', 'Group');
-         if ($pfTaskjob->getFromDB($task['taskjob']['id'])) {
-            $pfTaskjob->prepareRunTaskjob(
-               $task['taskjob']
-            );
-         }
-      }
-
-      if(isset($_SESSION['glpi_plugin_fusioninventory']['agents']) ) {
-         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
-            $pfTaskjob->startAgentRemotly($agents_id);
-         }
-         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
-      }
-
-      return 1;
-   }
-
-
    /**
    * re initialize all taskjob of a taskjob
    *
@@ -1414,8 +1375,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $pfTaskjob->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         Html::showCheckbox(array('name'    => 'taskjobstoforcerun[]', 
-                                  'value'   => $data['id'], 
+         Html::showCheckbox(array('name'    => 'taskjobstoforcerun[]',
+                                  'value'   => $data['id'],
                                   'checked' => true));
          echo "</td>";
          $link_item = $pfTaskjob->getFormURL();
@@ -1428,7 +1389,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             $pfTaskjob->getFromDB($data['id']);
             echo "<tr class='tab_bg_1'>";
             echo "<td>";
-            Html::showCheckbox(array('name'    => 'taskjobstoforcerun[]', 
+            Html::showCheckbox(array('name'    => 'taskjobstoforcerun[]',
                                      'value'   => $data['id']));
             echo "</td>";
             $link_item = $pfTaskjob->getFormURL();
@@ -1742,7 +1703,7 @@ function new_subtype(id) {
       foreach ($a_taskjobs as $data) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'>";
-         Html::showCheckbox(array('name'    => 'taskjob_entries[]', 
+         Html::showCheckbox(array('name'    => 'taskjob_entries[]',
                                   'value'   => $i));
          echo "</td>";
          echo "<td>";
