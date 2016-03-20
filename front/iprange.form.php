@@ -102,14 +102,14 @@ if (isset ($_POST["add"])) {
       }
    }
    Html::back();
-} else if (isset ($_POST["delete"])) {
+} else if (isset ($_POST["purge"])) {
    if (isset($_POST['communication'])) {
       $task = new PluginFusioninventoryTask();
       $task->delete(array('id' => $_POST['task_id']), 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
       Html::back();
    } else {
-      Session::checkRight('plugin_fusioninventory_"iprange', PURGE);
+      Session::checkRight('plugin_fusioninventory_iprange', PURGE);
 
       $iprange->delete($_POST);
       Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange'));
