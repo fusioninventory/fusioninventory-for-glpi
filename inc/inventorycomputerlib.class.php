@@ -1506,7 +1506,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          foreach ($a_peripherals as $peripherals_id) {
             $input = array();
             $input['computers_id']   = $computers_id;
-            $input['itemtype']       = 'Peripharal';
+            $input['itemtype']       = 'Peripheral';
             $input['items_id']       = $peripherals_id;
             $input['is_dynamic']     = 1;
             $input['_no_history']    = $no_history;
@@ -1538,7 +1538,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach ($a_peripherals as $peripherals_id) {
                   $input = array();
                   $input['computers_id']   = $computers_id;
-                  $input['itemtype']       = 'Peripharal';
+                  $input['itemtype']       = 'Peripheral';
                   $input['items_id']       = $peripherals_id;
                   $input['is_dynamic']     = 1;
                   $input['_no_history']    = $no_history;
