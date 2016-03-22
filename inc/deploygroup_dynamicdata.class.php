@@ -87,7 +87,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
                $params['metacriteria'] = array();
             }
-            
+
             $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
                                 "?id=".$item->getID();
             self::showList('PluginFusioninventoryComputer', $params, array('2', '1'));
@@ -103,6 +103,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $_GET['_in_modal'] = true;
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
+      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
+              "`mainitemtype` = 'Computer'", $data['sql']['search']);
       Search::constructDatas($data);
       if (Session::isMultiEntitiesMode()) {
          $data['data']['cols'] = array_slice($data['data']['cols'], 0, 2);
@@ -141,6 +143,12 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          $search_params,
          array('2')
       );
+
+      $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, array('2'));
+      Search::constructSQL($results);
+      $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
+              "`mainitemtype` = 'Computer'", $results['sql']['search']);
+      Search::constructDatas($results);
 
       $ids     = array();
       foreach ($results['data']['rows'] as $id => $row) {

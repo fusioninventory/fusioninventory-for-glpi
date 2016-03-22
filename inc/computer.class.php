@@ -52,6 +52,8 @@ class PluginFusioninventoryComputer extends Computer {
       $computer = new Computer();
       $options  = $computer->getSearchOptions();
 
+      $options += NetworkPort::getSearchOptionsToAdd('Computer');
+
       $options['6000']['name']          = __('Static group', 'fusioninventory');
       $options['6000']['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
       $options['6000']['massiveaction'] = FALSE;
