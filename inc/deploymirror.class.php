@@ -59,14 +59,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    function defineTabs($options=array()) {
 
       $ong=array();
-      $ong[1]=__('Main');
-
-
-      if ($this->fields['id'] > 0) {
-         $ong[12]=__('Historical');
-
-      }
-      $ong['no_all_tab'] = TRUE;
+      $this->addDefaultFormTab($ong)
+         ->addStandardTab('Log', $ong, $options);
 
       return $ong;
    }
@@ -120,12 +114,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
-      $this->showTabs($options);
+      $this->initForm($id, $options);
+
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -170,11 +160,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "</td></tr>";
 
       $this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-
-      echo "<script type='text/javascript'>loadDefaultTab();
-      </script>";
 
       return TRUE;
    }
@@ -249,7 +234,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
-         case "transfert": 
+         case "transfert":
             Dropdown::show('Entity');
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return true;
@@ -269,7 +254,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       switch ($ma->getAction()) {
          case "transfert" :
-            
+
             foreach($ids as $key) {
                if ($pfDeployMirror->getFromDB($key)) {
                   $input = array();
@@ -286,7 +271,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
             }
 
             break;
-      } 
+      }
    }
 }
 

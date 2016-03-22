@@ -70,7 +70,8 @@ $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
-$mirror->showForm($id);
+$mirror->display(array('id' => $id));
+//$mirror->showForm($id);
 Html::footer();
 
 ?>
