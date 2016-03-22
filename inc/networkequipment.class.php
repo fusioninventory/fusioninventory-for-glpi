@@ -741,6 +741,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                echo __('Alias', 'fusioninventory');
                break;
 
+            case 17:
+               echo _n('Network outlet', 'Network outlets', 1);
+               break;
+
          }
          echo "</th>";
       }
@@ -766,6 +770,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       $networkName   = new NetworkName();
       $networkPort   = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      $networkPortEthernet   = new NetworkPortEthernet();
       $iPAddress = new IPAddress();
 
       $networkPort->getFromDB($data['id']);
@@ -1095,6 +1100,18 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             case 16:
                echo "<td>".$pfNetworkPort->fields["ifalias"]."</td>";
                break;
+
+            case 17:
+               echo "<td>";
+               if ($networkPort->fields['instantiation_type'] == 'NetworkPortEthernet') {
+                  $npes = $networkPortEthernet->find("`networkports_id`='".$networkPort->fields['id']."'", '', 1);
+                  foreach ($npes as $npe) {
+                     echo Dropdown::getDropdownName("glpi_netpoints", $npe["netpoints_id"]);
+                  }
+               }
+               echo "</td>";
+               break;
+
          }
       }
       echo "</tr>";

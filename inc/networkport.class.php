@@ -124,6 +124,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[16]['field']         = 'ifalias';
       $tab[16]['name']          = __('Alias', 'fusioninventory');
 
+      $tab[17]['table']          = 'glpi_netpoints';
+      $tab[17]['field']          = 'name';
+      $tab[17]['name']           = _n('Network outlet', 'Network outlets', 1);
 
       return $tab;
    }
