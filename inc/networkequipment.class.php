@@ -624,15 +624,24 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       $result=$DB->query($query);
       echo ' ('.$DB->numrows($result).')';
 
-      $tmp = " class='pointer' onClick=\"var w = window.open('".$CFG_GLPI["root_doc"].
-             "/front/popup.php?popup=search_config&amp;".
-             "itemtype=PluginFusioninventoryNetworkPort' , 'glpipopup', ".
-             "'height=400, width=1000, top=100, left=100, scrollbars=yes'); w.focus();\"";
+      $tmp = " class='pointer' onClick=\"";
+      $tmp .= Html::jsGetElementbyID('search_config_top').
+                                             ".dialog('open');\">";
+      $tmp .= Ajax::createIframeModalWindow('search_config_top',
+                                          $CFG_GLPI["root_doc"].
+                                             "/front/displaypreference.form.php?itemtype=PluginFusioninventoryNetworkPort"
+                                             ,
+                                          array('title'
+                                                   => __('Select default items to show'),
+                                                'reloadonclose'
+                                                   => true,
+                                                'display'
+                                                   => false));
 
       echo " <img alt=\"".__s('Select default items to show')."\" title=\"".
                           __s('Select default items to show')."\" src='".
                           $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
-      echo $tmp.">";
+      echo $tmp;
 
 
       $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/".
@@ -803,8 +812,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          echo "<td>";
          $state = PluginMonitoringNetworkport::isMonitoredNetworkport($data['id']);
          if (Session::haveRight("plugin_monitoring_componentscatalog", UPDATE)) {
-            Html::showCheckbox(array('name'    => 'networkports_id[]', 
-                                     'value'   => $data['id'], 
+            Html::showCheckbox(array('name'    => 'networkports_id[]',
+                                     'value'   => $data['id'],
                                      'checked' => $state));
          } else if (Session::haveRight("plugin_monitoring_componentscatalog", READ)) {
             echo Dropdown::getYesNo($state);
