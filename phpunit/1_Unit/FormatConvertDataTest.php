@@ -132,7 +132,7 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
           );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $a_reference['software'] = array();
       $a_reference['Computer'] = array(

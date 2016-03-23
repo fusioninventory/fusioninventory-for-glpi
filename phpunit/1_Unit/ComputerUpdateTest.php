@@ -265,7 +265,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $computer         = new Computer();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
 
-      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $serialized = gzcompress(serialize($a_inventory));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
@@ -1162,7 +1162,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
       $software         = new Software();
 
-      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $serialized = gzcompress(serialize($a_inventory));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
