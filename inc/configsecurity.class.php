@@ -321,7 +321,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    function showDropdownSNMPEncryption($p_value=NULL) {
-      $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256');
+      $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
       $options = array();
       if (!is_null($p_value)) {
          $options = array('value'=>$p_value);
@@ -336,19 +336,18 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
          case '1':
             return 'DES';
-            break;
 
          case '2':
-            return 'AES128';
-            break;
+            return 'AES';
 
          case '3':
             return 'AES192';
-            break;
 
          case '4':
             return 'AES256';
-            break;
+
+         case '5':
+            return '3DES';
 
       }
       return '';
@@ -405,7 +404,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
-         case "assign_auth": 
+         case "assign_auth":
             PluginFusioninventoryConfigSecurity::auth_dropdown();
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return true;
@@ -467,7 +466,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                }
             }
          break;
-      } 
+      }
    }
 }
 
