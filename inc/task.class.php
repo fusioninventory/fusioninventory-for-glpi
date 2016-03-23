@@ -439,7 +439,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $query_timeslot = '';
       } else {
          $query_timeslot = "OR (`plugin_fusioninventory_timeslots_id` IN (".implode(',', $timeslots)."))";
-      }      
+      }
 
       //transform methods array into string for database query
       $methods = "'" . implode("','", $methods) . "'";
@@ -1254,15 +1254,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $where[] = "`taskjob`.`id` IS NOT NULL";
       }
 
-      //Filter by definition classes
-      if (     isset($filter['definitions'])
-            && is_array($filter['definitions']) ) {
+      //Filter by targets classes
+      if (     isset($filter['targets'])
+            && is_array($filter['targets']) ) {
          $where_tmp = array();
          //check classes existence and append them to the query filter
-         foreach($filter['definitions'] as $itemclass => $itemid) {
+         foreach($filter['targets'] as $itemclass => $itemid) {
             if ( class_exists($itemclass) ) {
 
-               $cond = "taskjob.`definition` LIKE '%\"".$itemclass."\"";
+               $cond = "taskjob.`targets` LIKE '%\"".$itemclass."\"";
 
                //adding itemid if not empty
                if (!empty($itemid)) {
@@ -1288,15 +1288,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
       }
 
-      // Filter by action classes
-      if (isset($filter['actions'])
-            && is_array($filter['actions']) ) {
+      // Filter by actors classes
+      if (isset($filter['actors'])
+            && is_array($filter['actors']) ) {
          $where_tmp = array();
          //check classes existence and append them to the query filter
-         foreach($filter['actions'] as $itemclass => $itemid) {
+         foreach($filter['actors'] as $itemclass => $itemid) {
             if ( class_exists($itemclass) ) {
 
-               $cond = "taskjob.`action` LIKE '%\"".$itemclass."\"";
+               $cond = "taskjob.`actors` LIKE '%\"".$itemclass."\"";
 
                //adding itemid if not empty
                if (!empty($itemid)) {
