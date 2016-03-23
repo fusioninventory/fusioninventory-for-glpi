@@ -69,6 +69,10 @@ class GetTaskByFiltersTest extends RestoreDatabase_TestCase {
          )
       );
 
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
       $this->assertEquals(array(), $running_tasks, 'Not find task because not have job');
    }
 
