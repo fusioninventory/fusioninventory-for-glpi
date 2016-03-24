@@ -2202,8 +2202,32 @@ function plugin_fusioninventory_registerMethods() {
    $WEBSERVICES_METHOD['fusioninventory.computerextendedinfo'] = array(
        'PluginFusioninventoryInventoryComputerWebservice',
 		 'methodExtendedInfo');
+}
 
 
+// Define dropdown relations
+function plugin_fusioninventory_getDatabaseRelations() {
+
+   $plugin = new Plugin();
+
+   if ($plugin->isActivated("fusioninventory")) {
+      return array("glpi_entities"
+                        => array("glpi_plugin_fusioninventory_agents"               => "entities_id",
+                                 "glpi_plugin_fusioninventory_collects"             => "entities_id",
+                                 "glpi_plugin_fusioninventory_credentialips"        => "entities_id",
+                                 "glpi_plugin_fusioninventory_credentials"          => "entities_id",
+                                 "glpi_plugin_fusioninventory_deployfiles"          => "entities_id",
+                                 "glpi_plugin_fusioninventory_deploymirrors"        => "entities_id",
+                                 "glpi_plugin_fusioninventory_deploypackages"       => "entities_id",
+                                 "glpi_plugin_fusioninventory_ignoredimportdevices" => "entities_id",
+                                 "glpi_plugin_fusioninventory_ipranges"             => "entities_id",
+                                 "glpi_plugin_fusioninventory_tasks"                => "entities_id",
+                                 "glpi_plugin_fusioninventory_timeslotentries"      => "entities_id",
+                                 "glpi_plugin_fusioninventory_timeslots"            => "entities_id",
+                                 "glpi_plugin_fusioninventory_unmanageds"           => "entities_id"));
+
+   }
+   return array();
 }
 
 ?>
