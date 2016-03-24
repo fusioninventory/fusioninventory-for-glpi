@@ -47,7 +47,7 @@ Session::checkRight('plugin_fusioninventory_networkequipment', UPDATE);
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-   $pfNetworkEquipment->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusioninventory_configsecurities_id'], $_POST['sysdescr']);
+   $pfNetworkEquipment->update_network_infos($_POST['id'], $_POST['plugin_fusioninventory_configsecurities_id'], $_POST['sysdescr']);
 }
 
 Html::back();

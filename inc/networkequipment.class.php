@@ -408,8 +408,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-   function update_network_infos($id, $plugin_fusinvsnmp_models_id,
-                                 $plugin_fusinvsnmp_configsecurities_id, $sysdescr) {
+   function update_network_infos($id, $configsecurities_id,
+           $sysdescr) {
       global $DB;
 
       $query = "SELECT *
@@ -422,12 +422,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
          $DB->query($queryInsert);
       }
-      if (empty($plugin_fusinvsnmp_configsecurities_id)) {
+      if (empty($configsecurities_id)) {
          $plugin_fusinvsnmp_configsecurities_id = 0;
       }
       $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                 SET `plugin_fusioninventory_configsecurities_id`=
-                        '".$plugin_fusinvsnmp_configsecurities_id."',
+                        '".$configsecurities_id."',
                     `sysdescr`='".$sysdescr."'
                 WHERE `networkequipments_id`='".$id."';";
 
