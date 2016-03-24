@@ -40,14 +40,14 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerLocks extends RestoreDatabase_TestCase {
+class DevicesLocks extends RestoreDatabase_TestCase {
 
    /**
     * @test
     *
     * lock model, import, field may not change and model may not be created
     */
-   public function lockItem() {
+   public function computerLockItem() {
       global $DB;
 
       $DB->connect();
@@ -136,7 +136,7 @@ class ComputerLocks extends RestoreDatabase_TestCase {
     *
     * idem but with general lock on itemtype
     */
-   public function lockItemtype() {
+   public function computerLockItemtype() {
       global $DB;
 
       $DB->connect();
@@ -203,6 +203,76 @@ class ComputerLocks extends RestoreDatabase_TestCase {
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
+
+   }
+
+
+   /**
+    * @test
+    *
+    * idem but with general lock on itemtype
+    */
+   public function switchLockItemtype() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfLock = new PluginFusioninventoryLock();
+      $networkEquipment = new NetworkEquipment();
+      $pfCommunicationNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
+
+      $input = array(
+          'tablename'   => 'glpi_networkequipments',
+          'items_id'    => 0,
+          'tablefields' => exportArrayToDB(array('locations_id'))
+      );
+      $pfLock->add($input);
+
+      $a_inventory = array(
+          'PluginFusioninventoryNetworkEquipment' => Array(
+                  'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
+                  'last_fusioninventory_update' => '2016-03-24 09:41:25',
+                  'cpu'                         => 5,
+                  'memory'                      => 18,
+                  'uptime'                      => '157 days, 02:14:44.00'
+                ),
+          'networkport'       => array(),
+          'connection-mac'    => array(),
+          'vlans'             => array(),
+          'connection-lldp'   => array(),
+          'internalport'      => array('192.168.30.67', '192.168.40.67', '192.168.50.67'),
+          'itemtype'          => 'NetworkEquipment'
+          );
+      $a_inventory['NetworkEquipment'] = array(
+               'name'               => 'switchr2d2',
+               'id'                 => 1,
+               'serial'             => 'FOC147UJEU4',
+               'manufacturers_id'   => 'Cisco',
+               'locations_id'       => 'dc1 > rack 02',
+               'networkequipmentmodels_id' => 'C2960',
+               'networkequipmentfirmwares_id' => '12.2(50)SE4',
+               'memory'             => 18,
+               'ram'                => 64,
+               'is_dynamic'         => 1,
+               'mac'                => '6c:50:4d:39:59:80'
+      );
+
+      $input = array(
+          'serial'      => 'FOC147UJEU4',
+          'entities_id' => 0);
+      $networkEquipment->add($input);
+
+      $PLUGIN_FUSIONINVENTORY_XML = '';
+      $pfCommunicationNetworkInventory->importDevice('NetworkEquipment', 1, $a_inventory);
+
+      $this->assertEquals(countElementsInTable('glpi_locations'), 0, 'Location has been created :/');
+      $networkEquipment->getFromDB(1);
+      $this->assertEquals($networkEquipment->fields['name'], 'switchr2d2', "Switch not updated");
+      $this->assertEquals($networkEquipment->fields['locations_id'], 0, "Locations id must be 0");
 
    }
 }
