@@ -5,15 +5,17 @@
 # Translators:
 # Alexey Petukhov <lexx015@gmail.com>, 2014
 # Evgeny Dedenev <jek@hotbox.ru>, 2014
+# Nikolay Petrov <techobsl@yandex.ru>, 2016
 # sayanvd <sayanvd@yandex.ru>, 2013
 # sayanvd <sayanvd@yandex.ru>, 2014
+# Sergey Morev <morev.sergey.a@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-18 05:56+0000\n"
-"Last-Translator: sayanvd <sayanvd@yandex.ru>\n"
+"PO-Revision-Date: 2016-03-24 12:30+0000\n"
+"Last-Translator: Nikolay Petrov <techobsl@yandex.ru>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/ddurieux/FusionInventory/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,7 +68,7 @@ msgstr "Компания"
 #: hook.php:132 inc/agent.class.php:130 inc/agent.class.php:222
 #: inc/agent.class.php:428 inc/agent.class.php:1191
 msgid "Useragent"
-msgstr "Useragent"
+msgstr "Агент ПК"
 
 #: hook.php:139 inc/agent.class.php:136 inc/agent.class.php:461
 #: inc/agent.class.php:1196 inc/config.class.php:468 inc/config.class.php:486
@@ -97,7 +99,7 @@ msgstr "Развёртывание"
 
 #: hook.php:172
 msgid "WakeOnLan"
-msgstr "WakeOnLan"
+msgstr "Пробуждение по сети"
 
 #: hook.php:179
 msgid "Local inventory"
@@ -255,7 +257,7 @@ msgstr "Несовместимая версия GLPI, требуется 0.85"
 
 #: setup.php:508
 msgid "fileinfo extension (PHP) is required..."
-msgstr "требуется расширение fileinfo (PHP)  ..."
+msgstr "требуется модуль fileinfo (PHP)  ..."
 
 #: setup.php:521
 #, php-format
@@ -363,7 +365,7 @@ msgstr "Идентификатор устройства"
 
 #: inc/agent.class.php:108 inc/agent.class.php:384
 msgid "Computer link"
-msgstr "Ссылка на компьютер"
+msgstr "Связать с компьютером"
 
 #: inc/agent.class.php:142 inc/agent.class.php:149 inc/agent.class.php:418
 #: inc/agent.class.php:452 inc/config.class.php:600 inc/config.class.php:610
@@ -397,7 +399,7 @@ msgstr "Статус агента"
 
 #: inc/agent.class.php:815
 msgid "Force inventory"
-msgstr "Форсировать инвентаризацию"
+msgstr "Принудительная инвентаризация"
 
 #: inc/agent.class.php:1130
 msgid "Informations for agent configuration"
@@ -460,7 +462,7 @@ msgstr "Рекурсивный"
 
 #: inc/collect_file.class.php:93 inc/collect_file.class.php:194
 msgid "Regex"
-msgstr "Regex"
+msgstr "Регулярное выражение"
 
 #: inc/collect_file.class.php:94 inc/collect_file.class.php:200
 #: inc/collect_file_content.class.php:189
@@ -778,7 +780,7 @@ msgstr "Версия SNMP"
 
 #: inc/configsecurity.class.php:94
 msgid "Community"
-msgstr "Community"
+msgstr "Объединение"
 
 #: inc/configsecurity.class.php:107
 msgid "Encryption protocol for authentication "
@@ -875,7 +877,7 @@ msgstr "в"
 
 #: inc/deployaction.class.php:340
 msgid "exec"
-msgstr "exec"
+msgstr "выполнение"
 
 #: inc/deployaction.class.php:353
 msgid "path"
@@ -1039,7 +1041,7 @@ msgstr "Сбой при записи файла на диск"
 
 #: inc/deployfile.class.php:722
 msgid "PHP extension stopped the file upload"
-msgstr "Расширение PHP  остановило загрузку файлов"
+msgstr "Мудуль PHP остановил загрузку файлов"
 
 #: inc/deployfile.class.php:752 inc/deployfile.class.php:800
 msgid "File saved!"
@@ -1316,11 +1318,11 @@ msgstr "Ограничить поиск в заданной организаци
 
 #: inc/inventoryruleimport.class.php:181
 msgid "FusionInventory link"
-msgstr "Ссылка FusionInventory"
+msgstr "Связать с FusionInventory"
 
 #: inc/inventoryruleimport.class.php:194
 msgid "Link"
-msgstr "Ссылка"
+msgstr "Связь"
 
 #: inc/inventoryruleimport.class.php:195
 msgid "Import denied (no log)"
