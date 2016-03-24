@@ -929,14 +929,16 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      $link1 = $item->getLink(1);
                      $link = str_replace($item->getName(0), $data_device["mac"],
                                          $item->getLink());
-
+                     $link2 = '';
                      // * GetIP
                         $a_networknames = current($networkName->find("`itemtype`='NetworkPort'
-                                          AND `items_id`='".$item->getID()."'", "", 1));
-                        $a_ipaddresses =  current($iPAddress->find("`itemtype`='NetworkName'
-                                          AND `items_id`='".$a_networknames['id']."'", "", 1));
-                        $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
-                                             $item->getLink());
+                                          AND `items_id`='".$opposite_port."'", "", 1));
+                        if (isset($a_networknames['id'])) {
+                           $a_ipaddresses =  current($iPAddress->find("`itemtype`='NetworkName'
+                                             AND `items_id`='".$a_networknames['id']."'", "", 1));
+                           $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
+                                                $item->getLink());
+                        }
 
                      if ($data_device["itemtype"] == 'PluginFusioninventoryUnmanaged') {
                         $icon = $this->getItemtypeIcon($item->fields["item_type"]);
