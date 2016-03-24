@@ -68,6 +68,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    **/
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
+
          case 0:
             $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
@@ -75,13 +76,19 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             }
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
+
          case 1:
+            $params_dyn = array();
+            foreach (array('sort', 'order', 'start') as $field) {
+               if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
+                  $params_dyn[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+               }
+            }
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-            foreach (array('sort', 'order', 'start') as $field) {
-               if (isset($_GET[$field])) {
-                  $params[$field] = $_GET[$field];
-               }
+
+            foreach ($params_dyn as $key => $value) {
+               $params[$key] = $value;
             }
 
             if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
@@ -92,6 +99,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                                 "?id=".$item->getID();
             self::showList('PluginFusioninventoryComputer', $params, array('2', '1'));
             break;
+
       }
 
       return true;

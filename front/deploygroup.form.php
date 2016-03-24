@@ -99,6 +99,10 @@ if (isset($_POST['save'])) {
       $id = '';
    } else {
       $id = $_GET['id'];
+      if (isset($_GET['sort']) AND isset($_GET['order'])) {
+         $group->getFromDB($id);
+         PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, true);
+      }
    }
    $values['id'] = $id;
    $group->display($values);
