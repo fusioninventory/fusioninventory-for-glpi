@@ -268,24 +268,15 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-      if ($pfConfig->getValue("storagesnmpauth") == "file") {
-         $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_printers';
-         $sopt[5191]['field'] = 'plugin_fusioninventory_configsecurities_id';
-         $sopt[5191]['linkfield'] = 'id';
-         $sopt[5191]['name'] = __('FusInv', 'fusioninventory')." - ".
-            __('SNMP authentication', 'fusioninventory');
+      $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
+      $sopt[5191]['field']='name';
+      $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
+      $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
+                             __('SNMP authentication', 'fusioninventory');
+      $sopt[5191]['datatype'] = 'itemlink';
+      $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
+      $sopt[5191]['massiveaction'] = FALSE;
 
-         $sopt[5191]['massiveaction'] = FALSE;
-      } else {
-         $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
-         $sopt[5191]['field']='name';
-         $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
-         $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
-            __('SNMP authentication', 'fusioninventory');
-         $sopt[5191]['datatype'] = 'itemlink';
-         $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
-         $sopt[5191]['massiveaction'] = FALSE;
-      }
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_printers';
       $sopt[5194]['field']='last_fusioninventory_update';
@@ -1055,10 +1046,6 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networkports.id" :
                return "GROUP_CONCAT( FUSIONINVENTORY_22.name SEPARATOR '$$$$') AS ITEM_$num, ";
-               break;
-
-            case "glpi_plugin_fusioninventory_configsecurities.name" :
-               return "glpi_plugin_fusioninventory_configsecurities.name AS ITEM_$num, ";
                break;
 
          }
