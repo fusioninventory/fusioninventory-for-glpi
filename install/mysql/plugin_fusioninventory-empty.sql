@@ -915,6 +915,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
+  `computers_id_cache` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)

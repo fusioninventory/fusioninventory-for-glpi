@@ -412,9 +412,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * Get targets for the group
     *
     * @param integer $groups_id id of the group
+    * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
     * @return array list of computers
     */
-   static function getTargetsForGroup($groups_id) {
+   static function getTargetsForGroup($groups_id, $use_cache = false) {
       $group = new self();
       $group->getFromDB($groups_id);
 
@@ -426,7 +427,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $results[$tmpgroup['items_id']] = $tmpgroup['items_id'];
          }
       } else {
-         $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group);
+         $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group,
+                                                                                    $use_cache);
       }
       return $results;
    }

@@ -894,25 +894,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                'comment'=>'Wake agents ups'));
    }
 
-   /**
-   * Add field to manage which group can be refreshed by updatedynamictasks crontask
-   */
-   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
-      $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
-      $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-   }
-
-
-      //Change static & dynamic structure to fit the GLPI framework
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas',
-                              'groups_id',
-                              'plugin_fusioninventory_deploygroups_id', 'integer');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas',
-                              'groups_id', 'plugin_fusioninventory_deploygroups_id', 'integer');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_staticdatas');
-
 
 
    // Fix software version in computers. see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/1810
@@ -5534,7 +5515,7 @@ function do_deploygroup_migration($migration) {
          'type' => 'autoincrement',
          'value' => NULL
       ),
-      'groups_id' =>  array(
+      'plugin_fusioninventory_deploygroups_id' =>  array(
          'type' => 'integer',
          'value' => NULL
       ),
@@ -5552,11 +5533,12 @@ function do_deploygroup_migration($migration) {
    );
 
    $a_table['renamefields'] = array(
+      'groups_id' => 'plugin_fusioninventory_deploygroups_id',
    );
 
    $a_table['keys'] = array(
       array(
-         'field' => 'groups_id',
+         'field' => 'plugin_fusioninventory_deploygroups_id',
          'name' => '',
          'type' => 'KEY'
       ),
@@ -5589,11 +5571,19 @@ function do_deploygroup_migration($migration) {
          'type' => 'autoincrement',
          'value' => NULL
       ),
-      'groups_id' =>  array(
+      'plugin_fusioninventory_deploygroups_id' =>  array(
          'type' => 'integer',
          'value' => NULL
       ),
       'fields_array' =>  array(
+         'type' => 'text',
+         'value' => NULL
+      ),
+      'can_update_group' =>  array(
+         'type' => 'bool',
+         'value' => 0
+      ),
+      'computers_id_cache' =>  array(
          'type' => 'text',
          'value' => NULL
       ),
@@ -5603,11 +5593,17 @@ function do_deploygroup_migration($migration) {
    );
 
    $a_table['renamefields'] = array(
+      'groups_id' => 'plugin_fusioninventory_deploygroups_id',
    );
 
    $a_table['keys'] = array(
       array(
-         'field' => 'groups_id',
+         'field' => 'plugin_fusioninventory_deploygroups_id',
+         'name' => '',
+         'type' => 'KEY'
+      ),
+      array(
+         'field' => 'can_update_group',
          'name' => '',
          'type' => 'KEY'
       ),
