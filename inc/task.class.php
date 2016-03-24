@@ -437,7 +437,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @param array $methods
     * @return true
     */
-   function prepareTaskjobs($methods = array()) {
+   function prepareTaskjobs($methods = array(), $tasks_id = false) {
       global $DB;
 
       $now = new DateTime();
@@ -454,6 +454,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       //transform methods array into string for database query
       $methods = "'" . implode("','", $methods) . "'";
 
+      // limit preparation to a specific tasks_id
+      $sql_task_id = "";
+      if ($tasks_id) {
+         $sql_task_id = "AND `task`.`id` = $tasks_id";
+      }
+
       $query = implode( " \n", array(
          "SELECT",
          "     task.`id`, task.`name`, task.`reprepare_if_successful`, ",
@@ -463,6 +469,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
          "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
          "WHERE task.`is_active` = 1",
+         $sql_task_id,
          "AND (",
          /**
           * Filter jobs by the schedule and timeslots
@@ -780,6 +787,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $minutes = intval($interval / 60);
       $hours = intval($interval / 60 / 60);
       return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
+   }
+
+
+   /**
+   * Force running the current task
+   **/
+   function forceRunning() {
+      $methods = array();
+      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+         $methods[] = $method['method'];
+      }
+      $this->prepareTaskjobs($methods, $this->getID());
    }
 
 

@@ -810,12 +810,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       } else if (isset($postvars['taskjobstoforcerun'])) {
          // * Force running many tasks (wizard)
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
+         $pfTask = new PluginFusioninventoryTask();
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $_SESSION["plugin_fusioninventory_forcerun"] = array();
          foreach ($postvars['taskjobstoforcerun'] as $taskjobs_id) {
-            $pfTaskjob->getFromDB($taskjobs_id);
-            $uniqid = $pfTaskjob->forceRunningTask($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
-            $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
+            $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+            $pfTask->forceRunning();
          }
       } else if (isset($postvars['add']) || isset($postvars['update'])) {
          // * Add and update taskjob
