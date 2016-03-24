@@ -549,6 +549,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input = array();
                   $manufacturer =
                      PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
+                  $manufacturer = Toolbox::addslashes_deep($manufacturer);
+                  $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
                   $input['name'] = $manufacturer;
                   if (isset($_SESSION["plugin_fusioninventory_entity"])) {
                      $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
