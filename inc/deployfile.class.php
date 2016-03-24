@@ -438,7 +438,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<th>".__("retention", 'fusioninventory').
                   " - ".__("Minute(s)", 'fusioninventory')."</th>";
       echo "<td>";
-      
+
       echo "<input type='number' name='p2p-retention-duration' value='$p2p_retention_duration' />";
       echo "</td>";
       echo "</tr><tr>";
@@ -1062,6 +1062,75 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          return $filesize;
       } else {
          return "N/A";
+      }
+   }
+
+
+   function numberUnusedFiles(){
+
+      echo "<table width='950' class='tab_cadre_fixe'>";
+
+      echo "<tr>";
+      echo "<th>";
+      echo __('Unused file', 'fusioninventory');
+      echo "</th>";
+      echo "<th>";
+      echo __('Size', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
+      $a_files = $this->find();
+      foreach ($a_files as $data) {
+         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deployorders',
+                 '`json` LIKE \'%"'.$data['sha512'].'"%\'');
+         if ($cnt == 0) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo $data['name'];
+            echo "</td>";
+            echo "<td>";
+            echo round($data['filesize'] / 1000000, 1)." ".__('Mio');
+            echo "</td>";
+            echo "</tr>";
+         }
+      }
+      echo "</table>";
+   }
+
+
+
+   function deleteUnusedFiles(){
+
+      $manifests_path =
+         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
+      $parts_path =
+         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
+
+      $a_files = $this->find();
+      foreach ($a_files as $data) {
+         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deployorders',
+                 '`json` LIKE \'%"'.$data['sha512'].'"%\'');
+         if ($cnt == 0) {
+            $this->delete($data);
+
+            $handle = fopen($manifests_path.$data['sha512'], "r");
+            if ($handle) {
+               while(!feof($handle)){
+                  $buffer = trim(fgets($handle));
+                  if ($buffer != '') {
+                     $path =
+                        substr($buffer, 0, 1).
+                        "/".
+                        substr($buffer, 0, 2).
+                        "/".
+                        $buffer;
+                     unlink($parts_path.$path);
+                  }
+               }
+               fclose($handle);
+            }
+            unlink($manifests_path.$data['sha512']);
+         }
       }
    }
 

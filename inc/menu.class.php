@@ -127,6 +127,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/menu_import.png",
                                       array('alt' => __('Import', 'fusioninventory')));
       $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deploypackage.import.php';
+      // Add icon for clean unused deploy files
+      $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/menu_cleanfiles.png",
+                                      array('alt' => __('Clean unused files', 'fusioninventory')));
+      $options['deploypackage']['links'][$img] = '/plugins/fusioninventory/front/deployfile.clean.php';
 
       // Add icon for documentation
       $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/books.png",
