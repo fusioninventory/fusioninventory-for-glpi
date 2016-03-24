@@ -656,6 +656,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "entities_id";
       $exclude[] = "is_recursive";
       $exclude[] = "date_mod";
+      $exclude[] = "date_creation";
       $exclude[] = "is_deleted";
       $exclude[] = "is_dynamic";
       $exclude[] = "is_template";
@@ -874,6 +875,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
             break;
       }
+   }
+
+   static function isFieldLocked($a_lockable, $field) {
+      return in_array($field, $a_lockable);
    }
 }
 

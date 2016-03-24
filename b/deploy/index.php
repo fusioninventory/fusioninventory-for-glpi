@@ -50,7 +50,7 @@ if (isset($_GET['action'])) {
       case 'getJobs':
          if(isset($_GET['machineid'])) {
             $pfAgent        = new PluginFusioninventoryAgent();
-            $pfAgentModule = new PluginFusioninventoryAgentModule();
+            $pfAgentModule  = new PluginFusioninventoryAgentModule();
             $pfTask         = new PluginFusioninventoryTask();
             $pfTaskjob      = new PluginFusioninventoryTaskjob();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();

@@ -137,7 +137,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $computer         = new Computer();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
 
-      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
       $serialized = gzcompress(serialize($a_inventory));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
@@ -209,7 +209,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
 
-      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 1);
 
       $serialized = gzcompress(serialize($a_inventory));
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =

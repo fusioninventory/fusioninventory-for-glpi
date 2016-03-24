@@ -235,7 +235,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
                 )
           );
 
-      $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory);
+      $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory, 'Computer', 0);
 
       $serialized = gzcompress(serialize($this->a_inventory));
       $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] =

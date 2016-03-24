@@ -203,7 +203,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $a_computerinventory['monitor'][$num] = $pfBlacklist->cleanBlacklist($a_monit);
          }
       }
-      $this->arrayinventory = $a_computerinventory;
+      $this->fill_arrayinventory($a_computerinventory);
 
       $input = array();
 
@@ -423,7 +423,8 @@ class PluginFusioninventoryInventoryComputerInventory {
       );
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
-      $a_computerinventory = $pfFormatconvert->replaceids($this->arrayinventory);
+      $a_computerinventory = $pfFormatconvert->replaceids($this->arrayinventory,
+              $itemtype, $items_id);
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
 
       if ($itemtype == 'Computer') {
@@ -675,6 +676,12 @@ class PluginFusioninventoryInventoryComputerInventory {
     */
    static function getMethod() {
       return 'inventory';
+   }
+
+
+
+   function fill_arrayinventory($data) {
+      $this->arrayinventory = $data;
    }
 }
 
