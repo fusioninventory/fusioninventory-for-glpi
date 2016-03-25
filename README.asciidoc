@@ -3,7 +3,7 @@
 image:https://travis-ci.org/fusioninventory/fusioninventory-for-glpi.svg?branch=master["Build Status", link="https://travis-ci.org/fusioninventory/fusioninventory-for-glpi"]
 image:https://coveralls.io/repos/fusioninventory/fusioninventory-for-glpi/badge.svg["Coverage Status", link="https://coveralls.io/r/fusioninventory/fusioninventory-for-glpi"]
 image:https://img.shields.io/github/downloads/fusioninventory/fusioninventory-for-glpi/total.svg["github downloads"]
-image:https://img.shields.io/badge/downloads%20redmine-217906-green.svg["Redmine downloads"]
+image:https://img.shields.io/badge/downloads%20redmine-218k total-green.svg["Redmine downloads"]
 
 This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
 
