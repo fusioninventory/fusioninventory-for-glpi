@@ -1173,6 +1173,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['tag'].'</td>';
          echo '</tr>';
+
+         echo '<tr class="tab_bg_1">';
+         echo '<td>';
+         echo __('Last contact', 'fusioninventory');
+         echo '</td>';
+         echo '<td>';
+         echo Html::convDateTime($this->fields['last_contact']);
+         echo '</td>';
+         echo '</tr>';
+
       }
    }
 
