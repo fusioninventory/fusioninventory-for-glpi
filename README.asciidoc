@@ -2,6 +2,7 @@
 
 image:https://travis-ci.org/fusioninventory/fusioninventory-for-glpi.svg?branch=master["Build Status", link="https://travis-ci.org/fusioninventory/fusioninventory-for-glpi"]
 image:https://coveralls.io/repos/fusioninventory/fusioninventory-for-glpi/badge.svg["Coverage Status", link="https://coveralls.io/r/fusioninventory/fusioninventory-for-glpi"]
+image:https://img.shields.io/github/downloads/fusioninventory/fusioninventory-for-glpi/total.svg["Number of downloads on github"]
 
 This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
 
