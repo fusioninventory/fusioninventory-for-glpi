@@ -205,7 +205,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo __('Up to date', 'fusioninventory')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($antivirusData['uptodate']);
+         echo Dropdown::getYesNo($antivirusData['is_uptodate']);
          echo "</td>";
          echo "</tr>";
 
@@ -214,7 +214,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo __('Version')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo $antivirusData['version'];
+         echo $antivirusData['antivirus_version'];
          echo "</td>";
          echo "<td colspan='2'>";
          echo "</td>";
