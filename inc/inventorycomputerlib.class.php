@@ -123,7 +123,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
-      $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      if (!class_exists('ComputerAntivirus')) {
+         $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      } else {
+         $pfInventoryComputerAntivirus = new ComputerAntivirus();
+      }
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
       $computer_Item                = new Computer_Item();
@@ -1205,8 +1209,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Antivirus
          $db_antivirus = array();
          if ($no_history === FALSE) {
-            $query = "SELECT `id`, `name`, `version`
-                  FROM `glpi_plugin_fusioninventory_inventorycomputerantiviruses`
+            $query = "SELECT `id`, `name`, `antivirus_version`
+                  FROM `".$pfInventoryComputerAntivirus->getTable()."`
                WHERE `computers_id` = '$computers_id'";
             $result = $DB->query($query);
             while ($data = $DB->fetch_assoc($result)) {
@@ -1219,7 +1223,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          $simpleantivirus = array();
          foreach ($a_computerinventory['antivirus'] as $key=>$a_antivirus) {
-            $a_field = array('name', 'version');
+            $a_field = array('name', 'antivirus_version');
             foreach ($a_field as $field) {
                if (isset($a_antivirus[$field])) {
                   $simpleantivirus[$key][$field] = $a_antivirus[$field];
@@ -1233,6 +1237,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $input = array();
                   $input = $a_computerinventory['antivirus'][$key];
                   $input['id'] = $keydb;
+                  $input['is_dynamic'] = 1;
                   $pfInventoryComputerAntivirus->update($input, !$no_history);
                   unset($simpleantivirus[$key]);
                   unset($a_computerinventory['antivirus'][$key]);
@@ -1253,6 +1258,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_computerinventory['antivirus']) != 0) {
                foreach ($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $computers_id;
+                  $a_antivirus['is_dynamic'] = 1;
                   $pfInventoryComputerAntivirus->add($a_antivirus, array(), !$no_history);
                }
             }

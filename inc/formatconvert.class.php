@@ -1316,9 +1316,9 @@ class PluginFusioninventoryFormatconvert {
                                            array(
                                               'NAME'     => 'name',
                                               'COMPANY'  => 'manufacturers_id',
-                                              'VERSION'  => 'version',
+                                              'VERSION'  => 'antivirus_version',
                                               'ENABLED'  => 'is_active',
-                                              'UPTODATE' => 'uptodate'));
+                                              'UPTODATE' => 'is_uptodate'));
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }

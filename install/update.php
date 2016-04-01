@@ -930,6 +930,31 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->dropTable('glpi_plugin_fusioninventory_profiles');
    }
 
+   //Antivirus stuff has been integrated in GLPI's core
+   if (TableExists('glpi_plugin_fusioninventory_inventorycomputerantiviruses')) {
+      $migration->changeField("glpi_plugin_fusioninventory_inventorycomputerantiviruses",
+                          "uptodate", "is_uptodate",
+                          "bool");
+
+      $migration->changeField("glpi_plugin_fusioninventory_inventorycomputerantiviruses",
+                          "version", "antivirus_version",
+                          "string");
+
+      $migration->migrationOneTable("glpi_plugin_fusioninventory_inventorycomputerantiviruses");
+
+
+      //Antivirus migration from FI table to GLPi core table
+
+      $antivirus = new ComputerAntivirus();
+      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
+         unset($ant['id']);
+         $ant['is_dynamic'] = 1;
+         $antivirus->add($ant, array(), false);
+      }
+      $migration->dropTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses');
+   }
+
+
    //Create first access to the current profile is needed
    if (isset($_SESSION['glpiactiveprofile'])) {
       PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);

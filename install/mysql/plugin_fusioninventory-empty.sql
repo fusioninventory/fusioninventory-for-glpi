@@ -368,14 +368,14 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerantiviruses` (
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
-  `version` varchar(255) DEFAULT NULL,
+  `antivirus_version` varchar(255) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
-  `uptodate` tinyint(1) NOT NULL DEFAULT '0',
+  `is_uptodate` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
-  KEY `version` (`version`),
+  KEY `antivirus_version` (`antivirus_version`),
   KEY `is_active` (`is_active`),
-  KEY `uptodate` (`uptodate`),
+  KEY `is_uptodate` (`is_uptodate`),
   KEY `computers_id` (`computers_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

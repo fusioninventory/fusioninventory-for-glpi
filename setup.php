@@ -164,8 +164,10 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
-      $Plugin->registerClass('PluginFusioninventoryInventoryComputerAntivirus',
-              array('addtabon' => array('Computer')));
+      if (!class_exists('ComputerAntivirus')) {
+         Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
+                 array('addtabon' => array('Computer')));
+      }
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
