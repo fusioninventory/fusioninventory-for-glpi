@@ -1599,6 +1599,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 //
 //         }
 
+      Plugin::doHook("fusioninventory_inventory", array('inventory_data' => $a_computerinventory,
+                                                        'computers_id'   => $computers_id ));
+
       $this->addLog();
    }
 
