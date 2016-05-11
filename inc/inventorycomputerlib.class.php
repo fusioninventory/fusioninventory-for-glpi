@@ -1769,6 +1769,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
                $a_computerinventory_ipaddress =
                            $inventory_networkports[$key]['ipaddress'];
+               $nb_ip = count($a_computerinventory_ipaddress);
                foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
                   foreach ($db_addresses as $keydb2 => $arraydb2) {
                      if ($arrays2 == $arraydb2) {
@@ -1782,7 +1783,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   AND count($db_addresses) == 0) {
                   // Nothing to do
                } else {
-                  if (count($db_addresses) != 0) {
+                  if (count($db_addresses) != 0 AND $nb_ip > 0) {
                      // Delete ip address in DB
                      foreach (array_keys($db_addresses) as $idtmp) {
                         $iPAddress->delete(array('id'=>$idtmp), 1);
