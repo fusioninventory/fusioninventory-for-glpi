@@ -49,6 +49,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
 
 
    function showForm(Printer $item, $options=array()) {
+      global $DB;
 
       // ** Get link OID fields
       $mapping_name=array();
@@ -56,8 +57,23 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       $id = $item->getID();
       $a_cartridges = $this->find("`printers_id`='".$id."'");
 
-      echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
-                 action=\"".$options['target']."\">";
+      $printer = new Printer();
+      $printer->getFromDB($id);
+
+      $query_cartridges = "SELECT `id` FROM `glpi_cartridgeitems`
+                           WHERE `id` NOT IN (SELECT `c`.`cartridgeitems_id`
+                                              FROM `glpi_cartridgeitems_printermodels` AS c, `glpi_printers` AS p
+                                              WHERE `c`.`printermodels_id`=`p`.`printermodels_id` and `p`.`id`='$id')";
+
+      $result_cartridges = $DB->query($query_cartridges);
+      $exclude_cartridges = array();
+
+      if ($result_cartridges !== FALSE) {
+          while ($cartridge = $DB->fetch_array($result_cartridges)) {
+              $exclude_cartridges[] = $cartridge['id'];
+          }
+      }
+      echo "<div align='center'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center' colspan='3'>";
@@ -76,6 +92,18 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          echo " : ";
          echo "</td>";
          echo "<td align='center'>";
+         echo "<form method='post' action=\"".$options['target']."\">";
+         Dropdown::show('CartridgeItem', array('name'     => 'cartridges_id',
+                                               'value'    => $a_cartridge['cartridges_id'],
+                                               'comments' => false,
+                                               'entity'   => $printer->fields['entities_id'],
+                                               'entity_sons' => $this->isRecursive(),
+                                               'used'     => $exclude_cartridges));
+
+         echo "&nbsp;<input type='hidden' name='id' value='".$a_cartridge["id"]."'/>";
+         echo "<input type='submit' name='update_cartridge' value=\"".__('Update')."\" class='submit'>";
+         Html::closeForm();
+
          echo "</td>";
          echo "<td align='center'>";
          if ($a_cartridge['state'] == 100000) {
@@ -91,7 +119,6 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          echo "</tr>";
       }
       echo "</table>";
-      Html::closeForm();
       echo "</div>";
    }
 }

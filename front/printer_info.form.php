@@ -72,6 +72,12 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 
    $plugin_fusioninventory_printer->update($_POST);
 
+} else if ((isset($_POST["update_cartridge"])) && (isset($_POST['id']))) {
+   Session::checkRight('plugin_fusioninventory_printer', UPDATE);
+   $cartridge = new PluginFusioninventoryPrinterCartridge();
+   if ($cartridge->getFromDB($_POST['id'])) {
+      $cartridge->update($_POST);
+   }
 }
 
 $arg = "";
