@@ -213,7 +213,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       return implode("\n", array(
          "<div class='taskjob_item' id='" . $item_fullid . "'",
          "  >" ,
-         Html::getCheckbox(array()), 
+         Html::getCheckbox(array()),
          "  </input>" ,
          "  <span class='" . $itemtype ."'></span>",
          "  <label>",
@@ -665,6 +665,20 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       $this->showTextArea(__('Comments'), "comment");
 
       $modules_methods = PluginFusioninventoryStaticmisc::getModulesMethods();
+      if (!Session::haveRight('plugin_fusioninventory_networkequipment', READ)
+              AND !Session::haveRight('plugin_fusioninventory_printer', READ)) {
+         if (isset($modules_methods['networkdiscovery'])) {
+            unset($modules_methods['networkdiscovery']);
+         }
+         if (isset($modules_methods['networkinventory'])) {
+            unset($modules_methods['networkinventory']);
+         }
+      }
+      if (!Session::haveRight('plugin_fusioninventory_wol', READ)) {
+         if (isset($modules_methods['wakeonlan'])) {
+            unset($modules_methods['wakeonlan']);
+         }
+      }
       $modules_methods_rand = $this->showDropdownFromArray(
          __('Module method', 'fusioninventory'), "method",
          $modules_methods
