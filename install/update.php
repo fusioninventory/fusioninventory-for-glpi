@@ -1676,7 +1676,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             '*',
             'System Product Name',
             'Product Name',
-            'System Name');
+            'System Name',
+            'All Series');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['smodel']."'

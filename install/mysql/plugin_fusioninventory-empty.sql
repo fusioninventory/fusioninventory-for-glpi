@@ -1216,7 +1216,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (60, 1, '0'),
 (61, 1, 'empty'),
 (62, 3, '24:b6:20:52:41:53'),
-(63, 1, 'Not Specified');
+(63, 1, 'Not Specified'),
+(64, 5, 'All Series');
 
 
 
