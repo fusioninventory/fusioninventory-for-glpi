@@ -78,6 +78,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
       $tab[2]['name']      = __('Entity');
+      $tab[2]['datatype']  = 'dropdown';
 
       $tab[3]['table']     = $this->getTable();
       $tab[3]['field']     = 'is_recursive';
@@ -162,29 +163,29 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    */
    function getCurrentActiveTimeslots() {
       global $DB;
-      
+
       $timeslots   = array();
       $date        = new DateTime('NOW');
       $day_of_week = $date->format("N");
-      $timeinsecs  = $date->format('H') * HOUR_TIMESTAMP 
-                        + $date->format('i') * MINUTE_TIMESTAMP 
+      $timeinsecs  = $date->format('H') * HOUR_TIMESTAMP
+                        + $date->format('i') * MINUTE_TIMESTAMP
                         + $date->format('s');
-      
+
       //Get all timeslots currently active
-      $query_timeslot = "SELECT `t`.`id` 
-                         FROM `glpi_plugin_fusioninventory_timeslots` as t 
-                         INNER JOIN `glpi_plugin_fusioninventory_timeslotentries` as te 
-                           ON (`te`.`plugin_fusioninventory_timeslots_id`=`t`.`id`) 
-                         WHERE $timeinsecs BETWEEN `te`.`begin` 
-                            AND `te`.`end` 
+      $query_timeslot = "SELECT `t`.`id`
+                         FROM `glpi_plugin_fusioninventory_timeslots` as t
+                         INNER JOIN `glpi_plugin_fusioninventory_timeslotentries` as te
+                           ON (`te`.`plugin_fusioninventory_timeslots_id`=`t`.`id`)
+                         WHERE $timeinsecs BETWEEN `te`.`begin`
+                            AND `te`.`end`
                             AND `day`='".$day_of_week."'";
       foreach ($DB->request($query_timeslot) as $timeslot) {
          $timeslots[] = $timeslot['id'];
       }
-      
+
       return $timeslots;
    }
-   
+
    /**
     * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
     * @param date    The date and time we want to transform into cursor. If null the default value

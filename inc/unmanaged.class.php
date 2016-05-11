@@ -132,7 +132,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $tab[8]['field']     = 'completename';
       $tab[8]['linkfield'] = 'entities_id';
       $tab[8]['name']      = __('Entity');
-
+      $tab[8]['datatype']  = 'dropdown';
 
       $tab[9]['table']     = 'glpi_domains';
       $tab[9]['field']     = 'name';

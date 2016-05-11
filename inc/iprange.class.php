@@ -85,36 +85,31 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    function getSearchOptions() {
-
       $tab = array();
 
       $tab['common'] = __('IP range configuration', 'fusioninventory');
-
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
       $tab[1]['linkfield'] = 'name';
       $tab[1]['name'] = __('Name');
-
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
       $tab[2]['linkfield'] = 'entities_id';
       $tab[2]['name'] = __('Entity');
-
+      $tab[2]['datatype'] = 'dropdown';
 
       $tab[3]['table'] = $this->getTable();
       $tab[3]['field'] = 'ip_start';
       $tab[3]['linkfield'] = 'ip_start';
       $tab[3]['name'] = __('Start of IP range', 'fusioninventory');
 
-
-       $tab[4]['table'] = $this->getTable();
+      $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'ip_end';
       $tab[4]['linkfield'] = 'ip_end';
       $tab[4]['name'] = __('End of IP range', 'fusioninventory');
-
 
       return $tab;
    }

@@ -88,6 +88,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $tab[5]['field']     = 'completename';
       $tab[5]['name']      = __('Entity');
       $tab[5]['massiveaction']  = false;
+      $tab[5]['datatype']  = 'dropdown';
 
       $tab[6]['table']           = $this->getTable();
       $tab[6]['field']           = 'serial';

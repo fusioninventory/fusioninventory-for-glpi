@@ -202,7 +202,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[80]['table']     = 'glpi_entities';
       $tab[80]['field']     = 'completename';
       $tab[80]['name']      = __('Entity');
-
+      $tab[80]['datatype']  = 'dropdown';
 
       $tab[81]['table']     = getTableNameForForeignKeyField('locations_id');
       $tab[81]['field']     = 'completename';

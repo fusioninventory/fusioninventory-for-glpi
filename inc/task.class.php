@@ -91,6 +91,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[3]['field']          = 'completename';
       $sopt[3]['linkfield']      = 'entities_id';
       $sopt[3]['name']           = __('Entity');
+      $sopt[3]['datatype']       = 'dropdown';
 
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'comment';

@@ -257,6 +257,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $tab[80]['table']     = 'glpi_entities';
       $tab[80]['field']     = 'completename';
       $tab[80]['name']      = __('Entity');
+      $tab[80]['datatype']  = 'dropdown';
 
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';
