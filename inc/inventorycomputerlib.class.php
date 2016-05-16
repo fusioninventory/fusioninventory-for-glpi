@@ -796,7 +796,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                       'computers_id'        => $computers_id,
                       'softwareversions_id' => $softwareversions_id,
                       'is_dynamic'          => 1,
-                      'entities_id'         => $a_software['entities_id']
+                      'entities_id'         => $computer->fields['entities_id']
                       );
                   $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                }
@@ -919,7 +919,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                             'computers_id'        => $computers_id,
                             'softwareversions_id' => $softwareversions_id,
                             'is_dynamic'          => 1,
-                            'entities_id'         => $a_software['entities_id']
+                            'entities_id'         => $computer->fields['entities_id']
                             );
                         $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                      }

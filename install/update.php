@@ -5678,6 +5678,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
+   // Fix software version in computers. see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/1810
+   $query = "SELECT * FROM `glpi_computers` WHERE `entities_id` > 0";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      $DB->query("UPDATE `glpi_computers_softwareversions` SET `entities_id`='".$data['entities_id']."'
+                     WHERE `computers_id`='".$data['id']."'"
+              . "AND `is_dynamic`='1' AND `entities_id`='0'");
+   }
+
    if (TableExists('glpi_plugin_fusioninventory_profiles')) {
       //Migrate rights to the new system introduction in GLPI 0.85
       PluginFusioninventoryProfile::migrateProfiles();
