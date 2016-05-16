@@ -958,7 +958,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ));
       $query_joins['log'] = implode( "\n", array(
          "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
-         "  ON log.`id` = max_run.`max_log_id`",
+         "  ON max_run.`max_log_id` = log.`id`",
       ));
       $query_joins['job'] = implode( "\n", array(
          "INNER JOIN `glpi_plugin_fusioninventory_taskjobs` AS job",
@@ -982,7 +982,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             "FROM `glpi_plugin_fusioninventory_agents` AS agent",
             implode( "\n", $query_joins),
             implode("\n", $query_where),
-            "GROUP BY job.`id`, agent.`id`, run.`id`",
+            "GROUP BY job.`id`, agent.`id`, run.`id`, log.`id`",
          )),
          'result' => null
       );
@@ -1020,7 +1020,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             "FROM `glpi_plugin_fusioninventory_agents` AS agent",
             implode( "\n", $query_joins),
             implode( "\n", $query_where),
-            "GROUP BY job.`id`, agent.`id`, run.`id`",
+            "GROUP BY job.`id`, agent.`id`, run.`id`, log.`id`",
          )),
          'result' => null
       );

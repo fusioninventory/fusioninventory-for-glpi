@@ -2295,11 +2295,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                               "date",
                               "date_mod",
-                              "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                              "datetime DEFAULT NULL");
          $migration->changeField($newTable,
                               "date_mod",
                               "date_mod",
-                              "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                              "datetime DEFAULT NULL");
          $migration->changeField($newTable,
                               "creation",
                               "creation",
@@ -2331,7 +2331,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "int(11) NOT NULL AUTO_INCREMENT");
          $migration->addField($newTable,
                               "date_mod",
-                              "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                              "datetime DEFAULT NULL");
          $migration->addField($newTable,
                               "creation",
                               "tinyint(1) NOT NULL DEFAULT '0'");
@@ -2535,7 +2535,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  "date",
                                  "date",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->changeField($newTable,
                                  "pages_total",
                                  "pages_total",
@@ -2602,7 +2602,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "date",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->addField($newTable,
                                  "pages_total",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -2824,7 +2824,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  "lastup",
                                  "lastup",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
       $migration->migrationOneTable($newTable);
          $migration->changeField($newTable,
                                  "ID",
@@ -2894,7 +2894,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "lastup",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->addKey($newTable,
                             "networkports_id");
       $migration->migrationOneTable($newTable);
@@ -3437,11 +3437,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  "start_time",
                                  "start_time",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->changeField($newTable,
                                  "end_time",
                                  "end_time",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->changeField($newTable,
                                  "date_mod",
                                  "date_mod",
@@ -3482,10 +3482,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "start_time",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->addField($newTable,
                                  "end_time",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+                                 "datetime DEFAULT NULL");
          $migration->addField($newTable,
                                  "date_mod",
                                  "datetime DEFAULT NULL");

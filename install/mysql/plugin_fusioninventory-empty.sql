@@ -503,7 +503,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportconnectionlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `date_mod` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `date_mod` datetime DEFAULT NULL,
    `creation` tinyint(1) NOT NULL DEFAULT '0',
    `networkports_id_source` int(11) NOT NULL DEFAULT '0',
    `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
@@ -569,7 +569,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printerlogs`;
 CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
-   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `date` datetime DEFAULT NULL,
    `pages_total` int(11) NOT NULL DEFAULT '0',
    `pages_n_b` int(11) NOT NULL DEFAULT '0',
    `pages_color` int(11) NOT NULL DEFAULT '0',
@@ -624,7 +624,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
    `ifalias` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `portduplex` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `trunk` tinyint(1) NOT NULL DEFAULT '0',
-   `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `lastup` datetime DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `networkports_id` (`networkports_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -676,8 +676,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-  `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   `threads` int(11) NOT NULL DEFAULT '0',
   `nb_ip` int(11) NOT NULL DEFAULT '0',
