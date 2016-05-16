@@ -1865,6 +1865,9 @@ class PluginFusioninventoryFormatconvert {
             }
             $array_tmp['ifspeed'] = $array_tmp['speed'];
 
+            if (!isset($a_port['IFNUMBER'])) {
+               continue;
+            }
             $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
 
             if (isset($a_port['CONNECTIONS'])) {
