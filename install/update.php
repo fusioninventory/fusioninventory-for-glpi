@@ -5846,7 +5846,7 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       if ($data['cnt'] > 1) {
          $queryd = "DELETE FROM `glpi_displaypreferences`
             WHERE (`itemtype` = '".$newitemtype."'
-                     OR `itemtype` = '".$olditemtype."' "
+                     OR `itemtype` = '".$olditemtype."') "
                  . " AND `users_id`='".$data['users_id']."'"
                  . " AND `num`='".$data['num']."'"
                  . " LIMIT 1, 100";
@@ -7679,7 +7679,7 @@ function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype
       if ($data['cnt'] > 1) {
          $queryd = "DELETE FROM `glpi_displaypreferences`
             WHERE (`itemtype` = '".$newitemtype."'
-                     OR `itemtype` = '".$olditemtype."' "
+                     OR `itemtype` = '".$olditemtype."') "
                  . " AND `users_id`='".$data['users_id']."'"
                  . " AND `num`='".$data['num']."'"
                  . " LIMIT 1, 100";
