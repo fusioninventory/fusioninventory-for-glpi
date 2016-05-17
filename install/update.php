@@ -5840,7 +5840,7 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
    $query = "SELECT *, count(`id`) as `cnt` FROM `glpi_displaypreferences`
    WHERE (`itemtype` = '".$newitemtype."'
    OR `itemtype` = '".$olditemtype."')
-   group by `users_id`, `num`";
+   group by `users_id`, `num`, `id`";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
       if ($data['cnt'] > 1) {
@@ -7669,7 +7669,7 @@ function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype
    $query = "SELECT *, count(`id`) as `cnt` FROM `glpi_displaypreferences`
    WHERE (`itemtype` = '".$newitemtype."'
    OR `itemtype` = '".$olditemtype."')
-   group by `users_id`, `num`";
+   group by `users_id`, `num`, `id`";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
       if ($data['cnt'] > 1) {
