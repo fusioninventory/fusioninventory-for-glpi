@@ -12,6 +12,7 @@ This plugin makes GLPI to process various types of tasks for Fusioninventory age
 * Network (SNMP) inventory
 * Software deployment
 * VMWare ESX host remote inventory
+* Collect data (files, Windows registry, WMI)
 
 For further information and documentation, please check http://www.fusioninventory.org .
 
