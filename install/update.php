@@ -5837,15 +5837,19 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 function changeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
 
-   $query = "SELECT *, count(`id`) as `cnt` FROM `glpi_displaypreferences`
+   $query = "SELECT `users_id`, `num`, count(*) as `cnt` FROM `glpi_displaypreferences`
    WHERE (`itemtype` = '".$newitemtype."'
    OR `itemtype` = '".$olditemtype."')
-   group by `users_id`, `num`, `id`";
+   group by `users_id`, `num`";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
       if ($data['cnt'] > 1) {
          $queryd = "DELETE FROM `glpi_displaypreferences`
-            WHERE `id`='".$data['id']."'";
+            WHERE (`itemtype` = '".$newitemtype."'
+                     OR `itemtype` = '".$olditemtype."' "
+                 . " AND `users_id`='".$data['users_id']."'"
+                 . " AND `num`='".$data['num']."'"
+                 . " LIMIT 1, 100";
          $DB->query($queryd);
       }
    }
@@ -7666,15 +7670,19 @@ function update213to220_ConvertField($migration) {
 function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
 
-   $query = "SELECT *, count(`id`) as `cnt` FROM `glpi_displaypreferences`
+   $query = "SELECT `users_id`, `num`, count(*) as `cnt` FROM `glpi_displaypreferences`
    WHERE (`itemtype` = '".$newitemtype."'
    OR `itemtype` = '".$olditemtype."')
-   group by `users_id`, `num`, `id`";
+   group by `users_id`, `num`";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
       if ($data['cnt'] > 1) {
          $queryd = "DELETE FROM `glpi_displaypreferences`
-            WHERE `id`='".$data['id']."'";
+            WHERE (`itemtype` = '".$newitemtype."'
+                     OR `itemtype` = '".$olditemtype."' "
+                 . " AND `users_id`='".$data['users_id']."'"
+                 . " AND `num`='".$data['num']."'"
+                 . " LIMIT 1, 100";
          $DB->query($queryd);
       }
    }
