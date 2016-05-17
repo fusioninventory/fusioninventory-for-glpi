@@ -52,38 +52,53 @@ if (isset($_GET['action'])) {
       case 'getJobs':
          if(isset($_GET['machineid'])) {
             $pfAgent        = new PluginFusioninventoryAgent();
+            $pfAgentModule  = new PluginFusioninventoryAgentModule();
+            $pfTask         = new PluginFusioninventoryTask();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
             $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
-            $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-            if (isset($a_agent['id'])) {
-               $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
 
-               foreach ($moduleRun as $className => $array) {
-                  if (class_exists($className)) {
-                     if ($className == "PluginFusioninventoryCollect") {
+            $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+            if (isset($agent['id'])) {
+               $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+                  $agent['id'],
+                  array('collect')
+               );
+               if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
+                  foreach($taskjobstates as $taskjobstate) {
+                     $taskjobstate->cancel(
+                        __("Collect module has been disabled for this agent", 'fusioninventory')
+                     );
+                  }
+                  $response = "{}";
+               } else {
+                  $order = new stdClass;
+                  $order->jobs = array();
 
-                        $class = new PluginFusioninventoryCollect();
-                        foreach ($array as $data) {
-                           $out = $class->run($data, $a_agent);
-                           if (count($out) > 0) {
-                              $response[] = $out;
-                           }
-                           $pfTaskjobstate->changeStatus(
-                                   $data['id'],
-                                   PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
-
-                           $a_input = array();
-                           $a_input['plugin_fusioninventory_taskjobstates_id'] = $data['id'];
-                           $a_input['items_id'] = $a_agent['id'];
-                           $a_input['itemtype'] = 'PluginFusioninventoryAgent';
-                           $a_input['date'] = date("Y-m-d H:i:s");
-                           $a_input['comment'] = '';
-                           $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
-                           $pfTaskjoblog->add($a_input);
-
-
-                        }
+                  $class = new PluginFusioninventoryCollect();
+                  foreach ($taskjobstates as $taskjobstate) {
+                     $out = $class->run($taskjobstate, $agent);
+                     if (count($out) > 0) {
+                        $order->jobs[] = $out;
                      }
+                     $pfTaskjobstate->changeStatus(
+                             $taskjobstate->fields['id'],
+                             PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                     );
+
+                     $a_input = array();
+                     $a_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstate->fields['id'];
+                     $a_input['items_id'] = $agent['id'];
+                     $a_input['itemtype'] = 'PluginFusioninventoryAgent';
+                     $a_input['date'] = date("Y-m-d H:i:s");
+                     $a_input['comment'] = '';
+                     $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_STARTED;
+                     $pfTaskjoblog->add($a_input);
+                  }
+                  // return an empty dictionnary if there are no jobs.
+                  if (count($order->jobs) == 0) {
+                     $response = "{}";
+                  } else {
+                     $response = json_encode($order);
                   }
                }
             }
@@ -94,6 +109,7 @@ if (isset($_GET['action'])) {
          // example
          // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+         $pfCollect = new PluginFusioninventoryCollect();
          $pfAgent = new PluginFusioninventoryAgent();
 
          $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
@@ -107,9 +123,11 @@ if (isset($_GET['action'])) {
             unset($a_values['action']);
             unset($a_values['uuid']);
 
-            switch ($jobstate['itemtype']) {
+            $pfCollect->getFromDB($jobstate['items_id']);
 
-               case 'PluginFusioninventoryCollect_Registry':
+            switch ($pfCollect->fields['type']) {
+
+               case 'registry':
                   // update registry content
                   $pfCRC = new PluginFusioninventoryCollect_Registry_Content();
                   $pfCRC->updateComputer($computers_id,
@@ -134,10 +152,11 @@ if (isset($_GET['action'])) {
                           $jobstate['items_id'],
                           $jobstate['itemtype']);
                   }
+                  $response = "{}";
                   break;
 
-               case 'PluginFusioninventoryCollect_Wmi':
-                  // update registry content
+               case 'wmi':
+                  // update wmi content
                   $pfCWC = new PluginFusioninventoryCollect_Wmi_Content();
                   $pfCWC->updateComputer($computers_id,
                                          $a_values,
@@ -151,15 +170,25 @@ if (isset($_GET['action'])) {
                           $jobstate['items_id'],
                           $jobstate['itemtype']);
                   }
+                  $response = "{}";
                   break;
 
-               case 'PluginFusioninventoryCollect_File':
-                  // update registry content
+               case 'file':
+                  // update files content
+                  $params = array(
+                     'machineid' => $pfAgent->fields['device_id'],
+                     'uuid'      => $_GET['uuid']
+                  );
                   $pfCFC = new PluginFusioninventoryCollect_File_Content();
                   $pfCFC->storeTempFilesFound($jobstate['id'], $a_values);
+                  $params['code'] = 'running';
+                  $params['msg'] = "file ".$a_values['path']." | size ".$a_values['size'];
+
                   $pfTaskjobstate->changeStatus(
                           $jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+
+                  PluginFusioninventoryCommunicationRest::updateLog($params);
                   if ($a_values['_cpt'] == 1) { // it last value
                      $pfCFC->updateComputer($computers_id,
                                             $jobstate['items_id'],
@@ -169,6 +198,7 @@ if (isset($_GET['action'])) {
                           $jobstate['items_id'],
                           $jobstate['itemtype']);
                   }
+                  $response = "{}";
                   break;
 
             }
@@ -177,8 +207,8 @@ if (isset($_GET['action'])) {
 
    }
 
-   if (count($response) > 0) {
-      echo json_encode($response);
+   if ($response !== FALSE) {
+      echo $response;
    } else {
       echo json_encode((object)array());
    }
