@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Kaya Zeren <kayazeren@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:16+0100\n"
-"PO-Revision-Date: 2014-12-19 04:24+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
+"POT-Creation-Date: 2016-05-20 00:19+0200\n"
+"PO-Revision-Date: 2016-05-19 22:32+0000\n"
+"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/ddurieux/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,16 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: hook.php:51 hook.php:231 hook.php:238 hook.php:257 hook.php:264
-#: hook.php:275 hook.php:283 hook.php:294 hook.php:315 hook.php:322
-#: hook.php:330 inc/agent.class.php:191 inc/task.view.class.php:59
+#: hook.php:274 hook.php:284 hook.php:305 hook.php:314 hook.php:322
+#: inc/agent.class.php:192 inc/task.view.class.php:59
 msgid "FusInv"
 msgstr "FusInv"
 
-#: hook.php:52 hook.php:295 hook.php:323
+#: hook.php:52 hook.php:285 hook.php:315
 #: inc/inventorycomputercomputer.class.php:96
 #: inc/inventorycomputercomputer.class.php:231
-#: inc/networkequipment.class.php:563 inc/networkequipment.class.php:1114
+#: inc/networkequipment.class.php:563 inc/networkequipment.class.php:1144
 #: inc/printer.class.php:156 inc/printer.class.php:210
+#: inc/printer.class.php:256
 msgid "Last inventory"
 msgstr "Son Envanter"
 
@@ -60,16 +60,16 @@ msgstr "Sahibi"
 msgid "Company"
 msgstr "Kurum"
 
-#: hook.php:132 inc/agent.class.php:130 inc/agent.class.php:222
-#: inc/agent.class.php:428 inc/agent.class.php:1191
+#: hook.php:132 inc/agent.class.php:131 inc/agent.class.php:223
+#: inc/agent.class.php:434 inc/agent.class.php:1201
 msgid "Useragent"
 msgstr "Kullanıcı ajanı"
 
-#: hook.php:139 inc/agent.class.php:136 inc/agent.class.php:461
-#: inc/agent.class.php:1196 inc/config.class.php:468 inc/config.class.php:486
-#: inc/config.class.php:520 inc/inventoryruleentity.class.php:127
+#: hook.php:139 inc/agent.class.php:137 inc/agent.class.php:467
+#: inc/agent.class.php:1206 inc/config.class.php:533 inc/config.class.php:551
+#: inc/config.class.php:585 inc/inventoryruleentity.class.php:129
 #: inc/inventoryruleimport.class.php:143
-#: inc/inventoryrulelocation.class.php:130
+#: inc/inventoryrulelocation.class.php:134
 msgid "FusionInventory tag"
 msgstr "FusionInventory etiketi"
 
@@ -81,14 +81,14 @@ msgid "Architecture"
 msgstr "Mimari"
 
 #: hook.php:165 hook.php:172 hook.php:179 hook.php:186 hook.php:193
-#: hook.php:200 hook.php:207 inc/agent.class.php:166 inc/agent.class.php:245
-#: inc/agentmodule.class.php:110 inc/agentmodule.class.php:222
-#: inc/agentmodule.class.php:224 inc/ignoredimportdevice.class.php:118
+#: hook.php:200 hook.php:207 inc/agent.class.php:167 inc/agent.class.php:246
+#: inc/agentmodule.class.php:110 inc/agentmodule.class.php:221
+#: inc/agentmodule.class.php:223 inc/ignoredimportdevice.class.php:119
 #: inc/rulematchedlog.class.php:171 inc/rulematchedlog.class.php:241
 msgid "Module"
 msgstr "Modül"
 
-#: hook.php:165 inc/menu.class.php:454
+#: hook.php:165 inc/menu.class.php:460
 msgid "Deploy"
 msgstr "Yayım"
 
@@ -108,8 +108,8 @@ msgstr "ESX/VMWare"
 msgid "Network inventory"
 msgstr "Ağ envanteri"
 
-#: hook.php:200 inc/agent.class.php:143 inc/agent.class.php:419
-#: inc/agent.class.php:436 inc/config.class.php:601 inc/config.class.php:623
+#: hook.php:200 inc/agent.class.php:144 inc/agent.class.php:425
+#: inc/agent.class.php:442 inc/config.class.php:666 inc/config.class.php:688
 #: inc/staticmisc.class.php:86
 msgid "Network discovery"
 msgstr "Ağ keşfi"
@@ -118,7 +118,7 @@ msgstr "Ağ keşfi"
 msgid "Collect"
 msgstr "Toplayın"
 
-#: hook.php:211 inc/computer.class.php:55 inc/deploygroup.class.php:73
+#: hook.php:211 inc/computer.class.php:57 inc/deploygroup.class.php:73
 msgid "Static group"
 msgstr "Durağan grup"
 
@@ -126,74 +126,42 @@ msgstr "Durağan grup"
 msgid "Agent base URL"
 msgstr "Ajan temel İnternet  adresi"
 
-#: hook.php:276 hook.php:284 hook.php:316 inc/menu.class.php:382
+#: hook.php:275 hook.php:306 inc/menu.class.php:388
 #: inc/networkequipment.class.php:482 inc/printer.class.php:168
-#: inc/profile.class.php:251 inc/unmanaged.class.php:171
-#: inc/unmanaged.class.php:424
+#: inc/profile.class.php:255 inc/unmanaged.class.php:171
+#: inc/unmanaged.class.php:422
 msgid "SNMP authentication"
 msgstr "SNMP kimlik doğrulaması"
 
-#: hook.php:302 hook.php:338 inc/networkequipment.class.php:470
+#: hook.php:292 hook.php:330 inc/networkequipment.class.php:470
 #: inc/printer.class.php:147 inc/unmanaged.class.php:165
 #: inc/unmanaged.class.php:412
 msgid "Sysdescr"
 msgstr "Sisaçıklm"
 
-#: hook.php:331 inc/networkequipment.class.php:492
+#: hook.php:323 inc/networkequipment.class.php:492
 msgid "CPU usage (in %)"
 msgstr "CPU kullanımı (% olarak)"
 
-#: hook.php:897 hook.php:906 hook.php:917 inc/lock.class.php:180
-#: inc/lock.class.php:325 inc/profile.class.php:272
+#: hook.php:893 hook.php:909 inc/lock.class.php:180 inc/lock.class.php:347
+#: inc/profile.class.php:276
 msgid "Lock"
 msgid_plural "Locks"
 msgstr[0] "Kilit"
 
-#: hook.php:898 inc/deploygroup.class.php:94
+#: hook.php:897 inc/deploygroup.class.php:94 inc/iprange.class.php:314
 msgid "Target a task"
 msgstr "Bir görevi hedefleyin"
 
-#: hook.php:900
+#: hook.php:901
 msgid "Add to static group"
 msgstr "Durağan gruba ekleyin"
 
-#: hook.php:908 hook.php:919
-msgid "Load the correct SNMP model"
-msgstr "Doğru SNMP modelini yükleyin"
-
-#: hook.php:909 hook.php:920
-msgid "Assign SNMP model"
-msgstr "SNMP modeli ekleyin"
-
-#: hook.php:911 hook.php:922 inc/unmanaged.class.php:251
+#: hook.php:913 inc/unmanaged.class.php:251
 msgid "Assign SNMP authentication"
 msgstr "SNMP kimlik doğrulaması ekleyin"
 
-#: hook.php:936 inc/taskjoblog.class.php:478 inc/taskjoblog.class.php:921
-#: inc/taskjoblog.class.php:979
-msgid "Force the end"
-msgstr "Durmaya zorlayın"
-
-#: hook.php:1030 inc/deploygroup.class.php:119 inc/deploytask.class.php:56
-#: inc/deploytask.class.php:114 inc/profile.class.php:296
-#: inc/task.view.class.php:126
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "Görevler"
-
-#: hook.php:1049 inc/deploygroup.class.php:138 inc/deploypackage.class.php:56
-msgid "Package"
-msgstr "Paket"
-
-#: hook.php:1063
-msgid "Create a job for each computer"
-msgstr "Her bir bilgisayar için bir iş oluşturun"
-
-#: hook.php:1065 inc/deploygroup.class.php:151
-msgid "Create a job for each group"
-msgstr "Her bir grup için bir iş oluşturun"
-
-#: index.php:55 front/agent.form.php:47 front/agent.php:45
+#: index.php:55 front/agent.form.php:79 front/agent.php:45
 #: front/agentmodule.form.php:45 front/collect.php:45
 #: front/collectrule.form.php:45 front/collectrule.php:46
 #: front/configsecurity.form.php:50 front/configsecurity.php:45
@@ -211,65 +179,51 @@ msgstr "Her bir grup için bir iş oluşturun"
 #: front/stateinventory.php:45 front/task.form.php:47 front/task.php:46
 #: front/taskjob.form.php:47 front/taskjob.php:45 front/taskjoblog.php:45
 #: front/timeslot.php:48 front/unmanaged.form.php:48 front/unmanaged.php:45
-#: front/wizard.php:45 front/wizard_inventory.php:45
-#: front/wizard_inventorycomputeroptions.php:45
 #: inc/inventorycomputercomputer.class.php:91
-#: inc/networkequipment.class.php:558 report/computer_last_inventory.php:49
-#: report/not_queried_recently.php:51 report/ports_date_connections.php:49
-#: report/switch_ports.history.php:50
+#: inc/networkequipment.class.php:558 inc/printer.class.php:251
+#: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
+#: report/ports_date_connections.php:49 report/switch_ports.history.php:50
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: setup.php:383 inc/printerlog.class.php:476
+#: setup.php:375 inc/printerlog.class.php:476
 msgid "Printed page counter"
 msgstr "Basılmış sayfa sayacı"
 
-#: setup.php:387
-msgid "Switchs ports history"
-msgstr "Switch kapılarının geçmişi"
+#: setup.php:379
+msgid "Switch ports history"
+msgstr ""
 
-#: setup.php:389
-msgid "Unused switchs ports"
-msgstr "Kullanılmayan switch kapıları"
+#: setup.php:381
+msgid "Unused switch ports"
+msgstr ""
 
-#: setup.php:391
+#: setup.php:383
 msgid "Number of days since last inventory"
 msgstr "Son envanterden sonra geçen gün"
 
-#: setup.php:395 report/computer_last_inventory.php:67
+#: setup.php:387 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
 msgstr "Bilgisayarların xx gündür envanter sayımı yapılmadı"
 
-#: setup.php:503
-msgid "Your GLPI version not compatible, require 0.85"
-msgstr "Bu uygulama eki GLPI 0.84 ve üzerindeki sürümlerle çalışır"
+#: setup.php:499
+msgid "Your GLPI version not compatible, require >= 0.85"
+msgstr ""
 
-#: setup.php:508
+#: setup.php:504
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo eklentisi (PHP) gerekli..."
 
-#: setup.php:521
+#: setup.php:517
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Lütfen glpi/plugins/ içindeki %s klasörünü silin"
 
-#: ajax/configurationamanagement_action.php:55
-msgid "In referentiel + alert"
-msgstr "Referans + uyarı"
-
-#: ajax/configurationamanagement_action.php:56
-msgid "In referentiel - alert"
-msgstr "Referans - uyarı"
-
-#: ajax/configurationamanagement_action.php:57
-msgid "Not in referentiel"
-msgstr "Referens değil"
-
-#: front/agent.form.php:58
+#: front/agent.form.php:53
 msgid "The agent is running"
 msgstr "Ajan çalışıyor"
 
-#: front/agent.form.php:61 inc/agent.class.php:790
+#: front/agent.form.php:56 inc/agent.class.php:796
 msgid "Impossible to communicate with agent!"
 msgstr "Ajan ile iletişim kurulamadı!"
 
@@ -280,6 +234,12 @@ msgstr "Toplama yönetimi"
 #: front/config.form.php:47 front/configlogfield.form.php:47
 msgid "Features"
 msgstr "Özellikler"
+
+#: front/deploygroup.php:46 inc/deploygroup.class.php:64
+#: inc/deploytaskjob.class.php:170 inc/menu.class.php:233
+#: inc/profile.class.php:306
+msgid "Groups of computers"
+msgstr "Bilgisayar grupları"
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
@@ -331,8 +291,8 @@ msgstr "Alınan aygıt sayısı"
 msgid "Number of devices not imported because type not defined"
 msgstr "Tip tanımı olmadığından alınamayan aygıt sayısı"
 
-#: inc/agent.class.php:60 inc/agent.class.php:69 inc/agent.class.php:765
-#: inc/agent.class.php:1186 inc/ignoredimportdevice.class.php:59
+#: inc/agent.class.php:60 inc/agent.class.php:69 inc/agent.class.php:771
+#: inc/agent.class.php:1196 inc/ignoredimportdevice.class.php:59
 #: inc/rulematchedlog.class.php:167 inc/statediscovery.class.php:139
 #: inc/stateinventory.class.php:92 inc/taskjoblog.class.php:198
 #: inc/taskjoblog.class.php:272 inc/taskjoblog.class.php:339
@@ -340,61 +300,61 @@ msgstr "Tip tanımı olmadığından alınamayan aygıt sayısı"
 msgid "Agent"
 msgstr "Ajan"
 
-#: inc/agent.class.php:90 inc/agent.class.php:223 inc/agent.class.php:444
+#: inc/agent.class.php:91 inc/agent.class.php:224 inc/agent.class.php:450
 msgid "Last contact"
 msgstr "Son iletişim"
 
-#: inc/agent.class.php:96 inc/agent.class.php:404
+#: inc/agent.class.php:97 inc/agent.class.php:410
 msgid "locked"
 msgstr "kilitli"
 
-#: inc/agent.class.php:102 inc/agent.class.php:377
+#: inc/agent.class.php:103 inc/agent.class.php:383
 msgid "Device_id"
 msgstr "Aygıt_kodu"
 
-#: inc/agent.class.php:108 inc/agent.class.php:384
+#: inc/agent.class.php:109 inc/agent.class.php:390
 msgid "Computer link"
 msgstr "Bilgisayar bağlantısı"
 
-#: inc/agent.class.php:142 inc/agent.class.php:149 inc/agent.class.php:418
-#: inc/agent.class.php:452 inc/config.class.php:600 inc/config.class.php:610
+#: inc/agent.class.php:143 inc/agent.class.php:150 inc/agent.class.php:424
+#: inc/agent.class.php:458 inc/config.class.php:665 inc/config.class.php:675
 #: inc/statediscovery.class.php:144 inc/stateinventory.class.php:98
 msgid "Threads number"
 msgstr "İş parçacığı numarası"
 
-#: inc/agent.class.php:150 inc/agent.class.php:453 inc/agent.class.php:468
-#: inc/agentmodule.class.php:135 inc/agentmodule.class.php:248
-#: inc/config.class.php:611 inc/config.class.php:632
+#: inc/agent.class.php:151 inc/agent.class.php:459 inc/agent.class.php:474
+#: inc/agentmodule.class.php:135 inc/agentmodule.class.php:247
+#: inc/config.class.php:676 inc/config.class.php:697
 #: inc/staticmisc.class.php:92
 msgid "Network inventory (SNMP)"
 msgstr "Ağ envanteri (SNMP)"
 
-#: inc/agent.class.php:157 inc/agent.class.php:482 inc/config.class.php:320
+#: inc/agent.class.php:158 inc/agent.class.php:488 inc/config.class.php:327
 msgid "Agent port"
 msgstr "Ajan kapısı"
 
-#: inc/agent.class.php:435 inc/agent.class.php:467 inc/config.class.php:622
-#: inc/config.class.php:631
+#: inc/agent.class.php:441 inc/agent.class.php:473 inc/config.class.php:687
+#: inc/config.class.php:696
 msgid "SNMP timeout"
 msgstr "SNMP zaman aşımı"
 
-#: inc/agent.class.php:483
+#: inc/agent.class.php:489
 msgid "if empty use port configured in general options"
 msgstr "boş ise genel ayarlardaki kapı kullanılsın"
 
-#: inc/agent.class.php:759
+#: inc/agent.class.php:765
 msgid "Agent state"
 msgstr "Ajan durumu"
 
-#: inc/agent.class.php:815
+#: inc/agent.class.php:825
 msgid "Force inventory"
 msgstr "Envanter alınsın"
 
-#: inc/agent.class.php:1130
+#: inc/agent.class.php:1140
 msgid "Informations for agent configuration"
 msgstr "Ajan ayarları ile ilgili bilgiler"
 
-#: inc/agent.class.php:1140
+#: inc/agent.class.php:1150
 msgid "Communication url of the server"
 msgstr "Sunucunun iletişim İnternet adresi"
 
@@ -411,9 +371,20 @@ msgstr "Etkinleştirme (varsayılan)"
 msgid "Exceptions"
 msgstr "Katılmayacaklar"
 
-#: inc/agentmodule.class.php:140 inc/agentmodule.class.php:253
+#: inc/agentmodule.class.php:140 inc/agentmodule.class.php:252
 msgid "Package deployment"
 msgstr "Paket yayımı"
+
+#: inc/agentwakeup.class.php:58 inc/lock.class.php:284 inc/task.class.php:1539
+#: inc/taskjob.class.php:58 inc/taskjob.class.php:767
+#: inc/taskjoblog.class.php:171 inc/taskjobstate.class.php:224
+#: inc/unmanaged.class.php:197
+msgid "Job"
+msgstr "İş"
+
+#: inc/agentwakeup.class.php:143
+msgid "Maximum number of agent wakeup reached"
+msgstr ""
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
@@ -455,7 +426,7 @@ msgstr "Kurallı ifade"
 
 #: inc/collect_file.class.php:94 inc/collect_file.class.php:200
 #: inc/collect_file_content.class.php:189
-#: inc/collect_file_content.class.php:227
+#: inc/collect_file_content.class.php:227 inc/deployfile.class.php:1078
 msgid "Size"
 msgstr "Boyut"
 
@@ -609,7 +580,7 @@ msgid "Property"
 msgstr "Varlık"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
-#: inc/menu.class.php:329 inc/profile.class.php:213
+#: inc/menu.class.php:335 inc/profile.class.php:213
 msgid "Additional computer information rules"
 msgstr "Ek bilgisayar bilgileri kuralları"
 
@@ -641,17 +612,21 @@ msgstr "Dosya yolu"
 msgid "File size"
 msgstr "Dosya boyutu"
 
-#: inc/common.view.class.php:188
+#: inc/collectrule.class.php:190
+msgid "Software version"
+msgstr ""
+
+#: inc/common.view.class.php:201
 msgid "Warning:"
 msgstr "Uyarı:"
 
-#: inc/common.view.class.php:192
+#: inc/common.view.class.php:205
 msgid "Error:"
 msgstr "Hata:"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:215
-#: inc/communicationnetworkinventory.class.php:295
+#: inc/communicationnetworkinventory.class.php:283
 msgid "Unattended element in"
 msgstr "Şunun içinde kast edilmeyen bileşen"
 
@@ -675,76 +650,92 @@ msgstr "Seçenek"
 msgid "Union between computer and license"
 msgstr "Bilgisayar ve lisans arasındaki bağ"
 
-#: inc/config.class.php:199 inc/staticmisc.class.php:70
+#: inc/config.class.php:206 inc/staticmisc.class.php:70
 msgid "Computer Inventory"
 msgstr "Bilgisayar Envanteri"
 
-#: inc/config.class.php:201
+#: inc/config.class.php:208
 msgid "Network Inventory"
 msgstr "Ağ Envanteri"
 
-#: inc/config.class.php:203 inc/menu.class.php:439
+#: inc/config.class.php:210 inc/menu.class.php:445
 msgid "Package management"
 msgstr "Paket yönetimi"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:302
 msgid "SSL-only for agent"
 msgstr "Ajan yalnız SSL kullansın"
 
-#: inc/config.class.php:299
+#: inc/config.class.php:306
 msgid "Inventory frequency (in hours)"
 msgstr "Envanter sıklığı (saat)"
 
-#: inc/config.class.php:310
-msgid "Delete tasks after"
-msgstr "Şundan sonra görevler silinsin"
+#: inc/config.class.php:317
+msgid "Delete tasks logs after"
+msgstr ""
 
-#: inc/config.class.php:327
+#: inc/config.class.php:334
 msgid "Extra-debug"
 msgstr "Ek hata ayıklama"
 
-#: inc/config.class.php:360
-msgid "Clean agents not have contacted server since (in days)"
-msgstr "Sunucuya şu kadar gün bağlanmayan ajanlar silinsin"
+#: inc/config.class.php:369
+msgid "Maximum number of agents to wake up in a task"
+msgstr ""
 
-#: inc/config.class.php:399 inc/wizard.class.php:340
+#: inc/config.class.php:380
+msgid "Update agents"
+msgstr ""
+
+#: inc/config.class.php:382
+msgid "Update agents not have contacted server since (in days)"
+msgstr ""
+
+#: inc/config.class.php:417 inc/config.class.php:439
+msgid "Change the status"
+msgstr ""
+
+#: inc/config.class.php:442
+msgid "Clean agents"
+msgstr ""
+
+#: inc/config.class.php:464
 msgid "Import options"
 msgstr "Alma ayarları"
 
-#: inc/config.class.php:447 inc/inventorycomputerantivirus.class.php:53
+#: inc/config.class.php:512 inc/inventorycomputerantivirus.class.php:53
 #: inc/inventorycomputerantivirus.class.php:80
 #: inc/inventorycomputerantivirus.class.php:136
 #: inc/inventorycomputerbatteries.class.php:117
 msgid "Antivirus"
 msgstr "Antivirus"
 
-#: inc/config.class.php:490
+#: inc/config.class.php:555
 msgid "Virtual network card"
 msgstr "Sanal ağ kartı"
 
-#: inc/config.class.php:499
+#: inc/config.class.php:564
 msgid "Default status"
 msgstr "Varsayılan durum"
 
-#: inc/config.class.php:533
+#: inc/config.class.php:598
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
 msgstr "Sanal makina bilgilerine göre bilgisayar oluşturulsun ( yalnız sanal makina envanter ajanı yüklü değilse ! )"
 
-#: inc/config.class.php:550
+#: inc/config.class.php:615
 msgid "Network drives"
 msgstr "Ağ sürücüleri"
 
-#: inc/config.class.php:595
+#: inc/config.class.php:660
 msgid "Network options"
 msgstr "Ağ seçenekleri"
 
-#: inc/config.class.php:672
+#: inc/config.class.php:737
 msgid "Root folder for sending files from server"
 msgstr "Sunucudan gönderilecek dosyaların kök klasörü"
 
-#: inc/config.class.php:680
+#: inc/config.class.php:745
 msgid "Use this GLPI server as a mirror server"
 msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
 
@@ -777,19 +768,19 @@ msgid "Encryption protocol for data"
 msgstr "Veri için kullanılacak şifreleme yöntemi"
 
 #: inc/credential.class.php:56 inc/credential.class.php:143
-#: inc/credentialip.class.php:97 inc/credentialip.class.php:110
-#: inc/credentialip.class.php:130 inc/menu.class.php:392
-#: inc/profile.class.php:242
+#: inc/credentialip.class.php:97 inc/credentialip.class.php:112
+#: inc/credentialip.class.php:132 inc/menu.class.php:398
+#: inc/profile.class.php:246
 msgid "Authentication for remote devices (VMware)"
 msgstr "Uzak aygıtlar için kimlik doğrulaması (VMware)"
 
-#: inc/credential.class.php:229 inc/credential.class.php:244
-#: inc/profile.class.php:248
+#: inc/credential.class.php:230 inc/credential.class.php:245
+#: inc/profile.class.php:252
 msgid "VMware host"
 msgstr "VMware sunucusu"
 
-#: inc/credential.class.php:349 inc/menu.class.php:373
-#: inc/profile.class.php:245 inc/wizard.class.php:1014
+#: inc/credential.class.php:350 inc/menu.class.php:379
+#: inc/profile.class.php:249
 msgid "Remote devices to inventory (VMware)"
 msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
 
@@ -827,12 +818,12 @@ msgstr "Kopyalansın"
 
 #: inc/deployaction.class.php:66 inc/deployaction.class.php:222
 #: inc/deploycheck.class.php:206 inc/deployfile.class.php:293
-#: inc/networkequipment.class.php:1055 inc/networkequipment.class.php:1056
+#: inc/networkequipment.class.php:1073 inc/networkequipment.class.php:1074
 #: inc/networkportlog.class.php:193 inc/networkporttype.class.php:389
-#: inc/printerlog.class.php:354 inc/printerlog.class.php:554
-#: inc/taskjob.class.php:165 inc/taskjob.class.php:1801
-#: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:443
-#: inc/taskjob.view.class.php:455
+#: inc/printerlog.class.php:354 inc/printerlog.class.php:551
+#: inc/taskjob.class.php:165 inc/taskjob.class.php:1764
+#: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:446
+#: inc/taskjob.view.class.php:458
 msgid "Delete"
 msgstr "Silin"
 
@@ -849,7 +840,7 @@ msgid "return codes saved for this command"
 msgstr "bu komut için kaydedilmiş geri dönüş kodları"
 
 #: inc/deployaction.class.php:207 inc/deploycheck.class.php:191
-#: inc/deployfile.class.php:279 inc/taskjob.class.php:1789
+#: inc/deployfile.class.php:279 inc/taskjob.class.php:1752
 msgid "drag"
 msgstr "sürükleyin"
 
@@ -965,13 +956,14 @@ msgstr "Sunucudan yükleyin"
 msgid "p2p"
 msgstr "p2p"
 
-#: inc/deployfile.class.php:227
+#: inc/deployfile.class.php:227 inc/deployfile.class.php:438
 msgid "retention"
 msgstr "tutulma"
 
-#: inc/deployfile.class.php:229
-msgid "days"
-msgstr "gün"
+#: inc/deployfile.class.php:229 inc/deployfile.class.php:439
+#: inc/networkequipment.class.php:601 inc/taskjob.class.php:1162
+msgid "Minute(s)"
+msgstr "dakika"
 
 #: inc/deployfile.class.php:242
 msgid "uncompress"
@@ -997,68 +989,63 @@ msgstr "Sunucudan dosya seçin"
 msgid "Uncompress"
 msgstr "Ayıklayın"
 
-#: inc/deployfile.class.php:429
+#: inc/deployfile.class.php:430
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:436
-msgid "retention days"
-msgstr "gün olarak tutulma süresi"
-
-#: inc/deployfile.class.php:707
+#: inc/deployfile.class.php:703
 msgid "Transfer error: the file size is too big"
 msgstr "Aktarım hatası: dosya boyutu çok büyük"
 
-#: inc/deployfile.class.php:710
+#: inc/deployfile.class.php:706
 msgid "The uploaded file was only partially uploaded"
 msgstr "Dosyanın yalnızca bir kısmı yüklenebildi"
 
-#: inc/deployfile.class.php:713
+#: inc/deployfile.class.php:709
 msgid "No file was uploaded"
 msgstr "Henüz bir dosya yüklenmemiş"
 
-#: inc/deployfile.class.php:716
+#: inc/deployfile.class.php:712
 msgid "Missing a temporary folder"
 msgstr "Geçici klasör bulunamadı"
 
-#: inc/deployfile.class.php:719
+#: inc/deployfile.class.php:715
 msgid "Failed to write file to disk"
 msgstr "Dosya diske yazılamadı"
 
-#: inc/deployfile.class.php:722
+#: inc/deployfile.class.php:718
 msgid "PHP extension stopped the file upload"
 msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
 
-#: inc/deployfile.class.php:752 inc/deployfile.class.php:800
+#: inc/deployfile.class.php:748 inc/deployfile.class.php:796
 msgid "File saved!"
 msgstr "Dosya kaydedildi!"
 
-#: inc/deployfile.class.php:755 inc/deployfile.class.php:803
+#: inc/deployfile.class.php:751 inc/deployfile.class.php:799
 msgid "Failed to copy file"
 msgstr "Dosya kopyalanamadı"
 
-#: inc/deployfile.class.php:759 inc/deployfile.class.php:807
+#: inc/deployfile.class.php:755 inc/deployfile.class.php:803
 msgid "File missing"
 msgstr "Dosya eksik"
 
-#: inc/deployfile.class.php:1047
+#: inc/deployfile.class.php:1043
 msgid "Max file size"
 msgstr "En büyük dosya boyutu"
 
-#: inc/deployfile.class.php:1049
+#: inc/deployfile.class.php:1045
 msgid "Mio"
 msgstr "MB"
 
-#: inc/deploygroup.class.php:64 inc/deploytaskjob.class.php:170
-#: inc/menu.class.php:227 inc/profile.class.php:302
-msgid "Groups of computers"
-msgstr "Bilgisayar grupları"
+#: inc/deployfile.class.php:1075
+msgid "Unused file"
+msgstr ""
 
 #: inc/deploygroup.class.php:74
 msgid "Dynamic group"
 msgstr "Devingen grup"
 
-#: inc/deploygroup.class.php:298
+#: inc/deploygroup.class.php:174
 msgid "Add group"
 msgstr "Grup ekleyin"
 
@@ -1066,16 +1053,16 @@ msgstr "Grup ekleyin"
 msgid "Installation"
 msgstr "Yükleme"
 
-#: inc/deploymirror.class.php:54 inc/menu.class.php:448
-#: inc/profile.class.php:228
+#: inc/deploymirror.class.php:54 inc/menu.class.php:454
+#: inc/profile.class.php:232
 msgid "Mirror servers"
 msgstr "Yansı sunucular"
 
-#: inc/deploymirror.class.php:135 inc/deploymirror.class.php:196
+#: inc/deploymirror.class.php:137 inc/deploymirror.class.php:193
 msgid "Mirror server address"
 msgstr "Yansı sunucu adresi"
 
-#: inc/deploymirror.class.php:141
+#: inc/deploymirror.class.php:143
 msgid "Mirror location"
 msgstr "Yansı konumu"
 
@@ -1083,8 +1070,12 @@ msgstr "Yansı konumu"
 msgid "The modified JSON contained a syntax error :"
 msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
 
-#: inc/deploypackage.class.php:68 inc/menu.class.php:126
-#: inc/menu.class.php:131
+#: inc/deploypackage.class.php:56 inc/task.class.php:1491
+msgid "Package"
+msgstr "Paket"
+
+#: inc/deploypackage.class.php:68 inc/menu.class.php:128
+#: inc/menu.class.php:137
 msgid "Import"
 msgstr "Alın"
 
@@ -1101,33 +1092,40 @@ msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "Bu paketle birlikte şu işlemler yürütülüyor"
 
-#: inc/deploypackage.class.php:395
+#: inc/deploypackage.class.php:371
 msgid "Audits"
 msgstr "Denetimler"
 
-#: inc/deploypackage.class.php:396
+#: inc/deploypackage.class.php:372
 msgid "Files"
 msgstr "Dosyalar"
 
-#: inc/deploypackage.class.php:397
+#: inc/deploypackage.class.php:373
 msgid "Actions"
 msgstr "İşlemler"
 
-#: inc/deploypackage.class.php:729
+#: inc/deploypackage.class.php:705
 msgid "Item successfully added"
 msgstr "Öge eklendi"
 
-#: inc/deploypackage.class.php:817
+#: inc/deploypackage.class.php:793
 msgid "Package exported in"
 msgstr "Paket şuraya verildi"
 
-#: inc/deploypackage.class.php:901
+#: inc/deploypackage.class.php:877
 msgid "Packages to import"
 msgstr "Alınacak paketler"
 
 #: inc/deploytask.class.php:54
 msgid "Group of computers"
 msgstr "Bilgisayar grubu"
+
+#: inc/deploytask.class.php:56 inc/deploytask.class.php:114
+#: inc/profile.class.php:300 inc/task.class.php:1472 inc/task.class.php:1521
+#: inc/task.view.class.php:126
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "Görevler"
 
 #: inc/deploytask.class.php:85
 msgid "Order list"
@@ -1161,9 +1159,14 @@ msgstr "Başka birimden kendiliğinden bilgisayar aktarımı modeli"
 msgid "Service URL"
 msgstr "Hizmet İnternet Adresi"
 
-#: inc/ignoredimportdevice.class.php:52
+#: inc/ignoredimportdevice.class.php:52 inc/profile.class.php:217
 msgid "Equipment ignored on import"
 msgstr "Alma sırasında aygıt yoksayıldı"
+
+#: inc/ignoredimportdevice.class.php:69 inc/rulematchedlog.class.php:163
+#: inc/rulematchedlog.class.php:229
+msgid "Rule name"
+msgstr ""
 
 #: inc/inventorycomputerantivirus.class.php:165
 #: inc/inventorycomputerbatteries.class.php:146
@@ -1217,7 +1220,7 @@ msgid "Lock it"
 msgstr "Kilitleyin"
 
 #: inc/inventorycomputercomputer.class.php:238
-#: inc/networkequipment.class.php:1121 inc/printer.class.php:217
+#: inc/networkequipment.class.php:1151 inc/printer.class.php:217
 msgid "Download"
 msgstr "İndirin"
 
@@ -1255,26 +1258,26 @@ msgstr "Bilgisayar GLPI içine eklendi"
 msgid "Entity rules"
 msgstr "Birim kuralları"
 
-#: inc/inventoryruleentity.class.php:136
+#: inc/inventoryruleentity.class.php:138
 msgid "IP Address"
 msgstr "IP Adresi"
 
-#: inc/inventoryruleentity.class.php:139
+#: inc/inventoryruleentity.class.php:141
 msgid "Computer's name"
 msgstr "Bilgisayar adı"
 
-#: inc/inventoryruleentity.class.php:168
-#: inc/inventoryrulelocation.class.php:172
+#: inc/inventoryruleentity.class.php:173
+#: inc/inventoryrulelocation.class.php:180
 msgid "Ignore in FusionInventory import"
 msgstr "FusionInventory almasında yoksayılsın"
 
-#: inc/inventoryruleentity.class.php:212
-#: inc/inventoryrulelocation.class.php:215
+#: inc/inventoryruleentity.class.php:217
+#: inc/inventoryrulelocation.class.php:223
 msgid "is CIDR"
 msgstr "CIDR"
 
-#: inc/inventoryruleentity.class.php:213
-#: inc/inventoryrulelocation.class.php:216
+#: inc/inventoryruleentity.class.php:218
+#: inc/inventoryrulelocation.class.php:224
 msgid "is not CIDR"
 msgstr "CIDR değil"
 
@@ -1299,38 +1302,42 @@ msgstr "Duruma göre GLPI aygıtı arama"
 msgid "Restrict search in defined entity"
 msgstr "Yalnız belirtilen kurumda aransın"
 
-#: inc/inventoryruleimport.class.php:181
+#: inc/inventoryruleimport.class.php:190
 msgid "FusionInventory link"
 msgstr "FusionInventory bağlantısı"
 
-#: inc/inventoryruleimport.class.php:194
+#: inc/inventoryruleimport.class.php:203
 msgid "Link"
 msgstr "Bağlantı"
 
-#: inc/inventoryruleimport.class.php:195
+#: inc/inventoryruleimport.class.php:204
 msgid "Import denied (no log)"
 msgstr "Alma reddedildi (günlük yok)"
 
-#: inc/inventoryruleimport.class.php:224
+#: inc/inventoryruleimport.class.php:233
 msgid "equal"
 msgstr "eşit"
 
-#: inc/inventoryruleimport.class.php:226
+#: inc/inventoryruleimport.class.php:235
 msgid "empty"
 msgstr "boş"
 
-#: inc/inventoryruleimport.class.php:949
+#: inc/inventoryruleimport.class.php:917
+msgid "No itemtype defined"
+msgstr ""
+
+#: inc/inventoryruleimport.class.php:960
 #: inc/inventoryruleimportcollection.class.php:110
 msgid "Device created"
 msgstr "Aygıt oluşturuldu"
 
-#: inc/inventoryruleimport.class.php:954
+#: inc/inventoryruleimport.class.php:965
 #: inc/inventoryruleimportcollection.class.php:115
 #: inc/taskjoblog.class.php:1133
 msgid "Import denied"
 msgstr "Alma reddedilsin"
 
-#: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:299
+#: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:305
 msgid "Equipment import and link rules"
 msgstr "Aygıt alma ve bağlama kuralları"
 
@@ -1347,27 +1354,26 @@ msgstr "İletişim kipi"
 msgid "See all informations of task"
 msgstr "Görevin tüm bilgilerine bakın"
 
-#: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:364
+#: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:370
 #: inc/staticmisc.class.php:366 inc/staticmisc.class.php:387
-#: inc/wizard.class.php:376 inc/wizard.class.php:425 inc/wizard.class.php:955
 msgid "IP Ranges"
 msgstr "IP Aralıkları"
 
-#: inc/iprange.class.php:91 inc/profile.class.php:239
+#: inc/iprange.class.php:90 inc/profile.class.php:243
 msgid "IP range configuration"
 msgstr "IP aralığı ayarları"
 
-#: inc/iprange.class.php:110 inc/iprange.class.php:151
-#: inc/iprange.class.php:259 inc/wizard.class.php:961
+#: inc/iprange.class.php:107 inc/iprange.class.php:158
+#: inc/iprange.class.php:266
 msgid "Start of IP range"
 msgstr "IP aralığının başlangıcı"
 
-#: inc/iprange.class.php:116 inc/iprange.class.php:176
-#: inc/iprange.class.php:262 inc/wizard.class.php:962
+#: inc/iprange.class.php:112 inc/iprange.class.php:183
+#: inc/iprange.class.php:269
 msgid "End of IP range"
 msgstr "IP aralığının sonu"
 
-#: inc/iprange.class.php:257
+#: inc/iprange.class.php:264
 msgid "Bad IP"
 msgstr "Kötü IP"
 
@@ -1383,6 +1389,10 @@ msgstr "SNMP Kimlik Doğrulaması"
 msgid "Version"
 msgstr "Sürüm"
 
+#: inc/iprange_configsecurity.class.php:152
+msgid "By order of priority"
+msgstr ""
+
 #: inc/lock.class.php:177
 msgid "Values GLPI"
 msgstr "GLPI değerleri"
@@ -1391,17 +1401,11 @@ msgstr "GLPI değerleri"
 msgid "Values of last inventory"
 msgstr "Son envanter değerleri"
 
-#: inc/lock.class.php:261 inc/taskjob.class.php:58 inc/taskjob.class.php:805
-#: inc/taskjoblog.class.php:171 inc/taskjobstate.class.php:224
-#: inc/unmanaged.class.php:197
-msgid "Job"
-msgstr "İş"
-
-#: inc/lock.class.php:265
+#: inc/lock.class.php:288
 msgid "Add locks"
 msgstr "Kilit ekleyin"
 
-#: inc/lock.class.php:271
+#: inc/lock.class.php:294
 msgid "Delete locks"
 msgstr "Kilitleri silin"
 
@@ -1941,17 +1945,17 @@ msgstr "ağ > LLDP uzak kod"
 msgid "networking > LLDP remote port description"
 msgstr "ağ > LLDP uzak kapı açıklaması"
 
-#: inc/mapping.class.php:653 inc/networkequipment.class.php:684
+#: inc/mapping.class.php:653 inc/networkequipment.class.php:693
 #: inc/networkport.class.php:77
 msgid "MTU"
 msgstr "MTU"
 
-#: inc/mapping.class.php:661 inc/networkequipment.class.php:692
+#: inc/mapping.class.php:661 inc/networkequipment.class.php:701
 #: inc/networkport.class.php:85
 msgid "Internal status"
 msgstr "İçsel durum"
 
-#: inc/mapping.class.php:665 inc/networkequipment.class.php:696
+#: inc/mapping.class.php:665 inc/networkequipment.class.php:705
 msgid "Last Change"
 msgstr "Son Değişiklik"
 
@@ -1975,12 +1979,12 @@ msgstr "Gönderme hatası"
 msgid "CPU usage"
 msgstr "İşlemci kullanımı"
 
-#: inc/mapping.class.php:693 inc/networkequipment.class.php:712
+#: inc/mapping.class.php:693 inc/networkequipment.class.php:721
 #: inc/networkport.class.php:105
 msgid "Internal MAC address"
 msgstr "İçsel MAC adresi"
 
-#: inc/mapping.class.php:713 inc/networkequipment.class.php:732
+#: inc/mapping.class.php:713 inc/networkequipment.class.php:741
 #: inc/networkport.class.php:125
 msgid "Alias"
 msgstr "Kısa ad"
@@ -2285,181 +2289,239 @@ msgstr "Toplam basılmış sayfa sayısı (faks)"
 msgid "Total number of large printed pages"
 msgstr "Toplam basılmış geniş sayfa sayısı"
 
-#: inc/menu.class.php:155
-msgid "Computer inv."
-msgstr "Bİlgisayar env."
+#: inc/menu.class.php:132
+msgid "Clean unused files"
+msgstr ""
 
-#: inc/menu.class.php:158
-msgid "SNMP inv."
-msgstr "SNMP env."
-
-#: inc/menu.class.php:197
+#: inc/menu.class.php:203
 msgid ""
 "The server needs to kown the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr "Sunucu, ajanların kendisine erişmek için kullandığı İnternet adresini bilmelidir. Lütfen genel ayarlar sayfasından bu adresi ayarlayın."
 
-#: inc/menu.class.php:221
+#: inc/menu.class.php:227
 msgid "Agents management"
 msgstr "Ajan yönetimi"
 
-#: inc/menu.class.php:233
+#: inc/menu.class.php:239
 msgid "General configuration"
 msgstr "Genel ayarlar"
 
-#: inc/menu.class.php:240 inc/profile.class.php:144
+#: inc/menu.class.php:246 inc/profile.class.php:144
 msgid "General"
 msgstr "Genel"
 
-#: inc/menu.class.php:256 inc/task.class.php:54
+#: inc/menu.class.php:262 inc/task.class.php:54
 msgid "Task management"
 msgstr "Görev yönetimi"
 
-#: inc/menu.class.php:260
+#: inc/menu.class.php:266
 msgid "Monitoring / Logs"
 msgstr "İzleme / Günlükler"
 
-#: inc/menu.class.php:267
+#: inc/menu.class.php:273
 msgid "Import agent XML file"
 msgstr "Ajan XML dosyasını alın"
 
-#: inc/menu.class.php:275 inc/profile.class.php:305
+#: inc/menu.class.php:281 inc/profile.class.php:309
 msgid "Additional computer information"
 msgstr "Ek bilgisayar bilgileri"
 
-#: inc/menu.class.php:281 inc/timeslot.class.php:61 inc/timeslot.class.php:70
+#: inc/menu.class.php:287 inc/timeslot.class.php:61 inc/timeslot.class.php:70
 #: inc/timeslotentry.class.php:70
 msgid "Time slot"
 msgstr "Zaman aralığı"
 
-#: inc/menu.class.php:287
+#: inc/menu.class.php:293
 msgid "Tasks"
 msgstr "Görevler"
 
-#: inc/menu.class.php:307
+#: inc/menu.class.php:313
 msgid "Ignored import devices"
 msgstr "Alınırken yoksayılan aygıtlar"
 
-#: inc/menu.class.php:315
+#: inc/menu.class.php:321
 msgid "Computer entity rules"
 msgstr "Bilgisayar birim kuralları"
 
-#: inc/menu.class.php:322
+#: inc/menu.class.php:328
 msgid "Computer location rules"
 msgstr "Bilgisayar konum kuralları"
 
-#: inc/menu.class.php:336 inc/ruledictionnarycomputerarch.class.php:53
+#: inc/menu.class.php:342 inc/ruledictionnarycomputerarch.class.php:53
 #: inc/ruledictionnarycomputerarchcollection.class.php:50
 msgid "Dictionnary of computer architectures"
 msgstr "Bilgisayar mimarileri sözlüğü"
 
-#: inc/menu.class.php:351
+#: inc/menu.class.php:357
 msgid "Rules"
 msgstr "Kurallar"
 
-#: inc/menu.class.php:401
+#: inc/menu.class.php:407
 msgid "Discovery status"
 msgstr "Keşif durumu"
 
-#: inc/menu.class.php:409
+#: inc/menu.class.php:415
 msgid "Network inventory status"
 msgstr "Ağ envanteri durumu"
 
-#: inc/menu.class.php:419
+#: inc/menu.class.php:425
 msgid "SNMP models creation"
 msgstr "SNMP modeli oluşturma"
 
-#: inc/menu.class.php:426
+#: inc/menu.class.php:432
 msgid "Networking"
 msgstr "Ağ"
 
-#: inc/menu.class.php:484 inc/menu.class.php:558
+#: inc/menu.class.php:472
+msgid "Computer inv."
+msgstr "Bİlgisayar env."
+
+#: inc/menu.class.php:478
+msgid "SNMP inv."
+msgstr "SNMP env."
+
+#: inc/menu.class.php:484
+msgid "Guide"
+msgstr ""
+
+#: inc/menu.class.php:515 inc/menu.class.php:589
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: inc/menu.class.php:484 inc/menu.class.php:874
+#: inc/menu.class.php:515 inc/menu.class.php:978
 msgid "Number of computer inventories of last hours"
 msgstr "Son saatlerdeki bilgisayar envanterinin sayısı"
 
-#: inc/menu.class.php:496
+#: inc/menu.class.php:527
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
 msgstr "Bilgisayar envanteri için FusionInventory uygulama ekini ayarlama adımları"
 
-#: inc/menu.class.php:502
+#: inc/menu.class.php:533
 msgid "Configure frequency of agent contact (and so each inventory)"
 msgstr "Ajan ile iletişim sıklığını ayarlayın (ve her bir envanteri)"
 
-#: inc/menu.class.php:507
+#: inc/menu.class.php:538
 msgid "Configure inventory options"
 msgstr "Envanter ayarlarını yapın"
 
-#: inc/menu.class.php:512
+#: inc/menu.class.php:543
 msgid "Define rules for entity"
 msgstr "Kurum kurallarını belirleyin"
 
-#: inc/menu.class.php:517
+#: inc/menu.class.php:548
 msgid "Define rules for location"
 msgstr "Konum kurallarını belirleyin"
 
-#: inc/menu.class.php:522
+#: inc/menu.class.php:553
 msgid ""
 "Define rules for import : merge and create new computer (CAUTION: same rules"
 " for SNMP inventory)"
 msgstr "Alma kurallarını belirleyin : yeni bilgisayarlar aktarılsın ve oluşturulsun (DİKKAT: SNMP envanteri ile aynı kurallar)"
 
-#: inc/menu.class.php:583
+#: inc/menu.class.php:614
 msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
 msgstr "SNMP envanteri için FusionInventory uygulama ekini ayarlama adımları (ağ anahtarı, yöneltici, ağ yazıcısı)"
 
-#: inc/menu.class.php:589
+#: inc/menu.class.php:620
 msgid "Configure SNMP credentials"
 msgstr "SNMP oturum bilgilerini ayarlayın"
 
-#: inc/menu.class.php:594
+#: inc/menu.class.php:625
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
 msgstr "Alma kurallarını belirleyin : yeni bilgisayarlar aktarılsın ve oluşturulsun (DİKKAT: Bilgisayar envanteri ile aynı kurallar)"
 
-#: inc/menu.class.php:599
+#: inc/menu.class.php:630
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "Ağdaki aygıtları bulmak için `Ağ Keşfi` kullanıldı"
 
-#: inc/menu.class.php:604
+#: inc/menu.class.php:635
 msgid "Define IP Ranges of your network + related SNMP authentication"
 msgstr "Ağınızın IP aralıklarını ve ilgili SNMP kimlik doğrulamalarını ayarlayın"
 
-#: inc/menu.class.php:609
+#: inc/menu.class.php:640
 msgid "Define an agent allowed to discover the network"
 msgstr "Ağı keşfetmesine izin verilecek bir ajan belirleyin"
 
-#: inc/menu.class.php:614
+#: inc/menu.class.php:645
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr "Keşif modülünde önceden belirlediğiniz ajan ile yeni bir görev oluşturun"
 
-#: inc/menu.class.php:619
+#: inc/menu.class.php:650
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr "Yazılmamış aygıtlarınız varsa, yönetilmeyen aygıtlar olarak alın"
 
-#: inc/menu.class.php:624
+#: inc/menu.class.php:655
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr "Bulunan aygıtları envantere tamamlamak için `Ağ Envanteri` kullanıldı"
 
-#: inc/menu.class.php:629
+#: inc/menu.class.php:660
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr "Ağ üzerinden SNMP kullanarak envanter toplayacak bir ajan belirleyin"
 
-#: inc/menu.class.php:634
+#: inc/menu.class.php:665
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
 "previously"
 msgstr "Ağ envanteri modülünde önceden belirlediğiniz ajan ile yeni bir görev oluşturun"
 
+#: inc/menu.class.php:794
+msgid "FusionInventory computers"
+msgstr ""
+
+#: inc/menu.class.php:799
+msgid "Other computers"
+msgstr ""
+
+#: inc/menu.class.php:838
+msgid "NetworkEquipments (SNMP)"
+msgstr ""
+
+#: inc/menu.class.php:843
+msgid "Printers (SNMP)"
+msgstr ""
+
 #: inc/menu.class.php:879
+msgid "SNMP switch network ports linked"
+msgstr ""
+
+#: inc/menu.class.php:884
+msgid "SNMP switch network ports not linked"
+msgstr ""
+
+#: inc/menu.class.php:908
+msgid "Ports connected"
+msgstr ""
+
+#: inc/menu.class.php:913
+msgid "Ports not connected"
+msgstr ""
+
+#: inc/menu.class.php:939
+msgid "Prepared and waiting"
+msgstr ""
+
+#: inc/menu.class.php:944 inc/task.view.class.php:213
+#: inc/task.view.class.php:289
+msgid "Running"
+msgstr "Çalışıyor"
+
+#: inc/menu.class.php:949
+msgid "Successfull"
+msgstr ""
+
+#: inc/menu.class.php:954 inc/task.view.class.php:211
+#: inc/task.view.class.php:287
+msgid "In error"
+msgstr "Hata"
+
+#: inc/menu.class.php:983
 msgid "Deployment"
 msgstr "Yayım"
 
@@ -2491,17 +2553,13 @@ msgstr "Kullanılabilecek bir veri yok"
 msgid "Uptime"
 msgstr "Açık olduğu süre"
 
-#: inc/networkequipment.class.php:599 inc/taskjob.class.php:1212
+#: inc/networkequipment.class.php:599 inc/taskjob.class.php:1174
 msgid "day(s)"
 msgstr "gün"
 
-#: inc/networkequipment.class.php:600 inc/taskjob.class.php:1206
+#: inc/networkequipment.class.php:600 inc/taskjob.class.php:1168
 msgid "hour(s)"
 msgstr "saat"
-
-#: inc/networkequipment.class.php:601 inc/taskjob.class.php:1200
-msgid "Minute(s)"
-msgstr "dakika"
 
 #: inc/networkequipment.class.php:602
 msgid "sec(s)"
@@ -2511,43 +2569,43 @@ msgstr "saniye"
 msgid "Ports array"
 msgstr "Kapı dizisi"
 
-#: inc/networkequipment.class.php:646
+#: inc/networkequipment.class.php:655
 msgid "Legend"
 msgstr "İşaret"
 
-#: inc/networkequipment.class.php:656
+#: inc/networkequipment.class.php:665
 msgid "Connection with a switch or a server in trunk or tagged mode"
 msgstr "Switch ya da sunucu grup ya da etiketleme bağlantı kipi"
 
-#: inc/networkequipment.class.php:662
+#: inc/networkequipment.class.php:671
 msgid "Other connections (with a computer, a printer...)"
 msgstr "Diğer bağlantılar (bilgisayar, yazıcı ...)"
 
-#: inc/networkequipment.class.php:676
+#: inc/networkequipment.class.php:685
 msgid "Monitoring"
 msgstr "İzleme"
 
-#: inc/networkequipment.class.php:700
+#: inc/networkequipment.class.php:709
 msgid "Traffic received/sent"
 msgstr "Alınan/gönderilen trafik"
 
-#: inc/networkequipment.class.php:704
+#: inc/networkequipment.class.php:713
 msgid "Errors received/sent"
 msgstr "Alma/gönderme hatası"
 
-#: inc/networkequipment.class.php:708 inc/networkport.class.php:101
+#: inc/networkequipment.class.php:717 inc/networkport.class.php:101
 msgid "Duplex"
 msgstr "Çift yönlü"
 
-#: inc/networkequipment.class.php:728 inc/networkport.class.php:121
+#: inc/networkequipment.class.php:737 inc/networkport.class.php:121
 msgid "Port not connected since"
 msgstr "Kapı şu zamandan beri bağlanmamış"
 
-#: inc/networkequipment.class.php:892
+#: inc/networkequipment.class.php:903
 msgid "Half"
 msgstr "Yarım"
 
-#: inc/networkequipment.class.php:896
+#: inc/networkequipment.class.php:907
 msgid "Full"
 msgstr "Tam"
 
@@ -2589,11 +2647,11 @@ msgstr "Geçmişi temizleyin"
 msgid "Ports types to import (for network equipments)"
 msgstr "Alınacak kapı tipleri (ağ aygıtları için)"
 
-#: inc/printercartridge.class.php:64
+#: inc/printercartridge.class.php:80
 msgid "Cartridge(s)"
 msgstr "Kartuş"
 
-#: inc/printercartridge.class.php:86
+#: inc/printercartridge.class.php:114
 msgid "remaining pages"
 msgstr "kalan sayfa"
 
@@ -2625,35 +2683,35 @@ msgstr "Tümünü Bırakın"
 msgid "Time unit"
 msgstr "Zaman birimi"
 
-#: inc/printerlog.class.php:493
-msgid "year"
-msgstr "yıl"
+#: inc/printerlog.class.php:490
+msgid "Year"
+msgstr ""
 
-#: inc/printerlog.class.php:505
+#: inc/printerlog.class.php:502
 msgid "Display"
 msgstr "Görünüm"
 
-#: inc/printerlog.class.php:507
+#: inc/printerlog.class.php:504
 msgid "Total counter"
 msgstr "Sayaç toplamı"
 
-#: inc/printerlog.class.php:509
+#: inc/printerlog.class.php:506
 msgid "pages per day"
 msgstr "günlük sayfa sayısı"
 
-#: inc/printerlog.class.php:524
+#: inc/printerlog.class.php:521
 msgid "Printers to compare"
 msgstr "Karşılaştırılacak yazıcılar"
 
-#: inc/printerlog.class.php:532
+#: inc/printerlog.class.php:529
 msgid "Add a printer"
 msgstr "Yazıcı ekleyin"
 
-#: inc/printerlog.class.php:548
+#: inc/printerlog.class.php:545
 msgid "Remove a printer"
 msgstr "Yazıcıyı silin"
 
-#: inc/printerlog.class.php:674
+#: inc/printerlog.class.php:671
 msgid "Too datas to display"
 msgstr "Görüntülenemeyecek kadar çok veri var"
 
@@ -2669,43 +2727,43 @@ msgstr "Yazılım geliştirme"
 msgid "Fields blacklist"
 msgstr "Alan karalistesi"
 
-#: inc/profile.class.php:254
+#: inc/profile.class.php:258
 msgid "Network equipment SNMP"
 msgstr "Ağ aygıtı SNMP"
 
-#: inc/profile.class.php:257
+#: inc/profile.class.php:261
 msgid "Printer SNMP"
 msgstr "Yazıcı SNMP"
 
-#: inc/profile.class.php:260
+#: inc/profile.class.php:264
 msgid "Unmanaged devices"
 msgstr "Yönetilmeyen aygıtlar"
 
-#: inc/profile.class.php:263
+#: inc/profile.class.php:267
 msgid "computer XML manual import"
 msgstr "el ile XML bilgisayar alma"
 
-#: inc/profile.class.php:266
+#: inc/profile.class.php:270
 msgid "Printers report"
 msgstr "Yazıcı raporu"
 
-#: inc/profile.class.php:283
+#: inc/profile.class.php:287
 msgid "Menu"
 msgstr "Menü"
 
-#: inc/profile.class.php:286 inc/staticmisc.class.php:287
+#: inc/profile.class.php:290 inc/staticmisc.class.php:287
 msgid "Agents"
 msgstr "Ajanlar"
 
-#: inc/profile.class.php:289
+#: inc/profile.class.php:293
 msgid "Agent remote control"
 msgstr "Ajan uzaktan kumandası"
 
-#: inc/profile.class.php:293
+#: inc/profile.class.php:297
 msgid "Configuration"
 msgstr "Ayarlar"
 
-#: inc/profile.class.php:299 inc/staticmisc.class.php:62
+#: inc/profile.class.php:303 inc/staticmisc.class.php:62
 msgid "Wake On LAN"
 msgstr "Ağdan başlatma"
 
@@ -2764,20 +2822,20 @@ msgstr "Bağlanan aygıt"
 msgid "Devices imported"
 msgstr "Alınan aygıt"
 
-#: inc/statediscovery.class.php:209 inc/stateinventory.class.php:154
-#: inc/task.view.class.php:224 inc/task.view.class.php:300
+#: inc/statediscovery.class.php:213 inc/stateinventory.class.php:158
+#: inc/task.view.class.php:214 inc/task.view.class.php:290
 #: inc/taskjoblog.class.php:68 inc/taskjoblog.class.php:673
 #: inc/taskjoblog.class.php:1019 inc/taskjobstate.class.php:74
 msgid "Prepared"
 msgstr "Hazırlanmış"
 
-#: inc/statediscovery.class.php:214 inc/stateinventory.class.php:159
+#: inc/statediscovery.class.php:218 inc/stateinventory.class.php:163
 #: inc/taskjoblog.class.php:70 inc/taskjoblog.class.php:679
 #: inc/taskjoblog.class.php:803 inc/taskjoblog.class.php:1024
 msgid "Started"
 msgstr "Başlatılmış"
 
-#: inc/statediscovery.class.php:218 inc/stateinventory.class.php:163
+#: inc/statediscovery.class.php:222 inc/stateinventory.class.php:167
 #: inc/taskjobstate.class.php:181
 msgid "Finished tasks"
 msgstr "Bitirilmiş görevler"
@@ -2812,7 +2870,7 @@ msgstr "Verileri toplayın"
 
 #: inc/staticmisc.class.php:431 inc/staticmisc.class.php:437
 #: inc/taskjob.class.php:179 inc/taskjob.class.php:505
-#: inc/taskjob.class.php:1243 inc/taskjob.view.class.php:415
+#: inc/taskjob.class.php:1205 inc/taskjob.view.class.php:418
 msgid "Auto managenement dynamic of agents"
 msgstr "Ajanların otomatik yönetim devinimi"
 
@@ -2820,44 +2878,48 @@ msgstr "Ajanların otomatik yönetim devinimi"
 msgid "Fusinv"
 msgstr "Fusinv"
 
-#: inc/task.class.php:81 inc/task.view.class.php:425
+#: inc/task.class.php:81 inc/task.view.class.php:415
 msgid "Schedule start"
 msgstr "Zamanlama başlangıcı"
 
-#: inc/task.class.php:87 inc/task.view.class.php:431
+#: inc/task.class.php:87 inc/task.view.class.php:421
 msgid "Schedule end"
 msgstr "Zamanlama bitişi"
 
-#: inc/task.class.php:295
+#: inc/task.class.php:313
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
 "error."
 msgstr "Ajan zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. Ajanda kritik bir hata oluşmuş olma olasılığı daha yüksek. "
 
-#: inc/task.class.php:304
+#: inc/task.class.php:322
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
 
-#: inc/task.class.php:322
+#: inc/task.class.php:340
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Görev zamanlaması nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:354
+#: inc/task.class.php:372
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:371
+#: inc/task.class.php:389
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr "Bu ajan artık işin içinde tanımlanmış aktörlere bağlı değil."
 
-#: inc/task.class.php:563
+#: inc/task.class.php:591
 msgid "Device no longer defined in definition of job"
 msgstr "Aygıt artık iş tanımında bulunmuyor"
 
-#: inc/task.class.php:1364
+#: inc/task.class.php:1433
 msgid "Task has been disabled"
 msgstr "Görev devre dışı bırakılmış"
+
+#: inc/task.class.php:1504
+msgid "Create a job for each group"
+msgstr "Her bir grup için bir iş oluşturun"
 
 #: inc/task.view.class.php:81
 msgid "To Be Done"
@@ -2871,59 +2933,59 @@ msgstr "Kapalı"
 msgid "refresh interval"
 msgstr "yenileme aralığı"
 
-#: inc/task.view.class.php:186
+#: inc/task.view.class.php:181
 msgid "Show/Hide details"
 msgstr "Ayrıntılar Görüntülensin/Gizlensin"
 
-#: inc/task.view.class.php:220 inc/task.view.class.php:296
+#: inc/task.view.class.php:210 inc/task.view.class.php:286
 msgid "Not done yet"
 msgstr "Henüz yapılmadı"
 
-#: inc/task.view.class.php:221 inc/task.view.class.php:297
-msgid "In error"
-msgstr "Hata"
-
-#: inc/task.view.class.php:222 inc/task.view.class.php:298
+#: inc/task.view.class.php:212 inc/task.view.class.php:288
 msgid "Successful"
 msgstr "Başarılı"
 
-#: inc/task.view.class.php:223 inc/task.view.class.php:299
-msgid "Running"
-msgstr "Çalışıyor"
-
-#: inc/task.view.class.php:225 inc/task.view.class.php:301
+#: inc/task.view.class.php:215 inc/task.view.class.php:291
 #: inc/taskjobstate.class.php:79
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: inc/task.view.class.php:307
+#: inc/task.view.class.php:297
 msgid "N/A"
 msgstr "Kullanılamaz"
 
-#: inc/task.view.class.php:335
+#: inc/task.view.class.php:325
 msgid "Show/Hide Agent details"
 msgstr "Ajan Ayrıntıları Görüntülensin/Gizlensin"
 
-#: inc/task.view.class.php:362
+#: inc/task.view.class.php:352
 msgid "Execution"
 msgstr "Yürütme"
 
-#: inc/task.view.class.php:437
+#: inc/task.view.class.php:427
 msgid "Timeslot"
 msgstr "Zaman aralığı"
 
-#: inc/taskjob.class.php:144 inc/taskjob.class.php:1181
-#: inc/taskjob.class.php:1753 inc/taskjoblog.class.php:569
+#: inc/task.view.class.php:432
+msgid "Agent wakeup interval (in minutes)"
+msgstr ""
+
+#: inc/task.view.class.php:438
+msgid "Number of agents to wake up"
+msgstr ""
+
+#: inc/taskjob.class.php:144 inc/taskjob.class.php:1143
+#: inc/taskjob.class.php:1716 inc/taskjoblog.class.php:569
 msgid "Definition"
 msgstr "Açıklama"
 
-#: inc/taskjob.class.php:146 inc/taskjob.class.php:1182
-#: inc/taskjob.class.php:1770
+#: inc/taskjob.class.php:146 inc/taskjob.class.php:1144
+#: inc/taskjob.class.php:1733
 msgid "Action"
 msgstr "Eylem"
 
 #: inc/taskjob.class.php:182 inc/taskjob.class.php:507
-#: inc/taskjob.class.php:1247 inc/taskjob.view.class.php:420
+#: inc/taskjob.class.php:1209 inc/taskjob.view.class.php:423
 msgid "Auto managenement dynamic of agents (same subnet)"
 msgstr "Ajanların otomatik yönetim devinimi (aynı altağda)"
 
@@ -2931,41 +2993,46 @@ msgstr "Ajanların otomatik yönetim devinimi (aynı altağda)"
 msgid "Selection"
 msgstr "Seçim"
 
-#: inc/taskjob.class.php:728
+#: inc/taskjob.class.php:690
 msgid "Unable to run task because some jobs is running yet!"
 msgstr "Henüz bazı işler yapılmakta olduğundan bu görev çalıştırılamıyor!"
 
-#: inc/taskjob.class.php:798
+#: inc/taskjob.class.php:760
 msgid "Action on this device"
 msgstr "Bu aygıta yapılacak işlem"
 
-#: inc/taskjob.class.php:826 inc/taskjob.class.php:1179
+#: inc/taskjob.class.php:788 inc/taskjob.class.php:1141
 msgid "Scheduled date"
 msgstr "Zamanlanan tarih"
 
-#: inc/taskjob.class.php:1180
+#: inc/taskjob.class.php:1142
 msgid "Periodicity"
 msgstr "Yinelenirlik"
 
-#: inc/taskjob.class.php:1405 inc/taskjob.class.php:1438
+#: inc/taskjob.class.php:1367 inc/taskjob.class.php:1405
 msgid "Force start"
 msgstr "Başlatmaya zorlayın"
 
-#: inc/taskjob.class.php:1616
+#: inc/taskjob.class.php:1578
 msgid "Action after finish running task"
 msgstr "Görev tamamlandıktan sonra yapılacak işlem"
 
-#: inc/taskjob.class.php:1621
+#: inc/taskjob.class.php:1583
 msgid "Delete this task and finish"
 msgstr "Bu görevi silip tamamlayın"
 
-#: inc/taskjob.class.php:1626 inc/wizard.class.php:248
+#: inc/taskjob.class.php:1588
 msgid "Finish"
 msgstr "Tamamlayın"
 
-#: inc/taskjob.class.php:1631
+#: inc/taskjob.class.php:1593
 msgid "Run again this task"
 msgstr "Bu görevi yeniden çalıştırın"
+
+#: inc/taskjob.class.php:1784 inc/taskjoblog.class.php:478
+#: inc/taskjoblog.class.php:921 inc/taskjoblog.class.php:979
+msgid "Force the end"
+msgstr "Durmaya zorlayın"
 
 #: inc/taskjob.view.class.php:60
 msgid "Jobs configuration"
@@ -2975,63 +3042,63 @@ msgstr "İş ayarları"
 msgid "Add a job"
 msgstr "İş ekleyin"
 
-#: inc/taskjob.view.class.php:310
+#: inc/taskjob.view.class.php:313
 msgid "Actor Type"
 msgstr "Aktör Tipi"
 
-#: inc/taskjob.view.class.php:314
+#: inc/taskjob.view.class.php:317
 msgid "Target Type"
 msgstr "Hedef Tipi"
 
-#: inc/taskjob.view.class.php:346
+#: inc/taskjob.view.class.php:349
 msgid "Actor Item"
 msgstr "Aktör Öge"
 
-#: inc/taskjob.view.class.php:350
+#: inc/taskjob.view.class.php:353
 msgid "Target Item"
 msgstr "Hedef Öge"
 
-#: inc/taskjob.view.class.php:609 inc/taskjob.view.class.php:613
+#: inc/taskjob.view.class.php:612 inc/taskjob.view.class.php:616
 msgid "New action"
 msgstr "Yeni işlem"
 
-#: inc/taskjob.view.class.php:666
+#: inc/taskjob.view.class.php:683
 msgid "Module method"
 msgstr "Modül yöntemi"
 
-#: inc/taskjob.view.class.php:708 inc/taskjob.view.class.php:738
+#: inc/taskjob.view.class.php:725 inc/taskjob.view.class.php:755
 msgid "Targets"
 msgstr "Hedefler"
 
-#: inc/taskjob.view.class.php:713
+#: inc/taskjob.view.class.php:730
 msgid "The items that should be applied for this job."
 msgstr "Bu işin uygulanacağı ögeler."
 
-#: inc/taskjob.view.class.php:719 inc/taskjob.view.class.php:760
+#: inc/taskjob.view.class.php:736 inc/taskjob.view.class.php:777
 msgid "Actors"
 msgstr "Aktörler"
 
-#: inc/taskjob.view.class.php:723
+#: inc/taskjob.view.class.php:740
 msgid "The items that should carry out those targets."
 msgstr "Bu hedeflere ulaşacak ögeler."
 
-#: inc/taskjob.view.class.php:746 inc/taskjob.view.class.php:768
+#: inc/taskjob.view.class.php:763 inc/taskjob.view.class.php:785
 msgid "Clear list"
 msgstr "Listeyi temizleyin"
 
-#: inc/taskjob.view.class.php:750 inc/taskjob.view.class.php:772
+#: inc/taskjob.view.class.php:767 inc/taskjob.view.class.php:789
 msgid "Delete selected items"
 msgstr "Seçilmiş ögeleri sili"
 
-#: inc/taskjob.view.class.php:875
+#: inc/taskjob.view.class.php:892
 msgid "Cancel modifications"
 msgstr "Değişiklikleri iptal edin"
 
-#: inc/taskjob.view.class.php:881
+#: inc/taskjob.view.class.php:898
 msgid "Purge"
 msgstr "Silin"
 
-#: inc/taskjob.view.class.php:883
+#: inc/taskjob.view.class.php:900
 msgid "Confirm the final deletion ?"
 msgstr "Silme işlemini onaylıyor musunuz?"
 
@@ -3127,11 +3194,11 @@ msgstr "Çalışan görevler"
 msgid "Time slot entry"
 msgstr "Zaman aralığı kaydı"
 
-#: inc/timeslotentry.class.php:108
+#: inc/timeslotentry.class.php:109
 msgid "Start time"
 msgstr "Başlangıç zamanı"
 
-#: inc/timeslotentry.class.php:134
+#: inc/timeslotentry.class.php:135
 msgid "End time"
 msgstr "Bitiş zamanı"
 
@@ -3147,71 +3214,9 @@ msgstr "Ağ dağıtıcı"
 msgid "Approved devices"
 msgstr "Onaylanmış aygıtlar"
 
-#: inc/unmanaged.class.php:462
+#: inc/unmanaged.class.php:460
 msgid "Import unmanaged device into asset"
 msgstr "Demirbaşa yönetilmeyen aygıt alın"
-
-#: inc/wizard.class.php:74
-msgid "Breadcrumb"
-msgstr "Hiyerarşik menü"
-
-#: inc/wizard.class.php:338 inc/wizard.class.php:356 inc/wizard.class.php:374
-#: inc/wizard.class.php:394 inc/wizard.class.php:409
-msgid "Action choice"
-msgstr "İşlem seçimi"
-
-#: inc/wizard.class.php:339 inc/wizard.class.php:357 inc/wizard.class.php:375
-#: inc/wizard.class.php:410
-msgid "Type of device to inventory"
-msgstr "Demirbaşa eklenecek aygıt tipi"
-
-#: inc/wizard.class.php:343
-msgid "Agent configuration"
-msgstr "Ajan ayarları"
-
-#: inc/wizard.class.php:358
-msgid "ESX servers management"
-msgstr "ESX sunucuları yönetimi"
-
-#: inc/wizard.class.php:359 inc/wizard.class.php:380 inc/wizard.class.php:429
-msgid "Run tasks"
-msgstr "Görevleri çalıştırın"
-
-#: inc/wizard.class.php:360 inc/wizard.class.php:381 inc/wizard.class.php:430
-msgid "Tasks running result"
-msgstr "Çalıştırılan görevlerin sonucu"
-
-#: inc/wizard.class.php:361 inc/wizard.class.php:382 inc/wizard.class.php:431
-msgid "End Task"
-msgstr "Görevi Sonlandırın"
-
-#: inc/wizard.class.php:411
-msgid "Choice (netdiscovery or inventory)"
-msgstr "Seçim (ağ keşfi ya da envanter)"
-
-#: inc/wizard.class.php:452
-msgid "Discover the network"
-msgstr "Ağı keşfedilsin"
-
-#: inc/wizard.class.php:457
-msgid "Inventory devices"
-msgstr "Aygıt envanteri"
-
-#: inc/wizard.class.php:462
-msgid "Welcome in FusionInventory. Begin configuration?"
-msgstr "FusionInventory yazılımına hoşgeldiniz. Ayarları yapmak ister misiniz?"
-
-#: inc/wizard.class.php:488
-msgid "ESX servers"
-msgstr "ESX sunucular"
-
-#: inc/wizard.class.php:492
-msgid "Network devices and printers"
-msgstr "Ağ aygıtları ve yazıcılar"
-
-#: inc/wizard.class.php:1020
-msgid "Credential"
-msgstr "Kimlik Doğrulama Bilgisi"
 
 #: report/computer_last_inventory.php:73
 msgid "Number of days (minimum) since last inventory"
