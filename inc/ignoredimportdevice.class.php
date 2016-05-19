@@ -66,7 +66,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       $tab[2]['table']     = 'glpi_rules';
       $tab[2]['field']     = 'name';
-      $tab[2]['name']      = __('Rule name');
+      $tab[2]['name']      = __('Rule name', 'fusioninventory');
       $tab[2]['datatype']  = 'itemlink';
       $tab[2]['massiveaction']  = false;
 

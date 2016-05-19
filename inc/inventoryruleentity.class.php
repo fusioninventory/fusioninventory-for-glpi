@@ -141,10 +141,10 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias['name']['name']      = __("Computer's name", 'fusioninventory');
 
       $criterias['serial']['field']     = 'name';
-      $criterias['serial']['name']      = __('Serial Number');
+      $criterias['serial']['name']      = __('Serial number');
 
       $criterias['oscomment']['field']     = 'name';
-      $criterias['oscomment']['name']      = __('Operating system').'/'.__('Comment');
+      $criterias['oscomment']['name']      = __('Operating system').'/'.__('Comments');
 
       return $criterias;
    }

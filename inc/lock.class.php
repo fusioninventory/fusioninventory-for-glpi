@@ -172,7 +172,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
-      echo "<tr><th>&nbsp;".__('Fields')."&nbsp;</th>";
+      echo "<tr><th>&nbsp;"._n('Field', 'Fields', 2)."&nbsp;</th>";
       if ($p_items_id != '0') {
          echo "<th>&nbsp;".__('Values GLPI', 'fusioninventory')."&nbsp;</th>";
          echo "<th>&nbsp;".__('Values of last inventory', 'fusioninventory')."&nbsp;</th>";
@@ -343,7 +343,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th colspan='2'>".$item->getTypeName(1)."</th>";
       echo "</tr>";
 
-      echo "<tr><th>&nbsp;".__('Fields')."&nbsp;</th>";
+      echo "<tr><th>&nbsp;"._n('Field', 'Fields', 2)."&nbsp;</th>";
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 

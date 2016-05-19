@@ -160,7 +160,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Rule name');
+      echo __('Rule name', 'fusioninventory');
 
       echo "</th>";
       echo "<th>";
@@ -226,7 +226,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Rule name');
+      echo __('Rule name', 'fusioninventory');
 
       echo "</th>";
       echo "<th>";

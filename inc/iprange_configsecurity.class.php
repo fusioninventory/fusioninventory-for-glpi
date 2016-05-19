@@ -149,7 +149,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo __('Version', 'fusioninventory');
       echo "</th>";
       echo "<th>";
-      echo __('Rank');
+      echo __('By order of priority', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
 

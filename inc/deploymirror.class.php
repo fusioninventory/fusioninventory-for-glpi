@@ -140,7 +140,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror location', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>".__('Mirror location', 'fusioninventory')." (".__('Location').")"."&nbsp;:</td>";
       echo "<td align='center'>";
 
       echo "<script type='text/javascript'>\n";

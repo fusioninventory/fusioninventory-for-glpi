@@ -187,7 +187,7 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['software']['name']  = __('Software');
       $actions['software']['force_actions'] = array('assign', 'regex_result');
 
-      $actions['softwareversion']['name']  = __('Software version');
+      $actions['softwareversion']['name']  = __('Software version', 'fusioninventory');
       $actions['softwareversion']['force_actions'] = array('assign', 'regex_result');
 
       $actions['otherserial']['name']  = __('Inventory number');
