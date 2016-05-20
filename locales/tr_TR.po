@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Kaya Zeren <kayazeren@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 00:19+0200\n"
-"PO-Revision-Date: 2016-05-19 22:32+0000\n"
+"POT-Creation-Date: 2016-05-20 13:25+0200\n"
+"PO-Revision-Date: 2016-05-20 11:27+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/ddurieux/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
@@ -192,11 +193,11 @@ msgstr "Basılmış sayfa sayacı"
 
 #: setup.php:379
 msgid "Switch ports history"
-msgstr ""
+msgstr "Switch kapılarının geçmişi"
 
 #: setup.php:381
 msgid "Unused switch ports"
-msgstr ""
+msgstr "Kullanılmayan switch kapıları"
 
 #: setup.php:383
 msgid "Number of days since last inventory"
@@ -208,7 +209,7 @@ msgstr "Bilgisayarların xx gündür envanter sayımı yapılmadı"
 
 #: setup.php:499
 msgid "Your GLPI version not compatible, require >= 0.85"
-msgstr ""
+msgstr "Bu uygulama eki GLPI 0.85 ve üzerindeki sürümlerle çalışır"
 
 #: setup.php:504
 msgid "fileinfo extension (PHP) is required..."
@@ -384,7 +385,7 @@ msgstr "İş"
 
 #: inc/agentwakeup.class.php:143
 msgid "Maximum number of agent wakeup reached"
-msgstr ""
+msgstr "En fazla ajan uyandırma sayısına ulaşıldı"
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
@@ -614,7 +615,7 @@ msgstr "Dosya boyutu"
 
 #: inc/collectrule.class.php:190
 msgid "Software version"
-msgstr ""
+msgstr "Yazılım sürümü"
 
 #: inc/common.view.class.php:201
 msgid "Warning:"
@@ -672,7 +673,7 @@ msgstr "Envanter sıklığı (saat)"
 
 #: inc/config.class.php:317
 msgid "Delete tasks logs after"
-msgstr ""
+msgstr "Şundan sonra görev günlükleri silinsin"
 
 #: inc/config.class.php:334
 msgid "Extra-debug"
@@ -680,23 +681,23 @@ msgstr "Ek hata ayıklama"
 
 #: inc/config.class.php:369
 msgid "Maximum number of agents to wake up in a task"
-msgstr ""
+msgstr "Bir görevin uyandıracağı en fazla ajan sayısı"
 
 #: inc/config.class.php:380
 msgid "Update agents"
-msgstr ""
+msgstr "Ajanları güncelle"
 
 #: inc/config.class.php:382
 msgid "Update agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Ajan güncellemesi şu kadar zamandır sunucuya bağlanmadı (gün)"
 
 #: inc/config.class.php:417 inc/config.class.php:439
 msgid "Change the status"
-msgstr ""
+msgstr "Durumu değiştir"
 
 #: inc/config.class.php:442
 msgid "Clean agents"
-msgstr ""
+msgstr "Ajanları temizle"
 
 #: inc/config.class.php:464
 msgid "Import options"
@@ -1039,7 +1040,7 @@ msgstr "MB"
 
 #: inc/deployfile.class.php:1075
 msgid "Unused file"
-msgstr ""
+msgstr "Kullanılmayan dosya"
 
 #: inc/deploygroup.class.php:74
 msgid "Dynamic group"
@@ -1166,7 +1167,7 @@ msgstr "Alma sırasında aygıt yoksayıldı"
 #: inc/ignoredimportdevice.class.php:69 inc/rulematchedlog.class.php:163
 #: inc/rulematchedlog.class.php:229
 msgid "Rule name"
-msgstr ""
+msgstr "Kural adı"
 
 #: inc/inventorycomputerantivirus.class.php:165
 #: inc/inventorycomputerbatteries.class.php:146
@@ -1306,6 +1307,10 @@ msgstr "Yalnız belirtilen kurumda aransın"
 msgid "FusionInventory link"
 msgstr "FusionInventory bağlantısı"
 
+#: inc/inventoryruleimport.class.php:193
+msgid "To be unaware of import (with log)"
+msgstr ""
+
 #: inc/inventoryruleimport.class.php:203
 msgid "Link"
 msgstr "Bağlantı"
@@ -1324,7 +1329,7 @@ msgstr "boş"
 
 #: inc/inventoryruleimport.class.php:917
 msgid "No itemtype defined"
-msgstr ""
+msgstr "Henüz bir öge tipi tanımlanmamış"
 
 #: inc/inventoryruleimport.class.php:960
 #: inc/inventoryruleimportcollection.class.php:110
@@ -1391,7 +1396,7 @@ msgstr "Sürüm"
 
 #: inc/iprange_configsecurity.class.php:152
 msgid "By order of priority"
-msgstr ""
+msgstr "Öncelik sırasına göre"
 
 #: inc/lock.class.php:177
 msgid "Values GLPI"
@@ -2291,7 +2296,7 @@ msgstr "Toplam basılmış geniş sayfa sayısı"
 
 #: inc/menu.class.php:132
 msgid "Clean unused files"
-msgstr ""
+msgstr "Kullanılmayan dosyaları temizle"
 
 #: inc/menu.class.php:203
 msgid ""
@@ -2383,7 +2388,7 @@ msgstr "SNMP env."
 
 #: inc/menu.class.php:484
 msgid "Guide"
-msgstr ""
+msgstr "Rehber"
 
 #: inc/menu.class.php:515 inc/menu.class.php:589
 msgid "Statistics"
@@ -2473,39 +2478,39 @@ msgstr "Ağ envanteri modülünde önceden belirlediğiniz ajan ile yeni bir gö
 
 #: inc/menu.class.php:794
 msgid "FusionInventory computers"
-msgstr ""
+msgstr "FusionInventory bilgisayarları"
 
 #: inc/menu.class.php:799
 msgid "Other computers"
-msgstr ""
+msgstr "Diğer bilgisayarlar"
 
 #: inc/menu.class.php:838
 msgid "NetworkEquipments (SNMP)"
-msgstr ""
+msgstr "Ağ Aygıtları (SNMP)"
 
 #: inc/menu.class.php:843
 msgid "Printers (SNMP)"
-msgstr ""
+msgstr "Yazıcılar (SNMP)"
 
 #: inc/menu.class.php:879
 msgid "SNMP switch network ports linked"
-msgstr ""
+msgstr "SNMP switch ağ kapıları bağlı"
 
 #: inc/menu.class.php:884
 msgid "SNMP switch network ports not linked"
-msgstr ""
+msgstr "SNMP switch ağ kapıları bağlı değil"
 
 #: inc/menu.class.php:908
 msgid "Ports connected"
-msgstr ""
+msgstr "Kapılar bağlı"
 
 #: inc/menu.class.php:913
 msgid "Ports not connected"
-msgstr ""
+msgstr "Kapılar bağlı değil"
 
 #: inc/menu.class.php:939
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Hazırlandı ve bekliyor"
 
 #: inc/menu.class.php:944 inc/task.view.class.php:213
 #: inc/task.view.class.php:289
@@ -2514,7 +2519,7 @@ msgstr "Çalışıyor"
 
 #: inc/menu.class.php:949
 msgid "Successfull"
-msgstr ""
+msgstr "Tamamlandı"
 
 #: inc/menu.class.php:954 inc/task.view.class.php:211
 #: inc/task.view.class.php:287
@@ -2685,7 +2690,7 @@ msgstr "Zaman birimi"
 
 #: inc/printerlog.class.php:490
 msgid "Year"
-msgstr ""
+msgstr "Yıl"
 
 #: inc/printerlog.class.php:502
 msgid "Display"
@@ -2968,11 +2973,11 @@ msgstr "Zaman aralığı"
 
 #: inc/task.view.class.php:432
 msgid "Agent wakeup interval (in minutes)"
-msgstr ""
+msgstr "Ajan uyanma sıklığı (dakika)"
 
 #: inc/task.view.class.php:438
 msgid "Number of agents to wake up"
-msgstr ""
+msgstr "Uyanacak ajan sayısı"
 
 #: inc/taskjob.class.php:144 inc/taskjob.class.php:1143
 #: inc/taskjob.class.php:1716 inc/taskjoblog.class.php:569

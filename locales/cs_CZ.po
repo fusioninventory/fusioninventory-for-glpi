@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 00:19+0200\n"
-"PO-Revision-Date: 2016-05-19 22:32+0000\n"
+"POT-Creation-Date: 2016-05-20 13:25+0200\n"
+"PO-Revision-Date: 2016-05-20 11:27+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/ddurieux/FusionInventory/language/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
@@ -1313,6 +1313,10 @@ msgstr ""
 
 #: inc/inventoryruleimport.class.php:190
 msgid "FusionInventory link"
+msgstr ""
+
+#: inc/inventoryruleimport.class.php:193
+msgid "To be unaware of import (with log)"
 msgstr ""
 
 #: inc/inventoryruleimport.class.php:203

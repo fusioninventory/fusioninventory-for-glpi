@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 00:19+0200\n"
-"PO-Revision-Date: 2016-05-19 22:32+0000\n"
+"POT-Creation-Date: 2016-05-20 13:25+0200\n"
+"PO-Revision-Date: 2016-05-20 11:27+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/ddurieux/FusionInventory/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,7 @@ msgstr "Использование CPU (в %)"
 msgid "Lock"
 msgid_plural "Locks"
 msgstr[0] "Блокировка"
-msgstr[1] "Блокировок"
+msgstr[1] "Блокировка"
 msgstr[2] "Блокировки"
 msgstr[3] "Блокировки"
 
@@ -200,11 +200,11 @@ msgstr "Страниц напечатано"
 
 #: setup.php:379
 msgid "Switch ports history"
-msgstr ""
+msgstr "История портов коммутатора"
 
 #: setup.php:381
 msgid "Unused switch ports"
-msgstr ""
+msgstr "Неиспользуемые порты коммутатора"
 
 #: setup.php:383
 msgid "Number of days since last inventory"
@@ -216,7 +216,7 @@ msgstr "ПК без инвентаризации в течении xx дней"
 
 #: setup.php:499
 msgid "Your GLPI version not compatible, require >= 0.85"
-msgstr ""
+msgstr "Ваша версия GLPI не совместима, требуется >= 0.85"
 
 #: setup.php:504
 msgid "fileinfo extension (PHP) is required..."
@@ -392,7 +392,7 @@ msgstr "Задание"
 
 #: inc/agentwakeup.class.php:143
 msgid "Maximum number of agent wakeup reached"
-msgstr ""
+msgstr "Максимальное количество агентов для пробуждения достуигнуто"
 
 #: inc/collect.class.php:52 inc/staticmisc.class.php:657
 msgid "Collect information"
@@ -625,7 +625,7 @@ msgstr "Размер файла"
 
 #: inc/collectrule.class.php:190
 msgid "Software version"
-msgstr ""
+msgstr "Версия программы"
 
 #: inc/common.view.class.php:201
 msgid "Warning:"
@@ -683,7 +683,7 @@ msgstr "Интервал инвентаризации (в часах)"
 
 #: inc/config.class.php:317
 msgid "Delete tasks logs after"
-msgstr ""
+msgstr "Удалить логи задач после"
 
 #: inc/config.class.php:334
 msgid "Extra-debug"
@@ -691,23 +691,23 @@ msgstr "Отладка"
 
 #: inc/config.class.php:369
 msgid "Maximum number of agents to wake up in a task"
-msgstr ""
+msgstr "Максимальное количество агентов для пробуждения ПК в задаче"
 
 #: inc/config.class.php:380
 msgid "Update agents"
-msgstr ""
+msgstr "Обновление агентов"
 
 #: inc/config.class.php:382
 msgid "Update agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Обновить агентов не связывающихся с сервером после (в днях)"
 
 #: inc/config.class.php:417 inc/config.class.php:439
 msgid "Change the status"
-msgstr ""
+msgstr "Изменить статус"
 
 #: inc/config.class.php:442
 msgid "Clean agents"
-msgstr ""
+msgstr "Очистить агентов"
 
 #: inc/config.class.php:464
 msgid "Import options"
@@ -1050,7 +1050,7 @@ msgstr "МБ"
 
 #: inc/deployfile.class.php:1075
 msgid "Unused file"
-msgstr ""
+msgstr "Неиспользуемый файл"
 
 #: inc/deploygroup.class.php:74
 msgid "Dynamic group"
@@ -1183,7 +1183,7 @@ msgstr "Оборудование проигнорировано при импо�
 #: inc/ignoredimportdevice.class.php:69 inc/rulematchedlog.class.php:163
 #: inc/rulematchedlog.class.php:229
 msgid "Rule name"
-msgstr ""
+msgstr "Правило имени"
 
 #: inc/inventorycomputerantivirus.class.php:165
 #: inc/inventorycomputerbatteries.class.php:146
@@ -1323,6 +1323,10 @@ msgstr "Ограничить поиск в заданной организаци
 msgid "FusionInventory link"
 msgstr "Связать FusionInventory"
 
+#: inc/inventoryruleimport.class.php:193
+msgid "To be unaware of import (with log)"
+msgstr ""
+
 #: inc/inventoryruleimport.class.php:203
 msgid "Link"
 msgstr "Связать"
@@ -1341,7 +1345,7 @@ msgstr "пусто"
 
 #: inc/inventoryruleimport.class.php:917
 msgid "No itemtype defined"
-msgstr ""
+msgstr "Не определен тип элемента"
 
 #: inc/inventoryruleimport.class.php:960
 #: inc/inventoryruleimportcollection.class.php:110
@@ -1408,7 +1412,7 @@ msgstr "Версия"
 
 #: inc/iprange_configsecurity.class.php:152
 msgid "By order of priority"
-msgstr ""
+msgstr "По очередности заявок"
 
 #: inc/lock.class.php:177
 msgid "Values GLPI"
@@ -2308,7 +2312,7 @@ msgstr "Общее число напечатанных больших стран
 
 #: inc/menu.class.php:132
 msgid "Clean unused files"
-msgstr ""
+msgstr "Очистка неиспользуемых файлов"
 
 #: inc/menu.class.php:203
 msgid ""
@@ -2400,7 +2404,7 @@ msgstr "Инв. SNMP"
 
 #: inc/menu.class.php:484
 msgid "Guide"
-msgstr ""
+msgstr "Инструкция"
 
 #: inc/menu.class.php:515 inc/menu.class.php:589
 msgid "Statistics"
@@ -2490,39 +2494,39 @@ msgstr "Создать новую задачу с модулем инвента�
 
 #: inc/menu.class.php:794
 msgid "FusionInventory computers"
-msgstr ""
+msgstr "Компьютеры FusionInventory"
 
 #: inc/menu.class.php:799
 msgid "Other computers"
-msgstr ""
+msgstr "Другие компьютеры"
 
 #: inc/menu.class.php:838
 msgid "NetworkEquipments (SNMP)"
-msgstr ""
+msgstr "Сетевое оборудование (SNMP)"
 
 #: inc/menu.class.php:843
 msgid "Printers (SNMP)"
-msgstr ""
+msgstr "Принтеры (SNMP)"
 
 #: inc/menu.class.php:879
 msgid "SNMP switch network ports linked"
-msgstr ""
+msgstr "Интернет порты SNMP коммутатора связаны"
 
 #: inc/menu.class.php:884
 msgid "SNMP switch network ports not linked"
-msgstr ""
+msgstr "Интернет порты SNMP коммутатора не связаны"
 
 #: inc/menu.class.php:908
 msgid "Ports connected"
-msgstr ""
+msgstr "Порты подключены"
 
 #: inc/menu.class.php:913
 msgid "Ports not connected"
-msgstr ""
+msgstr "Порты не подключены"
 
 #: inc/menu.class.php:939
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Подготовлен и ожидает"
 
 #: inc/menu.class.php:944 inc/task.view.class.php:213
 #: inc/task.view.class.php:289
@@ -2531,7 +2535,7 @@ msgstr "Выполняется"
 
 #: inc/menu.class.php:949
 msgid "Successfull"
-msgstr ""
+msgstr "Успешно"
 
 #: inc/menu.class.php:954 inc/task.view.class.php:211
 #: inc/task.view.class.php:287
@@ -2702,7 +2706,7 @@ msgstr "Единица времени"
 
 #: inc/printerlog.class.php:490
 msgid "Year"
-msgstr ""
+msgstr "Год"
 
 #: inc/printerlog.class.php:502
 msgid "Display"
@@ -2985,11 +2989,11 @@ msgstr "Временной интервал"
 
 #: inc/task.view.class.php:432
 msgid "Agent wakeup interval (in minutes)"
-msgstr ""
+msgstr "Интервал пробуждения агента (в минутах)"
 
 #: inc/task.view.class.php:438
 msgid "Number of agents to wake up"
-msgstr ""
+msgstr "Количество агентов для пробуждения ПК"
 
 #: inc/taskjob.class.php:144 inc/taskjob.class.php:1143
 #: inc/taskjob.class.php:1716 inc/taskjoblog.class.php:569
