@@ -846,6 +846,13 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
+         else if (isset($array['HARDWARE']['MEMORY'])) {
+            $array_tmp = $thisc->addValues($array['HARDWARE'],
+                                           array(
+                                              'MEMORY' => 'size'));
+            $array_tmp['designation'] = 'Dummy Memory Module';
+            $a_inventory['memory'][] = $array_tmp;
+         }
       }
 
       // * MONITORS

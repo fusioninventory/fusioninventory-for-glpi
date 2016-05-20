@@ -103,7 +103,12 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'controller'              => array(),
           'processor'               => array(),
           'computerdisk'            => array(),
-          'memory'                  => array(),
+          'memory'                  => array(
+              array(
+                  'size'        => '3802',
+                  'designation' => 'Dummy Memory Module',
+              )
+          ),
           'monitor'                 => array(),
           'printer'                 => array(),
           'peripheral'              => array(),
