@@ -202,7 +202,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<td colspan='1' class='center' height='30'>";
       if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' ".
-                 "value='".__('Clean')."' >";
+                 "value='"._x('button','Clean')."' >";
       }
       echo "</td>";
       echo "</tr>";

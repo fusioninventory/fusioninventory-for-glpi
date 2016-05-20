@@ -190,7 +190,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $actions['_fusion']['name']        = __('FusionInventory link', 'fusioninventory');
       $actions['_fusion']['type']        = 'fusion_type';
 
-      $actions['_ignore_import']['name'] = __('To be unaware of import (with log)');
+      $actions['_ignore_import']['name'] = __('To be unaware of import (with log)', 'fusioninventory');
       $actions['_ignore_import']['type'] = 'yesonly';
 
       return $actions;
