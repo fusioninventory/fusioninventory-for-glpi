@@ -1017,7 +1017,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'contact_num'       => NULL,
           'users_id_tech'     => '0',
           'groups_id_tech'    => '0',
-          'comment'           => '',
+          'comment'           => NULL,
           'serial'            => 'UBYVUTFYEIUI',
           'otherserial'       => NULL,
           'size'              => '0',

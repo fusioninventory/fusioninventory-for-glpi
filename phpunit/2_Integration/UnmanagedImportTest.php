@@ -133,7 +133,7 @@ class UnmanagedImportTest extends Common_TestCase {
           'logical_number'       => '0',
           'instantiation_type'   => 'NetworkPortEthernet',
           'mac'                  => '00:00:00:43:ae:0f',
-          'comment'              => '',
+          'comment'              => NULL,
           'is_deleted'           => '0',
           'is_dynamic'           => '1'
       );
