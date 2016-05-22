@@ -123,6 +123,11 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
    public function NewNetworkEquipmentHasPorts() {
       $networkports = getAllDatasFromTable('glpi_networkports');
 
+      foreach ($networkports as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $networkports[$id] = $data;
+      }
 
       $this->assertEquals($this->networkports_reference,
                           $networkports,
@@ -167,6 +172,12 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
     */
    public function UpdatedNetworkEquipmentHasPorts() {
       $networkports = getAllDatasFromTable('glpi_networkports');
+
+      foreach ($networkports as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $networkports[$id] = $data;
+      }
 
       $this->assertEquals($this->networkports_reference,
                           $networkports,

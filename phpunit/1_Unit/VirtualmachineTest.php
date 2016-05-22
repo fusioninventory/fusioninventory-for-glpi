@@ -170,6 +170,13 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_data = getAllDatasFromTable("glpi_computervirtualmachines");
+
+      foreach ($a_data as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $a_data[$id] = $data;
+      }
+
       $a_reference = array(
           '1' => array(
                      'id'                       => '1',
@@ -222,6 +229,13 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, $nbvm, 'May have only 1 VM');
 
       $a_data = getAllDatasFromTable("glpi_computervirtualmachines");
+
+      foreach ($a_data as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $a_data[$id] = $data;
+      }
+
       $a_reference = array(
           '1' => array(
                      'id'                       => '1',

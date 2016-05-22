@@ -125,6 +125,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $printer->getFromDB(1);
       unset($printer->fields['date_mod']);
+      unset($printer->fields['date_creation']);
       $a_reference = array(
          'name'                 => 'ARC12-B09-N',
          'serial'               => 'VRG5XUT5',

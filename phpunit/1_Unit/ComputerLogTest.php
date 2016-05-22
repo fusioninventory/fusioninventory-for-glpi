@@ -255,6 +255,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $a_logs = getAllDatasFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
          unset($data['date_mod']);
+         unset($data['date_creation']);
          $a_logs[$id] = $data;
       }
 
@@ -352,6 +353,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $a_logs = getAllDatasFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
          unset($data['date_mod']);
+         unset($data['date_creation']);
          $a_logs[$id] = $data;
       }
       $a_reference = array(

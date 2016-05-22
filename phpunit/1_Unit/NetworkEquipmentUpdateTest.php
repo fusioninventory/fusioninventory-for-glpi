@@ -233,6 +233,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
 
       $networkEquipment->getFromDB(1);
       unset($networkEquipment->fields['date_mod']);
+      unset($networkEquipment->fields['date_creation']);
       $a_reference = array(
           'name'                 => 'switchr2d2',
           'serial'               => 'FOC147UJEU4',
