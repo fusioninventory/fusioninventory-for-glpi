@@ -537,7 +537,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function importToken($arrayinventory) {
 
       if (isset($arrayinventory['DEVICEID'])) {
-         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent = this;
          $a_agent = $pfAgent->find("`device_id`='".$arrayinventory['DEVICEID']."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
