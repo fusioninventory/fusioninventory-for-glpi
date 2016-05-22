@@ -620,7 +620,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_template_computer' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
-          'is_dynamic'           => '1'
+          'is_dynamic'           => '1',
+          'date_install'         => null
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
@@ -648,7 +649,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_template_computer' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
-          'is_dynamic'           => '1'
+          'is_dynamic'           => '1',
+          'date_install'         => null
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
@@ -676,7 +678,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_template_computer' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
-          'is_dynamic'           => '1'
+          'is_dynamic'           => '1',
+          'date_install'         => null
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
