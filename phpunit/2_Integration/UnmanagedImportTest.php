@@ -121,6 +121,8 @@ class UnmanagedImportTest extends Common_TestCase {
       $this->assertEquals('this is a comment', $networkEquipment->fields['comment'], "comment");
 
       $networkPort->getFromDB(1);
+      unset($networkPort->fields['date_mod']);
+      unset($networkPort->fields['date_creation']);
       $a_reference = array(
           'name'                 => 'general',
           'id'                   => '1',
@@ -131,12 +133,14 @@ class UnmanagedImportTest extends Common_TestCase {
           'logical_number'       => '0',
           'instantiation_type'   => 'NetworkPortEthernet',
           'mac'                  => '00:00:00:43:ae:0f',
-          'comment'              => '',
+          'comment'              => NULL,
           'is_deleted'           => '0',
           'is_dynamic'           => '1'
       );
       $this->assertEquals($a_reference, $networkPort->fields, "Networkport");
       $networkName->getFromDB(1);
+      unset($networkName->fields['date_mod']);
+      unset($networkName->fields['date_creation']);
       $a_reference = array(
           'id'          => '1',
           'entities_id' => '0',

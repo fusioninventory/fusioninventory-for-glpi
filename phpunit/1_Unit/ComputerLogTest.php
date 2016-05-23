@@ -255,79 +255,102 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $a_logs = getAllDatasFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
          unset($data['date_mod']);
+         unset($data['date_creation']);
          $a_logs[$id] = $data;
       }
 
       $a_reference = array(
           1 => array(
-              'id'               => 1,
-              'itemtype'         => 'Software',
-              'items_id'         => 1,
-              'itemtype_link'    => '',
-              'linked_action'    => 20,
-              'user_name'        => 'Plugin_FusionInventory',
-              'id_search_option' => 0,
+              'id'               => '1',
+              'itemtype'         => 'DeviceProcessor',
+              'items_id'         => '1',
+              'itemtype_link'    => '0',
+              'linked_action'    => '20',
+              'user_name'        => '',
+              'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
               ),
           2 => array(
-              'id'               => 2,
-              'itemtype'         => 'Software',
-              'items_id'         => 2,
-              'itemtype_link'    => '',
-              'linked_action'    => 20,
-              'user_name'        => 'Plugin_FusionInventory',
-              'id_search_option' => 0,
+              'id'               => '2',
+              'itemtype'         => 'DeviceMemory',
+              'items_id'         => '1',
+              'itemtype_link'    => '0',
+              'linked_action'    => '20',
+              'user_name'        => '',
+              'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
               ),
           3 => array(
-              'id'               => 3,
+              'id'               => '3',
               'itemtype'         => 'Software',
-              'items_id'         => 3,
+              'items_id'         => '1',
               'itemtype_link'    => '',
-              'linked_action'    => 20,
+              'linked_action'    => '20',
               'user_name'        => 'Plugin_FusionInventory',
-              'id_search_option' => 0,
+              'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
               ),
           4 => array(
-              'id'               => 4,
-              'itemtype'         => 'SoftwareVersion',
-              'items_id'         => 1,
+              'id'               => '4',
+              'itemtype'         => 'Software',
+              'items_id'         => '2',
               'itemtype_link'    => '',
-              'linked_action'    => 20,
+              'linked_action'    => '20',
               'user_name'        => 'Plugin_FusionInventory',
-              'id_search_option' => 0,
+              'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
               ),
           5 => array(
-              'id'               => 5,
-              'itemtype'         => 'SoftwareVersion',
-              'items_id'         => 2,
+              'id'               => '5',
+              'itemtype'         => 'Software',
+              'items_id'         => '3',
               'itemtype_link'    => '',
-              'linked_action'    => 20,
+              'linked_action'    => '20',
               'user_name'        => 'Plugin_FusionInventory',
-              'id_search_option' => 0,
+              'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
               ),
           6 => array(
-              'id'               => 6,
+              'id'               => '6',
               'itemtype'         => 'SoftwareVersion',
-              'items_id'         => 3,
+              'items_id'         => '1',
               'itemtype_link'    => '',
-              'linked_action'    => 20,
+              'linked_action'    => '20',
               'user_name'        => 'Plugin_FusionInventory',
-              'id_search_option' => 0,
+              'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              )
+              ),
+          7 => array(
+              'id'               => '7',
+              'itemtype'         => 'SoftwareVersion',
+              'items_id'         => '2',
+              'itemtype_link'    => '',
+              'linked_action'    => '20',
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => '0',
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
+          8 => array(
+              'id'               => '8',
+              'itemtype'         => 'SoftwareVersion',
+              'items_id'         => '3',
+              'itemtype_link'    => '',
+              'linked_action'    => '20',
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => '0',
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
       );
 
-      $this->assertEquals($a_reference, $a_logs, "Log must be 6 ".print_r($a_logs, true));
+      $this->assertEquals($a_reference, $a_logs, "Log must be 8 ".print_r($a_logs, true));
       $DB->query('TRUNCATE `glpi_logs`');
 
       // Update a second time and must not have any new lines in glpi_logs
@@ -352,6 +375,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $a_logs = getAllDatasFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
          unset($data['date_mod']);
+         unset($data['date_creation']);
          $a_logs[$id] = $data;
       }
       $a_reference = array(

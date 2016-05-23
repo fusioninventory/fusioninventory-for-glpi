@@ -298,6 +298,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer->getFromDB(1);
       unset($computer->fields['date_mod']);
+      unset($computer->fields['date_creation']);
       $a_reference = array(
           'name'                             => 'pc',
           'id'                               => '1',
@@ -401,6 +402,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $software->getFromDB(1);
       unset($software->fields['date_mod']);
+      unset($software->fields['date_creation']);
       $a_reference = array(
           'id'                      => '1',
           'name'                    => 'GentiumBasic',
@@ -441,6 +443,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $software->getFromDB(2);
       unset($software->fields['date_mod']);
+      unset($software->fields['date_creation']);
       $a_reference = array(
           'id'                      => '2',
           'name'                    => 'ImageMagick',
@@ -481,6 +484,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $software->getFromDB(3);
       unset($software->fields['date_mod']);
+      unset($software->fields['date_creation']);
       $a_reference = array(
           'id'                      => '3',
           'name'                    => 'ORBit2',
@@ -521,6 +525,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $softwareVersion->getFromDB(1);
       unset($softwareVersion->fields['date_mod']);
+      unset($softwareVersion->fields['date_creation']);
       $a_reference = array(
           'id'                   => '1',
           'name'                 => '110',
@@ -549,6 +554,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $softwareVersion->getFromDB(2);
       unset($softwareVersion->fields['date_mod']);
+      unset($softwareVersion->fields['date_creation']);
       $a_reference = array(
           'id'                   => '2',
           'name'                 => '6.8.0.7_1',
@@ -577,6 +583,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $softwareVersion->getFromDB(3);
       unset($softwareVersion->fields['date_mod']);
+      unset($softwareVersion->fields['date_creation']);
       $a_reference = array(
           'id'                   => '3',
           'name'                 => '2.14.19',
@@ -613,7 +620,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_template_computer' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
-          'is_dynamic'           => '1'
+          'is_dynamic'           => '1',
+          'date_install'         => null
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
@@ -641,7 +649,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_template_computer' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
-          'is_dynamic'           => '1'
+          'is_dynamic'           => '1',
+          'date_install'         => null
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
@@ -669,7 +678,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_template_computer' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
-          'is_dynamic'           => '1'
+          'is_dynamic'           => '1',
+          'date_install'         => null
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
@@ -686,6 +696,11 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_data = getAllDatasFromTable("glpi_deviceprocessors");
+      foreach ($a_data as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $a_data[$id] = $data;
+      }
       $a_reference = array(
           '1' => array(
                      'id'                 => '1',
@@ -806,6 +821,11 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_data = getAllDatasFromTable("glpi_devicememories");
+      foreach ($a_data as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $a_data[$id] = $data;
+      }
       $a_reference = array(
           '1' => array(
                      'id'                    => '1',
@@ -919,6 +939,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                                          "`itemtype`='Computer'
                                             AND `items_id`='1'");
 
+      foreach ($a_dataLink as $id=>$data) {
+         unset($data['date_mod']);
+         unset($data['date_creation']);
+         $a_dataLink[$id] = $data;
+      }
+
       $a_reference = array(
           '1' => array(
                      'id'                    => '1',
@@ -981,6 +1007,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $monitor->getFromDB($a_dataLink['items_id']);
 
       unset($monitor->fields['date_mod']);
+      unset($monitor->fields['date_creation']);
 
       $a_reference = array(
           'id'                => '1',
@@ -990,7 +1017,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'contact_num'       => NULL,
           'users_id_tech'     => '0',
           'groups_id_tech'    => '0',
-          'comment'           => '',
+          'comment'           => NULL,
           'serial'            => 'UBYVUTFYEIUI',
           'otherserial'       => NULL,
           'size'              => '0',
@@ -1042,6 +1069,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $printer->getFromDB($a_dataLink['items_id']);
 
       unset($printer->fields['date_mod']);
+      unset($printer->fields['date_creation']);
 
       $a_reference = array(
           'id'                   => '1',
