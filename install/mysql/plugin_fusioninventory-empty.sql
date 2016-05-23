@@ -128,6 +128,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `comment` text DEFAULT NULL,
   `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
   `statuscomments` text DEFAULT NULL,
+  `enduser` text DEFAULT NULL COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
   KEY `entities_id` (`entities_id`),

@@ -369,6 +369,9 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['plugins'] = 'PluginFusioninventoryMenu';
       }
 
+      // For end users
+      $PLUGIN_HOOKS['helpdesk_menu_entry']['fusioninventory'] = '/front/deploypackage.public.php';
+
       if (isset($_SESSION["glpiname"])) {
          $report_list = array();
          if (Session::haveRight('plugin_fusioninventory_reportprinter', READ)) {
