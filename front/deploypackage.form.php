@@ -43,15 +43,13 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-
+$package = new PluginFusioninventoryDeployPackage();
 if (isset($_POST['update_json'])) {
-   $order = new PluginFusioninventoryDeployOrder();
-
    $json_clean = stripcslashes($_POST['json']);
 
    $json = json_decode($json_clean,TRUE);
 
-   $ret = PluginFusioninventoryDeployOrder::updateOrderJson($_POST['orders_id'], $json);
+   $ret = PluginFusioninventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
    Html::back();
    exit;
 } elseif (isset($_POST['add_item'])) {
@@ -71,7 +69,6 @@ if (isset($_POST['update_json'])) {
 //$data = Toolbox::stripslashes_deep($_POST);
 $data = $_POST;
 
-$package = new PluginFusioninventoryDeployPackage();
 //general form
 if (isset ($data["add"])) {
    Session::checkRight('plugin_fusioninventory_package', CREATE);

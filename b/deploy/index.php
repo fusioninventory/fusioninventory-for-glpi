@@ -61,7 +61,7 @@ if (isset($_GET['action'])) {
 
                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                   $agent['id'],
-                  array('deployinstall', 'deployuninstall')
+                  array('deployinstall')
                );
                if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
                   foreach($taskjobstates as $taskjobstate) {
@@ -167,12 +167,7 @@ if (isset($_GET['action'])) {
             }
          }
          if (is_array($params['msg']) ) {
-
-            if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-               $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
-            } else {
-               $htmlspecialchars_flags = NULL;
-            }
+            $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
 
             $tmp_msg = implode("\n", $params['msg']);
             $flags = NULL;

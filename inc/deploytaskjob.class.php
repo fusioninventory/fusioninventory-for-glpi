@@ -63,7 +63,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $sql = " SELECT *
                FROM `".$this->getTable()."`
                WHERE `plugin_fusioninventory_deploytasks_id` = '$tasks_id'
-               AND (method = 'deployinstall' OR method = 'deployuninstall')";
+               AND method = 'deployinstall'";
 
       $res  = $DB->query($sql);
       $json  = array();

@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployCommon {
 
    static function getTypeName($nb=0) {
-      return __('Installation', 'fusioninventory');
+      return __('Package actions', 'fusioninventory');
    }
 
 
@@ -57,7 +57,7 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
       switch(get_class($item)) {
 
          case 'PluginFusioninventoryDeployPackage':
-            return __('Installation', 'fusioninventory');
+            return __('Package actions', 'fusioninventory');
             break;
 
       }
@@ -69,10 +69,7 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
       switch(get_class($item)) {
 
          case 'PluginFusioninventoryDeployPackage':
-            PluginFusioninventoryDeployPackage::displayOrderTypeForm(
-                     PluginFusioninventoryDeployOrder::INSTALLATION_ORDER,
-                     $item->getID(),
-                     $item);
+            $item->displayOrderTypeForm();
             break;
       }
    }
