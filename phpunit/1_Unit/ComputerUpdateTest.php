@@ -330,7 +330,9 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'groups_id'                        => '0',
           'states_id'                        => '0',
           'ticket_tco'                       => '0.0000',
-          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220'
+          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
+          'os_kernel_version'                => NULL,
+          'is_recursive'                     => '0'
       );
 
       $this->assertEquals($a_reference, $computer->fields);
@@ -1042,6 +1044,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'states_id'         => '0',
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => '1',
+          'is_recursive'      => '0'
       );
 
       $this->assertEquals($a_reference, $monitor->fields);
