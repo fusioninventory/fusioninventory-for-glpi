@@ -75,6 +75,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
+
+   /**
+    * Define standard massiveaction actions to deny
+    *
+    * @return array list of actions to deny
+    */
    function getForbiddenStandardMassiveAction() {
 
       $forbidden   = parent::getForbiddenStandardMassiveAction();
@@ -109,8 +115,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
-                                                       array $ids) {
+   /**
+    * Run specific code for our special massive actions
+    *
+    * @param MassiveAction $ma
+    * @param CommonDBTM $item
+    * @param array $ids list of id of packages
+    * @return True always true
+    */
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
 
       switch ($ma->getAction()) {
 
@@ -152,19 +165,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    *  Check if we can edit (or delete) this item
    *  If it's not possible display an error message
    **/
-   function getEditErrorMessage($order_type=NULL) {
+   function getEditErrorMessage() {
 
       $this->getRunningTasks();
       $error_message = "";
-      $tasklist = array();
-      if (isset($order_type)) {
-         $tasklist = array_filter(
-            $this->running_tasks,
-            create_function('$task', 'return $task["taskjob"]["method"]=="deploy'.$order_type.'";')
-         );
-      } else {
-         $tasklist = $this->running_tasks;
-      }
+      $tasklist = array_filter(
+         $this->running_tasks,
+         create_function('$task', 'return $task["taskjob"]["method"]=="deploy";')
+      );
 
       if (count($tasklist) > 0) {
 
@@ -197,18 +205,23 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   //mmmh I'm not sure if it's still used ... -- kiniou
-   function post_addItem() {
-      //check whether orders have not already been created
-      if (!isset($_SESSION['tmp_clone_package'])) {
-         //Create installation & uninstallation order
-         PluginFusioninventoryDeployOrder::createOrders($this->fields['id']);
+   function prepareInputForAdd($input) {
+
+      if (!isset($input['json'])) {
+         $input['json'] = json_encode(array('jobs' => array(
+            'checks' => array(),
+            'associatedFiles' => array(),
+            'actions' => array()
+         ), 'associatedFiles' => array()));
       }
+      return parent::prepareInputForAdd($input);
    }
 
-   // function : getRunningTasks
-   // desc : get every active tasks running
 
+
+   /**
+    * Get every tasks running
+    */
    function getRunningTasks() {
 
       $this->running_tasks =
@@ -225,8 +238,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    }
 
-   function getSearchOptions() {
 
+
+   function getSearchOptions() {
       $tab = array();
       $tab['common']           = __('Characteristics');
 
@@ -276,28 +290,30 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Get all packages in json format
+    *
+    * @return json
+    */
    function getAllDatas() {
       global $DB;
 
       $sql = " SELECT id, name
                FROM `".$this->getTable()."`
                ORDER BY name";
-
       $res  = $DB->query($sql);
-
       $nb   = $DB->numrows($res);
       $json  = array();
       $i = 0;
       while($row = $DB->fetch_assoc($res)) {
          $json['packages'][$i]['package_id'] = $row['id'];
          $json['packages'][$i]['package_name'] = $row['name'];
-
          $i++;
       }
       $json['results'] = $nb;
-
       return json_encode($json);
    }
+
 
 
    function cleanDBonPurge() {
@@ -318,24 +334,27 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->showList();
    }
 
+
+
    function showList() {
       Search::show('PluginFusioninventoryDeployPackage');
    }
 
-   function defineTabs($options=array()) {
 
+
+   function defineTabs($options=array()) {
       $ong = array();
       $this->addDefaultFormTab($ong);
       if ($this->fields['id'] > 0){
          $this->addStandardTab('PluginFusioninventoryDeployinstall', $ong, $options);
-         $this->addStandardTab('PluginFusioninventoryDeployuninstall', $ong, $options);
       }
       $ong['no_all_tab'] = TRUE;
       return $ong;
    }
 
-   function showForm($ID, $options=array()) {
 
+
+   function showForm($ID, $options=array()) {
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
       //Add redips_clone element before displaying tabs
@@ -355,16 +374,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-
       return TRUE;
    }
+
+
 
    /*
     * TODO: switch to non-static to avoid the $package argument
     *       -- kiniou
     */
 
-   static function displayOrderTypeForm($order_type, $packages_id, $package) {
+   function displayOrderTypeForm() {
       global $CFG_GLPI;
 
       $subtypes = array(
@@ -379,36 +399,26 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       );
       $rand = mt_rand();
 
-      $order = new PluginFusioninventoryDeployOrder($order_type, $packages_id);
-      $datas = json_decode($order->fields['json'], TRUE);
-      $orders_id = $order->fields['id'];
-      $order_type_label = PluginFusioninventoryDeployOrder::getOrderTypeLabel(
-                              $order->fields['type']
-                          );
+      $datas = json_decode($this->fields['json'], TRUE);
 
-
-      /**
-       * Display an error if the package modification is not possible
-       **/
-      $error_msg = $package->getEditErrorMessage($order_type_label);
+      // Display an error if the package modification is not possible
+      $error_msg = $this->getEditErrorMessage();
       if(!empty($error_msg)) {
          Session::addMessageAfterRedirect($error_msg);
          Html::displayMessageAfterRedirect();
-         echo "<div id='package_order_".$orders_id."_span'>";
+         echo "<div id='package_order_".$this->getID()."_span'>";
       }
 
-      echo "<table class='tab_cadre_fixe' id='package_order_".$orders_id."'>";
+      echo "<table class='tab_cadre_fixe' id='package_order_".$this->getID()."'>";
 
-      /**
-       * Display the lists of each subtypes of a package
-       **/
+      // Display the lists of each subtypes of a package
       foreach ($subtypes as $subtype => $label) {
 
          echo "<tr>";
          echo "<th id='th_title_{$subtype}_$rand'>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
          echo "&nbsp;".__($label, 'fusioninventory');
-         $package->plusButtonSubtype($package->getID(), $orders_id, $subtype, $rand);
+         $this->plusButtonSubtype($this->getID(), $subtype, $rand);
          echo "</th>";
          echo "</tr>";
 
@@ -427,12 +437,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
           **/
          echo "<form name='addition$subtype' method='post' ".$multipart.
             " action='deploypackage.form.php'>";
-         echo "<input type='hidden' name='orders_id' value='$orders_id' />";
+         echo "<input type='hidden' name='id' value='".$this->getID()."' />";
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
 
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
-         $classname::displayForm($order, $datas, $rand, "init");
+         $classname::displayForm($this, $datas, $rand, "init");
          Html::closeForm();
 
          $json_subtype = $json_subtypes[$subtype];
@@ -441,14 +451,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
           **/
          if (  isset($datas['jobs'][$json_subtype])
                && !empty($datas['jobs'][$json_subtype])) {
-            echo  "<div id='drag_" . $order_type_label . "_". $subtype . "s'>";
+            echo  "<div id='drag_deploypackage_". $subtype . "s'>";
             echo  "<form name='remove" . $subtype. "s' ".
                   "method='post' action='deploypackage.form.php' ".
                   "id='" . $subtype . "sList" . $rand . "'>";
             echo "<input type='hidden' name='remove_item' />";
             echo "<input type='hidden' name='itemtype' value='". $classname . "' />";
-            echo "<input type='hidden' name='orders_id' value='" . $order->fields['id'] . "' />";
-            $classname::displayList($order, $datas, $rand);
+            echo "<input type='hidden' name='packages_id' value='".$this->getID()."' />";
+            $classname::displayList($this, $datas, $rand);
             Html::closeForm();
             echo "</div>";
          }
@@ -457,18 +467,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
           * Initialize drag and drop on subtype lists
           **/
          echo "<script type='text/javascript'>";
-         echo "redipsInit('$order_type_label', '$subtype', $orders_id);";
+         echo "redipsInit('deploypackage', '$subtype', '".$this->getID()."');";
          echo "</script>";
          echo "</td>";
          echo "</tr>";
       }
 
-
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          // === debug ===
          echo "<tr><td>";
          echo "<span id='package_json_debug'>";
-         self::display_json_debug($order);
+         $this->display_json_debug();
          echo "</sp3an>";
          echo "</td></tr>";
       }
@@ -477,25 +486,37 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</div>";
          echo "<script type='text/javascript'>
                   Ext.onReady(function() {
-                     Ext.select('#package_order_".$orders_id."_span').mask();
+                     Ext.select('#package_order_".$this->getID()."_span').mask();
                   });
                </script>";
       }
    }
 
-   function plusButtonSubtype($id, $order_id, $subtype, $rand) {
+
+
+   /**
+    * Manage + button (audits, files, actions)
+    *
+    * @param integer $id id of the package
+    * @param integer $order_id if of the order
+    * @param string $subtype name of subtype (audits, files, actions)
+    * @param string $rand random string for js to prevent collisions
+    */
+   function plusButtonSubtype($id, $subtype, $rand) {
       global $CFG_GLPI;
 
       if ($this->can($id, UPDATE)) {
          echo "&nbsp;";
          echo "<img id='plus_{$subtype}s_block{$rand}'";
-         echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
+         echo " onclick=\"new_subtype('{$subtype}', {$id}, {$rand})\" ";
          echo  " title='".__('Add')."' alt='".__('Add')."' ";
          echo  " class='pointer' src='".
                $CFG_GLPI["root_doc"].
                "/pics/add_dropdown.png' /> ";
       }
    }
+
+
 
    static function plusButton($dom_id, $clone = FALSE) {
       global $CFG_GLPI;
@@ -515,32 +536,40 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             "/pics/add_dropdown.png'> ";
    }
 
-   static function display_json_debug(PluginFusioninventoryDeployOrder $order) {
+
+
+   /**
+    * When user is in DEBUG mode, we display the json
+    *
+    */
+   function display_json_debug() {
       global $CFG_GLPI;
 
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
 
-         $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-         $pfDeployPackage->getFromDB($order->fields['plugin_fusioninventory_deploypackages_id']);
-
-         // === debug ===
          echo "<span class='red'><b>DEBUG</b></span>";
          echo "<form action='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo PluginFusioninventoryToolbox::formatJson($order->fields['json']);
+         echo PluginFusioninventoryToolbox::formatJson($this->fields['json']);
          echo "</textarea>";
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
-            echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
+         if ($this->can($this->getID(), UPDATE)) {
+            echo "<input type='hidden' name='packages_id' value='{$this->fields['id']}' />";
             echo "<input type='submit' name='update_json' value=\"".
                _sx('button', 'Save')."\" class='submit'>";
          }
          Html::closeForm();
-         // === debug ===
       }
-
    }
 
+
+
+   /**
+    * Update the json structure
+    *
+    * @param string $action_type type of action
+    * @param array $params data used to update the json
+    */
    static function alter_json($action_type, $params) {
       //route to sub class
       $item_type = $params['itemtype'];
@@ -552,22 +581,25 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                'PluginFusioninventoryDeployCheck',
                'PluginFusioninventoryDeployFile',
                'PluginFusioninventoryDeployAction'
-            )
-         )
-      ) {
+            ))) {
          switch ($action_type) {
+
             case "add_item" :
                $item_type::add_item($params);
                break;
+
             case "save_item" :
                $item_type::save_item($params);
                break;
+
             case "remove_item" :
                $item_type::remove_item($params);
                break;
+
             case "move_item" :
                $item_type::move_item($params);
                break;
+
          }
       } else {
          Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
@@ -577,145 +609,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-
-   public function package_clone($new_name = '') {
-
-      if ($this->getField('id') < 0) {
-         return FALSE;
-      }
-
-      $_SESSION['tmp_clone_package'] = TRUE;
-
-      //duplicate package
-      $package_oldId = $this->getField('id');
-      if ($new_name == "") {
-         $new_name = $this->getField('name');
-      }
-      $params = $this->fields;
-      unset($params['id']);
-      $params['name'] = $new_name;
-      $new_package = new PluginFusioninventoryDeployPackage;
-      $package_newId = $new_package->add($params);
-
-      //duplicate orders
-      $order_obj = new PluginFusioninventoryDeployOrder;
-      $orders = $order_obj->find("plugin_fusioninventory_deploypackages_id = '".$package_oldId."'");
-
-      foreach($orders as $order_oldId => $order) {
-         //create new order for this new package
-         $order_param = array(
-            'type' => $order['type'],
-            'create_date' => date("Y-m-d H:i:s"),
-            'plugin_fusioninventory_deploypackages_id' => $package_newId
-         );
-         $order_newId = $order_obj->add($order_param);
-         unset($order_param);
-
-
-         //duplicate checks
-         $check_obj = new PluginFusioninventoryDeployCheck;
-         $checks = $check_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
-         foreach ($checks as $check) {
-            //create new check for this new order
-            unset($check['id']);
-            $check['plugin_fusioninventory_deployorders_id'] = $order_newId;
-            $check_obj->add($check);
-         }
-
-         //duplicate files
-         $file_obj = new PluginFusioninventoryDeployFile;
-         $files = $file_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
-         foreach ($files as $file) {
-            //create new file for this new order
-            unset($file['id']);
-            $file['plugin_fusioninventory_deployorders_id'] = $order_newId;
-            $file_newId = $file_obj->add($file);
-
-            //duplicate fileparts
-            $filepart_obj = new PluginFusioninventoryDeployFilepart;
-            $fileparts = $filepart_obj->find(
-               "plugin_fusioninventory_deployfiles_id = '".$order_oldId."'");
-            foreach ($fileparts as $filepart) {
-               //create new filepart for this new file
-               unset($filepart['id']);
-               $filepart['plugin_fusioninventory_deployorders_id'] = $order_newId;
-               $filepart['plugin_fusioninventory_deployfiles_id'] = $file_newId;
-               $filepart_obj->add($filepart);
-            }
-         }
-
-         //duplicate actions
-         $action_obj = new PluginFusioninventoryDeployAction;
-         $actions = $action_obj->find(
-            "plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
-         foreach ($actions as $action) {
-            //duplicate actions subitem
-            $action_subitem_obj = new $action['itemtype'];
-            $action_subitem_oldId = $action['items_id'];
-            $action_subitem_obj->getFromDB($action_subitem_oldId);
-            $params_subitem = $action_subitem_obj->fields;
-            unset($params_subitem['id']);
-            $action_subitem_newId = $action_subitem_obj->add($params_subitem);
-
-            //special case for command, we need to duplicate commandstatus and commandenvvariables
-            if ($action['itemtype'] == 'PluginFusioninventoryDeployAction_Command') {
-               $command_oldId = $action_subitem_oldId;
-               $command_newId = $action_subitem_newId;
-
-               //duplicate commandstatus
-               $commandstatus_obj = new PluginFusioninventoryDeployAction_Commandstatus;
-               $commandstatus = $commandstatus_obj->find(
-                  "plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
-               foreach ($commandstatus as $commandstate) {
-                  //create new commandstatus for this command
-                  unset($commandstate['id']);
-                  $commandstate['plugin_fusioninventory_deploycommands_id'] = $command_newId;
-                  $commandstatus_obj->add($commandstate);
-               }
-
-               //duplicate commandenvvariables
-               $commandenvvariables_obj = new PluginFusioninventoryDeployAction_Commandenvvariable;
-               $commandenvvariables = $commandenvvariables_obj->find(
-                  "plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
-               foreach ($commandenvvariables as $commandenvvariable) {
-                  //create new commandenvvariable for this command
-                  unset($commandenvvariable['id']);
-                  $commandenvvariable['plugin_fusioninventory_deploycommands_id'] = $command_newId;
-                  $commandenvvariables_obj->add($commandenvvariable);
-               }
-            }
-
-            //create new action for this new order
-            unset($action['id']);
-            $action['plugin_fusioninventory_deployorders_id'] = $order_newId;
-            $action['items_id'] = $action_subitem_newId;
-            $action_obj->add($action);
-         }
-      }
-
-      if ($new_package->getName() == NOT_AVAILABLE) {
-         $new_package->fields['name'] = $new_package->getTypeName()." : ".__('ID')
-
-                                 ." ".$new_package->fields['id'];
-      }
-      $display = (isset($this->input['_no_message_link'])?$new_package->getNameID()
-                                                         :$new_package->getLink());
-
-      // Do not display quotes
-      Session::addMessageAfterRedirect(__('Item successfully added', 'fusioninventory')."&nbsp;: ".
-                                       stripslashes($display));
-
-      unset($_SESSION['tmp_clone_package']);
-
-      //exit;
-
-   }
-
-
-
    /**
-    * Used to export package
+    * Export the package (information, actions, files...)
     *
+    * @param integer $packages_id id of the package to export
     */
    function exportPackage($packages_id) {
       $this->getFromDB($packages_id);
@@ -727,7 +624,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $this->update($input);
       }
 
-      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
       $pfDeployFile  = new PluginFusioninventoryDeployFile();
 
       // Generate JSON
@@ -741,15 +637,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $a_xml['repository'] = array();
 
       $a_files = array();
-      $a_data = $pfDeployOrder->find("`plugin_fusioninventory_deploypackages_id`='".$this->fields['id']."'");
-      foreach ($a_data as $data) {
-         unset($data['id']);
-         unset($data['plugin_fusioninventory_deploypackages_id']);
-         $a_xml['orders'][] = $data;
-         $json = json_decode($data['json'], true);
-         $a_files = array_merge($a_files, $json['associatedFiles']);
-
-      }
+      $a_xml['orders'][] = array('json' => $this->fields['json']);
+      $json = json_decode($this->fields['json'], true);
+      $a_files = $json['associatedFiles'];
 
       // Add files
       foreach ($a_files as $files_id=>$data) {
@@ -760,14 +650,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          }
       }
 
-
       // Create zip with JSON and files
       $name = preg_replace("/[^a-zA-Z0-9]/", '', $this->fields['name']);
       $filename = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/export/".$this->fields['uuid'].".".$name.".zip";
       if (file_exists($filename)) {
          unlink($filename);
       }
-
 
       $zip = new ZipArchive();
       if($zip->open($filename) == TRUE) {
@@ -797,13 +685,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-    * Used to import package
+    * Import the package
     *
+    * @param string $zipfile the zip file with all data inside
     */
    function importPackage($zipfile) {
 
       $zip           = new ZipArchive();
-      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
       $pfDeployFile  = new PluginFusioninventoryDeployFile();
 
       $filename = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/".$zipfile;
@@ -825,12 +713,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          // Create it
          $_SESSION['tmp_clone_package'] = true;
          $packages_id = $this->add($a_info['package']);
-         unset($_SESSION['tmp_clone_package']);
-         foreach ($a_info['orders'] as $input) {
-            $input['plugin_fusioninventory_deploypackages_id'] = $packages_id;
-            $pfDeployOrder->add($input);
-            echo "|";
-         }
          foreach ($a_info['files'] as $input) {
             $pfDeployFile->add($input);
          }
@@ -917,6 +799,100 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $massiveactionparams['ontop'] =false;
       Html::showMassiveActions($massiveactionparams);
       echo "</div>";
+   }
+
+
+
+   /*
+    * Get a sub element at index
+    * @param subtype the type of sub element
+    * @param the index in element list
+    * @return the sub element
+    */
+   function getSubElement($subtype, $index) {
+
+      $data_o = json_decode($this->fields['json'], TRUE);
+
+      return $data_o['jobs'][$subtype][$index];
+   }
+
+
+
+   /*
+    * Get Order's associated file by hash
+    * @param hash the sha512 hash of file
+    * @return the associated file for the selected hash
+    */
+   function getAssociatedFile($hash) {
+      $data_o = json_decode($this->fields['json'], TRUE);
+
+      if ( array_key_exists( $hash, $data_o['associatedFiles'] ) ) {
+         return $data_o['associatedFiles'][$hash];
+      }
+
+      return NULL;
+   }
+
+
+
+   /**
+    * Get the json
+    *
+    * @param integer $packages_id id of the order
+    * @return boolean | string(json)
+    */
+   static function getJson($packages_id) {
+      $pfDeployPackage = new self;
+      $pfDeployPackage->getFromDB($packages_id);
+      if (!empty($pfDeployPackage->fields['json'])) {
+         return $pfDeployPackage->fields['json'];
+      } else {
+         return FALSE;
+      }
+   }
+
+
+
+   static function updateOrderJson($packages_id, $datas) {
+      $pfDeployPackage = new self;
+      $options = 0;
+      $options = $options | JSON_UNESCAPED_SLASHES;
+
+      $json = json_encode($datas, $options);
+
+      $json_error_consts = array(
+         JSON_ERROR_NONE => "JSON_ERROR_NONE",
+         JSON_ERROR_DEPTH => "JSON_ERROR_DEPTH",
+         JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
+         JSON_ERROR_CTRL_CHAR => "JSON_ERROR_CTRL_CHAR",
+         JSON_ERROR_SYNTAX => "JSON_ERROR_SYNTAX",
+         JSON_ERROR_UTF8 => "JSON_ERROR_UTF8"
+      );
+
+      $error_json = json_last_error();
+
+      if ( version_compare(PHP_VERSION, '5.5.0',"ge") ) {
+         $error_json_message = json_last_error_msg();
+      } else {
+         $error_json_message = "";
+      }
+      $error = 0;
+      if ( $error_json != JSON_ERROR_NONE ) {
+         $error_msg = $json_error_consts[$error_json];
+         Session::addMessageAfterRedirect(
+            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            $error_msg . "<br/>". $error_json_message, FALSE, ERROR, FALSE
+         );
+         $error = 1;
+      } else {
+         $error = $pfDeployPackage->update(
+            array(
+               'id' => $packages_id,
+               'json' => Toolbox::addslashes_deep($json)
+            )
+         );
+      }
+      return $error;
    }
 
 }

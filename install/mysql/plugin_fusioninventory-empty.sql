@@ -725,22 +725,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerarchs` (
 --
 -- BEGIN DEPLOY
 --
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployorders`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployorders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` int(11) NOT NULL,
-  `create_date` datetime NOT NULL,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL,
-  `json` longtext DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type` (`type`),
-  KEY `create_date` (`create_date`),
-  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
@@ -751,6 +735,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `date_mod` datetime DEFAULT NULL,
   `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `json` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)

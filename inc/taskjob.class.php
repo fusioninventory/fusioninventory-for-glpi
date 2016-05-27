@@ -1551,12 +1551,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
          $item = new $itemtype;
 
-         if (
-            in_array(
-               $a_taskjob['method'],
-               array('deployinstall', 'deployuninstall')
-            ) && isset( $a_taskjob['definitions_filter'] )
-         ) {
+         if ($a_taskjob['method'] == 'deployinstall'
+                 && isset($a_taskjob['definitions_filter'])) {
             $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
          } else {
             $uniqid = $item->prepareRun($a_taskjob['id']);

@@ -60,9 +60,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
-   static function displayForm($order, $request_data, $rand, $mode) {
-      global $CFG_GLPI;
-
+   static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
        */
@@ -73,12 +71,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
           */
          echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
 
-         $c = $order->getSubElement( 'associatedFiles', $request_data['index'] );
+         $c = $package->getSubElement( 'associatedFiles', $request_data['index'] );
          if ( $c ) {
 
             $config = array(
                'hash' => $c,
-               'data' => $order->getAssociatedFile($c)
+               'data' => $package->getAssociatedFile($c)
             );
          }
       }
@@ -121,11 +119,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
 
-   static function displayList(PluginFusioninventoryDeployOrder $order, $datas, $rand) {
+   static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
-
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployPackage->getFromDB($order->fields['plugin_fusioninventory_deploypackages_id']);
 
       $o_file = new self;
 
@@ -191,7 +186,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          // start new line
          $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+         if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'file_entries[]', 'value' => 0));
             echo "</td>";
@@ -216,7 +211,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo  "&nbsp;".
                "<a class='edit' ".
                "  onclick=\"edit_subtype(".
-               "   'file', {$order->fields['id']}, $rand, this ".
+               "   'file', {$package->fields['id']}, $rand, this ".
                "  )\"".
                ">$file_name</a>";
 
@@ -275,24 +270,25 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "</div>";
          }
          echo "</td>";
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+         if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          $i++;
       }
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+      if ($package->can($package->getID(), UPDATE)) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("filesList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+      if ($package->can($package->getID(), UPDATE)) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit'>";
       }
    }
+
 
 
    static function displayDropdownType($config, $request_data, $rand, $mode) {
@@ -358,11 +354,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       global $CFG_GLPI;
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
 
-      if (isset($request_data['orders_id'])) {
-         $pfDeployOrder->getFromDB($request_data['orders_id']);
-         $pfDeployPackage->getFromDB($pfDeployOrder->fields['plugin_fusioninventory_deploypackages_id']);
+      if (isset($request_data['packages_id'])) {
+         $pfDeployPackage->getFromDB($request_data['packages_id']);
       } else {
          $pfDeployPackage->getEmpty();
       }
@@ -580,23 +574,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
-   static function getExtensionsWithAutoAction() {
-      $ext = array();
-
-      $ext['msi']['install']     = "msiexec /qb /i ##FILENAME## REBOOT=ReallySuppress";
-      $ext['msi']['uninstall']   = "msiexec /qb /x ##FILENAME## REBOOT=ReallySuppress";
-
-      $ext['deb']['install']     = "dpkg -i ##FILENAME## ; apt-get install -f";
-      $ext['deb']['uninstall']   = "dpkg -P ##FILENAME## ; apt-get install -f";
-
-      $ext['rpm']['install']     = "rpm -Uvh ##FILENAME##";
-      $ext['rpm']['install']     = "rpm -ev ##FILENAME##";
-
-      return $ext;
-   }
-
-
-
    static function add_item($params) {
       switch ($params['deploy_filetype']) {
          case 'Server':
@@ -614,7 +591,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       $files = $datas['jobs']['associatedFiles'];
       //remove selected checks
@@ -634,14 +611,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
 
 
 
    static function move_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       //get data on old index
       $moved_check = $datas['jobs']['associatedFiles'][$params['old_index']];
@@ -653,13 +630,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       array_splice($datas['jobs']['associatedFiles'], $params['new_index'], 0, array($moved_check));
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
 
 
    static function save_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       //get sha512
       $sha512 = $datas['jobs']['associatedFiles'][$params['index']];
@@ -679,11 +656,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $datas['associatedFiles'][$sha512] = $file;
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
 
+
+
    static function uploadFileFromComputer($params) {
-      if (isset($params["orders_id"])) {
+      if (isset($params["id"])) {
 
          //file uploaded?
          if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
@@ -740,7 +719,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                ? $params['p2p-retention-duration']
                : 0
             ),
-            'orders_id' => $params['orders_id']
+            'id' => $params['id']
          );
 
          //Add file in repo
@@ -756,13 +735,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return FALSE;
    }
 
+
+
    static function uploadFileFromServer($params) {
 
       if (preg_match('/\.\./', $params['filename'])) {
          die;
       }
 
-      if (isset($params["orders_id"])) {
+      if (isset($params["id"])) {
          $file_path = $params['filename'];
          $filename = basename($file_path);
          if (function_exists('finfo_open')
@@ -788,7 +769,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                ? $params['p2p-retention-duration']
                : 0
             ),
-            'orders_id' => $params['orders_id']
+            'id' => $params['id']
          );
 
          //Add file in repo
@@ -834,7 +815,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function addFileInRepo ($params) {
       $deployFile = new self;
-
 
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
@@ -927,8 +907,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          );
          $deployFile->add($entry);
       }
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      //get current package json
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       //add new entry
       $datas['associatedFiles'][$sha512] = $new_entry;
@@ -936,8 +916,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $datas['jobs']['associatedFiles'][] = $sha512;
       }
 
-      //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      //update package
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
 
       return TRUE;
    }
@@ -945,13 +925,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
-   static function removeFileInRepo($sha512, $orders_id) {
+   static function removeFileInRepo($sha512, $packages_id) {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
       $manifestsPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
 
-      $order = new PluginFusioninventoryDeployOrder;
-      $rows = $order->find("id != '$orders_id'
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $rows = $pfDeployPackage->find("id != '$packages_id'
             AND json LIKE '%".substr($sha512, 0, 6 )."%'
             AND json LIKE '%$sha512%'"
       );
@@ -961,7 +941,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($packages_id), TRUE);
       $multiparts = $datas['associatedFiles'][$sha512]['multiparts'];
 
       //parse all files part

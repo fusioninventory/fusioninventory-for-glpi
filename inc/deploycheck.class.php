@@ -84,9 +84,9 @@ class PluginFusioninventoryDeployCheck {
       );
    }
 
-   static function displayForm($order, $request_data, $rand, $mode) {
-      global $CFG_GLPI;
 
+
+   static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
        */
@@ -97,7 +97,7 @@ class PluginFusioninventoryDeployCheck {
           */
          echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
 
-         $c = $order->getSubElement( 'checks', $request_data['index'] );
+         $c = $package->getSubElement( 'checks', $request_data['index'] );
 
          if ( is_array( $c ) && count( $c ) ) {
 
@@ -130,7 +130,7 @@ class PluginFusioninventoryDeployCheck {
       if ( in_array( $mode, array('create', 'edit'), TRUE ) ) {
          echo "<span id='show_check_value{$rand}'>";
          if ( $mode === 'edit' ) {
-            self::displayAjaxValues( $config, $request_data, $rand, $mode );
+            self::displayAjaxValues($config, $request_data, $rand, $mode);
          }
          echo "</span>";
       }
@@ -143,11 +143,10 @@ class PluginFusioninventoryDeployCheck {
       }
    }
 
-   static function displayList(PluginFusioninventoryDeployOrder $order, $datas, $rand) {
-      global $CFG_GLPI;
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployPackage->getFromDB($order->fields['plugin_fusioninventory_deploypackages_id']);
+
+   static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
+      global $CFG_GLPI;
 
       $checks_types = self::getTypes();
 
@@ -163,14 +162,14 @@ class PluginFusioninventoryDeployCheck {
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+         if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'check_entries[]'));
             echo "</td>";
          }
          echo "<td>";
          echo "<a class='edit'".
-            "onclick=\"edit_subtype('check', {$order->fields['id']}, $rand ,this)\">".
+            "onclick=\"edit_subtype('check', {$package->fields['id']}, $rand ,this)\">".
             $checks_types[$check['type']].
             "</a><br />";
          echo $check['path'];
@@ -187,20 +186,20 @@ class PluginFusioninventoryDeployCheck {
             echo $check['value'];
          }
          echo "</td>";
-         if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+         if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
          $i++;
       }
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+      if ($package->can($package->getID(), UPDATE)) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("checksList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
+      if ($package->can($package->getID(), UPDATE)) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit' />";
@@ -317,11 +316,9 @@ class PluginFusioninventoryDeployCheck {
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $pfDeployOrder = new PluginFusioninventoryDeployOrder();
 
-      if (isset($request_data['orders_id'])) {
-         $pfDeployOrder->getFromDB($request_data['orders_id']);
-         $pfDeployPackage->getFromDB($pfDeployOrder->fields['plugin_fusioninventory_deploypackages_id']);
+      if (isset($request_data['packages_id'])) {
+         $pfDeployPackage->getFromDB($request_data['orders_id']);
       } else {
          $pfDeployPackage->getEmpty();
       }
@@ -468,16 +465,16 @@ class PluginFusioninventoryDeployCheck {
 
       //get current order json
       $datas = json_decode(
-         PluginFusioninventoryDeployOrder::getJson( $params['orders_id']),
-         TRUE
+              PluginFusioninventoryDeployPackage::getJson($params['id']),
+              TRUE
       );
 
       //add new entry
       $datas['jobs']['checks'][] = $new_entry;
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson(
-         $params['orders_id'], $datas
+      PluginFusioninventoryDeployPackage::updateOrderJson(
+         $params['id'], $datas
       );
    }
 
@@ -507,7 +504,7 @@ class PluginFusioninventoryDeployCheck {
       );
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       //unset index
       unset($datas['jobs']['checks'][$params['index']]);
@@ -517,7 +514,7 @@ class PluginFusioninventoryDeployCheck {
       array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
 
 
@@ -528,7 +525,7 @@ class PluginFusioninventoryDeployCheck {
       }
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       //remove selected checks
       foreach ($params['check_entries'] as $index => $checked) {
@@ -542,14 +539,14 @@ class PluginFusioninventoryDeployCheck {
       $datas['jobs']['checks'] = array_values($datas['jobs']['checks']);
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
 
 
 
    static function move_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
       //get data on old index
       $moved_check = $datas['jobs']['checks'][$params['old_index']];
@@ -561,7 +558,7 @@ class PluginFusioninventoryDeployCheck {
       array_splice($datas['jobs']['checks'], $params['new_index'], 0, array($moved_check));
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
 }
 

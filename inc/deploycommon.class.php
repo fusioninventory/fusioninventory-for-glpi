@@ -311,12 +311,11 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
    function run($taskjobstate) {
       //get order type label
       $order_type_label = str_replace("deploy", "", $taskjobstate->method);
-      //get numeric order type from label
-      $order_type = PluginFusioninventoryDeployOrder::getRender($order_type_label);
       //get order by type and package id
-      $order = new PluginFusioninventoryDeployOrder($order_type, $taskjobstate->fields['items_id']);
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage->getFromDB($taskjobstate->fields['items_id']);
       //decode order data
-      $order_data = json_decode($order->fields['json'], TRUE);
+      $order_data = json_decode($pfDeployPackage->fields['json'], TRUE);
 
       /* TODO:
        * This has to be done properly in each corresponding classes.

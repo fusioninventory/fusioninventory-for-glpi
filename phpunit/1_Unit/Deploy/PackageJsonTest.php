@@ -29,50 +29,59 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author Alexandre Delaunay
+   @co-author
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   @since     2013
 
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
+class PackageJsonTest extends RestoreDatabase_TestCase {
 
-class PluginFusioninventoryDeployuninstall extends PluginFusioninventoryDeployCommon {
 
-   static function getTypeName($nb=0) {
-      return __('Uninstallation', 'fusioninventory');
+   /**
+    * @test
+    */
+   public function JSONCreateNewPackage() {
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $input = array(
+          'name'        => 'test1',
+          'entities_id' => 0);
+      $packages_id = $pfDeployPackage->add($input);
+      $pfDeployPackage->getFromDB(1);
+      $json_structure = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
    }
 
 
+   /**
+    * @test
+    */
+   public function AddItem() {
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $input = array(
+          'name'        => 'test1',
+          'entities_id' => 0);
+      $packages_id = $pfDeployPackage->add($input);
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      // Add check
+      $item = array(
+         'id' => $packages_id,
+         'itemtype'  => 'PluginFusioninventoryDeployCheck',
+         'deploy_checktype' => 'winkeyExists',
+         'path'      => 'toto',
+         'return'    => 'error',
+         'add_item'  => 'Add'
+      );
+      PluginFusioninventoryDeployPackage::alter_json('add_item', $item);
 
-      switch(get_class($item)) {
+      $pfDeployPackage->getFromDB($packages_id);
+      $json_structure = '{"jobs":{"checks":[{"type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
 
-         case 'PluginFusioninventoryDeployPackage':
-            return __('Uninstallation', 'fusioninventory');
-            break;
-
-      }
-   }
-
-
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      switch(get_class($item)) {
-         case 'PluginFusioninventoryDeployPackage':
-            PluginFusioninventoryDeployPackage::displayOrderTypeForm(
-                     PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER,
-                     $item->getID(),
-                     $item);
-            break;
-      }
    }
 }
