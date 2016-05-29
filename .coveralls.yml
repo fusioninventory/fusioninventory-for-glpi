@@ -2,6 +2,5 @@
 #service_name: travis-ci
 
 # for php-coveralls
-src_dir: ./
 coverage_clover: build/logs/clover-*.xml
 
