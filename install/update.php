@@ -343,6 +343,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_computerstorage_migration($migration);
       do_computerlicense_migration($migration);
       do_computerarch_migration($migration);
+      do_computeroperatingsystem_migration($migration);
       do_dblocks_migration($migration);
       do_rule_migration($migration);
 
@@ -2579,8 +2580,8 @@ function do_computercomputer_migration($migration) {
                                                                  'value'   => NULL);
    $a_table['fields']['remote_addr']            = array('type'    => 'string',
                                                         'value'   => NULL);
-   $a_table['fields']['plugin_fusioninventory_computerarchs_id'] = array('type'    => 'integer',
-                                                                         'value'   => NULL);
+   $a_table['fields']['plugin_fusioninventory_computeroperatingsystems_id'] = array('type'    => 'integer',
+                                                                                    'value'   => NULL);
    $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
                                                         'value'   => "");
    $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
@@ -2588,7 +2589,7 @@ function do_computercomputer_migration($migration) {
    $a_table['fields']['oscomment']              = array('type'    => 'text',
                                                         'value'   => NULL);
 
-   $a_table['oldfields']  = array();
+   $a_table['oldfields']  = array('plugin_fusioninventory_computerarchs_id');
 
    $a_table['renamefields'] = array();
 
@@ -4623,10 +4624,80 @@ function do_computerlicense_migration($migration) {
 
 function do_computerarch_migration($migration) {
    /*
-    * Table glpi_plugin_fusioninventory_computerarchs
+    * Table glpi_plugin_fusioninventory_computerarches
     */
    $a_table = array();
-   $a_table['name'] = 'glpi_plugin_fusioninventory_computerarchs';
+   $a_table['name'] = 'glpi_plugin_fusioninventory_computerarches';
+   $a_table['oldname'] = array('glpi_plugin_fusioninventory_computerarchs');
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['name']    = array('type'    => 'string',
+                                         'value'   => NULL);
+   $a_table['fields']['comment'] = array('type'    => 'text',
+                                         'value'   => NULL);
+
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+}
+
+
+
+function do_computeroperatingsystem_migration($migration) {
+   /*
+    * Table glpi_plugin_fusioninventory_computeroperatingsystems
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroperatingsystems';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['name']    = array('type'    => 'string',
+                                         'value'   => NULL);
+   $a_table['fields']['comment'] = array('type'    => 'text',
+                                         'value'   => NULL);
+   $a_table['fields']['plugin_fusioninventory_computerarches_id'] = array('type'    => 'integer',
+                                                                          'value'   => NULL);
+   $a_table['fields']['plugin_fusioninventory_computeroskernelnames_id'] = array('type'    => 'integer',
+                                                                                              'value'   => NULL);
+   $a_table['fields']['plugin_fusioninventory_computeroskernelversions_id'] = array('type'    => 'integer',
+                                                                                                 'value'   => NULL);
+   $a_table['fields']['operatingsystems_id'] = array('type'    => 'integer',
+                                                     'value'   => NULL);
+   $a_table['fields']['operatingsystemversions_id'] = array('type'    => 'integer',
+                                                            'value'   => NULL);
+   $a_table['fields']['plugin_fusioninventory_computeroperatingsystemeditions_id'] = array('type'    => 'integer',
+                                                                                           'value'   => NULL);
+   $a_table['fields']['operatingsystemservicepacks_id'] = array('type'    => 'integer',
+                                                                'value'   => NULL);
+
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
+   /*
+    * Table glpi_plugin_fusioninventory_computeroskernelnames
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroskernelnames';
    $a_table['oldname'] = array();
 
    $a_table['fields']  = array();
@@ -4647,6 +4718,59 @@ function do_computerarch_migration($migration) {
    $a_table['oldkeys'] = array();
 
    migrateTablesFusionInventory($migration, $a_table);
+
+   /*
+    * Table glpi_plugin_fusioninventory_computeroskernelversions
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroskernelversions';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['name']    = array('type'    => 'string',
+                                         'value'   => NULL);
+   $a_table['fields']['comment'] = array('type'    => 'text',
+                                         'value'   => NULL);
+
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
+   /*
+    * Table glpi_plugin_fusioninventory_computeroperatingsystemeditions
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroperatingsystemeditions';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['name']    = array('type'    => 'string',
+                                         'value'   => NULL);
+   $a_table['fields']['comment'] = array('type'    => 'text',
+                                         'value'   => NULL);
+
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
 }
 
 

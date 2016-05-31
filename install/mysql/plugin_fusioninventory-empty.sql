@@ -422,7 +422,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `wincompany` varchar(255) DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   `remote_addr` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_computerarchs_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_computeroperatingsystems_id` int(11) NOT NULL DEFAULT '0',
   `serialized_inventory` longblob,
   `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
   `oscomment` text DEFAULT NULL,
@@ -710,9 +710,64 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerarchs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerarches`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_computerarchs` (
+CREATE TABLE `glpi_plugin_fusioninventory_computerarches` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroperatingsystems`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystems` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `plugin_fusioninventory_computerarches_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_computeroskernelnames_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_computeroskernelversions_id` int(11) NOT NULL DEFAULT '0',
+  `operatingsystems_id` int(11) NOT NULL DEFAULT '0',
+  `operatingsystemversions_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_computeroperatingsystemeditions_id` int(11) NOT NULL DEFAULT '0',
+  `operatingsystemservicepacks_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroskernelnames`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_computeroskernelnames` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroskernelversions`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_computeroskernelversions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroperatingsystemeditions`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystemeditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,

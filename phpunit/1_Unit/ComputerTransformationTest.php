@@ -270,13 +270,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
          $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
       }
+      unset($a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']);
       $a_reference = array(
           'fusioninventorycomputer' => Array(
               'winowner'                                 => 'test',
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
               'last_fusioninventory_update'              => $date,
-              'plugin_fusioninventory_computerarchs_id'  => '32 bits',
               'oscomment'                                => ''
           ),
           'soundcard'      => array(),
@@ -301,20 +301,379 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
-          'operatingsystemversions_id'       => '5.1.2600',
+          'operatingsystems_id'              => 0,
+          'operatingsystemversions_id'       => 0,
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 'Service Pack 3',
+          'operatingsystemservicepacks_id'   => 0,
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
      );
-      $this->assertEquals($a_reference, $a_return);
+     $this->assertEquals($a_reference, $a_return);
+
+
+      $operatingsystems = array(
+//          array(
+//              array(
+//                  'ARCH'           => '',
+//                  'FULL_NAME'      => '',
+//                  'KERNEL_NAME'    => '',
+//                  'KERNEL_VERSION' => '',
+//                  'NAME'           => '',
+//                  'SERVICE_PACK'   => ''
+//              ),
+//              array(
+//                  'arch'        => '',
+//                  'kernname'    => '',
+//                  'kernversion' => '',
+//                  'os'          => '',
+//                  'osversion'   => '',
+//                  'servicepack' => '',
+//                  'edition'     => ''
+//              )
+//          ),
+          array(
+              array(
+                  'ARCH'           => '64-bit',
+                  'FULL_NAME'      => 'Microsoft Windows 7 Enterprise',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.1.7600',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => ''
+              ),
+              array(
+                  'arch'        => '64-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.1.7600',
+                  'os'          => 'Windows',
+                  'osversion'   => '7',
+                  'servicepack' => '',
+                  'edition'     => 'Enterprise'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'SUSE Linux Enterprise Server 12 (x86_64)',
+                  'KERNEL_NAME'    => 'linux',
+                  'KERNEL_VERSION' => '3.12.43-52.6-default',
+                  'NAME'           => 'SuSE',
+                  'SERVICE_PACK'   => '0',
+                  'VERSION'        => '12'
+              ),
+              array(
+                  'arch'        => 'x86_64',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.12.43-52.6-default',
+                  'os'          => 'SuSE',
+                  'osversion'   => '12',
+                  'servicepack' => '',
+                  'edition'     => 'Enterprise Server'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Debian GNU/Linux 7.8 (wheezy)',
+                  'KERNEL_NAME'    => 'linux',
+                  'KERNEL_VERSION' => '3.2.0-4-amd64',
+                  'NAME'           => 'Debian',
+                  'VERSION'        => '7.8'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.2.0-4-amd64',
+                  'os'          => 'Debian',
+                  'osversion'   => '7.8',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+          ),
+          array(
+              array(
+                  'ARCH'           => 'x86_64',
+                  'FULL_NAME'      => 'Debian GNU/Linux 8.4 (jessie)',
+                  'KERNEL_NAME'    => 'linux',
+                  'KERNEL_VERSION' => '3.16.0-4-amd64',
+                  'NAME'           => 'Debian',
+                  'VERSION'        => '8.4'
+              ),
+              array(
+                  'arch'        => 'x86_64',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.16.0-4-amd64',
+                  'os'          => 'Debian',
+                  'osversion'   => '8.4',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+          ),
+          array(
+              array(
+                  'ARCH'           => '32-bit',
+                  'FULL_NAME'      => 'Microsoft Windows Embedded Standard',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.1.7601',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 1'
+              ),
+              array(
+                  'arch'        => '32-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.1.7601',
+                  'os'          => 'Windows',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 1',
+                  'edition'     => 'Embedded Standard'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'MicrosoftÂ® Windows ServerÂ® 2008 Standard',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.0.6002',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 2'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.0.6002',
+                  'os'          => 'Windows',
+                  'osversion'   => '2008',
+                  'servicepack' => 'Service Pack 2',
+                  'edition'     => 'ServerÂ® Standard'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft(R) Windows(R) Server 2003, Standard Edition',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '5.2.3790',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 2'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.2.3790',
+                  'os'          => 'Windows',
+                  'osversion'   => '2003',
+                  'servicepack' => 'Service Pack 2',
+                  'edition'     => 'Server Standard Edition'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft Windows Server 2012 R2 Datacenter',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.3.9600',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.3.9600',
+                  'os'          => 'Windows',
+                  'osversion'   => '2012 R2',
+                  'servicepack' => '',
+                  'edition'     => 'Server Datacenter'
+              )
+          ),
+          array(
+              array(
+                  'ARCH'           => '64-bit',
+                  'FULL_NAME'      => 'Microsoft Windows Server 2008 R2 Datacenter',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.1.7601',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 1'
+              ),
+              array(
+                  'arch'        => '64-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.1.7601',
+                  'os'          => 'Windows',
+                  'osversion'   => '2008 R2',
+                  'servicepack' => 'Service Pack 1',
+                  'edition'     => 'Server Datacenter'
+              )
+          ),
+//          array(
+//              array(
+//                  'FULL_NAME'      => 'Microsoft® Windows Vista™ Professionnel',
+//                  'KERNEL_NAME'    => 'MSWin32',
+//                  'KERNEL_VERSION' => '6.0.6001',
+//                  'NAME'           => 'Windows',
+//                  'SERVICE_PACK'   => 'Service Pack 1'
+//              ),
+//              array(
+//                  'arch'        => '',
+//                  'kernname'    => 'MSWin32',
+//                  'kernversion' => '6.0.6001',
+//                  'os'          => 'Windows',
+//                  'osversion'   => 'Vista',
+//                  'servicepack' => 'Service Pack 1',
+//                  'edition'     => 'Professionnel'
+//              )
+//          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft(R) Windows(R) Server 2003, Standard Edition x64',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '5.2.3790',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 2'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.2.3790',
+                  'os'          => 'Windows',
+                  'osversion'   => '2003',
+                  'servicepack' => 'Service Pack 2',
+                  'edition'     => 'Server Standard Edition x64'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft Windows XP Édition familiale',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '5.1.2600',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 3'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.1.2600',
+                  'os'          => 'Windows',
+                  'osversion'   => 'XP',
+                  'servicepack' => 'Service Pack 3',
+                  'edition'     => 'Édition familiale'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft Windows 2000 Professionnel',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '5.0.2195',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 4'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.0.2195',
+                  'os'          => 'Windows',
+                  'osversion'   => '2000',
+                  'servicepack' => 'Service Pack 4',
+                  'edition'     => 'Professionnel'
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft Hyper-V Server 2012 R2',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.3.9600',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.3.9600',
+                  'os'          => 'Windows',
+                  'osversion'   => '2012 R2',
+                  'servicepack' => '',
+                  'edition'     => 'Hyper-V Server'
+              )
+          ),
+          array(
+              array(
+                  'ARCH'           => 'x86_64',
+                  'FULL_NAME'      => 'Fedora release 23 (Twenty Three)',
+                  'KERNEL_NAME'    => 'linux',
+                  'KERNEL_VERSION' => '4.4.6-301.fc23.x86_64',
+                  'NAME'           => 'Fedora',
+                  'VERSION'        => '23'
+              ),
+              array(
+                  'arch'        => 'x86_64',
+                  'kernname'    => 'linux',
+                  'kernversion' => '4.4.6-301.fc23.x86_64',
+                  'os'          => 'Fedora',
+                  'osversion'   => '23',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'ThinPro 5.2.0',
+                  'KERNEL_NAME'    => 'linux',
+                  'KERNEL_VERSION' => '3.8.13-hp',
+                  'NAME'           => 'ThinPro',
+                  'VERSION'        => '5.2.0'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.8.13-hp',
+                  'os'          => 'ThinPro',
+                  'osversion'   => '5.2.0',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+          ),
+          array(
+              array(
+                  'ARCH'           => '64-bit',
+                  'FULL_NAME'      => 'Microsoft Windows 10 Professionnel',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '10.0.10586',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => ''
+              ),
+              array(
+                  'arch'        => '64-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '10.0.10586',
+                  'os'          => 'Windows',
+                  'osversion'   => '10',
+                  'servicepack' => '',
+                  'edition'     => 'Professionnel'
+              )
+          ),
+      );
+      $mapping = array(
+          'arch'        => 'plugin_fusioninventory_computerarches_id',
+          'kernname'    => 'plugin_fusioninventory_computeroskernelnames_id',
+          'kernversion' => 'plugin_fusioninventory_computeroskernelversions_id',
+          'os'          => 'operatingsystems_id',
+          'osversion'   => 'operatingsystemversions_id',
+          'servicepack' => 'operatingsystemservicepacks_id',
+          'edition'     => 'plugin_fusioninventory_computeroperatingsystemeditions_id'
+      );
+      foreach ($operatingsystems as $operatingsystem) {
+         $a_computer = array();
+         $a_computer['OPERATINGSYSTEM'] = $operatingsystem[0];
+         $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+            );
+
+         $a_reference = array();
+         foreach ($operatingsystem[1] as $key=>$value) {
+             $a_reference[$mapping[$key]] = $value;
+         }
+         $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+         $this->assertEquals($a_reference, $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']);
+      }
    }
 
 

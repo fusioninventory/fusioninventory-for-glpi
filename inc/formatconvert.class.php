@@ -431,34 +431,68 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp = $thisc->addValues(
                  $array['OPERATINGSYSTEM'],
                  array(
-                    'FULL_NAME'      => 'operatingsystems_id',
+                    'NAME'           => 'operatingsystems_id',
                     'VERSION'        => 'operatingsystemversions_id',
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
-                    'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
-
-         if (!isset($array['OPERATINGSYSTEM']['VERSION'])
-                 && isset($array['OPERATINGSYSTEM']['KERNEL_VERSION'])) {
-            $array_tmp['operatingsystemversions_id'] = $array['OPERATINGSYSTEM']['KERNEL_VERSION'];
-         }
-         foreach ($array_tmp as $key=>$value) {
-            if (isset($a_inventory['Computer'][$key])
-                    && $a_inventory['Computer'][$key] != '') {
-               $a_inventory['Computer'][$key] = $value;
+                    'ARCH'           => 'plugin_fusioninventory_computerarches_id',
+                    'KERNEL_NAME'    => 'plugin_fusioninventory_computeroskernelnames_id',
+                    'KERNEL_VERSION' => 'plugin_fusioninventory_computeroskernelversions_id'));
+         $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = '';
+         if (isset($array['OPERATINGSYSTEM']['FULL_NAME'])) {
+            $matches = array();
+            preg_match("/Microsoft Windows (XP |\d\.\d |\d{1,4} )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+            if (count($matches) == 3) {
+               $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[2];
+               if ($array_tmp['operatingsystemversions_id'] == '') {
+                  $array_tmp['operatingsystemversions_id'] = trim($matches[1]);
+               }
+            } else if (count($matches) == 2) {
+               $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[1];
+            } else {
+               preg_match("/Linux (.*) (\d{1,2}) \((.*)\)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+               if (count($matches) == 4) {
+                  if (empty($array_tmp['operatingsystemversions_id'])) {
+                     $array_tmp['operatingsystemversions_id'] = $matches[2];
+                  }
+                  if (empty($array_tmp['plugin_fusioninventory_computerarches_id'])) {
+                     $array_tmp['plugin_fusioninventory_computerarches_id'] = $matches[3];
+                  }
+                  $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[1];
+               } else {
+                  preg_match("/Microsoft[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+                  if (count($matches) == 4) {
+                     $array_tmp['operatingsystemversions_id'] = $matches[2];
+                     $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]." ".$matches[3]);
+                  } else {
+                     if ($array['OPERATINGSYSTEM']['FULL_NAME'] == 'Microsoft Windows Embedded Standard') {
+                        $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = 'Embedded Standard';
+                     }
+                  }
+               }
             }
          }
-         if (isset($array_tmp['plugin_fusioninventory_computerarchs_id'])
-                 && $array_tmp['plugin_fusioninventory_computerarchs_id'] != '') {
+
+         if (isset($array_tmp['plugin_fusioninventory_computerarches_id'])
+                 && $array_tmp['plugin_fusioninventory_computerarches_id'] != '') {
 
             $rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
-            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['plugin_fusioninventory_computerarchs_id']));
+            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['plugin_fusioninventory_computerarches_id']));
             if (isset($res_rule['name'])) {
-            $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] =
-                 $res_rule['name'];
+               $array_tmp['plugin_fusioninventory_computerarches_id'] = $res_rule['name'];
             } else {
-               $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] =
-                  $array_tmp['plugin_fusioninventory_computerarchs_id'];
+               $array_tmp['plugin_fusioninventory_computerarches_id'] = $array_tmp['plugin_fusioninventory_computerarches_id'];
+            }
+            if ($array_tmp['plugin_fusioninventory_computerarches_id'] == '0') {
+               $array_tmp['plugin_fusioninventory_computerarches_id'] = '';
             }
          }
+         if ($array_tmp['operatingsystemservicepacks_id'] == '0') {
+            $array_tmp['operatingsystemservicepacks_id'] = '';
+         }
+         $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = $array_tmp;
+         $a_inventory['Computer']['operatingsystemversions_id'] = 0;
+         $a_inventory['Computer']['operatingsystemservicepacks_id'] = 0;
+         $a_inventory['Computer']['operatingsystems_id'] = 0;
       }
 
       // otherserial (on tag) if defined in config
