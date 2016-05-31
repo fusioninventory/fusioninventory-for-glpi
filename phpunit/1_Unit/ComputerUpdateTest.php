@@ -364,9 +364,9 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
           'remote_addr'                               => NULL,
-          'plugin_fusioninventory_computerarchs_id'   => 0,
+          'plugin_fusioninventory_computeroperatingsystems_id' => 0,
           'is_entitylocked'                           => 0,
-          'oscomment'                                 => ''
+          'oscomment'                                 => NULL
       );
 
       $this->assertEquals($a_reference, $a_computer);
