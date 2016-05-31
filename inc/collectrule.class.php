@@ -54,7 +54,7 @@ class PluginFusioninventoryCollectRule extends Rule {
 
 
    function getTitle() {
-      return __('Additional computer information rules', 'fusioninventory');
+      return __('Computer information rules', 'fusioninventory');
    }
 
 
