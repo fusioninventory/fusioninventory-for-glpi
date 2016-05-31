@@ -210,7 +210,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_blacklist'
           ),
           array('itemtype'  => 'PluginFusioninventoryCollectRule',
-                'label'     => __('Additional computer information rules', 'fusioninventory'),
+                'label'     => __('Computer information rules', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_rulecollect'
           ),
           array('itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
@@ -306,7 +306,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Groups of computers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_group'),
           array('itemtype'  => 'PluginFusioninventoryCollect',
-                'label'     => __('Additional computer information', 'fusioninventory'),
+                'label'     => __('Computer information', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_collect')
       );
 

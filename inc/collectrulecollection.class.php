@@ -54,7 +54,7 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
    public $menu_option='test';
 
    function getTitle() {
-      return __('Additional computer information rules', 'fusioninventory');
+      return __('Computer information rules', 'fusioninventory');
    }
 
 

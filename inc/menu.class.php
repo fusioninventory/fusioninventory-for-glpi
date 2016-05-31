@@ -288,7 +288,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight("plugin_fusioninventory_collect", READ)) {
-         $a_menu[11]['name'] = __('Additional computer information', 'fusioninventory');
+         $a_menu[11]['name'] = __('Computer information', 'fusioninventory');
          $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
       }
@@ -342,7 +342,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
-         $a_menu[5]['name'] = __('Additional computer information rules', 'fusioninventory');
+         $a_menu[5]['name'] = __('Computer information rules', 'fusioninventory');
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/collectrule.php";
