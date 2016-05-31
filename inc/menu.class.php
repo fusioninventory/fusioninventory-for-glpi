@@ -207,6 +207,16 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          exit;
       }
 
+      // Check if cron GLPI running
+      $cronTask = new CronTask();
+      $cronTask->getFromDBbyName('PluginFusioninventoryTask', 'taskscheduler');
+      if ($cronTask->fields['lastrun'] == ''
+              OR strtotime($cronTask->fields['lastrun']) < strtotime("-3 day")) {
+         $message = __('GLPI cron not running, see ', 'fusioninventory');
+         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html'>".__('documentation', 'fusioninventory')."</a>";
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+      }
+
       $width_status = 0;
 
       echo "<div align='center' style='height: 35px; display: inline-block; width: 100%; margin: 0 auto;'>";
