@@ -138,14 +138,17 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5161]['linkfield'] = '';
          $sopt[5161]['name']      = __('FusionInventory tag', 'fusioninventory');
 
-         $sopt[5162]['table']     = 'glpi_plugin_fusioninventory_computerarchs';
+         $sopt[5162]['table']     = 'glpi_plugin_fusioninventory_computerarches';
          $sopt[5162]['field']     = 'name';
          $sopt[5162]['name']      = __('Architecture', 'fusioninventory');
          $sopt[5162]['datatype']  = 'dropdown';
          $sopt[5162]['massiveaction'] = FALSE;
          $sopt[5162]['joinparams']      = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                     'joinparams' => array('jointype'          => 'child')));
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
+
+
 
 //         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
 //         $sopt[5163]['field']     = 'conform';
@@ -220,6 +223,65 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                                    'joinparams' => array('jointype'          => 'itemtype_item',
                                                                            'specific_itemtype' => 'Computer')));
 
+         $sopt[5172]['table']     = 'glpi_operatingsystems';
+         $sopt[5172]['field']     = 'name';
+         $sopt[5172]['name']      = _n('Operating system', 'Operating systems', 1);
+         $sopt[5172]['datatype']  = 'dropdown';
+         $sopt[5172]['massiveaction'] = FALSE;
+         $sopt[5172]['joinparams'] = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
+
+         $sopt[5173]['table']     = 'glpi_operatingsystemversions';
+         $sopt[5173]['field']     = 'name';
+         $sopt[5173]['name']      = _n('Version of the operating system', 'Versions of the operating systems', 1);
+         $sopt[5173]['datatype']  = 'dropdown';
+         $sopt[5173]['massiveaction'] = FALSE;
+         $sopt[5173]['joinparams'] = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
+
+         $sopt[5174]['table']     = 'glpi_plugin_fusioninventory_computeroskernelnames';
+         $sopt[5174]['field']     = 'name';
+         $sopt[5174]['name']      = __('Kernel name', 'fusioninventory');
+         $sopt[5174]['datatype']  = 'dropdown';
+         $sopt[5174]['massiveaction'] = FALSE;
+         $sopt[5174]['joinparams'] = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
+
+         $sopt[5175]['table']     = 'glpi_plugin_fusioninventory_computeroskernelversions';
+         $sopt[5175]['field']     = 'name';
+         $sopt[5175]['name']      = __('Kernel version', 'fusioninventory');
+         $sopt[5175]['datatype']  = 'dropdown';
+         $sopt[5175]['massiveaction'] = FALSE;
+         $sopt[5175]['joinparams'] = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
+
+         $sopt[5176]['table']     = 'glpi_operatingsystemservicepacks';
+         $sopt[5176]['field']     = 'name';
+         $sopt[5176]['name']      = _n('Service pack', 'Service packs', 1);
+         $sopt[5176]['datatype']  = 'dropdown';
+         $sopt[5176]['massiveaction'] = FALSE;
+         $sopt[5176]['joinparams'] = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
+
+         $sopt[5177]['table']     = 'glpi_plugin_fusioninventory_computeroperatingsystemeditions';
+         $sopt[5177]['field']     = 'name';
+         $sopt[5177]['name']      = __('Operating system edition', 'fusioninventory');
+         $sopt[5177]['datatype']  = 'dropdown';
+         $sopt[5177]['massiveaction'] = FALSE;
+         $sopt[5177]['joinparams'] = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                                                                 'joinparams' => array('jointype' => 'child')))));
 
    }
 
