@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Anthony Hebert
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -47,6 +47,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployFilepart {
 
 
+   /**
+    * Send file to agent
+    *
+    * @param array $params
+    */
    static function httpSendFile($params) {
       if (!isset($params['file'])) {
          header("HTTP/1.1 500");
@@ -60,8 +65,7 @@ class PluginFusioninventoryDeployFilepart {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
-      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).
-                                                                              '/'.$sha512;
+      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).'/'.$sha512;
 
       if (!is_file($filePath)) {
          header("HTTP/1.1 404");

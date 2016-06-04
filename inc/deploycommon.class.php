@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -46,26 +46,34 @@ if(!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
 
-   /*
-    * @function definitionFiltered
+   /**
     * Check if definition_type is present in definitions_filter array.
     * This function returns TRUE if the definition_type is not in definitions_filter array.
     * If definitions_filter is NULL, this check is inhibited and return FALSE.
+    *
+    * @param type $definition_type
+    * @param type $definitions_filter
+    * @return boolean
     */
    public function definitionFiltered($definition_type, $definitions_filter) {
-      if (
-         !is_null($definitions_filter)
-         && is_array($definitions_filter)
-         && count($definitions_filter) > 0
-         && !in_array($definition_type, $definitions_filter)
-      ) {
+      if (!is_null($definitions_filter)
+              && is_array($definitions_filter)
+              && count($definitions_filter) > 0
+              && !in_array($definition_type, $definitions_filter)) {
          return TRUE;
-      } else {
-         return FALSE;
       }
+      return FALSE;
    }
 
-   // Get all devices and put in taskjobstate each task for each device for each agent
+
+
+   /**
+    * Prepare a takjob, get all devices and put in taskjobstate each task
+    * for each device for each agent
+    *
+    * @param integer $taskjob_id id of the taskjob
+    * @param type $definitions_filter
+    */
    function prepareRun($taskjob_id , $definitions_filter=NULL) {
       global $DB;
 
@@ -82,7 +90,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $communication= $task->fields['communication'];
 
       $actions     = importArrayFromDB($job->fields['action']);
-      $definitions   = importArrayFromDB($job->fields['definition']);
+      $definitions = importArrayFromDB($job->fields['definition']);
       $taskvalid = 0;
 
       $computers = array();
@@ -91,12 +99,14 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          $items_id = current($action);
 
          switch($itemtype) {
+
             case 'Computer':
                if ($this->definitionFiltered("Computer", $definitions_filter) ) {
                   break;
                }
                $computers[] = $items_id;
                break;
+
             case 'Group':
                if ($this->definitionFiltered("Group", $definitions_filter)) {
                   break;
@@ -108,7 +118,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $group         = new Group();
                $group->getFromDB($items_id);
 
-               $members = array();
                $computers_a_1 = array();
                $computers_a_2 = array();
 
@@ -116,7 +125,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $members = $group_users->getGroupUsers($items_id);
 
                foreach ($members as $member) {
-                  $computers = $computer_object->find("users_id = '${member['id']}' "
+                  $computers = $computer_object->find("users_id = '".$member['id']."' "
                   . " AND `is_deleted`='0' AND `is_template`='0'");
                   foreach($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
@@ -132,13 +141,14 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
                //merge two previous array and deduplicate entries
                $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
-
                break;
+
             case 'PluginFusioninventoryDeployGroup':
                $group = new PluginFusioninventoryDeployGroup;
                $group->getFromDB($items_id);
 
                switch ($group->getField('type')) {
+
                   case 'STATIC':
                      if ($this->definitionFiltered("PluginFusioninventoryDeployGroupStatic", $definitions_filter)) {
                         break;
@@ -152,6 +162,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                         $computers[] = $row['items_id'];
                      }
                      break;
+
                   case 'DYNAMIC':
                      if ($this->definitionFiltered("PluginFusioninventoryDeployGroupDynamic", $definitions_filter)) {
                         break;
@@ -195,8 +206,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      Search::manageParams('Computer');
                      $glpilist_limit = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
-                     $result = $pfSearch->constructSQL('Computer',
-                                                       $_GET);
+                     $result = $pfSearch->constructSQL('Computer', $_GET);
                      $_SESSION['glpilist_limit'] = $glpilist_limit;
                      while ($data=$DB->fetch_array($result)) {
                         $computers[] = $data['id'];
@@ -204,10 +214,11 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      if (count($get_tmp) > 0) {
                         $_GET = $get_tmp;
                      }
-
                      break;
+
                }
                break;
+
          }
       }
 
@@ -215,8 +226,8 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //We are using isset for faster processing than array_unique because we might have many
       //entries in this list.
       $tmp_computers = array();
-      foreach( $computers as $computer) {
-         if( !isset($tmp_computers[$computer]) ) {
+      foreach($computers as $computer) {
+         if(!isset($tmp_computers[$computer])) {
             $tmp_computers[$computer] = 1;
 
          }
@@ -290,27 +301,24 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
             }
          }
       }
-
       if ($taskvalid > 0) {
          $job->fields['status']= 1;
          $job->update($job->fields);
       } else {
          $job->reinitializeTaskjobs($job->fields['plugin_fusioninventory_tasks_id']);
       }
-
    }
 
 
 
-   // When agent contact server, this function prepare data to be sent
-   /*
-    * $itemtype = type of device in definition
-    * $array = array with different ID
+   /**
+    * When agent contact server, this function prepare data to be sent
     *
+    * @param type $taskjobstate
+    *
+    * @return type
     */
    function run($taskjobstate) {
-      //get order type label
-      $order_type_label = str_replace("deploy", "", $taskjobstate->method);
       //get order by type and package id
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $pfDeployPackage->getFromDB($taskjobstate->fields['items_id']);
@@ -339,7 +347,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
        */
       $order_files = $order_data['associatedFiles'];
 
-
       //Add mirrors to associatedFiles
       $mirrors = PluginFusioninventoryDeployMirror::getList(
          $taskjobstate->fields['plugin_fusioninventory_agents_id']
@@ -348,10 +355,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          $order_files[$hash]['mirrors'] = $mirrors;
          $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
          $order_files[$hash]['multiparts'] = array();
-         if ( file_exists($manifest) ) {
+         if (file_exists($manifest)) {
             $handle = fopen($manifest, "r");
             if ($handle) {
-               while ( ($buffer = fgets($handle) ) !== FALSE) {
+               while (($buffer = fgets($handle)) !== FALSE) {
                   $order_files[$hash]['multiparts'][] = trim($buffer);
                }
                fclose($handle);
@@ -367,7 +374,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          "job" => $order_job,
          "associatedFiles" => $order_files
       );
-
       return $order;
    }
 }

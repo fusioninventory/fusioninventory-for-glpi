@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -52,6 +52,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static public $itemtype = 'PluginFusioninventoryDeployGroup';
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
@@ -60,6 +61,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       return '';
    }
+
+
 
    /**
     * @param $item         CommonGLPI object
@@ -74,7 +77,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
                unset($search_params['metacriteria']);
             }
-            PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
+            PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
             break;
 
          case 1:
@@ -105,6 +108,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       return true;
    }
 
+
+
    // override Search method to gain performance and decrease memory usage
    // we dont need to display search criteria result
    static function showList($itemtype, $params, $forcedisplay) {
@@ -122,6 +127,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       Search::displayDatas($data);
    }
 
+
+
    // override Search method to gain performance and decrease memory usage
    // we dont need to display search criteria result
    static function getDatas($itemtype, $params, array $forcedisplay=array()) {
@@ -131,6 +138,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       return $data;
    }
+
+
 
    /**
    * Get computers belonging to a dynamic group
@@ -159,12 +168,11 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       Search::constructDatas($results);
 
       $ids     = array();
-      foreach ($results['data']['rows'] as $id => $row) {
+      foreach ($results['data']['rows'] as $row) {
          $ids[$row['id']] = $row['id'];
       }
       return $ids;
    }
-
 }
 
 ?>

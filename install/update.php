@@ -346,6 +346,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_computeroperatingsystem_migration($migration);
       do_dblocks_migration($migration);
       do_rule_migration($migration);
+      do_task_migration($migration);
 
 
 
@@ -4947,13 +4948,16 @@ function do_deploypackage_migration($migration) {
                'type' => 'longtext DEFAULT NULL',
                'value' => NULL
       ),
+      'plugin_fusioninventory_deploygroups_id' => array(
+               'type'    => 'integer',
+               'value'   => NULL
+      ),
+
    );
 
-   $a_table['oldfields'] = array(
-   );
+   $a_table['oldfields'] = array();
 
-   $a_table['renamefields'] = array(
-   );
+   $a_table['renamefields'] = array();
 
    $a_table['keys'] = array(
       array(
@@ -4968,8 +4972,7 @@ function do_deploypackage_migration($migration) {
       ),
    );
 
-   $a_table['oldkeys'] = array(
-   );
+   $a_table['oldkeys'] = array();
 
    migrateTablesFusionInventory($migration, $a_table);
 
@@ -5006,6 +5009,130 @@ function do_deploypackage_migration($migration) {
    if (TableExists($order_table)) {
       $migration->dropTable($order_table);
    }
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_deploypackages_entities
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_deploypackages_entities';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = array('type' => 'integer',
+                                                                          'value' => NULL);
+   $a_table['fields']['entities_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+   $a_table['fields']['is_recursive']  = array('type'    => 'bool',
+                                               'value'   => '0');
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'plugin_fusioninventory_deploypackages_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'is_recursive', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_deploypackages_groups
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_deploypackages_groups';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = array('type' => 'integer',
+                                                                          'value' => NULL);
+   $a_table['fields']['groups_id']   = array('type'    => 'integer',
+                                             'value'   => NULL);
+   $a_table['fields']['entities_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+   $a_table['fields']['is_recursive']  = array('type'    => 'bool',
+                                               'value'   => '0');
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'plugin_fusioninventory_deploypackages_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'groups_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'is_recursive', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_deploypackages_profiles
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_deploypackages_profiles';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = array('type' => 'integer',
+                                                                          'value' => NULL);
+   $a_table['fields']['profiles_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+   $a_table['fields']['entities_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+   $a_table['fields']['is_recursive']  = array('type'    => 'bool',
+                                               'value'   => '0');
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'plugin_fusioninventory_deploypackages_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'profiles_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'is_recursive', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_deploypackages_users
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_deploypackages_users';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']      = array('type'    => 'autoincrement',
+                                         'value'   => '');
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = array('type' => 'integer',
+                                                                          'value' => NULL);
+   $a_table['fields']['users_id']   = array('type'    => 'integer',
+                                            'value'   => NULL);
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'plugin_fusioninventory_deploypackages_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'users_id', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+
 }
 
 
@@ -5972,6 +6099,58 @@ function do_rule_migration($migration) {
    $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
            ." WHERE `type`='import_printer' ";
 
+}
+
+
+
+function do_task_migration($migration) {
+   global $DB;
+
+   /*
+    * Table glpi_plugin_fusioninventory_taskjobs
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_taskjobs';
+   $a_table['oldname'] = array();
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']                     = array('type'    => 'autoincrement',
+                                                        'value'   => '');
+   $a_table['fields']['plugin_fusioninventory_tasks_id'] = array('type'    => 'integer',
+                                                                 'value'   => NULL);
+   $a_table['fields']['entities_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+   $a_table['fields']['name']          = array('type'    => 'string',
+                                               'value'   => NULL);
+   $a_table['fields']['date_creation'] = array('type'    => 'datetime',
+                                               'value'   => NULL);
+   $a_table['fields']['method']        = array('type'    => 'string',
+                                               'value'   => NULL);
+   $a_table['fields']['targets']       = array('type'    => 'text',
+                                               'value'   => NULL);
+   $a_table['fields']['actors']        = array('type'    => 'text',
+                                               'value'   => NULL);
+   $a_table['fields']['comment']       = array('type'    => 'text',
+                                               'value'   => NULL);
+   $a_table['fields']['rescheduled_taskjob_id'] = array('type'    => 'integer',
+                                                        'value'   => NULL);
+   $a_table['fields']['statuscomments'] = array('type'    => 'text',
+                                                'value'   => NULL);
+   $a_table['fields']['enduser']       = array('type'    => 'text',
+                                               'value'   => NULL);
+
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'plugin_fusioninventory_tasks_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
+   $a_table['keys'][] = array('field' => 'method', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
 }
 
 

@@ -95,7 +95,7 @@ if (isset($_GET['action'])) {
                      // Append order to the final json
                      $order->jobs[] = $jobstate_order['job'];
                      // Update associated files list
-                     foreach( $jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
+                     foreach($jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
                         if(!array_key_exists($hash, $order->associatedFiles) ) {
                            $order->associatedFiles->$hash = $associatedFiles;
                         }
@@ -107,7 +107,7 @@ if (isset($_GET['action'])) {
                   }
 
                   // return an empty dictionnary if there are no jobs.
-                  if ( count($order->jobs) == 0) {
+                  if (count($order->jobs) == 0) {
                      $response = "{}";
                   } else {
                      $response = json_encode($order);
@@ -139,7 +139,7 @@ if (isset($_GET['action'])) {
             'uuid'      => $_GET['uuid']
          );
 
-         if ( array_key_exists("status", $_GET)
+         if (array_key_exists("status", $_GET)
                  && $_GET['status'] == 'ko') {
             $params['code'] = 'ko';
             if (array_key_exists("currentStep", $_GET)) {
@@ -151,8 +151,8 @@ if (isset($_GET['action'])) {
          }
 
 
-         if ( $error != TRUE) {
-            if ( array_key_exists("msg", $_GET)
+         if ($error != TRUE) {
+            if (array_key_exists("msg", $_GET)
                     && $_GET['msg'] === 'job successfully completed') {
                //Job is ended and status should be ok
                $params['code'] = 'ok';

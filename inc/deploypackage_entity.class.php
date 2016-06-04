@@ -29,42 +29,53 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author
+   @co-author Alexandre Delaunay
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2016
+   @since     2010
 
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
-Session::checkLoginUser();
-
-Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
-             "pluginfusioninventorymenu", "deploypackage");
-
-$pfDeployPackage = new PluginFusioninventoryDeployPackage();
-
-if (isset($_POST['prepareinstall'])) {
-   foreach ($_POST as $key=>$data) {
-      if (strstr($key, 'deploypackages_')) {
-         $computers_id = str_replace('deploypackages_', '', $key);
-         foreach ($data as $packages_id) {
-            $pfDeployPackage->deploy_to_computer($computers_id, $packages_id, $_SESSION['glpiID']);
-         }
-      }
-   }
-   PluginFusioninventoryTask::cronTaskscheduler();
-   // Force local agent run now to deploy
-   echo '<link rel="import" href="http://127.0.0.1:62354/now">';
-   Html::back();
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
 }
 
-$pfDeployPackage->show_package_for_me($_SESSION['glpiID']);
-$pfTaskJobView = new PluginFusioninventoryTaskjobView();
-Html::footer();
+class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
 
+   // From CommonDBRelation
+   static public $itemtype_1          = 'PluginFusioninventoryDeployPackage';
+   static public $items_id_1          = 'plugin_fusioninventory_deploypackages_id';
+   static public $itemtype_2          = 'Entity';
+   static public $items_id_2          = 'entities_id';
+
+   static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
+   static public $logs_for_item_2     = false;
+
+
+   /**
+    * Get entities for a deploypackage
+    *
+    * @param $deploypackages_id ID of the deploypackage
+    *
+    * @return array of entities linked to a deploypackage
+   **/
+   static function getEntities($deploypackages_id) {
+      global $DB;
+
+      $ent   = array();
+      $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_entities`.*
+                FROM `glpi_plugin_fusioninventory_deploypackages_entities`
+                WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
+
+      foreach ($DB->request($query) as $data) {
+         $ent[$data['entities_id']][] = $data;
+      }
+      return $ent;
+   }
+
+}
 ?>

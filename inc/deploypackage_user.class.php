@@ -28,8 +28,8 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author
+   @author    David Durieux
+   @co-author Alexandre Delaunay
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -44,9 +44,38 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployDependence extends CommonDBTM {
+class PluginFusioninventoryDeployPackage_User extends CommonDBRelation {
 
+   // From CommonDBRelation
+   static public $itemtype_1          = 'PluginFusioninventoryDeployPackage';
+   static public $items_id_1          = 'plugin_fusioninventory_deploypackages_id';
+   static public $itemtype_2          = 'User';
+   static public $items_id_2          = 'users_id';
+
+   static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
+   static public $logs_for_item_2     = false;
+
+
+   /**
+    * Get users for a deploypackage
+    *
+    * @param $deploypackages_id ID of the deploypackage
+    *
+    * @return array of users linked to a deploypackage
+   **/
+   static function getUsers($deploypackages_id) {
+      global $DB;
+
+      $users = array();
+      $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_users`.*
+                FROM `glpi_plugin_fusioninventory_deploypackages_users`
+                WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
+
+      foreach ($DB->request($query) as $data) {
+         $users[$data['users_id']][] = $data;
+      }
+      return $users;
+   }
 
 }
-
 ?>

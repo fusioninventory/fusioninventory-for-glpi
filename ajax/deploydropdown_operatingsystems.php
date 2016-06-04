@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author
+   @author    David Durieux
    @co-author
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -53,10 +53,7 @@ if (!TableExists($_POST['table'])) {
    exit();
 }
 
-
 $where = "WHERE 1";
-
-
 
 if (strlen($_POST['searchText'])>0 && $_POST['searchText']!=$CFG_GLPI["ajax_wildcard"]) {
    $search = Search::makeTextSearch($_POST['searchText']);
@@ -66,11 +63,10 @@ if (strlen($_POST['searchText'])>0 && $_POST['searchText']!=$CFG_GLPI["ajax_wild
    $where .= ")";
 }
 
-
 $NBMAX = $CFG_GLPI["dropdown_max"];
 $LIMIT = "LIMIT 0, $NBMAX";
 
-if ($_POST['searchText']==$CFG_GLPI["ajax_wildcard"]) {
+if ($_POST['searchText'] == $CFG_GLPI["ajax_wildcard"]) {
    $LIMIT = "";
 }
 
@@ -83,7 +79,8 @@ $result = $DB->query($query);
 
 echo "<select name='".$_POST['myname']."' id='".$_POST['myname']."' size='1'>";
 
-if ($_POST['searchText']!=$CFG_GLPI["ajax_wildcard"] && $DB->numrows($result)==$NBMAX) {
+if ($_POST['searchText'] != $CFG_GLPI["ajax_wildcard"]
+        && $DB->numrows($result)==$NBMAX) {
    echo "<option value='0'>--".__('Limited view')."--</option>";
 }
 

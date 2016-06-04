@@ -66,11 +66,11 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
+
    /*
     * Get and filter mirrors list by computer agent and location.
     * Location is retrieved from the computer data.
     */
-
    static function getList($agents_id = NULL) {
       global $PF_CONFIG;
 
@@ -114,6 +114,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       return $mirrors;
    }
+
 
 
    function showForm($id, $options=array()) {
@@ -220,6 +221,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
+
    /**
     * Massive action ()
     */
@@ -239,11 +241,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
+
          case "transfert":
             Dropdown::show('Entity');
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return true;
-            break;
+
       }
    }
 
@@ -256,10 +259,9 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
                                                        array $ids) {
 
       $pfDeployMirror = new self();
-
       switch ($ma->getAction()) {
-         case "transfert" :
 
+         case "transfert" :
             foreach($ids as $key) {
                if ($pfDeployMirror->getFromDB($key)) {
                   $input = array();
@@ -274,8 +276,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
                   }
                }
             }
-
             break;
+
       }
    }
 }

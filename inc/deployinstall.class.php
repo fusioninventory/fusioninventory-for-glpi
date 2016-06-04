@@ -73,8 +73,6 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
             break;
       }
    }
-
-
 }
 
 ?>

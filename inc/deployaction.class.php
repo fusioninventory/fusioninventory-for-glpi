@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -46,9 +46,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployAction {
 
-   static function retchecks_entries() {
+   /**
+    * Get array for dropdown with code => description
+    *
+    * @return array
+    */
+   static function getReturnActionNames() {
       return array(
-         0 => Dropdown::EMPTY_VALUE,
+         0              => Dropdown::EMPTY_VALUE,
          'okCode'       => __("Return code is equal to", 'fusioninventory'),
          'errorCode'    => __("Return code is not equal to", 'fusioninventory'),
          'okPattern'    => __("Command output contains", 'fusioninventory'),
@@ -58,18 +63,30 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Get types of actions with name => description
+    *
+    * @return array
+    */
    static function getTypes() {
        return array(
          'cmd'     => __('Command', 'fusioninventory'),
          'move'    => __('Move', 'fusioninventory'),
          'copy'    => __('Copy', 'fusioninventory'),
-         'delete'  => __('Delete', 'fusioninventory'),
-         'mkdir'   => __('Make directory', 'fusioninventory')
+         'delete'  => __('Delete directory', 'fusioninventory'),
+         'mkdir'   => __('Create directory', 'fusioninventory')
       );
    }
 
 
 
+   /**
+    * Get description of the type name
+    *
+    * @param string $type name of the type
+    *
+    * @return text mapped with the type
+    */
    static function getType($type) {
       $a_types = PluginFusioninventoryDeployAction::getTypes();
       if (isset($a_types[$type])) {
@@ -86,20 +103,20 @@ class PluginFusioninventoryDeployAction {
        * Get element config in 'edit' mode
        */
       $config = NULL;
-      if ( $mode === 'edit' && isset( $request_data['index'] ) ) {
+      if ($mode === 'edit' && isset($request_data['index'])) {
          /*
           * Add an hidden input about element's index to be updated
           */
          echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
 
-         $c = $package->getSubElement( 'actions', $request_data['index'] );
-         if ( is_array( $c ) && count( $c ) == 1 ) {
-            reset( $c );
-            $t = key( $c );
+         $element = $package->getSubElement('actions', $request_data['index']);
+         if (is_array($element) && count($element) == 1) {
+            reset($element);
+            $type = key($element);
 
             $config = array(
-               'type' => $t,
-               'data' => $c[$t]
+               'type' => $type,
+               'data' => $element[$type]
             );
          }
       }
@@ -107,15 +124,15 @@ class PluginFusioninventoryDeployAction {
       /*
        * Display start of div form
        */
-      if ( in_array( $mode, array('init'), TRUE ) ) {
+      if (in_array($mode, array('init'), TRUE)) {
          echo "<div id='actions_block$rand' style='display:none'>";
       }
 
       /*
        * Display element's dropdownType in 'create' or 'edit' mode
        */
-      if ( in_array( $mode, array('create', 'edit'), TRUE ) ) {
-         self::displayDropdownType($config,$request_data, $rand, $mode);
+      if (in_array($mode, array('create', 'edit'), TRUE)) {
+         self::displayDropdownType($config, $rand, $mode);
       }
 
       /*
@@ -123,25 +140,31 @@ class PluginFusioninventoryDeployAction {
        * In 'create' mode, those values are refreshed with dropdownType 'change'
        * javascript event.
        */
-      if ( in_array( $mode, array('create', 'edit'), TRUE ) ) {
+      if (in_array($mode, array('create', 'edit'), TRUE)) {
          echo "<span id='show_action_value{$rand}'>";
-         if ( $mode === 'edit' ) {
-            self::displayAjaxValues($config, $request_data, $rand, $mode);
+         if ($mode === 'edit') {
+            self::displayAjaxValues($config, $request_data, $mode);
          }
          echo "</span>";
       }
 
-
       /*
        * Close form div
        */
-      if ( in_array( $mode, array('init'), TRUE ) ) {
+      if (in_array($mode, array('init'), TRUE)) {
          echo "</div>";
       }
    }
 
 
 
+   /**
+    * Display list of actions
+    *
+    * @param PluginFusioninventoryDeployPackage $package
+    * @param array $datas array converted of 'json' field in DB where stored actions
+    * @param integer $rand random number used to identify/update an element
+    */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -191,8 +214,8 @@ class PluginFusioninventoryDeployAction {
                "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
-               $retchecks_entries = self::retchecks_entries();
-               echo $retchecks_entries[$retCheck['type']]." ".array_shift($retCheck['values']);
+               $getReturnActionNames = self::getReturnActionNames();
+               echo $getReturnActionNames[$retCheck['type']]." ".array_shift($retCheck['values']);
                echo "</li>";
             }
             echo "</ul>";
@@ -221,15 +244,14 @@ class PluginFusioninventoryDeployAction {
 
 
 
-   /* display the dropdown to select type of element
-    * @param config order item configuration
-    * @param request_data data from http request
-    * @param rand random value used in forms
-    * @param mode display mode in use
-    * @return nothing
+   /**
+    * Display the dropdown to select type of element
+    *
+    * @param array $config order item configuration
+    * @param ingeter $rand random number used to identify/update an element
+    * @param string $mode mode in use (create, edit...)
     */
-
-   static function displayDropdownType($config, $request_data, $rand, $mode) {
+   static function displayDropdownType($config, $rand, $mode) {
       global $CFG_GLPI;
       /*
        * Build dropdown options
@@ -260,7 +282,7 @@ class PluginFusioninventoryDeployAction {
 
       //ajax update of action value span
 
-      if ( $mode === 'create' ) {
+      if ($mode === 'create') {
          $params = array(
             'values'  => '__VALUE__',
             'rand'   => $rand,
@@ -283,7 +305,16 @@ class PluginFusioninventoryDeployAction {
 
 
 
-   static function displayAjaxValues($config, $request_data, $rand, $mode) {
+   /**
+    * Display different fields relative the action selected (cmd, move...)
+    *
+    * @param array $config
+    * @param array $request_data
+    * @param string $mode mode in use (create, edit...)
+    *
+    * @return boolean
+    */
+   static function displayAjaxValues($config, $request_data, $mode) {
       global $CFG_GLPI;
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
@@ -298,7 +329,7 @@ class PluginFusioninventoryDeployAction {
        */
       $type = NULL;
 
-      if ( $mode === 'create' ) {
+      if ($mode === 'create') {
          $type = $request_data['values'];
       } else {
          $type = $config['type'];
@@ -313,40 +344,42 @@ class PluginFusioninventoryDeployAction {
       $value_2      = "";
       $retChecks    = NULL;
 
-
       /*
        * set values from element's config in 'edit' mode
        */
-      switch ( $type ) {
+      switch ($type) {
+
          case 'move':
          case 'copy':
             $value_label_1 = __("From", 'fusioninventory');
             $name_label_1 = "from";
             $value_label_2 = __("To", 'fusioninventory');
             $name_label_2 = "to";
-            if ( $mode === 'edit' ) {
+            if ($mode === 'edit') {
                $value_1 = $config_data['from'];
                $value_2 = $config_data['to'];
             }
             break;
+
          case 'cmd':
             $value_label_1 = __("exec", 'fusioninventory');
             $name_label_1 = "exec";
             $value_label_2 = FALSE;
             $value_type_1  = "textarea";
-            if ( $mode === 'edit' ) {
+            if ($mode === 'edit') {
                $value_1 = $config_data['exec'];
-               if ( isset( $config_data['retChecks'] ) ) {
+               if (isset($config_data['retChecks'])) {
                   $retChecks = $config_data['retChecks'];
                }
             }
             break;
+
          case 'delete':
          case 'mkdir':
             $value_label_1 = __("path", 'fusioninventory');
             $name_label_1 = "list[]";
             $value_label_2 = FALSE;
-            if ( $mode === 'edit' ) {
+            if ($mode === 'edit') {
                /*
                 * TODO : Add list input like `retChecks` on `mkdir` and `delete`
                 * because those methods are defined as list in specification
@@ -354,8 +387,10 @@ class PluginFusioninventoryDeployAction {
                $value_1 = array_shift($config_data['list']);
             }
             break;
+
          default:
             return FALSE;
+
       }
 
       echo "<table class='package_item'>";
@@ -363,12 +398,15 @@ class PluginFusioninventoryDeployAction {
       echo "<th>$value_label_1</th>";
       echo "<td>";
       switch ($value_type_1) {
+
          case "input":
             echo "<input type='text' name='$name_label_1' value='$value_1' />";
             break;
+
          case "textarea":
             echo "<textarea name='$name_label_1' rows='3'>$value_1</textarea>";
             break;
+
       }
       echo "</td>";
       echo "</tr>";
@@ -398,7 +436,7 @@ class PluginFusioninventoryDeployAction {
                echo "<table class='table_retchecks'>";
                echo "<tr>";
                echo "<td>";
-               Dropdown::showFromArray('retchecks_type[]', self::retchecks_entries(), array(
+               Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames(), array(
                   'value' => $retcheck['type']
                ));
                echo "</td>";
@@ -415,8 +453,7 @@ class PluginFusioninventoryDeployAction {
          echo "<table class='table_retchecks template' style='display:none'>";
          echo "<tr>";
          echo "<td>";
-         //Toolbox::logDebug(self::retchecks_entries());
-         Dropdown::showFromArray('retchecks_type[]', self::retchecks_entries(), array());
+         Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames());
          echo "</td>";
          echo "<td><input type='text' name='retchecks_value[]' /></td>";
          echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
@@ -431,7 +468,7 @@ class PluginFusioninventoryDeployAction {
       echo "<tr>";
       echo "<td></td><td>";
       if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
-         if ( $mode === 'edit' ) {
+         if ($mode === 'edit') {
             echo "<input type='submit' name='save_item' value=\"".
                _sx('button', 'Save')."\" class='submit' >";
          } else {
@@ -453,6 +490,11 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Add a new item in actions of the package
+    *
+    * @param array $params list of fields with value of the action
+    */
    static function add_item($params) {
       //prepare new action entry to insert in json
       if (isset($params['list'])) {
@@ -469,7 +511,8 @@ class PluginFusioninventoryDeployAction {
       }
 
       //process ret checks
-      if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
+      if (isset($params['retchecks_type'])
+              && !empty($params['retchecks_type'])) {
          foreach ($params['retchecks_type'] as $index => $type) {
             if ($type !== '0') {
                $tmp['retChecks'][] = array(
@@ -481,7 +524,7 @@ class PluginFusioninventoryDeployAction {
       }
 
       //append prepared datas to new entry
-      $new_entry[ $params['deploy_actiontype']] = $tmp;
+      $new_entry[$params['deploy_actiontype']] = $tmp;
 
       //get current order json
       $data = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
@@ -495,6 +538,11 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Save the item in actions
+    *
+    * @param array $params list of fields with value of the action
+    */
    static function save_item($params) {
       //prepare updated action entry to insert in json
       if (isset($params['list'])) {
@@ -542,6 +590,13 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Remove an item
+    *
+    * @param array $params
+    *
+    * @return boolean
+    */
    static function remove_item($params) {
       if (!isset($params['action_entries'])) {
          return FALSE;
@@ -567,6 +622,11 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Move an item
+    *
+    * @param array $params
+    */
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);

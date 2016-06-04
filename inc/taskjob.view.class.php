@@ -924,12 +924,11 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       echo "<br/>";
 
-      //$pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      //$pfTaskjoblog->showHistory($id);
-
       return TRUE;
    }
 
+
+   
    function showTaskjobItems($name, $randmethod, $id) {
       global $CFG_GLPI;
 /*

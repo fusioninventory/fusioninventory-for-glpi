@@ -792,10 +792,73 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
   `date_mod` datetime DEFAULT NULL,
   `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `json` longtext DEFAULT NULL,
+  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_entities`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_entities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `entities_id` (`entities_id`),
+  KEY `is_recursive` (`is_recursive`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_groups`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `groups_id` int(11) NOT NULL DEFAULT '0',
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `groups_id` (`groups_id`),
+  KEY `entities_id` (`entities_id`),
+  KEY `is_recursive` (`is_recursive`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_profiles`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `profiles_id` int(11) NOT NULL DEFAULT '0',
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `profiles_id` (`profiles_id`),
+  KEY `entities_id` (`entities_id`),
+  KEY `is_recursive` (`is_recursive`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_users`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
+  `users_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
+  KEY `users_id` (`users_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 

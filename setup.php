@@ -370,7 +370,13 @@ function plugin_init_fusioninventory() {
       }
 
       // For end users
-      $PLUGIN_HOOKS['helpdesk_menu_entry']['fusioninventory'] = '/front/deploypackage.public.php';
+      if (isset($_SESSION['glpiactiveprofile']['interface'])
+              && $_SESSION['glpiactiveprofile']['interface'] == 'helpdesk') {
+         $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+         if ($pfDeployPackage->can_user_deploy_self()) {
+            $PLUGIN_HOOKS['helpdesk_menu_entry']['fusioninventory'] = '/front/deploypackage.public.php';
+         }
+      }
 
       if (isset($_SESSION["glpiname"])) {
          $report_list = array();
