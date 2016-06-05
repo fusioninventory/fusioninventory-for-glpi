@@ -1309,6 +1309,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
               . "    AND `glpi_plugin_fusioninventory_tasks`.`is_active`='1'"
               . "    AND `glpi_plugin_fusioninventory_tasks`.`name` like '[self-deploy] %'"
               . "    AND `glpi_plugin_fusioninventory_tasks`.`entities_id`='".$computer->fields['entities_id']."'"
+              . "    AND `glpi_plugin_fusioninventory_tasks`.`reprepare_if_successful`='0'"
               . " LIMIT 1";
       $result = $DB->query($sql);
 
@@ -1336,8 +1337,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       // case 2: if not exist, create a new task + taskjob
          $this->getFromDB($packages_id);
          $input = array(
-             'name'        => '[self-deploy] '.$this->fields['name'],
-             'entities_id' => $computer->fields['entities_id']
+             'name'                    => '[self-deploy] '.$this->fields['name'],
+             'entities_id'             => $computer->fields['entities_id'],
+             'reprepare_if_successful' => 0
          );
          $tasks_id = $pfTask->add($input);
          $input = array(

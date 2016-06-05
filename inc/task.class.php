@@ -429,8 +429,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    function prepareTaskjobs($methods = array()) {
       global $DB;
 
-      $agent = new PluginFusioninventoryAgent();
-
       $now = new DateTime();
 
       //Get all active timeslots
@@ -447,7 +445,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $query = implode( " \n", array(
          "SELECT",
-         "     task.`id`, task.`name`,",
+         "     task.`id`, task.`name`, task.`reprepare_if_successful`, ",
          "     job.`id`, job.`name`, job.`method`, ",
          "     job.`targets`, job.`actors`",
          "FROM `glpi_plugin_fusioninventory_taskjobs` job",
@@ -503,7 +501,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $jobstate = new PluginFusioninventoryTaskjobstate();
       $joblog   = new PluginFusioninventoryTaskjoblog();
 
-      foreach($results as $index => $result) {
+      foreach($results as $result) {
 
          $actors = importArrayFromDB($result['job']['actors']);
          // Get agents linked to the actors
@@ -541,6 +539,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $item_type = key($target);
             $item_id = current($target);
             $job_id = $result['job']['id'];
+            // Filter out agents that are already running the targets.
             $jobstates_running = $jobstate->find(
                implode(" \n", array(
                   "    `itemtype` = '" . $item_type . "'",
@@ -556,14 +555,33 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   ")"
                ))
             );
-
-            // Filter out agents that are already running the targets.
-            foreach( $jobstates_running as $jobstate_running) {
-
+            foreach($jobstates_running as $jobstate_running) {
                $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
-               if ( isset( $agent_ids[$jobstate_agent_id] )
-               ) {
+               if (isset( $agent_ids[$jobstate_agent_id])) {
                   $agent_ids[$jobstate_agent_id] = false;
+               }
+            }
+
+            // If task have not reprepare_if_successful, not reprerare
+            // successfull taskjobstate
+            if (!$result['task']['reprepare_if_successful']) {
+               $jobstates_running = $jobstate->find(
+                  implode(" \n", array(
+                     "    `itemtype` = '" . $item_type . "'",
+                     "AND `items_id` = ".$item_id,
+                     "AND `plugin_fusioninventory_taskjobs_id` = ". $job_id,
+                     "AND `state` = '".
+                        PluginFusioninventoryTaskjobstate::FINISHED."'",
+                     "AND `plugin_fusioninventory_agents_id` IN (",
+                     "'" . implode("','", array_keys($agent_ids)) . "'",
+                     ")"
+                  ))
+               );
+               foreach($jobstates_running as $jobstate_running) {
+                  $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
+                  if (isset( $agent_ids[$jobstate_agent_id])) {
+                     $agent_ids[$jobstate_agent_id] = false;
+                  }
                }
             }
 
@@ -590,9 +608,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             foreach($agent_ids as $agent_id => $agent_not_running) {
-
-               if( $agent_not_running) {
-
+               if($agent_not_running) {
                   $limit += 1;
                   if ($limit > 500) {
                      $limit = 0;
