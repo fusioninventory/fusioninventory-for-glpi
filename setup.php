@@ -379,6 +379,9 @@ function plugin_init_fusioninventory() {
       }
 
       if (isset($_SESSION["glpiname"])) {
+         if (strstr($_SERVER['SCRIPT_FILENAME'], '/front/')) {
+            register_shutdown_function('plugin_fusioninventory_footer', $CFG_GLPI['root_doc']);
+         }
          $report_list = array();
          if (Session::haveRight('plugin_fusioninventory_reportprinter', READ)) {
             $report_list["front/printerlogreport.php"] = __('Printed page counter', 'fusioninventory');
@@ -556,4 +559,23 @@ function plugin_fusioninventory_haveTypeRight($type,$right) {
    return TRUE;
 }
 
+
+
+function plugin_fusioninventory_footer($baseroot) {
+
+      echo "<div id='footer'>";
+      echo "<table width='100%'>";
+      echo "<tr>";
+      echo "<td class='right'>";
+      echo "<a href='http://fusioninventory.org/'>";
+      echo "<span class='copyright'>FusionInventory ".PLUGIN_FUSIONINVENTORY_VERSION." | copyleft ".
+           "<img src='".$baseroot."/plugins/fusioninventory/pics/copyleft.png'/> "
+              . " 2010-2016 by FusionInventory Team".
+           "</span>";
+      echo "</a>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      echo "</div>";
+}
 ?>
