@@ -49,7 +49,7 @@ if (isset($_REQUEST['move_item'])) { //ajax request
 
    $json_response = array(
       "success" => TRUE,
-      "reason" => ''
+      "reason"  => ''
    );
 
    if (Session::haveRight('plugin_fusioninventory_package', UPDATE)) {
@@ -63,11 +63,13 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    exit;
 }
 
-if ( !isset($_REQUEST['packages_id']) && !isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
+if (!isset($_REQUEST['packages_id'])
+        && !isset($_REQUEST['rand'])
+        && !isset($_REQUEST['subtype'])) {
    exit;
 }
 
-if ( !is_numeric($_REQUEST['packages_id']) ) {
+if (!is_numeric($_REQUEST['packages_id'])) {
    Toolbox::logDebug("Error: orders_id in request is not an integer");
    Toolbox::logDebug(var_dump($_REQUEST['orders_id']) );
    exit;
@@ -81,15 +83,22 @@ $pfDeployPackage->getFromDB($_REQUEST['packages_id']);
 //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
 // I think we could use only $order -- Kevin 'kiniou' Roy
 switch ($_REQUEST['subtype']) {
+
    case 'check':
-      PluginFusioninventoryDeployCheck::displayForm($pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
+      PluginFusioninventoryDeployCheck::displayForm(
+              $pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
       break;
+
    case 'file':
-      PluginFusioninventoryDeployFile::displayForm($pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
+      PluginFusioninventoryDeployFile::displayForm(
+              $pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
       break;
+
    case 'action':
-      PluginFusioninventoryDeployAction::displayForm($pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
+      PluginFusioninventoryDeployAction::displayForm(
+              $pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
       break;
+
    case 'package_json_debug':
       if ( isset($order->fields['json']) ) {
          $pfDeployPackage->display_json_debug();
@@ -97,4 +106,5 @@ switch ($_REQUEST['subtype']) {
          echo "{}";
       }
       break;
+
 }

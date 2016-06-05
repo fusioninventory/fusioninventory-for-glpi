@@ -103,16 +103,18 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($item->fields['interface'] == 'central') {
-         return self::createTabEntry('FusionInventory');
-      }
+      return self::createTabEntry('FusionInventory');
    }
 
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       $pfProfile = new self();
-      $pfProfile->showForm($item->getID());
+      if ($item->fields['interface'] == 'central') {
+         $pfProfile->showForm($item->getID());
+      } else {
+         $pfProfile->showFormSelf($item->getID());
+      }
       return TRUE;
    }
 
@@ -169,6 +171,51 @@ class PluginFusioninventoryProfile extends Profile {
 
       $this->showLegend();
    }
+
+
+
+    /**
+    * Show profile form for helpdesk interface
+    *
+    * @param $items_id integer id of the profile
+    * @param $target value url of target
+    *
+    * @return nothing
+    **/
+   function showFormSelf($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
+
+      echo "<div class='firstbloc'>";
+      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+          && $openform) {
+         $profile = new Profile();
+         echo "<form method='post' action='".$profile->getFormURL()."'>";
+      }
+
+      $profile = new Profile();
+      $profile->getFromDB($profiles_id);
+
+      $rights = array(
+          array('rights'    => array(READ => __('Read')),
+                'label'     => __('Self deploy package', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_selfpackage')
+      );
+      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('Software deployment', 'fusioninventory')));
+      if ($canedit
+          && $closeform) {
+         echo "<div class='center'>";
+         echo Html::hidden('id', array('value' => $profiles_id));
+         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo "</div>\n";
+         Html::closeForm();
+      }
+      echo "</div>";
+
+      $this->showLegend();
+   }
+
+
 
    static function uninstallProfile() {
       $pfProfile = new self();

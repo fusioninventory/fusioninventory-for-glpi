@@ -1792,22 +1792,10 @@ class PluginFusioninventoryFormatconvert {
                              && $key != "users_id") {
                         $this->foreignkey_itemtype[$key] =
                                     getItemTypeForTable(getTableNameForForeignKeyField($key));
-                        if ($key == 'computermodels_id') {
-                           if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'])) {
-                              $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
-                              $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                      $value,
-                                                                      $_SESSION["plugin_fusioninventory_entity"],
-                                                                      array('manufacturer' => $manufacturer));
-                           } else {
-                              $array[$key] = 0;
-                           }
-                        } else {
-                           $table = getTableForItemType($this->foreignkey_itemtype[$key]);
-                           $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                   $value,
-                                                                   $_SESSION["plugin_fusioninventory_entity"]);
-                        }
+                        $table = getTableForItemType($this->foreignkey_itemtype[$key]);
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                $value,
+                                                                $_SESSION["plugin_fusioninventory_entity"]);
                      }
                   }
                } else {

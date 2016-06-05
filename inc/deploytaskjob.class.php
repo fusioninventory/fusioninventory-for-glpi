@@ -183,14 +183,16 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          exit;
       }
       switch($params['get']) {
+
          case "type";
-            $res = array(
+            $res = json_encode(array(
                'action_types' =>self::getActionTypes()
-            );
-            $res = json_encode($res);
+            ));
             break;
          case "selection";
+
             switch ($params['type']) {
+
                case 'Computer':
                   $query = "SELECT id, name FROM glpi_computers";
                   if (isset($params['query'])) {
@@ -208,6 +210,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
                   $res = json_encode($res);
                   break;
+
                case 'Group':
                   $like = "1";
                   if (isset($params['query'])) {
@@ -223,19 +226,20 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                   }
                   $res = json_encode($res);
                   break;
+
                case 'PluginFusioninventoryDeployGroup':
                   $res = PluginFusioninventoryDeployGroup::getAllDatas('action_selections');
                   break;
+
             }
-
             break;
+
          case "oneSelection":
-
             break;
+
          default:
             $res = '';
       }
-
       return $res;
    }
 }

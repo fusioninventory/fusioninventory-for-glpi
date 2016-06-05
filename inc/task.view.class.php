@@ -49,6 +49,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       ));
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $CFG_GLPI;
 
@@ -67,6 +69,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
    }
 
+
+
    function defineTabs($options=array()){
       global $CFG_GLPI;
       $ong = array();
@@ -76,11 +80,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       return $ong;
    }
 
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
          echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
       }
    }
+
 
 
    function showJobLogs() {
@@ -263,6 +270,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       ));
    }
 
+
+
    // TODO: Move this method in task.class
    function ajaxGetJobLogs($options) {
 
@@ -281,6 +290,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    }
 
+
+
    function getCounterTypeName($type = "") {
       $typenames = array(
          "agents_notdone"   => __('Not done yet', 'fusioninventory'),
@@ -297,6 +308,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          return __('N/A', 'fusioninventory');
       }
    }
+
+
 
    function getAgentsLogs($agents = array(), $counters = array(), $target_id = "") {
       $display_list = array();
@@ -344,6 +357,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       return $display_list;
    }
 
+
+
    function getRunLogs($run = array()) {
 
       $logClass = new PluginFusioninventoryTaskjoblog();
@@ -366,6 +381,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $display[] = "</div>";
       return $display;
    }
+
+
 
    /**
     * Display form for task configuration
@@ -451,6 +468,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       return true;
    }
+
 
 
    public function submitForm($postvars) {

@@ -35,7 +35,7 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   @since     2016
 
    ------------------------------------------------------------------------
  */
@@ -43,66 +43,28 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
+Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
+             "pluginfusioninventorymenu", "deploypackage");
 
-//Session::checkRight('create_ticket', "1");
+$pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
-// Security
-if (!TableExists($_POST['table'])) {
-   exit();
-}
-
-$where = "WHERE 1";
-
-if (strlen($_POST['searchText'])>0 && $_POST['searchText']!=$CFG_GLPI["ajax_wildcard"]) {
-   $search = Search::makeTextSearch($_POST['searchText']);
-
-   $where .= " AND (`name` ".$search."
-                    OR `id` = '".$_POST['searchText']."'";
-   $where .= ")";
-}
-
-$NBMAX = $CFG_GLPI["dropdown_max"];
-$LIMIT = "LIMIT 0, $NBMAX";
-
-if ($_POST['searchText'] == $CFG_GLPI["ajax_wildcard"]) {
-   $LIMIT = "";
-}
-
-$query = "SELECT *
-          FROM `".$_POST['table']."`
-          $where
-          ORDER BY `name`
-          $LIMIT";
-$result = $DB->query($query);
-
-echo "<select name='".$_POST['myname']."' id='".$_POST['myname']."' size='1'>";
-
-if ($_POST['searchText'] != $CFG_GLPI["ajax_wildcard"]
-        && $DB->numrows($result)==$NBMAX) {
-   echo "<option value='0'>--".__('Limited view')."--</option>";
-}
-
-echo "<option value='0'>".Dropdown::EMPTY_VALUE."</option>";
-
-if ($DB->numrows($result)) {
-   while ($data = $DB->fetch_array($result)) {
-      $output = $data['name'];
-
-      if (empty($output) || $_SESSION['glpiis_ids_visible']) {
-         $output .= " (".$data['id'].")";
+if (isset($_POST['prepareinstall'])) {
+   foreach ($_POST as $key=>$data) {
+      if (strstr($key, 'deploypackages_')) {
+         $computers_id = str_replace('deploypackages_', '', $key);
+         foreach ($data as $packages_id) {
+            $pfDeployPackage->deploy_to_computer($computers_id, $packages_id, $_SESSION['glpiID']);
+         }
       }
-      $selected = "";
-      if ($data['id'] == $_POST['value']) {
-         $selected = "selected='selected'";
-      }
-
-      echo "<option value='".$data['id']."' $selected title=\"".Html::cleanInputText($output)."\">".
-            Toolbox::substr($output, 0, $_SESSION["glpidropdown_chars_limit"])."</option>";
    }
+   PluginFusioninventoryTask::cronTaskscheduler();
+   // Force local agent run now to deploy
+   echo '<link rel="import" href="http://127.0.0.1:62354/now">';
+   Html::back();
 }
 
-echo "</select>";
+$pfDeployPackage->show_package_for_me($_SESSION['glpiID']);
+$pfTaskJobView = new PluginFusioninventoryTaskjobView();
+Html::footer();
 
 ?>

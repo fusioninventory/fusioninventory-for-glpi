@@ -28,8 +28,8 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Anthony Hebert
-   @co-author David Durieux
+   @author    David Durieux
+   @co-author Alexandre Delaunay
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -44,55 +44,38 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployFilepart {
+class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
+
+   // From CommonDBRelation
+   static public $itemtype_1          = 'PluginFusioninventoryDeployPackage';
+   static public $items_id_1          = 'plugin_fusioninventory_deploypackages_id';
+   static public $itemtype_2          = 'Entity';
+   static public $items_id_2          = 'entities_id';
+
+   static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
+   static public $logs_for_item_2     = false;
 
 
    /**
-    * Send file to agent
+    * Get entities for a deploypackage
     *
-    * @param array $params
-    */
-   static function httpSendFile($params) {
-      if (!isset($params['file'])) {
-         header("HTTP/1.1 500");
-         exit;
+    * @param $deploypackages_id ID of the deploypackage
+    *
+    * @return array of entities linked to a deploypackage
+   **/
+   static function getEntities($deploypackages_id) {
+      global $DB;
+
+      $ent   = array();
+      $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_entities`.*
+                FROM `glpi_plugin_fusioninventory_deploypackages_entities`
+                WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
+
+      foreach ($DB->request($query) as $data) {
+         $ent[$data['entities_id']][] = $data;
       }
-      $matches = array();
-      preg_match('/.\/..\/([^\/]+)/', $params['file'], $matches);
-
-      $sha512 = $matches[1];
-//      $short_sha512 = substr($sha512, 0, 6);
-
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
-
-      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).'/'.$sha512;
-
-      if (!is_file($filePath)) {
-         header("HTTP/1.1 404");
-         print "\n".$filePath."\n\n";
-         exit;
-      } else if (!is_readable($filePath)) {
-         header("HTTP/1.1 403");
-         exit;
-      }
-
-      error_reporting(0);
-
-      header('Content-Description: File Transfer');
-      header('Content-Type: application/octet-stream');
-      header('Content-Disposition: attachment; filename='.$sha512);
-      header('Content-Transfer-Encoding: binary');
-      header('Expires: 0');
-      header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-      header('Pragma: public');
-      header('Content-Length: ' . filesize($filePath));
-      if (ob_get_level() > 0) {
-         ob_clean();
-      }
-      flush();
-      readfile($filePath);
-      exit;
+      return $ent;
    }
-}
 
+}
 ?>

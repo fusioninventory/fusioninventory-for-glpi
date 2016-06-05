@@ -425,11 +425,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
-   function prepareTaskjobs( $methods = array()) {
+
+   function prepareTaskjobs($methods = array()) {
       global $DB;
 
       $agent = new PluginFusioninventoryAgent();
-
 
       $now = new DateTime();
 
@@ -567,8 +567,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
             }
 
-
-
             // Cancel agents prepared but not in $agent_ids (like computer
             // not in dynamic group)
             $jobstates_tocancel = $jobstate->find(
@@ -624,14 +622,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
                }
             }
-
          }
-
       }
-
       return true;
-
    }
+
+
 
    /**
     * Get Computers from Actors defined in taskjobs

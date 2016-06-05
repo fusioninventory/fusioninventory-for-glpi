@@ -49,16 +49,19 @@ include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/task.class.php");
 class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
    static function getTypeName($nb=0) {
-
       if ($nb>1) {
          return __('Group of computers', 'fusioninventory');
       }
       return __('Task', 'fusioninventory');
    }
 
+
+
    static function canCreate() {
       return TRUE;
    }
+
+
 
    static function canView() {
       return TRUE;
@@ -73,7 +76,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       if ($this->fields['id'] > 0){
          $this->addStandardTab(__CLASS__, $ong, $options);
       }
-
       return $ong;
    }
 
@@ -82,7 +84,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case __CLASS__: return __('Order list', 'fusioninventory');
+
+         case __CLASS__:
+            return __('Order list', 'fusioninventory');
 
       }
    }
@@ -91,10 +95,12 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
+
          case __CLASS__:
             $obj = new self;
             $obj->showActions($_POST["id"]);
             break;
+
       }
    }
 
@@ -113,13 +119,10 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       $buttons = array();
       $title = __('Task', 'fusioninventory');
 
-
       if ($this->canCreate()) {
          $buttons["task.form.php?new=1"] = __('Add task', 'fusioninventory');
-
          $title = "";
       }
-
       Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png",
                          $title, $title, $buttons);
    }
@@ -149,7 +152,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          echo "</div></div></div>";
          echo "</div>";
       }
-
 
        echo "<table class='deploy_extjs'>
          <tbody>
@@ -199,9 +201,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
             $status->delete($a_taskjobstatus, 1);
          }
          $job->delete($a_taskjob, 1);
-
       }
-
       return TRUE;
    }
 

@@ -336,9 +336,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     *
     * since 0.85+1.0
     */
-
    function getLogs( $id, $last_date ) {
       global $DB;
+
       $fields = array(
          'log.id' => 0,
          'log.date' => 1,

@@ -1413,36 +1413,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
 
-   /*
-    * List of last logs (uniqid) of taskjob
-    */
-   static function quickListLogs() {
-
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-
-      if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
-         foreach ($_SESSION["plugin_fusioninventory_forcerun"] as $taskjobs_id=>$uniqid) {
-            $pfTaskjob->getFromDB($taskjobs_id);
-
-            echo "<table class='tab_cadrehov' style='width:950px'>";
-            echo "<tr class='tab_bg_1'>";
-            echo "<th>".$pfTaskjob->getLink(1)."</th>";
-            echo "</tr>";
-
-            echo "<tr class='tab_bg_1'>";
-            echo "<td>";
-            $pfTaskjoblog->showHistory($taskjobs_id, 950, array('uniqid'=>$uniqid));
-            echo "</td>";
-
-            echo "</table>";
-            echo "<br/>";
-         }
-      }
-   }
-
-
-
    /**
     * Function used to add item in definition or action of a taskjob
     *    and hide add form

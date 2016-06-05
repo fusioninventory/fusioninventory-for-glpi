@@ -53,13 +53,17 @@ $rand = $_POST['rand'];
 $mode = $_POST['mode'];
 
 switch ($_POST['type']) {
+
    case 'check':
       PluginFusioninventoryDeployCheck::displayAjaxValues(NULL, $_POST, $rand, $mode);
       break;
+
    case 'file':
       PluginFusioninventoryDeployFile::displayAjaxValues( NULL, $_POST, $rand, $mode);
       break;
+
    case 'action':
-      PluginFusioninventoryDeployAction::displayAjaxValues(NULL, $_POST, $rand, $mode);
+      PluginFusioninventoryDeployAction::displayAjaxValues(NULL, $_POST, $mode);
       break;
+
 }

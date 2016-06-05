@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -79,6 +79,8 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       return '';
    }
 
+
+
    /**
     * @param $item         CommonGLPI object
     * @param $tabnum       (default 1)
@@ -86,16 +88,19 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    **/
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
+
          case 1:
             self::showCriteriaAndSearch($item);
             break;
+
          case 2:
-            self::showResults($item);
+            self::showResults();
             break;
       }
-
       return true;
    }
+
+
 
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
       $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
@@ -104,7 +109,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
          unset($search_params['metacriteria']);
       }
-      PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
+      PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
 
       unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       if (isset($_GET['preview'])) {
@@ -116,12 +121,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
    }
 
-   static function showResults(PluginFusioninventoryDeployGroup $group) {
+
+
+   static function showResults() {
       $computers_params['metacriteria'] = array();
       $computers_params['criteria'][]   = array('searchtype' => 'equals',
                                                 'value' => $_GET['id'],
                                                 'field' => 6000);
-      $search_params    = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
+      $search_params = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
 
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
