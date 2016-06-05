@@ -506,6 +506,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $items_id = $computer->add($input);
             $no_history = TRUE;
             $setdynamic = 0;
+            $_SESSION['glpi_fusionionventory_nolock'] = True;
          }
          if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
                $a_computerinventory['Computer']['locations_id'] =
@@ -551,6 +552,9 @@ class PluginFusioninventoryInventoryComputerInventory {
          $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventories`
                WHERE `value`='".$items_id."'";
          $DB->query($query);
+         if (isset($_SESSION['glpi_fusionionventory_nolock'])) {
+            unset($_SESSION['glpi_fusionionventory_nolock']);
+         }
 
          $plugin = new Plugin();
          if ($plugin->isActivated('monitoring')) {
