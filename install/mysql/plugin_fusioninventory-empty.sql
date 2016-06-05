@@ -106,6 +106,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `last_agent_wakeup` datetime DEFAULT NULL,
   `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
   `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
+  `reprepare_if_successful` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_active` (`is_active`),

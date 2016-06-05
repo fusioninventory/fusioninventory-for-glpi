@@ -570,6 +570,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'last_agent_wakeup', 'datetime');
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', "int(11) NOT NULL DEFAULT '0'");
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField('glpi_plugin_fusioninventory_tasks', 'reprepare_if_successful', "tinyint(1) NOT NULL DEFAULT '1'");
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter');
    $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
 

@@ -145,8 +145,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<td align='center'>";
          $checked = $data['is_active'];
 
-         Html::showCheckbox(array('name'    => 'activation', 
-                                  'value'   => '1', 
+         Html::showCheckbox(array('name'    => 'activation',
+                                  'value'   => '1',
                                   'checked' => $checked));
          echo "</td>";
          echo "<td>";
@@ -266,8 +266,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
          }
          $check = "";
-         Html::showCheckbox(array('name'    => "activation-".$data["modulename"], 
-                                  'value'   => '1', 
+         Html::showCheckbox(array('name'    => "activation-".$data["modulename"],
+                                  'value'   => '1',
                                   'checked' => $checked));
          echo "</td>";
          if ($i == 1) {
@@ -450,7 +450,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
 
       // ... else use global plugin configuration parameter.
-      $config = new PluginFusioninventoryConfig();
       if (strlen($pfEntity->getValue('agent_base_url', $entities_id))<10) {
          PluginFusioninventoryCommunicationRest::sendError();
          exit;

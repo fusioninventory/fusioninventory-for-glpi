@@ -193,10 +193,10 @@ class PluginFusioninventoryCommunicationRest {
       $p['uuid']      = ''; //Task uuid
       $p['msg']       = 'ok'; //status of the task
       $p['code']      = ''; //current step of processing
+      $p['sendheaders'] = True;
       foreach ($params as $key => $value) {
          $p[$key] = $value;
       }
-
 
       //Get the agent ID by its deviceid
       $agent = PluginFusioninventoryAgent::getByDeviceID($p['machineid']);
@@ -251,7 +251,9 @@ class PluginFusioninventoryCommunicationRest {
                break;
          }
       }
-      self::sendOk();
+      if ($p['sendheaders']) {
+         self::sendOk();
+      }
    }
 
 

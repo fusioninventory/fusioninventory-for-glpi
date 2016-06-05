@@ -928,7 +928,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-   
+
    function showTaskjobItems($name, $randmethod, $id) {
       global $CFG_GLPI;
 /*

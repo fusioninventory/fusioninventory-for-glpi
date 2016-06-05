@@ -407,7 +407,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $new_item = true;
       }
 
-
       $options['colspan'] = 2;
       $this->initForm($id,$options);
       $this->showFormHeader($options);
@@ -419,6 +418,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       $this->showTextField( __('Name'), "name");
       $this->showTextArea(__('Comments'), "comment");
+      $this->showCheckboxField(__('Re-prepare a target-actor if previous run is successful', 'fusioninventory'),
+                               "reprepare_if_successful");
+
       echo "</div>";
       if ( ! $new_item ) {
          echo "<div class='fusinv_form'>";
@@ -525,5 +527,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
          Html::back();
       }
+   }
+
+
+
+   function getEmpty() {
+      parent::getEmpty();
+      $this->fields['reprepare_if_successful'] = 1;
    }
 }
