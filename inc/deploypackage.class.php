@@ -1231,12 +1231,20 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-      echo "<tr>";
-      echo "<th colspan='2'>";
-      echo "<input name='prepareinstall' value=\"".__('Prepare for install', 'fusioninventory').
-         "\" class='submit' type='submit'>";
-      echo "</th>";
-      echo "</tr>";
+      if (count($my_packages)) {
+         echo "<tr>";
+         echo "<th colspan='2'>";
+         echo "<input name='prepareinstall' value=\"".__('Prepare for install', 'fusioninventory').
+            "\" class='submit' type='submit'>";
+         echo "</th>";
+         echo "</tr>";
+      } else {
+         echo "<tr>";
+         echo "<th colspan='2'>";
+         echo __('No packages available to install', 'fusioninventory');
+         echo "</th>";
+         echo "</tr>";
+      }
 
       echo "</table>";
       Html::closeForm();
