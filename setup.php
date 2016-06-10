@@ -379,7 +379,8 @@ function plugin_init_fusioninventory() {
       }
 
       if (isset($_SESSION["glpiname"])) {
-         if (strstr($_SERVER['SCRIPT_FILENAME'], '/front/')) {
+         if (strstr($_SERVER['SCRIPT_FILENAME'], '/front/')
+              && !strstr($_SERVER['SCRIPT_FILENAME'], 'report.dynamic.php')) {
             register_shutdown_function('plugin_fusioninventory_footer', $CFG_GLPI['root_doc']);
          }
          $report_list = array();
