@@ -69,6 +69,76 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return $elements;
    }
 
+   static function getSearchOptionsToAdd() {
+      $tab = array();
+
+      $i = 5200;
+
+      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      foreach ($pfCollect_Registry->find(getEntitiesRestrictRequest(" AND", $pfCollect_Registry->getTable())) as $registry) {
+
+         $tab[$i]['table']        = 'glpi_plugin_fusioninventory_collects_registries_contents';
+         $tab[$i]['field']        = 'value';
+         $tab[$i]['linkfield']    = '';
+         $tab[$i]['name']         = __('Registry', 'fusioninventory')." - ".$registry['name'];
+         $tab[$i]['joinparams']   = array('jointype' => 'child');
+         $tab[$i]['datatype']     = 'text';
+         $tab[$i]['forcegroupby'] = true;
+         $tab[$i]['joinparams']   = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = ".$registry['id'],
+                                          'jointype' => 'child');
+         $i++;
+      }
+
+
+      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      foreach ($pfCollect_Wmi->find(getEntitiesRestrictRequest(" AND", $pfCollect_Wmi->getTable())) as $wmi) {
+
+         $tab[$i]['table']        = 'glpi_plugin_fusioninventory_collects_wmis_contents';
+         $tab[$i]['field']        = 'value';
+         $tab[$i]['linkfield']    = '';
+         $tab[$i]['name']         = __('WMI', 'fusioninventory')." - ".$wmi['name'];
+         $tab[$i]['joinparams']   = array('jointype' => 'child');
+         $tab[$i]['datatype']     = 'text';
+         $tab[$i]['forcegroupby'] = true;
+         $tab[$i]['joinparams']   = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = ".$wmi['id'],
+                                          'jointype' => 'child');
+         $i++;
+      }
+
+
+      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      foreach ($pfCollect_File->find(getEntitiesRestrictRequest(" AND", $pfCollect_File->getTable())) as $file) {
+
+         $tab[$i]['table']        = 'glpi_plugin_fusioninventory_collects_files_contents';
+         $tab[$i]['field']        = 'pathfile';
+         $tab[$i]['linkfield']    = '';
+         $tab[$i]['name']         = __('Find file', 'fusioninventory').
+                                    " - ".$wmi['name'].
+                                    " - ".__('pathfile', 'fusioninventory');
+         $tab[$i]['joinparams']   = array('jointype' => 'child');
+         $tab[$i]['datatype']     = 'text';
+         $tab[$i]['forcegroupby'] = true;
+         $tab[$i]['joinparams']   = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$wmi['id'],
+                                          'jointype' => 'child');
+         $i++;
+
+         $tab[$i]['table']        = 'glpi_plugin_fusioninventory_collects_files_contents';
+         $tab[$i]['field']        = 'size';
+         $tab[$i]['linkfield']    = '';
+         $tab[$i]['name']         = __('Find file', 'fusioninventory').
+                                    " - ".$wmi['name'].
+                                    " - ".__('Size', 'fusioninventory');
+         $tab[$i]['joinparams']   = array('jointype' => 'child');
+         $tab[$i]['datatype']     = 'text';
+         $tab[$i]['forcegroupby'] = true;
+         $tab[$i]['joinparams']   = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$wmi['id'],
+                                          'jointype' => 'child');
+         $i++;
+      }
+
+      return $tab;
+   }
+
 
 
    function showForm($ID, $options=array()) {

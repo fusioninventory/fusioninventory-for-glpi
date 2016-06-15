@@ -299,6 +299,9 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['linkfield']='';
       $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Switch ports');
       $sopt[5193]['forcegroupby']='1';
+
+      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
+
    }
 
    if ($itemtype == 'Entity') {
