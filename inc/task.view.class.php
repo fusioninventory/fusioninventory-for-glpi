@@ -494,9 +494,15 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          );
 
          $this->showDropdownForItemtype(
-            __('Timeslot','fusioninventory'),
+            __('Preparation timeslot','fusioninventory'),
             "PluginFusioninventoryTimeslot",
-            array('value' => $this->fields['plugin_fusioninventory_timeslots_id'])
+            array('value' => $this->fields['plugin_fusioninventory_timeslots_prep_id'])
+            );
+
+         $this->showDropdownForItemtype(
+            __('Execution timeslot','fusioninventory'),
+            "PluginFusioninventoryTimeslot",
+            array('value' => $this->fields['plugin_fusioninventory_timeslots_exec_id'])
             );
 
          $this->showIntegerField( __('Agent wakeup interval (in minutes)', 'fusioninventory'), "wakeup_agent_time",
