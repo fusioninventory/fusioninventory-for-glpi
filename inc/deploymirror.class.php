@@ -54,13 +54,16 @@ if (!defined('GLPI_ROOT')) {
  * Manage the deploy mirror depend on location of computer.
  */
 class PluginFusioninventoryDeployMirror extends CommonDBTM {
+   const MATCH_LOCATION = 0;
+   const MATCH_ENTITY   = 1;
+   const MATCH_BOTH     = 2;
 
    /**
     * We activate the history.
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
    /**
     * The right name for this class
@@ -108,32 +111,70 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return array
     */
    static function getList($agents_id = NULL) {
-      global $PF_CONFIG;
+      global $PF_CONFIG, $DB;
 
       if (is_null($agents_id)) {
-         return array();
+         return [];
       }
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $agent = $pfAgent->fields;
-
-      $ancestors = getAncestorsOf('glpi_entities', $agent['entities_id']);
-
-      $results = getAllDatasFromTable(
-              'glpi_plugin_fusioninventory_deploymirrors',
-              "(`entities_id` IN ('".implode("', '", $ancestors)."') AND `is_recursive`='1')"
-              . " OR `entities_id`='".$agent['entities_id']."'");
       if (!isset($agent) || !isset($agent['computers_id'])) {
-         return array();
+         return [];
       }
+
       $computer = new Computer();
       $computer->getFromDB($agent['computers_id']);
 
-      $mirrors = array();
+      //If no configuration has been done in the plugin's configuration
+      //then use location for mirrors as default
+      if (isset($PF_CONFIG['server_as_mirror'])) {
+         $mirror_match = $PF_CONFIG['server_as_mirror'];
+      } else {
+         $mirror_match = self::MATCH_LOCATION;
+      }
+
+      //Get all mirrors for the agent's entity, or for entities above
+      $table     = 'glpi_plugin_fusioninventory_deploymirrors';
+      $restrict  = "`is_active`=1";
+      $restrict  = getEntitiesRestrictRequest(' AND ',
+                                              $table,
+                                              'entities_id',
+                                              $agent['entities_id'],
+                                              true);
+      $results   = getAllDatasFromTable($table, $restrict, false);
+
+      $mirrors = [];
       foreach ($results as $result) {
-         if ($computer->fields['locations_id'] == $result['locations_id']) {
+
+         //First, check mirror by location
+         if (in_array($mirror_match, [self::MATCH_LOCATION, self::MATCH_BOTH])
+             && $computer->fields['locations_id'] == $result['locations_id']) {
             $mirrors[] = $result['url'];
+         }
+
+         //Second, check by entity
+         if (in_array($mirror_match, [self::MATCH_ENTITY, self::MATCH_BOTH])) {
+            $entities = $result['entities_id'];
+            if ($result['is_recursive']) {
+               $entities = getSonsOf('glpi_entities', $result['entities_id']);
+            }
+
+            $add_mirror = false;
+            if(is_array($entities)) {
+               if(in_array($computer->fields['entities_id'], $entities)) {
+                  $add_mirror = true;
+               }
+            } else {
+               if($computer->fields['entities_id'] == $result['entities_id']) {
+                  $add_mirror = true;
+               }
+            }
+
+            if(!in_array($result['url'], $mirrors) && $add_mirror) {
+               $mirrors[] = $result['url'];
+            }
          }
       }
 
@@ -143,7 +184,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          $entities_id = $agent['entities_id'];
       }
       if (isset($PF_CONFIG['server_as_mirror'])
-              && (bool)$PF_CONFIG['server_as_mirror'] == TRUE) {
+              && (bool)$PF_CONFIG['server_as_mirror'] == true) {
          $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
@@ -188,30 +229,33 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<td>".__('Mirror location', 'fusioninventory')." (".__('Location').")"."&nbsp;:</td>";
       echo "<td align='center'>";
 
-      echo "<script type='text/javascript'>\n";
-      echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
-      echo "</script>";
+      //If
+      if ($this->can($id, UPDATE)) {
+         echo "<script type='text/javascript'>\n";
+         echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
+         echo "</script>";
+         $params = ['is_recursive' => '__VALUE__',
+                    'id'           => $id
+                   ];
+         Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
+                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
 
-      $params = array('is_recursive' => '__VALUE__',
-                      'id'           => $id);
-      Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
-              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
+         echo "<div id='displaydropdownlocation'>";
+         // Location option
+         Location::dropdown([ 'value'       => $this->fields["locations_id"],
+                              'entity'      => $this->fields["entities_id"],
+                              'entity_sons' => $this->isRecursive(),
+                            ]);
+         echo "</div>";
 
-      echo "<div id='displaydropdownlocation'>";
-      // Location option
-      Location::dropdown(
-         array(
-            'value'  => $this->fields["locations_id"],
-            'entity' => $this->fields["entities_id"],
-            'entity_sons' => $this->isRecursive(),
-         )
-      );
-      echo "</div>";
+      } else {
+         echo Dropdown::getDropdownName('glpi_locations', $this->fields['locations_id']);
+      }
       echo "</td></tr>";
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -278,10 +322,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
-
-      $actions = array();
-      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
-      return $actions;
+      return [__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfer'
+               => __('Transfer')];
    }
 
 
@@ -293,12 +335,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return boolean
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      if ($ma->getAction() == 'transfert') {
+      if ($ma->getAction() == 'transfer') {
          Dropdown::show('Entity');
-         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-         return TRUE;
+         echo Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -316,7 +358,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $pfDeployMirror = new self();
       switch ($ma->getAction()) {
 
-         case "transfert" :
+         case "transfer" :
             foreach ($ids as $key) {
                if ($pfDeployMirror->getFromDB($key)) {
                   $input = array();
