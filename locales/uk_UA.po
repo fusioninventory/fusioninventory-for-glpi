@@ -2308,7 +2308,7 @@ msgstr ""
 
 #: inc/menu.class.php:203
 msgid ""
-"The server needs to kown the URL the agents use to access the server. Please"
+"The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr "Серверу необхідно знати URL, який використовують агенти для доступу в сервер. Будь ласка вкажіть його на сторінці Загальних налаштувань."
 

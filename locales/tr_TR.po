@@ -2300,7 +2300,7 @@ msgstr "Kullanılmayan dosyaları temizle"
 
 #: inc/menu.class.php:203
 msgid ""
-"The server needs to kown the URL the agents use to access the server. Please"
+"The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr "Sunucu, ajanların kendisine erişmek için kullandığı İnternet adresini bilmelidir. Lütfen genel ayarlar sayfasından bu adresi ayarlayın."
 
