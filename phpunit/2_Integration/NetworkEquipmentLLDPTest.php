@@ -526,11 +526,11 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
                           count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, TRUE).')');
 
-      $a_unkowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unmanageds');
+      $a_unknowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unmanageds');
 
       $this->assertEquals(1,
-                          count($a_unkowns),
-                          'May have only one unknown device ('.print_r($a_unkowns, TRUE).')');
+                          count($a_unknowns),
+                          'May have only one unknown device ('.print_r($a_unknowns, TRUE).')');
 
 
       $a_networkport_ref = array(
