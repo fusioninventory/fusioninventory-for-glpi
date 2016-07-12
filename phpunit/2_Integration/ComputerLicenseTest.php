@@ -160,8 +160,48 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_ref,
                           $pfComputerLicenseInfo->fields,
                           'License data');
+   }
 
+   /**
+    * @test
+    */
+   public function testCleanComputer()
+   {
+      global $DB;
 
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      //First, check if license does exist
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->getFromDB(1);
+
+      $a_ref = array(
+          'id'                   => 1,
+          'computers_id'         => 1,
+          'softwarelicenses_id'  => 0,
+          'name'                 => 'Microsoft Office 2003',
+          'fullname'             => 'Microsoft Office Professional Edition 2003',
+          'serial'               => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx',
+          'is_trial'             => '0',
+          'is_update'            => '0',
+          'is_oem'               => '0',
+          'activation_date'      => NULL
+      );
+
+      $this->assertEquals($a_ref,
+                          $pfComputerLicenseInfo->fields,
+                          'License data');
+
+      //Second, clean and check if it has been removed
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->cleancomputer(1);
+
+      $pfComputerLicenseInfo->getFromDB(1);
+      $this->assertEquals(0, count($pfComputerLicenseInfo->fields));
    }
 }
-?>
+
