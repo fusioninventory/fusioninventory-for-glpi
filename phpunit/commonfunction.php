@@ -111,7 +111,7 @@ function drop_database($dbuser='', $dbhost='', $dbdefault='', $dbpassword=''){
       return $cmd;
    }
 
-   $cmd = 'echo "DROP DATABASE IF EXISTS '.$dbdefault .'; CREATE DATABASE '.$dbdefault.'" | ' . $cmd ." 2>&1";
+   $cmd = 'echo "DROP DATABASE IF EXISTS \`'.$dbdefault .'\`; CREATE DATABASE \`'.$dbdefault.'\`" | ' . $cmd ." 2>&1";
 
 
    $returncode = 0;
