@@ -1089,7 +1089,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                echo "<td align='center'>";
                if ($pfNetworkPort->fields['ifstatus'] == 1) {
                   echo __('Connected');
-               } else if ($pfNetworkPort->fields['lastup'] == "0000-00-00 00:00:00") {
+               } else if ($pfNetworkPort->fields['lastup'] == "") {
                   echo '-';
                } else {
                   $time = strtotime(date('Y-m-d H:i:s'))

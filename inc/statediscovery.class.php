@@ -79,7 +79,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $this->getFromDB($process_id);
       $doEnd = 1;
       if (($this->fields['threads'] != '0')
-              && ($this->fields['end_time'] == '0000-00-00 00:00:00')) {
+              && ($this->fields['end_time'] == '')) {
          $doEnd = 0;
       }
 
