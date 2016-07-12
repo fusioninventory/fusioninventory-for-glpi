@@ -1979,7 +1979,8 @@ function plugin_pre_item_update_fusioninventory($parm) {
 function plugin_pre_item_purge_fusioninventory($parm) {
    global $DB;
 
-   switch (get_class($parm)) {
+   $itemtype = get_class($parm);
+   switch ($itemtype) {
 
       case 'Computer':
          // Delete link between computer and agent fusion
@@ -1988,9 +1989,15 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                      WHERE `computers_id` = '".$parm->getField('id')."'";
          $DB->query($query);
 
-         PluginFusioninventoryInventoryComputerComputer::cleanComputer($parm->getField('id'));
-         // Remove antivirus if set
-         PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($parm->getField('id'));
+         $clean = array('PluginFusioninventoryInventoryComputerComputer',
+                        'PluginFusioninventoryInventoryComputerAntivirus',
+                        'PluginFusioninventoryComputerLicenseInfo',
+                        'PluginFusioninventoryCollect_File_Content',
+                        'PluginFusioninventoryCollect_Registry_Content',
+                        'PluginFusioninventoryCollect_Wmi_Content');
+         foreach ($clean as $obj) {
+            $obj::cleanComputer($parm->getID());
+         }
          break;
 
       case 'NetworkPort_NetworkPort':
@@ -2010,6 +2017,11 @@ function plugin_pre_item_purge_fusioninventory($parm) {
       break;
 
    }
+
+   $rule = new PluginFusioninventoryRulematchedlog();
+   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $parm->getID()));
+
+   PluginFusioninventoryLock::cleanForAsset($itemtype, $parm->getID());
    return $parm;
 }
 

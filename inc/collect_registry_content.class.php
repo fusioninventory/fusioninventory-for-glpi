@@ -97,6 +97,10 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    }
 
 
+   static function cleanComputer($computers_id) {
+      $registry_content = new self();
+      $registry_content->deleteByCriteria(array('computers_id' => $computers_id));
+   }
 
    function updateComputer($computers_id, $registry_data, $collects_registries_id) {
       global $DB;
