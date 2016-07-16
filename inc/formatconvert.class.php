@@ -1448,6 +1448,18 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      $plugin_values = Plugin::doHook(
+         "fusioninventory_addinventoryinfos",
+         array(
+            'inventory' => $a_inventory,
+            'source'    => $array
+         )
+      );
+
+      if (is_array($plugin_values)) {
+         $a_inventory = array_merge($a_inventory, $plugin_values);         
+      }
+
       return $a_inventory;
    }
 
