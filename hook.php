@@ -2144,11 +2144,11 @@ function plugin_item_purge_fusioninventory($parm) {
          }
 
          // If hub have no port, delete it
-         foreach (array_keys($a_hubs) as $unkowndevice_id) {
+         foreach (array_keys($a_hubs) as $unknowndevice_id) {
             $a_networkports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnmanaged'
-               AND `items_id`='".$unkowndevice_id."' ");
+               AND `items_id`='".$unknowndevice_id."' ");
             if (count($a_networkports) < 2) {
-               $pfUnmanaged->delete(array('id'=>$unkowndevice_id), 1);
+               $pfUnmanaged->delete(array('id'=>$unknowndevice_id), 1);
             } else if (count($a_networkports) == '2') {
                $switchPorts_id = 0;
                $otherPorts_id  = 0;

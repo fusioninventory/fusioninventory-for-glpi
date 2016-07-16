@@ -2318,7 +2318,7 @@ msgstr "Supprimer les fichiers non utilisés"
 
 #: inc/menu.class.php:203
 msgid ""
-"The server needs to kown the URL the agents use to access the server. Please"
+"The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr "Le serveur a besoin de connaître l'URL avec laquelle les agents vont accéder au serveur. Merci de la configurer dans la page de configuration générale."
 

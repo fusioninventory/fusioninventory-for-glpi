@@ -2316,7 +2316,7 @@ msgstr "Очистка неиспользуемых файлов"
 
 #: inc/menu.class.php:203
 msgid ""
-"The server needs to kown the URL the agents use to access the server. Please"
+"The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr "Сервер должен знать какой URL используют агенты для доступа к нему. Пожалуйста, настройте его на странице Основных настроек."
 

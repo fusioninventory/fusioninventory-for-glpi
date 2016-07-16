@@ -200,7 +200,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
               && !strstr($_SERVER['PHP_SELF'], 'front/config.form.php')) {
          echo "<div class='msgboxmonit msgboxmonit-red'>";
          print "<center><a href=\"".$CFG_GLPI['root_doc']."/front/entity.form.php?id=0&forcetab=PluginFusioninventoryEntity$0\">";
-         print __('The server needs to kown the URL the agents use to access the server. Please '.
+         print __('The server needs to know the URL the agents use to access the server. Please '.
                  'configure it in the General Configuration page.', 'fusioninventory');
          print "</a></center>";
          echo "</div>";
