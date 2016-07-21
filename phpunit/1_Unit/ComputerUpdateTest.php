@@ -332,7 +332,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'ticket_tco'                       => '0.0000',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'os_kernel_version'                => NULL,
-          'is_recursive'                     => '0'
+          'is_recursive'                     => '0',
+          'operatingsystemarchitectures_id'  => '0'
       );
 
       $this->assertEquals($a_reference, $computer->fields);
