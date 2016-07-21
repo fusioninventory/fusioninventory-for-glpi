@@ -585,7 +585,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                 " AND `".$graphField."` > 0 "
              .$group;
          $result = $DB->query($query);
-         if ($DB->numrows($result) == 0) {
+         if ($DB->numrows($result) == 0 AND $graphField != "pages_total") {
             unset($elementsField[$graphField]);
          }
       }
@@ -651,6 +651,11 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                      $input[] = array('x' => $date,
                                       'y' => $data[$graphField]);
                   }
+               }
+            } else {
+               if ($graphType == 'day') {
+                  $input[] = array('x' => date("Y-m-d"),
+                                   'y' => 0);
                }
             }
          }
