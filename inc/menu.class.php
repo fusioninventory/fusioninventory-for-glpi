@@ -122,6 +122,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
             $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
          }
       }
+      // hack for config
+      $options['config']['page'] = PluginFusioninventoryConfig::getFormURL(False);
 
       // Add icon for import package
       $img = Html::image($CFG_GLPI["root_doc"] . "/plugins/fusioninventory/pics/menu_import.png",
