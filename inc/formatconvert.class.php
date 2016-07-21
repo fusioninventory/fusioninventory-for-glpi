@@ -70,7 +70,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -212,7 +212,8 @@ class PluginFusioninventoryFormatconvert {
          'monitor'                 => array(),
          'printer'                 => array(),
          'peripheral'              => array(),
-         'storage'                 => array()
+         'storage'                 => array(),
+         'remote_mgmt'             => array()
       );
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
@@ -1447,6 +1448,19 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['licenseinfo'][] = $array_tmp;
          }
       }
+
+      // * REMOTE_MGMT
+      $a_inventory['remote_mgmt'] = array();
+      if (isset($array['REMOTE_MGMT'])) {
+         foreach ($array['REMOTE_MGMT'] as $a_remotemgmt) {
+            $array_tmp = $thisc->addValues($a_remotemgmt,
+                                           array(
+                                              'ID'   => 'number',
+                                              'TYPE' => 'type'));
+            $a_inventory['remote_mgmt'][] = $array_tmp;
+         }
+      }
+
 
       $plugin_params = array(
          'inventory' => $a_inventory,

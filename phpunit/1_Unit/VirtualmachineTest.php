@@ -74,6 +74,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'remote_mgmt'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(

@@ -101,6 +101,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $monitor                      = new Monitor();
       $printer                      = new Printer();
       $peripheral                   = new Peripheral();
+      $pfComputerRemotemgmt         = new PluginFusioninventoryComputerRemoteManagement();
 
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
@@ -1271,6 +1272,48 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
+
+      // * Remote_mgmt
+         $db_remotemgmt = array();
+         if ($no_history === FALSE) {
+            $query = "SELECT `id`, `type`, `number`
+                  FROM `glpi_plugin_fusioninventory_computerremotemanagements`
+               WHERE `computers_id` = '$computers_id'";
+            $result = $DB->query($query);
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['id'];
+               unset($data['id']);
+               $data1 = Toolbox::addslashes_deep($data);
+               $data2 = array_map('strtolower', $data1);
+               $db_remotemgmt[$idtmp] = $data2;
+            }
+         }
+         foreach ($a_computerinventory['remote_mgmt'] as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_remotemgmt as $keydb => $arraydb) {
+               if ($arrayslower == $arraydb) {
+                  unset($a_computerinventory['remote_mgmt'][$key]);
+                  unset($db_remotemgmt[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['remote_mgmt']) == 0
+            AND count($db_remotemgmt) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_remotemgmt) != 0) {
+               foreach ($db_remotemgmt as $idtmp => $data) {
+                  $pfComputerRemotemgmt->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (count($a_computerinventory['remote_mgmt']) != 0) {
+               foreach($a_computerinventory['remote_mgmt'] as $a_remotemgmt) {
+                  $a_remotemgmt['computers_id'] = $computers_id;
+                  $pfComputerRemotemgmt->add($a_remotemgmt, array(), !$no_history);
+               }
+            }
+         }
 
 
       // * Batteries

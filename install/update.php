@@ -342,6 +342,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_computerstat_migration($migration);
       do_computerstorage_migration($migration);
       do_computerlicense_migration($migration);
+      do_computerremotemgmt_migration($migration);
       do_computerarch_migration($migration);
       do_computeroperatingsystem_migration($migration);
       do_dblocks_migration($migration);
@@ -4616,6 +4617,39 @@ function do_computerlicense_migration($migration) {
    $a_table['keys']   = array();
    $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
    $a_table['keys'][] = array('field' => 'fullname', 'name' => '', 'type' => 'INDEX');
+
+   $a_table['oldkeys'] = array();
+
+   migrateTablesFusionInventory($migration, $a_table);
+}
+
+
+
+function do_computerremotemgmt_migration($migration) {
+
+   /*
+    * Table PluginFusioninventoryComputerRemoteManagement
+    */
+   $a_table = array();
+   $a_table['name'] = 'glpi_plugin_fusioninventory_computerremotemanagements';
+   $a_table['oldname'] = array('glpi_plugin_fusioninventory_computerremotemanagements');
+
+   $a_table['fields']  = array();
+   $a_table['fields']['id']                  = array('type'    => 'autoincrement',
+                                                     'value'   => '');
+   $a_table['fields']['computers_id']        = array('type'    => 'integer',
+                                                     'value'   => NULL);
+   $a_table['fields']['number']              = array('type'    => 'string',
+                                                     'value'   => NULL);
+   $a_table['fields']['type']                = array('type'    => 'string',
+                                                     'value'   => NULL);
+
+   $a_table['oldfields']  = array();
+
+   $a_table['renamefields'] = array();
+
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'computers_id', 'name' => '', 'type' => 'INDEX');
 
    $a_table['oldkeys'] = array();
 

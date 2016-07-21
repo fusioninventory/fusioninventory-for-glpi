@@ -779,6 +779,19 @@ CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystemeditions` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerremotemanagements`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `number` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 --
 -- BEGIN DEPLOY
 --

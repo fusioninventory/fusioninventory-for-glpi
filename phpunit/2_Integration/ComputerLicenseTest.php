@@ -80,8 +80,9 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
               )
           ),
           'networkcard'    => array(),
-          'drive'          => Array(),
-          'batteries'      => Array(),
+          'drive'          => array(),
+          'batteries'      => array(),
+          'remote_mgmt'    => array(),
           'itemtype'       => 'Computer'
       );
 
