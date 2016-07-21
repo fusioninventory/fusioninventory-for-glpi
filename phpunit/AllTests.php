@@ -186,6 +186,7 @@ require_once '2_Integration/ComputerLicense.php';
 require_once '2_Integration/NetworkEquipmentLLDP.php';
 require_once '2_Integration/ComputerMonitor.php';
 require_once '2_Integration/ComputerPeripheral.php';
+require_once '2_Integration/CollectsTest.php';
 
 require_once 'emulatoragent.php';
 
