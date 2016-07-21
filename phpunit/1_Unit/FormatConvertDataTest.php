@@ -131,6 +131,7 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
           'operatingsystemversions_id'       => '9.1-RELEASE'
           );
 
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
@@ -185,6 +186,103 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
+   }
+
+
+
+   /**
+    * @test
+    */
+   function SwitchConvert() {
+      global $DB;
+
+      $DB->connect();
+
+      $sxml = '<?xml version="1.0" encoding="UTF-8" ?>
+<REQUEST>
+  <CONTENT>
+    <DEVICE>
+      <INFO>
+        <COMMENTS>Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE10, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2015 by Cisco Systems, Inc.
+Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
+        <CPU>8</CPU>
+        <FIRMWARE>12.2(55)SE10</FIRMWARE>
+        <ID>0</ID>
+        <IPS>
+          <IP>192.168.20.80</IP>
+        </IPS>
+        <MAC>00:1a:6c:9a:fc:80</MAC>
+        <MANUFACTURER>Cisco</MANUFACTURER>
+        <MEMORY>7</MEMORY>
+        <MODEL>Catalyst 2960-24TC</MODEL>
+        <NAME>cisco2960</NAME>
+        <RAM>64</RAM>
+        <SERIAL>FOC1047ZFMY</SERIAL>
+        <TYPE>NETWORKING</TYPE>
+        <UPTIME>12 hours, 59:37.55</UPTIME>
+        <VENDOR>Cisco</VENDOR>
+      </INFO>
+      <PORTS>
+        <PORT>
+          <CONNECTIONS>
+            <CONNECTION>
+              <MAC>64:9e:f3:32:cc:06</MAC>
+              <MAC>fc:99:47:13:d5:10</MAC>
+            </CONNECTION>
+          </CONNECTIONS>
+          <IFDESCR>GigabitEthernet0/1</IFDESCR>
+          <IFINERRORS>0</IFINERRORS>
+          <IFINOCTETS>189552874</IFINOCTETS>
+          <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+          <IFLASTCHANGE>3 minutes, 01.53</IFLASTCHANGE>
+          <IFMTU>1500</IFMTU>
+          <IFNAME>Gi0/1</IFNAME>
+          <IFNUMBER>10101</IFNUMBER>
+          <IFOUTERRORS>0</IFOUTERRORS>
+          <IFOUTOCTETS>16579230</IFOUTOCTETS>
+          <IFPORTDUPLEX>3</IFPORTDUPLEX>
+          <IFSPEED>1000000000</IFSPEED>
+          <IFSTATUS>1</IFSTATUS>
+          <IFTYPE>6</IFTYPE>
+          <MAC>00:1a:6c:9a:fc:99</MAC>
+          <TRUNK>0</TRUNK>
+          <VLANS>
+            <VLAN>
+              <NAME>default</NAME>
+              <NUMBER>1</NUMBER>
+            </VLAN>
+          </VLANS>
+        </PORT>
+      </PORTS>
+    </DEVICE>
+    <MODULEVERSION>2.2.1</MODULEVERSION>
+    <PROCESSNUMBER>1</PROCESSNUMBER>
+  </CONTENT>
+  <DEVICEID>foo</DEVICEID>
+  <QUERY>SNMPQUERY</QUERY>
+</REQUEST>';
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+      $a_xml = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+      $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($a_xml['CONTENT']['DEVICE'][0]);
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'NetworkEquipment', 0);
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      $a_reference = array(
+          10101 => array(
+              '64:9e:f3:32:cc:06',
+              'fc:99:47:13:d5:10'
+          )
+      );
+     $this->assertEquals($a_reference, $a_inventory['connection-mac'], "Must have 2 macs ".print_r($a_inventory['connection-mac'], true));
    }
 }
 ?>
