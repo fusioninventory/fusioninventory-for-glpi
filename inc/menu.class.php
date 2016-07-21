@@ -872,12 +872,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
 
-      $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
+      $query = "SELECT networkports.`id` FROM `glpi_networkports` networkports
               LEFT JOIN `glpi_plugin_fusioninventory_networkports`
-                 ON `glpi_plugin_fusioninventory_networkports`.`networkports_id` = `glpi_networkports`.`id`
+                 ON `glpi_plugin_fusioninventory_networkports`.`networkports_id` = networkports.`id`
               LEFT JOIN glpi_networkports_networkports
-                  ON (`networkports_id_1`=`glpi_networkports`.`id`
-                     OR `networkports_id_2`=`glpi_networkports`.`id`)
+                  ON (`networkports_id_1`=networkports.`id`
+                     OR `networkports_id_2`=networkports.`id`)
               WHERE `glpi_plugin_fusioninventory_networkports`.`id` IS NOT NULL
                   AND `glpi_networkports_networkports`.`id` IS NOT NULL
                   $restrict_entity";
