@@ -207,32 +207,35 @@ class ComputerLog extends RestoreDatabase_TestCase {
         );
 
       $this->a_inventory['software'] = Array(
-            'gentiumbasic$$$$110$$$$1$$$$0' => Array(
+            'gentiumbasic$$$$110$$$$1$$$$0$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
-                    'is_dynamic'             => 1
+                    'is_dynamic'             => 1,
+                    'operatingsystems_id'    => 0
                 ),
-            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
+            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => Array(
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
-                    'is_dynamic'             => 1
+                    'is_dynamic'             => 1,
+                    'operatingsystems_id'    => 0
                 ),
-            'orbit2$$$$2.14.19$$$$3$$$$0' => Array(
+            'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => Array(
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
-                    'is_dynamic'             => 1
+                    'is_dynamic'             => 1,
+                    'operatingsystems_id'    => 0
                 )
           );
 
@@ -368,7 +371,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       // * Remove a software
       $this->a_inventory['Computer']['contact'] = 'root';
       unset($this->a_inventory['processor'][3]);
-      unset($this->a_inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0']);
+      unset($this->a_inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0$$$$0']);
 
       $DB->query('TRUNCATE `glpi_logs`');
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
