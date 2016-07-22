@@ -90,13 +90,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
          $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
       }
+      $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = array();
       $a_reference = array(
           'fusioninventorycomputer' => Array(
               'winowner'                        => '',
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date,
-              'oscomment'                       => 'amd64/-1-11-30 22:04:44'
+              'oscomment'                       => 'amd64/-1-11-30 22:04:44',
+              'plugin_fusioninventory_computeroperatingsystems_id' => array()
           ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
@@ -127,13 +129,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
           'users_id'                         => 0,
-          'operatingsystems_id'              => 'freebsd',
-          'operatingsystemversions_id'       => '9.1-RELEASE',
+          'operatingsystems_id'              => 0,
+          'operatingsystemversions_id'       => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'domains_id'                       => 'mydomain.local',
           'os_licenseid'                     => '',
           'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
+          'operatingsystemservicepacks_id'   => 0,
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -180,7 +182,16 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'winowner'                        => '',
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
-              'last_fusioninventory_update'     => $date
+              'last_fusioninventory_update'     => $date,
+              'plugin_fusioninventory_computeroperatingsystems_id' => array(
+                  'operatingsystemversions_id'     => '',
+                  'operatingsystemservicepacks_id' => '',
+                  'operatingsystems_id'            => '',
+                  'plugin_fusioninventory_computerarches_id' => '',
+                  'plugin_fusioninventory_computeroskernelnames_id' => '',
+                  'plugin_fusioninventory_computeroskernelversions_id' => '',
+                  'plugin_fusioninventory_computeroperatingsystemeditions_id' => ''
+              )
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -206,13 +217,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
           'users_id'                         => 0,
-          'operatingsystems_id'              => '',
-          'operatingsystemversions_id'       => '',
+          'operatingsystems_id'              => 0,
+          'operatingsystemversions_id'       => 0,
           'uuid'                             => '',
           'domains_id'                       => '',
           'os_licenseid'                     => '',
           'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => '',
+          'operatingsystemservicepacks_id'   => 0,
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -272,14 +283,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
          $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
       }
-      unset($a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']);
+      $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = array();
       $a_reference = array(
           'fusioninventorycomputer' => Array(
               'winowner'                                 => 'test',
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
               'last_fusioninventory_update'              => $date,
-              'oscomment'                                => ''
+              'oscomment'                                => '',
+              'plugin_fusioninventory_computeroperatingsystems_id' => array()
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -653,6 +665,21 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'edition'     => 'Professionnel'
               )
           ),
+          array(
+              array(
+                  'FULL_NAME'   => 'Debian GNU/Linux 7.4 (wheezy)',
+                  'VERSION'     => '3.2.0-2-amd64',
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.2.0-2-amd64',
+                  'os'          => 'Debian',
+                  'osversion'   => '7.4 (wheezy)',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+          ),
       );
       $mapping = array(
           'arch'        => 'plugin_fusioninventory_computerarches_id',
@@ -675,6 +702,9 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
              $a_reference[$mapping[$key]] = $value;
          }
          $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+         $GLPIlog = new GLPIlogs();
+         $GLPIlog->testSQLlogs();
+         $GLPIlog->testPHPlogs();
          $this->assertEquals($a_reference, $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']);
       }
    }
@@ -719,13 +749,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
          $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
       }
+      $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = array();
       $a_reference = array(
           'fusioninventorycomputer' => Array(
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date,
-              'oscomment'                       => ''
+              'oscomment'                       => '',
+              'plugin_fusioninventory_computeroperatingsystems_id' => array()
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -750,20 +782,20 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
-          'operatingsystemversions_id'       => '5.1.2600',
+          'operatingsystems_id'              => 0,
+          'operatingsystemversions_id'       => 0,
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 'Service Pack 3',
+          'operatingsystemservicepacks_id'   => 0,
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
      );
-      $this->assertEquals($a_reference, $a_return);
+     $this->assertEquals($a_reference, $a_return);
    }
 
 
@@ -1002,6 +1034,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
          $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
       }
+      $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = array();
       $a_reference = array(
           'fusioninventorycomputer' => Array(
               'winowner'                                 => 'test',
@@ -1012,7 +1045,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'bios_version'                             => 'A05',
               'bios_assettag'                            => '',
               'bios_manufacturers_id'                    => 'Dell Inc.',
-              'oscomment'                                => ''
+              'oscomment'                                => '',
+              'plugin_fusioninventory_computeroperatingsystems_id' => array()
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -1037,13 +1071,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
-          'operatingsystemversions_id'       => '5.1.2600',
+          'operatingsystems_id'              => 0,
+          'operatingsystemversions_id'       => 0,
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 'Service Pack 3',
+          'operatingsystemservicepacks_id'   => 0,
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
@@ -1108,6 +1142,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
          $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
       }
+      $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = array();
       $a_reference = array(
           'fusioninventorycomputer' => Array(
               'winowner'                                 => 'test',
@@ -1118,7 +1153,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'bios_version'                             => 'A05',
               'bios_assettag'                            => '',
               'bios_manufacturers_id'                    => 'Dell Inc.',
-              'oscomment'                                => ''
+              'oscomment'                                => '',
+              'plugin_fusioninventory_computeroperatingsystems_id' => array()
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -1143,13 +1179,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
-          'operatingsystemversions_id'       => '5.1.2600',
+          'operatingsystems_id'              => 0,
+          'operatingsystemversions_id'       => 0,
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 'Service Pack 3',
+          'operatingsystemservicepacks_id'   => 0,
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
