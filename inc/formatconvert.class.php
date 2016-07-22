@@ -228,23 +228,28 @@ class PluginFusioninventoryFormatconvert {
       $array_tmp = $thisc->addValues($array['HARDWARE'],
                                      array(
                                         'NAME'           => 'name',
-                                        'OSNAME'         => 'operatingsystems_id',
-                                        'OSVERSION'      => 'operatingsystemversions_id',
                                         'WINPRODID'      => 'os_licenseid',
                                         'WINPRODKEY'     => 'os_license_number',
                                         'WORKGROUP'      => 'domains_id',
                                         'UUID'           => 'uuid',
                                         'LASTLOGGEDUSER' => 'users_id',
-                                        'operatingsystemservicepacks_id' =>
-                                                      'operatingsystemservicepacks_id',
                                         'manufacturers_id' => 'manufacturers_id',
                                         'computermodels_id' => 'computermodels_id',
                                         'serial' => 'serial',
                                         'computertypes_id' => 'computertypes_id'));
-      if ($array_tmp['operatingsystemservicepacks_id'] == ''
-              && isset($array['HARDWARE']['OSCOMMENTS'])
-              && $array['HARDWARE']['OSCOMMENTS'] != '') {
-         $array_tmp['operatingsystemservicepacks_id'] = $array['HARDWARE']['OSCOMMENTS'];
+      if (!isset($array['OPERATINGSYSTEM']) || empty($array['OPERATINGSYSTEM'])) {
+         $array['OPERATINGSYSTEM'] = array();
+         if (isset($array['HARDWARE']['OSNAME'])) {
+            $array['OPERATINGSYSTEM']['FULL_NAME'] = $array['HARDWARE']['OSNAME'];
+         }
+         if (isset($array['HARDWARE']['OSVERSION'])) {
+            $array['OPERATINGSYSTEM']['VERSION'] = $array['HARDWARE']['OSVERSION'];
+         }
+         if (isset($array['HARDWARE']['OSCOMMENTS'])
+                 && $array['HARDWARE']['OSCOMMENTS'] != ''
+                 && !strstr($array['HARDWARE']['OSCOMMENTS'], 'UTC')) {
+            $array['OPERATINGSYSTEM']['SERVICE_PACK'] = $array['HARDWARE']['OSCOMMENTS'];
+         }
       }
       if (isset($array_tmp['users_id'])) {
          if ($array_tmp['users_id'] == '') {
@@ -450,23 +455,42 @@ class PluginFusioninventoryFormatconvert {
             } else if (count($matches) == 2) {
                $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[1];
             } else {
-               preg_match("/Linux (.*) (\d{1,2}) \((.*)\)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+               preg_match("/^(.*) GNU\/Linux (\d{1,2}|\d{1,2}\.\d{1,2}) \((.*)\)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
                if (count($matches) == 4) {
-                  if (empty($array_tmp['operatingsystemversions_id'])) {
-                     $array_tmp['operatingsystemversions_id'] = $matches[2];
+                  if (empty($array_tmp['operatingsystems_id'])) {
+                     $array_tmp['operatingsystems_id'] = $matches[1];
                   }
-                  if (empty($array_tmp['plugin_fusioninventory_computerarches_id'])) {
-                     $array_tmp['plugin_fusioninventory_computerarches_id'] = $matches[3];
+                  if (empty($array_tmp['plugin_fusioninventory_computeroskernelversions_id'])) {
+                     $array_tmp['plugin_fusioninventory_computeroskernelversions_id'] = $array_tmp['operatingsystemversions_id'];
+                     $array_tmp['operatingsystemversions_id'] = $matches[2]." (".$matches[3].")";
+                  } else if (empty($array_tmp['operatingsystemversions_id'])) {
+                     $array_tmp['operatingsystemversions_id'] = $matches[2]." (".$matches[3].")";
                   }
-                  $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[1];
+                  if (empty($array_tmp['plugin_fusioninventory_computeroskernelnames_id'])) {
+                     $array_tmp['plugin_fusioninventory_computeroskernelnames_id'] = 'linux';
+                  }
                } else {
-                  preg_match("/Microsoft[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+                  preg_match("/Linux (.*) (\d{1,2}|\d{1,2}\.\d{1,2}) \((.*)\)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
                   if (count($matches) == 4) {
-                     $array_tmp['operatingsystemversions_id'] = $matches[2];
-                     $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]." ".$matches[3]);
+                     if (empty($array_tmp['operatingsystemversions_id'])) {
+                        $array_tmp['operatingsystemversions_id'] = $matches[2];
+                     }
+                     if (empty($array_tmp['plugin_fusioninventory_computerarches_id'])) {
+                        $array_tmp['plugin_fusioninventory_computerarches_id'] = $matches[3];
+                     }
+                     if (empty($array_tmp['plugin_fusioninventory_computeroskernelnames_id'])) {
+                        $array_tmp['plugin_fusioninventory_computeroskernelnames_id'] = 'linux';
+                     }
+                     $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]);
                   } else {
-                     if ($array['OPERATINGSYSTEM']['FULL_NAME'] == 'Microsoft Windows Embedded Standard') {
+                     preg_match("/Microsoft[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+                     if (count($matches) == 4) {
+                        $array_tmp['operatingsystemversions_id'] = $matches[2];
+                        $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]." ".$matches[3]);
+                     } else if ($array['OPERATINGSYSTEM']['FULL_NAME'] == 'Microsoft Windows Embedded Standard') {
                         $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = 'Embedded Standard';
+                     } else if (empty($array_tmp['operatingsystems_id'])) {
+                        $array_tmp['operatingsystems_id'] = $array['OPERATINGSYSTEM']['FULL_NAME'];
                      }
                   }
                }
