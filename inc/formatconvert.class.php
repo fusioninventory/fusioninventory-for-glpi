@@ -1510,6 +1510,10 @@ class PluginFusioninventoryFormatconvert {
     * Sometimes we can have 2 same software, but one without manufacturer and
     * one with. So in this case, delete the software without manufacturer
     */
+      $operatingsystems_id = 0;
+      if (isset($a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']['operatingsystems_id'])) {
+         $operatingsystems_id = $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']['operatingsystems_id'];
+      }
 
       $softwareWithManufacturer = array();
       $softwareWithoutManufacturer = array();
@@ -1551,6 +1555,7 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['name'] = $a_softwares['GUID'];
             }
          }
+         $array_tmp['operatingsystems_id'] = $operatingsystems_id;
 
          if (!(!isset($array_tmp['name'])
                  || $array_tmp['name'] == '')) {
@@ -1611,11 +1616,13 @@ class PluginFusioninventoryFormatconvert {
                   $comp_key = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
-                               "$$$$".$array_tmp['entities_id'];
+                               "$$$$".$array_tmp['entities_id'].
+                               "$$$$".$array_tmp['operatingsystems_id'];
 
                   $comp_key_simple = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['entities_id'];
+                               "$$$$".$array_tmp['entities_id'].
+                               "$$$$".$array_tmp['operatingsystems_id'];
 
                   if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
@@ -1634,7 +1641,8 @@ class PluginFusioninventoryFormatconvert {
             $comp_key = strtolower($array_tmp['name']).
                          "$$$$".strtolower($array_tmp['version']).
                          "$$$$".$array_tmp['manufacturers_id'].
-                         "$$$$".$array_tmp['entities_id'];
+                         "$$$$".$array_tmp['entities_id'].
+                         "$$$$".$array_tmp['operatingsystems_id'];
             if (!isset($a_inventory['software'][$comp_key])) {
                $a_inventory['software'][$comp_key] = $array_tmp;
             }
