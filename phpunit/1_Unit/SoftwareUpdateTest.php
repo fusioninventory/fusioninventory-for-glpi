@@ -339,5 +339,74 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
 
    }
+
+
+   /**
+    * @test
+    */
+   public function ProcessInstalldate() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_software = array();
+      $a_software['SOFTWARES'][] = array(
+                'ARCH'             => 'i586',
+                'FROM'             => 'registry',
+                'GUID'             => 'Audacity_is1',
+                'HELPLINK'         => 'http://audacity.sourceforge.net',
+                'INSTALLDATE'      => '16/10/2013',
+                'NAME'             => 'Audacity 2.0.4',
+                'PUBLISHER'        => 'Audacity Team',
+                'UNINSTALL_STRING' => '"C:\\Program Files\\Audacity\\unins000.exe\"',
+                'URL_INFO_ABOUT'   => 'http://audacity.sourceforge.net',
+                'VERSION'          => '2.0.4',
+                'VERSION_MAJOR'    => '2',
+                'VERSION_MINOR'    => '0',
+            );
+      $a_software['SOFTWARES'][] = array(
+                'ARCH'             => 'i586',
+                'FROM'             => 'registry',
+                'GUID'             => 'AutoItv3',
+                'NAME'             => 'AutoIt v3.3.8.1',
+                'PUBLISHER'        => 'AutoIt Team',
+                'UNINSTALL_STRING' => 'C:\\Program Files\\AutoIt3\\Uninstall.exe',
+                'URL_INFO_ABOUT'   => 'http://www.autoitscript.com/autoit3',
+          );
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
+
+      $a_reference = array();
+      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0"] = array(
+               'name'                  => 'Audacity 2.0.4',
+               'manufacturers_id'      => 3,
+               'version'               => '2.0.4',
+               'is_template_computer'  => 0,
+               'is_deleted_computer'   => 0,
+               'entities_id'           => 0,
+               'is_recursive'          => 0,
+               'operatingsystems_id'   => 0,
+               'date_install'          => '2013-10-16'
+            );
+      $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = array(
+               'name'                  => 'AutoIt v3.3.8.1',
+               'manufacturers_id'      => 4,
+               'version'               => '',
+               'is_template_computer'  => 0,
+               'is_deleted_computer'   => 0,
+               'entities_id'           => 0,
+               'is_recursive'          => 0,
+               'operatingsystems_id'   => 0
+      );
+      $this->assertEquals($a_reference, $a_return);
+
+
+
+   }
 }
 ?>
