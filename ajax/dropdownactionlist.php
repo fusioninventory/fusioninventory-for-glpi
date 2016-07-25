@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Walid Nouh
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdownactionlist.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownactionlist.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -51,6 +51,10 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 $pfTaskjob = new PluginFusioninventoryTaskjob();
-$pfTaskjob->dropdownAction("ActionList", $_POST['ActionType'], $_POST['method'], $_POST['actiontypeid']);
+$pfTaskjob->dropdownAction(
+        "ActionList",
+        filter_input(INPUT_POST, "ActionType"),
+        filter_input(INPUT_POST, "method"),
+        filter_input(INPUT_POST, "actiontypeid"));
 
 ?>

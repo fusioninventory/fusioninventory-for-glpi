@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjob_itemtypes.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjob_itemtypes.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -50,6 +50,11 @@ Session::checkCentralAccess();
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-$pfTaskjob->ajaxModuleTypesDropdown($_GET);
+$params = array(
+    "moduletype" => filter_input(INPUT_GET, "moduletype"),
+    "method"     => filter_input(INPUT_GET, "method"),
+);
+
+$pfTaskjob->ajaxModuleTypesDropdown($params);
 ?>
 

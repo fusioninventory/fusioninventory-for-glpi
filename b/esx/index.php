@@ -41,7 +41,7 @@
  */
 
 //This call is to check that the ESX inventory service is up and running
-if (isset($_GET['status'])) {
+if (!empty(filter_input(INPUT_GET, "status"))) {
    return 'ok';
 }
 ob_start();
@@ -50,9 +50,9 @@ ob_end_clean();
 
 $response = FALSE;
 //Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
+if (!empty(filter_input(INPUT_GET, "machineid"))) {
 
-   switch ($_GET['action']) {
+   switch (filter_input(INPUT_GET, "action")) {
 
       case 'getJobs':
          $pfAgent        = new PluginFusioninventoryAgent();
@@ -60,7 +60,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pfTaskjob      = new PluginFusioninventoryTaskjob();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($_GET['machineid']));
+         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep(filter_input(INPUT_GET, "machineid")));
 
          if (isset($agent['id'])) {
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(

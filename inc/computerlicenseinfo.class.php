@@ -164,7 +164,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                 Ajax::updateItem(
                         "softwarelicenses_id_$rand",
                         $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/".
-                           "dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'],
+                           "dropdownsoftwarelicenses.php",
                         $params,
                         FALSE);
                echo "<span id='softwarelicenses_id_$rand'></span>";

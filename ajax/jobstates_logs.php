@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "jobstates_logs.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "jobstates_logs.php")) {
    include ("../../../inc/includes.php");
    Session::checkCentralAccess();
 }
@@ -50,7 +50,11 @@ header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 $pfJobstate = new PluginFusioninventoryTaskjobstate();
 
-$pfJobstate->ajaxGetLogs($_GET);
+$params = array(
+    "id"        => filter_input(INPUT_GET, "id"),
+    "last_date" => filter_input(INPUT_GET, "last_date")
+);
+$pfJobstate->ajaxGetLogs($params);
 
 ?>
 

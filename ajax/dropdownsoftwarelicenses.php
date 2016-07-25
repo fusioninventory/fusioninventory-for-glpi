@@ -50,6 +50,13 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
-$pfComputerLicenseInfo->dropdownSoftwareLicenses($_POST);
+$options = array(
+    "name"                => filter_input(INPUT_POST, "name"),
+    "fullname"            => filter_input(INPUT_POST, "fullname"),
+    "serial"              => filter_input(INPUT_POST, "serial"),
+    "softwarelicenses_id" => filter_input(INPUT_POST, "softwarelicenses_id")
+);
+
+$pfComputerLicenseInfo->dropdownSoftwareLicenses($options);
 
 ?>

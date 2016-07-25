@@ -49,37 +49,40 @@ Html::header_nocache();
 //Session::checkRight('create_ticket', "1");
 
 // Security
-if (!TableExists($_POST['table'])) {
+$table = filter_input(INPUT_POST, "table");
+if (empty($table) || !TableExists($table)) {
    exit();
 }
 
 $where = "WHERE 1";
 
-if (strlen($_POST['searchText'])>0 && $_POST['searchText']!=$CFG_GLPI["ajax_wildcard"]) {
-   $search = Search::makeTextSearch($_POST['searchText']);
+$searchText = filter_input(INPUT_POST, "searchText");
+if (strlen($searchText) > 0 && $searchText != $CFG_GLPI["ajax_wildcard"]) {
+   $search = Search::makeTextSearch($searchText);
 
    $where .= " AND (`name` ".$search."
-                    OR `id` = '".$_POST['searchText']."'";
+                    OR `id` = '".$searchText."'";
    $where .= ")";
 }
 
 $NBMAX = $CFG_GLPI["dropdown_max"];
 $LIMIT = "LIMIT 0, $NBMAX";
 
-if ($_POST['searchText'] == $CFG_GLPI["ajax_wildcard"]) {
+if ($searchText == $CFG_GLPI["ajax_wildcard"]) {
    $LIMIT = "";
 }
 
 $query = "SELECT *
-          FROM `".$_POST['table']."`
+          FROM `".$table."`
           $where
           ORDER BY `name`
           $LIMIT";
 $result = $DB->query($query);
 
-echo "<select name='".$_POST['myname']."' id='".$_POST['myname']."' size='1'>";
+$myname = filter_input(INPUT_POST, "myname");
+echo "<select name='".$myname."' id='".$myname."' size='1'>";
 
-if ($_POST['searchText'] != $CFG_GLPI["ajax_wildcard"]
+if ($searchText != $CFG_GLPI["ajax_wildcard"]
         && $DB->numrows($result)==$NBMAX) {
    echo "<option value='0'>--".__('Limited view')."--</option>";
 }
@@ -94,7 +97,7 @@ if ($DB->numrows($result)) {
          $output .= " (".$data['id'].")";
       }
       $selected = "";
-      if ($data['id'] == $_POST['value']) {
+      if ($data['id'] == filter_input(INPUT_POST, "value")) {
          $selected = "selected='selected'";
       }
 

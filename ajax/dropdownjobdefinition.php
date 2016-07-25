@@ -47,31 +47,36 @@ Html::header_nocache();
 Session::checkCentralAccess();
 
 // Make a select box
-if (isset($_POST["type"]) && isset($_POST["actortype"])) {
+$type = filter_input(INPUT_POST, "type");
+$actortype = filter_input(INPUT_POST, "actortype");
+
+if (!empty($type) && !empty($actortype)) {
    $rand = mt_rand();
 
-   switch ($_POST["type"]) {
+   $entity_restrict = filter_input(INPUT_POST, "entity_restrict");
+   switch ($type) {
       case "user" :
          $right = 'all';
          /// TODO : review depending of itil object
          // Only steal or own ticket whit empty assign
-         if ($_POST["actortype"]=='assign') {
+         if ($actortype == 'assign') {
             $right = "own_ticket";
             if (!$item->canAssign()) {
                $right = 'id';
             }
          }
 
-         $options = array('name'        => '_itil_'.$_POST["actortype"].'[users_id]',
-                          'entity'      => $_POST['entity_restrict'],
+         $options = array('name'        => '_itil_'.$actortype.'[users_id]',
+                          'entity'      => $entity_restrict,
                           'right'       => $right,
                           'ldap_import' => TRUE);
          $withemail = FALSE;
          if ($CFG_GLPI["use_mailing"]) {
-            $withemail = (isset($_POST["allow_email"]) ? $_POST["allow_email"] : FALSE);
+            $allow_email = filter_input(INPUT_POST, "allow_email");
+            $withemail = (!empty($allow_email) ? $allow_email : FALSE);
             $paramscomment = array('value'       => '__VALUE__',
                                    'allow_email' => $withemail,
-                                   'field'       => "_itil_".$_POST["actortype"]);
+                                   'field'       => "_itil_".$actortype);
             // Fix rand value
             $options['rand']     = $rand;
             $options['toupdate'] = array('value_fieldname' => 'value',
@@ -85,24 +90,24 @@ if (isset($_POST["type"]) && isset($_POST["actortype"])) {
             echo "<br><span id='notif_user_$rand'>";
             if ($withemail) {
                echo __('Email followup').'&nbsp;:&nbsp;';
-               $rand = Dropdown::showYesNo('_itil_'.$_POST["actortype"].'[use_notification]', 1);
+               $rand = Dropdown::showYesNo('_itil_'.$actortype.'[use_notification]', 1);
                echo '<br>'.__('Email').'&nbsp;:&nbsp;';
-               echo "<input type='text' size='25' name='_itil_".$_POST["actortype"]."[alternative_email]'>";
+               echo "<input type='text' size='25' name='_itil_".$actortype."[alternative_email]'>";
             }
             echo "</span>";
          }
          break;
 
       case "group" :
-         $cond = ($_POST["actortype"]=='assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
-         Dropdown::show('Group', array('name'      => '_itil_'.$_POST["actortype"].'[groups_id]',
-                                       'entity'    => $_POST['entity_restrict'],
+         $cond = ($actortype=='assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
+         Dropdown::show('Group', array('name'      => '_itil_'.$actortype.'[groups_id]',
+                                       'entity'    => $entity_restrict,
                                        'condition' => $cond));
          break;
 
       case "supplier" :
          Dropdown::show('Supplier', array('name'   => 'suppliers_id_assign',
-                                          'entity' => $_POST['entity_restrict']));
+                                          'entity' => $entity_restrict));
          break;
    }
 }

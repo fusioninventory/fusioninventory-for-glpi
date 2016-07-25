@@ -272,21 +272,18 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
    // TODO: Move this method in task.class
-   function ajaxGetJobLogs($options) {
-
-      if (isset($options['task_id'])) {
-         if (is_array($options['task_id'])) {
-            $task_ids = $options['task_id'];
+   function ajaxGetJobLogs($task_id) {
+      if (!empty($task_id)) {
+         if (is_array($task_id)) {
+            $task_ids = $task_id;
          } else {
-            $task_ids = array($options['task_id']);
+            $task_ids = array($task_id);
          }
       } else {
          $task_ids = array();
       }
       $logs = $this->getJoblogs($task_ids);
       echo json_encode($logs);
-      return;
-
    }
 
 

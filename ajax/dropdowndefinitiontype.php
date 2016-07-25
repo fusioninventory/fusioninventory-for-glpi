@@ -40,20 +40,19 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdowndefinitiontype.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitiontype.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
-$value = 0;
-$title = 0;
-if (isset($_POST['value'])) {
-   $value = $_POST['value'];
-}
 
 $pfTaskjob = new PluginFusioninventoryTaskjob;
-$pfTaskjob->dropdownDefinitionType("DefinitionType", $_POST['method'], $value, $_POST['taskjobs_id'], "");
+$pfTaskjob->dropdownDefinitionType(
+        "DefinitionType",
+        filter_input(INPUT_POST, "method"),
+        filter_input(INPUT_POST, "taskjobs_id"),
+        "");
 
 ?>

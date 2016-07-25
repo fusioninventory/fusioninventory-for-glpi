@@ -40,22 +40,18 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjobdeletetype.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjobdeletetype.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
-$value = 0;
-$title = 0;
-if (isset($_POST['value'])) {
-   $value = $_POST['value'];
-}
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
-$pfTaskjob->deleteitemtodefatc($_POST['type'],
-                               $_POST[$_POST['type'].'item'],
-                               $_POST['taskjobs_id']);
+$pfTaskjob->deleteitemtodefatc(
+        filter_input(INPUT_POST, "type"),
+        filter_input(INPUT_POST, filter_input(INPUT_POST, "type").'item'),
+        filter_input(INPUT_POST, "taskjobs_id"));
 
 ?>

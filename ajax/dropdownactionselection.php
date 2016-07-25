@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdownactionselection.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownactionselection.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -52,8 +52,8 @@ Session::checkCentralAccess();
 
 echo "<script type='text/javascript'>
 var select = document.getElementById('actionlist');
-var obj = document.getElementById('".$_POST['actionselectadd']."');
-var actiontype = document.getElementById('".$_POST['actiontypeid']."');
+var obj = document.getElementById('".filter_input(INPUT_POST, "actionselectadd")."');
+var actiontype = document.getElementById('".filter_input(INPUT_POST, "actiontypeid")."');
 
 var list = document.getElementById('actionselection').innerHTML;
 

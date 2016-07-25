@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    Walid Nouh
-   @co-author
+   @co-author David Durieux
    @copyright Copyright (c) 2010-2016 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -40,13 +40,17 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdownCredentials.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownCredentials.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
 
 Session::checkRight('plugin_fusioninventory_credential', READ);
-PluginFusioninventoryCredential::dropdownCredentialsForItemtype($_POST);
+$params = array(
+    'itemtype' => filter_input(INPUT_POST, "itemtype"),
+    'id'       => filter_input(INPUT_POST, "id")
+);
+PluginFusioninventoryCredential::dropdownCredentialsForItemtype($params);
 
 ?>

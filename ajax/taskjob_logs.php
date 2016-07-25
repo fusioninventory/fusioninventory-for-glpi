@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjob_logs.php")) {
+if (strpos(filter_input(INPUT_SERVER, 'PHP_SELF'), "taskjob_logs.php")) {
    include ("../../../inc/includes.php");
    Session::checkCentralAccess();
 }
@@ -52,7 +52,6 @@ Html::header_nocache();
 
 $pfTask = new PluginFusioninventoryTask();
 
-$pfTask->ajaxGetJobLogs($_GET);
+$pfTask->ajaxGetJobLogs(filter_input(INPUT_GET, "task_id"));
 
 ?>
-

@@ -40,23 +40,19 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjobaddtype.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjobaddtype.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
-$value = 0;
-$title = 0;
-if (isset($_POST['value'])) {
-   $value = $_POST['value'];
-}
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
-$pfTaskjob->additemtodefatc($_POST['type'],
-                            $_POST['itemtype'],
-                            $_POST['items_id'],
-                            $_POST['taskjobs_id']);
+$pfTaskjob->additemtodefatc(
+        filter_input(INPUT_POST, "type"),
+        filter_input(INPUT_POST, "itemtype"),
+        filter_input(INPUT_POST, "items_id"),
+        filter_input(INPUT_POST, "taskjobs_id"));
 
 ?>

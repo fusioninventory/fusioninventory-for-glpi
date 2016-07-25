@@ -58,7 +58,7 @@ switch (filter_input(INPUT_GET, "action")) {
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
          $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
 
-         $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($machineid));
+         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineid));
          if (isset($agent['id'])) {
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                $agent['id'],

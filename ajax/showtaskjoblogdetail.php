@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "showtaskjoblogdetail.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "showtaskjoblogdetail.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -52,6 +52,9 @@ if (!defined('GLPI_ROOT')) {
 Session::checkCentralAccess();
 
 $pftaskjoblog = new PluginFusioninventoryTaskjoblog();
-echo $pftaskjoblog->showHistoryInDetail($_POST["agents_id"], $_POST["uniqid"], "900")."</td>";
+echo $pftaskjoblog->showHistoryInDetail(
+        filter_input(INPUT_POST, "agents_id"),
+        filter_input(INPUT_POST, "uniqid"),
+        "900")."</td>";
 
 ?>

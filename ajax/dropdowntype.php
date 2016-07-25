@@ -40,23 +40,23 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdowntype.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowntype.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
-$value = 0;
-$title = 0;
-if (isset($_POST['value'])) {
-   $value = $_POST['value'];
-}
+
+$typename = filter_input(INPUT_POST, "typename");
+$method = filter_input(INPUT_POST, "method");
+$taskjobs_id = filter_input(INPUT_POST, "taskjobs_id");
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
-if (isset($_POST['typename'])
-        && isset($_POST['method'])
-        && isset($_POST['taskjobs_id'])) {
-   $pfTaskjob->dropdownType($_POST['typename'], $_POST['method'], $value, $_POST['taskjobs_id'], "");
+if (!empty($typename)
+        && !empty($method)
+        && !empty($taskjobs_id)) {
+   $pfTaskjob->dropdownType($typename, $method,
+           filter_input(INPUT_POST, "value"), $taskjobs_id, "");
 }
 ?>

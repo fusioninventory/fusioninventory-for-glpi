@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdown_taskjob.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdown_taskjob.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -50,11 +50,11 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-
-if (isset($_POST['id']) AND $_POST['id'] > 0) {
+$id = filter_input(INPUT_POST, "id");
+if (!empty($id) AND $id > 0) {
     Dropdown::show('PluginFusioninventoryTaskjob', array(
              'name' => "taskjobs_id",
-             'condition' => "`plugin_fusioninventory_tasks_id`='".$_POST['id']."'"
+             'condition' => "`plugin_fusioninventory_tasks_id`='".$id."'"
     ));
 }
 

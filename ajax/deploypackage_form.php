@@ -45,7 +45,7 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-if (isset($_REQUEST['move_item'])) { //ajax request
+if (!empty(filter_input(INPUT_POST, "move_item"))) { //ajax request
 
    $json_response = array(
       "success" => TRUE,
@@ -53,7 +53,160 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    );
 
    if (Session::haveRight('plugin_fusioninventory_package', UPDATE)) {
-      PluginFusioninventoryDeployPackage::alterJSON('move_item', $_REQUEST);
+      switch (filter_input(INPUT_POST, "itemtype")) {
+
+         case "PluginFusioninventoryDeployCheck":
+            switch ($action_type) {
+
+               case "add_item" :
+                  $params = array(
+                      'value'            => filter_input(INPUT_POST, "value"),
+                      'unit'             => filter_input(INPUT_POST, "unit"),
+                      'deploy_checktype' => filter_input(INPUT_POST, "deploy_checktype"),
+                      'path'             => filter_input(INPUT_POST, "path"),
+                      'return'           => filter_input(INPUT_POST, "return"),
+                      'id'               => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployCheck::add_item($params);
+                  break;
+
+               case "save_item" :
+                  $params = array(
+                      'value'            => filter_input(INPUT_POST, "value"),
+                      'unit'             => filter_input(INPUT_POST, "unit"),
+                      'deploy_checktype' => filter_input(INPUT_POST, "deploy_checktype"),
+                      'path'             => filter_input(INPUT_POST, "path"),
+                      'return'           => filter_input(INPUT_POST, "return"),
+                      'index'            => filter_input(INPUT_POST, "index"),
+                      'id'               => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployCheck::save_item($params);
+                  break;
+
+               case "remove_item" :
+                  $params = array(
+                      'check_entries' => filter_input(INPUT_POST, "check_entries"),
+                      'id'            => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployCheck::remove_item($params);
+                  break;
+
+               case "move_item" :
+                  $params = array(
+                      'old_index' => filter_input(INPUT_POST, "old_index"),
+                      'new_index' => filter_input(INPUT_POST, "new_index"),
+                      'id'        => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployCheck::move_item($params);
+                  break;
+
+            }
+            break;
+
+         case "PluginFusioninventoryDeployFile":
+            switch ($action_type) {
+
+               case "add_item" :
+                  $params = array(
+                      'deploy_filetype' => filter_input(INPUT_POST, "deploy_filetype"),
+                      'filename'        => filter_input(INPUT_POST, "filename"),
+                      'id'              => filter_input(INPUT_POST, "id"),
+                      'p2p'             => filter_input(INPUT_POST, "p2p"),
+                      'uncompress'      => filter_input(INPUT_POST, "uncompress"),
+                      'p2p-retention-duration' => filter_input(INPUT_POST, "p2p-retention-duration")
+                  );
+                  PluginFusioninventoryDeployFile::add_item($params);
+                  break;
+
+               case "save_item" :
+                  $params = array(
+                      'index'      => filter_input(INPUT_POST, "index"),
+                      'id'         => filter_input(INPUT_POST, "id"),
+                      'p2p'        => filter_input(INPUT_POST, "p2p"),
+                      'uncompress' => filter_input(INPUT_POST, "uncompress"),
+                      'p2p-retention-duration' => filter_input(INPUT_POST, "p2p-retention-duration")
+                  );
+                  PluginFusioninventoryDeployFile::save_item($params);
+                  break;
+
+               case "remove_item" :
+                  $params = array(
+                      'file_entries' => filter_input(INPUT_POST, "file_entries"),
+                      'id'           => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployFile::remove_item($params);
+                  break;
+
+               case "move_item" :
+                  $params = array(
+                      'old_index' => filter_input(INPUT_POST, "old_index"),
+                      'new_index' => filter_input(INPUT_POST, "new_index"),
+                      'id'        => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployFile::move_item($params);
+                  break;
+
+            }
+            break;
+
+         case "PluginFusioninventoryDeployAction":
+            switch ($action_type) {
+
+               case "add_item" :
+                  $params = array(
+                      'list'              => filter_input(INPUT_POST, "list"),
+                      'from'              => filter_input(INPUT_POST, "from"),
+                      'to'                => filter_input(INPUT_POST, "to"),
+                      'exec'              => filter_input(INPUT_POST, "exec"),
+                      'retchecks_type'    => filter_input(INPUT_POST, "retchecks_type"),
+                      'retchecks_value'   => filter_input(INPUT_POST, "retchecks_value"),
+                      'deploy_actiontype' => filter_input(INPUT_POST, "deploy_actiontype"),
+                      'id'                => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployAction::add_item($params);
+                  break;
+
+               case "save_item" :
+                  $params = array(
+                      'list'              => filter_input(INPUT_POST, "list"),
+                      'from'              => filter_input(INPUT_POST, "from"),
+                      'to'                => filter_input(INPUT_POST, "to"),
+                      'exec'              => filter_input(INPUT_POST, "exec"),
+                      'retchecks_type'    => filter_input(INPUT_POST, "retchecks_type"),
+                      'retchecks_value'   => filter_input(INPUT_POST, "retchecks_value"),
+                      'deploy_actiontype' => filter_input(INPUT_POST, "deploy_actiontype"),
+                      'index'             => filter_input(INPUT_POST, "index"),
+                      'id'                => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployAction::save_item($params);
+                  break;
+
+               case "remove_item" :
+                  $params = array(
+                      'action_entries' => filter_input(INPUT_POST, "action_entries"),
+                      'id'             => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployAction::remove_item($params);
+                  break;
+
+               case "move_item" :
+                  $params = array(
+                      'old_index' => filter_input(INPUT_POST, "old_index"),
+                      'new_index' => filter_input(INPUT_POST, "new_index"),
+                      'id'        => filter_input(INPUT_POST, "id")
+                  );
+                  PluginFusioninventoryDeployAction::move_item($params);
+                  break;
+
+            }
+            break;
+
+         default :
+            Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
+            Html::displayErrorAndDie ("package subtype not found");
+            break;
+
+      }
    } else {
       $json_response['success'] = FALSE;
       $json_response['reason'] = __('Package modification is forbidden by your profile.');
@@ -63,40 +216,49 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    exit;
 }
 
-if (!isset($_REQUEST['packages_id'])
-        && !isset($_REQUEST['rand'])
-        && !isset($_REQUEST['subtype'])) {
+$orders_id = filter_input(INPUT_POST, "orders_id");
+$rand = filter_input(INPUT_POST, "rand");
+$mode = filter_input(INPUT_POST, "mode");
+
+if (empty($orders_id) && empty($rand)
+        && empty(filter_input(INPUT_POST, "subtype"))) {
    exit;
 }
 
-if (!is_numeric($_REQUEST['packages_id'])) {
+if (!is_numeric($orders_id)) {
    Toolbox::logDebug("Error: orders_id in request is not an integer");
-   Toolbox::logDebug(var_dump($_REQUEST['orders_id']) );
+   Toolbox::logDebug(var_dump($orders_id) );
    exit;
 }
 
 $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
-$pfDeployPackage->getFromDB($_REQUEST['packages_id']);
+$pfDeployPackage->getFromDB($orders_id);
 
 
 //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
 // I think we could use only $order -- Kevin 'kiniou' Roy
-switch ($_REQUEST['subtype']) {
+$input = array(
+    'index'       => filter_input(INPUT_POST, "index"),
+    'value'       => filter_input(INPUT_POST, "value"),
+    'packages_id' => filter_input(INPUT_POST, "packages_id"),
+    'orders_id'   => filter_input(INPUT_POST, "orders_id"),
+);
+switch (filter_input(INPUT_POST, "subtype")) {
 
    case 'check':
       PluginFusioninventoryDeployCheck::displayForm(
-              $pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
+              $pfDeployPackage, $input, $rand, $mode);
       break;
 
    case 'file':
       PluginFusioninventoryDeployFile::displayForm(
-              $pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
+              $pfDeployPackage, $input, $rand, $mode);
       break;
 
    case 'action':
       PluginFusioninventoryDeployAction::displayForm(
-              $pfDeployPackage, $_REQUEST, $_REQUEST['rand'], $_POST['mode']);
+              $pfDeployPackage, $input, $rand, $mode);
       break;
 
    case 'package_json_debug':

@@ -405,12 +405,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             case "Computer":
                echo "<input type='file' name='file' value='".
                   __("filename", 'fusioninventory')."' />";
-               echo "<i>".self::getMaxUploadSize()."</i>";
+               echo " <i>".self::getMaxUploadSize()."</i>";
                break;
 
             case "Server":
                echo "<input type='text' name='filename' id='server_filename$rand'".
-                  " style='width:120px;float:left' />";
+                  " style='width:500px;float:left' />";
                echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
                   "' onclick='fileModal$rand.dialog(\"open\");' />";
                Ajax::createModalWindow("fileModal$rand",
@@ -480,12 +480,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Show files / directory on server.
     * This is used when get a file on the server
     *
-    * @param array $params
+    * @param string $rand
     */
-   static function showServerFileTree($params) {
+   static function showServerFileTree($rand) {
       global $CFG_GLPI;
-
-      $rand = $params['rand'];
 
       echo "<script type='text/javascript'>";
       echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -540,20 +538,30 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Get files / directories on server
     *
-    * @param array $params
+    * @param type $node
     */
-   static function getServerFileTree($params) {
+   static function getServerFileTree($node) {
 
       $nodes = array();
+      $pfConfig = new PluginFusioninventoryConfig();
+      $dir = $pfConfig->getValue('server_upload_path');
 
-      if (isset($params['node'])) {
-         //root node
-         $pfConfig = new PluginFusioninventoryConfig();
-         $dir = $pfConfig->getValue('server_upload_path');
+      $security_problem = FALSE;
+      if ($node != "-1") {
+         if (strstr($node, "..")) {
+            $security_problem = TRUE;
+         }
+         $matches = array();
+         preg_match("/^(".str_replace("/", "\/", $dir).")(.*)$/", $node, $matches);
+         if (count($matches) != 3) {
+            $security_problem = TRUE;
+         }
+      }
 
+      if (!$security_problem) {
          // leaf node
-         if ($params['node'] != -1) {
-            $dir = $params['node'];
+         if ($node != -1) {
+            $dir = $node;
          }
 
          if (($handle = opendir($dir))) {

@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdowndefinitiontypelist.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitiontypelist.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -51,6 +51,11 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 $pfTaskjob = new PluginFusioninventoryTaskjob;
-$pfTaskjob->dropdownDefinition("DefinitionList", $_POST['DefinitionType'], $_POST['method'], $_POST['deftypeid'], $_POST['taskjobs_id']);
+$pfTaskjob->dropdownDefinition(
+        "DefinitionList",
+        filter_input(INPUT_POST, "DefinitionType"),
+        filter_input(INPUT_POST, "method"),
+        filter_input(INPUT_POST, "deftypeid"),
+        filter_input(INPUT_POST, "taskjobs_id"));
 
 ?>

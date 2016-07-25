@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdowntypelist.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowntypelist.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -50,9 +50,14 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-if ($_POST[$_POST['myname']] != '') {
+$myname = filter_input(INPUT_POST, "myname");
+$myamemore = filter_input(INPUT_POST, $myname);
+if ($myamemore != '') {
    $pfTaskjob = new PluginFusioninventoryTaskjob();
-   $pfTaskjob->dropdownValue($_POST['myname'], $_POST[$_POST['myname']], $_POST['method'], $_POST[$_POST['name'].'typeid'], $_POST['taskjobs_id']);
+   $pfTaskjob->dropdownValue($myname, $myamemore,
+           filter_input(INPUT_POST, "method"),
+           filter_input(INPUT_POST, filter_input(INPUT_POST, "name").'typeid'),
+           filter_input(INPUT_POST, "taskjobs_id"));
 }
 
 ?>

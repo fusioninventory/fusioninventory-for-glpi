@@ -50,15 +50,15 @@ class PluginFusioninventoryDeployFilepart {
    /**
     * Send file to agent
     *
-    * @param array $params
+    * @param string $file
     */
-   static function httpSendFile($params) {
-      if (!isset($params['file'])) {
+   static function httpSendFile($file) {
+      if (empty($file)) {
          header("HTTP/1.1 500");
          exit;
       }
       $matches = array();
-      preg_match('/.\/..\/([^\/]+)/', $params['file'], $matches);
+      preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
       $sha512 = $matches[1];
 //      $short_sha512 = substr($sha512, 0, 6);

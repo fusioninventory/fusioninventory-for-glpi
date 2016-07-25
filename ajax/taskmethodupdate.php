@@ -40,22 +40,19 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskmethodupdate.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskmethodupdate.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
-$value = 0;
-$title = 0;
-if (isset($_POST['value'])) {
-   $value = $_POST['value'];
-}
 
-if ($_POST['method'] != '') {
+if (filter_input(INPUT_POST, "method") != '') {
     $pfTaskjob = new PluginFusioninventoryTaskjob();
-    $pfTaskjob->updateMethod($_POST['method'], $_POST['taskjobs_id']);
+    $pfTaskjob->updateMethod(
+            filter_input(INPUT_POST, "method"),
+            filter_input(INPUT_POST, "taskjobs_id"));
 }
 
 ?>

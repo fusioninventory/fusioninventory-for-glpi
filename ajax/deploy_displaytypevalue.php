@@ -45,25 +45,39 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-if (!isset($_POST['rand']) && !isset($_POST['subtype'])) {
-   exit;
+$rand = filter_input(INPUT_POST, "rand");
+$mode = filter_input(INPUT_POST, "mode");
+$type = filter_input(INPUT_POST, "type");
+
+if (empty($rand) && (empty($type))) {
+   exit();
 }
 
-$rand = $_POST['rand'];
-$mode = $_POST['mode'];
-
-switch ($_POST['type']) {
+switch ($type) {
 
    case 'check':
-      PluginFusioninventoryDeployCheck::displayAjaxValues(NULL, $_POST, $rand, $mode);
+      $request_data = array(
+          'packages_id' => filter_input(INPUT_POST, "packages_id"),
+          'orders_id'   => filter_input(INPUT_POST, "orders_id"),
+          'value'       => filter_input(INPUT_POST, "value")
+      );
+      PluginFusioninventoryDeployCheck::displayAjaxValues(NULL, $request_data, $rand, $mode);
       break;
 
    case 'file':
-      PluginFusioninventoryDeployFile::displayAjaxValues( NULL, $_POST, $rand, $mode);
+      $request_data = array(
+          'packages_id' => filter_input(INPUT_POST, "packages_id"),
+          'value'       => filter_input(INPUT_POST, "value")
+      );
+      PluginFusioninventoryDeployFile::displayAjaxValues( NULL, $request_data, $rand, $mode);
       break;
 
    case 'action':
-      PluginFusioninventoryDeployAction::displayAjaxValues(NULL, $_POST, $mode);
+      $request_data = array(
+          'packages_id' => filter_input(INPUT_POST, "packages_id"),
+          'values'      => filter_input(INPUT_POST, "values")
+      );
+      PluginFusioninventoryDeployAction::displayAjaxValues(NULL, $request_data, $mode);
       break;
 
 }

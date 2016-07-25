@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "dropdowndefinitionselection.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowndefinitionselection.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -52,8 +52,8 @@ Session::checkCentralAccess();
 
 echo "<script type='text/javascript'>
 var select = document.getElementById('definitionlist');
-var obj = document.getElementById('".$_POST['defselectadd']."');
-var deftype = document.getElementById('".$_POST['definitiontypeid']."');
+var obj = document.getElementById('".filter_input(INPUT_POST, "defselectadd")."');
+var deftype = document.getElementById('".filter_input(INPUT_POST, "definitiontypeid")."');
 
 var list = document.getElementById('definitionselection').innerHTML;
 

@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'], "taskjob_form.php")) {
+if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjob_form.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
@@ -53,5 +53,10 @@ Session::checkCentralAccess();
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-$pfTaskjob->ajaxGetForm($_GET);
+$params = array(
+    "id" => filter_input(INPUT_GET, "id"),
+    "task_id" => filter_input(INPUT_GET, "task_id")
+);
+
+$pfTaskjob->ajaxGetForm($params);
 ?>
