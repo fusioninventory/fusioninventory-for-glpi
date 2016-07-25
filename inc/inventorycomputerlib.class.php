@@ -769,7 +769,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
              *
              */
 
-
             if (count($db_software) == 0) { // there are no software associated with computer
                $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
                $options = array();
@@ -828,8 +827,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                       'computers_id'        => $computers_id,
                       'softwareversions_id' => $softwareversions_id,
                       'is_dynamic'          => 1,
-                      'entities_id'         => $computer->fields['entities_id']
+                      'entities_id'         => $computer->fields['entities_id'],
+                      'date_install'        => 'NULL'
                       );
+                  if (isset($a_software['date_install'])) {
+                     $a_tmp['date_install'] = $a_software['date_install'];
+                  }
                   $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                }
                if (count($a_toinsert) > 0) {
@@ -2297,9 +2300,27 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
-      $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`) ';
-      $query .= ' VALUES '.implode(',', $a_input);
-      $DB->query($query);
+      // split with and without date_install
+      $input_date = array();
+      $input_nodate = array();
+      foreach ($a_input as $input) {
+         if (substr($input, -7) == "'NULL')") {
+            $input_nodate[] = str_replace(",'NULL')", ")", $input);
+         } else {
+            $input_date[] = $input;
+         }
+      }
+      if (count($input_date) > 0) {
+         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`,`date_install`) ';
+         $query .= ' VALUES '.implode(',', $input_date);
+         $DB->query($query);
+      }
+
+      if (count($input_nodate) > 0) {
+         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`) ';
+         $query .= ' VALUES '.implode(',', $input_nodate);
+         $DB->query($query);
+      }
    }
 
 

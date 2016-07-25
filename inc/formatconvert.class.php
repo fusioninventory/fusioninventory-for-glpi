@@ -1547,7 +1547,8 @@ class PluginFusioninventoryFormatconvert {
                                         array(
                                            'PUBLISHER'   => 'manufacturers_id',
                                            'NAME'        => 'name',
-                                           'VERSION'     => 'version'));
+                                           'VERSION'     => 'version',
+                                           'INSTALLDATE' => 'date_install'));
          if (!isset($array_tmp['name'])
                  || $array_tmp['name'] == '') {
             if (isset($a_softwares['GUID'])
@@ -1556,6 +1557,14 @@ class PluginFusioninventoryFormatconvert {
             }
          }
          $array_tmp['operatingsystems_id'] = $operatingsystems_id;
+         // test date_install
+         $matches = array();
+         preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
+         if (count($matches) == 4) {
+            $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
+         } else {
+            unset($array_tmp['date_install']);
+         }
 
          if (!(!isset($array_tmp['name'])
                  || $array_tmp['name'] == '')) {

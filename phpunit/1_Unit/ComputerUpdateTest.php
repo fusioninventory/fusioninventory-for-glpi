@@ -261,7 +261,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
-                    'operatingsystems_id'    => 0
+                    'operatingsystems_id'    => 0,
+                    'date_install'           => '2016-07-20'
                 )
           );
 
@@ -617,10 +618,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(1);
+      $computer_SoftwareVersion->getFromDB(2);
 
       $a_reference = array(
-          'id'                   => '1',
+          'id'                   => '2',
           'computers_id'         => '1',
           'softwareversions_id'  => '1',
           'is_deleted_computer'  => '0',
@@ -646,10 +647,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(2);
+      $computer_SoftwareVersion->getFromDB(3);
 
       $a_reference = array(
-          'id'                   => '2',
+          'id'                   => '3',
           'computers_id'         => '1',
           'softwareversions_id'  => '2',
           'is_deleted_computer'  => '0',
@@ -675,10 +676,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(3);
+      $computer_SoftwareVersion->getFromDB(1);
 
       $a_reference = array(
-          'id'                   => '3',
+          'id'                   => '1',
           'computers_id'         => '1',
           'softwareversions_id'  => '3',
           'is_deleted_computer'  => '0',
@@ -686,7 +687,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'entities_id'          => '0',
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
-          'date_install'         => null
+          'date_install'         => '2016-07-20'
       );
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
