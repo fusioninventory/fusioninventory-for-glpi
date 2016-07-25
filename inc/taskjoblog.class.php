@@ -859,19 +859,16 @@ function appear_array(id){
          case 7:
             return "<".$type." align='center' width='".$width."'>".
                       __('Prepared', 'fusioninventory')."</".$type.">";
-            break;
 
          case 1:
             return "<".$type." align='center' width='".$width."'>".
                        __('Started', 'fusioninventory')."</".$type.">";
-            break;
 
          case 2:
             return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;".
                      "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                      "align='center' width='".$width."'>".
                      "<strong>".__('Ok', 'fusioninventory')."</strong></".$type.">";
-            break;
 
          case 3:
             return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;".
@@ -879,28 +876,24 @@ function appear_array(id){
                      "align='center' width='".$width."'>".
                      "<strong>".__('Error / rescheduled', 'fusioninventory').
                      "</strong></".$type.">";
-            break;
 
          case 4:
             return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;".
                  "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' ".
                  "width='".$width."'>".
                  "<strong>".__('Error')."</strong></".$type.">";
-            break;
 
          case 5:
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;".
                      "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                      "align='center' width='".$width."'>".
                      "<strong>".__('unknown', 'fusioninventory')."</strong></".$type.">";
-            break;
 
          case 6:
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;".
                      "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                      "align='center' width='".$width."'>".
                      "<strong>".__('Running')."</strong></".$type.">";
-            break;
 
       }
    }
@@ -937,8 +930,7 @@ function appear_array(id){
             $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
          }
       }
-      $comment = str_replace(",[", "<br/>[", $comment);
-      return $comment;
+      return str_replace(",[", "<br/>[", $comment);
    }
 
 
@@ -967,7 +959,7 @@ function appear_array(id){
          } else if ($i == $nb) {
             $endtable = 1;
          }
-         $this->_showLine(
+         $this->ShowLine(
                  $data['method'],
                  $data['name'],
                  '80 deployments (ok: 50, ko : 12, unneeded : 3)',
@@ -982,7 +974,7 @@ function appear_array(id){
 
 
 
-   function _showLine ($module, $name, $text, $percent, $state, $begintable=0, $endtable=0) {
+   function showLine ($module, $name, $text, $percent, $state, $begintable=0, $endtable=0) {
       global $CFG_GLPI;
 
       if ($begintable) {

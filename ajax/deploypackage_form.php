@@ -53,7 +53,7 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    );
 
    if (Session::haveRight('plugin_fusioninventory_package', UPDATE)) {
-      PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
+      PluginFusioninventoryDeployPackage::alterJSON('move_item', $_REQUEST);
    } else {
       $json_response['success'] = FALSE;
       $json_response['reason'] = __('Package modification is forbidden by your profile.');
@@ -101,7 +101,7 @@ switch ($_REQUEST['subtype']) {
 
    case 'package_json_debug':
       if ( isset($order->fields['json']) ) {
-         $pfDeployPackage->display_json_debug();
+         $pfDeployPackage->displayJSONDebug();
       } else {
          echo "{}";
       }

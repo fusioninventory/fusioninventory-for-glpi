@@ -329,7 +329,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       PluginFusioninventoryTask::cronTaskscheduler();
 
       // 1 computer deploy successfully
-      $agent = $pfAgent->InfosByKey('portdavid');
+      $agent = $pfAgent->infoByKey('portdavid');
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
          $agent['id'],
          array('deployinstall')
@@ -347,7 +347,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       }
 
       // 1 computer in error
-      $agent = $pfAgent->InfosByKey('computer3');
+      $agent = $pfAgent->infoByKey('computer3');
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
          $agent['id'],
          array('deployinstall')

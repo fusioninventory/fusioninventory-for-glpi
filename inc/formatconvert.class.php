@@ -49,6 +49,12 @@ class PluginFusioninventoryFormatconvert {
    var $manufacturer_cache = array();
 
 
+   /**
+    * Convert XML into php array
+    *
+    * @param string $xml
+    * @return array
+    */
    static function XMLtoArray($xml) {
       global $PLUGIN_FUSIONINVENTORY_XML;
 
@@ -150,6 +156,12 @@ class PluginFusioninventoryFormatconvert {
 
 
 
+   /**
+    * Convert json into php array
+    *
+    * @param string $json
+    * @return array
+    */
    static function JSONtoArray($json) {
       $datainventory = json_decode($json, TRUE);
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
@@ -158,6 +170,12 @@ class PluginFusioninventoryFormatconvert {
 
 
 
+   /**
+    * Clean the php array (remove unwanted characters, potential attack code...)
+    *
+    * @param array $data
+    * @return array cleaned php array
+    */
    static function cleanArray($data) {
       foreach ($data as $key=>$value) {
          //if (is_array($value)) {
@@ -184,8 +202,11 @@ class PluginFusioninventoryFormatconvert {
 
 
 
-   /*
-    * Modify Computer inventory
+   /**
+    * Convert Fusioninventory Computer inventory to pre-prepared GLPI inventory
+    *
+    * @param array $array
+    * @return array
     */
    static function computerInventoryTransformation($array) {
       global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
@@ -431,7 +452,6 @@ class PluginFusioninventoryFormatconvert {
 
       $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
 
-
       // * OPERATINGSYSTEM
       if (isset($array['OPERATINGSYSTEM'])) {
          $array_tmp = $thisc->addValues(
@@ -496,7 +516,6 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
-
          if (isset($array_tmp['plugin_fusioninventory_computerarches_id'])
                  && $array_tmp['plugin_fusioninventory_computerarches_id'] != '') {
 
@@ -559,8 +578,6 @@ class PluginFusioninventoryFormatconvert {
 //                  'VOLTAGE'    => 'voltage'));
 //         }
 //      }
-
-
 
       // * SOUNDS
       $a_inventory['soundcard'] = array();
@@ -764,7 +781,6 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-
       // * CONTROLLERS
       $a_inventory['controller'] = array();
       if ($pfConfig->getValue('component_control') == 1) {
@@ -949,7 +965,6 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-
       // * PRINTERS
       $a_inventory['printer'] = array();
       if (isset($array['PRINTERS'])) {
@@ -985,8 +1000,6 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
-
-
 
       // * PERIPHERAL
       $a_inventory['peripheral'] = array();
@@ -1126,9 +1139,6 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
-
-
-
 
       // * USERS
       $cnt = 0;
@@ -1485,7 +1495,6 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-
       $plugin_params = array(
          'inventory' => $a_inventory,
          'source'    => $array
@@ -1504,6 +1513,14 @@ class PluginFusioninventoryFormatconvert {
 
 
 
+   /**
+    * Convert SOFTWARE part of computer inventory because need a special
+    * transformation
+    *
+    * @param array $a_inventory computer inventory converted
+    * @param integer $entities_id entity id
+    * @return array
+    */
    function computerSoftwareTransformation($a_inventory, $entities_id) {
 
    /*
@@ -1663,6 +1680,14 @@ class PluginFusioninventoryFormatconvert {
 
 
 
+   /**
+    * Prepare collect info (file, wmi and registry) to be glpi ready :D
+    *
+    * @param array $a_inventory computer array prepared
+    * @param integer $computers_id computer ID
+    * @return array
+    *
+    */
    function extraCollectInfo($a_inventory, $computers_id) {
       global $DB;
 
@@ -1776,6 +1801,14 @@ class PluginFusioninventoryFormatconvert {
 
 
 
+   /**
+    * Convert data in right format (string, integer) when have empty or not
+    * exist in inventory
+    *
+    * @param array $array inventory data
+    * @param string $a_key the key to check
+    * @return string|array
+    */
    static function addValues($array, $a_key) {
       $a_return = array();
       //if (!is_array($array)) {
@@ -1812,6 +1845,14 @@ class PluginFusioninventoryFormatconvert {
 
 
 
+   /**
+    * Replace string in prepared data into GLPI ID (create items if required)
+    *
+    * @param array $array data prepared
+    * @param string $itemtype it's itemtype of item
+    * @param integer $items_id id of the item
+    * @return array
+    */
    function replaceids($array, $itemtype, $items_id, $level=0) {
       global $CFG_GLPI;
 
@@ -1861,7 +1902,6 @@ class PluginFusioninventoryFormatconvert {
                              && $key != "users_id") {
                         $this->foreignkey_itemtype[$key] =
                                     getItemTypeForTable(getTableNameForForeignKeyField($key));
-                        $table = getTableForItemType($this->foreignkey_itemtype[$key]);
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                                 $value,
                                                                 $_SESSION["plugin_fusioninventory_entity"]);
@@ -1877,8 +1917,12 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-   /*
-    * Modify switch inventory
+
+   /**
+    * Convert network equipment in GLPI prepared data
+    *
+    * @param array $array
+    * @return array
     */
    static function networkequipmentInventoryTransformation($array) {
 
@@ -2035,8 +2079,11 @@ class PluginFusioninventoryFormatconvert {
 
 
 
-   /*
-    * Modify switch inventory
+   /**
+    * Convert printer in GLPI prepared data
+    *
+    * @param array $array
+    * @return array
     */
    static function printerInventoryTransformation($array) {
 

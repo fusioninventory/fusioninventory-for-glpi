@@ -52,15 +52,13 @@ class PluginFusioninventoryInventoryComputerInventory {
    * Import data
    *
    * @param $p_DEVICEID XML code to import
-   * @param $p_CONTENT XML code of the Computer
-   * @param $p_CONTENT XML code of all agent have sent
+   * @param $a_CONTENT XML code of the Computer
+   * @param $arrayinventory array of the inventory
    *
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       global $DB, $CFG_GLPI;
-
-      $pfConfig = new PluginFusioninventoryConfig();
 
       $errors = '';
       $_SESSION["plugin_fusioninventory_entity"] = -1;
@@ -203,7 +201,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $a_computerinventory['monitor'][$num] = $pfBlacklist->cleanBlacklist($a_monit);
          }
       }
-      $this->fill_arrayinventory($a_computerinventory);
+      $this->fillArrayInventory($a_computerinventory);
 
       $input = array();
 
@@ -260,9 +258,9 @@ class PluginFusioninventoryInventoryComputerInventory {
                AND (!empty($a_computerinventory['Computer']['operatingsystems_id']))) {
             $input['osname'] = $a_computerinventory['Computer']['operatingsystems_id'];
          }
-         if ((isset($a_inventory['fusioninventorycomputer']['oscomment']))
-               AND (!empty($a_inventory['fusioninventorycomputer']['oscomment']))) {
-            $input['oscomment'] = $a_inventory['fusioninventorycomputer']['oscomment'];
+         if ((isset($a_computerinventory['fusioninventorycomputer']['oscomment']))
+               AND (!empty($a_computerinventory['fusioninventorycomputer']['oscomment']))) {
+            $input['oscomment'] = $a_computerinventory['fusioninventorycomputer']['oscomment'];
          }
          if ((isset($a_computerinventory['Computer']['computermodels_id']))
                  AND (!empty($a_computerinventory['Computer']['computermodels_id']))) {
@@ -300,8 +298,6 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // If transfer is disable, get entity and search only on this entity
          // (see http://forge.fusioninventory.org/issues/1503)
-         $pfConfig = new PluginFusioninventoryConfig();
-         $pfEntity = new PluginFusioninventoryEntity();
 
          // * entity rules
             $inputent = $input;
@@ -522,8 +518,6 @@ class PluginFusioninventoryInventoryComputerInventory {
             $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
          }
 
-         $pfConfig = new PluginFusioninventoryConfig();
-
          $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventories`
             SET `value`='".$items_id."'";
          $CFG_GLPI["use_log_in_files"] = FALSE;
@@ -684,7 +678,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
 
-   function fill_arrayinventory($data) {
+   function fillArrayInventory($data) {
       $this->arrayinventory = $data;
    }
 }

@@ -346,7 +346,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
       } else {
-         $a_data = $this->get_agents($method);
+         $a_data = $this->getAgents($method);
 
          $rand = Dropdown::showFromArray($_POST['name'].'selectiontoadd', $a_data);
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
@@ -464,7 +464,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          if (is_callable(array($class, $actionselection_method))) {
             $rand = call_user_func(array($class, $actionselection_method));
          } else {
-            $a_data = $this->get_agents($method);
+            $a_data = $this->getAgents($method);
 
             $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
          }
@@ -499,7 +499,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    * @return array [id integed agent id] => $name value agent name
    *
    **/
-   function get_agents($module) {
+   function getAgents($module) {
 
       $array = array();
       $array[".1"] = " ".__('Auto managenement dynamic of agents', 'fusioninventory');
@@ -1513,22 +1513,18 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    function prepareRunTaskjob($a_taskjob) {
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       $uniqid = 0;
-//      if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
+      $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
+      $item = new $itemtype;
 
-         $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
-         $item = new $itemtype;
-
-         if ($a_taskjob['method'] == 'deployinstall'
-                 && isset($a_taskjob['definitions_filter'])) {
-            $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
-         } else {
-            $uniqid = $item->prepareRun($a_taskjob['id']);
-         }
-         return $uniqid;
-//      }
+      if ($a_taskjob['method'] == 'deployinstall'
+              && isset($a_taskjob['definitions_filter'])) {
+         $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
+      } else {
+         $uniqid = $item->prepareRun($a_taskjob['id']);
+      }
+      return $uniqid;
    }
 
 

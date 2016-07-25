@@ -153,7 +153,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
    /**
     * Get ESX jobs for this agent
     *
-    * @param type $device_id deviceid of the agent runing and want job info to run
+    * @param type $taskjobstate
     *
     * @return $response array
     */

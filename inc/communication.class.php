@@ -183,7 +183,7 @@ class PluginFusioninventoryCommunication {
       }
 
       if (!isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-         $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
+         $agent = $pfAgent->infoByKey($this->message['DEVICEID']);
       } else {
          $agent = array('id' => $_SESSION['plugin_fusioninventory_agents_id']);
       }
@@ -276,7 +276,7 @@ class PluginFusioninventoryCommunication {
             ) {
                $class = new $className();
                $sxml_temp = $class->run($jobstate);
-               PluginFusioninventoryToolbox::append_simplexml(
+               PluginFusioninventoryToolbox::appendSimplexml(
                   $this->message, $sxml_temp
                );
             }
@@ -457,7 +457,7 @@ class PluginFusioninventoryCommunication {
 <REPLY>
 </REPLY>");
 
-            $a_agent = $agent->InfosByKey($deviceid);
+            $a_agent = $agent->infoByKey($deviceid);
 
             // Get taskjob in waiting
             $communication->getTaskAgent($a_agent['id']);

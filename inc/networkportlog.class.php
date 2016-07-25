@@ -94,7 +94,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     * @return id of inserted line
     *
    **/
-   function insert_connection($status, $array) {
+   function insertConnection($status, $array) {
       global $DB;
 
       $input = array();
@@ -325,7 +325,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $pfNetworkPort->getValue($db_field);
             $array["value_new"] = $value_new;
-            $pfNetworkPortLog->insert_connection("field", $array);
+            $pfNetworkPortLog->insertConnection("field", $array);
          }
       }
    }

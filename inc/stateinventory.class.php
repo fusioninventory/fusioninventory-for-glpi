@@ -180,8 +180,6 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
             echo "<td>-</td>";
             echo "<td>-</td>";
          } else {
-            $interval = '';
-
             $date1 = new DateTime($start_date);
             $date2 = new DateTime($end_date);
             $interval = $date1->diff($date2);
@@ -207,7 +205,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    }
 
 
-   function date_diff($date1, $date2) {
+   function dateDiff($date1, $date2) {
       $timestamp1 = strtotime($date1);
       $timestamp2 = strtotime($date2);
 

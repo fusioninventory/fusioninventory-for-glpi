@@ -310,17 +310,15 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfIPRange = new PluginFusioninventoryIPRange();
-      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       $pfToolbox = new PluginFusioninventoryToolbox();
-
 
       $pfAgent->getFromDB($jobstate->fields['plugin_fusioninventory_agents_id']);
 
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
 
-      $a_versions = importArrayFromDB($pfAgent->fields["version"]);
       // * Disabled by David Durieux, I think it's not required now * //
+//       $a_versions = importArrayFromDB($pfAgent->fields["version"]);
 //      if (((isset($a_versions["NETWORKDISCOVERY"])) AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))
 //              OR !isset($a_versions["NETWORKDISCOVERY"])) {
 //         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml")) {

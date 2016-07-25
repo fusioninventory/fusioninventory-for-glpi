@@ -70,7 +70,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    /**
     * Display informations about computer (bios...)
     *
-    * @param type $computers_id
+    * @param type $item
     */
    static function showInfo($item) {
       global $CFG_GLPI;

@@ -72,7 +72,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
    function defineTabs($options=array()){
-      global $CFG_GLPI;
       $ong = array();
 
       $this->addDefaultFormTab($ong);
@@ -387,7 +386,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    /**
     * Display form for task configuration
     *
-    * @param $items_id integer ID of the task
+    * @param $id integer ID of the task
     * @param $options array
     *
     * @return bool TRUE if form is ok

@@ -190,7 +190,7 @@ class PluginFusioninventoryToolbox {
     * @param $simplexml_from simplexml object destination
     *
     **/
-   static function append_simplexml(&$simplexml_to, &$simplexml_from) {
+   static function appendSimplexml(&$simplexml_to, &$simplexml_from) {
       static $firstLoop=TRUE;
 
       //Here adding attributes to parent
@@ -206,7 +206,7 @@ class PluginFusioninventoryToolbox {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
          }
          $firstLoop=FALSE;
-         self::append_simplexml($simplexml_temp, $simplexml_child);
+         self::appendSimplexml($simplexml_temp, $simplexml_child);
       }
       unset($firstLoop);
    }

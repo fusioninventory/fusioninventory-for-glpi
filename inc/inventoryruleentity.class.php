@@ -187,7 +187,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       switch ($condition) {
          case Rule::PATTERN_FIND:
             return FALSE;
-            break;
 
          case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);

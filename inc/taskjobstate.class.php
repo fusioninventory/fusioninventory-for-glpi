@@ -81,10 +81,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
-      global $DB;
-
-
       if ($item->getType() == 'PluginFusioninventoryTask' ) {
          $item->showJobLogs();
       }
@@ -304,17 +300,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       return $moduleRun;
    }
 
+
+
    /**
     * Process ajax parameters for getLogs() methods
     *
     * since 0.85+1.0
-    * @param $options  array of ajax expected 'id' and 'last_date' parameters
+    * @param $params  array of ajax expected 'id' and 'last_date' parameters
     * @return a json encoded list of logs grouped by jobstates
     */
-
    function ajaxGetLogs($params) {
-      $result = array();
-
       $id = null;
       $last_date = null;
 
@@ -328,8 +323,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       if (!is_null($id) and !is_null($last_date)) {
          echo json_encode($this->getLogs($id, $last_date));
       }
-
    }
+
+
 
    /**
     * Get logs associated to a jobstate.
@@ -376,6 +372,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       return $logs;
    }
 
+
+
    /**
    * Change the status to finish
    *
@@ -391,11 +389,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    **/
    function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='',
                                $unmanaged=0, $reinitialize=1) {
-      global $DB;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTask = new PluginFusioninventoryTask();
 
       $this->getFromDB($taskjobstates_id);
       $input = array();
@@ -426,6 +422,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
+
    function fail($reason='') {
       $log = new PluginFusioninventoryTaskjoblog();
 
@@ -445,6 +442,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'state' => self::IN_ERROR
          ));
    }
+
+
 
    function cancel($reason='') {
 
@@ -466,6 +465,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'state' => self::CANCELLED
          ));
    }
+
+
 
    /**
     * Cron for clean taskjob

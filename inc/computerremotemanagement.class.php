@@ -82,7 +82,6 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
 
 
    function showForm($computers_id) {
-      global $CFG_GLPI;
 
       $pfRemoteManagement = new self();
       $a_remotemanagement = $pfRemoteManagement->find("`computers_id`='".$computers_id."'");

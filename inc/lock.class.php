@@ -182,7 +182,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $checked = false;
       $a_exclude = $this->excludeFields();
-      $serialized = $this->getSerialized_InventoryArray($p_itemtype, $p_items_id);
+      $serialized = $this->getSerializedInventoryArray($p_itemtype, $p_items_id);
       $options = Search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
          $name = "";
@@ -349,7 +349,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $checked = false;
       $a_exclude = $this->excludeFields();
-      $serialized = $this->getSerialized_InventoryArray($p_itemtype, 0);
       $options = search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
          $name = "";
@@ -373,7 +372,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   }
                }
             }
-            $css_glpi_value = '';
             // Get value of field
             $val = $this->getValueForKey($val, $key);
             echo "<tr class='tab_bg_1'>";
@@ -702,7 +700,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       $item_device = new $itemtype();
       $item_device->getFromDB($items_id);
-      $a_serialized = $pfLock->getSerialized_InventoryArray($itemtype, $items_id);
+      $a_serialized = $pfLock->getSerializedInventoryArray($itemtype, $items_id);
       foreach ($a_serialized as $key=>$value) {
          if (!in_array($key, $a_fieldList)) {
             $item_device->fields[$key] = $value;
@@ -752,7 +750,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
 
-   function getSerialized_InventoryArray($itemtype, $items_id) {
+   function getSerializedInventoryArray($itemtype, $items_id) {
 
       $item_extend = new PluginFusioninventoryLock();
       if ($itemtype == 'Computer') {
@@ -805,7 +803,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
    static function showLockIcon($itemtype) {
-      global $PLUGIN_HOOKS;
 
       if (isset($_GET['id'])
               && $_GET['id'] > 0) {

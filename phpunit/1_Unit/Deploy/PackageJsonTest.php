@@ -77,7 +77,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
          'return'    => 'error',
          'add_item'  => 'Add'
       );
-      PluginFusioninventoryDeployPackage::alter_json('add_item', $item);
+      PluginFusioninventoryDeployPackage::alterJSON('add_item', $item);
 
       $pfDeployPackage->getFromDB($packages_id);
       $json_structure = '{"jobs":{"checks":[{"type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';

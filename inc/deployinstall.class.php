@@ -58,7 +58,6 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
 
          case 'PluginFusioninventoryDeployPackage':
             return __('Package actions', 'fusioninventory');
-            break;
 
       }
    }

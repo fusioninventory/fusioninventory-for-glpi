@@ -222,8 +222,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
                   // Search in unmanaged device if device with IP (LLDP) is yet added, in this case,
                   // we get id of this unmanaged device
-                  $a_manageds = $pfUnmanaged->find("`ip`='".$ip."'", "", 1);
-                  if (count($a_manageds) > 0) {
+                  $a_unmanageds = $pfUnmanaged->find("`ip`='".$ip."'", "", 1);
+                  if (count($a_unmanageds) > 0) {
                      $datas= current($a_unmanageds);
                      $this->unmanagedCDP = $datas['id'];
                   }

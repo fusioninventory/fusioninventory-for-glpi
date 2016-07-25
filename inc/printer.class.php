@@ -110,8 +110,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
    function showForm(Printer $item, $options=array()) {
-      global $DB;
-
       Session::checkRight('plugin_fusioninventory_printer', READ);
 
       $id = $item->getID();
@@ -167,7 +165,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown(
+      PluginFusioninventoryConfigSecurity::authDropdown(
               $this->fields["plugin_fusioninventory_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";

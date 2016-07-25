@@ -65,8 +65,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Update computer data
     *
-    * @global type $DB
-    *
     * @param php array $a_computerinventory all data from the agent
     * @param integer $computers_id id of the computer
     * @param boolean $no_history set true if not want history
@@ -90,10 +88,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
-      $networkPort                  = new NetworkPort();
-      $networkName                  = new NetworkName();
-      $iPAddress                    = new IPAddress();
-      $ipnetwork                    = new IPNetwork();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
@@ -112,7 +106,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
 
       // * Computer
-         $db_computer = array();
          $db_computer = $computer->fields;
          $computerName = $a_computerinventory['Computer']['name'];
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
@@ -775,8 +768,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if ($nb_unicity == 0) {
                   $options['disable_unicity_check'] = TRUE;
                }
-               $a_softwareInventory = array();
-               $a_softwareVersionInventory = array();
 
                $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
@@ -873,7 +864,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                } else {
                   if (count($db_software) > 0) {
                      // Delete softwares in DB
-                     $a_delete = array();
                      foreach ($db_software as $idtmp) {
                         $this->computer_SoftwareVersion->getFromDB($idtmp);
                         $this->softwareVersion->getFromDB($this->computer_SoftwareVersion->fields['softwareversions_id']);

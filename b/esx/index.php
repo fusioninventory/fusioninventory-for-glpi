@@ -60,7 +60,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pfTaskjob      = new PluginFusioninventoryTaskjob();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-         $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
          if (isset($agent['id'])) {
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(

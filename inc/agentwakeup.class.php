@@ -73,7 +73,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    static function cronWakeupAgents($crontask) {
       global $DB;
 
-
       $wakeupArray = array();
       $tasks       = array();
       //Get the maximum number of agent to wakeup,
@@ -154,7 +153,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
       //Number of agents successfully woken up
       $wokeup = 0;
-      $myTask = new PluginFusioninventoryTask();
       if (!empty($tasks)) {
          //Update last wake up time each task
          $query_lastrun = "UPDATE `glpi_plugin_fusioninventory_tasks`

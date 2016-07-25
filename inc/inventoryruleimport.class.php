@@ -272,7 +272,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                case "dropdown_itemtype":
                   $array = $this->getTypes();
                   return $array[$pattern];
-                  break;
 
             }
          }
@@ -292,7 +291,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
          case self::PATTERN_ENTITY_RESTRICT:
             return TRUE;
-            break;
 
          case Rule::PATTERN_EXISTS:
          case Rule::PATTERN_DOES_NOT_EXISTS:

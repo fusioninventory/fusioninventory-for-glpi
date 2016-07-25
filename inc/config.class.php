@@ -294,7 +294,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    function showForm($options=array()) {
-      global $CFG_GLPI;
 
       $this->showFormHeader($options);
 
@@ -435,12 +434,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    static function getActions($action){
       switch ($action) {
+
          case self::ACTION_STATUS :
               return __('Change the status', 'fusioninventory');
-            break;
+
          case self::ACTION_CLEAN :
               return __('Clean agents', 'fusioninventory');
-            break;
+            
       }
    }
 

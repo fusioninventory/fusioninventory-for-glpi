@@ -408,8 +408,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-   function update_network_infos($id, $configsecurities_id,
-           $sysdescr) {
+   function updateNetworkInfo($id, $configsecurities_id, $sysdescr) {
       global $DB;
 
       $query = "SELECT *
@@ -423,7 +422,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          $DB->query($queryInsert);
       }
       if (empty($configsecurities_id)) {
-         $plugin_fusinvsnmp_configsecurities_id = 0;
+         $configsecurities_id = 0;
       }
       $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                 SET `plugin_fusioninventory_configsecurities_id`=
@@ -481,7 +480,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown(
+      PluginFusioninventoryConfigSecurity::authDropdown(
                  $this->fields['plugin_fusioninventory_configsecurities_id']
               );
       echo "</td>";
@@ -538,7 +537,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    /**
     * Display informations about networkequipment (automatic inventory)
     *
-    * @param type $networkequipments_id
+    * @param type $item
     */
    static function showInfo($item) {
 

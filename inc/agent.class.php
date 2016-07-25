@@ -306,7 +306,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                }
             }
             return;
-            break;
       }
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -510,7 +509,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @return array all DB fields of this agent
    *
    **/
-   function InfosByKey($device_id) {
+   function infoByKey($device_id) {
       global $DB;
 
       $query = "SELECT * FROM `".$this->getTable()."`
@@ -531,7 +530,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Import agent : create if not exist and update if yet exist
    *
-   * @param $p_xml simpleXMLobject
+   * @param $arrayinventory array
    *
    **/
    function importToken($arrayinventory) {
@@ -583,9 +582,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    function getIPs() {
-      $ip_addresses = array();
-
-      $computers_id = 0;
 
       if (isset($this->fields['computers_id']) ) {
          if ( $this->fields['computers_id'] > 0 ) {
@@ -624,7 +620,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Get agent id of a computer
    *
-   * @param $computers_id integer ID of the computer
+   * @param $computer_ids array ID of the computers
    *
    * @return agent id or False
    *
@@ -716,7 +712,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          return TRUE;
       } else { # This is a new computer
          // Link agent with computer
-         $agent = $this->InfosByKey($device_id);
+         $agent = $this->infoByKey($device_id);
          if (isset($agent['id'])) {
              $agent['computers_id'] = $computers_id;
              $agent['entities_id']  = $entities_id;
@@ -753,8 +749,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 
       $agent_id = $this->fields['id'];
-
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
          "/plugins/fusioninventory/front/agent.form.php\">";
@@ -861,7 +855,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $url_ok = null;
       $url_headers=array();
       foreach( $url_addresses as $url) {
-         if ( $stream = fopen($url, 'r', false, $ctx) ) {
+         if ($stream = fopen($url, 'r', false, $ctx)) {
             //$result = file_get_contents($url, FALSE, $ctx);
             $contents = stream_get_contents($stream);
             $url_headers[$url] = stream_get_meta_data($stream);

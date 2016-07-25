@@ -377,7 +377,7 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
    /**
-    * @param $ID  integer
+    * @param $profiles_id integer id of profile
     */
    static function createFirstAccess($profiles_id) {
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
@@ -412,7 +412,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
    static function migrateProfiles() {
-      global $DB;
       //Get all rights from the old table
       $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
 
@@ -420,7 +419,7 @@ class PluginFusioninventoryProfile extends Profile {
       $oldrights = self::getOldRightsMappings();
 
       //For each old profile : translate old right the new one
-      foreach ($profiles as $id => $profile) {
+      foreach ($profiles as $profile) {
          switch ($profile['right']) {
             case 'r' :
                $value = READ;

@@ -64,10 +64,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
                if (count($a_colfiles) == 0) {
                   return array();
                }
-               $in = array();
-               foreach ($a_colfiles as $id=>$data) {
-                  $in[] = $id;
-               }
+               $in = array_keys($a_colfiles);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_files_contents',
                                 "`plugin_fusioninventory_collects_files_id` IN ('".implode("','", $in)."')") > 0) {
                   return array(__('Find file content', 'fusioninventory'));

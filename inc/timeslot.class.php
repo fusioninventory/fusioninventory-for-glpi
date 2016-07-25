@@ -205,7 +205,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    /**
    * Display form for agent configuration
    *
-   * @param $computers_id integer ID of the agent
+   * @param $ID integer ID of the agent
    * @param $options array
    *
    * @return bool TRUE if form is ok

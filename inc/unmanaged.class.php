@@ -57,6 +57,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
+
    /**
     * @see CommonDBTM::useDeletedToLockIfDynamic()
     *
@@ -72,8 +73,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       return self::getTypeName();
    }
 
+
+
    static function getMenuContent() {
-      global $CFG_GLPI;
       $menu          = array();
       if (Session::haveRight(static::$rightname, READ)) {
          $menu['title']           = self::getTypeName();
@@ -82,6 +84,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
       return $menu;
    }
+
+
 
    function getSearchOptions() {
 
@@ -177,6 +181,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
+
    /**
     * Display tab
     *
@@ -265,7 +270,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       switch ($ma->getAction()) {
 
          case "assign_auth" :
-            PluginFusioninventoryConfigSecurity::auth_dropdown();
+            PluginFusioninventoryConfigSecurity::authDropdown();
             echo "<br><br>";
             break;
 
@@ -421,7 +426,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown(
+      PluginFusioninventoryConfigSecurity::authDropdown(
                $this->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
@@ -482,7 +487,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    * @return nothing
    *
    **/
-   function CleanOrphelinsConnections() {
+   function cleanOrphelinsConnections() {
       global $DB;
 
       $query = "SELECT `glpi_networkports`.`id`
@@ -733,7 +738,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       foreach ($a_mac as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
-            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
+            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPortsID());
             if ($ID) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -826,7 +831,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    /**
    * Purge unmanaged devices
    *
-   * @param $pram object to purge
+   * @param $parm object to purge
    *
    * @return nothing
    *
@@ -853,7 +858,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       foreach($a_ports as $a_port) {
          $NetworkPort->delete($a_port, 1);
       }
-
    }
 
 

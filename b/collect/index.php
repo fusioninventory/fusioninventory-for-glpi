@@ -79,7 +79,7 @@ switch (filter_input(INPUT_GET, "action")) {
                foreach ($taskjobstates as $taskjobstate) {
                   $out = $class->run($taskjobstate, $agent);
                   if (count($out) > 0) {
-                     $order->jobs = array_merge($order->jobs, $out);
+                     $order->jobs[] = $out;
                   }
                   $pfTaskjobstate->changeStatus(
                           $taskjobstate->fields['id'],

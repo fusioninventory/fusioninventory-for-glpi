@@ -51,8 +51,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * Import data
     *
     * @param $p_DEVICEID XML code to import
-    * @param $p_CONTENT XML code to import
-    * @param $p_xml value XML code to import
+    * @param $a_CONTENT XML code to import
+    * @param $arrayinventory array of inventory
     *
     * @return "" (import ok) / error string (import ko)
     *
@@ -65,7 +65,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
               'Function PluginFusioninventoryCommunicationNetworkDiscovery->import().');
 
       $errors = '';
-      $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
+      $a_agent = $pfAgent->infoByKey($p_DEVICEID);
       if (isset($a_CONTENT['PROCESSNUMBER'])) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
          if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
@@ -147,7 +147,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    /**
     * Prepare data and send them to rule engine
     *
-    * @param type $p_xml simpleXML object
+    * @param type $arrayinventory inventory array
     */
    function sendCriteria($arrayinventory) {
 
@@ -443,7 +443,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $item->update($input);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'Computer',
                $item->getID(),
@@ -497,9 +497,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['plugin_fusioninventory_agents_id'] =
                            $_SESSION['glpi_plugin_fusioninventory_agentid'];
 
-            $this->_updateSNMPInfo($arrayinventory, $input, $item);
+            $this->updateSNMPInfo($arrayinventory, $input, $item);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'PluginFusioninventoryUnmanaged',
                $item->getID(),
@@ -521,7 +521,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             $item->update($input);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'NetworkEquipment',
                $item->getID(),
@@ -530,12 +530,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
 
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $input = $this->_initSpecificInfo(
+            $input = $this->initSpecificInfo(
                'networkequipments_id',
                $item->getID(),
                $pfNetworkEquipment
             );
-            $this->_updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
+            $this->updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
 
             break;
 
@@ -552,7 +552,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['have_ethernet'] = '1';
             $item->update($input);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'Printer',
                $item->getID(),
@@ -561,19 +561,19 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
 
             $pfPrinter = new PluginFusioninventoryPrinter();
-            $input = $this->_initSpecificInfo(
+            $input = $this->initSpecificInfo(
                'printers_id',
                $item->getID(),
                $pfPrinter
             );
-            $this->_updateSNMPInfo($arrayinventory, $input, $pfPrinter);
+            $this->updateSNMPInfo($arrayinventory, $input, $pfPrinter);
 
             break;
 
       }
    }
 
-   function _updateNetworkInfo($arrayinventory, $item_type, $id, $instanciation_type, $check_addresses) {
+   function updateNetworkInfo($arrayinventory, $item_type, $id, $instanciation_type, $check_addresses) {
       $NetworkPort = new NetworkPort();
       $port = current($NetworkPort->find(
            "`itemtype`='$item_type' AND `items_id`='$id'".
@@ -662,7 +662,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
 
-   function _initSpecificInfo($key_field, $id, $class) {
+   function initSpecificInfo($key_field, $id, $class) {
       $instances = $class->find("`$key_field`='$id'");
       $input = array();
       if (count($instances) > 0) {
@@ -679,7 +679,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
 
-   function _updateSNMPInfo($arrayinventory, $input, $class) {
+   function updateSNMPInfo($arrayinventory, $input, $class) {
       if (isset($arrayinventory['DESCRIPTION'])
                     && !empty($arrayinventory['DESCRIPTION'])) {
          $input['sysdescr']  = $arrayinventory['DESCRIPTION'];

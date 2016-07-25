@@ -54,15 +54,15 @@ if (isset($_POST['update_json'])) {
    exit;
 } elseif (isset($_POST['add_item'])) {
    $data = array_map(array('Toolbox', 'stripslashes_deep'), $_POST);
-   PluginFusioninventoryDeployPackage::alter_json('add_item', $data);
+   PluginFusioninventoryDeployPackage::alterJSON('add_item', $data);
    Html::back();
 } elseif (isset($_POST['save_item'])) {
    $data = array_map(array('Toolbox', 'stripslashes_deep'), $_POST);
-   PluginFusioninventoryDeployPackage::alter_json('save_item', $data);
+   PluginFusioninventoryDeployPackage::alterJSON('save_item', $data);
    Html::back();
 } elseif (isset($_POST['remove_item'])) {
    $data = array_map(array('Toolbox', 'stripslashes_deep'), $_POST);
-   PluginFusioninventoryDeployPackage::alter_json('remove_item', $data);
+   PluginFusioninventoryDeployPackage::alterJSON('remove_item', $data);
    Html::back();
 }
 

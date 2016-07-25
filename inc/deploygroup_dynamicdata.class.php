@@ -155,12 +155,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $search_params['sort'] = '';
 
       //Only retrieve computers IDs
-      $results = Search::getDatas(
-         'PluginFusioninventoryComputer',
-         $search_params,
-         array('2')
-      );
-
       $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, array('2'));
       Search::constructSQL($results);
       $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",

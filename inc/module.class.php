@@ -49,7 +49,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Get all installed modules
     *
-    * @param $p_inactive=FALSE Show inactive modules
+    * @param $p_inactive Show inactive modules
     *
     * @return array of fields
     **/

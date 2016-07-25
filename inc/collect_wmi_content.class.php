@@ -64,10 +64,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
                if (count($a_colregs) == 0) {
                   return array();
                }
-               $in = array();
-               foreach ($a_colregs as $id=>$data) {
-                  $in[] = $id;
-               }
+               $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
                                 "`plugin_fusioninventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
                   return array(__('Windows WMI content', 'fusioninventory'));

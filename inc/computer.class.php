@@ -124,8 +124,8 @@ class PluginFusioninventoryComputer extends Computer {
 
       $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
       switch ($ma->getAction()) {
+
          case 'add' :
-            $input = $ma->getInput();
             foreach ($ids as $key) {
                if ($item->can($key, UPDATE)) {
                   if (!countElementsInTable($group_item->getTable(),
@@ -142,15 +142,14 @@ class PluginFusioninventoryComputer extends Computer {
                   } else {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                   }
-            } else {
-               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
-               $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+               } else {
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                  $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+               }
             }
-         }
-         return;
+            return;
 
          case 'deleteitem':
-
             foreach ($ids as $key) {
                if ($group_item->deleteByCriteria(array('items_id' => $key,
                                                        'itemtype' => 'Computer',
@@ -160,9 +159,12 @@ class PluginFusioninventoryComputer extends Computer {
                } else {
                   $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                }
-         }
+            }
+
       }
    }
+
+
 
    /**
     * @since version 0.85
@@ -170,9 +172,8 @@ class PluginFusioninventoryComputer extends Computer {
     * @see CommonDBTM::showMassiveActionsSubForm()
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      global $CFG_GLPI;
-
       switch ($ma->getAction()) {
+         
          case 'add' :
             echo "<br><br>".Html::submit(_x('button', 'Add'),
                                          array('name' => 'massiveaction'));

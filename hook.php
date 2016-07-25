@@ -886,7 +886,7 @@ function plugin_fusioninventory_getDropdown() {
 function cron_plugin_fusioninventory() {
 //   TODO :Disable for the moment (may be check if functions is good or not
 //   $ptud = new PluginFusioninventoryUnmanaged;
-//   $ptud->CleanOrphelinsConnections();
+//   $ptud->cleanOrphelinsConnections();
 //   $ptud->FusionUnknownKnownDevice();
 //   TODO : regarder les 2 lignes juste en dessous !!!!!
 //   #Clean server script processes history

@@ -265,7 +265,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
          $rangeToUpdate = $dbentries;
          $rangeToAdd = array();
-         $rangeToDelete = array();
 
          foreach ($dbentries as $entries) {
             // the entry if before this db entry

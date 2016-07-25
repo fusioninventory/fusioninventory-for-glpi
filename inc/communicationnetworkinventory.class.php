@@ -77,7 +77,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-      $this->agent = $pfAgent->InfosByKey($p_DEVICEID);
+      $this->agent = $pfAgent->infoByKey($p_DEVICEID);
 
       $this->arrayinventory = $arrayinventory;
 
@@ -132,7 +132,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
    /**
     * Import the content (where have all devices)
-    *@param $p_content CONTENT code to import
+    *@param $arrayinventory CONTENT code to import
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
@@ -196,7 +196,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
             case 'AGENT' :
                if (isset($this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'])) {
-                  $agent = $pfAgent->InfosByKey($this->arrayinventory['DEVICEID']);
+                  $agent = $pfAgent->infoByKey($this->arrayinventory['DEVICEID']);
                   $agent['fusioninventory_agent_version'] =
                                        $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
                   $agent['last_agent_update'] = date("Y-m-d H:i:s");
@@ -290,7 +290,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    /**
     * Send XML of SNMP device to rules
     *
-    * @param simplexml $p_CONTENT
+    * @param simplexml $a_inventory
     *
     * @return type
     */

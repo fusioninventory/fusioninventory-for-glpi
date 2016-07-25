@@ -488,7 +488,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          // === debug ===
          echo "<tr><td>";
          echo "<span id='package_json_debug'>";
-         $this->display_json_debug();
+         $this->displayJSONDebug();
          echo "</sp3an>";
          echo "</td></tr>";
       }
@@ -550,7 +550,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * When user is in DEBUG mode, we display the json
     *
     */
-   function display_json_debug() {
+   function displayJSONDebug() {
       global $CFG_GLPI;
 
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
@@ -578,7 +578,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param string $action_type type of action
     * @param array $params data used to update the json
     */
-   static function alter_json($action_type, $params) {
+   static function alterJSON($action_type, $params) {
       //route to sub class
       $item_type = $params['itemtype'];
 
@@ -1158,11 +1158,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     *
     * @param integer $users_id id of the user
     */
-   function show_package_for_me($users_id) {
+   function showPackageForMe($users_id) {
 
       $computer = new Computer();
 
-      $my_packages = $this->get_package_for_me($users_id);
+      $my_packages = $this->getPackageForMe($users_id);
 
       $states = array(
           'agents_notdone'   => __('Not done yet', 'fusioninventory'),
@@ -1258,7 +1258,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     *
     * @param integer $users_id id of the user
     */
-   function get_package_for_me($users_id) {
+   function getPackageForMe($users_id) {
 
       $computer      = new Computer();
       $pfDeployGroup = new PluginFusioninventoryDeployGroup();
@@ -1270,9 +1270,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       foreach ($mycomputers as $computers_id=>$data) {
          $my_packages[$computers_id] = array();
       }
-      $packages_used = $this->get_my_depoy_packages($my_packages, $users_id);
+      $packages_used = $this->getMyDepoyPackages($my_packages, $users_id);
 
-      $packages = $this->can_user_deploy_self();
+      $packages = $this->canUserDeploySelf();
       if ($packages) {
          foreach ($packages as $package) {
             $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_fusioninventory_deploygroups_id']);
@@ -1282,7 +1282,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   if (isset($packages_used[$computers_id][$package['id']])) {
                      $taskjobs_id = $packages_used[$computers_id][$package['id']];
                      $my_packages[$computers_id][$package['id']]['taskjobs_id'] = $taskjobs_id;
-                     $last_job_state = $this->get_my_depoy_packages_state($computers_id, $taskjobs_id);
+                     $last_job_state = $this->getMyDepoyPackagesState($computers_id, $taskjobs_id);
                      $my_packages[$computers_id][$package['id']]['last_taskjobstate'] = $last_job_state;
                   }
                }
@@ -1302,7 +1302,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param integer $packages_id id of the package to install in computer
     * @param integer $users_id id of the user have requested the installation
     */
-   function deploy_to_computer($computers_id, $packages_id, $users_id) {
+   function deployToComputer($computers_id, $packages_id, $users_id) {
       global $DB;
 
       $pfTask    = new PluginFusioninventoryTask();
@@ -1377,7 +1377,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param integer $users_id
     * @return array
     */
-   function get_my_depoy_packages($computers_packages, $users_id) {
+   function getMyDepoyPackages($computers_packages, $users_id) {
       global $DB;
 
       // Get packages yet deployed by enduser
@@ -1413,7 +1413,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param integer $taskjobs_id id of the taskjob (where order defined)
     * @param string $packages_name name of the package
     */
-   function get_my_depoy_packages_state($computers_id, $taskjobs_id) {
+   function getMyDepoyPackagesState($computers_id, $taskjobs_id) {
       $pfTaskJobState = new PluginFusioninventoryTaskjobstate();
       $pfAgent = new PluginFusioninventoryAgent();
 
@@ -1464,7 +1464,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     *
     * @return boolean|array
     */
-   function can_user_deploy_self() {
+   function canUserDeploySelf() {
       global $DB;
 
       $table = "glpi_plugin_fusioninventory_deploypackages";

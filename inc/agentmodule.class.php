@@ -265,7 +265,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $checked = 1;
             }
          }
-         $check = "";
          Html::showCheckbox(array('name'    => "activation-".$data["modulename"],
                                   'value'   => '1',
                                   'checked' => $checked));

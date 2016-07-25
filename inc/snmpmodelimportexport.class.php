@@ -517,7 +517,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $ptap = new PluginFusioninventoryStateDiscovery();
       $pta  = new PluginFusioninventoryAgent();
 
-      $agent = $pta->InfosByKey($agentKey);
+      $agent = $pta->infoByKey($agentKey);
 
       if (isset($arrayinventory['AGENT']['START'])) {
          $ptap->updateState($arrayinventory['PROCESSNUMBER'],

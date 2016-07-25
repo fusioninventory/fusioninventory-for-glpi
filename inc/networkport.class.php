@@ -235,7 +235,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
-   function getNetworkPorts_id() {
+   function getNetworkPortsID() {
       if (isset($this->portDB['id'])) {
          return $this->portDB['id'];
       } else if (isset($this->portModif['id'])) {

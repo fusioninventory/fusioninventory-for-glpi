@@ -53,7 +53,7 @@ if (isset($_POST['prepareinstall'])) {
       if (strstr($key, 'deploypackages_')) {
          $computers_id = str_replace('deploypackages_', '', $key);
          foreach ($data as $packages_id) {
-            $pfDeployPackage->deploy_to_computer($computers_id, $packages_id, $_SESSION['glpiID']);
+            $pfDeployPackage->deployToComputer($computers_id, $packages_id, $_SESSION['glpiID']);
          }
       }
    }
@@ -63,7 +63,7 @@ if (isset($_POST['prepareinstall'])) {
    Html::back();
 }
 
-$pfDeployPackage->show_package_for_me($_SESSION['glpiID']);
+$pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
 $pfTaskJobView = new PluginFusioninventoryTaskjobView();
 Html::footer();
 

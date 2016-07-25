@@ -86,7 +86,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    /**
    * Display form for service configuration
    *
-   * @param $items_id integer ID
+   * @param $entities_id integer id of entity
    * @param $options array
    *
    *@return bool true if form is ok

@@ -247,7 +247,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
                }
                echo "<td>".$display_date.$interval->s."s</td>";
             } else {
-               $interval = $pfStateInventory->date_diff($start_date, $end_date);
+               $interval = $pfStateInventory->dateDiff($start_date, $end_date);
             }
          }
          echo "<td>".$nb_threads."</td>";

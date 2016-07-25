@@ -299,7 +299,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return nothing, displays a seach form
     */
    static function showCriteria(PluginFusioninventoryDeployGroup $item, $p) {
-      global $CFG_GLPI;
 
       $is_dynamic = $item->isDynamicGroup();
       $itemtype   = "PluginFusioninventoryComputer";

@@ -130,12 +130,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($tabnum == 'task') {
          $pfTask = new PluginFusioninventoryTask();
-            $pfTask->showJobLogs();
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $a_taskjobs = $pfTaskjob->find('`targets` LIKE \'%"PluginFusioninventoryIPRange":"'.$item->getID().'"%\'');
-         foreach ($a_taskjobs as $data) {
-            //$pfTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
-         }
+         $pfTask->showJobLogs();
       }
    }
 
@@ -187,12 +182,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $this->fields["ip_end"] = "...";
       }
       $ipexploded = explode(".", $this->fields["ip_end"]);
-      $i = 0;
+      $j = 0;
       foreach ($ipexploded as $ipnum) {
          if ($ipnum > 255) {
-            $ipexploded[$i] = '';
+            $ipexploded[$j] = '';
          }
-         $i++;
+         $j++;
       }
 
       echo "<script type='text/javascript'>
@@ -315,7 +310,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $actions;
    }
-
 }
 
 ?>

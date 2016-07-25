@@ -264,15 +264,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
          case '1':
             return '1';
-            break;
 
          case '2':
             return '2c';
-            break;
 
          case '3':
             return '3';
-            break;
 
       }
       return '';
@@ -308,11 +305,9 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
          case '1':
             return 'MD5';
-            break;
 
          case '2':
             return 'SHA';
-            break;
 
       }
       return '';
@@ -388,7 +383,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
-   static function auth_dropdown($selected="") {
+   static function authDropdown($selected="") {
 
       Dropdown::show("PluginFusioninventoryConfigSecurity",
                       array('name' => "plugin_fusioninventory_configsecurities_id",
@@ -405,10 +400,9 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
          case "assign_auth":
-            PluginFusioninventoryConfigSecurity::auth_dropdown();
+            PluginFusioninventoryConfigSecurity::authDropdown();
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return true;
-            break;
       }
    }
 

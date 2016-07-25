@@ -376,7 +376,7 @@ function plugin_init_fusioninventory() {
       if (isset($_SESSION['glpiactiveprofile']['interface'])
               && $_SESSION['glpiactiveprofile']['interface'] == 'helpdesk') {
          $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-         if ($pfDeployPackage->can_user_deploy_self()) {
+         if ($pfDeployPackage->canUserDeploySelf()) {
             $PLUGIN_HOOKS['helpdesk_menu_entry']['fusioninventory'] = '/front/deploypackage.public.php';
          }
       }
