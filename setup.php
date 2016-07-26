@@ -272,7 +272,7 @@ function plugin_init_fusioninventory() {
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
             "lib/d3-3.4.3/d3".($debug_mode?"":".min").".js",
-            "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
+//            "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
             "lib/expanding/expanding".($debug_mode?"":".min").".js"
          );
       }
@@ -303,7 +303,7 @@ function plugin_init_fusioninventory() {
          );
       }
       if (script_endswith("menu.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats".($debug_mode?"":".min").".js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats.js";
       }
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
@@ -434,23 +434,13 @@ function plugin_init_fusioninventory() {
             // Add graph javascript
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
                   $PLUGIN_HOOKS['add_javascript']['fusioninventory'], array(
-                     "lib/nvd3/lib/d3.v2.min.js",
-                     "lib/nvd3/nv.d3.min.js",
-                     "lib/nvd3/src/tooltip.js",
-                     "lib/nvd3/src/utils.js",
-                     "lib/nvd3/src/models/legend.js",
-                     "lib/nvd3/src/models/axis.js",
-                     "lib/nvd3/src/models/scatter.js",
-                     "lib/nvd3/src/models/line.js",
-                     "lib/nvd3/src/models/multiBar.js",
-                     "lib/nvd3/src/models/multiBarChart.js",
-                     "lib/nvd3/src/models/lineChart.js"
+                     "lib/nvd3/nv.d3.min.js"
                   )
             );
             // Add graph css
             $PLUGIN_HOOKS['add_css']['fusioninventory'] = array_merge(
                   $PLUGIN_HOOKS['add_css']['fusioninventory'], array(
-                     "lib/nvd3/src/nv.d3.css"
+                     "lib/nvd3/nv.d3.css"
                   )
             );
          }
