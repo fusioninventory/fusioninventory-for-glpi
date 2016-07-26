@@ -233,7 +233,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                $group         = new Group();
                $group->getFromDB($items_id);
 
-               $members = array();
                $computers_a_1 = array();
                $computers_a_2 = array();
 
@@ -312,7 +311,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      if (count($get_tmp) > 0) {
                         $_GET = $get_tmp;
                      }
-
                      break;
 
                }
@@ -467,11 +465,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
             $reg_db = $pfCollect_Registry->find("`plugin_fusioninventory_collects_id`='".$this->fields['id']."'");
             foreach ($reg_db as $reg) {
-               $output['function'] = 'getFromRegistry';
-               $output['path'] = $reg['hive'].
-                       $reg['path'].
-                       $reg['key'];
-               $output['uuid'] = $taskjobstate->fields['uniqid'];
+               $output[] = array(
+                   'function' => 'getFromRegistry',
+                   'path'     => $reg['hive'].$reg['path'].$reg['key'],
+                   'uuid'     => $taskjobstate->fields['uniqid'],
+                   '_sid'     => $reg['id']);
             }
             break;
 
@@ -479,11 +477,16 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
             $wmi_db = $pfCollect_Wmi->find("`plugin_fusioninventory_collects_id`='".$this->fields['id']."'");
             foreach ($wmi_db as $wmi) {
-               $output['function'] = 'getFromWMI';
-   //            $output['moniker'] = $pfCollect_Wmi->fields['moniker'];
-               $output['class'] = $pfCollect_Wmi->fields['class'];
-               $output['properties'] = array($pfCollect_Wmi->fields['properties']);
-               $output['uuid'] = $taskjobstate->fields['uniqid'];
+               $datawmi = array(
+                   'function'   => 'getFromWMI',
+                   'class'      => $wmi['class'],
+                   'properties' => array($wmi['properties']),
+                   'uuid'       => $taskjobstate->fields['uniqid'],
+                   '_sid'       => $wmi['id']);
+               if ($wmi['moniker'] != '') {
+                  $datawmi['moniker'] = $wmi['moniker'];
+               }
+               $output[] = $datawmi;
             }
             break;
 
@@ -491,36 +494,39 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_File = new PluginFusioninventoryCollect_File();
             $files_db = $pfCollect_File->find("`plugin_fusioninventory_collects_id`='".$this->fields['id']."'");
             foreach ($files_db as $files) {
-               $output['function'] = 'findFile';
-               $output['dir'] = $files['dir'];
-               $output['limit'] = $files['limit'];
-               $output['recursive'] = $files['is_recursive'];
-               $output['filter'] = array();
+               $datafile = array();
+               $datafile['function'] = 'findFile';
+               $datafile['dir'] = $files['dir'];
+               $datafile['limit'] = $files['limit'];
+               $datafile['recursive'] = $files['is_recursive'];
+               $datafile['filter'] = array();
                if ($files['filter_regex'] != '') {
-                  $output['filter']['regex'] = $files['filter_regex'];
+                  $datafile['filter']['regex'] = $files['filter_regex'];
                }
                if ($files['filter_sizeequals'] > 0) {
-                  $output['filter']['sizeEquals'] = $files['filter_sizeequals'];
+                  $datafile['filter']['sizeEquals'] = $files['filter_sizeequals'];
                } else if ($files['filter_sizegreater'] > 0) {
-                  $output['filter']['sizeGreater'] = $files['filter_sizegreater'];
+                  $datafile['filter']['sizeGreater'] = $files['filter_sizegreater'];
                } else if ($files['filter_sizelower'] > 0) {
-                  $output['filter']['sizeLower'] = $files['filter_sizelower'];
+                  $datafile['filter']['sizeLower'] = $files['filter_sizelower'];
                }
                if ($files['filter_checksumsha512'] != '') {
-                  $output['filter']['checkSumSHA512'] = $files['filter_checksumsha512'];
+                  $datafile['filter']['checkSumSHA512'] = $files['filter_checksumsha512'];
                }
                if ($files['filter_checksumsha2'] != '') {
-                  $output['filter']['checkSumSHA2'] = $files['filter_checksumsha2'];
+                  $datafile['filter']['checkSumSHA2'] = $files['filter_checksumsha2'];
                }
                if ($files['filter_name'] != '') {
-                  $output['filter']['name'] = $files['filter_name'];
+                  $datafile['filter']['name'] = $files['filter_name'];
                }
                if ($files['filter_iname'] != '') {
-                  $output['filter']['iname'] = $files['filter_iname'];
+                  $datafile['filter']['iname'] = $files['filter_iname'];
                }
-               $output['filter']['is_file'] = $files['filter_is_file'];
-               $output['filter']['is_dir'] = $files['filter_is_dir'];
-               $output['uuid'] = $taskjobstate->fields['uniqid'];
+               $datafile['filter']['is_file'] = $files['filter_is_file'];
+               $datafile['filter']['is_dir'] = $files['filter_is_dir'];
+               $datafile['uuid'] = $taskjobstate->fields['uniqid'];
+               $datafile['_sid'] = $files['id'];
+               $output[] = $datafile;
             }
             break;
 

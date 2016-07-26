@@ -165,6 +165,11 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
             }
          }
       }
+      $input = array(
+          'id' => $pfTaskjobstate->fields['id'],
+          'specificity' => ''
+      );
+      $pfTaskjobstate->update($input);
    }
 
 
@@ -182,17 +187,31 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
 
    function showForComputer($computers_id) {
 
-      echo "<table class='tab_cadre_fixe'>";
+      $pfCollect_File = new PluginFusioninventoryCollect_File();
 
-      echo "<tr>";
-      echo "<th>".__('Path/file', 'fusioninventory')."</th>";
-      echo "<th>".__('Size', 'fusioninventory')."</th>";
-      echo "</tr>";
+      echo "<table class='tab_cadre_fixe'>";
 
       $a_data = $this->find("`computers_id`='".$computers_id."'",
                               "`plugin_fusioninventory_collects_files_id`,
                                  `pathfile`");
+      $previous_key = 0;
       foreach ($a_data as $data) {
+         $pfCollect_File->getFromDB($data['plugin_fusioninventory_collects_files_id']);
+         if ($previous_key != $data['plugin_fusioninventory_collects_files_id']) {
+            echo "<tr class='tab_bg_1'>";
+            echo '<th colspan="3">';
+            echo $pfCollect_File->fields['name']. ": ".$pfCollect_File->fields['dir'];
+            echo '</th>';
+            echo '</tr>';
+
+            echo "<tr>";
+            echo "<th>".__('Path/file', 'fusioninventory')."</th>";
+            echo "<th>".__('Size', 'fusioninventory')."</th>";
+            echo "</tr>";
+
+            $previous_key = $data['plugin_fusioninventory_collects_files_id'];
+         }
+
          echo "<tr class='tab_bg_1'>";
          echo '<td>';
          echo $data['pathfile'];
@@ -259,6 +278,9 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
          $a_specificity = importArrayFromDB($pfTaskjobstate->fields['specificity']);
       }
       unset($a_values['_cpt']);
+      unset($a_values['_sid']);
+      $a_values['path'] = str_replace('\\', '/', $a_values['path']);
+      $a_values['path'] = str_replace('//', '/', $a_values['path']);
       $a_specificity[] = $a_values;
       $input = array();
       $input['id'] = $pfTaskjobstate->fields['id'];

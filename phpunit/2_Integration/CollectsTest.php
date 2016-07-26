@@ -182,4 +182,581 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $sopts[5203]);
    }
 
+
+
+   /**
+    * @test
+    */
+   public function registryProcessWithAgent() {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $computer = new Computer();
+
+      // Create a registry task with 2 paths to get
+      $input = array(
+          'name'        => 'my registry keys',
+          'entities_id' => 0,
+          'type'        => 'registry',
+          'is_active'   => 1
+      );
+      $collects_id = $pfCollect->add($input);
+      $this->assertEquals($collects_id, 1);
+
+      $input = array(
+          'name' => 'Teamviewer',
+          'plugin_fusioninventory_collects_id' => $collects_id,
+          'hive' => 'HKEY_LOCAL_MACHINE',
+          'path' => '/software/Wow6432Node/TeamViewer/',
+          'key'  => '*',
+      );
+      $registry_tm = $pfCollect_Registry->add($input);
+      $this->assertEquals($registry_tm, 1);
+
+      $input = array(
+          'name' => 'FusionInventory',
+          'plugin_fusioninventory_collects_id' => $collects_id,
+          'hive' => 'HKEY_LOCAL_MACHINE',
+          'path' => '/software/FusionInventory-Agent/',
+          'key'  => '*',
+      );
+      $registry_fi = $pfCollect_Registry->add($input);
+      $this->assertEquals($registry_fi, 2);
+
+      // Create computer
+      $input = array(
+          'name'        => 'pc01',
+          'entities_id' => 0
+      );
+      $computers_id = $computer->add($input);
+      $this->assertEquals($computers_id, 1);
+
+      $input = array(
+          'name'         => 'pc01',
+          'entities_id'  => 0,
+          'computers_id' => $computers_id,
+          'device_id'    => 'pc01'
+      );
+      $agents_id = $pfAgent->add($input);
+      $this->assertEquals($agents_id, 1);
+
+      // Create task
+      $input = array(
+          'name'        => 'mycollect',
+          'entities_id' => 0,
+          'is_active'   => 1
+      );
+      $tasks_id = $pfTask->add($input);
+      $this->assertEquals($tasks_id, 1);
+
+      $input = array(
+          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'entities_id' => 0,
+          'name'    => 'collectjob',
+          'method'  => 'collect',
+          'targets' => exportArrayToDB(array(array('PluginFusioninventoryCollect' => $collects_id))),
+          'actors'  => exportArrayToDB(array(array('Computer' => $computers_id))),
+      );
+      $taskjobs_id = $pfTaskjob->add($input);
+      $this->assertEquals($taskjobs_id, 1);
+      $methods = array();
+      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+         $methods[] = $method['method'];
+      }
+      $pfTask->prepareTaskjobs($methods);
+      $jobstates = $pfTaskjobstate->find();
+      $this->assertEquals(1, count($jobstates));
+      $jobstate = current($jobstates);
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+
+      // Get jobs
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_tm.'"},'
+                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_fi.'"}]}');
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // answer 1
+      $params = array(
+          'action'                => 'setAnswer',
+          'InstallationDate'      => '2016-07-15',
+          'Version'               => '11.0.62308',
+          'UpdateVersion'         => '11.0.59518\0\0',
+          'InstallationRev'       => '1110',
+          '_cpt'                  => '1',
+          'MIDInitiativeGUID'     => '{da2b3220-3d00-4f0f-93af-d38604c78405}',
+          'ClientIC'              => '0x41A3B7BA',
+          'uuid'                  => $jobstate['uniqid'],
+          '_sid'                  => $registry_tm,
+          'InstallationDirectory' => 'C:\\Program Files (x86)\\TeamViewer'
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // answer 2
+      $params = array(
+          'action'                  => 'setAnswer',
+          'backend-collect-timeout' => 180,
+          'httpd-port'              => '62354',
+          'no-ssl-check'            => 1,
+          'server'                  => 'http://10.0.2.2/glpi090/plugins/fusioninventory/',
+          'logfile'                 => 'C:\\Program Files\\FusionInventory-Agent\\fusioninventory-agent.log',
+          'timeout'                 => 180,
+          'httpd-trust'             => '127.0.0.1/32',
+          'uuid'                    => $jobstate['uniqid'],
+          '_sid'                    => $registry_tm,
+          '_cpt'                    => '1',
+          'httpd-ip'                => '0.0.0.0',
+          'logger'                  => 'File',
+          'debug'                   => '1',
+          'delaytime'               => '3600',
+          'logfile-maxsize'         => '16'
+      );
+
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // jobsdone
+      $params = array(
+          'action' => 'jobsDone',
+          'uuid'   => $jobstate['uniqid'],
+          );
+
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function wmiProcessWithAgent() {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $pfCollect_Wmi_Content = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $computer = new Computer();
+
+      // Create a registry task with 2 paths to get
+      $input = array(
+          'name'        => 'my wmi keys',
+          'entities_id' => 0,
+          'type'        => 'wmi',
+          'is_active'   => 1
+      );
+      $collects_id = $pfCollect->add($input);
+      $this->assertEquals($collects_id, 1);
+
+      $input = array(
+          'name'       => 'keyboad name',
+          'plugin_fusioninventory_collects_id' => $collects_id,
+          'moniker'    => '',
+          'class'      => 'Win32_Keyboard',
+          'properties' => 'Name',
+      );
+      $registry_kn = $pfCollect_Wmi->add($input);
+      $this->assertEquals($registry_kn, 1);
+
+      $input = array(
+          'name'       => 'keyboad description',
+          'plugin_fusioninventory_collects_id' => $collects_id,
+          'moniker'    => '',
+          'class'      => 'Win32_Keyboard',
+          'properties' => 'Description',
+      );
+      $registry_kd = $pfCollect_Wmi->add($input);
+      $this->assertEquals($registry_kd, 2);
+
+      // Create computer
+      $input = array(
+          'name'        => 'pc01',
+          'entities_id' => 0
+      );
+      $computers_id = $computer->add($input);
+      $this->assertEquals($computers_id, 1);
+
+      $input = array(
+          'name'         => 'pc01',
+          'entities_id'  => 0,
+          'computers_id' => $computers_id,
+          'device_id'    => 'pc01'
+      );
+      $agents_id = $pfAgent->add($input);
+      $this->assertEquals($agents_id, 1);
+
+      // Create task
+      $input = array(
+          'name'        => 'mycollect',
+          'entities_id' => 0,
+          'is_active'   => 1
+      );
+      $tasks_id = $pfTask->add($input);
+      $this->assertEquals($tasks_id, 1);
+
+      $input = array(
+          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'entities_id' => 0,
+          'name'    => 'collectjob',
+          'method'  => 'collect',
+          'targets' => exportArrayToDB(array(array('PluginFusioninventoryCollect' => $collects_id))),
+          'actors'  => exportArrayToDB(array(array('Computer' => $computers_id))),
+      );
+      $taskjobs_id = $pfTaskjob->add($input);
+      $this->assertEquals($taskjobs_id, 1);
+      $methods = array();
+      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+         $methods[] = $method['method'];
+      }
+      $pfTask->prepareTaskjobs($methods);
+      $jobstates = $pfTaskjobstate->find();
+      $this->assertEquals(1, count($jobstates));
+      $jobstate = current($jobstates);
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+
+      // Get jobs
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      $this->assertEquals($result, '{"jobs":[{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Name"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kn.'"},'
+                                          . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kd.'"}]}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // answer 1
+      $params = array(
+          'action' => 'setAnswer',
+          'uuid'   => $jobstate['uniqid'],
+          '_sid'   => $registry_kn,
+          '_cpt'   => '1',
+          'Name'   => 'Enhanced (101- or 102-key)'
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // answer 2
+      $params = array(
+          'action'      => 'setAnswer',
+          'uuid'        => $jobstate['uniqid'],
+          '_sid'        => $registry_kd,
+          '_cpt'        => '1',
+          'Description' => 'Standard PS/2 Keyboard'
+      );
+
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // jobsdone
+      $params = array(
+          'action' => 'jobsDone',
+          'uuid'   => $jobstate['uniqid'],
+          );
+
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // check data in db
+      $content = $pfCollect_Wmi_Content->find();
+      $reference = array(
+          1 => array(
+              'id' => 1,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_wmis_id' => $registry_kn,
+              'property'     => 'Name',
+              'value'        => 'Enhanced (101- or 102-key)'
+          ),
+          2 => array(
+              'id' => 2,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_wmis_id' => $registry_kd,
+              'property'     => 'Description',
+              'value'        => 'Standard PS/2 Keyboard'
+          )
+      );
+      $this->assertEquals($reference, $content);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function filesProcessWithAgent() {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $pfCollect_File_Content = new PluginFusioninventoryCollect_File_Content();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $computer = new Computer();
+
+      // Create a registry task with 2 paths to get
+      $input = array(
+          'name'        => 'my files search',
+          'entities_id' => 0,
+          'type'        => 'file',
+          'is_active'   => 1
+      );
+      $collects_id = $pfCollect->add($input);
+      $this->assertEquals($collects_id, 1);
+
+      $input = array(
+          'name'           => 'desktop',
+          'plugin_fusioninventory_collects_id' => $collects_id,
+          'dir'            => 'C:\Users\toto\Desktop',
+          'limit'          => 10,
+          'is_recursive'   => 1,
+          'filter_is_file' => 1,
+      );
+      $registry_desktop = $pfCollect_File->add($input);
+      $this->assertEquals($registry_desktop, 1);
+
+      $input = array(
+          'name'           => 'downloads',
+          'plugin_fusioninventory_collects_id' => $collects_id,
+          'dir'            => 'C:\Users\toto\Downloads',
+          'limit'          => 10,
+          'is_recursive'   => 1,
+          'filter_is_file' => 1,
+      );
+      $registry_down = $pfCollect_File->add($input);
+      $this->assertEquals($registry_down, 2);
+
+      // Create computer
+      $input = array(
+          'name'        => 'pc01',
+          'entities_id' => 0
+      );
+      $computers_id = $computer->add($input);
+      $this->assertEquals($computers_id, 1);
+
+      $input = array(
+          'name'         => 'pc01',
+          'entities_id'  => 0,
+          'computers_id' => $computers_id,
+          'device_id'    => 'pc01'
+      );
+      $agents_id = $pfAgent->add($input);
+      $this->assertEquals($agents_id, 1);
+
+      // Create task
+      $input = array(
+          'name'        => 'mycollect',
+          'entities_id' => 0,
+          'is_active'   => 1
+      );
+      $tasks_id = $pfTask->add($input);
+      $this->assertEquals($tasks_id, 1);
+
+      $input = array(
+          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'entities_id' => 0,
+          'name'    => 'collectjob',
+          'method'  => 'collect',
+          'targets' => exportArrayToDB(array(array('PluginFusioninventoryCollect' => $collects_id))),
+          'actors'  => exportArrayToDB(array(array('Computer' => $computers_id))),
+      );
+      $taskjobs_id = $pfTaskjob->add($input);
+      $this->assertEquals($taskjobs_id, 1);
+      $methods = array();
+      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+         $methods[] = $method['method'];
+      }
+      $pfTask->prepareTaskjobs($methods);
+      $jobstates = $pfTaskjobstate->find();
+      $this->assertEquals(1, count($jobstates));
+      $jobstate = current($jobstates);
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+
+      // Get jobs
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\totoDesktop","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_desktop.'"},'
+                                          . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_down.'"}]}');
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // answer 1
+      $params = array(
+          'action' => 'setAnswer',
+          'uuid'   => $jobstate['uniqid'],
+          '_sid'   => $registry_desktop,
+          '_cpt'   => '3',
+          'path'   => 'C:\\Users\\toto\\Desktop/06_import_tickets.php',
+          'size'   => 5053
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $params = array(
+          'action' => 'setAnswer',
+          'uuid'   => $jobstate['uniqid'],
+          '_sid'   => $registry_desktop,
+          '_cpt'   => '2',
+          'path'   => 'C:\\Users\\toto\\Desktop/fusioninventory.txt',
+          'size'   => 28
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $params = array(
+          'action' => 'setAnswer',
+          'uuid'   => $jobstate['uniqid'],
+          '_sid'   => $registry_desktop,
+          '_cpt'   => '1',
+          'path'   => 'C:\\Users\\toto\\Desktop/desktop.ini',
+          'size'   => 282
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+
+      // answer 2
+      $params = array(
+          'action' => 'setAnswer',
+          'uuid'   => $jobstate['uniqid'],
+          '_sid'   => $registry_down,
+          '_cpt'   => '2',
+          'path'   => 'C:\\Users\\toto\\Downloads/jxpiinstall.exe',
+          'size'   => 738368
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $params = array(
+          'action' => 'setAnswer',
+          'uuid'   => $jobstate['uniqid'],
+          '_sid'   => $registry_down,
+          '_cpt'   => '1',
+          'path'   => 'C:\\Users\\toto\\Downloads/npp.6.9.2.Installer.exe',
+          'size'   => 4211112
+      );
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // jobsdone
+      $params = array(
+          'action' => 'jobsDone',
+          'uuid'   => $jobstate['uniqid'],
+          );
+
+      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $this->assertEquals($result, '{}');
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // check data in db
+      $content = $pfCollect_File_Content->find();
+      $reference = array(
+          1 => array(
+              'id' => 1,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_files_id' => $registry_desktop,
+              'pathfile'     => 'C:/Users/toto/Desktop/06_import_tickets.php',
+              'size'         => 5053
+          ),
+          2 => array(
+              'id' => 2,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_files_id' => $registry_desktop,
+              'pathfile'     => 'C:/Users/toto/Desktop/fusioninventory.txt',
+              'size'         => 28
+          ),
+          3 => array(
+              'id' => 3,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_files_id' => $registry_desktop,
+              'pathfile'     => 'C:/Users/toto/Desktop/desktop.ini',
+              'size'         => 282
+          ),
+          4 => array(
+              'id' => 4,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_files_id' => $registry_down,
+              'pathfile'     => 'C:/Users/toto/Downloads/jxpiinstall.exe',
+              'size'         => 738368
+          ),
+          5 => array(
+              'id' => 5,
+              'computers_id' => $computers_id,
+              'plugin_fusioninventory_collects_files_id' => $registry_down,
+              'pathfile'     => 'C:/Users/toto/Downloads/npp.6.9.2.Installer.exe',
+              'size'         => 4211112
+          )
+      );
+      $this->assertEquals($reference, $content);
+   }
+
 }

@@ -116,6 +116,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
 
       unset($wmi_data['_cpt']);
+      unset($wmi_data['_sid']);
 
       foreach ($wmi_data as $key => $value) {
          foreach ($db_wmis as $keydb => $arraydb) {
