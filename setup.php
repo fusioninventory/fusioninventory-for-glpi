@@ -72,8 +72,8 @@ $fi_loader->register();
  *
  */
 function script_endswith($scriptname) {
-   $script_filename = filter_input(INPUT_SERVER, "SCRIPT_FILENAME");
-   return substr($script_filename, -strlen($scriptname))===$scriptname;
+   $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
+   return substr($script_name, -strlen($scriptname))===$scriptname;
 }
 
 // Init the hooks of fusioninventory
@@ -266,7 +266,7 @@ function plugin_init_fusioninventory() {
        */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
-      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_FILENAME"), "plugins/fusioninventory") != false) {
+      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
@@ -382,8 +382,8 @@ function plugin_init_fusioninventory() {
       }
 
       if (isset($_SESSION["glpiname"])) {
-         if (strstr(filter_input(INPUT_SERVER, "SCRIPT_FILENAME"), '/front/')
-              && !strstr(filter_input(INPUT_SERVER, "SCRIPT_FILENAME"), 'report.dynamic.php')) {
+         if (strstr(filter_input(INPUT_SERVER, "SCRIPT_NAME"), '/front/')
+              && !strstr(filter_input(INPUT_SERVER, "SCRIPT_NAME"), 'report.dynamic.php')) {
             register_shutdown_function('plugin_fusioninventory_footer', $CFG_GLPI['root_doc']);
          }
          $report_list = array();
