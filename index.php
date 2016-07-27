@@ -44,15 +44,17 @@ include ("../../inc/includes.php");
 
 //Agent posting an inventory or asking for orders using REST
 $rawdata = file_get_contents("php://input");
-if ((isset($_GET['action'])
-   && isset($_GET['machineid']))
+$action = filter_input(INPUT_GET, "action");
+$machineid = filter_input(INPUT_GET, "machineid");
+if ((!empty($action)
+   && !empty($machineid))
       || !empty($rawdata)) {
 
    include_once("front/communication.php");
 
 //Fusioninventory plugin pages
 } else {
-   Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+   Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "plugins",
                 "fusioninventory");
 
    Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard.php");

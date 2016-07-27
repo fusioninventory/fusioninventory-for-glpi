@@ -72,7 +72,8 @@ $fi_loader->register();
  *
  */
 function script_endswith($scriptname) {
-   return substr($_SERVER['SCRIPT_FILENAME'], -strlen($scriptname))===$scriptname;
+   $script_filename = filter_input(INPUT_SERVER, "SCRIPT_FILENAME");
+   return substr($script_filename, -strlen($scriptname))===$scriptname;
 }
 
 // Init the hooks of fusioninventory
@@ -265,7 +266,7 @@ function plugin_init_fusioninventory() {
        */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
-      if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
+      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_FILENAME"), "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
@@ -382,8 +383,8 @@ function plugin_init_fusioninventory() {
       }
 
       if (isset($_SESSION["glpiname"])) {
-         if (strstr($_SERVER['SCRIPT_FILENAME'], '/front/')
-              && !strstr($_SERVER['SCRIPT_FILENAME'], 'report.dynamic.php')) {
+         if (strstr(filter_input(INPUT_SERVER, "SCRIPT_FILENAME"), '/front/')
+              && !strstr(filter_input(INPUT_SERVER, "SCRIPT_FILENAME"), 'report.dynamic.php')) {
             register_shutdown_function('plugin_fusioninventory_footer', $CFG_GLPI['root_doc']);
          }
          $report_list = array();
@@ -415,21 +416,20 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
          // Hack for NetworkEquipment display ports
-         if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
-            if (isset($_GET['_target'])
-                    && strstr($_GET['_target'], '/front/networkequipment.form.php')
-                    && $_GET['_itemtype'] == 'NetworkEquipment') {
+         if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/ajax/common.tabs.php')) {
+            if (strstr(filter_input(INPUT_GET, "_target"), '/front/networkequipment.form.php')
+                    && filter_input(INPUT_GET, "_itemtype") == 'NetworkEquipment') {
 
-               if ($_GET['_glpi_tab'] == 'NetworkPort$1') {
+               if (filter_input(INPUT_GET, "_glpi_tab") == 'NetworkPort$1') {
                   $_GET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
-               } else if ($_GET['_glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
+               } else if (filter_input(INPUT_GET, "_glpi_tab") == 'PluginFusioninventoryNetworkEquipment$1') {
                   $_GET['displaysnmpinfo'] = 1;
                }
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
-                 || strstr($_SERVER['PHP_SELF'], 'fusioninventory/front/menu.php')) {
+         if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/front/printer.form.php')
+                 || strstr(filter_input(INPUT_SERVER, "PHP_SELF"), 'fusioninventory/front/menu.php')) {
 
             // Add graph javascript
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
@@ -452,11 +452,11 @@ function plugin_init_fusioninventory() {
    }
 
    // Check for uninstall
-   if (isset($_GET['id'])
-      && ($_GET['id'] == $moduleId)
-         && (isset($_GET['action'])
-            && $_GET['action'] == 'uninstall')
-               && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
+   $id = filter_input(INPUT_GET, "id");
+   $action = filter_input(INPUT_GET, "action");
+   if ($id == $moduleId
+         && $action == 'uninstall'
+               && (strstr(filter_input(INPUT_SERVER, "HTTP_REFERER"), "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(TRUE)) {
           Session::addMessageAfterRedirect(__('Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin'));
