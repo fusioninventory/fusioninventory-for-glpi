@@ -2159,8 +2159,8 @@ function plugin_item_transfer_fusioninventory($parm) {
 
       case 'Computer':
          $pfAgent = new PluginFusioninventoryAgent();
-
-         if ($agent_id == $pfAgent->getAgentWithComputerid($parm['id'])) {
+         $agent_id = $pfAgent->getAgentWithComputerid($parm['id']);
+         if ($agent_id) {
             $input = array();
             $input['id'] = $agent_id;
             $computer = new Computer();
