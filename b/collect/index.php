@@ -146,13 +146,6 @@ switch (filter_input(INPUT_GET, "action")) {
                        1,
                        'Path not found');
                }
-//               if (isset($a_values['_cpt'])
-//                       && $a_values['_cpt'] == 1) { // it last value
-//                  $pfTaskjobstate->changeStatusFinish(
-//                       $jobstate['id'],
-//                       $jobstate['items_id'],
-//                       $jobstate['itemtype']);
-//               }
                $response = "{}";
                break;
 
@@ -165,12 +158,6 @@ switch (filter_input(INPUT_GET, "action")) {
                $pfTaskjobstate->changeStatus(
                        $jobstate['id'],
                        PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-//               if ($a_values['_cpt'] == 1) { // it last value
-//                  $pfTaskjobstate->changeStatusFinish(
-//                       $jobstate['id'],
-//                       $jobstate['items_id'],
-//                       $jobstate['itemtype']);
-//               }
                $response = "{}";
                break;
 
@@ -195,11 +182,6 @@ switch (filter_input(INPUT_GET, "action")) {
                                          filter_input(INPUT_GET, "_sid"),
                                          $jobstate['id']);
                }
-//                  $pfTaskjobstate->changeStatusFinish(
-//                       $jobstate['id'],
-//                       $jobstate['items_id'],
-//                       $jobstate['itemtype']);
-//               }
                $response = "{}";
                break;
 
