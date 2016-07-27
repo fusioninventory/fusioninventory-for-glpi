@@ -64,10 +64,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
                if (count($a_colregs) == 0) {
                   return array();
                }
-               $in = array();
-               foreach ($a_colregs as $id=>$data) {
-                  $in[] = $id;
-               }
+               $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_registries_contents',
                                 "`plugin_fusioninventory_collects_registries_id` IN ('".implode("','", $in)."')") > 0) {
                   return array(__('Windows registry content', 'fusioninventory'));
@@ -116,6 +113,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       }
 
       unset($registry_data['_cpt']);
+      unset($registry_data['_sid']);
 
       foreach ($registry_data as $key => $value) {
          foreach ($db_registries as $keydb => $arraydb) {
@@ -174,19 +172,30 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr>";
-      echo "<th>".__('Path', 'fusioninventory')."</th>";
-      echo "<th>".__('Value', 'fusioninventory')."</th>";
-      echo "<th>".__('Data', 'fusioninventory')."</th>";
-      echo "</tr>";
-
       $a_data = $this->find("`computers_id`='".$computers_id."'",
                               "`plugin_fusioninventory_collects_registries_id`,
                                  `key`");
+      $previous_key = 0;
       foreach ($a_data as $data) {
+         $pfCollect_Registry->getFromDB($data['plugin_fusioninventory_collects_registries_id']);
+         if ($previous_key != $data['plugin_fusioninventory_collects_registries_id']) {
+            echo "<tr class='tab_bg_1'>";
+            echo '<th colspan="3">';
+            echo $pfCollect_Registry->fields['name'];
+            echo '</th>';
+            echo '</tr>';
+
+            echo "<tr>";
+            echo "<th>".__('Path', 'fusioninventory')."</th>";
+            echo "<th>".__('Value', 'fusioninventory')."</th>";
+            echo "<th>".__('Data', 'fusioninventory')."</th>";
+            echo "</tr>";
+
+            $previous_key = $data['plugin_fusioninventory_collects_registries_id'];
+         }
+
          echo "<tr class='tab_bg_1'>";
          echo '<td>';
-         $pfCollect_Registry->getFromDB($data['plugin_fusioninventory_collects_registries_id']);
          echo $pfCollect_Registry->fields['hive'].
               $pfCollect_Registry->fields['path'];
          echo '</td>';
