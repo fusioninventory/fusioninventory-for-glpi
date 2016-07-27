@@ -524,57 +524,71 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $pfConfig = new PluginFusioninventoryConfig();
          $dir = $pfConfig->getValue('server_upload_path');
 
-         // leaf node
-         if ($params['node'] != -1) {
-            $dir = $params['node'];
+         $security_problem = FALSE;
+         if ($params['node'] != "-1") {
+            if (strstr($params['node'], "..")) {
+               $security_problem = TRUE;
+            }
+            $matches = array();
+            preg_match("/^(".str_replace("/", "\/", $dir).")(.*)$/", $params['node'], $matches);
+            if (count($matches) != 3) {
+               $security_problem = TRUE;
+            }
          }
 
-         if (($handle = opendir($dir))) {
-            $folders = $files = array();
+         if (!$security_problem) {
 
-            //list files in dir selected
-            //we store folders and files separately to sort them alphabeticaly separatly
-            while (FALSE !== ($entry = readdir($handle))) {
-               if ($entry != "." && $entry != "..") {
-                  $filepath = $dir."/".$entry;
-                  if (is_dir($filepath)) {
-                     $folders[$filepath] = $entry;
-                  } else {
-                     $files[$filepath] = $entry;
+            // leaf node
+            if ($params['node'] != -1) {
+               $dir = $params['node'];
+            }
+
+            if (($handle = opendir($dir))) {
+               $folders = $files = array();
+
+               //list files in dir selected
+               //we store folders and files separately to sort them alphabeticaly separatly
+               while (FALSE !== ($entry = readdir($handle))) {
+                  if ($entry != "." && $entry != "..") {
+                     $filepath = $dir."/".$entry;
+                     if (is_dir($filepath)) {
+                        $folders[$filepath] = $entry;
+                     } else {
+                        $files[$filepath] = $entry;
+                     }
                   }
                }
+
+               //sort folders and files (and maintain index association)
+               asort($folders);
+               asort($files);
+
+               //add folders in json
+               foreach ($folders as $filepath => $entry) {
+                  $path['text'] = $entry;
+                  $path['id'] = $filepath;
+                  $path['draggable'] = FALSE;
+                  $path['leaf']      = FALSE;
+                  $path['cls']       = 'folder';
+
+                  $nodes[] = $path;
+               }
+
+               //add files in json
+               foreach ($files as $filepath => $entry) {
+                  $path['text'] = $entry;
+                  $path['id'] = $filepath;
+                  $path['draggable'] = FALSE;
+                  $path['leaf']      = TRUE;
+                  $path['cls']       = 'file';
+
+                  $nodes[] = $path;
+               }
+
+               closedir($handle);
             }
-
-            //sort folders and files (and maintain index association)
-            asort($folders);
-            asort($files);
-
-            //add folders in json
-            foreach ($folders as $filepath => $entry) {
-               $path['text'] = $entry;
-               $path['id'] = $filepath;
-               $path['draggable'] = FALSE;
-               $path['leaf']      = FALSE;
-               $path['cls']       = 'folder';
-
-               $nodes[] = $path;
-            }
-
-            //add files in json
-            foreach ($files as $filepath => $entry) {
-               $path['text'] = $entry;
-               $path['id'] = $filepath;
-               $path['draggable'] = FALSE;
-               $path['leaf']      = TRUE;
-               $path['cls']       = 'file';
-
-               $nodes[] = $path;
-            }
-
-            closedir($handle);
          }
       }
-
       print json_encode($nodes);
    }
 
