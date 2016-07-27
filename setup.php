@@ -72,7 +72,7 @@ $fi_loader->register();
  *
  */
 function script_endswith($scriptname) {
-   return substr($_SERVER['SCRIPT_FILENAME'], -strlen($scriptname))===$scriptname;
+   return substr($_SERVER['SCRIPT_NAME'], -strlen($scriptname))===$scriptname;
 }
 
 // Init the hooks of fusioninventory
@@ -262,7 +262,7 @@ function plugin_init_fusioninventory() {
        */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
-      if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
+      if (strpos($_SERVER['SCRIPT_NAME'], "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
