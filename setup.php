@@ -272,8 +272,7 @@ function plugin_init_fusioninventory() {
 
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            "lib/d3-3.4.3/d3".($debug_mode?"":".min").".js",
-//            "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
+            "lib/d3/d3".($debug_mode?"":".min").".js",
             "lib/expanding/expanding".($debug_mode?"":".min").".js"
          );
       }
