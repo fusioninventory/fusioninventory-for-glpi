@@ -203,7 +203,7 @@ class PluginFusioninventoryDeployAction {
                echo "</b>";
                if ($key ==="exec") {
                   echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;".
-                          "padding-left:2px'>$value</pre>";
+                          "padding-left:2px;white-space: pre-wrap;'>$value</pre>";
                } else {
                   echo " $value ";
                }
