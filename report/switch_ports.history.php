@@ -47,15 +47,13 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
 Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
-if (isset($_GET["networkports_id"])) {
-   $ports_id = $_GET["networkports_id"];
-}
+$FK_port = filter_input(INPUT_GET, "networkports_id");
 
-echo "<form action='".$_SERVER["PHP_SELF"]."' method='get'>";
+echo "<form action='".filter_input(INPUT_SERVER, "PHP_SELF")."' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 echo "<tr class='tab_bg_1' align='center'>";
 
@@ -73,7 +71,7 @@ $result=$DB->query($query);
       $selected = '';
 while ($data=$DB->fetch_array($result)) {
 
-   if ((isset($FK_port)) AND ($data['id'] == $FK_port)) {
+   if (($data['id'] == $FK_port)) {
       $selected = $data['id'];
    }
    $ports[$data['id']] = $data['name']." - ".$data['pname'];
@@ -93,8 +91,9 @@ echo "</tr>";
 echo "</table>";
 Html::closeForm();
 
-if(isset($_GET["networkports_id"])) {
-   echo PluginFusioninventoryNetworkPortLog::showHistory($_GET["networkports_id"]);
+$networkports_id = filter_input(INPUT_GET, "networkports_id");
+if($networkports_id != '') {
+   echo PluginFusioninventoryNetworkPortLog::showHistory($networkports_id);
 }
 
 Html::closeForm();

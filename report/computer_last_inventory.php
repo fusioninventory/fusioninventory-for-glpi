@@ -50,16 +50,14 @@ Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "ut
 
 Session::checkRight('computer', READ);
 
-$nbdays = 365;
-if (isset($_GET["nbdays"])) {
-   $nbdays = $_GET["nbdays"];
-}
-$state = '';
-if (isset($_GET["state"])) {
-   $state = $_GET["state"];
+$nbdays = filter_input(INPUT_GET, "nbdays");
+if ($nbdays == '') {
+   $nbdays = 365;
 }
 
-echo "<form action='".$_SERVER["PHP_SELF"]."' method='get'>";
+$state = filter_input(INPUT_GET, "state");
+
+echo "<form action='".filter_input(INPUT_SERVER, "PHP_SELF")."' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";

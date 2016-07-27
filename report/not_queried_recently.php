@@ -48,20 +48,17 @@ $NEEDED_ITEMS=array("search", "computer", "infocom", "setup", "networking", "pri
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
 Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
-$nbdays = 1;
-if (isset($_GET["nbdays"])) {
-   $nbdays = $_GET["nbdays"];
+$nbdays = filter_input(INPUT_GET, "nbdays");
+if ($nbdays == '') {
+   $nbdays = 1;
 }
-$state = '';
-if (isset($_GET["state"])) {
-   $state = $_GET["state"];
-}
+$state = filter_input(INPUT_GET, "state");
 
-echo "<form action='".$_SERVER["PHP_SELF"]."' method='get'>";
+echo "<form action='".filter_input(INPUT_SERVER, "PHP_SELF")."' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr class='tab_bg_1' align='center'>";
@@ -98,9 +95,9 @@ Html::closeForm();
 
 
 
-
-if(isset($_GET["FK_networking_ports"])) {
-   echo PluginFusioninventoryNetworkPortLog::showHistory($_GET["FK_networking_ports"]);
+$FK_networking_ports = filter_input(INPUT_GET, "FK_networking_ports");
+if ($FK_networking_ports != '') {
+   echo PluginFusioninventoryNetworkPortLog::showHistory($FK_networking_ports);
 }
 
 Html::closeForm();

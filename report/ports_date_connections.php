@@ -46,17 +46,19 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
 Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
-if (isset($_GET["reset_search"])) {
+$reset_search = filter_input(INPUT_GET, "reset_search");
+if ($reset_search != '') {
    resetSearch();
 }
 
-if (!isset($_GET["start"])) {
-   $_GET["start"] = 0;
-}
+$options=array('options'=>array('default'=>0));
+$start = filter_input(INPUT_GET, "start", FILTER_VALIDATE_INT, $options);
+$_GET["start"] = $start;
+
 $_GET=getValues($_GET, $_POST);
 displaySearchForm();
 
