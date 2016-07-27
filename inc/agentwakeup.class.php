@@ -162,7 +162,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
          $agent  = new PluginFusioninventoryAgent();
          //Try to wake up agents one by one
-         foreach ($wakeupArray as $ID => $value) {
+         foreach (array_keys($wakeupArray) as $ID) {
             $agent->getFromDB($ID);
             if ($agent->wakeUp()) {
                $wokeup++;

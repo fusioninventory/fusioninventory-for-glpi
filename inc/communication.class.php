@@ -351,15 +351,16 @@ class PluginFusioninventoryCommunication {
       $agent = new PluginFusioninventoryAgent();
       $agent->disableDebug();
       $compressmode = '';
+      $content_type = filter_input(INPUT_SERVER, "CONTENT_TYPE");
       if (!empty($xml)) {
             $compressmode = 'none';
-      } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
+      } else if ($content_type == "application/x-compress-zlib") {
             $xml = gzuncompress($rawdata);
             $compressmode = "zlib";
-      } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
+      } else if ($content_type == "application/x-compress-gzip") {
             $xml = $pfToolbox->gzdecode($rawdata);
             $compressmode = "gzip";
-      } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
+      } else if ($content_type == "application/xml") {
             $xml = $rawdata;
             $compressmode = 'none';
       } else {
@@ -387,11 +388,7 @@ class PluginFusioninventoryCommunication {
 
       // check if we are in ssl only mode
       $ssl = $config->getValue('ssl_only');
-      if (
-         $ssl == "1"
-            AND
-         (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
-      ) {
+      if ($ssl == "1" AND filter_input(INPUT_SERVER, "HTTPS") != "on") {
          if ($output == 'glpi') {
             Session::addMessageAfterRedirect('SSL REQUIRED BY SERVER', false, ERROR);
          } else {

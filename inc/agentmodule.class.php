@@ -405,25 +405,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
-   /**
-    * agent's ids with module activations.
-    * @since 0.85+1.0
-    * @param $agent_ids List of agent's ids.
-    * @param $methods Methods requested.
-    * @return The list filtered by activated on the requested methods.
-    */
-   function filterAgentsByMethods($agent_ids, $methods=array()) {
 
-      $available_methods = PluginFusioninventoryStaticmisc::task_methods();
-      $methods_requested = array();
-
-      foreach($available_methods as $method_info) {
-         if (in_array($method_info, $methods)){
-            $methods_requested = $method_info;
-         }
-      }
-   }
-
+   
    /**
    * Get URL for module (for REST)
    *

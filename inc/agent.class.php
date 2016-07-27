@@ -185,13 +185,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
       $tab_names = array();
       if ( $this->can(0, CREATE) ) {
          if ($item->getType() == 'Computer') {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
          }
-
       }
 
       if (!empty($tab_names)) {
@@ -295,7 +293,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                if ($pfAgent->getFromDB($key)) {
                   $input = array();
                   $input['id'] = $key;
-                  $input['entities_id'] = $_POST['entities_id'];
+                  $input['entities_id'] = filter_input(INPUT_POST, "entities_id");
                   if ($pfAgent->update($input)) {
                      //set action massive ok for this item
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
@@ -547,9 +545,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['device_id']    = $arrayinventory['DEVICEID'];
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
-            if (isset($_SERVER['HTTP_USER_AGENT'])) {
-               $a_input['useragent'] = $_SERVER['HTTP_USER_AGENT'];
-            }
+            $a_input['useragent'] = filter_input(INPUT_SERVER, "HTTP_USER_AGENT");
             return $pfAgent->add($a_input);
          } else {
             foreach ($a_agent as $data) {
@@ -559,9 +555,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                   $input['token'] = $arrayinventory['TOKEN'];
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
-               if (isset($_SERVER['HTTP_USER_AGENT'])) {
-                  $input['useragent'] = $_SERVER['HTTP_USER_AGENT'];
-               }
+               $input['useragent'] = filter_input(INPUT_SERVER, "HTTP_USER_AGENT");
                $pfAgent->update($input);
                return $data['id'];
             }
@@ -855,7 +849,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $url_ok = null;
       $url_headers=array();
       foreach( $url_addresses as $url) {
-         if ($stream = fopen($url, 'r', false, $ctx)) {
+         $stream = fopen($url, 'r', false, $ctx);
+         if ($stream) {
             //$result = file_get_contents($url, FALSE, $ctx);
             $contents = stream_get_contents($stream);
             $url_headers[$url] = stream_get_meta_data($stream);
@@ -1138,9 +1133,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td width='50%'>";
-      $array = explode("/", $_SERVER['HTTP_REFERER']);
+      $array = explode("/", filter_input(INPUT_SERVER, "HTTP_REFERER"));
       $create_url = $array[0]."//".$array[2].
-              str_replace("front/wizard.php", "", $_SERVER['PHP_SELF']);
+              str_replace("front/wizard.php", "", filter_input(INPUT_SERVER, "PHP_SELF"));
       echo __('Communication url of the server', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
