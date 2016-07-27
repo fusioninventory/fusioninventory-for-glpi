@@ -404,7 +404,7 @@ class PluginFusioninventoryDeployAction {
             break;
 
          case "textarea":
-            echo "<textarea name='$name_label_1' rows='3'>$value_1</textarea>";
+            echo "<textarea name='$name_label_1' rows='3' style='width: 760px;'>$value_1</textarea>";
             break;
 
       }
