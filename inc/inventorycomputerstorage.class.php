@@ -264,9 +264,9 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
             }
          }
          function chbgOut(params) {
-            for(i=0;i<params.length;i++){
-               if(document.getElementById(\'storage\' + params[i])) {
-                  document.getElementById(\'storage\' + params[i]).style.backgroundColor = "white";
+            for(j=0;j<params.length;j++){
+               if(document.getElementById(\'storage\' + params[j])) {
+                  document.getElementById(\'storage\' + params[j]).style.backgroundColor = "white";
                }
             }
          }

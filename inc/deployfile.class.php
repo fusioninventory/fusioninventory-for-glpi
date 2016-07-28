@@ -774,7 +774,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                   $msg = __("Failed to write file to disk", 'fusioninventory');
                   break;
 
-               case UPLOAD_ERR_CANT_WRITE:
+               case UPLOAD_ERR_EXTENSION:
                   $msg = __("PHP extension stopped the file upload", 'fusioninventory');
                   break;
 

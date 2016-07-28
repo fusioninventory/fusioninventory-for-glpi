@@ -898,7 +898,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
             case 10:
                if ($pfNetworkPort->fields["portduplex"] == 2) {
-                  echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
+                  echo "<td class='tab_bg_1_2' style='background-color:#cf9b9b'>";
                   echo __('Half', 'fusioninventory');
                   echo '</td>';
                } else if ($pfNetworkPort->fields["portduplex"] == 3) {
@@ -945,8 +945,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                            echo "<td style='background:#bfec75'
                                      class='tab_bg_1_2'>".$icon.$link1;
                         } else {
-                           echo "<td background='#cf9b9b'
-                                     class='tab_bg_1_2'>".$icon.$link1;
+                           echo "<td class='tab_bg_1_2' style='background-color:#cf9b9b'>".$icon.$link1;
                         }
                         if (!empty($link)) {
                            echo "<br/>".$link;

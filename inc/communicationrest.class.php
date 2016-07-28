@@ -63,8 +63,11 @@ class PluginFusioninventoryCommunicationRest {
                case 'getConfig':
                   $response = self::getConfigByAgent($params);
                   break;
+
                case 'getJobs':
                   $response = self::getJobsByAgent($params);
+                    break;
+
                case 'wait':
                   break;
 

@@ -1386,7 +1386,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @see CommonDBTM::post_updateItem()
    **/
    function post_updateItem($history=1) {
-      global $DB, $CFG_GLPI;
 
       if (isset($this->oldvalues['is_active'])
               && $this->oldvalues['is_active'] == 1) {

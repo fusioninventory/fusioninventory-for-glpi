@@ -614,7 +614,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                '0',
                'PluginFusioninventoryAgent',
                '1',
-               $pfAgent->fields["threads_networkinventory"].' threads',
+               $pfAgent->fields["threads_networkinventory"].' threads '.
                $pfAgent->fields["timeout_networkinventory"].' timeout'
             );
             $changestate = $pfTaskjobstate->fields['id'];

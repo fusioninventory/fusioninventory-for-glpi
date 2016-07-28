@@ -156,8 +156,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
    static function getAdditionalMenuContent() {
-      global $CFG_GLPI;
-
       $menu = array();
 
 //      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
@@ -518,9 +516,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function displayMenuInventory() {
       global $CFG_GLPI;
 
-      $pfConfig = new PluginFusioninventoryConfig();
-
-
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
@@ -592,9 +587,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function displayMenuSNMPInventory() {
       global $CFG_GLPI;
 
-      $pfConfig = new PluginFusioninventoryConfig();
-
-
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
@@ -617,7 +609,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       );
       echo "<tr class='tab_bg_1' height='100'>";
       echo "<td colspan='2' height='220'>";
-      self::showChart('snmp', $dataSNMP, '', 940);
+      self::showChart('snmp', $dataSNMP);
       echo "</td>";
       echo "</tr>";
 

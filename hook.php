@@ -1415,14 +1415,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   ON glpi_plugin_fusioninventory_printers.plugin_fusioninventory_configsecurities_id
                         = glpi_plugin_fusioninventory_configsecurities.id ";
 
-            case "glpi_plugin_fusioninventory_printers.plugin_fusioninventory_printers_id":
-               $return = " ";
-               if ($leftjoin_fusioninventory_printers == "1") {
-                  $return = " LEFT JOIN glpi_plugin_fusioninventory_printers
-                     ON glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id ";
-               }
-               return $return;
-
             // ** FusionInventory - switch
             case "glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_networkequipments_id" :
                $table_networking_ports = 0;

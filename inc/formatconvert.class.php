@@ -523,8 +523,6 @@ class PluginFusioninventoryFormatconvert {
             $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['plugin_fusioninventory_computerarches_id']));
             if (isset($res_rule['name'])) {
                $array_tmp['plugin_fusioninventory_computerarches_id'] = $res_rule['name'];
-            } else {
-               $array_tmp['plugin_fusioninventory_computerarches_id'] = $array_tmp['plugin_fusioninventory_computerarches_id'];
             }
             if ($array_tmp['plugin_fusioninventory_computerarches_id'] == '0') {
                $array_tmp['plugin_fusioninventory_computerarches_id'] = '';

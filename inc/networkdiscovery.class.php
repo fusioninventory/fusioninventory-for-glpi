@@ -383,7 +383,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
-                                       $pfAgent->fields["threads_networkdiscovery"].' threads',
+                                       $pfAgent->fields["threads_networkdiscovery"].' threads '.
                                        $pfAgent->fields["timeout_networkdiscovery"].' timeout'
                                     );
                $changestate = $pfTaskjobstate->fields['id'];

@@ -92,7 +92,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Display form forconfiguration of agent modules
+   * Display form for configuration of agent modules
    *
    * @return bool TRUE if form is ok
    *
@@ -115,15 +115,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
-         $use_rest = FALSE;
 
          foreach ($a_methods as $datamod) {
             if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
                 isset($datamod['task'])
                   && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
-               if (isset($datamod['use_rest']) && $datamod['use_rest'] == TRUE) {
-                  $use_rest = TRUE;
-               }
                if (isset($datamod['name'])) {
                   $modulename = $datamod['name'];
                }

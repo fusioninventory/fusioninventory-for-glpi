@@ -262,7 +262,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $inputdb['itemtype'] = $input['itemtype'];
          }
          if (isset($input['serial'])) {
-            $input['serial'] = $input['serial'];
+            $inputdb['serial'] = $input['serial'];
          }
          if (isset($input['ip'])) {
             $inputdb['ip'] = exportArrayToDB($input['ip']);

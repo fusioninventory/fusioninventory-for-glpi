@@ -2329,7 +2329,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['is_template_computer'] = FALSE;
       $a_software['is_deleted_computer']  = FALSE;
       $a_software['_no_history']          = TRUE;
-      $a_software['entities_id']          = $a_software['entities_id'];
+      $a_software['entities_id']          = $computers_id['entities_id'];
 
       if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
          if (!$no_history) {

@@ -924,8 +924,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             } else {
                $pfPrinter->update($data);
             }
-
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -976,7 +975,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $pfNetworkEquipment->update($data);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -1001,7 +1000,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -1027,7 +1026,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -1050,7 +1049,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 

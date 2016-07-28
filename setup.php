@@ -85,17 +85,16 @@ function plugin_init_fusioninventory() {
    $Plugin = new Plugin();
    $moduleId = 0;
 
-   if ( isset($_SESSION['glpi_use_mode']) ) {
+   $debug_mode = false;
+   if (isset($_SESSION['glpi_use_mode'])) {
       $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
-   } else {
-      $debug_mode = false;
    }
 
    if ($Plugin->isActivated('fusioninventory')) { // check if plugin is active
 
       // Register classes into GLPI plugin factory
 
-      Plugin::registerClass('PluginFusioninventoryAgent',
+      $Plugin->registerClass('PluginFusioninventoryAgent',
          array(
             'addtabon' => array(
                'Computer',
@@ -105,9 +104,9 @@ function plugin_init_fusioninventory() {
             )
          )
       );
-      Plugin::registerClass('PluginFusioninventoryAgentmodule');
-      Plugin::registerClass('PluginFusioninventoryConfig');
-      Plugin::registerClass('PluginFusioninventoryTask',
+      $Plugin->registerClass('PluginFusioninventoryAgentmodule');
+      $Plugin->registerClass('PluginFusioninventoryConfig');
+      $Plugin->registerClass('PluginFusioninventoryTask',
          array(
             'addtabon' => array(
                'Computer',
@@ -117,7 +116,7 @@ function plugin_init_fusioninventory() {
             )
          )
       );
-      Plugin::registerClass('PluginFusioninventoryTaskjob',
+      $Plugin->registerClass('PluginFusioninventoryTaskjob',
          array(
             'addtabon' => array(
                //'Computer',
@@ -129,7 +128,7 @@ function plugin_init_fusioninventory() {
          )
       );
 
-      Plugin::registerClass('PluginFusioninventoryTaskjobstate',
+      $Plugin->registerClass('PluginFusioninventoryTaskjobstate',
          array(
             'addtabon' => array(
                'PluginFusioninventoryTask'
@@ -137,58 +136,57 @@ function plugin_init_fusioninventory() {
          )
       );
 
-      Plugin::registerClass('PluginFusioninventoryUnmanaged');
-      Plugin::registerClass('PluginFusioninventoryModule');
-      Plugin::registerClass('PluginFusioninventoryProfile',
+      $Plugin->registerClass('PluginFusioninventoryUnmanaged');
+      $Plugin->registerClass('PluginFusioninventoryModule');
+      $Plugin->registerClass('PluginFusioninventoryProfile',
               array('addtabon' => array('Profile')));
-      Plugin::registerClass('PluginFusioninventoryEntity',
+      $Plugin->registerClass('PluginFusioninventoryEntity',
               array('addtabon' => array('Entity')));
-      Plugin::registerClass('PluginFusioninventorySetup');
-      Plugin::registerClass('PluginFusioninventoryIPRange');
-      Plugin::registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
+      $Plugin->registerClass('PluginFusioninventorySetup');
+      $Plugin->registerClass('PluginFusioninventoryIPRange');
+      $Plugin->registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
               array('addtabon' => 'PluginFusioninventoryIPRange'));
-      Plugin::registerClass('PluginFusioninventoryCredential');
-      Plugin::registerClass('PluginFusioninventoryTimeslot');
-      Plugin::registerClass('PluginFusioninventoryLock',
+      $Plugin->registerClass('PluginFusioninventoryCredential');
+      $Plugin->registerClass('PluginFusioninventoryTimeslot');
+      $Plugin->registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryCollect');
-      Plugin::registerClass('PluginFusioninventoryCollect_Registry',
+      $Plugin->registerClass('PluginFusioninventoryCollect');
+      $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
               array('addtabon' => array('PluginFusioninventoryCollect')));
-      Plugin::registerClass('PluginFusioninventoryCollect_Registry_Content',
+      $Plugin->registerClass('PluginFusioninventoryCollect_Registry_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      Plugin::registerClass('PluginFusioninventoryCollect_Wmi',
+      $Plugin->registerClass('PluginFusioninventoryCollect_Wmi',
               array('addtabon' => array('PluginFusioninventoryCollect')));
-      Plugin::registerClass('PluginFusioninventoryCollect_Wmi_Content',
+      $Plugin->registerClass('PluginFusioninventoryCollect_Wmi_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      Plugin::registerClass('PluginFusioninventoryCollect_File',
+      $Plugin->registerClass('PluginFusioninventoryCollect_File',
               array('addtabon' => array('PluginFusioninventoryCollect')));
-      Plugin::registerClass('PluginFusioninventoryCollect_File_Content',
+      $Plugin->registerClass('PluginFusioninventoryCollect_File_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
+      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryComputerRemoteManagement',
+      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement',
               array('addtabon' => array('Computer')));
-
 
          //Classes for rulesengine
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocation');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
               array('rulecollections_types'=>TRUE));
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntity');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
               array('rulecollections_types'=>TRUE));
-      Plugin::registerClass('PluginFusioninventoryRulematchedlog',
+      $Plugin->registerClass('PluginFusioninventoryRulematchedlog',
               array('addtabon' => array('Computer',
                                         'PluginFusioninventoryAgent',
                                         'PluginFusioninventoryUnmanaged',
@@ -196,38 +194,38 @@ function plugin_init_fusioninventory() {
                                         'NetworkEquipment')));
 
       //Classes for rulesengine
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleImport');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleImportCollection',
               array('rulecollections_types'=>TRUE));
-      Plugin::registerClass('PluginFusioninventoryConstructDevice');
+      $Plugin->registerClass('PluginFusioninventoryConstructDevice');
 
       //Computer arch dictionnary
-      Plugin::registerClass('PluginFusioninventoryRuleDictionnaryComputerArch');
-      Plugin::registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
+      $Plugin->registerClass('PluginFusioninventoryRuleDictionnaryComputerArch');
+      $Plugin->registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
               array('rulecollections_types'=>TRUE));
       array_push($CFG_GLPI["dictionnary_types"], 'PluginFusioninventoryRuleDictionnaryComputerArchCollection');
 
       // Networkinventory and networkdiscovery
-      Plugin::registerClass('PluginFusioninventorySnmpmodel');
-      Plugin::registerClass('PluginFusioninventoryNetworkEquipment',
+      $Plugin->registerClass('PluginFusioninventorySnmpmodel');
+      $Plugin->registerClass('PluginFusioninventoryNetworkEquipment',
               array('addtabon' => array('NetworkEquipment')));
-      Plugin::registerClass('PluginFusioninventoryPrinter',
+      $Plugin->registerClass('PluginFusioninventoryPrinter',
               array('addtabon' => array('Printer')));
-      Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
-      Plugin::registerClass('PluginFusioninventoryConfigSecurity');
-      Plugin::registerClass('PluginFusioninventoryNetworkPortLog',
+      $Plugin->registerClass('PluginFusioninventoryPrinterCartridge');
+      $Plugin->registerClass('PluginFusioninventoryConfigSecurity');
+      $Plugin->registerClass('PluginFusioninventoryNetworkPortLog',
               array('addtabon' => array('NetworkPort')));
-      Plugin::registerClass('PluginFusinvsnmpAgentconfig');
-      Plugin::registerClass('PluginFusioninventoryNetworkPort',
+      $Plugin->registerClass('PluginFusinvsnmpAgentconfig');
+      $Plugin->registerClass('PluginFusioninventoryNetworkPort',
               array('classname'=>'glpi_networkports'));
-      Plugin::registerClass('PluginFusioninventoryStateDiscovery');
-      Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
-      Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
+      $Plugin->registerClass('PluginFusioninventoryStateDiscovery');
+      $Plugin->registerClass('PluginFusioninventoryPrinterLogReport');
+      $Plugin->registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
-      Plugin::registerClass('PluginFusioninventoryDeployGroup');
-      Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
+      $Plugin->registerClass('PluginFusioninventoryDeployGroup');
+      $Plugin->registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
-      Plugin::registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
+      $Plugin->registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
@@ -358,8 +356,7 @@ function plugin_init_fusioninventory() {
                  'PluginFusioninventoryUnmanaged' => array('PluginFusioninventoryUnmanaged',
                                                                'purgeUnmanaged'),
                  'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
-                 'Printer'                            => 'plugin_item_purge_fusinvsnmp',
-                 'PluginFusioninventoryUnmanaged' => 'plugin_item_purge_fusinvsnmp');
+                 'Printer'                            => 'plugin_item_purge_fusinvsnmp');
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
 
@@ -454,8 +451,8 @@ function plugin_init_fusioninventory() {
    $id = filter_input(INPUT_GET, "id");
    $action = filter_input(INPUT_GET, "action");
    if ($id == $moduleId
-         && $action == 'uninstall'
-               && (strstr(filter_input(INPUT_SERVER, "HTTP_REFERER"), "front/plugin.php"))) {
+           && $action == 'uninstall'
+           && (strstr(filter_input(INPUT_SERVER, "HTTP_REFERER"), "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(TRUE)) {
           Session::addMessageAfterRedirect(__('Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin'));

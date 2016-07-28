@@ -639,7 +639,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       unset($input['id']);
       $a_xml = array(
           'package'    => $input,
-          'orders'     => array(),
           'files'      => array(),
           'manifests'  => array(),
           'repository' => array(),

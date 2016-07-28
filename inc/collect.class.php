@@ -204,7 +204,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $joblog     = new PluginFusioninventoryTaskjoblog();
       $jobstate   = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
-      $uniqid     = uniqid();
 
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);

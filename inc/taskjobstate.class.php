@@ -57,8 +57,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    public $method = '';
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
-
       $tab_names = array();
       $tab_names[] = __("Job executions");
       //Return tab names if list is not empty
@@ -68,6 +66,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          return '';
       }
    }
+
+
 
    static function getStateNames() {
       return array(

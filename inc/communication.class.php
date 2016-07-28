@@ -407,7 +407,6 @@ class PluginFusioninventoryCommunication {
       );
 
       // Check XML integrity
-      $pxml = '';
       if (($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA))) {
 
       } else if (($pxml = @simplexml_load_string(utf8_encode($xml),

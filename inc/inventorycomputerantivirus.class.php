@@ -129,7 +129,6 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    function showForm($items_id, $options=array()) {
 
       $a_antivirus = $this->find("`computers_id`='".$items_id."'");
-      $antivirusData = array();
 
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
