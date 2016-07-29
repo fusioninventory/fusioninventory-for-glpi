@@ -391,10 +391,10 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                $changestate = $pfTaskjobstate->fields['id'];
             } else {
                $pfTaskjobstate->changeStatusFinish($pfTaskjobstate->fields['id'],
-                                                                 $taskjobstatedatas['items_id'],
-                                                                 $taskjobstatedatas['itemtype'],
-                                                                 0,
-                                                                 "Merged with ".$changestate);
+                   $taskjobstatedatas['items_id'],
+                   $taskjobstatedatas['itemtype'],
+                   0,
+                   "Merged with ".$changestate);
             }
       //}
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();

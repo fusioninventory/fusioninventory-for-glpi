@@ -252,9 +252,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                                              0,
                                              '',
                                              1,
-                                             "No agent found for [[Computer::".$computer_id."]]",
-                                             0,
-                                             0);
+                                             "No agent found for [[Computer::".$computer_id."]]");
             } else {
                if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {
                   $c_input['plugin_fusioninventory_agents_id'] = $agents_id;

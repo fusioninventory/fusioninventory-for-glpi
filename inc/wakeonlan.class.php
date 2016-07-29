@@ -290,8 +290,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                                                       $data['items_id'],
                                                       $data['itemtype'],
                                                       0,
-                                                      'WakeOnLan have not return state',
-                                                      1);
+                                                      'WakeOnLan have not return state');
                }
             //}
          }

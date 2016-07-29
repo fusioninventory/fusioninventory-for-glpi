@@ -1237,7 +1237,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          foreach($a_taskjobstates as $data) {
             if ($data['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
                $mytaskjobstate->changeStatusFinish($data['id'],
-                  0, '', 1, "Action cancelled by user", 0, 0);
+                  0, '', 1, "Action cancelled by user");
             }
          }
 
