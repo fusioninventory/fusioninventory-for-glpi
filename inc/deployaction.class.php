@@ -424,10 +424,6 @@ class PluginFusioninventoryDeployAction {
          PluginFusioninventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
          echo "</th>";
          echo "<td>";
-         $display = "style='display:none'";
-         if ($retChecks) {
-            $display = "style='display:block'";
-         }
          echo "<span id='retchecks' style='display:block'>";
 
          if (is_array($retChecks)

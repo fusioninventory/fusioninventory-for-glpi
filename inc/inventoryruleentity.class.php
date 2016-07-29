@@ -226,7 +226,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $res = parent::checkCriteria($criteria, $input);
 
       if (in_array($criteria->fields["condition"], array(self::PATTERN_CIDR))) {
-         $condition = $criteria->fields['condition'];
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -256,7 +255,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
             }
          }
       } else if (in_array($criteria->fields["condition"], array(self::PATTERN_NOT_CIDR))) {
-         $condition = $criteria->fields['condition'];
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],

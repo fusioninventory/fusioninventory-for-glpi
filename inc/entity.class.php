@@ -75,7 +75,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > -1) {
-         $pmEntity = new PluginFusionInventoryEntity();
+         $pmEntity = new PluginFusioninventoryEntity();
          $pmEntity->showForm($item->fields['id']);
       }
       return true;
@@ -93,7 +93,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    *
    **/
    function showForm($entities_id, $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_configs = $this->find("`entities_id`='".$entities_id."'", "", 1);
       $id = 0;

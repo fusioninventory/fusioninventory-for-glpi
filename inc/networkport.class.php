@@ -48,9 +48,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    private $portDB = array();
    private $portModif = array();
    private $plugin_fusinvsnmp_networkports_id = 0;
-   private $cdp=FALSE; // TRUE if CDP=1
-   private $portMacs=array();  // MAC addresses
-   private $portIps=array();   // IP addresses
    private $portVlans=array(); // number and name for each vlan
 
 

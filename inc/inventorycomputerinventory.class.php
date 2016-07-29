@@ -593,7 +593,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          $class = new $itemtype();
          if ($items_id == "0") {
             if ($entities_id == -1) {
-               $entities_id = 0;
                $_SESSION["plugin_fusioninventory_entity"] = 0;
             }
             $input = array();

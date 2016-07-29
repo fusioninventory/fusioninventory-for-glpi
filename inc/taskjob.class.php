@@ -174,13 +174,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             $item_type = key($data);
             $item_id = current($data);
             $class = new $item_type();
-            $name = '';
             if ($item_id == '.1') {
                $name = __('Auto managenement dynamic of agents', 'fusioninventory');
-
             } else if ($item_id == '.2') {
                $name = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
-
             } else {
                $class->getFromDB($item_id);
                $name = $class->getName();
@@ -336,7 +333,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $rand = '';
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
-      $iddropdown = '';
       if (is_callable(array($class, "task_".$_POST['name']."selection_".
             $definitiontype."_".$method))) {
          $rand = call_user_func(array($class,
@@ -420,7 +416,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             'method'=>$method,
             'actiontypeid'=>'dropdown_'.$myname.$rand
             );
-      Ajax::UpdateItemOnSelectEvent('dropdown_ActionType'.$rand,
+      Ajax::updateItemOnSelectEvent('dropdown_ActionType'.$rand,
                                     "show_ActionList",
                                     $CFG_GLPI["root_doc"].
                                        "/plugins/fusioninventory/ajax/dropdownactionlist.php",
@@ -482,7 +478,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                     'actiontypeid'     => $actiontypeid);
 
 
-      Ajax::UpdateItemOnEvent('addAObject', 'show_ActionListEmpty',
+      Ajax::updateItemOnEvent('addAObject', 'show_ActionListEmpty',
                               $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/dropdownactionselection.php",
                               $params, array("click"));
@@ -724,8 +720,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             $period = $periodicity_count * 60 * 60 * 24 * 30; //month
             break;
 
-         default:
-            $period = 0;
       }
       return $period;
    }
@@ -772,7 +766,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
       foreach($a_methods as $data) {
-         $class = PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
 
          if (is_callable(array($class, 'task_action_'.$data['method']))) {
             $a_itemtype = call_user_func(array($class, 'task_action_'.$data['method']));
@@ -1200,14 +1194,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                $class = new $itemtype();
                $itemname = $class->getTypeName();
                $class->getFromDB($items_id);
-               $name = '';
                if ($items_id == '.1') {
                   $name = __('Auto managenement dynamic of agents', 'fusioninventory');
-
                } else if ($items_id == '.2') {
-                  $name =
-                        __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
-
+                  $name =  __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
                } else {
                   $name = $class->getLink(1);
                }
@@ -1452,7 +1442,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
+      Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
                                 $CFG_GLPI["root_doc"].
                                    "/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
@@ -1480,7 +1470,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
+      Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
                                 $CFG_GLPI["root_doc"].
                                    "/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
@@ -1514,7 +1504,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
    function prepareRunTaskjob($a_taskjob) {
 
-      $uniqid = 0;
       $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
       $item = new $itemtype;
 
@@ -1600,9 +1589,9 @@ function edit_subtype(id,el) {
 //      params['index'] = row.index();
       // change mode to edit
 //      params['mode'] = 'edit';
-      arg = 'taskjobs_id=' + id;
+      var arg = 'taskjobs_id=' + id;
    } else {
-      arg = 'tasks_id=' + id;
+      var arg = 'tasks_id=' + id;
    }
 
    //scroll to edit form

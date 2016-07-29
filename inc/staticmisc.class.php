@@ -200,7 +200,7 @@ class PluginFusioninventoryStaticmisc {
       $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $data) {
-         $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         $class = $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
          if (is_callable(array($class, 'task_methods'))) {
             $a_methods = array_merge($a_methods,
                call_user_func(array($class, 'task_methods')));
@@ -293,15 +293,6 @@ class PluginFusioninventoryStaticmisc {
 
       $options = array();
       $options['name'] = 'definitionactiontoadd';
-
-      $module = new PluginFusioninventoryAgentmodule();
-      $module_infos = $module->getActivationExceptions('InventoryComputerESX');
-      $exceptions = json_decode($module_infos['exceptions'], TRUE);
-
-      $in = "";
-      if (!empty($exceptions)) {
-         $in = " AND `a`.`id` NOT IN (".implode($exceptions, ', ').")";
-      }
 
       $query = "SELECT `a`.`id`, `a`.`name`
                 FROM `glpi_plugin_fusioninventory_credentialips` as `a`

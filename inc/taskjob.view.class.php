@@ -55,8 +55,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
-
       $tab_names = array();
       if ( $item->getID() > 0 and $this->can('task', 'r') ) {
          $tab_names[] = __('Jobs configuration', 'fusioninventory');
@@ -1106,7 +1104,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
 
       } elseif (isset($postvars['forceend'])) {
-         $taskjobstate = new PluginFusioninventoryTaskjobstate();
+         $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $mytaskjobstate->getFromDB($postvars['taskjobstates_id']);
          $jobstate = $mytaskjobstate->fields;

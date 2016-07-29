@@ -195,13 +195,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    function getTaskjobstatesForAgent($agent_id, $methods = array(), $options=array()) {
       global $DB;
 
-      // Check for read only which means we do not change the jobstates state (especially usefull
-      // for the get_agent_jobs.php script).
-      $read_only = false;
-      if ( isset($options['read_only']) ) {
-         $read_only = $options['read_only'];
-      }
-
       $pfTimeslot = new PluginFusioninventoryTimeslot();
 
       $jobstates = array();
@@ -274,7 +267,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Get timeslot's entries from this list at the time of the request (ie. get entries according
       // to the day of the week)
-      $timeslot_entries = array();
       $day_of_week = $now->format("N");
 
       $timeslot_ids = array();
@@ -1239,7 +1231,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // add taskjobs table JOIN statement if not already set
          if ( !isset( $leftjoin['taskjobs'] ) ) {
                $leftjoin_bak = $leftjoin;
-               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin_tmp = PluginFusioninventoryTaskjob::getJoinQuery();
                $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
             if (!isset( $select["taskjobs"]) ) {
                $select['taskjobs'] = "taskjob.*";
@@ -1272,7 +1264,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             // add taskjobs table JOIN statement if not already set
             if ( !isset( $leftjoin['taskjobs'] ) ) {
                $leftjoin_bak = $leftjoin;
-               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin_tmp = PluginFusioninventoryTaskjob::getJoinQuery();
                $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
             }
             if (!isset( $select["taskjobs"]) ) {
@@ -1306,7 +1298,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             // add taskjobs table JOIN statement if not already set
             if ( !isset( $leftjoin['taskjobs'] ) ) {
                $leftjoin_bak = $leftjoin;
-               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin_tmp = PluginFusioninventoryTaskjob::getJoinQuery();
                $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
             }
             if (!isset( $select["taskjobs"]) ) {
@@ -1590,8 +1582,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
 
          case 'target_task' :
-            $taskjob = new PluginFusioninventoryTaskjob();
-
             // prepare base insertion
             $input = array(
                'plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'],

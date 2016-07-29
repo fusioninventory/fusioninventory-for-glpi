@@ -51,8 +51,6 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 $pfTaskjob = new PluginFusioninventoryTaskjob();
-$pfTaskjob->showList(
-        filter_input(INPUT_POST, "taskjobs_id"),
-        filter_input(INPUT_POST, "typename"));
+$pfTaskjob->showList();
 
 ?>

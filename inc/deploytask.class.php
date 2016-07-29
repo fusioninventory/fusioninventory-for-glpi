@@ -138,9 +138,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       echo "</script>";
 
       $this->getFromDB($id);
-      $disabled = "false";
       if ($this->getField('is_active') == 1) {
-         $disabled = "true";
          echo "<div class='box' style='margin-bottom:20px;'>";
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
          echo "</div></div></div>";

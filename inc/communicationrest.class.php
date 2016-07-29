@@ -113,7 +113,7 @@ class PluginFusioninventoryCommunicationRest {
                if (strstr($taskname, 'deploy')) {
                   $taskname = $method['task'];
                }
-               $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
+               $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($method['module']);
 
                if (
                      (isset($method['task']) && strtolower($method['task']) == strtolower($task))
@@ -220,7 +220,7 @@ class PluginFusioninventoryCommunicationRest {
          $taskjobstate->getFromDB($jobstate['id']);
 
          //Get taskjoblog associated
-         $taskjoblog = new PluginFusioninventoryTaskjobLog();
+         $taskjoblog = new PluginFusioninventoryTaskjoblog();
          $taskjoblog->getFromDBByQuery(
             "WHERE `plugin_fusioninventory_taskjobstates_id`=". $jobstate['id']
          );

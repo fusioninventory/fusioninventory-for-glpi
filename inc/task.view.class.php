@@ -52,8 +52,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
-
       $tab_names = array();
 
       if ( $this->can("task", "r") ) {
@@ -252,8 +250,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $Computer = new Computer();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
-         "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
-         "  taskjobs.computers_url = '". $Computer->getFormUrl()."'",
+         "  taskjobs.agents_url = '". $pfAgent->getFormURL()."'",
+         "  taskjobs.computers_url = '". $Computer->getFormURL()."'",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",

@@ -54,7 +54,7 @@ $myname = filter_input(INPUT_POST, "myname");
 $myamemore = filter_input(INPUT_POST, $myname);
 if ($myamemore != '') {
    $pfTaskjob = new PluginFusioninventoryTaskjob();
-   $pfTaskjob->dropdownValue($myname, $myamemore,
+   $pfTaskjob->dropdownvalue($myname, $myamemore,
            filter_input(INPUT_POST, "method"),
            filter_input(INPUT_POST, filter_input(INPUT_POST, "name").'typeid'),
            filter_input(INPUT_POST, "taskjobs_id"));

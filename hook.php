@@ -329,10 +329,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Hardware ports');
       $sopt[5193]['forcegroupby']='1';
 
-      $pfConfig = new PluginFusioninventoryConfig();
-
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-
       $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
@@ -359,10 +355,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
    }
 
    if ($itemtype == 'NetworkEquipment') {
-
-      $pfConfig = new PluginFusioninventoryConfig();
-
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
       $sopt[5191]['field']='name';

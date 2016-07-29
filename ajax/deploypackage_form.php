@@ -227,7 +227,7 @@ if (empty($orders_id) && empty($rand)
 
 if (!is_numeric($orders_id)) {
    Toolbox::logDebug("Error: orders_id in request is not an integer");
-   Toolbox::logDebug(var_dump($orders_id) );
+   Toolbox::logDebug(print_r($orders_id, TRUE));
    exit;
 }
 

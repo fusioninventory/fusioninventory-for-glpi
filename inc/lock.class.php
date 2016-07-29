@@ -349,7 +349,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $checked = false;
       $a_exclude = $this->excludeFields();
-      $options = search::getOptions($p_itemtype);
+      $options = Search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
          $name = "";
          $key_source = $key;

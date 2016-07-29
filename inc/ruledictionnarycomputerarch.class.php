@@ -42,13 +42,6 @@
 class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDropdown {
 
 
-   /**
-    * Constructor
-   **/
-   function __construct() {
-      parent::__construct('PluginFusioninventoryRuleDictionnaryComputerArch');
-   }
-
    static function getTypeName($nb=0) {
       return __('Dictionnary of computer architectures', 'fusioninventory');
    }

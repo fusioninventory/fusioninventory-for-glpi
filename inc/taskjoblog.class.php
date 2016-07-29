@@ -294,7 +294,7 @@ function appear_array(id){
       $pfAgent->getFromDB($pfTaskjobstate->fields['plugin_fusioninventory_agents_id']);
       echo $pfAgent->getLink(1);
 
-      Ajax::UpdateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
+      Ajax::updateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
                       'viewfollowup'.$pfTaskjobstate->fields["id"],
                       $CFG_GLPI['root_doc'].
                          "/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
@@ -959,7 +959,7 @@ function appear_array(id){
          } else if ($i == $nb) {
             $endtable = 1;
          }
-         $this->ShowLine(
+         $this->showLine(
                  $data['method'],
                  $data['name'],
                  '80 deployments (ok: 50, ko : 12, unneeded : 3)',

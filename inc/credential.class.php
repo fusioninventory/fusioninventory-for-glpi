@@ -250,7 +250,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    static function getForItemtype($itemtype) {
       $itemtypes = array();
       foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
          if (is_callable(array($class, 'credential_types'))) {
             foreach (call_user_func(array($class, 'credential_types')) as $credential) {
                if (in_array($itemtype, $credential['targets'])) {
@@ -297,7 +297,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $params    = array('itemtype' => '__VALUE__',
                          'id'       => $p['id']);
       $url       = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
-      Ajax::UpdateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
+      Ajax::updateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
                                   "span_credentials", $url, $params);
 
       echo "&nbsp;<span name='span_credentials' id='span_credentials'>";

@@ -155,7 +155,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                        AND `instantiation_type`='NetworkPortAggregate'
                        AND `logical_number` = '0'", '', 1));
       $a_ips_DB = array();
-      $networkports_id = 0;
       if (isset($a_networkPortAggregates['id'])) {
          $a_networkPortAggregates['mac'] = $mac;
          $networkPort->update($a_networkPortAggregates);
@@ -173,7 +172,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       // Get networkname
       $a_networknames_find = current($networkName->find("`items_id`='".$networkports_id."'
                                                          AND `itemtype`='NetworkPort'", "", 1));
-      $networknames_id = 0;
       if (isset($a_networknames_find['id'])) {
          $networknames_id = $a_networknames_find['id'];
          $a_networknames_find['name'] = $networkname_name;

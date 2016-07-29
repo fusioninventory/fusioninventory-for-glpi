@@ -51,7 +51,7 @@ switch (filter_input(INPUT_GET, "action")) {
       $machineid = filter_input(INPUT_GET, "machineid");
       if(isset($machineid)) {
          $pfAgent        = new PluginFusioninventoryAgent();
-         $pfAgentModule  = new PluginFusioninventoryAgentModule();
+         $pfAgentModule  = new PluginFusioninventoryAgentmodule();
          $pfTask         = new PluginFusioninventoryTask();
          $pfTaskjob      = new PluginFusioninventoryTaskjob();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();

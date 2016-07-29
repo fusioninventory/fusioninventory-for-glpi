@@ -89,7 +89,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       if (count($a_remotemanagement)) {
 
          echo '<div align="center">';
-         echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
+         echo '<table class="tab_cadre_fixe" style="margin: 5px 0 0;">';
          echo '<tr>';
          echo '<th colspan="4">'.__('Remote management', 'fusioninventory').'</th>';
          echo '</tr>';

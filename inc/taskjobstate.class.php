@@ -113,7 +113,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $total++;
             $state[$data['state']]++;
          }
-         $globalState = 0;
          if ($total == '0') {
             $globalState = 0;
          } else {

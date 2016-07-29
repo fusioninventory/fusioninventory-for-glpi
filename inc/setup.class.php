@@ -1868,7 +1868,6 @@ class PluginFusioninventorySetup {
     */
    function createFusionInventoryUser() {
       $user = new User();
-      $a_users = array();
       $a_users = $user->find("`name`='Plugin_FusionInventory'");
       if (count($a_users) == '0') {
          $input = array();

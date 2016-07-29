@@ -73,7 +73,7 @@ $data = $_POST;
 if (isset ($data["add"])) {
    Session::checkRight('plugin_fusioninventory_package', CREATE);
    $newID = $package->add($data);
-   html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
 } else if (isset ($data["update"])) {
    Session::checkRight('plugin_fusioninventory_package', UPDATE);
    $package->update($data);

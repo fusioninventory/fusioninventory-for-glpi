@@ -1804,7 +1804,7 @@ class PluginFusioninventoryFormatconvert {
     * exist in inventory
     *
     * @param array $array inventory data
-    * @param string $a_key the key to check
+    * @param array $a_key the key to check
     * @return string|array
     */
    static function addValues($array, $a_key) {

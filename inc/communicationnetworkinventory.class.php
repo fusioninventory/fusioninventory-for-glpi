@@ -46,8 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryCommunicationNetworkInventory {
 
-   private $ptd, $logFile, $agent, $arrayinventory;
-   private $a_ports = array();
+   private $logFile, $agent, $arrayinventory;
 
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
@@ -280,9 +279,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             break;
 
          default:
-            $errors.=__('Unattended element in', 'fusioninventory').' TYPE : '
-                              .$a_inventory['itemtype']."\n";
+            return __('Unattended element in', 'fusioninventory').' TYPE : '.$a_inventory['itemtype']."\n";
       }
+      return '';
    }
 
 

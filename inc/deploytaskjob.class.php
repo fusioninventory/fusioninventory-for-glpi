@@ -115,7 +115,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       //remove old jobs from task
       $query = "DELETE FROM ".$this->getTable()."
       WHERE plugin_fusioninventory_deploytasks_id = '".$tasks_id."'";
-      $res = $DB->query($query);
+      $DB->query($query);
 
       //get plugin id
       $plug = new Plugin;
@@ -149,7 +149,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          $i++;
       }
       foreach($sql_tasks as $query) {
-         $res = $DB->query($query);
+         $DB->query($query);
       }
    }
 

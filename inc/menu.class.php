@@ -980,7 +980,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "<td width='380'>";
       $title = __('Number of computer inventories of last hours', 'fusioninventory');
-      $title = '';
       self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";

@@ -203,9 +203,7 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
  */
 function unregisterInvalidManifests( $logger, $dryrun, $invalid_manifests ) {
 
-   global $DB;
    $logger->info("Unregistering ".count($invalid_manifests)." manifests from database.");
-
 
    $pfDeployFile = new PluginFusioninventoryDeployFile();
 
