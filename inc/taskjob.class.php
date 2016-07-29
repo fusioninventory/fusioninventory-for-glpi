@@ -1108,7 +1108,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $pfTaskjobstate->getFromDB($a_taskjobstate['id']);
          if ($a_taskjobstate['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
                $pfTaskjobstate->changeStatusFinish(
-                     $a_taskjobstate['id'], 0, '', 1, "Action cancelled by user", 0, 0
+                     $a_taskjobstate['id'], 0, '', 1, "Action cancelled by user"
                );
          }
       }

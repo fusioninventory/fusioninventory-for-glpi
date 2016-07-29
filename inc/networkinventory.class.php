@@ -341,9 +341,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                                             '',
                                                             1,
                                                             "Unable to find agent to inventory ".
-                                                               "this ".$itemtype,
-                                                            0,
-                                                            0);
+                                                               "this ".$itemtype);
                         $a_input['state'] = 1;
                      }
                   }

@@ -335,9 +335,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                                           0,
                                           '',
                                           1,
-                                          "No agent found for [[Computer::".$computer_id."]]",
-                                          0,
-                                          0);
+                                          "No agent found for [[Computer::".$computer_id."]]");
          } else {
             foreach($definitions as $definition) {
                $pfCollect->getFromDB($definition['PluginFusioninventoryCollect']);
