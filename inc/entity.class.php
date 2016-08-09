@@ -59,6 +59,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $array_ret = array();
@@ -183,7 +184,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
 
 
-/**
+   /**
     * Get value of config
     *
     * @global object $DB
@@ -253,6 +254,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
+   
    function post_getEmpty() {
       $this->fields['transfers_id_auto'] = -1;
    }

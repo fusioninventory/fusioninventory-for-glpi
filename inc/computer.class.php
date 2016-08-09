@@ -68,6 +68,8 @@ class PluginFusioninventoryComputer extends Computer {
       return $options;
    }
 
+
+
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
@@ -101,6 +103,8 @@ class PluginFusioninventoryComputer extends Computer {
       return $actions;
    }
 
+
+
    /**
     * @since version 0.84
    **/
@@ -112,6 +116,7 @@ class PluginFusioninventoryComputer extends Computer {
       $forbidden[] = 'delete';
       return $forbidden;
    }
+
 
 
    /**
@@ -173,7 +178,7 @@ class PluginFusioninventoryComputer extends Computer {
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
-         
+
          case 'add' :
             echo "<br><br>".Html::submit(_x('button', 'Add'),
                                          array('name' => 'massiveaction'));

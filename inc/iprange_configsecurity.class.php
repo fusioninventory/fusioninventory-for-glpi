@@ -67,6 +67,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
    }
 
 
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pfIPRange_ConfigSecurity = new self();

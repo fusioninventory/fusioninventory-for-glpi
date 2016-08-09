@@ -49,6 +49,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       return TRUE;
    }
 
+
+
    static function canView() {
       return TRUE;
    }

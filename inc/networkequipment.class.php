@@ -79,7 +79,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-
    static function getType() {
       return "NetworkEquipment";
    }
@@ -750,6 +749,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
       return $result;
    }
+
 
 
    /**

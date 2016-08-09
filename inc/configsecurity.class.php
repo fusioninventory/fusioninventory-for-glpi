@@ -392,6 +392,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
+
    /**
     * @since version 0.85
     *
@@ -405,6 +406,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
             return true;
       }
    }
+
 
 
    /**

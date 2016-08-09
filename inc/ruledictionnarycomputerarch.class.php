@@ -46,6 +46,8 @@ class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDr
       return __('Dictionnary of computer architectures', 'fusioninventory');
    }
 
+
+
    function getCriterias() {
 
       static $criterias = array();
@@ -59,6 +61,7 @@ class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDr
       $criterias['name']['table'] = 'glpi_plugin_fusioninventory_computerarchs';
       return $criterias;
    }
+
 
 
    /**

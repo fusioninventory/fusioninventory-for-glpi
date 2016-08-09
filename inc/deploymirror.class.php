@@ -234,6 +234,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
+
    /**
     * @since version 0.85
     *
@@ -249,6 +250,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       }
    }
+
+
 
    /**
     * @since version 0.85

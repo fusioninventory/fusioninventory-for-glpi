@@ -213,6 +213,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
+
    /**
     * Add more criteria specific to this type of rule
    **/

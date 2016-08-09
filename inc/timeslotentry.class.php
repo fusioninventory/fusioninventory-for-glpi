@@ -191,6 +191,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
+
    /**
     * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
     * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.

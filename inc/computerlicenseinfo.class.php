@@ -54,6 +54,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return __('License');
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {

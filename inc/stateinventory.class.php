@@ -205,6 +205,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    }
 
 
+
    function dateDiff($date1, $date2) {
       $timestamp1 = strtotime($date1);
       $timestamp2 = strtotime($date2);

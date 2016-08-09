@@ -136,6 +136,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
+
    /**
     * Get Collection Datas : retrieve descriptions and rules
     *

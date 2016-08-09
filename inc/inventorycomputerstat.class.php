@@ -59,6 +59,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
    }
 
 
+
    static function init() {
       global $DB;
 

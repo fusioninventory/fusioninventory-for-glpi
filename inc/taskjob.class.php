@@ -48,6 +48,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       parent::__construct();
    }
 
+
+
    /**
    * Get name of this type
    *
@@ -59,12 +61,14 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
+
    /**
     * This class can be created by GLPI framework.
     */
    static function canCreate() {
       return true;
    }
+
 
 
    static function getJoinQuery() {
@@ -77,6 +81,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          )
       );
    }
+
+
 
    function getSearchOptions() {
 
@@ -116,11 +122,15 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $tab;
    }
 
+
+
    function getTask() {
       $pfTask = new PluginFusioninventoryTask();
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       return $pfTask;
    }
+
+
 
    /*
     * Manage definitions
@@ -206,6 +216,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
+
    /**
    * Display definitions type (itemtypes)
    *
@@ -217,7 +228,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    * @return value rand of the dropdown
    *
    **/
-
    function dropdownType($myname, $method, $value=0, $taskjobs_id=0, $entity_restrict='') {
       global $CFG_GLPI;
 
@@ -256,6 +266,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       return $rand;
    }
+
+
 
    /**
     * Get Itemtypes list for the selected method.
@@ -298,13 +310,15 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
+
    /**
     * Get Items list from the Itemtype previously selected in the Module types dropdown
     */
-
    function getItemsForModuleItemtype($method, $itemtype) {
 
    }
+
+
 
    /**
    * Display definitions value with preselection of definition type
@@ -368,12 +382,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                               "-1",
                               array(__('Add')));
 
-
       echo "<span id='Additem_$rand'></span>";
    }
-
-
-
 
 
 
@@ -510,6 +520,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       asort($array);
       return $array;
    }
+
 
 
    /**
@@ -723,6 +734,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       return $period;
    }
+
+
 
    /**
    * Display actions possible in device
@@ -1115,6 +1128,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
 
+
+
    /*
     * Display static list of taskjob
     *
@@ -1499,9 +1514,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
 
-
-
-
    function prepareRunTaskjob($a_taskjob) {
 
       $itemtype = "PluginFusioninventory".ucfirst($a_taskjob['method']);
@@ -1726,6 +1738,7 @@ function new_subtype(id) {
    }
 
 
+
    /**
     * Massive action ()
     */
@@ -1736,6 +1749,7 @@ function new_subtype(id) {
 
       return $actions;
    }
+
 
 
    /**

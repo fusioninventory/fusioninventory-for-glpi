@@ -65,6 +65,8 @@ class PluginFusioninventoryToolbox {
       }
    }
 
+
+
    /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
     *  used to uncompress gzip string
     *
@@ -182,6 +184,8 @@ class PluginFusioninventoryToolbox {
        }
        return $data;
    }
+
+
 
    /**
     * Merge 2 simpleXML objects
@@ -549,6 +553,9 @@ class PluginFusioninventoryToolbox {
       }
 
    }
+
+
+
    /**
    *  @function fetchAssocByTable
    *  This function fetch rows from a MySQL result in an array with each table as a key
@@ -651,6 +658,8 @@ class PluginFusioninventoryToolbox {
       return Dropdown::showFromArray($name, $values, $p);
    }
 
+
+
    /**
     * Get hour:minute from number of seconds
     */
@@ -659,6 +668,8 @@ class PluginFusioninventoryToolbox {
       $minute = (($seconds - ((floor($seconds / 3600)) * 3600)) / 60);
       return sprintf("%02s", $hour).":".sprintf("%02s", $minute);
    }
+
+
 
    /**
     * Get information if allow_url_fopen is activated and display message if not
@@ -688,6 +699,8 @@ class PluginFusioninventoryToolbox {
       }
       return TRUE;
    }
+
+
 
    /**
     *  Execute a function as Fusioninventory user

@@ -54,6 +54,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       return true;
    }
 
+
+
    static function getTypeName($nb=0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
@@ -75,6 +77,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       }
    }
+
 
 
    function getComments() {
@@ -133,7 +136,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $pfTask->showJobLogs();
       }
    }
-
 
 
 
@@ -297,6 +299,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       parent::post_deleteItem();
    }
+
 
 
    /**

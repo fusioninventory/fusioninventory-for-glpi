@@ -54,12 +54,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return __('Task management', 'fusioninventory');
    }
 
+
+
    /**
     * This class can be created by GLPI framework.
     */
    static function canCreate() {
       return true;
    }
+
 
 
    function getSearchOptions() {
@@ -152,6 +155,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
+
    /**
    * Purge task and taskjob related with method
    *
@@ -188,6 +192,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
       }
    }
+
+
 
    /**
     * Get the list of taskjobstates
@@ -713,6 +719,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return(array_keys($agents));
    }
 
+
+
    /**
    * Prepare Taskjobs for current
    *
@@ -731,6 +739,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $task->prepareTaskjobs($methods);
       return true;
    }
+
+
 
    static function formatChrono($chrono) {
       $interval = abs($chrono['end'] - $chrono['start']);
@@ -1421,6 +1431,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
+
    /**
     * Massive action ()
     */
@@ -1431,6 +1442,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       return $actions;
    }
+
 
 
    /**
@@ -1536,6 +1548,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
    }
 
+
+
    /**
     * @since version 0.85
     *
@@ -1543,8 +1557,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    **/
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
-
-
 
       $pfTask    = new self();
       $pfTaskjob = new PluginFusioninventoryTaskjob();

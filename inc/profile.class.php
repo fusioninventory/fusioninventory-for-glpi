@@ -102,6 +102,8 @@ class PluginFusioninventoryProfile extends Profile {
       return $types;
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       return self::createTabEntry('FusionInventory');
    }
@@ -360,6 +362,8 @@ class PluginFusioninventoryProfile extends Profile {
       return $rights;
    }
 
+
+
    static function addDefaultProfileInfos($profiles_id, $rights) {
       $profileRight = new ProfileRight();
       foreach ($rights as $right => $value) {
@@ -376,6 +380,8 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
 
+
+
    /**
     * @param $profiles_id integer id of profile
     */
@@ -387,6 +393,8 @@ class PluginFusioninventoryProfile extends Profile {
                                       array($right['field'] => ALLSTANDARDRIGHT));
       }
    }
+
+
 
    static function removeRightsFromSession() {
       $profile = new self();
@@ -410,6 +418,8 @@ class PluginFusioninventoryProfile extends Profile {
          unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged']);
       }
    }
+
+
 
    static function migrateProfiles() {
       //Get all rights from the old table
@@ -448,6 +458,8 @@ class PluginFusioninventoryProfile extends Profile {
          }
       }
    }
+
+
 
    /**
    * Init profiles during installation :

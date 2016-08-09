@@ -337,6 +337,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
 
+
    function getLock($computers_id) {
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();

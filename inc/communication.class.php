@@ -89,6 +89,8 @@ class PluginFusioninventoryCommunication {
       );
    }
 
+
+
    /**
     * Send data, using given compression algorithm
     *

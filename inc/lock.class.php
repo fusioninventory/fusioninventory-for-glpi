@@ -69,6 +69,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $itemtype = $item->getType();
@@ -122,7 +123,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       return TRUE;
    }
-
 
 
 
@@ -310,6 +310,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       echo "</div>";
    }
+
 
 
    function showFormItemtype($p_itemtype) {
@@ -815,6 +816,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
    }
 
+
+
    /**
     * @since version 0.85
     *
@@ -832,6 +835,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
             break;
       }
    }
+
+
 
    /**
     * @since version 0.85
@@ -873,6 +878,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
             break;
       }
    }
+
+
 
    static function isFieldLocked($a_lockable, $field) {
       return in_array($field, $a_lockable);

@@ -573,6 +573,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       }
    }
 
+
+
    function updateNetworkInfo($arrayinventory, $item_type, $id, $instanciation_type, $check_addresses) {
       $NetworkPort = new NetworkPort();
       $port = current($NetworkPort->find(

@@ -77,6 +77,7 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
    }
 
 
+
    function getChildren($id, $level) {
       global $DB;
 
@@ -111,6 +112,7 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
       }
       return $a_id;
    }
+
 
 
    function getParent($id, $level) {

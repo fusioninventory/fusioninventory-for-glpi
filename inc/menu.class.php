@@ -56,6 +56,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       return 'FusionInventory';
    }
 
+
+
    static function canView() {
       $can_display = false;
       $profile     = new PluginFusioninventoryProfile();
@@ -69,13 +71,19 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       return $can_display;
    }
 
+
+
    static function canCreate() {
       return false;
    }
 
+
+
    static function getMenuName() {
       return self::getTypeName();
    }
+
+
 
    static function getAdditionalMenuOptions() {
       global $CFG_GLPI;
@@ -171,6 +179,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 //      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
       return $menu;
    }
+
 
 
    /**
@@ -1003,6 +1012,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
+
    static function showChart($name, $data, $title='') {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
@@ -1013,6 +1023,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
+   
    static function showChartBar($name, $data, $title='', $width=370) {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 

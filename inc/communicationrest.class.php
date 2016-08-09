@@ -138,6 +138,8 @@ class PluginFusioninventoryCommunicationRest {
       return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
 
+
+
    /**
     * Get jobs for an agent
     * TODO: This methods must be used inplace of other methods in order to mutualize code and
@@ -154,6 +156,7 @@ class PluginFusioninventoryCommunicationRest {
 //      }
       return FALSE;
    }
+
 
 
    /**
@@ -259,6 +262,7 @@ class PluginFusioninventoryCommunicationRest {
       }
    }
 
+   
 
    /**
     * Test a given url

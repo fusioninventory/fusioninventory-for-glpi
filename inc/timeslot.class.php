@@ -105,6 +105,8 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       return $ong;
    }
 
+
+
    /*
     * Get Timeslot entries according to the requested day of week.
     * @since 0.85+1.0
@@ -130,7 +132,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *       )
     *    )
     */
-
    function getTimeslotEntries($timeslot_ids = array(), $weekdays = null) {
 
       $condition = array(
@@ -156,6 +157,8 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       return $results;
    }
+
+
 
    /**
    * Get all current active timeslots
@@ -186,13 +189,14 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       return $timeslots;
    }
 
+
+
    /**
     * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
     * @param date    The date and time we want to transform into cursor. If null the default value
     *                is now()
     * @since 0.85+1.0
     */
-
    function getTimeslotCursor(DateTime $datetime = null) {
       if (is_null($datetime)) {
          $datetime = new DateTime();
@@ -201,6 +205,8 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime,true))->getTimestamp();
       return $timeslot_cursor;
    }
+
+
 
    /**
    * Display form for agent configuration

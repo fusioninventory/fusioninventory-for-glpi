@@ -55,6 +55,8 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       return __('Find file', 'fusioninventory');
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -64,6 +66,8 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       }
       return array();
    }
+
+
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 

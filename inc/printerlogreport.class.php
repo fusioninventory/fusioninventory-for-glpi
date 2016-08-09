@@ -53,6 +53,7 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
    }
 
 
+
    function getSearchOptions() {
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();

@@ -52,6 +52,8 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       return __('Equipment ignored on import', 'fusioninventory');
    }
 
+
+
    function getSearchOptions() {
 
       $tab = array();
@@ -123,6 +125,8 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       return $tab;
    }
+
+
 
    static function getDefaultSearchRequest() {
       return array('sort'  => 3,

@@ -48,6 +48,8 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       parent::__construct();
    }
 
+
+
    /**
    * Get name of this type
    *
@@ -59,12 +61,15 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    }
 
 
+
    /**
     * This class can be created by GLPI framework.
     */
    static function canCreate() {
       return true;
    }
+
+
 
    /*
     * @function cronWakeupAgents

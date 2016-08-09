@@ -52,13 +52,19 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return __('Collect information', 'fusioninventory');
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       return array();
    }
 
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       return TRUE;
    }
+
+
 
    static function getTypes() {
       $elements             = array();
@@ -68,6 +74,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       return $elements;
    }
+
+
 
    static function getSearchOptionsToAdd() {
       $tab = array();

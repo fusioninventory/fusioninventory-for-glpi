@@ -60,6 +60,8 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       );
    }
 
+
+
    /**
     * Get a specific url root by type name
     *
@@ -78,35 +80,42 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       return "";
    }
 
+
+
    public function showList() {
       Search::show(get_class($this));
    }
 
+
+
    /**
     * Basic display elements
+    *
+    * @param type $title
+    * @param type $varname
     */
-
    public function showTextField($title, $varname) {
 
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       Html::autocompletionTextField ($this, $varname, $this->fields['name']);
       echo "</div>";
-
    }
+
+
 
    /**
     * Basic display elements
     */
-
    public function showIntegerField($title, $varname, $options = array()) {
 
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       Dropdown::showNumber($varname, $options);
       echo "</div>";
-
    }
+
+
 
    public function showCheckboxField($title, $varname, $options = array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
@@ -119,6 +128,8 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
 
    }
+
+
 
    public function showDropdownForItemtype($title, $itemtype, $options=array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
@@ -134,6 +145,8 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
       return $rand;
    }
+
+
 
    public function showDropdownFromArray($title, $varname, $values = array(), $options=array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
@@ -152,6 +165,8 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
       return $rand;
    }
+
+
 
    public function showDateTimeField($title, $varname, $options = array()) {
 
@@ -179,6 +194,8 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
    }
 
+
+
    public function showTextArea($title, $varname) {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
@@ -194,6 +211,8 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
          "</script>"
       ));
    }
+
+
 
    public function getMessage($msg,$type=self::MSG_INFO) {
       switch ($type) {

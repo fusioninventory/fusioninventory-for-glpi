@@ -2287,6 +2287,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
+
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
@@ -2369,6 +2370,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    function addPrepareLog($items_id, $itemtype, $itemtype_link='', $changes=array('0', '', ''), $linked_action=Log::HISTORY_CREATE_ITEM) {
       $this->log_add[] = array($items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"], $changes, $linked_action);
    }
+
 
 
    function addLog() {

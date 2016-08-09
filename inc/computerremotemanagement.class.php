@@ -54,6 +54,8 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       return __('Remote management', 'fusioninventory');
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {

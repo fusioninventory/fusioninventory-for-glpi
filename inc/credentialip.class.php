@@ -56,6 +56,8 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       return __('Remote device inventory', 'fusioninventory');
    }
 
+
+
    function getAdditionalFields() {
 
       return array(array('name'  => 'itemtype',

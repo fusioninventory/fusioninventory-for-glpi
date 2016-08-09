@@ -99,7 +99,6 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
 
 
-
    static function addHistory($item){
 
       foreach ($item->oldvalues as $field=>$old_value) {

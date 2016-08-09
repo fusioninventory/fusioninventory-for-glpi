@@ -246,7 +246,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
-
    /**
    * Get configuration value
    *
@@ -432,6 +431,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return TRUE;
    }
 
+
+
    static function getActions($action){
       switch ($action) {
 
@@ -440,9 +441,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
          case self::ACTION_CLEAN :
               return __('Clean agents', 'fusioninventory');
-            
+
       }
    }
+
+
 
    /**
    * Display form for config tab in fusioninventory config form
@@ -718,6 +721,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return TRUE;
    }
 
+
+
    /**
    * Display form for config tab in fusioninventory config form
    *
@@ -773,6 +778,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                                  'value'      => $value));
       }
    }
+
 
 
    /**

@@ -83,6 +83,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       return $elements;
    }
 
+
+
    static function getStateName($state=-1) {
       $state_names = self::dropdownStateValues();
       if(isset($state_names[$state])) {
@@ -91,6 +93,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          return "N/A";
       }
    }
+
+
 
    //TODO: move this in the view class
    static function getStateCSSName($state=-1) {
@@ -115,6 +119,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          return "";
       }
    }
+
 
 
    /**

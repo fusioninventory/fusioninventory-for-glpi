@@ -111,6 +111,8 @@ class PluginFusioninventoryStaticmisc {
       return $a_tasks;
    }
 
+
+
    /**
    * Display methods availables
    *
@@ -138,6 +140,7 @@ class PluginFusioninventoryStaticmisc {
       }
       return $modules_methods;
    }
+
 
 
    /**
@@ -477,7 +480,6 @@ class PluginFusioninventoryStaticmisc {
    /*
     * Deploy definitions
     */
-
    static function task_definitiontype_deployinstall($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployPackage' => __('Package'));
@@ -497,7 +499,6 @@ class PluginFusioninventoryStaticmisc {
    /*
     *  Deploy Actions
     */
-
    static function task_actiontype_deployinstall($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),

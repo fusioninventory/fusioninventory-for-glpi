@@ -473,7 +473,6 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
 
-
    /**
     * This function is used to import in one time all SNMP model in folder
     * fusioninventory/snmpmodels/

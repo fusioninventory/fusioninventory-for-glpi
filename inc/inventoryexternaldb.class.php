@@ -91,7 +91,6 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
 
 
 
-
    /**
    * get data from vendorid and productid USB
    *

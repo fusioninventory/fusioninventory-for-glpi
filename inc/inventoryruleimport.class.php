@@ -72,10 +72,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
+
    function maxActionsCount() {
       // Unlimited
       return 1;
    }
+
 
 
    function getCriterias() {

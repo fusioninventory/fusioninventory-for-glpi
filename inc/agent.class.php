@@ -184,6 +184,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return $ong;
    }
 
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
       if ( $this->can(0, CREATE) ) {
@@ -199,6 +201,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
    }
 
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType() == 'Computer') {
@@ -212,6 +216,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          }
       }
    }
+
+
 
    /**
     * Display personalized comments (in tooltip) of item
@@ -611,6 +617,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return FALSE;
    }
 
+
+
    /**
    * Get agent id of a computer
    *
@@ -632,6 +640,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return $agents;
    }
 
+
+
    /**
    * Get Computer associated with this agent
    *
@@ -651,6 +661,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $computer->getFromDB($this->fields['computers_id']);
       return $computer;
    }
+
 
 
    /**
@@ -821,6 +832,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<br/>";
    }
 
+
+
    /**
     * Get current state of the agent
     *
@@ -882,6 +895,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
+
    /**
    * Start agent remotly from server
    *
@@ -911,6 +925,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return $ret;
    }
 
+
+
    /**
    * Get state of agent
    *
@@ -930,6 +946,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
+
    /**
    * Disable debug mode because we don't want the errors
    *
@@ -939,11 +956,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       set_error_handler(array($this, 'errorempty'));
    }
 
+
+
    /**
    * When debug is disabled, we transfer every errors in this emtpy function.
    *
    **/
    static function errorempty() {}
+
+
 
    /**
    * Resotre debug mode if it has been explicitely set by the user in his settings.
@@ -962,6 +983,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 
    }
+
+
 
    /**
    * Set agent version of each module
