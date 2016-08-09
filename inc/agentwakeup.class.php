@@ -63,7 +63,9 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
 
    /**
-    * This class can be created by GLPI framework.
+    * Check if can wake up an agent
+    *
+    * @return true
     */
    static function canCreate() {
       return true;
@@ -74,6 +76,13 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    /*
     * @function cronWakeupAgents
     * This function update already running tasks with dynamic groups
+    */
+   /**
+    * Cron task: wake up agents. Configuration is in each tasks
+    *
+    * @global object $DB
+    * @param object $crontask
+    * @return boolean true if successfully, otherwise false
     */
    static function cronWakeupAgents($crontask) {
       global $DB;
@@ -176,7 +185,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       }
 
       $crontask->addVolume($wokeup);
-      return true;
+      return TRUE;
    }
 }
 
