@@ -52,17 +52,22 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Time slot', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -97,6 +102,12 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
 
       $ong = array();

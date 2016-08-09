@@ -48,26 +48,47 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_collect';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Windows registry', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'registry') {
-            return array(__('Windows registry', 'fusioninventory'));
+            return __('Windows registry', 'fusioninventory');
          }
       }
-      return array();
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
       $pfCollect_Registry->showRegistry($item->getID());
       $pfCollect_Registry->showForm($item->getID());

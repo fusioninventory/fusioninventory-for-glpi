@@ -56,8 +56,12 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    static public $items_id_2 = 'items_id';
 
    /**
-    * @see CommonGLPI::getTabNameForItem()
-   **/
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string|array name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
@@ -73,7 +77,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          } else {
             $tabs[2] = _n('Associated item','Associated items', $count);
          }
-
          return $tabs;
       }
       return '';
@@ -82,22 +85,26 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
 
    /**
-    * @param $item         CommonGLPI object
-    * @param $tabnum       (default 1)
-    * @param $withtemplate (default 0)
-   **/
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
 
          case 1:
             self::showCriteriaAndSearch($item);
-            break;
+            return TRUE;
 
          case 2:
             self::showResults();
-            break;
+            return TRUE;
+
       }
-      return true;
+      return FALSE;
    }
 
 

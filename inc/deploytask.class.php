@@ -48,8 +48,15 @@ include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/task.class.php");
 
 class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
-      if ($nb>1) {
+      if ($nb > 1) {
          return __('Group of computers', 'fusioninventory');
       }
       return __('Task', 'fusioninventory');
@@ -69,6 +76,12 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -81,6 +94,13 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
@@ -89,19 +109,29 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
             return __('Order list', 'fusioninventory');
 
       }
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
 
          case __CLASS__:
             $obj = new self;
             $obj->showActions($_POST["id"]);
-            break;
+            return TRUE;
 
       }
+      return FALSE;
    }
 
 

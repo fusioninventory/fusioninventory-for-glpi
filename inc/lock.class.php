@@ -50,6 +50,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    static $rightname = 'plugin_fusioninventory_lock';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return _n('Lock', 'Locks', $nb)." (".strtolower(_n('Field', 'Fields', 2)).")";
    }
@@ -70,6 +77,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $itemtype = $item->getType();
@@ -91,6 +105,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pflock = new self();
@@ -111,7 +133,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "</table>";
          return TRUE;
       }
-
       if ($item->getID() < 1) {
          $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
                            $item->getType());
@@ -120,7 +141,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
                               $item->getID(),
                            $item->getType(), $item->getID());
       }
-
       return TRUE;
    }
 
@@ -819,36 +839,39 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-         case "manage_locks":
-            //detect itemtype
-            $itemtype = str_replace("massform", "", $_POST['container']);
+      if ($ma->getAction() == 'manage_locks') {
+         //detect itemtype
+         $itemtype = str_replace("massform", "", $_POST['container']);
 
-            $pfil = new self;
-            $pfil->showForm($_SERVER["PHP_SELF"], $itemtype);
-            return true;
-            break;
+         $pfil = new self;
+         $pfil->showForm($_SERVER["PHP_SELF"], $itemtype);
+         return TRUE;
       }
+      return FALSE;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
       $itemtype = $item->getType();
 
       switch ($ma->getAction()) {
+
          case "manage_locks":
             if ($itemtype == "NetworkEquipment"
                 || $itemtype == "Printer"
@@ -876,6 +899,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                }
             }
             break;
+
       }
    }
 

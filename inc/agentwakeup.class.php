@@ -51,11 +51,11 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Job', 'fusioninventory');
    }

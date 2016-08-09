@@ -50,12 +50,25 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
    static $rightname = 'computer';
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Remote management', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -67,13 +80,20 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
             }
          }
       }
-      return array();
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfComputerRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
       if (get_class($item) == 'Computer') {
          $pfComputerRemoteManagement->showForm($item->getID());

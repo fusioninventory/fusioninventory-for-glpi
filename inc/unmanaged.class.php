@@ -47,11 +47,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    static $rightname = 'plugin_fusioninventory_unmanaged';
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Unmanaged device', 'fusioninventory');
    }
@@ -87,6 +87,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -183,12 +188,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -208,13 +212,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
@@ -224,12 +227,19 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          $pfUnmanaged->importForm($CFG_GLPI['root_doc'] .
                '/plugins/fusioninventory/front/unmanaged.form.php?id='.$item->fields["id"],
                                    $item->fields["id"]);
+         return TRUE;
       }
-      return TRUE;
+      return FALSE;
    }
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -243,7 +253,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
@@ -261,25 +274,29 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-
-      switch ($ma->getAction()) {
-
-         case "assign_auth" :
-            PluginFusioninventoryConfigSecurity::authDropdown();
-            echo "<br><br>";
-            break;
-
+      if ($ma->getAction() == 'assign_auth') {
+         PluginFusioninventoryConfigSecurity::authDropdown();
+         echo "<br><br>";
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
 
 
 
+   /**
+    * Execution code for massive action
+    *
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
@@ -299,7 +316,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             break;
 
       }
-      return;
    }
 
 

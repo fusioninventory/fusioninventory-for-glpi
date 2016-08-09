@@ -49,12 +49,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -67,16 +66,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfNetworkPortLog = new self();
       echo $pfNetworkPortLog->showHistory($item->getID());
       return TRUE;

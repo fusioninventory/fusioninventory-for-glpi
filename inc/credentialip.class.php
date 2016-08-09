@@ -52,6 +52,13 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
    static $rightname = 'plugin_fusioninventory_credentialip';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Remote device inventory', 'fusioninventory');
    }
@@ -92,6 +99,11 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();

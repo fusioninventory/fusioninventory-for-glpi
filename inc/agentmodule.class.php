@@ -49,12 +49,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    static $rightname = "plugin_fusioninventory_agent";
 
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -69,24 +68,25 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showForm();
+         return TRUE;
       } else if ($item->getType()=='PluginFusioninventoryAgent') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showFormAgentException($item->getID());
+         return TRUE;
       }
-      return TRUE;
+      return FALSE;
    }
 
 
@@ -402,7 +402,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
-   
+
    /**
    * Get URL for module (for REST)
    *

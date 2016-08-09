@@ -48,10 +48,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryMenu extends CommonGLPI {
 
    /**
-    * Name of the type
+    * Get name of this type by language of the user connected
     *
-    * @param $nb  integer  number of item in the type (default 0)
-   **/
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return 'FusionInventory';
    }
@@ -1023,7 +1024,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-   
+
    static function showChartBar($name, $data, $title='', $width=370) {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 

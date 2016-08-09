@@ -48,26 +48,47 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_collect';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Windows WMI', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'wmi') {
-            return array(__('Windows WMI', 'fusioninventory'));
+            return __('Windows WMI', 'fusioninventory');
          }
       }
-      return array();
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
       $pfCollect_Wmi->showWmi($item->getID());
       $pfCollect_Wmi->showForm($item->getID());

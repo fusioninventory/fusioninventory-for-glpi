@@ -48,12 +48,26 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_collect';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Windows WMI content', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -62,28 +76,35 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
                $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis',
                                                  "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
                if (count($a_colregs) == 0) {
-                  return array();
+                  return '';
                }
                $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
                                 "`plugin_fusioninventory_collects_wmis_id` IN ('".implode("','", $in)."')") > 0) {
-                  return array(__('Windows WMI content', 'fusioninventory'));
+                  return __('Windows WMI content', 'fusioninventory');
                }
             }
          } else if (get_class($item) == 'Computer') {
             if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
                              "`computers_id`='".$item->getID()."'") > 0) {
-               return array(__('Windows WMI content', 'fusioninventory'));
+               return __('Windows WMI content', 'fusioninventory');
             }
          }
       }
-      return array();
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_Wmi->showForCollect($item->getID());

@@ -50,12 +50,25 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_deploymirror';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Mirror servers', 'fusioninventory');
    }
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
 
       $ong=array();
@@ -172,6 +185,11 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -223,41 +241,44 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
-
       return $actions;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-
-         case "transfert":
-            Dropdown::show('Entity');
-            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-            return true;
-
+      if ($ma->getAction() == 'transfert') {
+         Dropdown::show('Entity');
+         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+         return TRUE;
       }
+      return FALSE;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 

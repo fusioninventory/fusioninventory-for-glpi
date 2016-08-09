@@ -51,6 +51,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    static $rightname = 'plugin_fusioninventory_configsecurity';
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
       $ong = array();
       $this->addStandardTab('Log', $ong, $options);
@@ -394,48 +400,53 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-         case "assign_auth":
-            PluginFusioninventoryConfigSecurity::authDropdown();
-            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-            return true;
+      if ($ma->getAction() == 'assign_auth') {
+         PluginFusioninventoryConfigSecurity::authDropdown();
+         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+         return TRUE;
       }
+      return FALSE;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
       $itemtype = $item->getType();
 
       switch ($ma->getAction()) {
+
          case "assign_auth" :
             switch($itemtype) {
+
                case 'NetworkEquipment':
                   $equipement = new PluginFusioninventoryNetworkEquipment();
                   break;
+
                case 'Printer':
                   $equipement = new PluginFusioninventoryPrinter();
                   break;
+
                case 'PluginFusioninventoryUnmanaged':
                   $equipement = new PluginFusinvsnmpUnmanaged();
                   break;
+
             }
-
             $fk = getForeignKeyFieldForItemType($itemtype);
-
-
             foreach($ids as $key) {
                $found = $equipement->find("`$fk`='".$key."'");
                $input = array();
@@ -462,6 +473,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                }
             }
          break;
+
       }
    }
 }

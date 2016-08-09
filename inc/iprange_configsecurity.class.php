@@ -57,21 +57,35 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      $ong = array();
       if ($item->getID() > 0) {
-         $ong[] = __('Associated SNMP authentications', 'fusioninventory');
+         return __('Associated SNMP authentications', 'fusioninventory');
       }
-      return $ong;
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfIPRange_ConfigSecurity = new self();
       $pfIPRange_ConfigSecurity->showForm($item);
+      return TRUE;
    }
 
 

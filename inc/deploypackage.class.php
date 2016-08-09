@@ -57,6 +57,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    protected $profiles  = array();
    protected $entities  = array();
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Package', 'fusioninventory');
    }
@@ -64,7 +71,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
@@ -100,20 +110,18 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
 
-      switch ($ma->getAction()) {
-
-         case 'transfert' :
-            Dropdown::show('Entity');
-            echo "<br><br>".Html::submit(__('Post'),
-                                         array('name' => 'massiveaction'));
-            return true;
-
+      if ($ma->getAction() == 'transfert') {
+         Dropdown::show('Entity');
+         echo "<br><br>".Html::submit(__('Post'),
+                                      array('name' => 'massiveaction'));
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
@@ -121,13 +129,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-    * Run specific code for our special massive actions
+    * Execution code for massive action
     *
-    * @param MassiveAction $ma
-    * @param CommonDBTM $item
-    * @param array $ids list of id of packages
-    *
-    * @return True always true
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
     */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
 
@@ -162,7 +168,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             break;
 
       }
-      return;
    }
 
 
@@ -241,6 +246,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
       $tab = array();
       $tab['common']           = __('Characteristics');
@@ -343,6 +353,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -895,6 +911,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate) {
@@ -904,13 +927,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                if ($item->canUpdateItem()) {
                   if ($_SESSION['glpishow_count_on_tabs']) {
                      $nb = $item->countVisibilities();
-                     $ong[2] = self::createTabEntry(_n('Target for self-service', 'Targets for self-service', $nb, 'fusioninventory'),
+                     return self::createTabEntry(_n('Target for self-service', 'Targets for self-service', $nb, 'fusioninventory'),
                                                     $nb);
                   } else {
-                     $ong[2] = _n('Target for self-service', 'Targets for self-service', 2, 'fusioninventory');
+                     return _n('Target for self-service', 'Targets for self-service', 2, 'fusioninventory');
                   }
                }
-               return $ong;
 
          }
       }
@@ -919,6 +941,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType() == __CLASS__) {
@@ -926,10 +956,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             case 2 :
                $item->showVisibility();
-               break;
+               return TRUE;
          }
       }
-      return true;
+      return FALSE;
    }
 
 

@@ -45,11 +45,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    static $rightname = 'plugin_fusioninventory_task';
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Task management', 'fusioninventory');
    }
@@ -65,6 +65,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $sopt = array();
@@ -1433,23 +1438,26 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
-
       return $actions;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       global $CFG_GLPI;
 
@@ -1458,7 +1466,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          case "transfert":
             Dropdown::show('Entity');
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-            return true;
+            return TRUE;
 
          case 'target_task' :
             echo "<table class='tab_cadre' width='600'>";
@@ -1506,7 +1514,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "</td>";
             echo "</tr>";
             echo "</table>";
-            return true;
+            return TRUE;
 
          case 'addtojob_target' :
             echo "<table class='tab_cadre' width='600'>";
@@ -1543,18 +1551,21 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "</td>";
             echo "</tr>";
             echo "</table>";
-            return true;
+            return TRUE;
 
       }
+      return FALSE;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
@@ -1562,13 +1573,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       switch ($ma->getAction()) {
+
          case "transfert" :
-
             foreach($ids as $key) {
-
                if ($pfTask->getFromDB($key)) {
                   $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
-
                   foreach ($a_taskjobs as $data1) {
                      $input = array();
                      $input['id'] = $data1['id'];
@@ -1589,9 +1598,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
                }
             }
-
             break;
-
 
          case 'target_task' :
             // prepare base insertion

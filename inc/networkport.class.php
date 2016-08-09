@@ -52,6 +52,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab                     = array();
@@ -62,12 +67,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[1]['name']          = __('Name');
       $tab[1]['type']          = 'text';
       $tab[1]['massiveaction'] = FALSE;
-
-//      $tab[2]['table']         = $this->getTable();
-//      $tab[2]['field']         = 'id';
-//      $tab[2]['name']          = __('ID');
-//      $tab[2]['massiveaction'] = FALSE;
-//      $tab[2]['datatype']      = 'number';
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'ifmtu';

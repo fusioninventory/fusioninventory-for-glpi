@@ -54,6 +54,11 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();

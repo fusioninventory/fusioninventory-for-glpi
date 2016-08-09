@@ -54,23 +54,31 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
       if ( $item->getID() > 0 and $this->can('task', 'r') ) {
-         $tab_names[] = __('Jobs configuration', 'fusioninventory');
+         return __('Jobs configuration', 'fusioninventory');
       }
-
-      //Return tab names if list is not empty
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
-
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pfTaskJob = new PluginFusioninventoryTaskjob();
@@ -118,9 +126,10 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       //            $pfTaskjob->showForm('');
       //         }
       //      }
+            return TRUE;
          }
       }
-      return true;
+      return FALSE;
    }
 
 

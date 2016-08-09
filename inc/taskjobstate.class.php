@@ -56,15 +56,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
    public $method = '';
 
+
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      $tab_names = array();
-      $tab_names[] = __("Job executions");
-      //Return tab names if list is not empty
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
+      return __("Job executions");
    }
 
 
@@ -82,10 +83,20 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'PluginFusioninventoryTask' ) {
          $item->showJobLogs();
+         return TRUE;
       }
+      return FALSE;
    }
 
 

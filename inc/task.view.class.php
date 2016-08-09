@@ -51,24 +51,32 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
 
       if ( $this->can("task", "r") ) {
          if ($item->getType() == 'Computer') {
-            $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
+            return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
          }
       }
-
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
+      return '';
    }
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
       $ong = array();
 
@@ -79,10 +87,20 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
          echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
+         return TRUE;
       }
+      return FALSE;
    }
 
 

@@ -48,8 +48,15 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_ruleimport';
 
-   static function getTypeName($nb=0) {
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
+   static function getTypeName($nb=0) {
+      return '';
    }
 
 
@@ -66,30 +73,44 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string|array name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $array_ret = array();
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
              $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
-
          }
       } else {
          $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
          $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
-
       }
       return $array_ret;
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pfRulematchedlog = new self();
       if ($tabnum == '0') {
          if ($item->getID() > 0) {
             $pfRulematchedlog->showFormAgent($item->getID());
+            return TRUE;
          }
       } else if ($tabnum == '1') {
          if ($item->getID() > 0) {
@@ -116,9 +137,10 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                     && $itemtype->canView()) {
                $itemtype->displaySerializedInventory($item->getID());
             }
+            return TRUE;
          }
       }
-      return TRUE;
+      return FALSE;
    }
 
 

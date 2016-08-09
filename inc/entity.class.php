@@ -49,37 +49,52 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    static $rightname = 'entity';
 
    /**
-   * Get name of this type
-   *
-   *@return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Entity');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      $array_ret = array();
       if ($item->getID() > -1) {
          if (Session::haveRight("config", READ)) {
-            $array_ret[0] = self::createTabEntry('Fusioninventory');
+            return self::createTabEntry('Fusioninventory');
          }
       }
-      return $array_ret;
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > -1) {
          $pmEntity = new PluginFusioninventoryEntity();
          $pmEntity->showForm($item->fields['id']);
+         return TRUE;
       }
-      return true;
+      return FALSE;
    }
 
 
@@ -254,7 +269,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
-   
+
    function post_getEmpty() {
       $this->fields['transfers_id_auto'] = -1;
    }

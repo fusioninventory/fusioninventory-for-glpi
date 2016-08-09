@@ -49,12 +49,23 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    static $rightname = 'plugin_fusioninventory_blacklist';
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return _n('Blacklist', 'Blacklists', $nb);
    }
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -79,6 +90,12 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();

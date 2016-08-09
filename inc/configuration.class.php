@@ -48,6 +48,13 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
    static $rightname = "plugin_fusioninventory_configuration";
 
+
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
 
       $tabs = array();

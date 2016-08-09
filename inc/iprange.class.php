@@ -56,30 +56,35 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
-
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
             return __('Communication mode', 'fusioninventory');
-
          } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
             // Permanent task inventory
             return __('See all informations of task', 'fusioninventory');
-
          } else {
             return __('IP Ranges', 'fusioninventory');
-
          }
-      } else {
-         return __('IP Ranges', 'fusioninventory');
-
       }
+      return __('IP Ranges', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get comments of the object
+    *
+    * @return string comments in HTML format
+    */
    function getComments() {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
       return Html::showToolTip($comment, array('display' => FALSE));
@@ -87,6 +92,11 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
       $tab = array();
 
@@ -119,6 +129,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
 
       $ong = array();
@@ -130,11 +146,21 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($tabnum == 'task') {
          $pfTask = new PluginFusioninventoryTask();
          $pfTask->showJobLogs();
+         return TRUE;
       }
+      return FALSE;
    }
 
 
@@ -303,7 +329,10 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 

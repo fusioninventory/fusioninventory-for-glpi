@@ -53,6 +53,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
@@ -65,10 +72,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
    /**
-    * @param $item         CommonGLPI object
-    * @param $tabnum       (default 1)
-    * @param $withtemplate (default 0)
-   **/
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
 
@@ -78,7 +88,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                unset($search_params['metacriteria']);
             }
             PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
-            break;
+            return TRUE;
 
          case 1:
             $params_dyn = array();
@@ -101,11 +111,10 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
                                 "?id=".$item->getID();
             self::showList('PluginFusioninventoryComputer', $params, array('2', '1'));
-            break;
+            return TRUE;
 
       }
-
-      return true;
+      return FALSE;
    }
 
 

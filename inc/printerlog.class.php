@@ -46,6 +46,12 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
+
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();

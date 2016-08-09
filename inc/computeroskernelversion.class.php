@@ -56,6 +56,12 @@ class PluginFusioninventoryComputerOSKernelVersion extends CommonDropdown {
    public $third_level_menu  = "computeroskernelversion";
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Operating system kernel version', 'fusioninventory');
    }

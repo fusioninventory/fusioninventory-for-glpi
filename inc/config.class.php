@@ -128,10 +128,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Display name of itemtype
+    * Get name of this type by language of the user connected
     *
-    * @return value name of this itemtype
-    **/
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
 
       return __('General setup');
@@ -160,6 +161,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()){
 
       $plugin = new Plugin;
@@ -190,26 +197,21 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string|array name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()==__CLASS__) {
-         $array_ret = array();
-         $array_ret[0] = __('General setup');
-
-         $array_ret[1] = __('Computer Inventory', 'fusioninventory');
-
-         $array_ret[2] = __('Network Inventory', 'fusioninventory');
-
-         $array_ret[3] = __('Package management', 'fusioninventory');
-
-         return $array_ret;
+         return array(
+             __('General setup'),
+             __('Computer Inventory', 'fusioninventory'),
+             __('Network Inventory', 'fusioninventory'),
+             __('Package management', 'fusioninventory')
+         );
       }
       return '';
    }
@@ -217,31 +219,35 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       switch ($tabnum) {
+
          case 0:
             $item->showForm();
-            break;
+            return TRUE;
+
          case 1:
             $item->showFormInventory();
-            break;
+            return TRUE;
+
          case 2:
             $item->showFormNetworkInventory();
-            break;
+            return TRUE;
+
          case 3:
             $item->showFormDeploy();
-            break;
+            return TRUE;
+
       }
-      return TRUE;
+      return FALSE;
    }
 
 

@@ -51,26 +51,47 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_collect';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Find file', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'file') {
-            return array(__('Find file', 'fusioninventory'));
+            return __('Find file', 'fusioninventory');
          }
       }
-      return array();
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfCollect_File = new PluginFusioninventoryCollect_File();
       $pfCollect_File->showFile($item->getID());
       $pfCollect_File->showForm($item->getID());

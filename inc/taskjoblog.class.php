@@ -154,6 +154,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $sopt = array();

@@ -48,6 +48,12 @@ class PluginFusioninventoryComputer extends Computer {
 
    static $rightname = "plugin_fusioninventory_group";
 
+
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
       $computer = new Computer();
       $options  = $computer->getSearchOptions();
@@ -70,6 +76,12 @@ class PluginFusioninventoryComputer extends Computer {
 
 
 
+   /**
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
+    */
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
@@ -120,10 +132,12 @@ class PluginFusioninventoryComputer extends Computer {
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
@@ -172,18 +186,16 @@ class PluginFusioninventoryComputer extends Computer {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-
-         case 'add' :
-            echo "<br><br>".Html::submit(_x('button', 'Add'),
-                                         array('name' => 'massiveaction'));
-            return true;
-
+      if ($ma->getAction() == 'add') {
+         echo "<br><br>".Html::submit(_x('button', 'Add'),
+                                      array('name' => 'massiveaction'));
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }

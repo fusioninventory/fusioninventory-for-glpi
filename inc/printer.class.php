@@ -48,8 +48,15 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_printer';
 
-   static function getTypeName($nb=0) {
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
+   static function getTypeName($nb=0) {
+      return '';
    }
 
 
@@ -60,14 +67,30 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
 
@@ -87,9 +110,9 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
          $pfPrinterLog->showGraph($item->getID(),
                      array('target' => $CFG_GLPI['root_doc'].
                                           '/plugins/fusioninventory/front/printer_info.form.php'));
+         return TRUE;
       }
-
-      return TRUE;
+      return FALSE;
    }
 
 

@@ -49,14 +49,30 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
 
@@ -72,9 +88,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                  array('target'=>$CFG_GLPI['root_doc'].
                                     '/plugins/fusioninventory/front/switch_info.form.php'));
          }
+         return TRUE;
       }
-
-      return TRUE;
+      return FALSE;
    }
 
 

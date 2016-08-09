@@ -56,6 +56,12 @@ class PluginFusioninventoryComputerOperatingSystem extends CommonDropdown {
    public $third_level_menu  = "computeroperatingsystem";
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return _n('Operating system (computer)', 'Operating systems (computer)', $nb, 'fusioninventory');
    }

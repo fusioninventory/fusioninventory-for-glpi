@@ -67,6 +67,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       if ($nb>1) {
          return __('Task');
@@ -76,6 +82,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -86,7 +98,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
       $actions = array();
@@ -97,19 +112,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-
-        case 'add_to_static_group':
-           Dropdown::show('PluginFusioninventoryDeployGroup',
-                           array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
-           echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-           return true;
-
+      if ($ma->getAction() == 'add_to_static_group') {
+         Dropdown::show('PluginFusioninventoryDeployGroup',
+                         array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
+         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
@@ -117,10 +130,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
       switch ($ma->getAction()) {
@@ -201,6 +216,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();

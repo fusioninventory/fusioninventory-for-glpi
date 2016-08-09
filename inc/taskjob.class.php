@@ -51,11 +51,11 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Job', 'fusioninventory');
    }
@@ -84,6 +84,11 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -1740,31 +1745,35 @@ function new_subtype(id) {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'fusioninventory');
-
       return $actions;
    }
 
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       switch ($ma->getAction()) {
-         case "plugin_fusioninventory_transfert" :
 
+         case "plugin_fusioninventory_transfert" :
             foreach($ids as $key) {
                $pfTaskjob->getFromDB($key);
                $pfTaskjob->forceEnd();
@@ -1772,8 +1781,8 @@ function new_subtype(id) {
                //set action massive ok for this item
                 $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
             }
-
             break;
+            
       }
    }
 
