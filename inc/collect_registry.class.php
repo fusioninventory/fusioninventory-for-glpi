@@ -97,6 +97,11 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
 
 
 
+   /**
+    * Get Hives of the registry
+    *
+    * @return array list of hives
+    */
    static function getHives() {
       $hives = array(
 //         "HKEY_CLASSES_ROOT"   => "HKEY_CLASSES_ROOT",
@@ -111,10 +116,15 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
 
 
 
-   function showRegistry($contents_id) {
+   /**
+    * Display registries defined in collect
+    *
+    * @param integer $collects_id id of collect
+    */
+   function showRegistry($collects_id) {
 
       $content = $this->find("`plugin_fusioninventory_collects_id`='".
-                              $contents_id."'");
+                              $collects_id."'");
 
       echo "<div class='spaced'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -149,7 +159,14 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
 
 
 
-   function showForm($contents_id, $options=array()) {
+   /**
+    * Display form to add registry
+    *
+    * @param integer $collects_id id of collect
+    * @param array $options
+    * @return true
+    */
+   function showForm($collects_id, $options=array()) {
 
       $ID = 0;
 
@@ -162,7 +179,7 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo "<input type='hidden' name='plugin_fusioninventory_collects_id'
-               value='".$contents_id."' />";
+               value='".$collects_id."' />";
       Html::autocompletionTextField($this,'name');
       echo "</td>";
       echo "<td>".__('Hive', 'fusioninventory')."</td>";

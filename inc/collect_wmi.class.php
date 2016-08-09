@@ -97,11 +97,14 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
 
 
-   function showWmi($contents_id) {
-
+   /**
+    * Display wmi information of collect id
+    *
+    * @param type $collects_id id of collect
+    */
+   function showWmi($collects_id) {
       $content = $this->find("`plugin_fusioninventory_collects_id`='".
-                              $contents_id."'");
-
+                              $collects_id."'");
       echo "<div class='spaced'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
@@ -135,10 +138,16 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
 
 
-   function showForm($contents_id, $options=array()) {
+   /**
+    * Display form to add collect wmi
+    *
+    * @param integer $collects_id id of collect
+    * @param array $options
+    * @return true
+    */
+   function showForm($collects_id, $options=array()) {
 
       $ID = 0;
-
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
@@ -148,7 +157,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo "<input type='hidden' name='plugin_fusioninventory_collects_id'
-               value='".$contents_id."' />";
+               value='".$collects_id."' />";
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
       echo "<td>".__('moniker', 'fusioninventory')."</td>";

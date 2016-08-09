@@ -54,6 +54,11 @@ class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDr
 
 
 
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
       static $criterias = array();
@@ -71,8 +76,10 @@ class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDr
 
 
    /**
-    * @see Rule::getActions()
-   **/
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions                          = array();

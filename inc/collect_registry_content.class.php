@@ -116,6 +116,15 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Update computer registry values (add and update) related to this
+    * collect registry id
+    *
+    * @global object $DB
+    * @param integer $computers_id id of the computer
+    * @param array $registry_data registry info sent by agent
+    * @param integer $collects_registries_id id of collect_registry
+    */
    function updateComputer($computers_id, $registry_data, $collects_registries_id) {
       global $DB;
 
@@ -176,6 +185,11 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display registries keys related with collect id
+    *
+    * @param integer $collects_id id of collect
+    */
    function showForCollect($collects_id) {
 
       $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries',
@@ -187,12 +201,14 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Show registries keys of the computer
+    *
+    * @param integer $computers_id id of the computer
+    */
    function showForComputer($computers_id) {
-
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-
       echo "<table class='tab_cadre_fixe'>";
-
       $a_data = $this->find("`computers_id`='".$computers_id."'",
                               "`plugin_fusioninventory_collects_registries_id`,
                                  `key`");
@@ -233,6 +249,11 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display registry keys / values of collect_registry id
+    *
+    * @param integer $collects_registries_id
+    */
    function showForCollectRegistry($collects_registries_id) {
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
       $computer = new Computer();

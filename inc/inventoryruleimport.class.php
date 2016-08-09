@@ -65,6 +65,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
 
       return __('Rules for import and link computers');
@@ -73,13 +78,22 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Define maximum number of actions possible in a rule
+    *
+    * @return integer
+    */
    function maxActionsCount() {
-      // Unlimited
       return 1;
    }
 
 
 
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
       $criterias = array ();
@@ -186,6 +200,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions = array();
@@ -650,13 +669,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    /**
-    * Execute the actions as defined in the rule
+    * Code execution of actions of the rule
     *
-    * @param $output the fields to manipulate
-    * @param $params parameters
-    *
-    * @return the $output array modified
-   **/
+    * @param array $output
+    * @param array $params
+    * @return array
+    */
    function executeActions($output, $params) {
       if (isset($params['class'])) {
          $class = $params['class'];
@@ -941,6 +959,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
 
       //If ticket is assign to an object, display this information first

@@ -53,20 +53,30 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
    //public $right='rule_import';
    public $menu_option='test';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
-
       return __('Location rules', 'fusioninventory');
-
    }
 
 
 
+   /**
+    * Prepare input data for process the rule
+    *
+    * @param array $input
+    * @param array $params
+    * @return array
+    */
    function prepareInputDataForProcess($input, $params) {
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-locationrules",
          "execute action\n". print_r($input, TRUE). "\n" . print_r($params, TRUE)
       );
-
       return $input;
    }
 }

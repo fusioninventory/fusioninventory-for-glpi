@@ -52,14 +52,25 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    public $menu_option         = 'fusionlinkcomputer';
    static $rightname           = "plugin_fusioninventory_ruleimport";
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
-
       return __('Equipment import and link rules', 'fusioninventory');
-
    }
 
 
 
+   /**
+    * Prepare input data for process the rule
+    *
+    * @param array $input
+    * @param array $params
+    * @return array
+    */
    function prepareInputDataForProcess($input, $params) {
       return array_merge($input, $params);
    }
@@ -92,6 +103,12 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
 
       //If ticket is assign to an object, display this information first

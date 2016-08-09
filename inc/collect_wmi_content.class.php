@@ -116,6 +116,14 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
 
 
 
+   /**
+    * update wmi data to compute (add and update) with data sent by the agent
+    *
+    * @global object $DB
+    * @param integer $computers_id id of the computer
+    * @param array $wmi_data
+    * @param integer $collects_wmis_id
+    */
    function updateComputer($computers_id, $wmi_data, $collects_wmis_id) {
       global $DB;
 
@@ -176,6 +184,11 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display wmi information in collect form (tab wmi)
+    *
+    * @param integer $collects_id id of collect
+    */
    function showForCollect($collects_id) {
 
       $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis',
@@ -187,10 +200,14 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display wmi information of computer
+    *
+    * @param integer $computers_id id of computer
+    */
    function showForComputer($computers_id) {
 
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr>";
@@ -225,6 +242,11 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display wmi information of collect_wmi_id
+    *
+    * @param integer $collects_wmis_id
+    */
    function showForCollectWmi($collects_wmis_id) {
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
       $computer = new Computer();

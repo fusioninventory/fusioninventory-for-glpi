@@ -53,12 +53,25 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
    //public $right='rule_import';
    public $menu_option='test';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
       return __('Computer information rules', 'fusioninventory');
    }
 
 
 
+   /**
+    * Prepare input data for process the rule
+    *
+    * @param array $input
+    * @param array $params
+    * @return array
+    */
    function prepareInputDataForProcess($input, $params) {
       return $input;
    }

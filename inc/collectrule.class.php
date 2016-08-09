@@ -53,30 +53,53 @@ class PluginFusioninventoryCollectRule extends Rule {
    public $specific_parameters = FALSE;
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
       return __('Computer information rules', 'fusioninventory');
    }
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
       return $output;
    }
 
 
 
+   /**
+    * Define maximum number of actions possible in a rule
+    *
+    * @return integer
+    */
    function maxActionsCount() {
-      // Unlimited
       return 8;
    }
 
 
 
+   /**
+    * Code execution of actions of the rule
+    *
+    * @param array $output
+    * @param array $params
+    * @return array
+    */
    function executeActions($output, $params) {
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             switch ($action->fields["action_type"]) {
+
                case "assign" :
                   $output[$action->fields["field"]] = $action->fields["value"];
                   break;
@@ -109,6 +132,7 @@ class PluginFusioninventoryCollectRule extends Rule {
                   $executeaction = clone $this;
                   $output = $executeaction->executePluginsActions($action, $output, $params);
                   break;
+
             }
          }
       }
@@ -117,6 +141,11 @@ class PluginFusioninventoryCollectRule extends Rule {
 
 
 
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
       $criterias = array ();
@@ -149,6 +178,11 @@ class PluginFusioninventoryCollectRule extends Rule {
 
 
 
+   /**
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions = array();

@@ -42,10 +42,13 @@
 
 class PluginFusioninventoryRuleDictionnaryComputerArchCollection extends RuleDictionnaryDropdownCollection {
    public $item_table  = "glpi_plugin_fusioninventory_computerarchs";
-   
+
+
    /**
-    * @see RuleCollection::getTitle()
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
       return __('Dictionnary of computer architectures', 'fusioninventory');
    }

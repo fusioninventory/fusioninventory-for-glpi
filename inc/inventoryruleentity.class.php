@@ -57,25 +57,47 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    const PATTERN_NOT_CIDR = 334;
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
       return __('Entity rules', 'fusioninventory');
    }
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
       return $output;
    }
 
 
 
+   /**
+    * Define maximum number of actions possible in a rule
+    *
+    * @return integer
+    */
    function maxActionsCount() {
-      // Unlimited
       return 2;
    }
 
 
 
+   /**
+    * Code execution of actions of the rule
+    *
+    * @param array $output
+    * @param array $params
+    * @return array
+    */
    function executeActions($output, $params) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -123,6 +145,11 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
 
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
       $criterias = array ();
@@ -153,6 +180,11 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
 
+   /**
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions = array();
