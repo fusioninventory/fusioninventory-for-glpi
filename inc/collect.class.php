@@ -88,6 +88,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
 
 
+   /**
+    * Get all collect types
+    *
+    * @return array [name] => description
+    */
    static function getTypes() {
       $elements             = array();
       $elements['registry'] = __('Registry', 'fusioninventory');
@@ -99,6 +104,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
 
 
+   /**
+    * Add search options
+    *
+    * @return array
+    */
    static function getSearchOptionsToAdd() {
       $tab = array();
 
@@ -179,12 +189,18 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $i++;
          }
       }
-
       return $tab;
    }
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $ID
+    * @param array $options
+    * @return true
+    */
    function showForm($ID, $options=array()) {
 
       $this->initForm($ID, $options);
@@ -226,6 +242,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
 
 
+   /**
+    * Prepare run, so it prepare the taskjob with module 'collect'.
+    * It prepare collect information and computer list for task run
+    *
+    * @global object $DB
+    * @param integer $taskjobs_id id of taskjob
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -481,6 +504,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
 
 
+   /**
+    * run function, so return data to send to the agent for collect information
+    *
+    * @param object $taskjobstate PluginFusioninventoryTaskjobstate instance
+    * @param array $agent agent information from agent table in database
+    * @return array
+    */
    function run($taskjobstate, $agent) {
       $output = array();
 
