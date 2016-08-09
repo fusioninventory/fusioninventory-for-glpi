@@ -100,10 +100,15 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
 
 
 
-   function showFile($contents_id) {
+   /**
+    * Display files of this collect id
+    *
+    * @param integer $collects_id id of the collect
+    */
+   function showFile($collects_id) {
 
       $content = $this->find("`plugin_fusioninventory_collects_id`='".
-                              $contents_id."'");
+                              $collects_id."'");
 
       echo "<div class='spaced'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -166,7 +171,14 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
 
 
 
-   function showForm($contents_id, $options=array()) {
+   /**
+    * Display form to add a new file of collect
+    *
+    * @param integer $collects_id id of collect
+    * @param array $options
+    * @return true
+    */
+   function showForm($collects_id, $options=array()) {
 
       $ID = 0;
 
@@ -179,7 +191,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo Html::hidden('plugin_fusioninventory_collects_id',
-                        array('value' => $contents_id));
+                        array('value' => $collects_id));
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
       echo "<td>".__('Limit', 'fusioninventory')."</td>";

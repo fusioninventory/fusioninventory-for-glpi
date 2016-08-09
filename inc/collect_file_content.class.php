@@ -116,6 +116,15 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
 
 
 
+   /**
+    * Update computer files (add and update files) related to this
+    * collect file id
+    *
+    * @global object $DB
+    * @param integer $computers_id id of the computer
+    * @param integer $collects_files_id id of collect_file
+    * @param integer $taskjobstates_id id of taskjobstate
+    */
    function updateComputer($computers_id, $collects_files_id, $taskjobstates_id) {
       global $DB;
 
@@ -192,8 +201,12 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
 
 
 
+   /**
+    * Show all files defined
+    *
+    * @param integer $collects_id id of collect
+    */
    function showForCollect($collects_id) {
-
       $a_colfiles = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files',
                                               "`plugin_fusioninventory_collects_id`='".$collects_id."'");
       foreach ($a_colfiles as $data) {
@@ -203,8 +216,12 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display files found on the computer
+    *
+    * @param integer $computers_id id of the computer
+    */
    function showForComputer($computers_id) {
-
       $pfCollect_File = new PluginFusioninventoryCollect_File();
 
       echo "<table class='tab_cadre_fixe'>";
@@ -244,6 +261,11 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display all files found on all computers related to the collect file
+    *
+    * @param integer $collects_files_id id of collect_file
+    */
    function showForCollectFile($collects_files_id) {
       $pfCollect_File = new PluginFusioninventoryCollect_File();
       $computer = new Computer();
@@ -285,8 +307,13 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
 
 
 
-   // all files information sent by agent will be stored in field specificity
-   // of table glpi_plugin_fusioninventory_taskjobstates
+   /**
+    * Store files found by agent in temp storage (field 'specificity' of
+    * taskjobstate because files received in many parts)
+    *
+    * @param integer $taskjobstates_id id of taskjobstate
+    * @param array $a_values data received from agent
+    */
    function storeTempFilesFound($taskjobstates_id, $a_values) {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
