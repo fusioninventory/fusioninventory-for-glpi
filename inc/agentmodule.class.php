@@ -92,11 +92,10 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Display form for configuration of agent modules
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form to configure modules in agents
+    *
+    * @return boolean true if no problem
+    */
    function showForm() {
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -193,19 +192,17 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Display form to add exception of modules activation for each agent
-   *
-   * @param interger $items_id ID of the agent
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
-   function showFormAgentException($items_id) {
+    * Display form to configure activation of modules in agent form (in tab)
+    *
+    * @global array $CFG_GLPI
+    * @param integer $agents_id id of the agent
+    */
+   function showFormAgentException($agents_id) {
       global $CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->getFromDB($items_id);
-      $canedit = $pfAgent->can($items_id, UPDATE);
+      $pfAgent->getFromDB($agents_id);
+      $canedit = $pfAgent->can($agents_id, UPDATE);
 
       echo "<br/>";
       if ($canedit) {
@@ -254,7 +251,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
          $checked = $data['is_active'];
          $a_agentList = importArrayFromDB($data['exceptions']);
-         if (in_array($items_id, $a_agentList)) {
+         if (in_array($agents_id, $a_agentList)) {
             if ($checked == 1) {
                $checked = 0;
             } else {
@@ -279,7 +276,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($canedit) {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
-         echo Html::hidden('id', array('value' => $items_id));
+         echo Html::hidden('id', array('value' => $agents_id));
          echo "<input type='submit' name='updateexceptions' ".
                  "value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
@@ -294,13 +291,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Get data (activation, exceptions...) for a module
-   *
-   * @param $module_name value Name of the module
-   *
-   * @return array all DB fields for this module
-   *
-   **/
+    * Get global activation status of a module
+    *
+    * @param string $module_name name of module
+    * @return array information of module activation
+    */
    function getActivationExceptions($module_name) {
       $a_modules = $this->find("`modulename`='".$module_name."'", "", 1);
       return current($a_modules);
@@ -309,13 +304,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Get agents can do a "module name"
-   *
-   * @param $module_name value Name of the module
-   *
-   * @return array of agents
-   *
-   **/
+    * Get list of agents have this module activated
+    *
+    * @param string $module_name name of the module
+    * @return array id list of agents
+    */
    function getAgentsCanDo($module_name) {
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -372,28 +365,26 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Get if agent allowed to do this TASK
-   *
-   * @param $module_name value Name of the module
-   * @param $items_id integer id of the agent
-   *
-   * @return bool
-   *
-   **/
-   function isAgentCanDo($module_name, $items_id) {
+    * Get if agent has this module enabled
+    *
+    * @param string $module_name module name
+    * @param integer $agents_id id of the agent
+    * @return boolean true if enabled, otherwise false
+    */
+   function isAgentCanDo($module_name, $agents_id) {
 
       $agentModule = $this->getActivationExceptions($module_name);
 
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
-         if (in_array($items_id, $a_agentList)) {
+         if (in_array($agents_id, $a_agentList)) {
             return TRUE;
          } else {
             return FALSE;
          }
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
-         if (in_array($items_id, $a_agentList)) {
+         if (in_array($agents_id, $a_agentList)) {
             return FALSE;
          } else {
             return TRUE;
@@ -404,13 +395,12 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-   * Get URL for module (for REST)
-   *
-   * @param $module value name of module
-   *
-   * @return nothing
-   *
-   **/
+    * Generate the server module URL to send to agent
+    *
+    * @param string $modulename name of the module
+    * @param integer $entities_id id of the entity
+    * @return string the URL generated
+    */
    static function getUrlForModule($modulename, $entities_id=-1) {
       // Get current entity URL if it exists ...
       $pfEntity = new PluginFusioninventoryEntity();
@@ -448,7 +438,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
    /**
-    * Get modules in the table
+    * Get list of all modules
+    *
+    * @return array list of name of modules
     */
    static function getModules() {
       $a_modules = array();
