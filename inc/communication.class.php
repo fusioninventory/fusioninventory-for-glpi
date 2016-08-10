@@ -66,8 +66,8 @@ class PluginFusioninventoryCommunication {
    /**
     * Get readable XML message (add carriage returns)
     *
-    * @return readable XML message
-    **/
+    * @return object SimpleXMLElement
+    */
    function getMessage() {
       return $this->message;
    }
@@ -77,10 +77,8 @@ class PluginFusioninventoryCommunication {
    /**
     * Set XML message
     *
-    * @param $message XML message
-    *
-    * @return nothing
-    **/
+    * @param string $message XML in string format
+    */
    function setMessage($message) {
       // avoid xml warnings
       $this->message = @simplexml_load_string(
@@ -92,9 +90,10 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Send data, using given compression algorithm
+    * Send response to agent, using given compression algorithm
     *
-    **/
+    * @param string $compressmode compressed mode: none|zlib|deflate|gzip
+    */
    function sendMessage($compressmode = 'none') {
 
       if (!$this->message) {
@@ -137,12 +136,10 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Add logs
+    * If extra-debug is active, write log
     *
-    * @param $p_logs logs to write
-    *
-    * @return nothing (write text in log file)
-    **/
+    * @param string $p_logs log message to write
+    */
    static function addLog($p_logs) {
 
       if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
@@ -157,12 +154,11 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Import data
+    * Import and parse the XML sent by the agent
     *
-    * @param $arrayinventory array to import
-    *
-    * @return TRUE (import ok) / FALSE (import ko)
-    **/
+    * @param object $arrayinventory SimpleXMLElement
+    * @return boolean
+    */
    function import($arrayinventory) {
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -215,7 +211,6 @@ class PluginFusioninventoryCommunication {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
@@ -242,11 +237,10 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Get all tasks prepared for this agent
+    * Get all tasks prepared for the agent
     *
-    * @param $agent_id interger id of agent
-    *
-    **/
+    * @param integer $agent_id id of the agent
+    */
    function getTaskAgent($agent_id) {
 
       $pfTask = new PluginFusioninventoryTask();
@@ -290,8 +284,7 @@ class PluginFusioninventoryCommunication {
 
    /**
     * Set prolog for agent
-    *
-    **/
+    */
    function addProlog() {
       $pfConfig = new PluginFusioninventoryConfig();
       $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
@@ -300,14 +293,14 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * order to agent to do inventory if module inventory is activated for this agent
+    * Order to agent to do inventory if module inventory is activated for the
+    * agent
     *
-    * @param $items_id interger Id of this agent
-    *
-    **/
-   function addInventory($items_id) {
+    * @param integer $agents_id id of the agent
+    */
+   function addInventory($agents_id) {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      if ($pfAgentmodule->isAgentCanDo('INVENTORY', $items_id)) {
+      if ($pfAgentmodule->isAgentCanDo('INVENTORY', $agents_id)) {
          $this->message->addChild('RESPONSE', "SEND");
       }
    }
@@ -318,6 +311,14 @@ class PluginFusioninventoryCommunication {
     * Manage communication with old protocol (XML over POST)
     *
     **/
+   /**
+    * Manage communication with old protocol (XML over POST).
+    * Used for inventory, network discovery, network inventory and wake on lan
+    *
+    * @param string $rawdata data get from agent (compressed or not)
+    * @param string $xml
+    * @param string $output
+    */
    function handleOCSCommunication($rawdata, $xml='', $output='ext') {
 
       // ***** For debug only ***** //
@@ -327,7 +328,6 @@ class PluginFusioninventoryCommunication {
       $config = new PluginFusioninventoryConfig();
       $user   = new User();
 
-//      ob_start();
       if (!isset($_SESSION['glpiID'])) {
          $users_id  = $config->getValue('users_id');
          $_SESSION['glpiID'] = $users_id;
@@ -366,7 +366,6 @@ class PluginFusioninventoryCommunication {
             $xml = $rawdata;
             $compressmode = 'none';
       } else {
-
          # try each algorithm successively
          if (($xml = gzuncompress($rawdata))) {
             $compressmode = "zlib";
