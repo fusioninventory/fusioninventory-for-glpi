@@ -65,10 +65,9 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    /**
     * Get a specific url root by type name
     *
-    * @param string $name The type of url requested (can be used for ajax call or pictures location)
-    *
-    * @return string Returns the requested url if found else returns empty string and trigger some
-    * error message
+    * @param string $name the type of url requested (can be used for ajax call
+    *                     or pictures location)
+    * @return string the requested url if found otherwise empty string
     */
    function getBaseUrlFor($name) {
       if ( array_key_exists($name, $this->base_urls) ) {
@@ -82,6 +81,9 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 
+   /**
+    * Show Search list for this itemtype
+    */
    public function showList() {
       Search::show(get_class($this));
    }
@@ -89,13 +91,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
    /**
-    * Basic display elements
+    * Display input form element
     *
-    * @param type $title
-    * @param type $varname
+    * @param string $title
+    * @param string $varname
     */
    public function showTextField($title, $varname) {
-
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       Html::autocompletionTextField ($this, $varname, $this->fields['name']);
@@ -105,10 +106,13 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
    /**
-    * Basic display elements
+    * Display input form element only with numbers
+    *
+    * @param string $title
+    * @param string $varname
+    * @param array $options
     */
    public function showIntegerField($title, $varname, $options = array()) {
-
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       Dropdown::showNumber($varname, $options);
@@ -117,6 +121,13 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 
+   /**
+    * Display checkbox form element
+    *
+    * @param type $title
+    * @param type $varname
+    * @param type $options
+    */
    public function showCheckboxField($title, $varname, $options = array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       $options['name'] = $varname;
@@ -126,11 +137,18 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "<div class='input_wrap'>";
       Html::showCheckbox($options);
       echo "</div>";
-
    }
 
 
 
+   /**
+    * Display dropdown form element for itemtype
+    *
+    * @param string $title
+    * @param string $itemtype a glpi/plugin itemtype
+    * @param array $options
+    * @return string the rand number can be used with ajax to update something
+    */
    public function showDropdownForItemtype($title, $itemtype, $options=array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       echo "<div class='input_wrap'>";
@@ -148,6 +166,15 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 
+   /**
+    * Display dropdown form element with array data
+    *
+    * @param string $title
+    * @param string $varname
+    * @param array $values
+    * @param array $options
+    * @return string the rand number can be used with ajax to update something
+    */
    public function showDropdownFromArray($title, $varname, $values = array(), $options=array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       echo "<div class='input_wrap'>";
@@ -168,6 +195,13 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 
+   /**
+    * Display date time select form element
+    *
+    * @param string $title
+    * @param string $varname
+    * @param array $options
+    */
    public function showDateTimeField($title, $varname, $options = array()) {
 
       // Get datetime value if the object is defined
@@ -196,6 +230,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 
+   /**
+    * Display a text area form element
+    *
+    * @param string $title
+    * @param string $varname
+    */
    public function showTextArea($title, $varname) {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
@@ -214,22 +254,32 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
 
 
+   /**
+    * Get a HTML message
+    *
+    * @param string $msg
+    * @param integer $type
+    * @return string
+    */
    public function getMessage($msg,$type=self::MSG_INFO) {
       switch ($type) {
+
          case self::MSG_WARNING:
             $msg = __('Warning:', 'fusioninventory') . " $msg";
             $class_msg = 'warning';
             break;
+
          case self::MSG_ERROR:
             $msg = __('Error:', 'fusioninventory') . " $msg";
             $class_msg = 'error';
             break;
+
          case self::MSG_INFO:
          default:
             $class_msg = '';
             break;
-      }
 
+      }
       return implode("\n", array(
          "<div class='box' style='margin-bottom:20px;'>",
          "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>",
