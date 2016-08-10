@@ -118,8 +118,10 @@ class PluginFusioninventoryComputer extends Computer {
 
 
    /**
-    * @since version 0.84
-   **/
+    * Define the standard massive actions to hide for this class
+    *
+    * @return array list of massive actions to hide
+    */
    function getForbiddenStandardMassiveAction() {
 
       $forbidden   = parent::getForbiddenStandardMassiveAction();

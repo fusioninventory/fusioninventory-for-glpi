@@ -102,6 +102,13 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @global array $CFG_GLPI
+    * @param integer $computers_id id of the computer
+    * @return true
+    */
    function showForm($computers_id) {
       global $CFG_GLPI;
 
@@ -193,22 +200,26 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                Html::closeForm();
                echo "</td>";
                echo "</tr>";
-
             }
             echo "<tr class='tab_bg_3'>";
             echo "<td colspan='4'></td>";
             echo "</tr>";
          }
-
          echo '</table>';
          echo '</div>';
-
       }
+      return TRUE;
    }
 
 
 
-   function dropdownSoftwareLicenses($options) {
+   /**
+    * Dropdown of software licenses found with information given
+    *
+    * @global object $DB
+    * @param array $params
+    */
+   function dropdownSoftwareLicenses($params) {
       global $DB;
 
       $query = "SELECT `glpi_softwares`.`name` as sname,
@@ -217,13 +228,13 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                        `glpi_softwarelicenses`.`serial` FROM `glpi_softwarelicenses`
          LEFT JOIN `glpi_softwares`
             ON `glpi_softwarelicenses`.`softwares_id` = `glpi_softwares`.`id`
-         WHERE ((`glpi_softwarelicenses`.`name` LIKE '%".$options['name']."%'
-                  OR `glpi_softwarelicenses`.`name` LIKE '%".$options['fullname']."%'
-                  OR `glpi_softwares`.`name` LIKE '%".$options['name']."%'
-                  OR `glpi_softwares`.`name` LIKE '%".$options['fullname']."%')
-               AND `serial` = '".$options['serial']."')
-         OR (`glpi_softwarelicenses`.`name` = '".$options['serial']."'
-               AND `serial` = '".$options['serial']."')";
+         WHERE ((`glpi_softwarelicenses`.`name` LIKE '%".$params['name']."%'
+                  OR `glpi_softwarelicenses`.`name` LIKE '%".$params['fullname']."%'
+                  OR `glpi_softwares`.`name` LIKE '%".$params['name']."%'
+                  OR `glpi_softwares`.`name` LIKE '%".$params['fullname']."%')
+               AND `serial` = '".$params['serial']."')
+         OR (`glpi_softwarelicenses`.`name` = '".$params['serial']."'
+               AND `serial` = '".$params['serial']."')";
 
       $licenses = array();
       $result=$DB->query($query);
@@ -233,7 +244,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
       Dropdown::showFromArray('softwarelicenses_id',
                               $licenses,
-                              array('value' => $options['softwarelicenses_id']));
+                              array('value' => $params['softwarelicenses_id']));
 
       echo "&nbsp;<input type='submit' class='submit' name='associate' ".
               "value='".__('Associate')."'>";
@@ -241,25 +252,36 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
 
 
-   function associate($options) {
+   /**
+    * Associate a license found on computer and a license managed in GLPI
+    *
+    * @param array $params
+    */
+   function associate($params) {
 
-      if (isset($options['computers_id'])) {
+      if (isset($params['computers_id'])) {
          $computer_slicense = new Computer_SoftwareLicense;
          $computer_slicense->add(array(
-            'computers_id'        => $options['computers_id'],
-            'softwarelicenses_id' => $options['softwarelicenses_id']
+            'computers_id'        => $params['computers_id'],
+            'softwarelicenses_id' => $params['softwarelicenses_id']
          ));
       }
 
       $pfLicenseInfo = new self;
       $pfLicenseInfo->update(array(
-         'id'                  => $options['fusioninventory_licenseinfos_id'],
-         'softwarelicenses_id' => $options['softwarelicenses_id']
+         'id'                  => $params['fusioninventory_licenseinfos_id'],
+         'softwarelicenses_id' => $params['softwarelicenses_id']
       ));
    }
 
 
 
+   /**
+    * Delete all licenses linked to the computer (most cases when delete a
+    * computer)
+    *
+    * @param integer $computers_id
+    */
    static function cleanComputer($computers_id) {
       $pfLicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
       $a_licenses = $pfLicenseinfo->find("`computers_id`='".$computers_id."'");

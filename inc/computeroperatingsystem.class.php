@@ -68,6 +68,11 @@ class PluginFusioninventoryComputerOperatingSystem extends CommonDropdown {
 
 
 
+   /**
+    * Fields added to this class
+    *
+    * @return array
+    */
    function getAdditionalFields() {
 
       return array(array('name'  => 'plugin_fusioninventory_computerarches_id',

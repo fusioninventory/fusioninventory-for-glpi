@@ -96,14 +96,20 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       $pfComputerRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
       if (get_class($item) == 'Computer') {
-         $pfComputerRemoteManagement->showForm($item->getID());
+         $pfComputerRemoteManagement->showInformation($item->getID());
       }
       return TRUE;
    }
 
 
 
-   function showForm($computers_id) {
+   /**
+    * Display remote management information
+    *
+    * @param integer $computers_id
+    * @return true
+    */
+   function showInformation($computers_id) {
 
       $pfRemoteManagement = new self();
       $a_remotemanagement = $pfRemoteManagement->find("`computers_id`='".$computers_id."'");
@@ -127,10 +133,17 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
          echo '</table>';
          echo '</div>';
       }
+      return TRUE;
    }
 
 
 
+   /**
+    * Delete all remote management information linked to the computer
+    * (most cases when delete a computer)
+    *
+    * @param integer $computers_id
+    */
    static function cleanComputer($computers_id) {
       $pfComputerRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
       $a_remotemgmts = $pfComputerRemoteManagement->find("`computers_id`='".$computers_id."'");

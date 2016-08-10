@@ -54,6 +54,12 @@ class PluginFusioninventoryCommunicationRest {
     *
     * @return an array of orders to send to the agent
     */
+   /**
+    * Manage communication between agent and server
+    *
+    * @param array $params
+    * @return array|false array return jobs ready for the agent
+    */
    static function communicate($params = array()) {
       $response = array();
       if (isset ($params['action']) && isset($params['machineid'])) {
@@ -84,11 +90,10 @@ class PluginFusioninventoryCommunicationRest {
 
 
    /**
-    * Get configuration for an agent
+    * Get configuration for an agent and for modules requested
     *
-    * @params an array of GET parameters given by the agent
-    *
-    * @return an array of orders to send to the agent
+    * @param array $params
+    * @return array
     */
    static function getConfigByAgent($params = array()) {
       $schedule = array();
@@ -178,6 +183,12 @@ class PluginFusioninventoryCommunicationRest {
 
 
 
+   /**
+    * Generate the function name related to the module to get parameters
+    *
+    * @param type $task
+    * @return type
+    */
    static function getMethodForParameters($task) {
       return "task_".strtolower($task)."_getParameters";
    }
@@ -185,11 +196,10 @@ class PluginFusioninventoryCommunicationRest {
 
 
    /**
-    * Update agent status for a task
+    * Update agent status for a taskjob
     *
-    * @param params parameters from the GET HTTP request
-    *
-    * @return nothing
+    * @global object $DB
+    * @param array $params
     */
    static function updateLog($params = array()) {
       global $DB;
@@ -200,6 +210,7 @@ class PluginFusioninventoryCommunicationRest {
       $p['msg']       = 'ok'; //status of the task
       $p['code']      = ''; //current step of processing
       $p['sendheaders'] = True;
+
       foreach ($params as $key => $value) {
          $p[$key] = $value;
       }
@@ -228,6 +239,7 @@ class PluginFusioninventoryCommunicationRest {
             "WHERE `plugin_fusioninventory_taskjobstates_id`=". $jobstate['id']
          );
          switch($p['code']) {
+
             case 'running':
                $taskjoblog->addTaskjoblog(
                   $taskjobstate->fields['id'],
@@ -237,6 +249,7 @@ class PluginFusioninventoryCommunicationRest {
                   $p['msg']
                );
                break;
+
             case 'ok':
                $taskjobstate->changeStatusFinish(
                   $taskjobstate->fields['id'],
@@ -246,6 +259,7 @@ class PluginFusioninventoryCommunicationRest {
                   $p['msg']
                );
                break;
+
             case 'ko':
                $taskjobstate->changeStatusFinish(
                   $taskjobstate->fields['id'],
@@ -255,6 +269,7 @@ class PluginFusioninventoryCommunicationRest {
                   $p['msg']
                );
                break;
+
          }
       }
       if ($p['sendheaders']) {
@@ -262,14 +277,13 @@ class PluginFusioninventoryCommunicationRest {
       }
    }
 
-   
+
 
    /**
     * Test a given url
     *
-    * @param url the url to test
-    *
-    * @return TRUE if url is valid, FALSE otherwise
+    * @param string $url
+    * @return boolean
     */
    static function testRestURL($url) {
 
