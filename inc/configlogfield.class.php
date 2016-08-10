@@ -51,30 +51,35 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    /**
     * Init config log fields : add default values in table
     *
-    *@return nothing
-    **/
+    * @global object $DB
+    */
    function initConfig() {
       global $DB;
-      $NOLOG = '-1';
-      $logs = array();
-      $logs['NetworkEquipment']['ifdescr'] = $NOLOG;
-      $logs['NetworkEquipment']['ifIndex'] = $NOLOG;
-      $logs['NetworkEquipment']['ifinerrors'] = $NOLOG;
-      $logs['NetworkEquipment']['ifinoctets'] = $NOLOG;
-      $logs['NetworkEquipment']['ifinternalstatus'] = $NOLOG;
-      $logs['NetworkEquipment']['iflastchange'] = $NOLOG;
-      $logs['NetworkEquipment']['ifmtu'] = $NOLOG;
-      $logs['NetworkEquipment']['ifName'] = $NOLOG;
-      $logs['NetworkEquipment']['ifouterrors'] = $NOLOG;
-      $logs['NetworkEquipment']['ifoutoctets'] = $NOLOG;
-      $logs['NetworkEquipment']['ifspeed'] = $NOLOG;
-      $logs['NetworkEquipment']['ifstatus'] = $NOLOG;
-      $logs['NetworkEquipment']['macaddr'] = $NOLOG;
-      $logs['NetworkEquipment']['portDuplex'] = $NOLOG;
-      $logs['NetworkEquipment']['trunk'] = $NOLOG;
 
-      $logs['Printer']['ifIndex'] = $NOLOG;
-      $logs['Printer']['ifName'] = $NOLOG;
+      $NOLOG = '-1';
+      $logs = array(
+          'NetworkEquipment' => array(
+              'ifdescr'          => $NOLOG,
+              'ifIndex'          => $NOLOG,
+              'ifinerrors'       => $NOLOG,
+              'ifinoctets'       => $NOLOG,
+              'ifinternalstatus' => $NOLOG,
+              'iflastchange'     => $NOLOG,
+              'ifmtu'            => $NOLOG,
+              'ifName'           => $NOLOG,
+              'ifouterrors'      => $NOLOG,
+              'ifoutoctets'      => $NOLOG,
+              'ifspeed'          => $NOLOG,
+              'ifstatus'         => $NOLOG,
+              'macaddr'          => $NOLOG,
+              'portDuplex'       => $NOLOG,
+              'trunk'            => $NOLOG
+          ),
+          'Printer' => array(
+              'ifIndex' => $NOLOG,
+              'ifName'  => $NOLOG
+          )
+      );
 
       $mapping = new PluginFusioninventoryMapping();
       foreach ($logs as $itemtype=>$fields){
@@ -108,9 +113,8 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
     * Get the value of a field in configlog
     *
     * @global object $DB
-    * @param $field name of the field
-    *
-    * @return value or FALSE
+    * @param string $field
+    * @return string|false
     */
    function getValue($field) {
       global $DB;
@@ -131,6 +135,13 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @global object $DB
+    * @param array $options
+    * @return true
+    */
    function showForm($options=array()) {
       global $DB;
 
@@ -160,9 +171,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       $days = array();
       $days[-1] = __('Never');
-
       $days[0]  = __('Always');
-
       for ($i = 1 ; $i < 366 ; $i++) {
          $days[$i]  = "$i";
       }
@@ -214,6 +223,11 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
 
 
+   /**
+    * Update data in database
+    *
+    * @param array $p_post
+    */
    function putForm($p_post) {
       foreach ($p_post as $field=>$log) {
          if (substr($field, 0, 6) == 'field-') {

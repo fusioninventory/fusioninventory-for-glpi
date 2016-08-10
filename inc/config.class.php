@@ -55,11 +55,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Initialize config values of fusioninventory plugin
-   *
-   * @return nothing
-   *
-   **/
+    * Initialize config values of fusioninventory plugin
+    *
+    * @param boolean $getOnly
+    * @return array
+    */
    function initConfigModule($getOnly=FALSE) {
 
       $input = array();
@@ -119,10 +119,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
 
-      if ($getOnly) {
-         return $input;
+      if (!$getOnly) {
+         $this->addValues($input);
       }
-      $this->addValues($input);
+      return $input;
    }
 
 
@@ -142,12 +142,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * add multiple configuration values
+    * Add multiple configuration values
     *
-    * @param $values array of configuration values, indexed by name
-    *
-    * @return nothing
-    **/
+    * @param array $values configuration values, indexed by name
+    * @param boolean $update say if add or update in database
+    */
    function addValues($values, $update=TRUE) {
 
       foreach ($values as $type=>$value) {
@@ -253,12 +252,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Get configuration value
-   *
-   * @param $name field name
-   *
-   * @return field value for an existing field, FALSE otherwise
-   **/
+    * Get configuration value with name
+    *
+    * @global array $PF_CONFIG
+    * @param string $name name in configuration
+    * @return null|string|integer
+    */
    function getValue($name) {
       global $PF_CONFIG;
 
@@ -276,12 +275,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * give state of a config field for a fusioninventory plugin
-   *
-   * @param $name field name
-   *
-   * @return TRUE for an existing field, FALSE otherwise
-   **/
+    * Give state of a config field for a fusioninventory plugin
+    *
+    * @param string $name name in configuration
+    * @return boolean
+    */
    function isActive($name) {
       if (!($this->getValue($name))) {
          return FALSE;
@@ -293,11 +291,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Display form for config
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form
+    *
+    * @param array $options
+    * @return true
+    */
    function showForm($options=array()) {
 
       $this->showFormHeader($options);
@@ -340,32 +338,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
       echo "</td>";
       echo "<td colspan=2></td>";
-/*
-      No more parameter in configuration; parameter is now in entity configuration.
-
-      echo "<td>";
-      echo __('Service URL', 'fusioninventory').'&nbsp;';
-      Html::showToolTip('ex: http://192.168.20.1/glpi');
-      echo "&nbsp;:";
-      $ctx = stream_context_create(array(
-          'http' => array(
-              'timeout' => 3
-              )
-          )
-      );
-      PluginFusioninventoryDisplay::disableDebug();
-      if (!file_exists($this->getValue('agent_base_url').'/plugins/fusioninventory/index.php')
-            && !file_get_contents($this->getValue('agent_base_url').
-                                    '/plugins/fusioninventory/index.php', FALSE, $ctx)) {
-           echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
-      }
-      PluginFusioninventoryDisplay::reenableusemode();
-      echo "</td>";
-      echo "<td>";
-      echo "<input type='text' name='agent_base_url' size='50' ".
-               "value='".$this->getValue('agent_base_url')."'/>";
-      echo "</td>";
-*/
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -439,6 +411,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
+   /**
+    * Get the action for agent action
+    *
+    * @param integer $action
+    * @return string
+    */
    static function getActions($action){
       switch ($action) {
 
@@ -454,13 +432,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Display form for config tab in fusioninventory config form
-   *
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for tab 'Inventory'
+    *
+    * @param array $options
+    * @return true
+    */
    static function showFormInventory($options=array()) {
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -648,13 +624,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Display form for config tab in network inventory config form
-   *
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for tab 'Network inventory'
+    *
+    * @param array $options
+    * @return true
+    */
    static function showFormNetworkInventory($options=array()) {
       global $CFG_GLPI;
 
@@ -730,13 +704,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Display form for config tab in fusioninventory config form
-   *
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for tab 'Deploy'
+    *
+    * @param array $options
+    * @return true
+    */
    static function showFormDeploy($options=array()) {
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -768,20 +740,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Add configuration value, if not already present
+    * Add name + value in configuration if not exist
     *
-    * @param $name field name
-    * @param $value field value
-    *
-    * @return integer the new id of the added item (or FALSE if fail)
-    **/
+    * @param type $name
+    * @param type $value
+    * @return integer|false integer is the id of this configuration name
+    */
    function addValue($name, $value) {
       $existing_value = $this->getValue($name);
       if (!is_null($existing_value)) {
          return $existing_value;
       } else {
-         return $this->add(array('type'       => $name,
-                                 'value'      => $value));
+         return $this->add(array('type'  => $name,
+                                 'value' => $value));
       }
    }
 
@@ -790,11 +761,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Update configuration value
     *
-    * @param $name field name
-    * @param $value field value
-    *
-    * @return boolean : TRUE on success
-    **/
+    * @param string $name name of configuration
+    * @param string $value
+    * @return boolean
+    */
    function updateValue($name, $value) {
       $config = current($this->find("`type`='".$name."'"));
       if (isset($config['id'])) {
@@ -808,6 +778,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    /**
     * Check if extradebug mode is activate
+    *
+    * @return null|integer the integer is 1 or 0 (it's like boolean)
     */
    static function isExtradebugActive() {
       $fConfig = new self();
@@ -818,6 +790,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    /**
     * Log when extra-debug is activated
+    *
+    * @param string $file name of log file to update
+    * @param string $message the message to put in log file
     */
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
@@ -830,12 +805,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
+   /**
+    * Load all configuration in global variable $PF_CONFIG
+    *
+    * Test if table exists before loading cache
+    * The only case where table doesn't exists is when you click on
+    * uninstall the plugin and it's already uninstalled
+    *
+    * @global object $DB
+    * @global array $PF_CONFIG
+    */
    static function loadCache() {
       global $DB, $PF_CONFIG;
 
-      //Test if table exists before loading cache
-      //The only case where table doesn't exists is when you click on
-      //uninstall the plugin and it's already uninstalled
       if (TableExists('glpi_plugin_fusioninventory_configs')) {
          $PF_CONFIG = array();
          foreach ($DB->request('glpi_plugin_fusioninventory_configs') as $data) {

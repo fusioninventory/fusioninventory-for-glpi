@@ -65,6 +65,13 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $id
+    * @param array $options
+    * @return true
+    */
    function showForm($id, $options=array()) {
 
       Session::checkRight('plugin_fusioninventory_configsecurity', READ);
@@ -151,107 +158,16 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
-   // for file stored snmp authentication
-   function add_xml() {
-      global $CFG_GLPI;
-
-      // Get new id
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
-                                 'SimpleXMLElement',
-                                 LIBXML_NOCDATA);
-
-      $id = $xml->incrementID[0] + 1;
-
-      // Write XML file
-      $xml_write = "<snmp>\n";
-      $xml_write .= "   <incrementID>".$id."</incrementID>\n";
-      $xml_write .= "   <auth>\n";
-      for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
-         $xml_write .= "      <conf>\n";
-         $j = 0;
-         foreach($xml->auth->conf[$i] as $item) {
-            $j++;
-            switch ($j) {
-               case 1:
-                  $xml_write .= "         <Num>".$item."</Num>\n";
-                  break;
-
-               case 2:
-                  $xml_write .= "         <Name><![CDATA[".$item."]]></Name>\n";
-                  break;
-
-               case 3:
-                  $xml_write .= "         <snmp_version>".$item."</snmp_version>\n";
-                  break;
-
-               case 4:
-                  $xml_write .= "         <community><![CDATA[".$item."]]></community>\n";
-                  break;
-
-               case 5:
-                  $xml_write .= "         <sec_name><![CDATA[".$item."]]></sec_name>\n";
-                  break;
-
-               case 7:
-                  $xml_write .= "         <auth_protocol>".$item."</auth_protocol>\n";
-                  break;
-
-               case 8:
-                  $xml_write .= "         <auth_passphrase><![CDATA[".$item.
-                                "]]></auth_passphrase>\n";
-                  break;
-
-               case 9:
-                  $xml_write .= "         <priv_protocol>".$item."</encryption>\n";
-                  break;
-
-               case 10:
-                  $xml_write .= "         <priv_passphrase><![CDATA[".$item.
-                                "]]></priv_passphrase>\n";
-                  break;
-            }
-         }
-         $xml_write .= "      </conf>\n";
-      }
-      // Write new Line
-      $xml_write .= "      <conf>\n";
-      $xml_write .= "         <Num>".$id."</Num>\n";
-      $xml_write .= "         <Name><![CDATA[".$_POST["name"]."]]></Name>\n";
-      $xml_write .= "         <snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"].
-                                 "</snmp_version>\n";
-      $xml_write .= "         <community><![CDATA[".$_POST["community"]."]]></community>\n";
-      $xml_write .= "         <sec_name><![CDATA[".$_POST["username"]."]]></sec_name>\n";
-      $xml_write .= "         <auth_protocol>".$_POST["authentication"]."</auth_protocol>\n";
-      $xml_write .= "         <auth_passphrase><![CDATA[".$_POST["auth_passphrase"].
-                    "]]></auth_passphrase>\n";
-      $xml_write .= "         <priv_protocol>".$_POST["encryption"]."</priv_protocol>\n";
-      $xml_write .= "         <priv_passphrase><![CDATA[".$_POST["priv_passphrase"].
-                    "]]></priv_passphrase>\n";
-      $xml_write .= "      </conf>\n";
-
-      $xml_write .= "   </auth>\n";
-      $xml_write .= "</snmp>\n";
-
-      $myFile = $CFG_GLPI['root_doc']."/plugins/fusioninventory/scripts/auth.xml";
-      $fh = fopen($myFile, 'w') or die("can't open file");
-      fwrite($fh, $xml_write);
-      fclose($fh);
-
-      return $id;
-   }
-
-
-
    /**
     * Display SNMP version (dropdown)
     *
-    * @param $p_value
+    * @param null|string $p_value
     */
    function showDropdownSNMPVersion($p_value=NULL) {
-      $snmpVersions = array(0=>'-----', '1', '2c', '3');
+      $snmpVersions = array(0 => '-----', '1', '2c', '3');
       $options = array();
       if (!is_null($p_value)) {
-         $options = array('value'=>$p_value);
+         $options = array('value' => $p_value);
       }
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
@@ -261,9 +177,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    /**
     * Get real version of SNMP
     *
-    * @param $id version number
-    *
-    * @return real version
+    * @param integer $id
+    * @return string
     */
    function getSNMPVersion($id) {
       switch($id) {
@@ -286,7 +201,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    /**
     * Display SNMP authentication encryption (dropdown)
     *
-    * @param $p_value
+    * @param null|string $p_value
     */
    function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
@@ -300,11 +215,10 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * Get SNMP authentication encryption
+    * Get SNMP authentication protocol
     *
-    * @param $id
-    *
-    * @return encryption
+    * @param integer $id
+    * @return string
     */
    function getSNMPAuthProtocol($id) {
       switch($id) {
@@ -321,17 +235,28 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
+   /**
+    * Show dropdown of SNMP encryption protocol
+    *
+    * @param string $p_value
+    */
    function showDropdownSNMPEncryption($p_value=NULL) {
-      $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
+      $encryptions = array(0 => '-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
       $options = array();
       if (!is_null($p_value)) {
-         $options = array('value'=>$p_value);
+         $options = array('value' => $p_value);
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
 
 
 
+   /**
+    * Get the SNMP encryption
+    *
+    * @param integer $id
+    * @return string
+    */
    function getSNMPEncryption($id) {
       switch($id) {
 
@@ -356,39 +281,11 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
-   function selectbox($selected=0) {
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
-                                 'SimpleXMLElement',
-                                 LIBXML_NOCDATA);
-      $selectbox = "<select name='plugin_fusioninventory_configsecurities_id' size='1'>\n
-                       <option value='0'>-----</option>\n";
-      for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
-
-         $j = 0;
-         foreach($xml->auth->conf[$i] as $item) {
-            $j++;
-            switch ($j) {
-               case 1:
-                  if ($item == $selected) {
-                     $selectbox .= "<option selected='selected' value='".$item."'>";
-                  } else {
-                     $selectbox .= "<option value='".$item."'>";
-                  }
-                  break;
-
-               case 2:
-                  $selectbox .= $item."</option>\n";
-                  break;
-            }
-         }
-      }
-      $selectbox .= "</select>\n";
-
-      return $selectbox;
-   }
-
-
-
+   /**
+    * Show dropdown of SNMP authentication
+    *
+    * @param string $selected
+    */
    static function authDropdown($selected="") {
 
       Dropdown::show("PluginFusioninventoryConfigSecurity",
