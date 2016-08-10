@@ -60,15 +60,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Import data
+    * Import data, so get data from agent to put in GLPI
     *
-    *@param $p_DEVICEID XML code to import
-    *@param $p_CONTENT XML code to import
-    *@return "" (import ok) / error string (import ko)
-    **/
+    * @param string $p_DEVICEID device_id of the agent
+    * @param array $a_CONTENT
+    * @param array $arrayinventory
+    */
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
-
-      //$_SESSION['SOURCEXML'] = $p_xml;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->import().');
@@ -77,7 +75,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $this->agent = $pfAgent->infoByKey($p_DEVICEID);
-
       $this->arrayinventory = $arrayinventory;
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
@@ -99,7 +96,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
           $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
               ' ==devicesqueried==';
           $this->addtaskjoblog();
-
       }
 
       $this->importContent($a_CONTENT);
@@ -131,10 +127,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
    /**
     * Import the content (where have all devices)
-    *@param $arrayinventory CONTENT code to import
     *
-    *@return errors string to be alimented if import ko / '' if ok
-    **/
+    * @param array $arrayinventory
+    * @return string errors or empty string
+    */
    function importContent($arrayinventory) {
 
       PluginFusioninventoryCommunication::addLog(
@@ -221,12 +217,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Import one device
+    * import process of one device
     *
-    * @param type $itemtype
-    * @param type $items_id
-    *
-    * @return errors string to be alimented if import ko / '' if ok
+    * @global SimpleXMLElement $PLUGIN_FUSIONINVENTORY_XML
+    * @param string $itemtype
+    * @param integer $items_id
+    * @param array $a_inventory
+    * @return string errors or empty string
     */
    function importDevice($itemtype, $items_id, $a_inventory) {
       global $PLUGIN_FUSIONINVENTORY_XML;
@@ -287,11 +284,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Send XML of SNMP device to rules
+    * Send inventory information to import rules
     *
-    * @param simplexml $a_inventory
-    *
-    * @return type
+    * @param array $a_inventory
+    * @return string errors or empty string
     */
    function sendCriteria($a_inventory) {
 
@@ -418,10 +414,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    /**
     * After rules import device
     *
-    * @param integer $items_id id of the device in GLPI DB (0 = created, other = merge)
-    * @param varchar $itemtype itemtype of the device
-    *
-    * @return type
+    * @param integer $items_id id of the device in GLPI DB (0 = created,
+    *                          other = merge)
+    * @param string $itemtype itemtype of the device
+    * @return string errors or empty string
     */
    function rulepassed($items_id, $itemtype) {
 
@@ -510,7 +506,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Used to add log in the task
+    * Add log in the taskjob
     */
    function addtaskjoblog() {
 
@@ -529,6 +525,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
 
+   /**
+    * Get method name linked to this class
+    *
+    * @return string
+    */
    static function getMethod() {
       return 'snmpinventory';
    }
