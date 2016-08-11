@@ -47,13 +47,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
 
 
-    /**
-    * get manufacturer from pciid
+   /**
+    * Get manufacturer from pciid
     *
-    * @param $pciid value id of the PCI (vendor identifiant)
-    *
-    * @return manufacturer name or nothing
-    *
+    * @global object $DB
+    * @param string $pciid
+    * @return array
     */
     static function getDataFromPCIID($pciid) {
        global $DB;
@@ -91,15 +90,14 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
 
 
 
-   /**
-   * get data from vendorid and productid USB
-   *
-   * @param $vendorId value USB id of vendor
-   * @param $productId value id of product
-   *
-   * @return array (vendor name, device name)
-   *
-   */
+    /**
+     * Get data from vendorid and productid USB
+     *
+     * @global object $DB
+     * @param integer $vendorId
+     * @param integer $productId
+     * @return array
+     */
    static function getDataFromUSBID($vendorId, $productId) {
       global $DB;
 
@@ -132,6 +130,13 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
 
 
 
+   /**
+    * Get manufaturer linked to 6 first number of MAC address
+    *
+    * @global object $DB
+    * @param string $mac
+    * @return string
+    */
    static function getManufacturerWithMAC($mac) {
       global $DB;
 

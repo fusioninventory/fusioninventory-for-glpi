@@ -60,6 +60,11 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
 
 
 
+   /**
+    * Init stats
+    *
+    * @global object $DB
+    */
    static function init() {
       global $DB;
 
@@ -75,6 +80,11 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
 
 
 
+   /**
+    * Increment computer states
+    *
+    * @global object $DB
+    */
    static function increment() {
       global $DB;
 
@@ -87,6 +97,13 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
 
 
 
+   /**
+    * Get stats for each hours for last xx hours
+    *
+    * @global object $DB
+    * @param integer $nb
+    * @return integer
+    */
    static function getLastHours($nb=11) {
       global $DB;
 

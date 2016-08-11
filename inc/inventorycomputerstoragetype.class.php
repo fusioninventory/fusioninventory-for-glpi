@@ -58,7 +58,6 @@ class PluginFusioninventoryInventoryComputerStorageType extends CommonDropdown {
    static function getTypeName($nb=0) {
       return __('Storage type', 'fusioninventory');
    }
-
 }
 
 ?>

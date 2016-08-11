@@ -48,15 +48,17 @@ class PluginFusioninventoryInventoryComputerInventory {
    private $arrayinventory = array();
    private $device_id = '';
 
+
    /**
-   * Import data
-   *
-   * @param $p_DEVICEID XML code to import
-   * @param $a_CONTENT XML code of the Computer
-   * @param $arrayinventory array of the inventory
-   *
-   * @return nothing (import ok) / error string (import ko)
-   **/
+    * import data
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param string $p_DEVICEID
+    * @param array $a_CONTENT
+    * @param array $arrayinventory
+    * @return string errors
+    */
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       global $DB, $CFG_GLPI;
 
@@ -114,15 +116,11 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
    /**
-   * Send Computer to inventoryruleimport
-   *
-   * @param $p_DEVICEID XML code to import
-   * @param $p_CONTENT XML code of the Computer
-   * @param $p_CONTENT XML code of all agent have sent
-   *
-   * @return nothing
-   *
-   **/
+    * Send Computer to inventoryruleimport
+    *
+    * @param string $p_DEVICEID
+    * @param array $arrayinventory
+    */
    function sendCriteria($p_DEVICEID, $arrayinventory) {
 
       if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
@@ -402,14 +400,15 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
    /**
-   * If rule have found computer or rule give to create computer
-   *
-   * @param $items_id integer id of the computer found (or 0 if must be created)
-   * @param $itemtype value Computer type here
-   *
-   * @return nothing
-   *
-   **/
+    * After rule engine passed, update task (log) and create item if required
+    *
+    * @global object $DB
+    * @global string $PLUGIN_FUSIONINVENTORY_XML
+    * @global boolean $PF_ESXINVENTORY
+    * @global array $CFG_GLPI
+    * @param integer $items_id id of the item (0 = not exist in database)
+    * @param string $itemtype
+    */
    function rulepassed($items_id, $itemtype) {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
 
@@ -647,10 +646,10 @@ class PluginFusioninventoryInventoryComputerInventory {
    /**
     * Get default value for state of devices (monitor, printer...)
     *
-    * @param type $input
-    * @param type $check_management
-    * @param type $management_value
-    *
+    * @param array $input
+    * @param boolean $check_management
+    * @param integer $management_value
+    * @return array
     */
    static function addDefaultStateIfNeeded(&$input, $check_management = FALSE,
                                            $management_value = 0) {
@@ -669,7 +668,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    /**
     * Return method name of this class/plugin
     *
-    * @return value
+    * @return string
     */
    static function getMethod() {
       return 'inventory';
@@ -677,6 +676,11 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
 
+   /**
+    * Fill internal variable with the inventory array
+    *
+    * @param array $data
+    */
    function fillArrayInventory($data) {
       $this->arrayinventory = $data;
    }

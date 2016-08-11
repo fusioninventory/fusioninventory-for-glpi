@@ -59,12 +59,11 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
 
 
-   /**
-   * Define Mapping for unlock fields
-   *
-   * @return array of the mapping
-   *
-   **/
+    /**
+     * Define Mapping for unlock fields
+     *
+     * @return array of the mapping
+     */
     static function getMapping() {
        $opt = array();
 
@@ -170,14 +169,11 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
 
     /**
-    * Update model for HP for suppliertag plugin
-    *
-    * @param $items_id integer id of the computer
-    * @param $partnumber value HP partnumber
-    *
-    * @return nothing
-    *
-    **/
+     * Update model for HP for suppliertag plugin
+     *
+     * @param integer $items_id id of the computer
+     * @param string $partnumber HP partnumber
+     */
     function Suppliertag($items_id, $partnumber) {
       if ($partnumber != 'Not Specified') {
          $a_partnumber = explode("#", $partnumber);

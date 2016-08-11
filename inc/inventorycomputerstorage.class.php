@@ -105,6 +105,12 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
 
 
+   /**
+    * Display storage form
+    *
+    * @global object $DB
+    * @param integer $computers_id
+    */
    function showStorage($computers_id) {
       global $DB;
 
@@ -295,6 +301,15 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
 
 
+   /**
+    * Get link between storages
+    *
+    * @param array $a_link
+    * @param integer $id
+    * @param integer $lev
+    * @param integer $a_position
+    * @return array
+    */
    function getStorageLinks($a_link, $id, $lev, $a_position) {
       $pficStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
       $a_par = $pficStorage_Storage->getParent($id, $lev);

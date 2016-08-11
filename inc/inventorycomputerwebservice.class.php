@@ -50,10 +50,9 @@ class PluginFusioninventoryInventoryComputerWebservice {
    /**
    * Method for import XML by webservice
    *
-   * @param $params array ID of the agent
-   * @param $protocol value the communication protocol used
-   *
-   * @return array or error value
+   * @param array $params array ID of the agent
+   * @param string $protocol value the communication protocol used
+   * @return array
    *
    **/
    static function loadInventory($params, $protocol) {
@@ -78,6 +77,13 @@ class PluginFusioninventoryInventoryComputerWebservice {
 
 
 
+   /**
+    * More information on the method
+    *
+    * @param array $params
+    * @param string $protocol
+    * @return array
+    */
    static function methodExtendedInfo($params, $protocol) {
       $response = array();
 

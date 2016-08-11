@@ -65,11 +65,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Update computer data
     *
-    * @param php array $a_computerinventory all data from the agent
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $a_computerinventory all data from the agent
     * @param integer $computers_id id of the computer
     * @param boolean $no_history set true if not want history
-    *
-    * @return nothing
+    * @param integer $setdynamic
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB, $CFG_GLPI;
@@ -1674,6 +1675,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Manage network ports
+    *
+    * @global object $DB
+    * @param array $inventory_networkports
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
    function manageNetworkPort($inventory_networkports, $computers_id, $no_history) {
       global $DB;
 
@@ -1947,11 +1956,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new processor component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addProcessor($data, $computers_id, $no_history) {
       $item_DeviceProcessor         = new Item_DeviceProcessor();
@@ -1971,11 +1978,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new memory component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addMemory($data, $computers_id, $no_history) {
       $item_DeviceMemory            = new Item_DeviceMemory();
@@ -1995,11 +2000,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new hard disk component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addHardDisk($data, $computers_id, $no_history) {
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
@@ -2019,11 +2022,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new drive component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addDrive($data, $computers_id, $no_history) {
       $item_DeviceDrive         = new Item_DeviceDrive();
@@ -2043,11 +2044,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new graphic card component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addGraphicCard($data, $computers_id, $no_history) {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
@@ -2067,11 +2066,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new network card component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addNetworkCard($data, $computers_id, $no_history) {
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
@@ -2091,11 +2088,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new sound card component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addSoundCard($data, $computers_id, $no_history) {
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
@@ -2115,11 +2110,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new controller component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addControl($data, $computers_id, $no_history) {
       $item_DeviceControl           = new Item_DeviceControl();
@@ -2139,13 +2132,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Load software from DB are in the incomming inventory
     *
-    * @global type $DB
-    *
+    * @global object $DB
     * @param integer $entities_id entitity id
     * @param array $a_soft list of software from the agent inventory
     * @param integer $lastid last id search to not search from beginning
-    *
-    * @return integer last id
+    * @return integer last software id
     */
    function loadSoftwares($entities_id, $a_soft, $lastid = 0) {
       global $DB;
@@ -2195,13 +2186,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Load software versions from DB are in the incomming inventory
     *
-    * @global type $DB
-    *
+    * @global object $DB
     * @param integer $entities_id entitity id
     * @param array $a_softVersion list of software versions from the agent inventory
     * @param integer $lastid last id search to not search from beginning
-    *
-    * @return type
+    * @return integer last software version id
     */
    function loadSoftwareVersions($entities_id, $a_softVersion, $lastid = 0) {
       global $DB;
@@ -2256,12 +2245,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new software
     *
-    * @global type $DB
-    *
     * @param array $a_software
     * @param array $options
-    *
-    * @return nothing
     */
    function addSoftware($a_software, $options) {
 
@@ -2273,6 +2258,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Add a software version
+    *
+    * @param array $a_software
+    * @param integer $softwares_id
+    */
    function addSoftwareVersion($a_software, $softwares_id) {
 
       $options = array();
@@ -2288,6 +2279,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Link software versions with the computer
+    *
+    * @global object $DB
+    * @param array $a_input
+    */
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
@@ -2316,6 +2313,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Link software version with the computer
+    *
+    * @global object $DB
+    * @param array $a_input
+    */
    function addSoftwareVersionComputer($a_software, $computers_id, $no_history, $options) {
 
       $options['disable_unicity_check'] = TRUE;
@@ -2351,6 +2354,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Arraydiff function to have real diff between 2 arrays
+    *
+    * @param array $arrayFrom
+    * @param array $arrayAgainst
+    * @return array
+    */
    function arrayDiffEmulation($arrayFrom, $arrayAgainst) {
       $arrayAgainsttmp = array();
       foreach ($arrayAgainst as $key => $data) {
@@ -2367,12 +2377,26 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Prepare add history in database
+    *
+    * @param integer $items_id
+    * @param string $itemtype
+    * @param string $itemtype_link
+    * @param array $changes
+    * @param integer $linked_action
+    */
    function addPrepareLog($items_id, $itemtype, $itemtype_link='', $changes=array('0', '', ''), $linked_action=Log::HISTORY_CREATE_ITEM) {
       $this->log_add[] = array($items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"], $changes, $linked_action);
    }
 
 
 
+   /**
+    * Insert logs are in queue
+    *
+    * @global object $DB
+    */
    function addLog() {
       global $DB;
 
@@ -2408,6 +2432,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Define items link to computer in dynamic mode
+    *
+    * @global object $DB
+    * @param integer $computers_id
+    */
    function setDynamicLinkItems($computers_id) {
       global $DB;
 

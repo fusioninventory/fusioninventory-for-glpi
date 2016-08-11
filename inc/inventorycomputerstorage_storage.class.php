@@ -61,6 +61,13 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
 
 
 
+   /**
+    * Get opposites, so storage linked with this
+    *
+    * @global object $DB
+    * @param integer $id
+    * @return integer
+    */
    function getOpposites($id) {
       global $DB;
 
@@ -84,6 +91,14 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
 
 
 
+   /**
+    * Get children of a storage
+    *
+    * @global object $DB
+    * @param integer $id
+    * @param integer $level
+    * @return integer
+    */
    function getChildren($id, $level) {
       global $DB;
 
@@ -121,6 +136,14 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
 
 
 
+   /**
+    * Get storage parent
+    *
+    * @global object $DB
+    * @param integer $id
+    * @param integer $level
+    * @return integer
+    */
    function getParent($id, $level) {
       global $DB;
 
