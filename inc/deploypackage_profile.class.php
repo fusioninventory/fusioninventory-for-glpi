@@ -59,9 +59,9 @@ class PluginFusioninventoryDeployPackage_Profile extends CommonDBRelation {
    /**
     * Get profiles for a deploypackage
     *
-    * @param $deploypackages_id ID of the deploypackage
-    *
-    * @return array of profiles linked to a deploypackage
+    * @global object $DB
+    * @param integer $deploypackages_id ID of the deploypackage
+    * @return array list of profiles linked to a deploypackage
    **/
    static function getProfiles($deploypackages_id) {
       global $DB;
@@ -76,6 +76,6 @@ class PluginFusioninventoryDeployPackage_Profile extends CommonDBRelation {
       }
       return $prof;
    }
-
 }
+
 ?>

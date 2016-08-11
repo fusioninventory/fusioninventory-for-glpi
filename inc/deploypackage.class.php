@@ -173,9 +173,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-   *  Check if we can edit (or delete) this item
-   *  If it's not possible display an error message
-   **/
+    * Define error message if package used in task. This will prevent edit the
+    * package
+    *
+    * @return string
+    */
    function getEditErrorMessage() {
 
       $this->getRunningTasks();
@@ -236,7 +238,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-    * Get every tasks running
+    * Get all tasks runnning
     */
    function getRunningTasks() {
       $this->running_tasks =
@@ -333,6 +335,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Clean orders when delete the package
+    *
+    * @global type $DB
+    */
    function cleanDBonPurge() {
       global $DB;
 
@@ -343,6 +350,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Display the menu / list of packages
+    *
+    * @param array $options
+    */
    function showMenu($options=array()) {
 
       $this->displaylist = FALSE;
@@ -353,6 +365,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Display list of packages
+    */
    function showList() {
       Search::show('PluginFusioninventoryDeployPackage');
    }
@@ -380,6 +395,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $ID
+    * @param array $options
+    * @return true
+    */
    function showForm($ID, $options=array()) {
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -414,9 +436,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   /*
-    * TODO: switch to non-static to avoid the $package argument
-    *       -- kiniou
+   /**
+    * Display order type form
+    *
+    * @global array $CFG_GLPI
     */
    function displayOrderTypeForm() {
       global $CFG_GLPI;
@@ -530,6 +553,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    /**
     * Manage + button (audits, files, actions)
     *
+    * @global array $CFG_GLPI
     * @param integer $id id of the package
     * @param integer $order_id if of the order
     * @param string $subtype name of subtype (audits, files, actions)
@@ -551,6 +575,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Plus button used to add an element
+    *
+    * @global array $CFG_GLPI
+    * @param string $dom_id
+    * @param boolean $clone
+    */
    static function plusButton($dom_id, $clone = FALSE) {
       global $CFG_GLPI;
 
@@ -571,6 +602,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    /**
     * When user is in DEBUG mode, we display the json
     *
+    * @global array $CFG_GLPI
     */
    function displayJSONDebug() {
       global $CFG_GLPI;
@@ -741,9 +773,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          foreach ($a_info['files'] as $input) {
             $pfDeployFile->add($input);
          }
-      } else {
-         // Update current
-
       }
       // Copy files
       foreach ($a_info['manifests'] as $manifest) {
@@ -827,11 +856,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   /*
+   /**
     * Get a sub element at index
-    * @param subtype the type of sub element
-    * @param the index in element list
-    * @return the sub element
+    *
+    * @param string $subtype
+    * @param integer $index
+    * @return string
     */
    function getSubElement($subtype, $index) {
       $data_o = json_decode($this->fields['json'], TRUE);
@@ -840,10 +870,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   /*
+   /**
     * Get Order's associated file by hash
-    * @param hash the sha512 hash of file
-    * @return the associated file for the selected hash
+    *
+    * @param string $hash
+    * @return null|string
     */
    function getAssociatedFile($hash) {
       $data_o = json_decode($this->fields['json'], TRUE);
@@ -860,7 +891,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * Get the json
     *
     * @param integer $packages_id id of the order
-    * @return boolean | string(json)
+    * @return boolean|string the string is in json format
     */
    static function getJson($packages_id) {
       $pfDeployPackage = new self;
@@ -874,6 +905,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Update the order json
+    *
+    * @param integer $packages_id
+    * @param array $datas
+    * @return integer error number
+    */
    static function updateOrderJson($packages_id, $datas) {
       $pfDeployPackage = new self;
       $options = JSON_UNESCAPED_SLASHES;
@@ -970,6 +1008,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Count number elements for the visibility
+    *
+    * @return integer
+    */
    function countVisibilities() {
       return (count($this->entities)
               + count($this->users)
@@ -979,6 +1022,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Display the visibility, so who can read. write...
+    *
+    * @global array $CFG_GLPI
+    * @return true
+    */
    function showVisibility() {
       global $CFG_GLPI;
 
@@ -1017,7 +1066,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          Html::closeForm();
          echo "</div>";
       }
-
 
       echo "<div class='spaced'>";
       if ($canedit && $nb) {
@@ -1163,15 +1211,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
 
       echo "</div>";
-      // Add items
 
-      return true;
+      return TRUE;
    }
 
 
 
+   /**
+    * Fill internal variable with visibility elements when load package
+    * information from database
+    */
    function post_getFromDB() {
-
       // Users
       $this->users    = PluginFusioninventoryDeployPackage_User::getUsers($this->fields['id']);
 
@@ -1280,7 +1330,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
       }
-
       echo "</table>";
       Html::closeForm();
    }
@@ -1333,6 +1382,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * Add the package in task or use existant task and add the computer in
     * taskjob
     *
+    * @global object $DB
     * @param integer $computers_id id of the computer where depoy package
     * @param integer $packages_id id of the package to install in computer
     * @param integer $users_id id of the user have requested the installation
@@ -1408,7 +1458,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    /**
     * Get all packages on all my computer I have requested to install
     *
-    * @param type $computers_packages
+    * @global object $DB
+    * @param array $computers_packages
     * @param integer $users_id
     * @return array
     */
@@ -1497,7 +1548,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    /**
     * Check I have rights to deploy packages
     *
-    * @return boolean|array
+    * @global object $DB
+    * @return false|array
     */
    function canUserDeploySelf() {
       global $DB;

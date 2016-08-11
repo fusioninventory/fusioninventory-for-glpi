@@ -80,9 +80,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
 
 
-   /*
+   /**
     * Get and filter mirrors list by computer agent and location.
     * Location is retrieved from the computer data.
+    *
+    * @global array $PF_CONFIG
+    * @param integer $agents_id
+    * @return array
     */
    static function getList($agents_id = NULL) {
       global $PF_CONFIG;
@@ -130,6 +134,14 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @global array $CFG_GLPI
+    * @param integer $id
+    * @param array $options
+    * @return true
+    */
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 

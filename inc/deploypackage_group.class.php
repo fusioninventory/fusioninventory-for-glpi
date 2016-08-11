@@ -59,9 +59,9 @@ class PluginFusioninventoryDeployPackage_Group extends CommonDBRelation {
    /**
     * Get groups for a deploypackage
     *
-    * @param $deploypackages_id ID of the deploypackage
-    *
-    * @return array of groups linked to a deploypackage
+    * @global object $DB
+    * @param integer $deploypackages_id ID of the deploypackage
+    * @return array list of groups linked to a deploypackage
    **/
    static function getGroups($deploypackages_id) {
       global $DB;
@@ -76,6 +76,6 @@ class PluginFusioninventoryDeployPackage_Group extends CommonDBRelation {
       }
       return $groups;
    }
-
 }
+
 ?>

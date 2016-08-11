@@ -45,18 +45,36 @@
 
 class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
+
+   /**
+    * Is this use can create a deploy task job
+    *
+    * @return boolean
+    */
    static function canCreate() {
       return TRUE;
    }
 
 
 
+   /**
+    * Is this use can view a deploy task job
+    *
+    * @return boolean
+    */
    static function canView() {
       return TRUE;
    }
 
 
 
+   /**
+    * Get all data
+    *
+    * @global object $DB
+    * @param array $params
+    * @return string in JSON format
+    */
    function getAllDatas($params) {
       global $DB;
 
@@ -108,6 +126,12 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
 
 
+   /**
+    * Save data
+    *
+    * @global object $DB
+    * @param array $params
+    */
    function saveDatas($params) {
       global $DB;
 
@@ -157,6 +181,11 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
 
 
+   /**
+    * Get the different type of task job actions
+    *
+    * @return array
+    */
    static function getActionTypes() {
 
       return array(
@@ -177,6 +206,13 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
 
 
+   /**
+    * Get actions
+    *
+    * @global object $DB
+    * @param array $params
+    * @return string in JSON format
+    */
    static function getActions($params) {
       global $DB;
 

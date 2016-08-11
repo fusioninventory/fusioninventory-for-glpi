@@ -64,12 +64,22 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Is this use can create a deploy task
+    *
+    * @return boolean
+    */
    static function canCreate() {
       return TRUE;
    }
 
 
 
+   /**
+    * Is this use can view a deploy task
+    *
+    * @return boolean
+    */
    static function canView() {
       return TRUE;
    }
@@ -136,6 +146,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Show list of deploy tasks
+    */
    function showList() {
       self::title();
       Search::show('PluginFusioninventoryDeployTask');
@@ -143,6 +156,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Display the title of the page
+    *
+    * @global array $CFG_GLPI
+    */
    function title() {
       global  $CFG_GLPI;
 
@@ -159,6 +177,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Show actions of the deploy task
+    *
+    * @param integer $id
+    */
    function showActions($id) {
 
       //load extjs plugins library
@@ -196,6 +219,12 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Do this before delete a deploy task
+    *
+    * @global array $CFG_GLPI
+    * @return boolean
+    */
    function pre_deleteItem() {
       global $CFG_GLPI;
 
@@ -235,6 +264,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Do this after added an item
+    */
    function post_addItem() {
       $options = array(
          'id'              => $this->getField('id'),

@@ -59,9 +59,9 @@ class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
    /**
     * Get entities for a deploypackage
     *
-    * @param $deploypackages_id ID of the deploypackage
-    *
-    * @return array of entities linked to a deploypackage
+    * @global object $DB
+    * @param integer $deploypackages_id ID of the deploypackage
+    * @return array list of of entities linked to a deploypackage
    **/
    static function getEntities($deploypackages_id) {
       global $DB;
@@ -76,6 +76,6 @@ class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
       }
       return $ent;
    }
-
 }
+
 ?>

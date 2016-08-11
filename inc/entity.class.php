@@ -100,14 +100,13 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
 
    /**
-   * Display form for service configuration
-   *
-   * @param $entities_id integer id of entity
-   * @param $options array
-   *
-   *@return bool true if form is ok
-   *
-   **/
+    * Display form
+    *
+    * @global array $CFG_GLPI
+    * @param integer $entities_id
+    * @param array $options
+    * @return true
+    */
    function showForm($entities_id, $options=array()) {
       global $CFG_GLPI;
 
@@ -194,7 +193,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
 
 
@@ -203,10 +202,9 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * Get value of config
     *
     * @global object $DB
-    * @param value $name field name
+    * @param string $name field name
     * @param integer $entities_id
-    *
-    * @return value of field
+    * @return string value of field
     */
    function getValueAncestor($name, $entities_id) {
       global $DB;
@@ -242,10 +240,9 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * Get the value (of this entity or parent entity or in general config
     *
     * @global object $DB
-    * @param value $name field name
-    * @param integet $entities_id
-    *
-    * @return value value of this field
+    * @param string $name field name
+    * @param integer $entities_id
+    * @return string value of this field
     */
    function getValue($name, $entities_id) {
       global $DB;
@@ -270,6 +267,9 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
 
 
+   /**
+    * Initialize a field when get empty item (default values)
+    */
    function post_getEmpty() {
       $this->fields['transfers_id_auto'] = -1;
    }
