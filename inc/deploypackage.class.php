@@ -214,6 +214,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
+   /**
+    * Prepare data before add to database
+    *
+    * @param array $input
+    * @return array
+    */
    function prepareInputForAdd($input) {
       if (!isset($input['json'])) {
          $input['json'] = json_encode(array(

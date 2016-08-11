@@ -65,6 +65,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
 
+   /**
+    * Fields added to this class
+    *
+    * @return array
+    */
    function getAdditionalFields() {
 
       return array(array('name'  => 'itemtype',
@@ -81,14 +86,15 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * Display specific fields for FieldUnicity
+    * Display specific fields
     *
-    * @param $ID
-    * @param $field array
-   **/
+    * @param integer $ID
+    * @param array $field
+    */
    function displaySpecificTypeField($ID, $field=array()) {
 
       switch ($field['type']) {
+
          case 'credential_itemtype' :
             $this->showItemtype($ID);
             break;
@@ -98,9 +104,9 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * Show itemtype
+    * DIsplay the credential itemtype
     *
-    * @param type $ID
+    * @param integer $ID
     */
    function showItemtype($ID) {
 
@@ -123,10 +129,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * Add more tabs to display
+    * Define more tabs to display
     *
-    * @param $options array
-   **/
+    * @param array $options
+    * @return array
+    */
    function defineMoreTabs($options=array()) {
       return array();
    }
@@ -136,8 +143,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Display more tabs
     *
-    * @param $tab
-   **/
+    * @param array $tab
+    */
    function displayMoreTabs($tab) {
    }
 
@@ -179,12 +186,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * Perform checks to be sure that an itemtype and at least a field are selected
+    * Perform checks to be sure that an itemtype and at least a field are
+    * selected
     *
-    * @param input the values to insert in DB
-    *
-    * @return input the values to insert, but modified
-   **/
+    * @param array $input the values to insert in DB
+    * @return array
+    */
    static function checkBeforeInsert($input) {
 
       if ($input['password'] == '') {
@@ -202,12 +209,24 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
 
+   /**
+    * Prepare data before add to database
+    *
+    * @param array $input
+    * @return array
+    */
    function prepareInputForAdd($input) {
       return self::checkBeforeInsert($input);
    }
 
 
 
+   /**
+    * Prepare data before update in database
+    *
+    * @param array $input
+    * @return array
+    */
    function prepareInputForUpdate($input) {
       return $input;
    }
@@ -215,11 +234,10 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * Get an itemtype label by his credential itemtype
+    * Get an itemtype label by the credential itemtype
     *
-    * @param $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
-    *
-    * @return the label associated with the itemtype, or FALSE if no credential found
+    * @param string $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @return string|false
     */
    static function getLabelByItemtype($credential_itemtype) {
       $credentialtypes = self::findItemtypeType($credential_itemtype);
@@ -234,7 +252,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Find a credential by his itemtype
     *
-    * @param $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @param string $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
+    * @return array
     */
    static function findItemtypeType($credential_itemtype) {
 
@@ -250,15 +269,23 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * Get all modules that can declare credentials
+    * Get all credentials itemtypes
+    *
+    * @return array
     */
    static function getCredentialsItemTypes() {
-     return array ('PluginFusioninventoryInventoryComputerESX' =>
+     return array('PluginFusioninventoryInventoryComputerESX' =>
                            __('VMware host', 'fusioninventory'));
    }
 
 
 
+   /**
+    * Get credential types
+    *
+    * @param string $itemtype
+    * @return array
+    */
    static function getForItemtype($itemtype) {
       $itemtypes = array();
       foreach (PluginFusioninventoryModule::getAll() as $data) {
@@ -277,9 +304,10 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
    /**
-    * See dropdown credentials
+    * Display dropdown with credentials
     *
-    * @param type $params
+    * @global array $CFG_GLPI
+    * @param array $params
     */
    static function dropdownCredentials($params = array()) {
       global $CFG_GLPI;
@@ -289,7 +317,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $p['value']    = '';
          $p['itemtype'] = '';
          $p['id']       = 0;
-
       } else {
          $credential = new PluginFusioninventoryCredential();
          $credential->getFromDB($params['id']);
@@ -306,11 +333,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $types[''] = Dropdown::EMPTY_VALUE ;
       $rand      = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types,
                                            array('value' => $p['itemtype']));
-      $params    = array('itemtype' => '__VALUE__',
-                         'id'       => $p['id']);
+      $ajparams = array('itemtype' => '__VALUE__',
+                        'id'       => $p['id']);
       $url       = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
       Ajax::updateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
-                                  "span_credentials", $url, $params);
+                                  "span_credentials", $url, $ajparams);
 
       echo "&nbsp;<span name='span_credentials' id='span_credentials'>";
       if ($p['id']) {
@@ -321,6 +348,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
 
+   /**
+    * Display dropdown of credentials for itemtype
+    *
+    * @param array $params
+    */
    static function dropdownCredentialsForItemtype($params = array()) {
 
       if (empty($params['itemtype'])) {
@@ -345,7 +377,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Check if there's at least one credential itemetype
     *
-    * @return TRUE if there's at least one type, FALSE otherwise
+    * @return boolean
     */
    static function hasAlLeastOneType() {
       $types = self::getCredentialsItemTypes();
@@ -354,18 +386,9 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
 
 
-   function title() {
-
-      $buttons = array();
-      if (Session::haveRight('plugin_fusioninventory_credential', READ)) {
-         $buttons["credentialip.php"] =
-                  __('Remote devices to inventory (VMware)', 'fusioninventory');
-
-      }
-   }
-
-
-
+   /**
+    * Display a specific header
+    */
    function displayHeader() {
       //Common dropdown header
       parent::displayHeader();

@@ -65,8 +65,12 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
 
+   /**
+    * Add more fields
+    *
+    * @return array
+    */
    function getAdditionalFields() {
-
       return array(array('name'  => 'itemtype',
                          'label' => __('Type'),
                          'type'  => 'credentials'),
@@ -78,14 +82,15 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
    /**
-    * Display specific fields for FieldUnicity
+    * Display specific fields
     *
-    * @param $ID
-    * @param $field array
-   **/
+    * @param integer $ID
+    * @param array $field
+    */
    function displaySpecificTypeField($ID, $field=array()) {
 
       switch ($field['type']) {
+
          case 'credentials' :
             if ($ID > 0) {
                $field['id'] = $this->fields['plugin_fusioninventory_credentials_id'];
@@ -137,19 +142,9 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
 
-   function title() {
-
-      //Leave empty !
-      $buttons = array();
-      if (Session::haveRight('plugin_fusioninventory_credential', READ)) {
-         $buttons["credential.php"] =
-                  __('Authentication for remote devices (VMware)', 'fusioninventory');
-
-      }
-   }
-
-
-
+   /**
+    * Display a specific header
+    */
    function displayHeader() {
       //Common dropdown header
       parent::displayHeader();

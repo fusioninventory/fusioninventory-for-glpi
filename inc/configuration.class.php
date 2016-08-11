@@ -60,7 +60,6 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
       $tabs = array();
       $moduleTabs = array();
       $tabs[1]=__('General setup');
-
       $tabs[2]=__('Agents modules', 'fusioninventory');
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
@@ -83,6 +82,12 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
 
 
+   /**
+    * Display configuration form
+    *
+    * @param array $options
+    * @return true
+    */
    function showForm($options=array()) {
 
       $this->showTabs($options);
