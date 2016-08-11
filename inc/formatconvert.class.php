@@ -1812,7 +1812,7 @@ class PluginFusioninventoryFormatconvert {
 
 
 
-   function replaceids($array, $itemtype, $items_id) {
+   function replaceids($array, $itemtype, $items_id, $level=0) {
       global $CFG_GLPI;
 
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
@@ -1827,7 +1827,11 @@ class PluginFusioninventoryFormatconvert {
          } else {
             //if (is_array($value)) {
             if ((array)$value === $value) {
-               $array[$key] = $this->replaceids($value, $itemtype, $items_id);
+               $new_itemtype = $itemtype;
+               if ($level == 0) {
+                  $new_itemtype = $key;
+               }
+               $array[$key] = $this->replaceids($value, $new_itemtype, $items_id, $level + 1);
             } else {
                if (!PluginFusioninventoryLock::isFieldLocked($a_lockable, $key)) {
                   if (!is_numeric($key)
@@ -1845,10 +1849,7 @@ class PluginFusioninventoryFormatconvert {
                      }
                   }
                   if (!is_numeric($key)) {
-                     if ($key == "bios_manufacturers_id") {
-                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
-                                                                $value);
-                     } else if ($key == "locations_id") {
+                     if ($key == "locations_id") {
                         $array[$key] = Dropdown::importExternal('Location',
                                                                 $value,
                                                                 $_SESSION["plugin_fusioninventory_entity"]);
