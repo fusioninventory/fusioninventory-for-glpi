@@ -47,12 +47,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryStaticmisc {
 
    /**
-   * Get task methods of this plugin fusioninventory
-   *
-   * @return array ('module'=>'value', 'method'=>'value')
-   *   module value name of plugin
-   *   method value name of method
-   **/
+    * Get task methods of this plugin fusioninventory
+    *
+    * @return array ('module'=>'value', 'method'=>'value')
+    *   module value name of plugin
+    *   method value name of method
+    */
    static function task_methods() {
 
       $a_tasks = array(
@@ -114,15 +114,10 @@ class PluginFusioninventoryStaticmisc {
 
 
    /**
-   * Display methods availables
-   *
-   * @param $myname value name of dropdown
-   * @param $value value name of the method (used for edit taskjob)
-   * @param $entity_restrict restriction of entity if required
-   *
-   * @return value rand of the dropdown
-   *
-   **/
+    * Display methods availables
+    *
+    * @return array
+    */
    static function getModulesMethods() {
 
       $methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -144,14 +139,13 @@ class PluginFusioninventoryStaticmisc {
 
 
    /**
-   * Get types of datas available to select for taskjob definition for WakeOnLan method
-   *
-   * @param $a_itemtype array types yet added for definitions
-   *
-   * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
-   *   itemtype itemtype of object
-   *   value name of the itemtype
-   **/
+    * Get types of datas available to select for taskjob definition for WakeOnLan method
+    *
+    * @param array $a_itemtype types yet added for definitions
+    * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
+    *   itemtype itemtype of object
+    *   value name of the itemtype
+    */
    static function task_definitiontype_wakeonlan($a_itemtype) {
 
       $a_itemtype['Computer'] = Computer::getTypeName();
@@ -162,13 +156,12 @@ class PluginFusioninventoryStaticmisc {
 
 
    /**
-   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
-   *
-   * @param $title value ???(not used I think)
-   *
-   * @return dropdown list of computers
-   *
-   **/
+    * Get all devices of definition type 'Computer' defined in
+    * task_definitiontype_wakeonlan
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_Computer_wakeonlan($title) {
 
       $options = array();
@@ -181,6 +174,13 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all devices of definition type 'PluginFusioninventoryDeployGroup'
+    * defined in task_definitiontype_wakeonlan
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_PluginFusioninventoryDeployGroup_wakeonlan($title) {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -192,13 +192,13 @@ class PluginFusioninventoryStaticmisc {
 
 
    /**
-   * Get all methods of this plugin
-   *
-   * @return array ('module'=>'value', 'method'=>'value')
-   *   module value name of plugin
-   *   method value name of method
-   *
-   **/
+    * Get all methods of this plugin
+    *
+    * @return array ('module'=>'value', 'method'=>'value')
+    *   module value name of plugin
+    *   method value name of method
+    *
+    */
    static function getmethods() {
       $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
       $a_modules = PluginFusioninventoryModule::getAll();
@@ -216,9 +216,9 @@ class PluginFusioninventoryStaticmisc {
 
    /**
     * Get name of the staticmisc class for a module
-    * @param module the module name
     *
-    * @return the name of the staticmisc class associated with it
+    * @param string $module the module name
+    * @return string the name of the staticmisc class associated with it
     */
    static function getStaticMiscClass($module) {
       return "Plugin".ucfirst($module)."Staticmisc";
@@ -227,14 +227,13 @@ class PluginFusioninventoryStaticmisc {
 
 
    /**
-   * Get types of datas available to select for taskjob definition for ESX method
-   *
-   * @param $a_itemtype array types yet added for definitions
-   *
-   * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
-   *   itemtype itemtype of object
-   *   value name of the itemtype
-   **/
+    * Get types of datas available to select for taskjob definition for ESX method
+    *
+    * @param array $a_itemtype array types yet added for definitions
+    * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
+    *   itemtype itemtype of object
+    *   value name of the itemtype
+    */
    static function task_definitiontype_InventoryComputerESX($a_itemtype) {
       $a_itemtype['PluginFusioninventoryCredentialIp'] =
                        PluginFusioninventoryCredentialIp::getTypeName();
@@ -244,13 +243,13 @@ class PluginFusioninventoryStaticmisc {
 
 
    /**
-   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
-   *
-   * @param $title value ???(not used I think)
-   *
-   * @return dropdown list of computers
-   *
-   **/
+    * Get all devices of definition type 'PluginFusioninventoryCredentialIp'
+    * defined in task_definitiontype_InventoryComputerESX
+    *
+    * @global object $DB
+    * @param string (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_PluginFusioninventoryCredentialIp_InventoryComputerESX($title) {
       global $DB;
 
@@ -277,20 +276,27 @@ class PluginFusioninventoryStaticmisc {
 
    //------------------------------------------ Actions-------------------------------------//
 
+   /**
+    * Get action types for InventoryComputerESX
+    *
+    * @param array $a_itemtype
+    * @return array
+    */
    static function task_actiontype_InventoryComputerESX($a_itemtype) {
-      return array ('' => Dropdown::EMPTY_VALUE ,
-                    'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory'));
+      return array('' => Dropdown::EMPTY_VALUE ,
+                   'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory'));
 
    }
 
 
 
    /**
-   * Get all devices of definition type 'Computer' defined in task_definitiontype_wakeonlan
-   *
-   * @return dropdown list of computers
-   *
-   **/
+    * Get all devices of action type 'PluginFusioninventoryCredentialIp'
+    * defined in task_actiontype_InventoryComputerESX
+    *
+    * @global object $DB
+    * @return string unique html element id
+    */
    static function task_actionselection_PluginFusioninventoryCredentialIp_InventoryComputerESX() {
       global $DB;
 
@@ -314,6 +320,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all devices of action type 'PluginFusioninventoryAgent'
+    * defined in task_actiontype_InventoryComputerESX
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_PluginFusioninventoryAgent_InventoryComputerESX() {
 
       $array = array();
@@ -335,7 +347,8 @@ class PluginFusioninventoryStaticmisc {
    /**
     * Get ESX task parameters to send to the agent
     * For the moment it's hardcoded, but in a future release it may be in DB
-    * @return an array of parameters
+    *
+    * @return array list of parameters
     */
    static function task_ESX_getParameters($entities_id) {
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
@@ -348,6 +361,12 @@ class PluginFusioninventoryStaticmisc {
    //------------------------------- Network tools ------------------------------------//
 
    // *** NETWORKDISCOVERY ***
+   /**
+    * Definition types for network discovery
+    *
+    * @param array $a_itemtype
+    * @return array
+    */
    static function task_definitiontype_networkdiscovery($a_itemtype) {
       $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
       return $a_itemtype;
@@ -355,8 +374,14 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all ip ranges of definition type 'PluginFusioninventoryIPRange'
+    * defined in task_definitiontype_networkdiscovery
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_PluginFusioninventoryIPRange_networkdiscovery($title) {
-
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -368,8 +393,13 @@ class PluginFusioninventoryStaticmisc {
 
 
    // *** NETWORKINVENTORY ***
+   /**
+    * Definition types for network inventory
+    *
+    * @param array $a_itemtype
+    * @return array
+    */
    static function task_definitiontype_networkinventory($a_itemtype) {
-
       $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
 
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
@@ -380,6 +410,13 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all ip ranges of definition type 'PluginFusioninventoryIPRange'
+    * defined in task_definitiontype_networkinventory
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_PluginFusioninventoryIPRange_networkinventory($title) {
       $rand = PluginFusioninventoryStaticmisc::task_definitionselection_PluginFusioninventoryIPRange_networkdiscovery($title);
       return $rand;
@@ -387,8 +424,14 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all devices of definition type 'NetworkEquipment'
+    * defined in task_definitiontype_networkinventory
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_NetworkEquipment_networkinventory($title) {
-
       $options = array();
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -399,6 +442,13 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all devices of definition type 'Printer'
+    * defined in task_definitiontype_networkinventory
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_Printer_networkinventory($title) {
 
       $options = array();
@@ -411,6 +461,11 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get agents allowed to do network discovery
+    *
+    * @return array
+    */
    static function task_networkdiscovery_agents() {
 
       $array = array();
@@ -427,7 +482,11 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   # Actions with itemtype autorized
+   /**
+    * Get types of actions for network inventory
+    *
+    * @return array
+    */
    static function task_action_networkinventory() {
       $a_itemtype = array();
       $a_itemtype[] = "Printer";
@@ -439,7 +498,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   # Selection type for actions
+   /**
+    * Get selection type for network inventory
+    *
+    * @param type $itemtype
+    * @return string
+    */
    static function task_selection_type_networkinventory($itemtype) {
       $selection_type = '';
       switch ($itemtype) {
@@ -459,6 +523,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get selection type for network discovery
+    *
+    * @param string $itemtype
+    * @return array
+    */
    static function task_selection_type_networkdiscovery($itemtype) {
       $selection_type = '';
       switch ($itemtype) {
@@ -467,18 +537,19 @@ class PluginFusioninventoryStaticmisc {
             $selection_type = 'iprange';
             break;
 
-         // __('Auto managenement dynamic of agents', 'fusioninventory')
-
-
       }
-
       return $selection_type;
    }
 
 
 
-   /*
-    * Deploy definitions
+   /* Deploy definitions */
+
+   /**
+    * Get definition types for deploy install
+    *
+    * @param string $a_itemtype
+    * @return array
     */
    static function task_definitiontype_deployinstall($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
@@ -487,6 +558,13 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all packages of definition type 'PluginFusioninventoryDeployPackage'
+    * defined in task_definitiontype_deployinstall
+    *
+    * @param string $title (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_PluginFusioninventoryDeployPackage_deployinstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -496,8 +574,14 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   /*
-    *  Deploy Actions
+   /* Deploy Actions */
+
+
+   /**
+    * Get types of action for deployinstall
+    *
+    * @param array $a_itemtype
+    * @return array
     */
    static function task_actiontype_deployinstall($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
@@ -509,6 +593,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all computers of action type 'Computer'
+    * defined in task_actiontype_deployinstall
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_Computer_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -535,6 +625,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all computers of action type 'Group'
+    * defined in task_actiontype_deployinstall
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_Group_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -545,6 +641,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all computers of action type 'PluginFusioninventoryDeployGroup'
+    * defined in task_actiontype_deployinstall
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_PluginFusioninventoryDeployGroup_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -555,6 +657,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get Deploy paramaters: url for communication with server
+    *
+    * @param integer $entities_id
+    * @return array
+    */
    static function task_deploy_getParameters($entities_id) {
       return array(
          "task" => "Deploy",
@@ -564,8 +672,14 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   /*
-    * Collect
+   /* Collect */
+
+
+   /**
+    * Get definition types of collect
+    *
+    * @param array $a_itemtype
+    * @return array
     */
    static function task_definitiontype_collect($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
@@ -574,6 +688,13 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all collects of definition type 'PluginFusioninventoryCollect'
+    * defined in task_definitiontype_collect
+    *
+    * @param string (not used)
+    * @return string unique html element id
+    */
    static function task_definitionselection_PluginFusioninventoryCollect_collect() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -583,6 +704,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get action types for collect
+    *
+    * @param array $a_itemtype
+    * @return array
+    */
    static function task_actiontype_collect($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
@@ -593,6 +720,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all computers of action type 'Computer'
+    * defined in task_actiontype_collect
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_Computer_collect() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -619,6 +752,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all computers of action type 'Group'
+    * defined in task_actiontype_collect
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_Group_collect() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -629,6 +768,12 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    * Get all computers of action type 'PluginFusioninventoryDeployGroup'
+    * defined in task_actiontype_collect
+    *
+    * @return string unique html element id
+    */
    static function task_actionselection_PluginFusioninventoryDeployGroup_collect() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -639,13 +784,18 @@ class PluginFusioninventoryStaticmisc {
 
 
 
+   /**
+    *
+    * Get collect parameters (URL to dialog with server)
+    * @param type $entities_id
+    * @return type
+    */
    static function task_collect_getParameters($entities_id) {
       return array(
          "task" => "Collect",
          "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Collect', $entities_id)
       );
    }
-
 }
 
 ?>

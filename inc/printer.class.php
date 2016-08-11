@@ -61,6 +61,11 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
 
+   /**
+    * Get the type
+    *
+    * @return string
+    */
    static function getType() {
       return "Printer";
    }
@@ -118,12 +123,9 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
    /**
-    * Update an existing preloaded printer with the instance values
-    *
-    *@return nothing
-    **/
+    * Update an existing printer with last_fusioninventory_update value
+    */
    function updateDB() {
-
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
@@ -132,6 +134,13 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $item Printer instance
+    * @param array $options
+    * @return true
+    */
    function showForm(Printer $item, $options=array()) {
       Session::checkRight('plugin_fusioninventory_printer', READ);
 
@@ -204,14 +213,21 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
+      return TRUE;
    }
 
 
 
-   function displaySerializedInventory($items_id) {
+   /**
+    * Display serialized inventory
+    *
+    * @global array $CFG_GLPI
+    * @param integer $printers_id
+    */
+   function displaySerializedInventory($printers_id) {
       global $CFG_GLPI;
 
-      $a_printerextend = current($this->find("`printers_id`='".$items_id."'",
+      $a_printerextend = current($this->find("`printers_id`='".$printers_id."'",
                                                "", 1));
 
       $this->getFromDB($a_printerextend['id']);
@@ -242,7 +258,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
               "/plugins/fusioninventory/front/send_inventory.php".
               "?itemtype=PluginFusioninventoryPrinter".
               "&function=sendSerializedInventory&items_id=".$a_printerextend['id'].
-              "&filename=Printer-".$items_id.".json'".
+              "&filename=Printer-".$printers_id.".json'".
               "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
       echo "</td>";
       echo "</tr>";
@@ -254,6 +270,11 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
 
+   /**
+    * Display extended printer information
+    *
+    * @param object $item
+    */
    static function showInfo($item) {
 
       // Manage locks pictures

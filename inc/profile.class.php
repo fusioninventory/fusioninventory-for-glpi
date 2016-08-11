@@ -74,6 +74,12 @@ class PluginFusioninventoryProfile extends Profile {
        *    status
        */
 
+   /**
+    * Get the mapping old rights => new rights. Require it for upgrade from old
+    * version of plugin FusionInventory
+    *
+    * @return array
+    */
    static function getOldRightsMappings() {
       $types = array ('agent'                  => 'plugin_fusioninventory_agent',
                       'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
@@ -137,14 +143,14 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
-    /**
-    * Show profile form
+   /**
+    * Display form
     *
-    * @param $items_id integer id of the profile
-    * @param $target value url of target
-    *
-    * @return nothing
-    **/
+    * @param integer $profiles_id
+    * @param boolean $openform
+    * @param boolean $closeform
+    * @return true
+    */
    function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
       echo "<div class='firstbloc'>";
@@ -187,18 +193,18 @@ class PluginFusioninventoryProfile extends Profile {
       echo "</div>";
 
       $this->showLegend();
+      return TRUE;
    }
 
 
 
-    /**
-    * Show profile form for helpdesk interface
+   /**
+    * Display profile form for helpdesk interface
     *
-    * @param $items_id integer id of the profile
-    * @param $target value url of target
-    *
-    * @return nothing
-    **/
+    * @param integer $profiles_id
+    * @param boolean $openform
+    * @param boolean $closeform
+    */
    function showFormSelf($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
       echo "<div class='firstbloc'>";
@@ -234,6 +240,9 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Delete profiles
+    */
    static function uninstallProfile() {
       $pfProfile = new self();
       $a_rights = $pfProfile->getAllRights();
@@ -244,6 +253,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get all rights
+    *
+    * @return array
+    */
    function getAllRights() {
       $a_rights = array();
       $a_rights = array_merge($a_rights, $this->getRightsGeneral());
@@ -255,6 +269,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get rights for rules part
+    *
+    * @return array
+    */
    function getRightsRules() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
@@ -287,6 +306,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get rights for deploy part
+    *
+    * @return array
+    */
    function getRightsDeploy() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryDeployPackage',
@@ -301,6 +325,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get rights for inventory part
+    *
+    * @return array
+    */
    function getRightsInventory() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryIprange',
@@ -345,6 +374,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get general rights
+    *
+    * @return array
+    */
    function getRightsGeneral() {
       $rights = array(
           array('rights'    => array(READ => __('Read')),
@@ -379,6 +413,12 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Add the default profile
+    *
+    * @param integer $profiles_id
+    * @param array $rights
+    */
    static function addDefaultProfileInfos($profiles_id, $rights) {
       $profileRight = new ProfileRight();
       foreach ($rights as $right => $value) {
@@ -398,7 +438,9 @@ class PluginFusioninventoryProfile extends Profile {
 
 
    /**
-    * @param $profiles_id integer id of profile
+    * Create first access (so default profile)
+    *
+    * @param integer $profiles_id id of profile
     */
    static function createFirstAccess($profiles_id) {
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
@@ -411,6 +453,9 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Delete rights stored in session
+    */
    static function removeRightsFromSession() {
       $profile = new self();
       foreach ($profile->getAllRights() as $right) {
@@ -436,6 +481,9 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Migration script for old rights from old version of plugin FusionInventory
+    */
    static function migrateProfiles() {
       //Get all rights from the old table
       $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
@@ -477,10 +525,10 @@ class PluginFusioninventoryProfile extends Profile {
 
 
    /**
-   * Init profiles during installation :
-   * - add rights in profile table for the current user's profile
-   * - current profile has all rights on the plugin
-   */
+    * Init profiles during installation:
+    * - add rights in profile table for the current user's profile
+    * - current profile has all rights on the plugin
+    */
    static function initProfile() {
       $pfProfile = new self();
       $profile   = new Profile();

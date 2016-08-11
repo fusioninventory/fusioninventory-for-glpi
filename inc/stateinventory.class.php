@@ -57,6 +57,13 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
 
 
+   /**
+    * Display network inventory state
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $options
+    */
    function display($options=array()) {
       global $DB, $CFG_GLPI;
 
@@ -206,6 +213,12 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
 
 
+   /**
+    * Display diff between 2 dates, so the time elapsed of execution
+    *
+    * @param string $date1
+    * @param string $date2
+    */
    function dateDiff($date1, $date2) {
       $timestamp1 = strtotime($date1);
       $timestamp2 = strtotime($date2);

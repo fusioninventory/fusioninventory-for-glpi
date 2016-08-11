@@ -84,13 +84,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    /**
     * Insert port history with connection and disconnection
     *
-    * @param $status status of port ('make' or 'remove')
-    * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"]
-    *                and $array["device_ID"]
-    *
-    * @return id of inserted line
-    *
-   **/
+    * @global object $DB
+    * @param string $status status of port ('make' or 'remove')
+    * @param array $array with values : $array["networkports_id"], $array["value"], $array["itemtype"]
+    *                     and $array["device_ID"]
+    */
    function insertConnection($status, $array) {
       global $DB;
 
@@ -113,6 +111,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
+    /**
+     * Display form
+     *
+     * @global object $DB
+     * @param integer $id
+     * @param array $options
+     * @return true
+     */
    function showForm($id, $options=array()) {
       global $DB;
 
@@ -235,6 +241,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
+   /**
+    * Cron task: clean networkport logs too old
+    *
+    * @global object $DB
+    */
    static function cronCleannetworkportlogs() {
       global $DB;
 
@@ -271,6 +282,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
+   /**
+    * Add log of networkport
+    *
+    * @param integer $port_id
+    * @param string $value_new
+    * @param string $field
+    */
    static function networkport_addLog($port_id, $value_new, $field) {
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
@@ -330,7 +348,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    // $status = connection or disconnection
-   static function addLogConnection($status, $port) {
+   /**
+    * Add log when connect or disconnect
+    *
+    * @param string $status values possible: make|remove
+    * @param integer $ports_id
+    */
+   static function addLogConnection($status, $ports_id) {
 
       $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
@@ -340,8 +364,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       // Récupérer le port de la machine associé au port du switch
 
       // Récupérer le type de matériel
-      $input["networkports_id_source"] = $port;
-      $opposite_port = $NetworkPort_NetworkPort->getOppositeContact($port);
+      $input["networkports_id_source"] = $ports_id;
+      $opposite_port = $NetworkPort_NetworkPort->getOppositeContact($ports_id);
       if (!$opposite_port) {
          return;
       }
@@ -360,7 +384,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
-   // List of history in networking display
+   /**
+    * Get the history list of the port
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param integer $ID_port
+    * @return string the html prepared to display
+    */
    static function showHistory($ID_port) {
       global $DB, $CFG_GLPI;
 
@@ -494,7 +525,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $text .= "</tr>";
          }
       }
-
       $text .= "</table>";
       return $text;
    }

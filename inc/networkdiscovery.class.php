@@ -46,7 +46,15 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstat each task for each device for each agent
+
+   /**
+    * Prepare network discovery.
+    * Get all devices and put in taskjobstat each task for each device for each
+    * agent
+    *
+    * @param integer $taskjobs_id
+    * @return string
+    */
    function prepareRun($taskjobs_id) {
 
       $pfTask = new PluginFusioninventoryTask();
@@ -120,7 +128,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             }
          }
       }
-
 
       if ($dynagent == '2') {
          // Dynamic with subnet
@@ -298,10 +305,11 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
 
 
-   // When agent contact server, this function send datas to agent
-   /*
-    * $a_Taskjobstates array with all taskjobstatus
+   /**
+    * When agent contact server, this function send job data to agent
     *
+    * @param object $jobstate PluginFusioninventoryTaskjobstate instance
+    * @return string
     */
    function run($jobstate) {
 
@@ -317,31 +325,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
 
-      // * Disabled by David Durieux, I think it's not required now * //
-//       $a_versions = importArrayFromDB($pfAgent->fields["version"]);
-//      if (((isset($a_versions["NETWORKDISCOVERY"])) AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))
-//              OR !isset($a_versions["NETWORKDISCOVERY"])) {
-//         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml")) {
-//            PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile(FALSE);
-//         }
-//         $sxml_option->addChild('DICOHASH',
-//                                md5_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
-//      }
-//      if (($pfAgent->fields["senddico"] == "1")) {
-//
-//         if (((isset($a_versions["NETWORKDISCOVERY"]))
-//                 AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))) {
-//
-//            $sxml_option->addChild('DICO',
-//                                   file_get_contents(
-//                                           GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
-//         }
-//         $input = array();
-//         $input['id'] = $pfAgent->fields['id'];
-//         $input["senddico"] = "0";
-//         $pfAgent->update($input);
-//      }
-
       $sxml_param = $sxml_option->addChild('PARAM');
       $sxml_param->addAttribute('THREADS_DISCOVERY',
          $pfAgent->fields["threads_networkdiscovery"]);
@@ -350,51 +333,49 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $sxml_param->addAttribute('PID', $jobstate->fields['id']);
 
       $changestate = 0;
-      //foreach ($a_Taskjobstates as $taskjobstate) {
-         $taskjobstatedatas = $jobstate->fields;
-         $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-            $pfTaskjob->getFromDB($taskjobstatedatas['plugin_fusioninventory_taskjobs_id']);
-            $pfTaskjobstate->getFromDB($taskjobstatedatas['id']);
-            $pfIPRange->getFromDB($taskjobstatedatas['items_id']);
+      $taskjobstatedatas = $jobstate->fields;
+      $sxml_rangeip = $sxml_option->addChild('RANGEIP');
+      $pfTaskjob->getFromDB($taskjobstatedatas['plugin_fusioninventory_taskjobs_id']);
+      $pfTaskjobstate->getFromDB($taskjobstatedatas['id']);
+      $pfIPRange->getFromDB($taskjobstatedatas['items_id']);
 
-            $sxml_rangeip->addAttribute('ID', $pfIPRange->fields['id']);
+      $sxml_rangeip->addAttribute('ID', $pfIPRange->fields['id']);
 
-            if (!is_null($pfTaskjobstate->fields['specificity'])) {
-               $a_split = explode("-", $pfTaskjobstate->fields['specificity']);
+      if (!is_null($pfTaskjobstate->fields['specificity'])) {
+         $a_split = explode("-", $pfTaskjobstate->fields['specificity']);
 
-               $first_ip = $pfIPRange->getIp2long($pfIPRange->fields["ip_start"]);
+         $first_ip = $pfIPRange->getIp2long($pfIPRange->fields["ip_start"]);
 
-               $last_ip = long2ip($first_ip + $a_split[1]);
-               $first_ip = long2ip($first_ip + $a_split[0]);
-               if ($first_ip != '0.0.0.0'
-                       && $last_ip != '0.0.0.0') {
-                  $sxml_rangeip->addAttribute('IPSTART', $first_ip);
-                  $sxml_rangeip->addAttribute('IPEND', $last_ip);
-               }
-            } else {
-               $sxml_rangeip->addAttribute('IPSTART', $pfIPRange->fields["ip_start"]);
-               $sxml_rangeip->addAttribute('IPEND', $pfIPRange->fields["ip_end"]);
-            }
-            $sxml_rangeip->addAttribute('ENTITY', $pfIPRange->fields["entities_id"]);
+         $last_ip = long2ip($first_ip + $a_split[1]);
+         $first_ip = long2ip($first_ip + $a_split[0]);
+         if ($first_ip != '0.0.0.0'
+                 && $last_ip != '0.0.0.0') {
+            $sxml_rangeip->addAttribute('IPSTART', $first_ip);
+            $sxml_rangeip->addAttribute('IPEND', $last_ip);
+         }
+      } else {
+         $sxml_rangeip->addAttribute('IPSTART', $pfIPRange->fields["ip_start"]);
+         $sxml_rangeip->addAttribute('IPEND', $pfIPRange->fields["ip_end"]);
+      }
+      $sxml_rangeip->addAttribute('ENTITY', $pfIPRange->fields["entities_id"]);
 
-            if ($changestate == '0') {
-               $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
-               $pfTaskjoblog->addTaskjoblog($pfTaskjobstate->fields['id'],
-                                       '0',
-                                       'PluginFusioninventoryAgent',
-                                       '1',
-                                       $pfAgent->fields["threads_networkdiscovery"].' threads '.
-                                       $pfAgent->fields["timeout_networkdiscovery"].' timeout'
-                                    );
-               $changestate = $pfTaskjobstate->fields['id'];
-            } else {
-               $pfTaskjobstate->changeStatusFinish($pfTaskjobstate->fields['id'],
-                   $taskjobstatedatas['items_id'],
-                   $taskjobstatedatas['itemtype'],
-                   0,
-                   "Merged with ".$changestate);
-            }
-      //}
+      if ($changestate == '0') {
+         $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
+         $pfTaskjoblog->addTaskjoblog($pfTaskjobstate->fields['id'],
+                                 '0',
+                                 'PluginFusioninventoryAgent',
+                                 '1',
+                                 $pfAgent->fields["threads_networkdiscovery"].' threads '.
+                                 $pfAgent->fields["timeout_networkdiscovery"].' timeout'
+                              );
+         $changestate = $pfTaskjobstate->fields['id'];
+      } else {
+         $pfTaskjobstate->changeStatusFinish($pfTaskjobstate->fields['id'],
+             $taskjobstatedatas['items_id'],
+             $taskjobstatedatas['itemtype'],
+             0,
+             "Merged with ".$changestate);
+      }
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
       $a_auths = $pfIPRange_ConfigSecurity->find(
               "`plugin_fusioninventory_ipranges_id`='".$pfIPRange->fields['id']."'",

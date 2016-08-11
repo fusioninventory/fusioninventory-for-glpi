@@ -210,13 +210,20 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   function countAllEntries($id) {
+   /**
+    * Count number entries for the printer
+    *
+    * @global object $DB
+    * @param integer $printers_id
+    * @return integer
+    */
+   function countAllEntries($printers_id) {
       global $DB;
 
       $num = 0;
       $query = "SELECT count(DISTINCT `id`)
                 FROM ".$this->getTable()."
-                WHERE `printers_id` = '".$id."';";
+                WHERE `printers_id` = '".$printers_id."';";
       $result_num=$DB->query($query);
       if ($result_num) {
          $field = $DB->result($result_num, 0, 0);
@@ -229,14 +236,22 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   /* Gets history (and the number of entries) of one printer */
-   function getEntries($id, $begin, $limit) {
+   /**
+    * Get logs of printer
+    *
+    * @global object $DB
+    * @param integer $printers_id
+    * @param integer $begin
+    * @param integer $limit
+    * @return array|false
+    */
+   function getEntries($printers_id, $begin, $limit) {
       global $DB;
 
       $datas=array();
       $query = "SELECT *
                 FROM ".$this->getTable()."
-                WHERE `printers_id` = '".$id."'
+                WHERE `printers_id` = '".$printers_id."'
                 LIMIT ".$begin.", ".$limit.";";
       $result=$DB->query($query);
       if ($result) {
@@ -253,13 +268,20 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   function stats($id) {
+   /**
+    * Get printed pages statistics
+    *
+    * @global object $DB
+    * @param integer $printers_id
+    * @return array|false
+    */
+   function stats($printers_id) {
       global $DB;
 
       $query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
                   "MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->getTable()."
-                WHERE `printers_id` = '".$id."';";
+                WHERE `printers_id` = '".$printers_id."';";
       $result = $DB->query($query);
       if ($result) {
          $fields = $DB->fetch_assoc($result);
@@ -277,14 +299,21 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   function showForm($id, $options=array()) {
+   /**
+    * Display form
+    *
+    * @param integer $printers_id
+    * @param array $options
+    * @return boolean
+    */
+   function showForm($printers_id, $options=array()) {
 
       if (!Session::haveRight('plugin_fusioninventory_printer', READ)) {
          return FALSE;
       }
 
       // display stats
-      $stats = $this->stats($id);
+      $stats = $this->stats($printers_id);
       if ($stats) {
          $this->showTabs($options);
          $this->showFormHeader($options);
@@ -306,7 +335,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $_GET['start'] = 0;
       }
 
-      $numrows = $this->countAllEntries($id);
+      $numrows = $this->countAllEntries($printers_id);
       $parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"];
 
       echo "<br>";
@@ -317,7 +346,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $limit = $_SESSION["glpilist_limit"];
       }
       // Get history
-      $data = $this->getEntries($id, $_GET['start'], $limit);
+      $data = $this->getEntries($printers_id, $_GET['start'], $limit);
       if (!($data)) {
          return FALSE;
       }
@@ -362,13 +391,19 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
+      return TRUE;
    }
 
 
 
    /**
-    * Show printer graph form
-    **/
+    * Display printer graph form
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param integer $id the id of printer
+    * @param array $options
+    */
    function showGraph($id, $options=array()) {
       global $DB, $CFG_GLPI;
 

@@ -62,8 +62,11 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
 
    /**
-    * @param CommonDBTM $item
-   **/
+    * Count number of elements
+    *
+    * @param object $item
+    * @return integer
+    */
    static function countForItem(CommonDBTM $item) {
 
       return countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
@@ -145,7 +148,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
 
 
-
+   /**
+    * Clean old data
+    *
+    * @global object $DB
+    * @param integer $items_id
+    * @param string $itemtype
+    */
    function cleanOlddata($items_id, $itemtype) {
       global $DB;
 
@@ -162,6 +171,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $items_id
+    * @param string $itemtype
+    * @return true
+    */
    function showForm($items_id, $itemtype) {
 
       $rule = new PluginFusioninventoryInventoryRuleImport();
@@ -223,12 +239,16 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          echo "</tr>";
       }
       echo "</table>";
-
-
+      return TRUE;
    }
 
 
 
+   /**
+    * Display form for agent
+    *
+    * @param integer $agents_id
+    */
    function showFormAgent($agents_id) {
 
       $rule = new PluginFusioninventoryInventoryRuleImport();
@@ -298,7 +318,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       }
       echo "</table>";
    }
-
 }
 
 ?>

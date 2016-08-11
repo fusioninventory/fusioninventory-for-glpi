@@ -48,6 +48,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
 
+   /**
+    * Initialize all port types
+    *
+    * @global object $DB
+    */
    function init() {
       global $DB;
 
@@ -328,6 +333,12 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
 
 
+   /**
+    * Check is the type yet in database
+    *
+    * @param string $type
+    * @return boolean
+    */
    function isImportType($type) {
       if (!strstr($type, 'gsn')) {
          $type = str_replace("-", "", $type);
@@ -345,6 +356,10 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
 
 
+   /**
+    * Display the types of network and what ports (with the types) we import in
+    * networkequipments
+    */
    function showNetworkporttype() {
 
       $a_notimports = $this->find("`import` = '0'");
@@ -382,19 +397,15 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          }
          echo "<br><br>";
 
-
-
          if (count($a_imports)) {
             echo "<input type='submit' class='submit' name='type_delete' value='<< ".
                   __('Delete', 'fusioninventory')."'>";
          }
          echo "</td><td>";
-
       } else {
          echo "<td colspan='2'></td>";
          echo "<td class='center'>";
       }
-
       if (count($a_imports)) {
          echo "<select name='type_to_delete[]' multiple size='5'>";
          foreach($a_imports as $key => $data) {
@@ -409,7 +420,6 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       echo "</table>";
 
       Html::closeForm();
-
    }
 }
 

@@ -48,6 +48,9 @@ class PluginFusioninventoryLogger {
 
    /**
     * Log when extra-debug is activated
+    *
+    * @param string $file
+    * @param string $message
     */
    static function logIfExtradebug($file, $message) {
       if (!PluginFusioninventoryConfig::isExtradebugActive()) {
@@ -60,6 +63,9 @@ class PluginFusioninventoryLogger {
 
    /**
     * log when extra-debug and debug mode is activated
+    *
+    * @param string $file
+    * @param string $message
     */
    static function logIfExtradebugAndDebugMode($file, $message) {
       if ($_SESSION['glpi_use_mode'] != Session::DEBUG_MODE) {
@@ -67,7 +73,6 @@ class PluginFusioninventoryLogger {
       }
       self::logIfExtradebug($file, $message);
    }
-
 }
 
 ?>

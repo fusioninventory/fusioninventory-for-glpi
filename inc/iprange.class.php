@@ -165,6 +165,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $id
+    * @param array $options
+    * @return true
+    */
    function showForm($id, $options=array()) {
 
       $this->initForm($id, $options);
@@ -257,7 +264,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
 
 
@@ -265,9 +272,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    /**
     * Check if IP is valid
     *
-    * @param $a_input array of IPs
-    *
-    * @return TRUE or FALSE
+    * @param array $a_input array of IPs
+    * @return boolean
     */
    function checkip($a_input) {
 
@@ -301,9 +307,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    /**
     * Get ip in long format
     *
-    * @param $ip ip in format ipv4
-    *
-    * @return $int integer
+    * @param string $ip IP in format IPv4
+    * @return integer $int
     */
    function getIp2long($ip) {
       $int = ip2long($ip);
@@ -315,6 +320,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * After purge item, delete SNMP authentication linked to this ip range
+    */
    function post_purgeItem() {
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
       $a_data = getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
@@ -322,7 +330,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       foreach ($a_data as $data) {
          $pfIPRange_ConfigSecurity->delete($data);
       }
-
       parent::post_deleteItem();
    }
 

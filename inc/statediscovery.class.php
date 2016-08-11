@@ -48,6 +48,14 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_task';
 
+
+   /**
+    * Update state of discovery
+    *
+    * @param integer $p_number
+    * @param array $a_input
+    * @param integer $agent_id
+    */
    function updateState($p_number, $a_input, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
@@ -90,6 +98,13 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
 
 
+   /**
+    * End the state process
+    *
+    * @param integer $p_number
+    * @param string $date_end
+    * @param integer $agent_id
+    */
    function endState($p_number, $date_end, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
@@ -101,6 +116,13 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
 
 
+   /**
+    * Display the discovery state
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $options
+    */
    function display($options=array()) {
       global $DB, $CFG_GLPI;
 

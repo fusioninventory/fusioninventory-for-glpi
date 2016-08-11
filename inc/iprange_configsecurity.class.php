@@ -80,7 +80,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @param object $item
     * @param integer $tabnum number of the tab to display
     * @param integer $withtemplate 1 if is a template form
-    * @return boolean
+    * @return true
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       $pfIPRange_ConfigSecurity = new self();
@@ -90,25 +90,36 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
 
 
+   /**
+    * Get standard massive action forbidden (hide in massive action list)
+    *
+    * @return array
+    */
    function getForbiddenStandardMassiveAction() {
-
-      $forbidden   = parent::getForbiddenStandardMassiveAction();
+      $forbidden = parent::getForbiddenStandardMassiveAction();
       $forbidden[] = 'update';
       return $forbidden;
    }
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $item
+    * @param array $options
+    * @return boolean
+    */
    function showForm(CommonDBTM $item, $options=array()) {
 
       $ID = $item->getField('id');
 
       if ($item->isNewID($ID)) {
-         return false;
+         return FALSE;
       }
 
       if (!$item->can($item->fields['id'], READ)) {
-         return false;
+         return FALSE;
       }
       $rand = mt_rand();
 
@@ -116,7 +127,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
                                      "`plugin_fusioninventory_ipranges_id`='".$item->getID()."'",
                                      false,
                                      '`rank`');
-
       $a_used = array();
       foreach ($a_data as $data) {
          $a_used[] = $data['plugin_fusioninventory_configsecurities_id'];
@@ -144,7 +154,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
-
 
       // Display list of auth associated with IP range
       $rand = mt_rand();
@@ -190,12 +199,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       $massiveactionparams['ontop'] =false;
       Html::showMassiveActions($massiveactionparams);
       echo "</div>";
-   }
-
-
-
-   function post_purgeItem() {
-
+      return TRUE;
    }
 }
 

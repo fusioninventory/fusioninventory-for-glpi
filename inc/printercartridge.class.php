@@ -48,6 +48,14 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @global object $DB
+    * @param object $item Printer instance
+    * @param array $options
+    * @return true
+    */
    function showForm(Printer $item, $options=array()) {
       global $DB;
 
@@ -120,6 +128,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       }
       echo "</table>";
       echo "</div>";
+      return TRUE;
    }
 }
 

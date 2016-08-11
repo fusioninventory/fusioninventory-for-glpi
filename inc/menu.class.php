@@ -59,13 +59,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Check if can view item
+    *
+    * @return boolean
+    */
    static function canView() {
-      $can_display = false;
-      $profile     = new PluginFusioninventoryProfile();
+      $can_display = FALSE;
+      $profile = new PluginFusioninventoryProfile();
 
       foreach ($profile->getAllRights() as $right) {
          if (Session::haveRight($right['field'], READ)) {
-            $can_display = true;
+            $can_display = TRUE;
             break;
          }
       }
@@ -74,18 +79,34 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Check if can create an item
+    *
+    * @return boolean
+    */
    static function canCreate() {
-      return false;
+      return FALSE;
    }
 
 
 
+   /**
+    * Get the menu name
+    *
+    * @return string
+    */
    static function getMenuName() {
       return self::getTypeName();
    }
 
 
 
+   /**
+    * Get additional menu options and breadcrumb
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
    static function getAdditionalMenuOptions() {
       global $CFG_GLPI;
 
@@ -148,8 +169,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                       array('alt' => __('Import', 'fusioninventory')));
       $options['menu']['links'][$img] = '/plugins/fusioninventory/front/documentation.php';
 
-
-
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
            'page'  => PluginFusioninventoryAgent::getSearchURL(false),
@@ -164,6 +183,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Get additional menu content
+    *
+    * @return array
+    */
    static function getAdditionalMenuContent() {
       $menu = array();
 
@@ -184,12 +208,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
    /**
-   * Display the menu of FusionInventory
-   *
-   *@param type value "big" or "mini"
-   *
-   *@return nothing
-   **/
+    * Display the menu of plugin FusionInventory
+    *
+    * @global array $CFG_GLPI
+    * @param string $type
+    */
    static function displayMenu($type = "big") {
       global $CFG_GLPI;
 
@@ -522,6 +545,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    /**
     * Menu for computer inventory
+    *
+    * @global array $CFG_GLPI
     */
    static function displayMenuInventory() {
       global $CFG_GLPI;
@@ -585,7 +610,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          echo "</tr>";
          $i++;
       }
-
       echo "</table>";
    }
 
@@ -593,6 +617,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    /**
     * Menu for SNMP inventory
+    *
+    * @global array $CFG_GLPI
     */
    static function displayMenuSNMPInventory() {
       global $CFG_GLPI;
@@ -705,23 +731,22 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          }
          echo "</tr>";
       }
-
       echo "</table>";
    }
 
 
 
    /**
-    * htmlMenu
+    * Display menu in html
     *
-    *@param $menu_name value of the menu
-    *@param $a_menu array menu of each module
-    *@param $type value "big" or "mini"
-    *@param $width_status integer width of space before and after menu position
-    *
-    *@return $width_status integer total width used by menu
-    **/
-   static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status='300') {
+    * @global array $CFG_GLPI
+    * @param string $menu_name
+    * @param array $a_menu
+    * @param string $type
+    * @param integer $width_status
+    * @return integer
+    */
+   static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status=300) {
       global $CFG_GLPI;
 
       $width_max = 1250;
@@ -780,6 +805,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Display the board (graph / stats on FusionInventory plugin page)
+    *
+    * @global object $DB
+    */
    static function board() {
       global $DB;
 
@@ -1009,11 +1039,17 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-
    }
 
 
 
+   /**
+    * Display chart
+    *
+    * @param string $name
+    * @param array $data list of data for the chart
+    * @param string $title
+    */
    static function showChart($name, $data, $title='') {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
@@ -1025,6 +1061,14 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Display chart bar
+    *
+    * @param string $name
+    * @param array $data list of data for the chart
+    * @param string $title
+    * @param integer $width
+    */
    static function showChartBar($name, $data, $title='', $width=370) {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 

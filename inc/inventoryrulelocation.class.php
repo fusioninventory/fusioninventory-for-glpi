@@ -217,6 +217,16 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
 
+   /**
+    * Display more conditions
+    *
+    * @param integer $condition
+    * @param object $criteria
+    * @param string $name
+    * @param string $value
+    * @param boolean $test
+    * @return boolean
+    */
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
       if ($test) {
          return FALSE;
@@ -246,8 +256,11 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
    /**
-    * Add more criteria specific to this type of rule
-   **/
+    * Add more criteria
+    *
+    * @param string $criterion
+    * @return array
+    */
    static function addMoreCriteria($criterion='') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
@@ -259,6 +272,13 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
 
+   /**
+    * Check criteria
+    *
+    * @param object $criteria
+    * @param array $input
+    * @return boolean
+    */
    function checkCriteria(&$criteria, &$input) {
 
       $res = parent::checkCriteria($criteria, $input);
@@ -323,10 +343,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             }
          }
       }
-
       return $res;
    }
-
 }
 
 ?>

@@ -49,10 +49,9 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Get all installed modules
     *
-    * @param $p_inactive Show inactive modules
-    *
-    * @return array of fields
-    **/
+    * @param boolean $p_inactive Show inactive modules
+    * @return array
+    */
    static function getAll($p_inactive=FALSE) {
       $plugin = new Plugin();
       if ($p_inactive) {
@@ -67,9 +66,10 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Get module id or fusioninventory plugin id
     *
-    * @param $p_name Module name
-    * @return Plugin id or FALSE if module is not active or not a fusioninventory module
-    **/
+    * @param string $p_name the module name
+    * @return integer|false plugin id or FALSE if module is not active or not a
+    *                       fusioninventory module
+    */
    static function getModuleId($p_name) {
       $index = FALSE;
       if (!isset($_SESSION['glpi_plugins'])) {
@@ -94,9 +94,9 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Get module name
     *
-    * @param $p_id Module id
-    * @return name or FALSE if module is not active or not a fusioninventory module
-    **/
+    * @param integer $p_id the module id
+    * @return string|false false if module is not active or not a fusioninventory module
+    */
    static function getModuleName($p_id) {
       if (isset($_SESSION['glpi_plugins'][$p_id])) {
          if ((substr($_SESSION['glpi_plugins'][$p_id], 0, 6) == 'fusinv')
