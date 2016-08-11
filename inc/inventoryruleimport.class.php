@@ -71,9 +71,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     * @return string name of this type
     */
    function getTitle() {
-
       return __('Rules for import and link computers');
-
    }
 
 
@@ -219,6 +217,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get action values
+    *
+    * @return array
+    */
    static function getRuleActionValues() {
 
       return array(self::RULE_ACTION_LINK   => __('Link', 'fusioninventory'),
@@ -230,10 +233,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    /**
     * Add more action values specific to this type of rule
     *
-    * @param value the value for this action
-    *
-    * @return the label's value or ''
-   **/
+    * @param string$value the value for this action
+    * @return string the label's value or ''
+    */
    function displayAdditionRuleActionValue($value) {
 
       $values = self::getRuleActionValues();
@@ -245,18 +247,21 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Manage the specific criteria values
+    *
+    * @param array $criteria
+    * @param string $name
+    * @param string $value
+    * @return boolean
+    */
    function manageSpecificCriteriaValues($criteria, $name, $value) {
-
-      switch ($criteria['type']) {
-         case "state" :
-            $link_array = array("0" => __('No'),
-
-                                "1" => __('Yes')." : ".__('equal', 'fusioninventory'),
-
-                                "2" => __('Yes')." : ".__('empty', 'fusioninventory'));
-
-
-            Dropdown::showFromArray($name, $link_array, array('value' => $value));
+      if  ($criteria['type'] == 'state') {
+         $link_array = array("0" => __('No'),
+                             "1" => __('Yes')." : ".__('equal', 'fusioninventory'),
+                             "2" => __('Yes')." : ".__('empty', 'fusioninventory'));
+         Dropdown::showFromArray($name, $link_array, array('value' => $value));
+         return TRUE;
       }
       return FALSE;
    }
@@ -264,8 +269,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    /**
-    * Add more criteria specific to this type of rule
-   **/
+    * Add more criteria
+    *
+    * @param string $criterion
+    * @return array
+    */
    static function addMoreCriteria($criterion='') {
 
       return array(Rule::PATTERN_FIND     => __('is already present in GLPI'),
@@ -276,6 +284,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get additional criteria pattern
+    *
+    * @param integer $ID
+    * @param integer $condition
+    * @param string $pattern
+    * @return string|false
+    */
    function getAdditionalCriteriaDisplayPattern($ID, $condition, $pattern) {
 
       if ($condition == self::PATTERN_IS_EMPTY) {
@@ -286,15 +302,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       if ($condition==self::PATTERN_IS || $condition==self::PATTERN_IS_NOT) {
          $crit = $this->getCriteria($ID);
-
-         if (isset($crit['type'])) {
-            switch ($crit['type']) {
-
-               case "dropdown_itemtype":
-                  $array = $this->getTypes();
-                  return $array[$pattern];
-
-            }
+         if (isset($crit['type'])
+                 && $crit['type'] == 'dropdown_itemtype') {
+            $array = $this->getTypes();
+            return $array[$pattern];
          }
       }
       return FALSE;
@@ -302,6 +313,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Display more confitions
+    *
+    * @param integer $condition
+    * @param string $criteria
+    * @param string $name
+    * @param string $value
+    * @param boolean $test
+    * @return boolean
+    */
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
 
       if ($test) {
@@ -326,23 +347,28 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Display more actions
+    *
+    * @param array $action
+    * @param string $value
+    * @return boolean
+    */
    function displayAdditionalRuleAction(array $action, $value='') {
-
-      switch ($action['type']) {
-
-         case 'fusion_type':
-            Dropdown::showFromArray('value', self::getRuleActionValues());
-            break;
-
-         default:
-            break;
-
+      if ($action['type'] == 'fusion_type') {
+         Dropdown::showFromArray('value', self::getRuleActionValues());
       }
       return TRUE;
    }
 
 
 
+   /**
+    * Get criteria by criteria name
+    *
+    * @param string $critname
+    * @return string
+    */
    function getCriteriaByID($critname) {
       $criteria = array();
       foreach ($this->criterias as $criterion) {
@@ -355,6 +381,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Find a device in GLPI
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $input
+    * @return boolean
+    */
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
@@ -364,8 +398,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       );
 
       $complex_criterias = array();
-      $sql_where         = '';
-      $sql_from          = '';
       $sql_where_computer= '';
       $sql_where_domain  = '';
       $sql_from_computer = '';
@@ -827,6 +859,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Display the pattern form selection
+    *
+    * @param string $name
+    * @param integer $ID
+    * @param integer $condition
+    * @param string $value
+    * @param boolean $test
+    * @return type
+    */
    function displayCriteriaSelectPattern($name, $ID, $condition, $value="", $test=FALSE) {
 
       $crit    = $this->getCriteria($ID);
@@ -851,7 +893,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
 
             if (($criteria->fields['condition'] == Rule::PATTERN_IS
-             || $criteria->fields['condition'] == Rule::PATTERN_IS_NOT)
+                        || $criteria->fields['condition'] == Rule::PATTERN_IS_NOT)
                     AND ($name != "itemtype" AND $name != 'states_id')) {
 
                $rc = new $this->rulecriteriaclass();
@@ -859,7 +901,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                                        'value' => $value,
                                                        'size'  => 70));
                return;
-
             }
          }
       }
@@ -920,6 +961,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get itemtypes have state_type and unmanaged devices
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
    function getTypes() {
       global $CFG_GLPI;
 
@@ -939,10 +986,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    /**
-   * Function used to display type specific criterias during rule's preview
-   *
-   * @param $fields fields values
-   **/
+    * Display type specific criterias during rule's preview
+    *
+    * @param array $fields
+    */
    function showSpecificCriteriasForPreview($fields) {
 
       $entity_as_criteria = FALSE;

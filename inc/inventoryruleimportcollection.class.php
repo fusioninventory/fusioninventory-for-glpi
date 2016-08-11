@@ -77,6 +77,11 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
 
+   /**
+    * Get name of this rule class
+    *
+    * @return string
+    */
    function getRuleClassName() {
       $rule_class = array();
       if (preg_match('/(.*)Collection/', get_class($this), $rule_class)) {
@@ -88,13 +93,14 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
    /**
-    * Get a instance of the class to manipulate rule of this collection
+    * Get an instance of the class to manipulate rule of this collection
     *
-   **/
+    * @return null|object
+    */
    function getRuleClass() {
       $name = $this->getRuleClassName();
       if ($name !=  '') {
-         return new $name ();
+         return new $name();
       }
       else {
          return NULL;
@@ -110,8 +116,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     * @return array
     */
    function preProcessPreviewResults($output) {
-
-      //If ticket is assign to an object, display this information first
       if (isset($output["action"])) {
          echo "<tr class='tab_bg_2'>";
          echo "<td>".__('Action type')."</td>";
@@ -155,11 +159,13 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
    /**
-    * Get Collection Datas : retrieve descriptions and rules
+    * Get collection datas: retrieve descriptions and rules
     *
-    * @param $retrieve_criteria  Retrieve the criterias of the rules ? (default 0)
-    * @param $retrieve_action    Retrieve the action of the rules ? (default 0)
-   **/
+    * @global object $DB
+    * @param integer $retrieve_criteria
+    * @param integer $retrieve_action
+    * @param integer $condition
+    */
    function getCollectionDatas($retrieve_criteria=0, $retrieve_action=0, $condition = 0) {
       global $DB;
 
@@ -169,32 +175,26 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       }
       $need = 1+($retrieve_criteria?2:0)+($retrieve_action?4:0);
 
-      // check if load required
-//      if (($need & $this->RuleList->load) != $need) {
-         //Select all the rules of a different type
-         $sql = $this->getRuleListQuery();
+      //Select all the rules of a different type
+      $sql = $this->getRuleListQuery();
 
-         $result = $DB->query($sql);
-         if ($result) {
-            $this->RuleList->list = array();
+      $result = $DB->query($sql);
+      if ($result) {
+         $this->RuleList->list = array();
 
-            while ($rule = $DB->fetch_assoc($result)) {
-               //For each rule, get a Rule object with all the criterias and actions
-               $tempRule = $this->getRuleClass();
+         while ($rule = $DB->fetch_assoc($result)) {
+            //For each rule, get a Rule object with all the criterias and actions
+            $tempRule = $this->getRuleClass();
 
-               if ($tempRule->getRuleWithCriteriasAndActions($rule["id"], $retrieve_criteria,
-                                                             $retrieve_action)) {
-                  //Add the object to the list of rules
-                  $this->RuleList->list[] = $tempRule;
-               }
+            if ($tempRule->getRuleWithCriteriasAndActions($rule["id"], $retrieve_criteria,
+                                                          $retrieve_action)) {
+               //Add the object to the list of rules
+               $this->RuleList->list[] = $tempRule;
             }
-
-            $this->RuleList->load = $need;
          }
-//      }
+         $this->RuleList->load = $need;
+      }
    }
-
-
 }
 
 ?>

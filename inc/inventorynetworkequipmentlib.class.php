@@ -50,10 +50,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    /**
     * Function to update NetworkEquipment
     *
+    * @global object $DB
     * @param array $a_inventory data fron agent inventory
-    * @param id $items_id id of the networkequipment
-    *
-    * @return nothing
+    * @param integer $items_id id of the networkequipment
     */
    function updateNetworkEquipment($a_inventory, $items_id) {
       global $DB;
@@ -134,13 +133,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
    /**
-    * Import IPs
+    * IMport internal ports (so internal IP, management IP)
     *
-    * @param $p_ips IPs code to import
-    * @param $networkequipments_id id of network equipment
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
+    * @param array $a_ips
+    * @param integer $networkequipments_id
+    * @param string $mac
+    * @param string $networkname_name
+    */
    function internalPorts($a_ips, $networkequipments_id, $mac, $networkname_name) {
 
       $networkPort = new NetworkPort();
@@ -233,6 +232,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import ports
+    *
+    * @param array $a_inventory
+    * @param integer $items_id
+    */
    function importPorts($a_inventory, $items_id) {
 
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
@@ -331,6 +336,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import LLDP connexions
+    *
+    * @param array $a_lldp
+    * @param integer $networkports_id
+    */
    function importConnectionLLDP($a_lldp, $networkports_id) {
 
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
@@ -372,6 +383,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import connexion with MAC address
+    *
+    * @param array $a_portconnection
+    * @param integer $networkports_id
+    */
    function importConnectionMac($a_portconnection, $networkports_id) {
 
       $wire = new NetworkPort_NetworkPort();
@@ -570,6 +587,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import VLANs
+    *
+    * @global object $DB
+    * @param array $a_vlans
+    * @param integer $networkports_id
+    */
    function importPortVlan($a_vlans, $networkports_id) {
       global $DB;
 
@@ -621,6 +645,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Add VLAN if not exist
+    *
+    * @param array $a_vlan
+    * @param integer $networkports_id
+    */
    function addVlan($a_vlan, $networkports_id) {
 
       $networkPort_Vlan = new NetworkPort_Vlan();
@@ -647,6 +677,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import aggregate ports
+    *
+    * @param array $a_ports
+    * @param integer $networkports_id
+    * @param integer $networkequipments_id
+    */
    function importPortAggregate($a_ports, $networkports_id, $networkequipments_id) {
 
       $networkPort = new NetworkPort();

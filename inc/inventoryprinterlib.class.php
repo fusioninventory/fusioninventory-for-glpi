@@ -50,18 +50,17 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    /**
     * Function to update Printer
     *
+    * @global object $DB
     * @param array $a_inventory data fron agent inventory
-    * @param id $items_id id of the printer
-    *
-    * @return nothing
+    * @param integer $printers_id id of the printer
     */
-   function updatePrinter($a_inventory, $items_id) {
+   function updatePrinter($a_inventory, $printers_id) {
       global $DB;
 
       $printer = new Printer();
       $pfPrinter = new PluginFusioninventoryPrinter();
 
-      $printer->getFromDB($items_id);
+      $printer->getFromDB($printers_id);
 
       if (!isset($_SESSION['glpiactiveentities_string'])) {
          $_SESSION['glpiactiveentities_string'] = $printer->fields['entities_id'];
@@ -76,7 +75,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       // * Printer
       $db_printer =  $printer->fields;
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $items_id);
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $printers_id);
 
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['Printer'],
                                                        $db_printer, $a_lockable);
@@ -84,14 +83,14 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
 
       $input = $a_inventory['Printer'];
 
-      $input['id'] = $items_id;
+      $input['id'] = $printers_id;
       $printer->update($input);
 
       // * Printer fusion (ext)
          $db_printer = array();
          $query = "SELECT *
             FROM `".  getTableForItemType("PluginFusioninventoryPrinter")."`
-            WHERE `printers_id` = '$items_id'";
+            WHERE `printers_id` = '$printers_id'";
          $result = $DB->query($query);
          while ($data = $DB->fetch_assoc($result)) {
             foreach($data as $key=>$value) {
@@ -100,7 +99,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          }
          if (count($db_printer) == '0') { // Add
             $a_inventory['PluginFusioninventoryPrinter']['printers_id'] =
-               $items_id;
+               $printers_id;
             $pfPrinter->add($a_inventory['PluginFusioninventoryPrinter']);
          } else { // Update
             $idtmp = $db_printer['id'];
@@ -118,19 +117,25 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          }
 
       // * Ports
-         $this->importPorts($a_inventory, $items_id);
+         $this->importPorts($a_inventory, $printers_id);
 
       // Page counters
-         $this->importPageCounters($a_inventory['pagecounters'], $items_id);
+         $this->importPageCounters($a_inventory['pagecounters'], $printers_id);
 
       // Cartridges
-         $this->importCartridges($a_inventory['cartridge'], $items_id);
+         $this->importCartridges($a_inventory['cartridge'], $printers_id);
 
    }
 
 
 
-   function importPorts($a_inventory, $items_id) {
+   /**
+    * Import ports
+    *
+    * @param array $a_inventory
+    * @param integer $printers_id
+    */
+   function importPorts($a_inventory, $printers_id) {
 
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
@@ -139,13 +144,13 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       foreach ($a_inventory['networkport'] as $a_port) {
          $a_ports_DB = current($networkPort->find(
                     "`itemtype`='Printer'
-                       AND `items_id`='".$items_id."'
+                       AND `items_id`='".$printers_id."'
                        AND `instantiation_type`='NetworkPortEthernet'
                        AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
          if (!isset($a_ports_DB['id'])) {
             // Add port
             $a_port['instantiation_type'] = 'NetworkPortEthernet';
-            $a_port['items_id'] = $items_id;
+            $a_port['items_id'] = $printers_id;
             $a_port['itemtype'] = 'Printer';
             $networkports_id = $networkPort->add($a_port);
             unset($a_port['id']);
@@ -180,19 +185,20 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    /**
     * Import page counters
     *
-    * @return string
+    * @param array $a_pagecounters
+    * @param integer $printers_id
     */
-   function importPageCounters($a_pagecounters, $items_id) {
+   function importPageCounters($a_pagecounters, $printers_id) {
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();
       //See if have an entry today
-      $a_entires = $pfPrinterLog->find("`printers_id`='".$items_id."'
+      $a_entires = $pfPrinterLog->find("`printers_id`='".$printers_id."'
          AND LEFT(`date`, 10)='".date("Y-m-d")."'", "", 1);
       if (count($a_entires) > 0) {
          return;
       }
 
-      $a_pagecounters['printers_id'] = $items_id;
+      $a_pagecounters['printers_id'] = $printers_id;
       $a_pagecounters['date'] = date("Y-m-d H:i:s");
 
       $pfPrinterLog->add($a_pagecounters);
@@ -203,12 +209,14 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    /**
     * Import cartridges
     *
-    **/
-   function importCartridges($a_cartridges, $items_id) {
+    * @param array $a_cartridges
+    * @param integer $printers_id
+    */
+   function importCartridges($a_cartridges, $printers_id) {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_db = $pfPrinterCartridge->find("`printers_id`='".$items_id."'");
+      $a_db = $pfPrinterCartridge->find("`printers_id`='".$printers_id."'");
       $a_dbcartridges = array();
       foreach ($a_db as $data) {
          $a_dbcartridges[$data['plugin_fusioninventory_mappings_id']] = $data;
@@ -220,14 +228,13 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
             $pfPrinterCartridge->update($a_dbcartridges[$mappings_id]);
          } else {
             $input = array();
-            $input['printers_id'] = $items_id;
+            $input['printers_id'] = $printers_id;
             $input['plugin_fusioninventory_mappings_id'] = $mappings_id;
             $input['state'] = $value;
             $pfPrinterCartridge->add($input);
          }
       }
    }
-
 }
 
 ?>

@@ -213,12 +213,23 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
 
+   /**
+    * Add additional rule conditions for criteria
+    *
+    * @param integer $condition
+    * @param string $criteria
+    * @param string $name
+    * @param string $value
+    * @param boolean $test
+    * @return boolean
+    */
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
       if ($test) {
          return FALSE;
       }
 
       switch ($condition) {
+
          case Rule::PATTERN_FIND:
             return FALSE;
 
@@ -235,15 +246,17 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
             return TRUE;
 
       }
-
       return FALSE;
    }
 
 
 
    /**
-    * Add more criteria specific to this type of rule
-   **/
+    * Add more criteria
+    *
+    * @param string $criterion
+    * @return array
+    */
    static function addMoreCriteria($criterion='') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
@@ -255,6 +268,13 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
 
+   /**
+    * Check the criteria
+    *
+    * @param object $criteria
+    * @param array $input
+    * @return boolean
+    */
    function checkCriteria(&$criteria, &$input) {
 
       $res = parent::checkCriteria($criteria, $input);
@@ -328,15 +348,15 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    /**
     * Process the rule
     *
-    * @param &$input          the input data used to check criterias
-    * @param &$output         the initial ouput array used to be manipulate by actions
-    * @param &$params         parameters for all internal functions
-    * @param &options   array options:
+    * @param array &$input the input data used to check criterias
+    * @param array &$output the initial ouput array used to be manipulate by actions
+    * @param array &$params parameters for all internal functions
+    * @param array &options array options:
     *                     - only_criteria : only react on specific criteria
     *
-    * @return the output array updated by actions.
+    * @return array the output updated by actions.
     *         If rule matched add field _rule_process to return value
-   **/
+    */
    function process(&$input, &$output, &$params, &$options=array()) {
 
       if ($this->validateCriterias($options)) {
@@ -361,7 +381,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          }
       }
    }
-
 }
 
 ?>
