@@ -88,8 +88,7 @@ class PluginFusioninventoryDeployCheck {
     * Get the number to multiply to have in B relative to the unit
     *
     * @param string $unit the unit of number
-    *
-    * @return int the number to multiply
+    * @return integer the number to multiply
     */
    static function getUnitSize($unit) {
       $units = array(
@@ -107,6 +106,14 @@ class PluginFusioninventoryDeployCheck {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param array $request_data
+    * @param string $rand unique element id used to identify/update an element
+    * @param string $mode possible values: init|edit|create
+    */
    static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
@@ -169,9 +176,10 @@ class PluginFusioninventoryDeployCheck {
    /**
     * Display list of checks
     *
-    * @param PluginFusioninventoryDeployPackage $package
+    * @global array $CFG_GLPI
+    * @param object $package PluginFusioninventoryDeployPackage instance
     * @param array $datas array converted of 'json' field in DB where stored checks
-    * @param integer $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
@@ -239,8 +247,9 @@ class PluginFusioninventoryDeployCheck {
    /**
     * Display the dropdown to select type of element
     *
+    * @global array $CFG_GLPI
     * @param array $config order item configuration
-    * @param ingeter $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
    static function displayDropdownType($config, $rand, $mode) {
@@ -303,7 +312,7 @@ class PluginFusioninventoryDeployCheck {
     * @param array $data fields yet defined in edit mode
     * @param string $mode mode in use (create, edit...)
     *
-    * @return string|boolean
+    * @return string|false
     */
    static function getValues($type, $data, $mode) {
       $values = array(
@@ -373,9 +382,8 @@ class PluginFusioninventoryDeployCheck {
     *
     * @param array $config
     * @param array $request_data
-    * @param type $rand
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
-    *
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
@@ -597,7 +605,6 @@ class PluginFusioninventoryDeployCheck {
     * Remove an item
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function remove_item($params) {
@@ -621,6 +628,7 @@ class PluginFusioninventoryDeployCheck {
 
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      return TRUE;
    }
 
 

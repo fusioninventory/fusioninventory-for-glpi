@@ -119,8 +119,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
 
-   // override Search method to gain performance and decrease memory usage
-   // we dont need to display search criteria result
+   /**
+    * Display list of computers in the group
+    *
+    * @param string $itemtype
+    * @param array $params
+    * @param array $forcedisplay
+    */
    static function showList($itemtype, $params, $forcedisplay) {
       $_GET['_in_modal'] = true;
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
@@ -138,8 +143,14 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
 
-   // override Search method to gain performance and decrease memory usage
-   // we dont need to display search criteria result
+   /**
+    * Get data, so computer list
+    *
+    * @param string $itemtype
+    * @param array $params
+    * @param array $forcedisplay
+    * @return array
+    */
    static function getDatas($itemtype, $params, array $forcedisplay=array()) {
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
@@ -151,11 +162,12 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
    /**
-   * Get computers belonging to a dynamic group
-   * @since 0.85+1.0
-   * @param group the group object
-   * @return an array of computer ids
-   */
+    * Get computers belonging to a dynamic group
+    *
+    * @since 0.85+1.0
+    * @param object group PluginFusioninventoryDeployGroup instance
+    * @return array
+    */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
       $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, false,true);
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {

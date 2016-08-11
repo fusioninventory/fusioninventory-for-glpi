@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Get the 2 types to add files
     *
-    * @return type
+    * @return array
     */
    static function getTypes() {
       return array(
@@ -66,6 +66,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param array $request_data
+    * @param string $rand unique element id used to identify/update an element
+    * @param string $mode possible values: init|edit|create
+    */
    static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
@@ -127,9 +135,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Display list of files
     *
-    * @param PluginFusioninventoryDeployPackage $package
+    * @global array $CFG_GLPI
+    * @param object $package PluginFusioninventoryDeployPackage instance
     * @param array $datas array converted of 'json' field in DB where stored actions
-    * @param integer $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
@@ -291,8 +300,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Display the dropdown to select type of file
     *
+    * @global array $CFG_GLPI
     * @param array $config order item configuration
-    * @param ingeter $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
    static function displayDropdownType($config, $rand, $mode) {
@@ -356,11 +366,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Display different fields relative the file selected
     *
+    * @global array $CFG_GLPI
     * @param array $config
     * @param array $request_data
-    * @param type $rand
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
-    *
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
@@ -480,7 +490,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Show files / directory on server.
     * This is used when get a file on the server
     *
-    * @param string $rand
+    * @global array $CFG_GLPI
+    * @param string $rand unique element id used to identify/update an element
     */
    static function showServerFileTree($rand) {
       global $CFG_GLPI;
@@ -538,7 +549,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Get files / directories on server
     *
-    * @param type $node
+    * @param string $node
     */
    static function getServerFileTree($node) {
 
@@ -637,7 +648,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Remove an item
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function remove_item($params) {
@@ -666,16 +676,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      return TRUE;
    }
 
 
 
    /**
-    * Remove an item
+    * Move an item
     *
     * @param array $params
-    *
-    * @return boolean
     */
    static function move_item($params) {
       //get current order json
@@ -732,7 +741,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Upload file from user computer
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function uploadFileFromComputer($params) {
@@ -821,10 +829,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
    /**
-    * Upload file from server
+    * Upload file from temp folder in server
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function uploadFileFromServer($params) {
@@ -881,7 +888,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Get directories based on sha512
     *
     * @param string $sha512
-    *
     * @return string the directories based on sha512
     */
    static function getDirBySha512 ($sha512) {
@@ -899,8 +905,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * @param string $repoPath path of the repository
     * @param string $filePath path of the file + filename
     * @param boolean $skip_creation
-    *
-    * @return type
+    * @return string
     */
    function registerFilepart ($repoPath, $filePath, $skip_creation=FALSE) {
       $sha512 = hash_file('sha512', $filePath);
@@ -922,10 +927,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Add file in the fusioninventory repository
     *
     * @param array $params
-    *
     * @return boolean
     */
-   static function addFileInRepo ($params) {
+   static function addFileInRepo($params) {
       $deployFile = new self;
 
       $filename = addslashes($params['filename']);
@@ -1040,7 +1044,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     *
     * @param string $sha512 sha512 of the file
     * @param integer $packages_id id of the package
-    *
     * @return boolean
     */
    static function removeFileInRepo($sha512, $packages_id) {
@@ -1078,7 +1081,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Check if the manifest relative to the sha512 exist
     *
     * @param string $sha512 sha512 of the file
-    *
     * @return boolean
     */
    function checkPresenceManifest($sha512) {
@@ -1096,7 +1098,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Check if the file relative to the sha512 exist
     *
     * @param string $sha512 sha512 of the file
-    *
     * @return boolean
     */
    function checkPresenceFile($sha512) {
@@ -1163,7 +1164,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Get the size of file
     *
     * @param integer $filesize
-    *
     * @return string
     */
    static function processFilesize($filesize) {

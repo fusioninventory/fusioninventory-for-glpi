@@ -170,6 +170,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Display title of the page
+    *
+    * @global array $CFG_GLPI
+    */
    function title() {
       global $CFG_GLPI;
 
@@ -186,6 +191,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $ID
+    * @param array $options
+    * @return true
+    */
    function showForm($ID, $options = array()) {
 
       $this->initForm($ID, $options);
@@ -268,16 +280,21 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get a specific value to display
+    *
+    * @param string $field
+    * @param array $values
+    * @param array $options
+    * @return string
+    */
    static function getSpecificValueToDisplay($field, $values, array $options=array()) {
       $group = new self();
       if (!is_array($values)) {
          $values = array($field => $values);
       }
-      switch ($field) {
-
-         case 'type' :
-            return $group->grouptypes[$values[$field]];
-
+      if ($field == 'type') {
+         return $group->grouptypes[$values[$field]];
       }
       return '';
    }
@@ -285,8 +302,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-   * Display dropdown to select dynamic of static group
-   */
+    * Display dropdown to select dynamic of static group
+    *
+    * @param string $name
+    * @param string $value
+    * @return string
+    */
    static function dropdownGroupType($name = 'type', $value = 'STATIC') {
       $group = new self();
       return Dropdown::showFromArray($name, $group->grouptypes, array('value'=>$value));
@@ -294,6 +315,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get specific value to select
+    *
+    * @param string $field
+    * @param string $name
+    * @param string|array $values
+    * @param array $options
+    * @return string
+    */
    static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
 
       if (!is_array($values)) {
@@ -301,11 +331,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
 
       $options['display'] = false;
-      switch ($field) {
-
-         case 'type':
-            return self::dropdownGroupType($name, $values[$field]);
-
+      if ($field == 'type') {
+         return self::dropdownGroupType($name, $values[$field]);
       }
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
@@ -315,8 +342,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    /**
     * Displays tab content
     * This function adapted from Search::showGenericSearch with controls removed
-    * @param  bool $formcontrol : display form buttons
-    * @return nothing, displays a seach form
+    *
+    * @param  boolean $formcontrol : display form buttons
     */
    static function showCriteria(PluginFusioninventoryDeployGroup $item, $p) {
 
@@ -401,18 +428,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<input type='hidden' name='start' value='0'>";
 
       Html::closeForm();
-
-      //clean with javascript search control
-      /*
-      $clean_script = "jQuery( document ).ready(function( $ ) {
-         $('#parent_criteria img').remove();
-         $('.tabs_criteria img[name=img_deleted').remove();
-      });";
-      echo Html::scriptBlock($clean_script);*/
    }
 
 
 
+   /**
+    * Get targets for the group
+    *
+    * @param integer $groups_id id of the group
+    * @return array list of computers
+    */
    static function getTargetsForGroup($groups_id) {
       $group = new self();
       $group->getFromDB($groups_id);
@@ -432,6 +457,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get search parameters as an array
+    *
+    * @global object $DB
+    * @param object $group PluginFusioninventoryDeployGroup instance
+    * @param boolean $check_post_values
+    * @param boolean $getAll
+    * @return array
+    */
    static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values=FALSE, $getAll=FALSE) {
       global $DB;
 
@@ -461,6 +495,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Clean when purge a deploy group
+    */
    function cleanDBOnPurge() {
       $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();

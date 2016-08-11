@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployAction {
 
    /**
-    * Get array for dropdown with code => description
+    * Get list of return actions available
     *
     * @return array
     */
@@ -84,8 +84,7 @@ class PluginFusioninventoryDeployAction {
     * Get description of the type name
     *
     * @param string $type name of the type
-    *
-    * @return text mapped with the type
+    * @return string mapped with the type
     */
    static function getType($type) {
       $a_types = PluginFusioninventoryDeployAction::getTypes();
@@ -97,6 +96,14 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param array $request_data
+    * @param string $rand unique element id used to identify/update an element
+    * @param string $mode possible values: init|edit|create
+    */
    static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
 
       /*
@@ -161,9 +168,10 @@ class PluginFusioninventoryDeployAction {
    /**
     * Display list of actions
     *
-    * @param PluginFusioninventoryDeployPackage $package
+    * @global array $CFG_GLPI
+    * @param object $package PluginFusioninventoryDeployPackage instance
     * @param array $datas array converted of 'json' field in DB where stored actions
-    * @param integer $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
@@ -245,10 +253,11 @@ class PluginFusioninventoryDeployAction {
 
 
    /**
-    * Display the dropdown to select type of element
+    * Display dropdown type
     *
+    * @global array $CFG_GLPI
     * @param array $config order item configuration
-    * @param ingeter $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
    static function displayDropdownType($config, $rand, $mode) {
@@ -311,7 +320,6 @@ class PluginFusioninventoryDeployAction {
     * @param array $config
     * @param array $request_data
     * @param string $mode mode in use (create, edit...)
-    *
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $mode) {
@@ -590,7 +598,6 @@ class PluginFusioninventoryDeployAction {
     * Remove an item
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function remove_item($params) {

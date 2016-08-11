@@ -109,6 +109,11 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
 
 
+   /**
+    * Display criteria form + list of computers
+    *
+    * @param object $item PluginFusioninventoryDeployGroup instance
+    */
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
       $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
       //If metacriteria array is empty, remove it as it displays the metacriteria form,
@@ -130,6 +135,9 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
 
 
+   /**
+    * Display result, so list of computers
+    */
    static function showResults() {
       $computers_params['metacriteria'] = array();
       $computers_params['criteria'][]   = array('searchtype' => 'equals',

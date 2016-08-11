@@ -48,11 +48,12 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
    /**
     * Check if definition_type is present in definitions_filter array.
-    * This function returns TRUE if the definition_type is not in definitions_filter array.
+    * This function returns TRUE if the definition_type is not in
+    * definitions_filter array.
     * If definitions_filter is NULL, this check is inhibited and return FALSE.
     *
-    * @param type $definition_type
-    * @param type $definitions_filter
+    * @param string $definition_type
+    * @param null|array $definitions_filter
     * @return boolean
     */
    public function definitionFiltered($definition_type, $definitions_filter) {
@@ -71,8 +72,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * Prepare a takjob, get all devices and put in taskjobstate each task
     * for each device for each agent
     *
+    * @global object $DB
     * @param integer $taskjob_id id of the taskjob
-    * @param type $definitions_filter
+    * @param null|array $definitions_filter
     */
    function prepareRun($taskjob_id , $definitions_filter=NULL) {
       global $DB;
@@ -229,7 +231,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       foreach($computers as $computer) {
          if(!isset($tmp_computers[$computer])) {
             $tmp_computers[$computer] = 1;
-
          }
       }
       $computers = array_keys($tmp_computers);
@@ -310,11 +311,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
 
    /**
-    * When agent contact server, this function prepare data to be sent
+    * run function, so return data to send to the agent for deploy
     *
-    * @param type $taskjobstate
-    *
-    * @return type
+    * @param object $taskjobstate PluginFusioninventoryTaskjobstate instance
+    * @return array
     */
    function run($taskjobstate) {
       //get order by type and package id
