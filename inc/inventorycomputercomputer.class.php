@@ -90,9 +90,11 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
 
    /**
-    * Display informations about computer (bios...)
+    * Display information about computer (bios, last contact...)
     *
-    * @param type $item
+    * @global array $CFG_GLPI
+    * @param object $item
+    * @return true
     */
    static function showInfo($item) {
       global $CFG_GLPI;
@@ -268,25 +270,32 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</tr>';
       }
       echo '</table>';
+      return TRUE;
    }
 
 
 
-   function displaySerializedInventory($items_id) {
+   /**
+    * Display a serialized inventory
+    *
+    * @global array $CFG_GLPI
+    * @param integer $computers_id
+    */
+   function displaySerializedInventory($computers_id) {
       global $CFG_GLPI;
 
-      $a_computerextend = current($this->find("`computers_id`='".$items_id."'",
+      $a_computerextend = current($this->find("`computers_id`='".$computers_id."'",
                                                "", 1));
 
       $this->getFromDB($a_computerextend['id']);
 
-      $folder = substr($items_id, 0, -1);
+      $folder = substr($computers_id, 0, -1);
       if (empty($folder)) {
          $folder = '0';
       }
 
       if (empty($this->fields['serialized_inventory'])
-              && !file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
+              && !file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
          return;
       }
 
@@ -315,18 +324,18 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
               "/plugins/fusioninventory/front/send_inventory.php".
               "?itemtype=PluginFusioninventoryInventoryComputerComputer".
               "&function=sendSerializedInventory&items_id=".$a_computerextend['id'].
-              "&filename=Computer-".$items_id.".json'".
+              "&filename=Computer-".$computers_id.".json'".
               "target='_blank'>".__('PHP Array', 'fusioninventory')."</a> ";
       }
-      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
          if (!empty($this->fields['serialized_inventory'])) {
             echo "/ ";
          }
          echo "<a href='".$CFG_GLPI['root_doc'].
         "/plugins/fusioninventory/front/send_inventory.php".
         "?itemtype=PluginFusioninventoryInventoryComputerComputer".
-        "&function=sendXML&items_id=computer/".$folder."/".$items_id.
-        "&filename=Computer-".$items_id.".xml'".
+        "&function=sendXML&items_id=computer/".$folder."/".$computers_id.
+        "&filename=Computer-".$computers_id.".xml'".
         "target='_blank'>XML</a>";
       }
 
@@ -341,17 +350,14 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
 
    /**
-   * Delete extended information of computer
-   *
-   * @param $items_id integer id of the computer
-   *
-   * @return nothing
-   *
-   **/
-   static function cleanComputer($items_id) {
+    * Delete extended information of computer
+    *
+    * @param integer $computers_id
+    */
+   static function cleanComputer($computers_id) {
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$items_id."'",
+                                              "`computers_id`='".$computers_id."'",
                                               "", 1));
       if (!empty($a_computerextend)) {
          $pfInventoryComputerComputer->delete($a_computerextend);
@@ -360,6 +366,13 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
 
 
+   /**
+    * Get entity lock. If true, computer can't be transfered to another entity
+    * by agent inventory (so in automatic)
+    *
+    * @param integer $computers_id
+    * @return boolean
+    */
    function getLock($computers_id) {
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();

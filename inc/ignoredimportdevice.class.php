@@ -140,6 +140,11 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
 
 
+   /**
+    * Get search parameters for default search / display list
+    *
+    * @return array
+    */
    static function getDefaultSearchRequest() {
       return array('sort'  => 3,
                    'order' => 'DESC');

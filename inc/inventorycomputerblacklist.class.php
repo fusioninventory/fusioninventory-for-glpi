@@ -113,14 +113,12 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
 
    /**
-   * Display form for black list
-   *
-   * @param $items_id integer id of the blacklist
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for blacklist
+    *
+    * @param integer $items_id
+    * @param array $options
+    * @return true
+    */
    function showForm($items_id, $options=array()) {
 
       if ($items_id!='') {
@@ -152,13 +150,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
 
    /**
-   * Remove fields in XML from agent who are blacklisted
-   *
-   * @param $p_xml value XML from agent
-   *
-   * @return value XML cleaned (without blacklisted fields)
-   *
-   **/
+    * Remove fields in inventory XML from agent which are blacklisted
+    *
+    * @param array $a_computerinventory
+    * @return array
+    */
    function cleanBlacklist($a_computerinventory) {
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();

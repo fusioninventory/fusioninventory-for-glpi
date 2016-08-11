@@ -46,13 +46,13 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCommunication {
 
+
    /**
     * Get all devices and put in taskjobstate each task for
     * each device for each agent
     *
-    * @param type $taskjobs_id id of taskjob esx
-    *
-    * @return uniqid value
+    * @param integer $taskjobs_id id of taskjob esx
+    * @return string uniqid value
     */
    function prepareRun($taskjobs_id) {
 
@@ -153,9 +153,8 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
    /**
     * Get ESX jobs for this agent
     *
-    * @param type $taskjobstate
-    *
-    * @return $response array
+    * @param object $taskjobstate
+    * @return array
     */
    function run($taskjobstate) {
       $credential     = new PluginFusioninventoryCredential();

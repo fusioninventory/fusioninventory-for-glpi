@@ -124,6 +124,11 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
 
 
+   /**
+    * Add an entry in history
+    *
+    * @param object $item
+    */
    static function addHistory($item){
 
       foreach ($item->oldvalues as $field=>$old_value) {
@@ -142,17 +147,15 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
 
    /**
-   * Display form for antivirus
-   *
-   * @param $items_id integer ID of the antivirus
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
-   function showForm($items_id, $options=array()) {
+    * Display form for antivirus
+    *
+    * @param integer $computers_id
+    * @param array $options
+    * @return boolean
+    */
+   function showForm($computers_id, $options=array()) {
 
-      $a_antivirus = $this->find("`computers_id`='".$items_id."'");
+      $a_antivirus = $this->find("`computers_id`='".$computers_id."'");
 
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
@@ -210,16 +213,13 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
 
    /**
-   * Delete antivirus on computer
-   *
-   * @param $items_id integer id of the computer
-   *
-   * @return nothing
-   *
-   **/
-   static function cleanComputer($items_id) {
+    * Delete antivirus on computer
+    *
+    * @param integer $computers_id id of the computer
+    */
+   static function cleanComputer($computers_id) {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
-      $a_antivirus = $pfInventoryComputerAntivirus->find("`computers_id`='".$items_id."'");
+      $a_antivirus = $pfInventoryComputerAntivirus->find("`computers_id`='".$computers_id."'");
       if (count($a_antivirus) > 0) {
          $input = current($a_antivirus);
          $pfInventoryComputerAntivirus->delete($input);

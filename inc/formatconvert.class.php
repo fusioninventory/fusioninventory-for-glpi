@@ -52,6 +52,7 @@ class PluginFusioninventoryFormatconvert {
    /**
     * Convert XML into php array
     *
+    * @global string $PLUGIN_FUSIONINVENTORY_XML
     * @param string $xml
     * @return array
     */
@@ -205,6 +206,9 @@ class PluginFusioninventoryFormatconvert {
    /**
     * Convert Fusioninventory Computer inventory to pre-prepared GLPI inventory
     *
+    * @global object $DB
+    * @global boolean $PF_ESXINVENTORY
+    * @global array $CFG_GLPI
     * @param array $array
     * @return array
     */
@@ -1846,9 +1850,11 @@ class PluginFusioninventoryFormatconvert {
    /**
     * Replace string in prepared data into GLPI ID (create items if required)
     *
+    * @global array $CFG_GLPI
     * @param array $array data prepared
     * @param string $itemtype it's itemtype of item
     * @param integer $items_id id of the item
+    * @param integer $level
     * @return array
     */
    function replaceids($array, $itemtype, $items_id, $level=0) {
@@ -2183,13 +2189,11 @@ class PluginFusioninventoryFormatconvert {
 
 
    /**
-   * Get type of the drive
-   *
-   * @param $data array of the storage
-   *
-   * @return "Drive" or "HardDrive"
-   *
-   **/
+    * Get type of the drive
+    *
+    * @param array $data information of the storage
+    * @return string "Drive" or "HardDrive"
+    */
    static function getTypeDrive($data) {
       if (((isset($data['TYPE'])) AND
               ((preg_match("/rom/i", $data["TYPE"])) OR (preg_match("/dvd/i", $data["TYPE"]))

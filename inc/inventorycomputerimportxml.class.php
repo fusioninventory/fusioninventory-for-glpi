@@ -48,10 +48,11 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
 
 
    /**
-    * @since version 0.85
+    * Get rights
     *
-    * @see commonDBTM::getRights()
-   **/
+    * @param string $interface
+    * @return array
+    */
    function getRights($interface='central') {
       return array(CREATE  => __('Create'));
    }
@@ -59,11 +60,11 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
 
 
    /**
-   * Display form for import XML
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for import the XML
+    *
+    * @global array $CFG_GLPI
+    * @return boolean
+    */
    function showForm() {
       global $CFG_GLPI;
 

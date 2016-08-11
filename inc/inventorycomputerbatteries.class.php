@@ -119,17 +119,15 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
 
 
    /**
-   * Display form for antivirus
-   *
-   * @param $items_id integer ID of the antivirus
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
-   function showForm($items_id, $options=array()) {
+    * Display form for batteries
+    *
+    * @param integer $computers_id
+    * @param array $options
+    * @return true
+    */
+   function showForm($computers_id, $options=array()) {
 
-      $a_batteries = $this->find("`computers_id`='".$items_id."'");
+      $a_batteries = $this->find("`computers_id`='".$computers_id."'");
 
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
@@ -187,16 +185,13 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
 
 
    /**
-   * Delete batteries on computer
-   *
-   * @param $items_id integer id of the computer
-   *
-   * @return nothing
-   *
-   **/
-   static function cleanComputer($items_id) {
+    * Delete batteries on computer
+    *
+    * @param integer $computers_id
+    */
+   static function cleanComputer($computers_id) {
       $pfInventoryComputerBatteries = new PluginFusioninventoryInventoryComputerBatteries();
-      $a_batteries = $pfInventoryComputerBatteries->find("`computers_id`='".$items_id."'");
+      $a_batteries = $pfInventoryComputerBatteries->find("`computers_id`='".$computers_id."'");
       if (count($a_batteries) > 0) {
          $input = current($a_batteries);
          $pfInventoryComputerBatteries->delete($input);
