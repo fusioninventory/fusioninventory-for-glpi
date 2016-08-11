@@ -210,6 +210,92 @@ class DevicesLocks extends RestoreDatabase_TestCase {
    /**
     * @test
     *
+    * Test computer with manufacturer lock
+    */
+   public function computerManufacturerLock() {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $computer = new Computer();
+      $pfLock = new PluginFusioninventoryLock();
+
+      $a_computerinventory = array(
+          "Computer" => array(
+              "name"   => "pc003",
+              "serial" => "gtrgvdbg",
+              "computermodels_id" => "model xxx",
+              "manufacturers_id"  => "Dell"
+          ),
+          "fusioninventorycomputer" => Array(
+              'last_fusioninventory_update' => date('Y-m-d H:i:s'),
+              'serialized_inventory'        => 'something',
+              'bios_manufacturers_id'       => 'Award'
+          ),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          "computerdisk"   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'SOFTWARES'      => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
+          'networkcard'    => array(),
+          'drive'          => array(),
+          'batteries'      => array(),
+          'remote_mgmt'    => array(),
+          'itemtype'       => 'Computer'
+      );
+
+      $input = array(
+          'name'        => 'pc003',
+          'serial'      => 'gtrgvdbg',
+          'entities_id' => 0
+      );
+      $computers_id = $computer->add($input);
+
+      $input = array(
+          'tablename'   => 'glpi_computers',
+          'items_id'    => $computers_id,
+          'tablefields' => exportArrayToDB(array('manufacturers_id'))
+      );
+      $pfLock->add($input);
+
+      $pfInventoryComputerInventory->fill_arrayinventory($a_computerinventory);
+      $pfInventoryComputerInventory->rulepassed($computers_id, 'Computer');
+
+      $this->assertEquals(countElementsInTable('glpi_computers'), 1, 'More than 1 computer created');
+      $computer->getFromDB(1);
+      $this->assertEquals($computer->fields['manufacturers_id'], 0, "Manufacturer not right");
+
+      $pfInventoryComputerComputer->getFromDB(1);
+      $this->assertEquals($pfInventoryComputerComputer->fields['bios_manufacturers_id'], 1, "bios manufacturer not right");
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   }
+
+
+   /**
+    * @test
+    *
     * idem but with general lock on itemtype
     */
    public function switchLockItemtype() {
