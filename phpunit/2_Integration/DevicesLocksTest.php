@@ -229,6 +229,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $computer = new Computer();
       $pfLock = new PluginFusioninventoryLock();
+      $manufacturer = new Manufacturer();
 
       $a_computerinventory = array(
           "Computer" => array(
@@ -288,6 +289,9 @@ class DevicesLocks extends RestoreDatabase_TestCase {
 
       $pfInventoryComputerComputer->getFromDB(1);
       $this->assertEquals($pfInventoryComputerComputer->fields['bios_manufacturers_id'], 1, "bios manufacturer not right");
+      $this->assertEquals(countElementsInTable('glpi_manufacturers'), 1, 'More than 1 manufacturer created');
+      $manufacturer->getFromDB($pfInventoryComputerComputer->fields['bios_manufacturers_id']);
+      $this->assertEquals($manufacturer->fields['name'], 'Award', "Manufacturer name not right");
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
