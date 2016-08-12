@@ -185,7 +185,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
 
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -206,7 +206,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
-      if ( $this->can(0, CREATE) ) {
+      if ($this->can(0, CREATE)) {
          if ($item->getType() == 'Computer') {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
          }
@@ -872,7 +872,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $contents="";
       $url_ok = null;
       $url_headers=array();
-      foreach( $url_addresses as $url) {
+      foreach ($url_addresses as $url) {
          $stream = fopen($url, 'r', false, $ctx);
          if ($stream) {
             //$result = file_get_contents($url, FALSE, $ctx);
@@ -920,7 +920,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $urls = $this->getAgentRunURLs();
 
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
-      foreach ( $urls as $url ) {
+      foreach ($urls as $url) {
          if (!$ret) {
             if (@file_get_contents($url, 0, $ctx) !== FALSE) {
                $ret = TRUE;
@@ -957,7 +957,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * settings.
     */
    function restoreDebug() {
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE){
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          ini_set('display_errors', 'On');
          // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
@@ -1043,7 +1043,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $url_addresses = array();
 
 
-      if ( isset($this->fields['id']) ) {
+      if (isset($this->fields['id'])) {
          $computer = $this->getAssociatedComputer();
          if ($this->fields['agent_port'] != ''
                  && is_numeric($this->fields['agent_port'])) {
@@ -1067,7 +1067,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       # Guess the machine name from the DEVICEID,
       # useful when Windows domain != DNS domain
       $stack = array();
-      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/',
+      if (preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/',
                     $this->fields['name'],
                     $stack)) {
          array_push($url_addresses, "http://".$stack[1].":".$port);
@@ -1237,7 +1237,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             //change status of agents
             while ($data = $DB->fetch_array($result)) {
                $computer = new Computer();
-               if($computer->getFromDB($data['computers_id'])){
+               if ($computer->getFromDB($data['computers_id'])) {
                   $computer->update(array(
                       'id' => $data['computers_id'],
                       'states_id' => $pfConfig->getValue('agents_status')));

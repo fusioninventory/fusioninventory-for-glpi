@@ -46,7 +46,16 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstate each task for each device for each agent
+
+   /**
+    * Prepare a taskjob
+    * Get all devices and put in taskjobstate each task for each device for
+    * each agent
+    *
+    * @global object $DB
+    * @param integer $taskjobs_id
+    * @return string
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -130,7 +139,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      if (count($get_tmp) > 0) {
                         $_GET = $get_tmp;
                      }
-
                      break;
 
                }
@@ -143,7 +151,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       if ((!strstr($pfTaskjob->fields['action'], '".1"'))
             AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
 
-         foreach($a_actions as $a_action) {
+         foreach ($a_actions as $a_action) {
             if ((!in_array('.1', $a_action))
                && (!in_array('.2', $a_action))) {
 
@@ -171,7 +179,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
        */
       else if (in_array('.2', $a_actions)) {
          $subnet = '';
-         foreach($a_computers_to_wake as $items_id) {
+         foreach ($a_computers_to_wake as $items_id) {
             $sql = "SELECT * FROM `glpi_networkports`
                WHERE `items_id`='".$items_id."'
                   AND `itemtype`='Computer'
@@ -216,7 +224,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $a_input['state'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['uniqid'] = $uniqid;
-         while(count($a_computers_to_wake) != 0) {
+         while (count($a_computers_to_wake) != 0) {
             $agent_id = array_pop($a_agentList);
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             for ($i=0; $i < $nb_computers; $i++) {
@@ -244,7 +252,10 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
 
    /**
-    *  When agent contact server, this function send datas to agent
+    * When agent contact server, this function send datas to agent
+    *
+    * @param object $jobstate
+    * @return string
     */
    function run($jobstate) {
 
@@ -308,6 +319,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
 
 
+   /**
+    * Get agents on the subnet
+    *
+    * @global object $DB
+    * @param integer $nb_computers
+    * @param string $communication
+    * @param string $subnet
+    * @return array
+    */
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;
 
@@ -355,7 +375,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          }
          $a_agents = $pfAgentmodule->getAgentsCanDo('WAKEONLAN');
          $a_agentsid = array();
-         foreach($a_agents as $a_agent) {
+         foreach ($a_agents as $a_agent) {
             $a_agentsid[] = $a_agent['id'];
          }
          if (count($a_agentsid) == '0') {
@@ -399,6 +419,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
       }
+      return $a_agentList;
    }
 }
 

@@ -53,7 +53,10 @@ include_once( dirname(__FILE__) . "/../lib/pretty_json.php" );
 class PluginFusioninventoryToolbox {
 
    /**
-    * Log when extra-debug is activated
+    * Log if extra debug enabled
+    *
+    * @param string $file
+    * @param string $message
     */
    static function logIfExtradebug($file, $message) {
       $config = new PluginFusioninventoryConfig();
@@ -70,11 +73,11 @@ class PluginFusioninventoryToolbox {
    /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
     *  used to uncompress gzip string
     *
-    * @param type $data
-    * @param type $filename
-    * @param type $error
-    * @param type $maxlength
-    * @return type
+    * @param string $data
+    * @param string $filename
+    * @param string $error
+    * @param null|integer $maxlength
+    * @return null|false|string
     */
    static function gzdecode($data, &$filename='', &$error='', $maxlength=NULL) {
        $len = strlen($data);
@@ -190,16 +193,16 @@ class PluginFusioninventoryToolbox {
    /**
     * Merge 2 simpleXML objects
     *
-    * @param $simplexml_to simplexml object source
-    * @param $simplexml_from simplexml object destination
-    *
-    **/
+    * @staticvar boolean $firstLoop
+    * @param object $simplexml_to simplexml instance source
+    * @param object $simplexml_from simplexml instance destination
+    */
    static function appendSimplexml(&$simplexml_to, &$simplexml_from) {
       static $firstLoop=TRUE;
 
       //Here adding attributes to parent
       if ($firstLoop) {
-         foreach($simplexml_from->attributes() as $attr_key => $attr_value) {
+         foreach ($simplexml_from->attributes() as $attr_key => $attr_value) {
             $simplexml_to->addAttribute($attr_key, $attr_value);
          }
       }
@@ -218,10 +221,10 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-    * Clean XML, ie convert to be insert without problem into MySQL DB
+    * Clean XML, ie convert to be insert without problem into MySQL database
     *
-    * @param $xml SimpleXMLElement object
-    * @return SimpleXMLElement object
+    * @param object $xml SimpleXMLElement instance
+    * @return object SimpleXMLElement instance
     */
    function cleanXML($xml) {
       $nodes = array();
@@ -260,9 +263,9 @@ class PluginFusioninventoryToolbox {
    /**
     * Format XML, ie indent it for pretty printing
     *
-    * @param $xml simplexml object
+    * @param object $xml simplexml instance
     * @return string
-    **/
+    */
    static function formatXML($xml) {
       $string     = str_replace("><", ">\n<", $xml->asXML());
       $token      = strtok($string, "\n");
@@ -298,14 +301,11 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-   * Write XML in a folder from an inventory by agent
-   *
-   * @param $items_id integer id of the unmanaged device
-   * @param $xml value xml informations (with XML structure)
-   *
-   * @return nothing
-   *
-   **/
+    * Write XML in a folder from an inventory by agent
+    *
+    * @param integer $items_id id of the unmanaged device
+    * @param string $xml xml informations (with XML structure)
+    */
    static function writeXML($items_id, $xml, $itemtype) {
 
       $folder = substr($items_id, 0, -1);
@@ -332,43 +332,43 @@ class PluginFusioninventoryToolbox {
    /**
     * Add AUTHENTICATION string to XML node
     *
-    *@param $p_sxml_node XML node to authenticate
-    *@param $p_id Authenticate id
-    *@return nothing
+    * @param object $p_sxml_node XML node to authenticate
+    * @param integer $p_id Authenticate id
     **/
    function addAuth($p_sxml_node, $p_id) {
       $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       if ($pfConfigSecurity->getFromDB($p_id)) {
 
          $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
-            $sxml_authentication->addAttribute('ID', $p_id);
-            $sxml_authentication->addAttribute('VERSION',
-                       $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
-            if ($pfConfigSecurity->fields['snmpversion'] == '3') {
-               $sxml_authentication->addAttribute('USERNAME',
-                                                  $pfConfigSecurity->fields['username']);
-               if ($pfConfigSecurity->fields['authentication'] == '0') {
+
+         $sxml_authentication->addAttribute('ID', $p_id);
+         $sxml_authentication->addAttribute('VERSION',
+                    $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
+         if ($pfConfigSecurity->fields['snmpversion'] == '3') {
+            $sxml_authentication->addAttribute('USERNAME',
+                                               $pfConfigSecurity->fields['username']);
+            if ($pfConfigSecurity->fields['authentication'] == '0') {
 //                  $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
-               } else {
-                  $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                         $pfConfigSecurity->getSNMPAuthProtocol(
-                                 $pfConfigSecurity->fields['authentication']));
-               }
-               $sxml_authentication->addAttribute('AUTHPASSPHRASE',
-                                                  $pfConfigSecurity->fields['auth_passphrase']);
-               if ($pfConfigSecurity->fields['encryption'] == '0') {
-//                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
-               } else {
-                  $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                                 $pfConfigSecurity->getSNMPEncryption(
-                                          $pfConfigSecurity->fields['encryption']));
-               }
-               $sxml_authentication->addAttribute('PRIVPASSPHRASE',
-                                                   $pfConfigSecurity->fields['priv_passphrase']);
             } else {
-               $sxml_authentication->addAttribute('COMMUNITY',
-                                                  $pfConfigSecurity->fields['community']);
+               $sxml_authentication->addAttribute('AUTHPROTOCOL',
+                      $pfConfigSecurity->getSNMPAuthProtocol(
+                              $pfConfigSecurity->fields['authentication']));
             }
+            $sxml_authentication->addAttribute('AUTHPASSPHRASE',
+                                               $pfConfigSecurity->fields['auth_passphrase']);
+            if ($pfConfigSecurity->fields['encryption'] == '0') {
+//                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
+            } else {
+               $sxml_authentication->addAttribute('PRIVPROTOCOL',
+                              $pfConfigSecurity->getSNMPEncryption(
+                                       $pfConfigSecurity->fields['encryption']));
+            }
+            $sxml_authentication->addAttribute('PRIVPASSPHRASE',
+                                                $pfConfigSecurity->fields['priv_passphrase']);
+         } else {
+            $sxml_authentication->addAttribute('COMMUNITY',
+                                               $pfConfigSecurity->fields['community']);
+         }
       }
    }
 
@@ -377,11 +377,11 @@ class PluginFusioninventoryToolbox {
    /**
     * Add GET oids to XML node 'GET'
     *
-    * @param type $p_sxml_node
-    * @param type $p_object
-    * @param type $p_oid
-    * @param type $p_link
-    * @param type $p_vlan
+    * @param object $p_sxml_node
+    * @param string $p_object
+    * @param string $p_oid
+    * @param string $p_link
+    * @param string $p_vlan
     */
    function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_get = $p_sxml_node->addChild('GET');
@@ -396,11 +396,11 @@ class PluginFusioninventoryToolbox {
    /**
     * Add WALK (multiple oids) oids to XML node 'WALK'
     *
-    * @param type $p_sxml_node
-    * @param type $p_object
-    * @param type $p_oid
-    * @param type $p_link
-    * @param type $p_vlan
+    * @param object $p_sxml_node
+    * @param string $p_object
+    * @param string $p_oid
+    * @param string $p_link
+    * @param string $p_vlan
     */
    function addWalk($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_walk = $p_sxml_node->addChild('WALK');
@@ -412,6 +412,13 @@ class PluginFusioninventoryToolbox {
 
 
 
+   /**
+    * Get IP for device
+    *
+    * @param string $itemtype
+    * @param integer $items_id
+    * @return array
+    */
    static function getIPforDevice($itemtype, $items_id) {
       $NetworkPort = new NetworkPort();
       $networkName = new NetworkName();
@@ -421,13 +428,13 @@ class PluginFusioninventoryToolbox {
       $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."'
                                        AND `items_id`='".$items_id."'
                                           AND `instantiation_type` != 'NetworkPortLocal'");
-      foreach($a_ports as $a_port) {
+      foreach ($a_ports as $a_port) {
          $a_networknames = $networkName->find("`itemtype`='NetworkPort'
                                               AND `items_id`='".$a_port['id']."'");
          foreach ($a_networknames as $a_networkname) {
             $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
                                               AND `items_id`='".$a_networkname['id']."'");
-            foreach($a_ipaddresses as $data) {
+            foreach ($a_ipaddresses as $data) {
                if ($data['name'] != '127.0.0.1'
                        && $data['name'] != '::1') {
                   $a_ips[$data['name']] = $data['name'];
@@ -442,29 +449,16 @@ class PluginFusioninventoryToolbox {
    // *********************** Functions used for inventory *********************** //
 
 
-   static function diffArray($array1, $array2) {
-
-      $a_return = array();
-      foreach ($array1 as $key=>$value) {
-         if (defined($array2[$key])
-                 && $array2[$key] != $value) {
-            $a_return[$key] = $value;
-         }
-//         $key2 = FALSE;
-//         $key2 = array_search($value, $array2, TRUE);
-//         if ($key2) {
-//            unset($array2[$key2]);
-//         } else {
-//            $a_return[$key] = $value;
-//         }
-      }
-      return $a_return;
-   }
-
-
-
+   /**
+    * Check lock
+    *
+    * @param array $data
+    * @param array $db_data
+    * @param array $a_lockable
+    * @return array
+    */
    static function checkLock($data, $db_data, $a_lockable=array()) {
-      foreach($a_lockable as $field) {
+      foreach ($a_lockable as $field) {
          if (isset($data[$field])) {
             unset($data[$field]);
          }
@@ -477,31 +471,10 @@ class PluginFusioninventoryToolbox {
 
 
 
-   static function showYesNo($name, $value=0) {
-      $rand = mt_rand();
-      $checked['yes'] = '';
-      $checked['no'] = '';
-      if ($value == 0) {
-         $checked['no'] = 'checked';
-      } else {
-         $checked['yes'] = 'checked';
-      }
-      echo '<table>
-            <tr>
-            <td><input type="radio" value="1" id="yes'.$rand.'" name="'.$name.'" '.
-              $checked['yes'].' />
-            <label for="yes'.$rand.'">'.__('Yes').'</label></td>
-		   	<td><input type="radio" value="0" id="no'.$rand.'" name="'.$name.'" '.
-              $checked['no'].' />
-            <label for="no'.$rand.'">'.__('No').'</label></td>
-            </tr>
-            </table>';
-   }
-
-
-
    /**
     * Display data from serialized inventory field
+    *
+    * @param array $array
     */
    static function displaySerializedValues($array) {
 
@@ -530,6 +503,12 @@ class PluginFusioninventoryToolbox {
 
 
 
+   /**
+    * Send serialized inventory to user browser (to download)
+    *
+    * @param integer $items_id
+    * @param string $itemtype
+    */
    static function sendSerializedInventory($items_id, $itemtype) {
       header('Content-type: text/plain');
 
@@ -544,6 +523,12 @@ class PluginFusioninventoryToolbox {
 
 
 
+   /**
+    * Send the XML (last inventory) to user browser (to download)
+    *
+    * @param integer $items_id
+    * @param string $itemtype
+    */
    static function sendXML($items_id, $itemtype) {
       if (call_user_func(array($itemtype, 'canView'))) {
          $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
@@ -557,43 +542,42 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-   *  @function fetchAssocByTable
-   *  This function fetch rows from a MySQL result in an array with each table as a key
-   *
-   *  example:
-   *  $query =
-   *     "SELECT table_a.*,table_b.* ".
-   *     "FROM table_b ".
-   *     "LEFT JOIN table_a ON table_a.id = table_b.linked_id";
-   *  $result = mysqli_query( $query );
-   *  print_r( fetchTableAssoc( $result ) )
-   *
-   *  output:
-   *  $results = Array
-   *     (
-   *        [0] => Array
-   *           (
-   *              [table_a] => Array
-   *                 (
-   *                    [id] => 1
-   *                 )
-   *              [table_b] => Array
-   *                 (
-   *                    [id] => 2
-   *                    [linked_id] => 1
-   *                 )
-   *           )
-   *           ...
-   *     )
-   **/
-   static function fetchAssocByTable($mysql_result){
+    *  This function fetch rows from a MySQL result in an array with each table as a key
+    *
+    *  example:
+    *  $query =
+    *     "SELECT table_a.*,table_b.* ".
+    *     "FROM table_b ".
+    *     "LEFT JOIN table_a ON table_a.id = table_b.linked_id";
+    *  $result = mysqli_query( $query );
+    *  print_r( fetchTableAssoc( $result ) )
+    *
+    *  output:
+    *  $results = Array
+    *     (
+    *        [0] => Array
+    *           (
+    *              [table_a] => Array
+    *                 (
+    *                    [id] => 1
+    *                 )
+    *              [table_b] => Array
+    *                 (
+    *                    [id] => 2
+    *                    [linked_id] => 1
+    *                 )
+    *           )
+    *           ...
+    *     )
+    */
+   static function fetchAssocByTable($mysql_result) {
       $results = array();
       //get fields header infos
       $fields = mysqli_fetch_fields($mysql_result);
       //associate row data as array[table][field]
-      while( $row = mysqli_fetch_row($mysql_result) ) {
+      while ($row = mysqli_fetch_row($mysql_result)) {
          $result = array();
-         for( $i=0; $i < count( $row ); $i++ ) {
+         for ($i=0; $i < count( $row ); $i++) {
             $tname = $fields[$i]->table;
             $fname = $fields[$i]->name;
             if (!isset($result[$tname])) {
@@ -610,12 +594,18 @@ class PluginFusioninventoryToolbox {
 
 
 
+   /**
+    * Format a json in a pretty json
+    *
+    * @param string $json
+    * @return string
+    */
    static function formatJson($json) {
       $version = phpversion();
 
-      if ( version_compare($version, '5.4', 'lt') ) {
+      if (version_compare($version, '5.4', 'lt')) {
          return pretty_json($json);
-      } else if ( version_compare($version, '5.4', 'ge') ) {
+      } else if (version_compare($version, '5.4', 'ge')) {
          return json_encode(
             json_decode($json, TRUE),
             JSON_PRETTY_PRINT
@@ -628,7 +618,9 @@ class PluginFusioninventoryToolbox {
    /**
     * Dropdown for display hours
     *
-    * @return type
+    * @param string $name
+    * @param array $options
+    * @return string unique html element id
     */
    static function showHours($name, $options=array()) {
 
@@ -644,7 +636,6 @@ class PluginFusioninventoryToolbox {
             $p[$key] = $val;
          }
       }
-
       if ($p['step'] <= 0) {
          $p['step'] = 5;
       }
@@ -662,6 +653,9 @@ class PluginFusioninventoryToolbox {
 
    /**
     * Get hour:minute from number of seconds
+    *
+    * @param integer $seconds
+    * @return string
     */
    static function getHourMinute($seconds) {
       $hour = floor($seconds / 3600);
@@ -674,8 +668,7 @@ class PluginFusioninventoryToolbox {
    /**
     * Get information if allow_url_fopen is activated and display message if not
     *
-    * @param $wakecomputer boolean (1 if it's for wakeonlan, 0 if it's for task)
-    *
+    * @param integer $wakecomputer (1 if it's for wakeonlan, 0 if it's for task)
     * @return boolean
     */
    static function isAllowurlfopen($wakecomputer=0) {
@@ -704,10 +697,9 @@ class PluginFusioninventoryToolbox {
 
    /**
     *  Execute a function as Fusioninventory user
-    *  @param $function callable
-    *  @param $args array
-    *
-    *  @return the normally returned value from executed callable
+    *  @param string|array $function
+    *  @param array $args
+    *  @return string the normaly returned value from executed callable
     */
 
    function executeAsFusioninventoryUser($function, array $args = array()) {
@@ -718,16 +710,11 @@ class PluginFusioninventoryToolbox {
       // Backup _SESSION environment
       $OLD_SESSION = array();
 
-      foreach(
-         array(
-            'glpiID', 'glpiname','glpiactiveentities_string', 'glpiactiveentities',
-            'glpiparententities'
-         ) as $session_key
-      ) {
+      foreach (array('glpiID', 'glpiname','glpiactiveentities_string',
+          'glpiactiveentities', 'glpiparententities') as $session_key) {
          if (isset($_SESSION[$session_key])) {
             $OLD_SESSION[$session_key] = $_SESSION[$session_key];
          }
-
       }
 
       // Configure impersonation
@@ -745,15 +732,12 @@ class PluginFusioninventoryToolbox {
       $result = call_user_func_array($function, $args);
 
       // Restore SESSION
-      foreach($OLD_SESSION as $key => $value) {
+      foreach ($OLD_SESSION as $key => $value) {
          $_SESSION[$key] = $value;
       }
-
       // Return function results
       return $result;
-
    }
-
 }
 
 ?>

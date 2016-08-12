@@ -107,7 +107,7 @@ class PluginFusioninventoryComputer extends Computer {
          if ($_POST['custom_action'] == 'add_to_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
                = _x('button', 'Add');
-         } elseif($_POST['custom_action'] == 'delete_from_group') {
+         } elseif ($_POST['custom_action'] == 'delete_from_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
                = _x('button','Delete permanently');
          }

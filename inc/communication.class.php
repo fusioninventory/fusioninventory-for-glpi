@@ -251,7 +251,7 @@ class PluginFusioninventoryCommunication {
        */
       $methods = array();
       $classnames = array();
-      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          if (isset($method['classname'])) {
             $methods[] = $method['method'];
             $classnames[$method['method']] = $method['classname'];
@@ -266,10 +266,9 @@ class PluginFusioninventoryCommunication {
              * TODO: check if use_rest is enabled in Staticmisc::get_methods.
              * Also, this get_methods function need to be reviewed
              */
-            if (  $className != "PluginFusioninventoryInventoryComputerESX"
-               && $className != "PluginFusioninventoryDeployCommon"
-               && $className != "PluginFusioninventoryCollect"
-            ) {
+            if ($className != "PluginFusioninventoryInventoryComputerESX"
+                    && $className != "PluginFusioninventoryDeployCommon"
+                    && $className != "PluginFusioninventoryCollect") {
                $class = new $className();
                $sxml_temp = $class->run($jobstate);
                PluginFusioninventoryToolbox::appendSimplexml(

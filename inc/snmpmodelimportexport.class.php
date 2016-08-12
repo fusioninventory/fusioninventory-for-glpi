@@ -92,7 +92,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                             array('nb_found' => $count_discovery_devices), $agent['id']);
          if (is_int(key($arrayinventory['DEVICE']))) {
-            foreach($arrayinventory['DEVICE'] as $discovery) {
+            foreach ($arrayinventory['DEVICE'] as $discovery) {
                if (count($discovery) > 0) {
                   $pfCommunicationNetworkDiscovery =
                                     new PluginFusioninventoryCommunicationNetworkDiscovery();

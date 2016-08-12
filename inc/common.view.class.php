@@ -70,7 +70,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @return string the requested url if found otherwise empty string
     */
    function getBaseUrlFor($name) {
-      if ( array_key_exists($name, $this->base_urls) ) {
+      if (array_key_exists($name, $this->base_urls)) {
          return $this->base_urls[$name];
       }
       trigger_error(
@@ -205,13 +205,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    public function showDateTimeField($title, $varname, $options = array()) {
 
       // Get datetime value if the object is defined
-      if ( $this->fields['id'] > 0 ) {
+      if ($this->fields['id'] > 0) {
          $value = $this->fields[$varname];
       } else {
          // Else set default value to current date and time
-         if (  array_key_exists('maybeempty', $options)
-               and $options['maybeempty']
-         ) {
+         if (array_key_exists('maybeempty', $options)
+                 and $options['maybeempty']) {
             $value = "";
          } else {
             $value = date("Y-m-d H:i:s");

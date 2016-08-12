@@ -383,7 +383,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                  return FALSE;\"
                  href='".$_SERVER['PHP_SELF']."?select=all'>".
                  __('Check All', 'fusioninventory')."</a>";
-      echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return FALSE;\"
+      echo " - <a onclick= \"if (unMarkAllRows('printer_history_form')) return FALSE;\"
                   href='".$_SERVER['PHP_SELF']."?select=none'>".
                   __('Uncheck All', 'fusioninventory')."</a> ";
       echo "<input type='submit' name='delete' value=\"".__('Delete', 'fusioninventory').
@@ -416,10 +416,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $graphField='pages_total';
       $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
-         $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
+         $begin = $_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
-      if ( $begin == 'NULL' OR $begin == '' ) {
-         $begin=date("Y-m-01"); // first day of current month
+      if ($begin == 'NULL' OR $begin == '') {
+         $begin = date("Y-m-01"); // first day of current month
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
          $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
@@ -427,21 +427,21 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
          $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
       }
-      if ( $end == 'NULL' OR $end == '' ) {
-         $end=date("Y-m-d"); // today
+      if ($end == 'NULL' OR $end == '') {
+         $end = date("Y-m-d"); // today
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) {
-         $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+         $timeUnit = $_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
       }
       if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
          $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
-         $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
+         $printerCompAdd = $_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
          if (!key_exists($printerCompAdd,
                          $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
             $oPrinter = new Printer();
-            if ($oPrinter->getFromDB($printerCompAdd)){
+            if ($oPrinter->getFromDB($printerCompAdd)) {
                $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] =
                      $oPrinter->getField('name');
             }
@@ -455,7 +455,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       if (isset($printersView[$id])) {
          unset($printersView[$id]);
       } else {
-         if ($oPrinter->getFromDB($id)){
+         if ($oPrinter->getFromDB($id)) {
             $printers[$id] = $oPrinter->getField('name');
          }
       }
@@ -570,7 +570,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<td class='left'>".__('Add a printer', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
-      foreach($printersView as $printer_id=>$name) {
+      foreach ($printersView as $printer_id=>$name) {
          $printersused[] = $printer_id;
       }
       $printer->getFromDB($id);
@@ -617,7 +617,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<br/>";
       $a_graph = array();
-      foreach($elementsField as $graphField=>$name) {
+      foreach ($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
                     `$graphField`
@@ -630,7 +630,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             unset($elementsField[$graphField]);
          }
       }
-      foreach($elementsField as $graphField=>$name) {
+      foreach ($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
                     `$graphField`

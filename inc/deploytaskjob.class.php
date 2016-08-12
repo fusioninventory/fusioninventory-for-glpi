@@ -88,7 +88,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $res  = $DB->query($sql);
       $json  = array();
       $temp_tasks = array();
-      while($row = $DB->fetch_assoc($res)) {
+      while ($row = $DB->fetch_assoc($res)) {
          $row['packages'] = importArrayFromDB($row['definition']);
          $row['actions'] = importArrayFromDB($row['action']);
 
@@ -152,7 +152,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $sql_tasks = array();
       $i = 0;
 
-      foreach($tasks as $task) {
+      foreach ($tasks as $task) {
          $task = get_object_vars($task);
 
          //encode action and definition
@@ -174,7 +174,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          )";
          $i++;
       }
-      foreach($sql_tasks as $query) {
+      foreach ($sql_tasks as $query) {
          $DB->query($query);
       }
    }
@@ -257,7 +257,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                   $group = new Group;
                   $group_datas = $group->find($like);
                   $i=0;
-                  foreach($group_datas as $group_data) {
+                  foreach ($group_datas as $group_data) {
                      $res['action_selections'][$i]['id'] = $group_data['id'];
                      $res['action_selections'][$i]['name'] = $group_data['name'];
                      $i++;

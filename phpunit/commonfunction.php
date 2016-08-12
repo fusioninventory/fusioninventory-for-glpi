@@ -70,7 +70,7 @@ function mysql_dump($dbuser = '', $dbhost = '', $dbpassword = '', $dbdefault = '
 function construct_mysql_options($dbuser='', $dbhost='', $dbpassword='', $cmd_base='mysql') {
    $cmd = array();
 
-   if ( empty($dbuser) || empty($dbhost)) {
+   if (empty($dbuser) || empty($dbhost)) {
       return array(
          'returncode' => 2,
          'output' => array("ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')")
@@ -80,10 +80,10 @@ function construct_mysql_options($dbuser='', $dbhost='', $dbpassword='', $cmd_ba
 
    if (strpos($dbhost, ':') !== FALSE) {
       $dbhost = explode( ':', $dbhost);
-      if ( !empty($dbhost[0]) ) {
+      if (!empty($dbhost[0])) {
          $cmd[] = "--host ".$dbhost[0];
       }
-      if ( is_numeric($dbhost[1]) ) {
+      if (is_numeric($dbhost[1])) {
          $cmd[] = "--port ".$dbhost[1];
       } else {
          // The dbhost's second part is assumed to be a socket file if it is not numeric.
@@ -103,7 +103,7 @@ function construct_mysql_options($dbuser='', $dbhost='', $dbpassword='', $cmd_ba
 
 }
 
-function drop_database($dbuser='', $dbhost='', $dbdefault='', $dbpassword=''){
+function drop_database($dbuser='', $dbhost='', $dbdefault='', $dbpassword='') {
 
    $cmd = construct_mysql_options($dbuser, $dbhost, $dbpassword, 'mysql');
 

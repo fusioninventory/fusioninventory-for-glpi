@@ -170,7 +170,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
             }
          }
          if (count($registry_data) != 0) {
-            foreach($registry_data as $key=>$value) {
+            foreach ($registry_data as $key=>$value) {
                $input = array(
                    'computers_id' => $computers_id,
                    'plugin_fusioninventory_collects_registries_id' => $collects_registries_id,

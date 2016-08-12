@@ -128,8 +128,7 @@ class PluginFusioninventoryCommunicationRest {
                   && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
                           "`plugin_fusioninventory_agents_id`='".$a_agent['id']."' "
                           . " AND `itemtype`='".$classname."'"
-                          . " AND `state`='0'") > 0
-               ) {
+                          . " AND `state`='0'") > 0) {
                   /*
                    * Since migration, there is only one plugin in one directory
                    * It's maybe time to redo this function -- kiniou
@@ -154,8 +153,8 @@ class PluginFusioninventoryCommunicationRest {
    static function getJobsByAgent($params = array()) {
 //      $jobs = array();
 //      $methods = PluginFusioninventoryStaticmisc::getmethods();
-//      if( isset($params['task']) ) {
-//         foreach(array_keys($params['task']) as $task) {
+//      if (isset($params['task'])) {
+//         foreach (array_keys($params['task']) as $task) {
 //
 //         }
 //      }
@@ -230,7 +229,7 @@ class PluginFusioninventoryCommunicationRest {
       );
 
       $taskjobstate = new PluginFusioninventoryTaskjobstate();
-      foreach( $taskjobstates as $jobstate ) {
+      foreach ($taskjobstates as $jobstate) {
          $taskjobstate->getFromDB($jobstate['id']);
 
          //Get taskjoblog associated

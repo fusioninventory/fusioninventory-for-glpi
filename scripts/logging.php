@@ -23,7 +23,7 @@ class Logging {
 
    public function __construct($loglevel = NULL) {
 
-      if( is_null($loglevel) ) {
+      if (is_null($loglevel)) {
          $this->loglevel = self::$LOG_INFO;
       } else {
          $this->loglevel = $loglevel;
@@ -32,7 +32,7 @@ class Logging {
 
    public function formatlog($messages, $loglevel) {
       $msg = array();
-      foreach($messages as $message) {
+      foreach ($messages as $message) {
          if (is_array($message) || is_object($message)) {
             //$msg[] = print_r($message, true);
             $msg[] = PluginFusioninventoryToolbox::formatJson(json_encode($message));
@@ -49,7 +49,7 @@ class Logging {
 
    function printlog($msg="", $loglevel) {
 
-      if ( is_null($loglevel) ) {
+      if (is_null($loglevel)) {
          $loglevel = self::$LOG_INFO;
       }
 
@@ -81,9 +81,9 @@ class Logging {
 
    function setLevelFromArgs($quiet=false, $debug=false) {
       $this->loglevel = self::$LOG_INFO;
-      if          ( $quiet ) {
+      if ($quiet) {
          $this->loglevel = self::$LOG_QUIET;
-      } else if   ( $debug ) {
+      } else if ($debug) {
          $this->loglevel = self::$LOG_DEBUG;
       }
    }

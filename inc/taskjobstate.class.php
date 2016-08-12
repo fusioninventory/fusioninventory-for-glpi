@@ -70,14 +70,19 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
 
+   /**
+    * Get all states name
+    *
+    * @return array
+    */
    static function getStateNames() {
       return array(
-         self::PREPARED => __('Prepared', 'fusioninventory'),
+         self::PREPARED             => __('Prepared', 'fusioninventory'),
          self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
-         self::AGENT_HAS_SENT_DATA => __('Agent replied with data to the server', 'fusioninventory'),
-         self::FINISHED => __('Finished', 'fusioninventory'),
-         self::IN_ERROR => __('Error' , 'fusioninventory'),
-         self::CANCELLED => __('Cancelled', 'fusioninventory')
+         self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'fusioninventory'),
+         self::FINISHED             => __('Finished', 'fusioninventory'),
+         self::IN_ERROR             => __('Error' , 'fusioninventory'),
+         self::CANCELLED            => __('Cancelled', 'fusioninventory')
       );
    }
 
@@ -92,7 +97,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getType() == 'PluginFusioninventoryTask' ) {
+      if ($item->getType() == 'PluginFusioninventoryTask') {
          $item->showJobLogs();
          return TRUE;
       }
@@ -104,17 +109,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    /**
    * Display state of taskjob
    *
-   * @param $taskjobs_id integer id of the taskjob
-   * @param $width integer how large in pixel display array
-   * @param $return value display or return in var (html or htmlvar or other value
+   * @param integer $taskjobs_id id of the taskjob
+   * @param integer $width how large in pixel display array
+   * @param string $return display or return in var (html or htmlvar or other value
    *        to have state number in %)
-   * @param $style '' = normal or 'simple' for very simple display
+   * @param string $style '' = normal or 'simple' for very simple display
    *
-   * @return nothing, html or pourcentage value
+   * @return string
    *
    **/
-   function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
-
+   function stateTaskjob ($taskjobs_id, $width=930, $return='html', $style='') {
       $state = array();
       $state[0] = 0;
       $state[1] = 0;
@@ -124,7 +128,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                                         $taskjobs_id."' AND `state`!='".self::FINISHED."'");
       $total = 0;
       if (count($a_taskjobstates) > 0) {
-
          foreach ($a_taskjobstates as $data) {
             $total++;
             $state[$data['state']]++;
@@ -155,20 +158,20 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             return ceil($globalState);
          }
       }
+      return '';
    }
 
 
 
    /**
-   * Display state of an item of a taskjob
-   *
-   * @param $items_id integer id of the item
-   * @param $itemtype value type of the item
-   * @param $state value (all or each state : running, finished, nostarted)
-   *
-   * @return nothing
-   *
-   **/
+    * Display state of an item of a taskjob
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param integer $items_id id of the item
+    * @param string $itemtype type of the item
+    * @param string $state (all or each state : running, finished, nostarted)
+    */
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB, $CFG_GLPI;
 
@@ -265,16 +268,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    /**
-   * Change the state
-   *
-   * @param $id integer id of the taskjobstate
-   * @param $state value state to set
-   *
-   * @return nothing
-   *
-   * TODO: There is no need to pass $id since we should use this method with an instantiated
-   * object!!
-   **/
+    * Change the state
+    *
+    * @todo There is no need to pass $id since we should use this method with
+    *       an instantiated object
+    *
+    * @param integer $id id of the taskjobstate
+    * @param integer $state state to set
+    */
    function changeStatus($id, $state) {
       $input = array();
       $input['id'] = $id;
@@ -285,19 +286,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    /**
-   * Get taskjobs of an agent
-   *
-   * @param $agent_id integer id of the agent
-   *
-   * @return nothing
-   *
-   **/
+    * Get taskjobs of an agent
+    *
+    * @param integer $agent_id id of the agent
+    */
    function getTaskjobsAgent($agent_id) {
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-
       $moduleRun = array();
-
       $a_taskjobstates = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
                                      "' AND `state`='".self::PREPARED."'",
                                      "`id`");
@@ -321,17 +317,17 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * Process ajax parameters for getLogs() methods
     *
     * since 0.85+1.0
-    * @param $params  array of ajax expected 'id' and 'last_date' parameters
-    * @return a json encoded list of logs grouped by jobstates
+    * @param array $params list of ajax expected 'id' and 'last_date' parameters
+    * @return string in json format, encoded list of logs grouped by jobstates
     */
    function ajaxGetLogs($params) {
       $id = null;
       $last_date = null;
 
-      if( isset($params['id']) and $params['id'] > 0){
+      if (isset($params['id']) and $params['id'] > 0) {
          $id = $params['id'];
       }
-      if( isset($params['last_date'])){
+      if (isset($params['last_date'])) {
          $last_date = $params['last_date'];
       }
 
@@ -345,9 +341,12 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    /**
     * Get logs associated to a jobstate.
     *
-    * since 0.85+1.0
+    * @global object $DB
+    * @param integer $id
+    * @param string $last_date
+    * @return array
     */
-   function getLogs( $id, $last_date ) {
+   function getLogs($id, $last_date) {
       global $DB;
 
       $fields = array(
@@ -371,10 +370,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          "ORDER BY log.`id` DESC"
       ));
 
-
       $res = $DB->query($query);
       $logs = array();
-      while( $result = $res->fetch_row() ) {
+      while ($result = $res->fetch_row()) {
          $run_id = $result[$fields['run.id']];
          $logs['run']  = $run_id;
          $logs['logs'][] = array(
@@ -390,17 +388,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    /**
-   * Change the status to finish
-   *
-   * @param $taskjobstates_id integer id of the taskjobstates
-   * @param $items_id integer id of the item
-   * @param $itemtype value type of the item
-   * @param $error bool error
-   * @param $message value message for the status
-   *
-   * @return nothing
-   *
-   **/
+    * Change the status to finish
+    *
+    * @param integer $taskjobstates_id id of the taskjobstates
+    * @param integer $items_id id of the item
+    * @param string $itemtype type of the item
+    * @param integer $error error
+    * @param string $message message for the status
+    */
    function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='') {
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -433,6 +428,11 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
 
+   /**
+    * Update taskjob(log) in error
+    *
+    * @param string $reason
+    */
    function fail($reason='') {
       $log = new PluginFusioninventoryTaskjoblog();
 
@@ -444,9 +444,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'state' => PluginFusioninventoryTaskjoblog::TASK_ERROR,
          'comment' => Toolbox::addslashes_deep($reason)
       );
-
       $log->add($log_input);
-
       $this->update(array(
          'id' => $this->fields['id'],
          'state' => self::IN_ERROR
@@ -455,10 +453,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
 
+   /**
+    * Cancel a taskjob
+    *
+    * @param string $reason
+    */
    function cancel($reason='') {
 
       $log = new PluginFusioninventoryTaskjoblog();
-
       $log_input = array(
          'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
          'items_id' => $this->fields['items_id'],
@@ -479,9 +481,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    /**
-    * Cron for clean taskjob
+    * Cron task: clean taskjob (retention time)
     *
-    * @return nothing
+    * @global object $DB
     */
    static function cronCleantaskjob() {
       global $DB;

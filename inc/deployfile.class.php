@@ -156,7 +156,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       );
       // do a quick mapping between database id and short shas
       $files_mapping = array();
-      foreach($files as $file) {
+      foreach ($files as $file) {
          $files_mapping[$file['shortsha512']] = $file['id'];
       }
 
@@ -247,7 +247,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
          //sha fingerprint
          $sha_status = "good";
-         if($fileregistry_error != 0) {
+         if ($fileregistry_error != 0) {
             $sha_status = "bad";
          }
          echo "<div class='fingerprint'>";
@@ -269,7 +269,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
          //filesize
-         if(!$fileregistry_error) {
+         if (!$fileregistry_error) {
             echo "<div class='size'>";
             echo __('Size').": ".self::processFilesize($file_size);
             echo "</div>";
@@ -388,7 +388,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $p2p_retention_duration = 0;
       $uncompress = 0;
 
-      if ($mode === 'create' ) {
+      if ($mode === 'create') {
          $source = $request_data['value'];
          /**
           * No need to continue if there is no selected source
@@ -516,7 +516,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          loader           : Tree_Category_Loader$rand,
          rootVisible      : false,
          listeners: {
-            click: function(node, event){
+            click: function(node, event) {
                if (node.leaf == true) {
                   console.log('server_filename$rand');
                   Ext.get('server_filename$rand').dom.value = node.id;
@@ -748,7 +748,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //file uploaded?
          if (isset($_FILES['file']['tmp_name'])
-                 && !empty($_FILES['file']['tmp_name'])){
+                 && !empty($_FILES['file']['tmp_name'])) {
             $file_tmp_name = $_FILES['file']['tmp_name'];
          }
          if (isset($_FILES['file']['name'])
@@ -943,7 +943,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $short_sha512 = substr($sha512, 0, 6);
 
       $file_present_in_repo = FALSE;
-      if($deployFile->checkPresenceFile($sha512)) {
+      if ($deployFile->checkPresenceFile($sha512)) {
          $file_present_in_repo = TRUE;
       }
 
@@ -1000,7 +1000,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
            $manifest_filename, "w+"
          );
          if ($handle) {
-            foreach($multiparts as $sha) {
+            foreach ($multiparts as $sha) {
                fwrite($handle, $sha."\n");
             }
             fclose($handle);
@@ -1118,11 +1118,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $fileparts_cnt = 0;
       $handle = fopen($manifests_path.$sha512, "r");
       if ($handle) {
-         while(($buffer = fgets($handle) !== FALSE)) {
+         while (($buffer = fgets($handle) !== FALSE)) {
             $fileparts_cnt++;
             $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;
             //Check if the filepart exists
-            if(!file_exists($parts_path.$path)) {
+            if (!file_exists($parts_path.$path)) {
                $fileparts_ok = FALSE;
                break;
             }
@@ -1167,7 +1167,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * @return string
     */
    static function processFilesize($filesize) {
-      if(is_numeric($filesize)) {
+      if (is_numeric($filesize)) {
          if ($filesize >= (1024 * 1024 * 1024)) {
             $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
          } else if ($filesize >= 1024 * 1024) {
@@ -1188,7 +1188,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * List number of files not used in packages
     */
-   function numberUnusedFiles(){
+   function numberUnusedFiles() {
       echo "<table width='950' class='tab_cadre_fixe'>";
 
       echo "<tr>";
@@ -1223,7 +1223,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Delete the files not used in packages
     */
-   function deleteUnusedFiles(){
+   function deleteUnusedFiles() {
       $manifests_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
       $parts_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
@@ -1235,7 +1235,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             $this->delete($data);
             $handle = fopen($manifests_path.$data['sha512'], "r");
             if ($handle) {
-               while(!feof($handle)){
+               while (!feof($handle)) {
                   $buffer = trim(fgets($handle));
                   if ($buffer != '') {
                      $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;

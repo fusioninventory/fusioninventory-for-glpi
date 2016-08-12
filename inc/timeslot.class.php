@@ -108,7 +108,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
 
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -118,12 +118,14 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
 
 
-   /*
+   /**
     * Get Timeslot entries according to the requested day of week.
+    *
     * @since 0.85+1.0
-    * @param timeslot_ids  A list of timeslot's ids.
-    * @param weekdays      The day of week (ISO-8601 numeric representation).
-    * return The list of timeslots entries organized by timeslots ids :
+    *
+    * @param array $timeslot_ids  A list of timeslot's ids.
+    * @param string $weekdays      The day of week (ISO-8601 numeric representation).
+    * return array the list of timeslots entries organized by timeslots ids :
     *    array(
     *       [timeslot #0] => array(
     *          [timeslot_entry #2] => array(
@@ -148,7 +150,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $condition = array(
          "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."')",
       );
-      if ( !is_null($weekdays) ) {
+      if (!is_null($weekdays)) {
          $condition[] = "and `day` = '".$weekdays."'";
       }
 
@@ -160,7 +162,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
          false, ''
       );
 
-      foreach ( $timeslot_entries as $timeslot_entry ) {
+      foreach ($timeslot_entries as $timeslot_entry) {
          $timeslot_id = $timeslot_entry['plugin_fusioninventory_timeslots_id'];
          $timeslot_entry_id = $timeslot_entry['id'];
          $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
@@ -172,9 +174,13 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
 
    /**
-   * Get all current active timeslots
-   * @since 0.85+1.0
-   */
+    * Get all current active timeslots
+    *
+    * @since 0.85+1.0
+    *
+    * @global object $DB
+    * @return array
+    */
    function getCurrentActiveTimeslots() {
       global $DB;
 
@@ -204,9 +210,12 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
    /**
     * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
-    * @param date    The date and time we want to transform into cursor. If null the default value
-    *                is now()
+    *
     * @since 0.85+1.0
+    *
+    * @param null|object $datetime The date and time we want to transform into
+    *                              cursor. If null the default value is now()
+    * @return integer
     */
    function getTimeslotCursor(DateTime $datetime = null) {
       if (is_null($datetime)) {
@@ -220,16 +229,14 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
 
    /**
-   * Display form for agent configuration
-   *
-   * @param $ID integer ID of the agent
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+   *  Display form for agent configuration
+    *
+    * @param integer $ID ID of the agent
+    * @param array $options
+    * @return true
+    *
+    */
    function showForm($ID, $options=array()) {
-
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
@@ -255,7 +262,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
          $pf = new PluginFusioninventoryTimeslotEntry();
          $pf->formEntry($ID);
       }
-      return true;
+      return TRUE;
    }
 }
 

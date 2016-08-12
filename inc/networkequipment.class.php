@@ -344,7 +344,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-   function displayHubConnections($items_id, $background_img){
+   function displayHubConnections($items_id, $background_img) {
 
       $NetworkPort = new NetworkPort();
 
@@ -600,7 +600,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             $day = 0;
             $hour = 0;
             list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
-         } else if($sysUpTime == "0") {
+         } else if ($sysUpTime == "0") {
             $day = 0;
             $hour = 0;
             $minute = 0;

@@ -293,14 +293,14 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                foreach ($members as $member) {
                   $computers = $computer_object->find("users_id = '${member['id']}'");
-                  foreach($computers as $computer) {
+                  foreach ($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
 
                //find computers directly associated with this group
                $computers = $computer_object->find("groups_id = '$items_id'");
-               foreach($computers as $computer) {
+               foreach ($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
 
@@ -379,10 +379,10 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       $pfCollect = new PluginFusioninventoryCollect();
 
-      foreach($computers as $computer_id) {
+      foreach ($computers as $computer_id) {
          //get agent if for this computer
          $agents_id = $agent->getAgentWithComputerid($computer_id);
-         if($agents_id === FALSE) {
+         if ($agents_id === FALSE) {
             $jobstates_id = $jobstate->add($c_input);
             $jobstate->changeStatusFinish($jobstates_id,
                                           0,
@@ -390,7 +390,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                                           1,
                                           "No agent found for [[Computer::".$computer_id."]]");
          } else {
-            foreach($definitions as $definition) {
+            foreach ($definitions as $definition) {
                $pfCollect->getFromDB($definition['PluginFusioninventoryCollect']);
 
                switch ($pfCollect->fields['type']) {

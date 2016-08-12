@@ -92,8 +92,8 @@ class PluginFusioninventoryFormatconvert {
               && !is_array($datainventory['CONTENT']['BIOS'])) {
          unset($datainventory['CONTENT']['BIOS']);
       }
-      if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])){
-         foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data){
+      if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])) {
+         foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data) {
             if (isset($data['NETWORKS'])
                     && !is_int(key($data['NETWORKS']))) {
                $datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS'] =
@@ -393,7 +393,7 @@ class PluginFusioninventoryFormatconvert {
                                                              $a_inventory['Computer']['serial']));
             }
          }
-         if (isset($array['BIOS']['MSN'])){
+         if (isset($array['BIOS']['MSN'])) {
             $a_inventory['Computer']['mserial'] = trim($array['BIOS']['MSN']);
          }
       }
@@ -1017,7 +1017,7 @@ class PluginFusioninventoryFormatconvert {
                                               'PRODUCTNAME'  => 'productname'));
 
             $array_tmp['is_dynamic'] = 1;
-            if(isset($a_peripherals['VENDORID'])
+            if (isset($a_peripherals['VENDORID'])
                      AND $a_peripherals['VENDORID'] != ''
                      AND isset($a_peripherals['PRODUCTID'])) {
 
@@ -1397,7 +1397,7 @@ class PluginFusioninventoryFormatconvert {
                    OR ($a_drives['TYPE'] == "Compact Disc")))) {
 
             } else if (isset($a_drives['VOLUMN'])
-                    && strstr($a_drives['VOLUMN'], "/dev/mapper")){
+                    && strstr($a_drives['VOLUMN'], "/dev/mapper")) {
                // LVM
                $a_split = explode("-", $a_drives['VOLUMN']);
                $volumn = end($a_split);
@@ -1429,7 +1429,7 @@ class PluginFusioninventoryFormatconvert {
                }
 
             } else if (isset($a_drives['VOLUMN'])
-                    && strstr($a_drives['VOLUMN'], "/dev/")){
+                    && strstr($a_drives['VOLUMN'], "/dev/")) {
                $detectsize = 0;
                $array_tmp = array();
                foreach ($a_inventory['storage'] as $num=>$a_physicalvol) {

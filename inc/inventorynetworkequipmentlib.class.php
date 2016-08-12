@@ -102,7 +102,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             WHERE `networkequipments_id` = '$items_id'";
          $result = $DB->query($query);
          while ($data = $DB->fetch_assoc($result)) {
-            foreach($data as $key=>$value) {
+            foreach ($data as $key=>$value) {
                $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
             }
          }
@@ -208,7 +208,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
          }
          if (count($a_ips) != 0) {
-            foreach($a_ips as $ip) {
+            foreach ($a_ips as $ip) {
                if ($ip != '127.0.0.1') {
                   $input = array();
                   $input['entities_id'] = 0;
@@ -635,7 +635,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                }
             }
             if (count($a_vlans) != 0) {
-               foreach($a_vlans as $a_vlan) {
+               foreach ($a_vlans as $a_vlan) {
                   $this->addVlan($a_vlan, $networkports_id);
                }
             }

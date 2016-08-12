@@ -82,8 +82,8 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       );
 
       $mapping = new PluginFusioninventoryMapping();
-      foreach ($logs as $itemtype=>$fields){
-         foreach ($fields as $name=>$value){
+      foreach ($logs as $itemtype=>$fields) {
+         foreach ($fields as $name=>$value) {
             $input = array();
             $mapfields = $mapping->get($itemtype, $name);
             if ($mapfields != FALSE) {

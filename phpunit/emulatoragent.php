@@ -18,7 +18,7 @@ class emulatorAgent {
       socket_listen($this->socket);
 
       //Boucle infinie, car le serveur ne doit s'arrêter que si on lui demande
-      while(TRUE) {
+      while (TRUE) {
          //Le code se bloque jusqu'à ce qu'une nouvelle connexion client est établie
          $this->client = socket_accept($this->socket);
 

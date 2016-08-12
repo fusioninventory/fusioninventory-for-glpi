@@ -85,7 +85,7 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
 
       $dir = GLPI_ROOT."/files/_files/_plugins/fusioninventory";
-      if ( file_exists($dir) ) {
+      if (file_exists($dir)) {
          $objects = scandir($dir);
 
          foreach ($objects as $object) {
@@ -148,7 +148,7 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       //
       //         // No errors for missing classes due to implementation
       //         if (!isset($CFG_GLPI['missingclasses'])
-      //                 OR !in_array($item, $CFG_GLPI['missingclasses'])){
+      //                 OR !in_array($item, $CFG_GLPI['missingclasses'])) {
       //            if (file_exists("$dir$item.class.php")) {
       //               include_once ("$dir$item.class.php");
       //               if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {

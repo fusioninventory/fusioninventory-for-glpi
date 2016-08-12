@@ -117,7 +117,7 @@ function pluginFusioninventoryGetCurrentVersion() {
             return $data['value'];
          }
       }
-      if (FieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')){
+      if (FieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')) {
          $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
             WHERE `modulename`='WAKEONLAN'
             LIMIT 1";
@@ -166,7 +166,7 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
    $files = array();
    $prefix = $dir . '/';
    $dir = dir($dir);
-   while (FALSE !== ($file = $dir->read())){
+   while (FALSE !== ($file = $dir->read())) {
       if ($file === '.' || $file === '..') {
          continue;
       }
@@ -175,7 +175,7 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
          $files[] = pluginFusioninventoryFindFiles($file, $pattern);
          continue;
       }
-      if (preg_match($pattern, $file)){
+      if (preg_match($pattern, $file)) {
           $files[] = $file;
       }
    }
@@ -187,8 +187,8 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
 
 function pluginFusioninventoryFlatArray($array) {
    $tmp = array();
-   foreach($array as $a) {
-      if ( is_array($a) ) {
+   foreach ($array as $a) {
+      if (is_array($a)) {
          $tmp = array_merge($tmp, pluginFusioninventoryFlatArray($a));
       } else {
          $tmp[] = $a;
@@ -293,9 +293,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    // ********* Rename fileparts without .gz extension (cf #1999) *********** //
 
-   if ( is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files') ) {
+   if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
       $gzfiles = pluginFusioninventoryFindFiles(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files', '/\.gz$/');
-      foreach($gzfiles as $file) {
+      foreach ($gzfiles as $file) {
          $fileWithoutExt =
             pathinfo($file, PATHINFO_DIRNAME) .
             '/' . pathinfo($file, PATHINFO_FILENAME);
@@ -585,7 +585,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DBf_handle = fopen($DB_file, "rt");
          $sql_query = fread($DBf_handle, filesize($DB_file));
          fclose($DBf_handle);
-         foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         foreach (explode(";\n", "$sql_query") as $sql_line) {
             if (Toolbox::get_magic_quotes_runtime()) {
                $sql_line=Toolbox::stripslashes_deep($sql_line);
             }
@@ -905,7 +905,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
    //Create first access to the current profile is needed
-   if ( isset( $_SESSION['glpiactiveprofile'] ) ) {
+   if (isset($_SESSION['glpiactiveprofile'])) {
       PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
    }
 
@@ -1659,7 +1659,7 @@ function do_mapping_migration($migration) {
          $a_mappingdouble[$data['id']] = $data['itemtype'].".".$data['name'];
       }
    }
-   foreach($a_mappingdouble as $mapping_id=>$mappingkey) {
+   foreach ($a_mappingdouble as $mapping_id=>$mappingkey) {
       $query = "UPDATE `glpi_plugin_fusioninventory_printercartridges`
          SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
          WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
@@ -6284,7 +6284,7 @@ function migrationDynamicGroupFields($fields) {
             $new_fields['metacriteria'][] = $new_value;
          }
       }
-   } elseif(isset($data['itemtype']) && isset($data['name'])) {
+   } elseif (isset($data['itemtype']) && isset($data['name'])) {
       //Ugrapde from 0.83, where the number of fields to search was fixed
       $oldfields = array('name'                => 2,
                          'serial'              => 5,
@@ -8038,7 +8038,7 @@ function update213to220_ConvertField($migration) {
                          "Field_3");
       $migration->migrationOneTable("glpi_plugin_tracker_snmp_history");
 
-      foreach($constantsfield as $langvalue=>$mappingvalue) {
+      foreach ($constantsfield as $langvalue=>$mappingvalue) {
          $i++;
          $query_update = "UPDATE `glpi_plugin_tracker_snmp_history`
             SET `Field`='".$mappingvalue."'
@@ -8252,7 +8252,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
 
 
-   if (     TableExists("glpi_plugin_fusioninventory_deployorders")
+   if (TableExists("glpi_plugin_fusioninventory_deployorders")
          && TableExists("glpi_plugin_fusinvdeploy_checks")
          && TableExists("glpi_plugin_fusinvdeploy_files")
          && TableExists("glpi_plugin_fusinvdeploy_actions")) {
@@ -8269,7 +8269,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       //== glpi_plugin_fusioninventory_deployorders ==
       $o_query = "SELECT * FROM glpi_plugin_fusioninventory_deployorders";
       $o_res = $DB->query($o_query);
-      while($o_datas = $DB->fetch_assoc($o_res)) {
+      while ($o_datas = $DB->fetch_assoc($o_res)) {
          $order_id = $o_datas['id'];
 
          $o_line = array();
@@ -8291,11 +8291,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
             while ($c_datas = $DB->fetch_assoc($c_res)) {
                foreach ($c_datas as $c_key => $c_value) {
                   //specific case for filesytem sizes, convert to bytes
-                  if (
-                     !empty($c_value)
-                     && is_numeric($c_value)
-                     && $c_datas['type'] !== 'freespaceGreater'
-                  ) {
+                  if (!empty($c_value)
+                          && is_numeric($c_value)
+                          && $c_datas['type'] !== 'freespaceGreater') {
                      $c_value = $c_value * 1024 * 1024;
                   }
 
@@ -8329,7 +8327,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                foreach ($f_datas as $f_key => $f_value) {
 
                   //we don't store the sha512 field in json
-                  if (  $f_key == "sha512"
+                  if ($f_key == "sha512"
                      || $f_key == "id"
                      || $f_key == "filesize"
                      || $f_key == "mimetype") {
@@ -8378,8 +8376,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
                   FROM $a_table
                   WHERE id = ".$a_datas['items_id'];
                $at_res = $DB->query($at_query);
-               while($at_datas = $DB->fetch_assoc($at_res)) {
-                  foreach($at_datas as $at_key => $at_value) {
+               while ($at_datas = $DB->fetch_assoc($at_res)) {
+                  foreach ($at_datas as $at_key => $at_value) {
                      //we don't store the id field of action itemtype table in json
                      if ($at_key == "id") {
                         continue;
@@ -8439,14 +8437,13 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
 
    //=== Fileparts ===
-   if (     TableExists('glpi_plugin_fusinvdeploy_fileparts')
-         && TableExists('glpi_plugin_fusinvdeploy_files')
-   ) {
+   if (TableExists('glpi_plugin_fusinvdeploy_fileparts')
+           && TableExists('glpi_plugin_fusinvdeploy_files')) {
       $files_list = $DB->request('glpi_plugin_fusinvdeploy_files');
       // multipart file datas
       foreach ($files_list as $file) {
          $sha = $file['sha512'];
-         if( empty($sha) ){
+         if (empty($sha)) {
             continue;
          }
          $shortsha = substr($sha, 0, 6);
@@ -8493,7 +8490,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "  files.`shortsha512` != \"\""
             ), " \n");
          $f_res = $DB->query($f_query);
-         while($f_datas = $DB->fetch_assoc($f_res)) {
+         while ($f_datas = $DB->fetch_assoc($f_res)) {
             $entry = array(
                "id"        => $f_datas["id"],
                "name"      => $f_datas["name"],
@@ -8534,32 +8531,32 @@ function migrateTablesFromFusinvDeploy ($migration) {
     */
 
    $packages = $DB->request('glpi_plugin_fusioninventory_deploypackages');
-   foreach( $packages as $order_config ) {
+   foreach ($packages as $order_config) {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $json_order = json_decode($order_config['json']);
       //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
       // Checks for /jobs json property
-      if( !isset($json_order->jobs) || !is_object($json_order->jobs) ) {
+      if (!isset($json_order->jobs) || !is_object($json_order->jobs)) {
          //print("deployorders fixer : create missing required 'jobs' property\n");
          $json_order->jobs = new stdClass();
       }
 
-      if ( !isset($json_order->jobs->checks) ) {
+      if (!isset($json_order->jobs->checks)) {
          //print("deployorders fixer : create missing required '/jobs/checks' array property\n");
          $json_order->jobs->checks = array();
       }
-      if ( !isset($json_order->jobs->actions) ) {
+      if (!isset($json_order->jobs->actions)) {
          //print("deployorders fixer : create missing required '/jobs/actions' array property\n");
          $json_order->jobs->actions = array();
       }
-      if ( !isset($json_order->jobs->associatedFiles) ) {
+      if (!isset($json_order->jobs->associatedFiles)) {
          //print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
          $json_order->jobs->associatedFiles = array();
       }
 
       // Checks for /associatedFiles json property
-      if( !isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles) ) {
+      if (!isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles)) {
          //print("deployorders fixer : create missing required 'associatedFiles' property\n");
          $json_order->associatedFiles = new stdClass();
       }

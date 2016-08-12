@@ -55,7 +55,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
 
       $tabs = array();
       $moduleTabs = array();

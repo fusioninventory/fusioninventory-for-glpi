@@ -57,7 +57,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if ($item->getID() > 0 ) {
+      if ($item->getID() > 0) {
          return __('FusionInventory historical', 'fusioninventory');
       }
       return '';
@@ -253,8 +253,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
 
       $a_list = $pfConfigLogField->find();
-      if (count($a_list)){
-         foreach ($a_list as $data){
+      if (count($a_list)) {
+         foreach ($a_list as $data) {
 
             $query_delete = "DELETE FROM `".$pfNetworkPortLog->getTable()."`
                WHERE `plugin_fusioninventory_mappings_id`='".

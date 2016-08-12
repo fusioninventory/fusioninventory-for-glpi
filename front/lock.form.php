@@ -44,14 +44,14 @@ include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 
-if(isset($_POST["unlock_field_fusioninventory"])){
+if (isset($_POST["unlock_field_fusioninventory"])) {
    $typeright = strtolower($_POST['type']);
    if ($typeright == "networkequipment") {
       $typeright = "networking";
    }
    if (Session::haveRight($typeright, UPDATE)) {
       if (isset($_POST["lockfield_fusioninventory"])
-              && count($_POST["lockfield_fusioninventory"])){
+              && count($_POST["lockfield_fusioninventory"])) {
          $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
          PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
       } else {

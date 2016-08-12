@@ -72,18 +72,18 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       $agent_actions     = importArrayFromDB($job->fields['action']);
       $task_definitions  = importArrayFromDB($job->fields['definition']);
       $agent_actionslist = array();
-      foreach($agent_actions as $targets) {
+      foreach ($agent_actions as $targets) {
          foreach ($targets as $itemtype => $items_id) {
             $item = new $itemtype();
             // Detect if agent exists
-            if($item->getFromDB($items_id)) {
+            if ($item->getFromDB($items_id)) {
                $agent_actionslist[$items_id] = 1;
             }
          }
       }
 
       // *** Add jobstate
-      if(empty($agent_actionslist)) {
+      if (empty($agent_actionslist)) {
          $a_input= array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state']                              = 0;
@@ -111,7 +111,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
          }
          $job->update($job->fields);
       } else {
-         foreach($agent_actions as $targets) {
+         foreach ($agent_actions as $targets) {
             foreach ($targets as $items_id) {
 
                if ($communication == "push") {

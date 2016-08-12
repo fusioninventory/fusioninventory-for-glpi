@@ -43,7 +43,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
    $v = 0;
    $d = 0;
-   while(!feof($pciFile)) {
+   while (!feof($pciFile)) {
       $buffer = fgets($pciFile, 4096);
 
       $stack = array();
@@ -114,7 +114,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
 
    $v = 0;
    $d = 0;
-   while(!feof($usbFile)) {
+   while (!feof($usbFile)) {
       $buffer = fgets($usbFile, 4096);
 
       $stack = array();
@@ -166,7 +166,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
 
    $ouiFile = fopen("oui.txt", "r");
    $d = 0;
-   while(!feof($ouiFile)) {
+   while (!feof($ouiFile)) {
       $buffer = fgets($ouiFile, 4096);
 
       $stack = array();

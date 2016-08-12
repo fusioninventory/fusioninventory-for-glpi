@@ -57,7 +57,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
       $ong = array();
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
@@ -344,7 +344,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
             }
             $fk = getForeignKeyFieldForItemType($itemtype);
-            foreach($ids as $key) {
+            foreach ($ids as $key) {
                $found = $equipement->find("`$fk`='".$key."'");
                $input = array();
                if (count($found) > 0) {

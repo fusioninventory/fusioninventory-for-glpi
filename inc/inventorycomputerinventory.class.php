@@ -92,7 +92,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             SET `value`='".$name."'";
       $CFG_GLPI["use_log_in_files"] = FALSE;
       $start_time = date('U');
-      while(!$DB->query($query)) {
+      while (!$DB->query($query)) {
          usleep(100000);
          if ((date('U') - $start_time) > 5) {
             $communication = new PluginFusioninventoryCommunication();
@@ -150,7 +150,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // Hack for USB Printer serial
          if (isset($arrayinventory['CONTENT']['PRINTERS'])) {
-            foreach($arrayinventory['CONTENT']['PRINTERS'] as $key=>$printer) {
+            foreach ($arrayinventory['CONTENT']['PRINTERS'] as $key=>$printer) {
                if ((isset($printer['SERIAL']))
                        AND (preg_match('/\/$/', $printer['SERIAL']))) {
                   $arrayinventory['CONTENT']['PRINTERS'][$key]['SERIAL'] =
@@ -162,7 +162,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // Hack to remove Memories with Flash types see ticket
          // http://forge.fusioninventory.org/issues/1337
          if (isset($arrayinventory['CONTENT']['MEMORIES'])) {
-            foreach($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
+            foreach ($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
                if ((isset($memory['TYPE']))
                        AND (preg_match('/Flash/', $memory['TYPE']))) {
 
@@ -213,10 +213,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['Computer']['uuid'];
          }
-         foreach($a_computerinventory['networkport'] as $network) {
+         foreach ($a_computerinventory['networkport'] as $network) {
             if (((isset($network['virtualdev']))
                     && ($network['virtualdev'] != 1))
-                    OR (!isset($network['virtualdev']))){
+                    OR (!isset($network['virtualdev']))) {
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
                   $input['mac'][] = $network['mac'];
                }
@@ -233,7 +233,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // Case of virtualmachines
          if (!isset($input['mac'])
                  && !isset($input['ip'])) {
-            foreach($a_computerinventory['networkport'] as $network) {
+            foreach ($a_computerinventory['networkport'] as $network) {
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
                   $input['mac'][] = $network['mac'];
                }
@@ -271,14 +271,14 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // TODO
 //         if (isset($arrayinventory['CONTENT']['STORAGES'])) {
-//            foreach($arrayinventory['CONTENT']['STORAGES'] as $storage) {
+//            foreach ($arrayinventory['CONTENT']['STORAGES'] as $storage) {
 //               if ((isset($storage['SERIALNUMBER'])) AND (!empty($storage['SERIALNUMBER']))) {
 //                  $input['partitionserial'][] = $storage['SERIALNUMBER'];
 //               }
 //            }
 //         }
 //         if (isset($arrayinventory['CONTENT']['computerdisk'])) {
-//            foreach($arrayinventory['CONTENT']['DRIVES'] as $drive) {
+//            foreach ($arrayinventory['CONTENT']['DRIVES'] as $drive) {
 //               if ((isset($drive['SERIAL'])) AND (!empty($drive['SERIAL']))) {
 //                  $input['hdserial'][] = $drive['SERIAL'];
 //               }

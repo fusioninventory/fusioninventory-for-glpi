@@ -115,7 +115,7 @@ if (!defined('GLPI_ROOT')) {
 
       // No errors for missing classes due to implementation
       if (!isset($CFG_GLPI['missingclasses'])
-              OR !in_array($item, $CFG_GLPI['missingclasses'])){
+              OR !in_array($item, $CFG_GLPI['missingclasses'])) {
          if (file_exists("$dir$item.class.php")) {
             include_once ("$dir$item.class.php");
             if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {

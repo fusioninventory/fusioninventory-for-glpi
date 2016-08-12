@@ -324,7 +324,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                } else {
                   $a_ports[] = $a_inventory['networkport'];
                }
-               foreach($a_ports as $port) {
+               foreach ($a_ports as $port) {
                   if (!empty($port['mac'])) {
                      $input['mac'][] = $port['mac'];
                   }

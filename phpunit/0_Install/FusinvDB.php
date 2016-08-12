@@ -92,7 +92,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcivendors"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_ouis"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbdevices"))
-            AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))){
+            AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))) {
 
             $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
             $data[0] = str_replace("( ", "(", $data[0]);
@@ -101,7 +101,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
          }
       }
 
-      foreach($a_tables as $table) {
+      foreach ($a_tables as $table) {
          $query = "SHOW CREATE TABLE ".$table;
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {

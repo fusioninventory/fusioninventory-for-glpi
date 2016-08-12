@@ -52,7 +52,7 @@ class FusioninventoryIncludePathAutoloader implements SplAutoloader
 
 //         Toolbox::logDebug($matches);
 //         Toolbox::logDebug($plugin_name);
-         if ( $plugin_name !== "fusioninventory" ) {
+         if ($plugin_name !== "fusioninventory") {
             return false;
          }
 

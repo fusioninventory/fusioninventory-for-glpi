@@ -134,7 +134,7 @@ if ($args['--force-upgrade']) {
 }
 
 
-if ( !is_null($args['--as-user']) ) {
+if (!is_null($args['--as-user'])) {
    $user = new User();
    $user->getFromDBbyName($args['--as-user']);
    $auth = new Auth();

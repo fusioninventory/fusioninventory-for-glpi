@@ -51,7 +51,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
    case 'getJobs':
       $machineid = filter_input(INPUT_GET, "machineid");
-      if(!empty($machineid)) {
+      if (!empty($machineid)) {
          $pfAgent        = new PluginFusioninventoryAgent();
          $pfAgentModule  = new PluginFusioninventoryAgentmodule();
          $pfTask         = new PluginFusioninventoryTask();
@@ -65,7 +65,7 @@ switch (filter_input(INPUT_GET, "action")) {
                array('collect')
             );
             if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
-               foreach($taskjobstates as $taskjobstate) {
+               foreach ($taskjobstates as $taskjobstate) {
                   $taskjobstate->cancel(
                      __("Collect module has been disabled for this agent", 'fusioninventory')
                   );

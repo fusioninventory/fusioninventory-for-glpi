@@ -129,7 +129,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
     *
     * @param object $item
     */
-   static function addHistory($item){
+   static function addHistory($item) {
 
       foreach ($item->oldvalues as $field=>$old_value) {
          $changes = array();

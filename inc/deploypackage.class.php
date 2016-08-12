@@ -324,7 +324,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $nb   = $DB->numrows($res);
       $json  = array();
       $i = 0;
-      while($row = $DB->fetch_assoc($res)) {
+      while ($row = $DB->fetch_assoc($res)) {
          $json['packages'][$i]['package_id'] = $row['id'];
          $json['packages'][$i]['package_name'] = $row['name'];
          $i++;
@@ -383,7 +383,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function defineTabs($options=array()) {
       $ong = array();
       $this->addDefaultFormTab($ong);
-      if ($this->fields['id'] > 0){
+      if ($this->fields['id'] > 0) {
          $this->addStandardTab('PluginFusioninventoryDeployinstall', $ong, $options);
       }
       if ($this->fields['plugin_fusioninventory_deploygroups_id'] > 0) {
@@ -460,7 +460,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       // Display an error if the package modification is not possible
       $error_msg = $this->getEditErrorMessage();
-      if(!empty($error_msg)) {
+      if (!empty($error_msg)) {
          Session::addMessageAfterRedirect($error_msg);
          Html::displayMessageAfterRedirect();
          echo "<div id='package_order_".$this->getID()."_span'>";
@@ -505,7 +505,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          /**
           * Display stored actions datas
           **/
-         if (  isset($datas['jobs'][$json_subtype])
+         if (isset($datas['jobs'][$json_subtype])
                && !empty($datas['jobs'][$json_subtype])) {
             echo  "<div id='drag_deploypackage_". $subtype . "s'>";
             echo  "<form name='remove" . $subtype. "s' ".
@@ -718,8 +718,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
 
       $zip = new ZipArchive();
-      if($zip->open($filename) == TRUE) {
-         if($zip->open($filename, ZipArchive::CREATE) == TRUE) {
+      if ($zip->open($filename) == TRUE) {
+         if ($zip->open($filename, ZipArchive::CREATE) == TRUE) {
             $zip->addEmptyDir('files');
             $zip->addEmptyDir('files/manifests');
             $zip->addEmptyDir('files/repository');
@@ -879,7 +879,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function getAssociatedFile($hash) {
       $data_o = json_decode($this->fields['json'], TRUE);
 
-      if ( array_key_exists( $hash, $data_o['associatedFiles'] ) ) {
+      if (array_key_exists( $hash, $data_o['associatedFiles'])) {
          return $data_o['associatedFiles'][$hash];
       }
       return NULL;
@@ -929,13 +929,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $error_json = json_last_error();
 
-      if ( version_compare(PHP_VERSION, '5.5.0',"ge") ) {
+      if (version_compare(PHP_VERSION, '5.5.0',"ge")) {
          $error_json_message = json_last_error_msg();
       } else {
          $error_json_message = "";
       }
       $error = 0;
-      if ( $error_json != JSON_ERROR_NONE ) {
+      if ($error_json != JSON_ERROR_NONE) {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
             __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .

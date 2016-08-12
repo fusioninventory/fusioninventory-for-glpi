@@ -152,7 +152,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($values as $type=>$value) {
          if ($this->getValue($type) === NULL) {
             $this->addValue($type, $value);
-         } else if ($update == TRUE){
+         } else if ($update == TRUE) {
             $this->updateValue($type, $value);
          }
       }
@@ -166,7 +166,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
 
       $plugin = new Plugin;
 
@@ -372,8 +372,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                                       array('value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();'));
       //if action == action_status => show blocation else hide blocaction
       echo Html::scriptBlock("
-         function changestatus(){
-            if($('#dropdown_agents_action$rand').val() != 0){
+         function changestatus() {
+            if ($('#dropdown_agents_action$rand').val() != 0) {
                $('#blocaction1').show();
                $('#blocaction2').show();
             } else {
@@ -417,7 +417,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param integer $action
     * @return string
     */
-   static function getActions($action){
+   static function getActions($action) {
       switch ($action) {
 
          case self::ACTION_STATUS :

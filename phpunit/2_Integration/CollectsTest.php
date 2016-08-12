@@ -273,7 +273,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $taskjobs_id = $pfTaskjob->add($input);
       $this->assertEquals($taskjobs_id, 1);
       $methods = array();
-      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $pfTask->prepareTaskjobs($methods);
@@ -444,7 +444,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $taskjobs_id = $pfTaskjob->add($input);
       $this->assertEquals($taskjobs_id, 1);
       $methods = array();
-      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $pfTask->prepareTaskjobs($methods);
@@ -621,7 +621,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $taskjobs_id = $pfTaskjob->add($input);
       $this->assertEquals($taskjobs_id, 1);
       $methods = array();
-      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
       $pfTask->prepareTaskjobs($methods);

@@ -409,7 +409,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
       case "glpi_plugin_fusioninventory_agents.version":
          $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          $input = "";
-         foreach ($array as $name=>$version){
+         foreach ($array as $name=>$version) {
             $input .= "<strong>".$name."</strong> : ".$version."<br/>";
          }
          $input .= "*";
@@ -901,8 +901,7 @@ function plugin_fusioninventory_install() {
             $version_detected != PLUGIN_FUSIONINVENTORY_VERSION
             AND $version_detected!='0'
          )
-      )
-   ) {
+      )) {
       pluginFusioninventoryUpdate($version_detected, $migrationname);
    } else if ((isset($version_detected))
            && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
@@ -934,15 +933,15 @@ function plugin_fusioninventory_MassiveActions($type) {
    switch ($type) {
 
       case "Computer":
-         if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
             $ma["PluginFusioninventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
-         if(Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
             $ma["PluginFusioninventoryTask".$sep."target_task"]
                = __('Target a task', 'fusioninventory');
          }
-         if(Session::haveRight('plugin_fusioninventory_group', UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_group', UPDATE)) {
             $ma["PluginFusioninventoryDeployGroup".$sep."add_to_static_group"]
                = __('Add to static group', 'fusioninventory');
          }
@@ -950,11 +949,11 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "NetworkEquipment":
       case "Printer":
-         if(Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_lock', UPDATE)) {
             $ma["PluginFusioninventoryLock".$sep."manage_locks"]
                = _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")";
          }
-         if(Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
             $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"]
                = __('Assign SNMP authentication', 'fusioninventory');
          }
@@ -1319,8 +1318,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
          $leftjoin_fusioninventory_networkequipments = 1;
          if ((in_array('glpi_plugin_fusioninventory_networkequipments', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusioninventory_configsecurities',
-                         $already_link_tables_tmp))
-            ) {
+                         $already_link_tables_tmp))) {
 
             $leftjoin_fusioninventory_networkequipments = 0;
          }
@@ -1380,8 +1378,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
          $leftjoin_fusioninventory_printers = 1;
          if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables_tmp))
             OR (in_array('glpi_plugin_fusioninventory_configsecurities',
-                         $already_link_tables_tmp))
-            ) {
+                         $already_link_tables_tmp))) {
 
             $leftjoin_fusioninventory_printers = 0;
          }
@@ -1538,7 +1535,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
             if ($field == 'id') {
                //check if this range is numeric
                $ids = explode(',', $val);
-               foreach($ids as $k=>$i) {
+               foreach ($ids as $k=>$i) {
                   if (!is_numeric($i)) {
                      unset($ids[$k]);
                   }
@@ -1571,13 +1568,12 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
          $a_modules = $pfAgentmodule->find();
          foreach ($a_modules as $data) {
             if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".
-                    $data['modulename']
-               ) {
+                    $data['modulename']) {
                if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
                   $a_exceptions = importArrayFromDB($data['exceptions']);
                   $current_id = current($a_exceptions);
                   $in = "(";
-                  foreach($a_exceptions as $agent_id) {
+                  foreach ($a_exceptions as $agent_id) {
                      $in .= $agent_id.", ";
                   }
                   $in .= ")";
@@ -1646,7 +1642,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                   $a_exceptions = importArrayFromDB($data['exceptions']);
                   $current_id = current($a_exceptions);
                   $in = "(";
-                  foreach($a_exceptions as $agent_id) {
+                  foreach ($a_exceptions as $agent_id) {
                      $in .= $agent_id.", ";
                   }
                   $in .= ")";
@@ -1900,7 +1896,7 @@ function plugin_pre_item_update_fusioninventory($parm) {
       $plugin = new Plugin();
 
       $a_plugins = PluginFusioninventoryModule::getAll();
-      foreach($a_plugins as $datas) {
+      foreach ($a_plugins as $datas) {
          $plugin->unactivate($datas['id']);
       }
    }

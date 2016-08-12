@@ -175,7 +175,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<div width='50%'>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
 
-      if (!count($locked)){
+      if (!count($locked)) {
          $locked = array();
       }
       $colspan = '2';
@@ -354,7 +354,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $tableName = getTableForItemType($itemtype);
       echo "<div width='50%'>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, 0);
-      if (!count($locked)){
+      if (!count($locked)) {
          $locked = array();
       }
       $colspan = '2';
@@ -446,9 +446,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $pfLock = new PluginFusioninventoryLock();
       $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_table, $p_items_id);
-      if (count($fieldsToLock)){
+      if (count($fieldsToLock)) {
          $fieldToDel=array_search($p_fieldToDel, $fieldsToLock);
-         if (isset($fieldsToLock[$fieldToDel])){
+         if (isset($fieldsToLock[$fieldToDel])) {
             unset ($fieldsToLock[$fieldToDel]);
          }
          if (count($fieldsToLock)) {       // there are still locks
@@ -516,7 +516,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $tableName = getTableForItemType($p_itemtype);
       $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
-      if ($DB->numrows($result)){
+      if ($DB->numrows($result)) {
          $a_lines = $pfl->find("`tablename`='".$tableName."' AND `items_id`='".$p_items_id."'");
          $a_line = current($a_lines);
          $pfl->getFromDB($a_line['id']);
@@ -578,7 +578,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $p_fieldsToLock = array_diff($p_fieldsToLock, $a_exclude);
 
       $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
-      if ($DB->numrows($result)){
+      if ($DB->numrows($result)) {
          $row = $DB->fetch_assoc($result);
          $lockedFields = importArrayFromDB($row['tablefields']);
          if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
@@ -818,7 +818,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    function getValueForKey($val, $key) {
       if ((strstr($key, "_id")
               || ($key == 'is_ocs_import'))
-         AND $val == '0'){
+         AND $val == '0') {
 
          $val = "";
       }
@@ -897,9 +897,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
                 || $itemtype == "Printer"
                 || $itemtype == "Computer") {
 
-               foreach($ids as $key) {
+               foreach ($ids as $key) {
                   if (isset($_POST["lockfield_fusioninventory"])
-                      && count($_POST["lockfield_fusioninventory"])){
+                      && count($_POST["lockfield_fusioninventory"])) {
                      $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
 
                      //lock current item

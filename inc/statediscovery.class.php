@@ -202,7 +202,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          foreach ($a_taskjobstates as $datastate) {
             $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
                                                    $datastate['id']."'");
-            foreach($a_taskjoblog as $taskjoblog) {
+            foreach ($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
                   $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);
                } else if (strstr($taskjoblog['comment'], "==importdenied==")) {

@@ -93,7 +93,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
             WHERE `printers_id` = '$printers_id'";
          $result = $DB->query($query);
          while ($data = $DB->fetch_assoc($result)) {
-            foreach($data as $key=>$value) {
+            foreach ($data as $key=>$value) {
                $db_printer[$key] = Toolbox::addslashes_deep($value);
             }
          }

@@ -408,7 +408,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       }
       if (count($a_imports)) {
          echo "<select name='type_to_delete[]' multiple size='5'>";
-         foreach($a_imports as $key => $data) {
+         foreach ($a_imports as $key => $data) {
             echo "<option value='$key'>".$data['othername']."</option>";
          }
          echo "</select>";

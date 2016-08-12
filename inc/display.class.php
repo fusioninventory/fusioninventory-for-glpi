@@ -87,7 +87,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          if ($order!= '') {
             if ($percentage > 80) {
                echo "red";
-            } else if($percentage > 60) {
+            } else if ($percentage > 60) {
                echo "orange";
             } else {
                echo "green";
@@ -95,7 +95,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          } else {
             if ($percentage < 20) {
                echo "red";
-            } else if($percentage < 40) {
+            } else if ($percentage < 40) {
                echo "orange";
             } else {
                echo "green";
@@ -137,7 +137,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    * Enable debug mode if user is in debug mode
    **/
    static function reenableusemode() {
-      if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE){
+      if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
          ini_set('display_errors', 'On');
          error_reporting(E_ALL | E_STRICT);
          set_error_handler("userErrorHandler");

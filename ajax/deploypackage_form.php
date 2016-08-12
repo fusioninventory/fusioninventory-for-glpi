@@ -262,7 +262,7 @@ switch (filter_input(INPUT_POST, "subtype")) {
       break;
 
    case 'package_json_debug':
-      if ( isset($order->fields['json']) ) {
+      if (isset($order->fields['json'])) {
          $pfDeployPackage->displayJSONDebug();
       } else {
          echo "{}";

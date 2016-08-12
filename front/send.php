@@ -43,7 +43,7 @@
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', realpath('../../..'));
 }
-if (!defined("GLPI_PLUGIN_DOC_DIR")){
+if (!defined("GLPI_PLUGIN_DOC_DIR")) {
    define("GLPI_PLUGIN_DOC_DIR", GLPI_ROOT . "/files/_plugins");
 }
 Session::checkLoginUser();
@@ -54,7 +54,7 @@ if (isset($_GET['file'])) {
    $filename = $_GET['file'];
 
    // Security test : document in $docDir
-   if (strstr($filename, "../") || strstr($filename, "..\\")){
+   if (strstr($filename, "../") || strstr($filename, "..\\")) {
       echo "Security attack !!!";
       Event::log($filename, "sendFile", 1, "security",
                  $_SESSION["glpiname"]." tries to get a non standard file.");
@@ -62,7 +62,7 @@ if (isset($_GET['file'])) {
    }
 
    $file = $docDir.'/'.$filename;
-   if (!file_exists($file)){
+   if (!file_exists($file)) {
       echo "Error file $filename does not exist";
       return;
    } else {
@@ -76,7 +76,7 @@ if (isset($_GET['file'])) {
 
       $f=fopen($file, "r");
 
-      if (!$f){
+      if (!$f) {
          echo "Error opening file $filename";
       } else {
          // Pour que les \x00 ne devienne pas \0
@@ -86,7 +86,7 @@ if (isset($_GET['file'])) {
          }
          $fsize=filesize($file);
 
-         if ($fsize){
+         if ($fsize) {
             echo fread($f, filesize($file));
          } else {
 

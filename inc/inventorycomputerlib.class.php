@@ -134,7 +134,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                 LIMIT 1";
             $result = $DB->query($query);
             while ($data = $DB->fetch_assoc($result)) {
-               foreach($data as $key=>$value) {
+               foreach ($data as $key=>$value) {
                   $data[$key] = Toolbox::addslashes_deep($value);
                }
                $db_computer = $data;
@@ -259,7 +259,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['processor']) != 0) {
-                     foreach($a_computerinventory['processor'] as $a_processor) {
+                     foreach ($a_computerinventory['processor'] as $a_processor) {
                         $this->addProcessor($a_processor, $computers_id, $no_history);
                      }
                   }
@@ -326,7 +326,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['memory']) != 0) {
-                     foreach($a_computerinventory['memory'] as $a_memory) {
+                     foreach ($a_computerinventory['memory'] as $a_memory) {
                         $this->addMemory($a_memory, $computers_id, $no_history);
                      }
                   }
@@ -389,7 +389,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['harddrive']) != 0) {
-                     foreach($a_computerinventory['harddrive'] as $a_harddrive) {
+                     foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
                         $this->addHardDisk($a_harddrive, $computers_id, $no_history);
                      }
                   }
@@ -455,7 +455,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['drive']) != 0) {
-                     foreach($a_computerinventory['drive'] as $a_drive) {
+                     foreach ($a_computerinventory['drive'] as $a_drive) {
                         $this->addDrive($a_drive, $computers_id, $no_history);
                      }
                   }
@@ -515,7 +515,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['graphiccard']) != 0) {
-                     foreach($a_computerinventory['graphiccard'] as $a_graphiccard) {
+                     foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
                         $this->addGraphicCard($a_graphiccard, $computers_id, $no_history);
                      }
                   }
@@ -576,7 +576,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['networkcard']) != 0) {
-                     foreach($a_computerinventory['networkcard'] as $a_networkcard) {
+                     foreach ($a_computerinventory['networkcard'] as $a_networkcard) {
                         $this->addNetworkCard($a_networkcard, $computers_id, $no_history);
                      }
                   }
@@ -634,7 +634,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['soundcard']) != 0) {
-                     foreach($a_computerinventory['soundcard'] as $a_soundcard) {
+                     foreach ($a_computerinventory['soundcard'] as $a_soundcard) {
                         $this->addSoundCard($a_soundcard, $computers_id, $no_history);
                      }
                   }
@@ -690,7 +690,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['controller']) != 0) {
-                     foreach($a_computerinventory['controller'] as $a_control) {
+                     foreach ($a_computerinventory['controller'] as $a_control) {
                         $this->addControl($a_control, $computers_id, $no_history);
                      }
                   }
@@ -774,7 +774,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
                      SET `value`='1'";
                $CFG_GLPI["use_log_in_files"] = FALSE;
-               while(!$DB->query($queryDBLOCK)) {
+               while (!$DB->query($queryDBLOCK)) {
                   usleep(100000);
                }
                $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -795,7 +795,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
                      SET `value`='1'";
                $CFG_GLPI["use_log_in_files"] = FALSE;
-               while(!$DB->query($queryDBLOCK)) {
+               while (!$DB->query($queryDBLOCK)) {
                   usleep(100000);
                }
                $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -899,7 +899,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
                            SET `value`='1'";
                      $CFG_GLPI["use_log_in_files"] = FALSE;
-                     while(!$DB->query($queryDBLOCK)) {
+                     while (!$DB->query($queryDBLOCK)) {
                         usleep(100000);
                      }
                      $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -921,7 +921,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
                            SET `value`='1'";
                      $CFG_GLPI["use_log_in_files"] = FALSE;
-                     while(!$DB->query($queryDBLOCK)) {
+                     while (!$DB->query($queryDBLOCK)) {
                         usleep(100000);
                      }
                      $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -1041,7 +1041,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
                if (count($a_computerinventory['virtualmachine']) != 0) {
-                  foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
+                  foreach ($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
                      $a_virtualmachine['computers_id'] = $computers_id;
                      $computerVirtualmachine->add($a_virtualmachine, array(), !$no_history);
                   }
@@ -1150,7 +1150,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
                if (count($a_computerinventory['computerdisk']) != 0) {
-                  foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
+                  foreach ($a_computerinventory['computerdisk'] as $a_computerdisk) {
                      $a_computerdisk['computers_id']  = $computers_id;
                      $a_computerdisk['is_dynamic']    = 1;
                      $a_computerdisk['_no_history']   = $no_history;
@@ -1217,7 +1217,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['antivirus']) != 0) {
-               foreach($a_computerinventory['antivirus'] as $a_antivirus) {
+               foreach ($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $computers_id;
                   $pfInventoryComputerAntivirus->add($a_antivirus, array(), !$no_history);
                }
@@ -1261,7 +1261,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['licenseinfo']) != 0) {
-               foreach($a_computerinventory['licenseinfo'] as $a_licenseinfo) {
+               foreach ($a_computerinventory['licenseinfo'] as $a_licenseinfo) {
                   $a_licenseinfo['computers_id'] = $computers_id;
                   $pfComputerLicenseInfo->add($a_licenseinfo, array(), !$no_history);
                }
@@ -1304,7 +1304,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['remote_mgmt']) != 0) {
-               foreach($a_computerinventory['remote_mgmt'] as $a_remotemgmt) {
+               foreach ($a_computerinventory['remote_mgmt'] as $a_remotemgmt) {
                   $a_remotemgmt['computers_id'] = $computers_id;
                   $pfComputerRemotemgmt->add($a_remotemgmt, array(), !$no_history);
                }
@@ -1362,7 +1362,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['batteries']) != 0) {
-               foreach($a_computerinventory['batteries'] as $a_batteries) {
+               foreach ($a_computerinventory['batteries'] as $a_batteries) {
                   $a_batteries['computers_id'] = $computers_id;
                   $pfInventoryComputerBatteries->add($a_batteries, array(), FALSE);
                }
@@ -1442,7 +1442,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_monitors) != 0) {
-               foreach($a_monitors as $key => $monitors_id) {
+               foreach ($a_monitors as $key => $monitors_id) {
                   $input = array();
                   $input['computers_id']   = $computers_id;
                   $input['itemtype']       = 'Monitor';
@@ -1736,7 +1736,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $simplenetworkport = array();
       foreach ($inventory_networkports as $key=>$a_networkport) {
          // Add ipnetwork if not exist
-         if (       $a_networkport['gateway'] != ''
+         if ($a_networkport['gateway'] != ''
                  && $a_networkport['netmask'] != ''
                  && $a_networkport['subnet']  != '') {
 
@@ -2210,7 +2210,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $nbVersions = 0;
       foreach ($a_versions as $name=>$a_softwares_id) {
-         foreach($a_softwares_id as $softwares_id) {
+         foreach ($a_softwares_id as $softwares_id) {
             $arr[] = "'".$name."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']."'";
          }
          $nbVersions++;

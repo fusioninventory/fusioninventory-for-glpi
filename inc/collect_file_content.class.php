@@ -181,7 +181,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
             }
          }
          if (count($file_data) != 0) {
-            foreach($file_data as $key=>$value) {
+            foreach ($file_data as $key=>$value) {
                $input = array(
                    'computers_id' => $computers_id,
                    'plugin_fusioninventory_collects_files_id' => $collects_files_id,

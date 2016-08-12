@@ -436,7 +436,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                           OR empty($input[$crit->fields['criteria']])) {
                      return FALSE;
                   }
-               } else if($crit->fields["criteria"] == 'itemtype') {
+               } else if ($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                } else if ($crit->fields["criteria"] == 'entityrestrict') {
                   $entityRestrict = TRUE;
@@ -489,7 +489,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
          $itemtypeselected[] = $input['itemtype'];
       } else {
-         foreach($CFG_GLPI["state_types"] as $itemtype) {
+         foreach ($CFG_GLPI["state_types"] as $itemtype) {
             if (class_exists($itemtype)) {
                $itemtypeselected[] = $itemtype;
             }
@@ -765,7 +765,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      // Import into new equipment
                      $itemtype_found = 0;
                      if (count($this->criterias)) {
-                        foreach ($this->criterias as $criteria){
+                        foreach ($this->criterias as $criteria) {
                            if ($criteria->fields['criteria'] == 'itemtype') {
                               $itemtype = $criteria->fields['pattern'];
                               if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
@@ -818,7 +818,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                // no import
                $itemtype_found = 0;
                if (count($this->criterias)) {
-                  foreach ($this->criterias as $criteria){
+                  foreach ($this->criterias as $criteria) {
                      if ($criteria->fields['criteria'] == 'itemtype') {
                         $itemtype = $criteria->fields['pattern'];
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
@@ -971,7 +971,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       global $CFG_GLPI;
 
       $types = array();
-      foreach($CFG_GLPI["state_types"] as $itemtype) {
+      foreach ($CFG_GLPI["state_types"] as $itemtype) {
          if (class_exists($itemtype)) {
             $item = new $itemtype();
             $types[$itemtype] = $item->getTypeName();

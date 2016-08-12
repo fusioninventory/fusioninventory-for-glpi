@@ -123,7 +123,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       if (isset($agent['entities_id'])) {
          $entities_id = $agent['entities_id'];
       }
-      if ( isset($PF_CONFIG['server_as_mirror'])
+      if (isset($PF_CONFIG['server_as_mirror'])
               && (bool)$PF_CONFIG['server_as_mirror'] == TRUE) {
          $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
@@ -298,7 +298,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       switch ($ma->getAction()) {
 
          case "transfert" :
-            foreach($ids as $key) {
+            foreach ($ids as $key) {
                if ($pfDeployMirror->getFromDB($key)) {
                   $input = array();
                   $input['id'] = $key;

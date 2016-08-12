@@ -194,9 +194,9 @@ class PluginFusioninventoryDeployAction {
          echo "</a><br />";
 
          foreach ($action[$action_type] as $key => $value) {
-            if (is_array($value) ) {
+            if (is_array($value)) {
                if ($key === "list") {
-                  foreach($value as $list) {
+                  foreach ($value as $list) {
                      echo $list;
                      echo " ";
                   }

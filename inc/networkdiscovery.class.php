@@ -112,11 +112,11 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       }
       if ($dynagent == '1') {
          $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
-         foreach($a_agents as $data) {
+         foreach ($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
                $pfAgent->getFromDB($data['id']);
                $a_ip = $pfAgent->getIPs();
-               foreach($a_ip as $ip) {
+               foreach ($a_ip as $ip) {
                   if ($pfTask->fields['communication'] == 'push') {
                      if ($pfTaskjob->isAgentAlive('1', $data['id'])) {
                         $a_agentlist[$data['id']] = 1;
@@ -133,7 +133,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          // Dynamic with subnet
          $pfSnmpinventory = new PluginFusioninventoryNetworkinventory();
          $taskvalid = 0;
-         foreach($a_subnet_nbip as $iprange_id=>$nbips) {
+         foreach ($a_subnet_nbip as $iprange_id=>$nbips) {
             //$maxagentpossible = $nbips/10;
             $pfIPRange->getFromDB($iprange_id);
             $a_agentListComplete = array();
@@ -263,7 +263,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
 //            $nbIpAgent = $numberIpByAgent;
             $nbIpadded = 0;
-            foreach($a_iprangelist as $iprange_id) {
+            foreach ($a_iprangelist as $iprange_id) {
                if ($ip_id == $iprange_id) {
                   $pfIPRange->getFromDB($iprange_id);
                   $s = $pfIPRange->getIp2long($pfIPRange->fields['ip_start']);

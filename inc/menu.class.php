@@ -296,7 +296,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        * Tasks
        */
       $a_menu = array();
-      if(Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
          //$a_menu[1]['name'] = __('Task management', 'fusioninventory')." (".__s('Summary').")";
          //$a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          //$a_menu[1]['link'] = $CFG_GLPI['root_doc'].
@@ -326,7 +326,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
       }
 
-      if(Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
          $a_menu[12]['name'] = __('Time slot', 'fusioninventory');
          $a_menu[12]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_timeslot.png";
          $a_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');

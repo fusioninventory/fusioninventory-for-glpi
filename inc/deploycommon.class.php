@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if(!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
@@ -103,7 +103,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          switch($itemtype) {
 
             case 'Computer':
-               if ($this->definitionFiltered("Computer", $definitions_filter) ) {
+               if ($this->definitionFiltered("Computer", $definitions_filter)) {
                   break;
                }
                $computers[] = $items_id;
@@ -129,7 +129,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                foreach ($members as $member) {
                   $computers = $computer_object->find("users_id = '".$member['id']."' "
                   . " AND `is_deleted`='0' AND `is_template`='0'");
-                  foreach($computers as $computer) {
+                  foreach ($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
@@ -137,7 +137,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                //find computers directly associated with this group
                $computers = $computer_object->find("groups_id = '$items_id' "
                        . " AND `is_deleted`='0' AND `is_template`='0'");
-               foreach($computers as $computer) {
+               foreach ($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
 
@@ -228,8 +228,8 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //We are using isset for faster processing than array_unique because we might have many
       //entries in this list.
       $tmp_computers = array();
-      foreach($computers as $computer) {
-         if(!isset($tmp_computers[$computer])) {
+      foreach ($computers as $computer) {
+         if (!isset($tmp_computers[$computer])) {
             $tmp_computers[$computer] = 1;
          }
       }
@@ -243,10 +243,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
       $package = new PluginFusioninventoryDeployPackage();
 
-      foreach($computers as $computer_id) {
+      foreach ($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
 
-         foreach($definitions as $definition) {
+         foreach ($definitions as $definition) {
             $uniqid= uniqid();
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
 
@@ -258,7 +258,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
             //get agent for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);
-            if($agents_id === FALSE) {
+            if ($agents_id === FALSE) {
                $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
                                              0,
@@ -336,7 +336,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
        * list inside Orders data like the following :
        *
        * $order_files = array()
-       * foreach($order_job["associatedFiles"] as $hash) {
+       * foreach ($order_job["associatedFiles"] as $hash) {
        *    if (!isset($order_files[$hash]) {
        *       $order_files[$hash] = PluginFusioninventoryDeployFile::getByHash($hash);
        *       $order_files[$hash]['mirrors'] = $mirrors
@@ -349,7 +349,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $mirrors = PluginFusioninventoryDeployMirror::getList(
          $taskjobstate->fields['plugin_fusioninventory_agents_id']
       );
-      foreach($order_files as $hash => $params) {
+      foreach ($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
          $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
          $order_files[$hash]['multiparts'] = array();

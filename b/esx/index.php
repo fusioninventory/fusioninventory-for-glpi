@@ -83,7 +83,7 @@ if (!empty(filter_input(INPUT_GET, "machineid"))) {
             }
 
             // return an empty dictionnary if there are no jobs.
-            if ( count($order->jobs) == 0) {
+            if (count($order->jobs) == 0) {
                $response = "{}";
             } else {
                $response = json_encode($order);

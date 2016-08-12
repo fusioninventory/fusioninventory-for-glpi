@@ -266,7 +266,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $a_subnet = array();
          $a_agentList = array();
          $a_devicesubnet = array();
-         foreach($a_NetworkEquipment as $items_id) {
+         foreach ($a_NetworkEquipment as $items_id) {
             $NetworkEquipment->getFromDB($items_id);
             $a_ip = explode(".", $NetworkEquipment->fields['ip']);
             $ip_subnet = $a_ip[0].".".$a_ip[1].".".$a_ip[2].".";
@@ -276,11 +276,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $a_subnet[$ip_subnet]++;
             $a_devicesubnet[$ip_subnet]['NetworkEquipment'][$items_id] = 1;
          }
-         foreach($a_Printer as $items_id) {
+         foreach ($a_Printer as $items_id) {
             $a_ports = $NetworkPort->find("`itemtype`='Printer'
                                           AND `items_id`='".$items_id."'
                                           AND `ip`!='127.0.0.1'");
-            foreach($a_ports as $a_port) {
+            foreach ($a_ports as $a_port) {
                $a_ip = explode(".", $a_port['ip']);
                $ip_subnet = $a_ip[0].".".$a_ip[1].".".$a_ip[2].".";
                if (!isset($a_subnet[$ip_subnet])) {
@@ -309,7 +309,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $a_input['execution_id'] = $task->fields['execution_id'];
 
          $taskvalid = 0;
-         foreach($a_agentsubnet as $subnet=>$a_agentList) {
+         foreach ($a_agentsubnet as $subnet=>$a_agentList) {
             if (!isset($a_agentList)
                     OR (isset($a_agentList)
                        && is_array($a_agentList)
@@ -325,7 +325,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      $itemtype = 'NetworkEquipment';
                   }
                   if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                     foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
+                     foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
                         $a_input['specificity'] = exportArrayToDB(
@@ -366,7 +366,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      $itemtype = 'NetworkEquipment';
                   }
                   if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                     foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
+                     foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
                         $a_input['specificity'] = exportArrayToDB(
@@ -405,7 +405,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
 
             $agent_require_model = 0;
-            foreach($a_actions as $a_action) {
+            foreach ($a_actions as $a_action) {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
 
@@ -624,8 +624,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                "Merged with ".$changestate);
          }
          $snmpauthlist=$pfConfigSecurity->find();
-         if (count($snmpauthlist)){
-            foreach ($snmpauthlist as $snmpauth){
+         if (count($snmpauthlist)) {
+            foreach ($snmpauthlist as $snmpauth) {
                $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
             }
          }
@@ -656,7 +656,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKINVENTORY');
       $a_agentsid = array();
-      foreach($a_agents as $a_agent) {
+      foreach ($a_agents as $a_agent) {
          $a_agentsid[] = $a_agent['id'];
       }
       if (count($a_agentsid) == '0') {

@@ -169,7 +169,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
             }
          }
          if (count($wmi_data) != 0) {
-            foreach($wmi_data as $key=>$value) {
+            foreach ($wmi_data as $key=>$value) {
                $input = array(
                    'computers_id' => $computers_id,
                    'plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id,

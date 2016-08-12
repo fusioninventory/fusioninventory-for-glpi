@@ -49,7 +49,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
    case 'getJobs':
       $machineid = filter_input(INPUT_GET, "machineid");
-      if(isset($machineid)) {
+      if (isset($machineid)) {
          $pfAgent        = new PluginFusioninventoryAgent();
          $pfAgentModule  = new PluginFusioninventoryAgentmodule();
          $pfTask         = new PluginFusioninventoryTask();
@@ -65,7 +65,7 @@ switch (filter_input(INPUT_GET, "action")) {
                array('deployinstall')
             );
             if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
-               foreach($taskjobstates as $taskjobstate) {
+               foreach ($taskjobstates as $taskjobstate) {
                   $taskjobstate->cancel(
                      __("Deploy module has been disabled for this agent", 'fusioninventory')
                   );
@@ -96,8 +96,8 @@ switch (filter_input(INPUT_GET, "action")) {
                   // Append order to the final json
                   $order->jobs[] = $jobstate_order['job'];
                   // Update associated files list
-                  foreach($jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
-                     if(!array_key_exists($hash, $order->associatedFiles) ) {
+                  foreach ($jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
+                     if (!array_key_exists($hash, $order->associatedFiles)) {
                         $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }
@@ -165,7 +165,7 @@ switch (filter_input(INPUT_GET, "action")) {
             }
          }
       }
-      if (is_array($params['msg']) ) {
+      if (is_array($params['msg'])) {
          $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
 
          $tmp_msg = implode("\n", $params['msg']);

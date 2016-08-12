@@ -102,8 +102,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
 
+   /**
+    * Display form to add a new time entry in timeslot
+    *
+    * @param integer $timeslots_id
+    */
    function formEntry($timeslots_id) {
-
       $ID = 0;
       $options = array();
       $this->initForm($ID, $options);
@@ -128,7 +132,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       echo '</div>';
       $hours = array();
       $dec = 15 * 60;
-      for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec){
+      for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
          $hours[$timestamp] = date('H:i', $timestamp);
       }
       PluginFusioninventoryToolbox::showHours('beginhours', array('step' => 15));
@@ -157,8 +161,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
    /**
-    * TODO: rename this method in showTimeslots() since it's not only used to delete but also to
-    * show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
+    * Display delete form
+    *
+    * @todo rename this method in showTimeslots() since it's not only used to delete but also to
+    *       show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
+    *
+    * @param integer $timeslots_id
     */
    function formDeleteEntry($timeslots_id) {
 
@@ -191,16 +199,19 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-
       $this->showFormButtons(array('canedit' => false));
    }
 
 
 
    /**
+    * Display timeslot graph
+    *
     * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
     * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
     * -- Kevin 'kiniou' Roy
+    *
+    * @param integer $timeslots_id
     */
    function showTimeSlot($timeslots_id) {
       echo "<div id='chart'></div>";
@@ -234,14 +245,17 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
             );
          }
       }
-
       echo '<script>timeslot(\''.json_encode($dates).'\')</script>';
    }
 
 
 
+   /**
+    * Add a new entry
+    *
+    * @param array $data
+    */
    function addEntry($data) {
-
       if ($data['lastday'] < $data['beginday']) {
          return;
       } else if ($data['lastday'] == $data['beginday']
@@ -348,6 +362,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
 
+   /**
+    * Merge 2 periods when 2 entries have a same time part
+    *
+    * @param array $periods
+    * @return array
+    */
    function mergePeriods($periods) {
 
       $update = false;
