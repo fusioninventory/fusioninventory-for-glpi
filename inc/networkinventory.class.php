@@ -1,52 +1,67 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage network inventory task jobs.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage network inventory task jobs.
+ */
 class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstate each task for each device for each agent
+
+   /**
+    * Get all devices and put in taskjobstate each task for each device for
+    * each agent
+    *
+    * @global object $DB
+    * @param integer $taskjobs_id
+    * @return string
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -550,10 +565,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
 
-   // When agent contact server, this function send datas to agent
-   /*
-    * $a_Taskjobstate array with all taskjobstate
+   /**
+    * When agent contact server, this function send datas to agent
     *
+    * @param object $jobstate PluginFusioninventoryTaskjobstate instance
+    * @return string
     */
    function run($jobstate) {
 
@@ -635,6 +651,17 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
 
+   /**
+    * Get agents by the subnet given
+    *
+    * @global object $DB
+    * @param integer $nb_computers
+    * @param string $communication
+    * @param string $subnet
+    * @param string $ipstart
+    * @param string $ipend
+    * @return array
+    */
    function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
 
@@ -712,7 +739,14 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
 
-   function getDevicesOfIPRange($items_id) {
+   /**
+    * Get the devices have an IP in the IP range
+    *
+    * @global object $DB
+    * @param integer $ipranges_id
+    * @return array
+    */
+   function getDevicesOfIPRange($ipranges_id) {
       global $DB;
 
       $devicesList = array();
@@ -721,7 +755,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       // get all snmpauth
       $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
 
-      $pfIPRange->getFromDB($items_id);
+      $pfIPRange->getFromDB($ipranges_id);
    // Search NetworkEquipment
       $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,

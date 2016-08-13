@@ -1,54 +1,56 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the functions used in many classes.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-// add readable json encode for PHP < 5.4
-include_once( dirname(__FILE__) . "/../lib/pretty_json.php" );
-
 /**
- * Toolbox of various utility methods
+ * Manage the functions used in many classes.
  **/
 class PluginFusioninventoryToolbox {
 
@@ -305,6 +307,7 @@ class PluginFusioninventoryToolbox {
     *
     * @param integer $items_id id of the unmanaged device
     * @param string $xml xml informations (with XML structure)
+    * @param string $itemtype
     */
    static function writeXML($items_id, $xml, $itemtype) {
 
@@ -569,6 +572,9 @@ class PluginFusioninventoryToolbox {
     *           )
     *           ...
     *     )
+    *
+    * @param object $mysql_result
+    * @return array
     */
    static function fetchAssocByTable($mysql_result) {
       $results = array();
@@ -697,11 +703,11 @@ class PluginFusioninventoryToolbox {
 
    /**
     *  Execute a function as Fusioninventory user
+    *
     *  @param string|array $function
     *  @param array $args
     *  @return string the normaly returned value from executed callable
     */
-
    function executeAsFusioninventoryUser($function, array $args = array()) {
 
       $config = new PluginFusioninventoryConfig();

@@ -1,47 +1,63 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the task system.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access this file directly");
+}
+
+/**
+ * Manage the task system.
+ */
 class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_task';
 
    /**
@@ -726,7 +742,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Return the list of agent's ids.
       // (We used hash keys to avoid duplicates in the list)
-      return(array_keys($agents));
+      return array_keys($agents);
    }
 
 
@@ -1167,6 +1183,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $format_chrono['end'] = microtime(true);
       if ($debug_mode) {
 
+         /**
+          * Display tmp log
+          *
+          * @return string
+          */
          function tmp_display_log($log) {
             return "ID:". $log['task_id'] . "(".$log['task_name'].")";
          }
