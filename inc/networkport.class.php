@@ -55,10 +55,34 @@ if (!defined('GLPI_ROOT')) {
  * in database.
  */
 class PluginFusioninventoryNetworkPort extends CommonDBTM {
+
+   /**
+    * Initialize the port of database
+    *
+    * @var array
+    */
    private $portDB = array();
+
+   /**
+    * Initialize the port information from inventory
+    *
+    * @var array
+    */
    private $portModif = array();
+
+   /**
+    * Initialize network port id
+    *
+    * @var integer
+    */
    private $plugin_fusinvsnmp_networkports_id = 0;
-   private $portVlans=array(); // number and name for each vlan
+
+   /**
+    * Initialize VLANs (number and name) of port
+    *
+    * @var array
+    */
+   private $portVlans=array();
 
 
 

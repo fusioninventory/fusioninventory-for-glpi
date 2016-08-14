@@ -61,9 +61,18 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     */
    static $rightname = "plugin_fusioninventory_rulelocation";
 
-   // From Rule
-   //public $right='rule_import';
+   /**
+    * Set these rules can be sorted
+    *
+    * @var boolean
+    */
    public $can_sort=TRUE;
+
+   /**
+    * Set these rules don't have specific parameters
+    *
+    * @var boolean
+    */
    public $specific_parameters = FALSE;
 
    const PATTERN_CIDR     = 333;

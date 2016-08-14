@@ -30,7 +30,7 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to wake up the agents
+ * This file is used to manage the wake up the agents
  *
  * ------------------------------------------------------------------------
  *
@@ -45,8 +45,12 @@
  *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
+
 /**
- * Wake up the agents remotely.
+ * Manage the wake up the agents remotely.
  */
 class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
@@ -57,11 +61,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
     * @var string
     */
    static $rightname = 'plugin_fusioninventory_taskjob';
-
-   function __construct() {
-      parent::__construct();
-   }
-
 
 
    /**

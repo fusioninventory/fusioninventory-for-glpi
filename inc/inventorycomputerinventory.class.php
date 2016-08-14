@@ -52,7 +52,19 @@ if (!defined('GLPI_ROOT')) {
  * Manage the import of computer inventory.
  */
 class PluginFusioninventoryInventoryComputerInventory {
+
+   /**
+    * Initialize the array of inventory
+    *
+    * @var array
+    */
    private $arrayinventory = array();
+
+   /**
+    * initialize the device_id of the agent
+    *
+    * @var string
+    */
    private $device_id = '';
 
 

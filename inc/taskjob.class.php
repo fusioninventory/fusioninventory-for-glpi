@@ -60,6 +60,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     */
    static $rightname = 'plugin_fusioninventory_task';
 
+
+   /**
+    * __construct function
+    */
    function __construct() {
       parent::__construct();
    }

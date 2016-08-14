@@ -52,8 +52,13 @@ if (!defined('GLPI_ROOT')) {
  * Manage the configuration of the plugin.
  */
 class PluginFusioninventoryConfig extends CommonDBTM {
-   public $displaylist = FALSE;
 
+   /**
+    * Initialize the displaylist public variable
+    *
+    * @var boolean
+    */
+   public $displaylist = FALSE;
 
    /**
     * The right name for this class
@@ -62,7 +67,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_configuration';
 
+   /**
+    * Define number to the action 'clean' of agents
+    *
+    * @var integer
+    */
    CONST ACTION_CLEAN = 0;
+
+   /**
+    * Define number to the action 'change status' of agents
+    *
+    * @var integer
+    */
    CONST ACTION_STATUS = 1;
 
 

@@ -62,11 +62,32 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     */
    static $rightname = "plugin_fusioninventory_group";
 
-   // From CommonDBRelation
+   /**
+    * Itemtype for the first part of relation
+    *
+    * @var string
+    */
    static public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
+
+   /**
+    * id field name for the first part of relation
+    *
+    * @var string
+    */
    static public $items_id_1 = 'groups_id';
 
+   /**
+    * Itemtype for the second part of relation
+    *
+    * @var string
+    */
    static public $itemtype_2 = 'itemtype';
+
+   /**
+    * id field name for the second part of relation
+    *
+    * @var string
+    */
    static public $items_id_2 = 'items_id';
 
    /**

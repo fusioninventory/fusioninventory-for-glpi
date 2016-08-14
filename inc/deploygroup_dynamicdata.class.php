@@ -62,8 +62,18 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     */
    static $rightname = "plugin_fusioninventory_group";
 
-   // From CommonDBChild
+   /**
+    * Itemtype of the item linked
+    *
+    * @var string
+    */
    static public $itemtype = 'PluginFusioninventoryDeployGroup';
+
+   /**
+    * id field of the item linked
+    *
+    * @var string
+    */
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
 
@@ -180,7 +190,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     *
     * @since 0.85+1.0
     *
-    * @param object group PluginFusioninventoryDeployGroup instance
+    * @param object $group PluginFusioninventoryDeployGroup instance
     * @return array
     */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {

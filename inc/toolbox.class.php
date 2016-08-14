@@ -702,11 +702,11 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-    *  Execute a function as Fusioninventory user
+    * Execute a function as Fusioninventory user
     *
-    *  @param string|array $function
-    *  @param array $args
-    *  @return string the normaly returned value from executed callable
+    * @param string|array $function
+    * @param array $args
+    * @return string the normaly returned value from executed callable
     */
    function executeAsFusioninventoryUser($function, array $args = array()) {
 

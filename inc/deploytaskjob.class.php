@@ -45,11 +45,14 @@
  *
  */
 
-/* TODO: This class should inherit the PluginFusioninventoryTaskjob
- */
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
 
 /**
  * Manage the deploy task job.
+ *
+ * @todo This class should inherit the PluginFusioninventoryTaskjob
  */
 class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 

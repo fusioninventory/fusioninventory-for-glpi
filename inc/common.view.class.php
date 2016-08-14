@@ -45,25 +45,56 @@
  *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
+
 /**
  * It's a common code for display information in GLPI.
  */
 class PluginFusioninventoryCommonView extends CommonDBTM {
 
-   const MSG_INFO    = 0;
-   const MSG_WARNING = 1;
-   const MSG_ERROR   = 2;
+   /**
+    * Define the number for the message information constant
+    *
+    * @var interger
+    */
+   const MSG_INFO = 0;
 
+   /**
+    * Define the number for the message warning constant
+    *
+    * @var interger
+    */
+   const MSG_WARNING = 1;
+
+   /**
+    * Define the number for the message error constant
+    *
+    * @var interger
+    */
+   const MSG_ERROR = 2;
+
+   /**
+    * Define default value for the base URLs 
+    *
+    * @var array
+    */
    public $base_urls = array();
 
+   /**
+    * __contruct function and the different base URLs
+    *
+    * @global array $CFG_GLPI
+    */
    public function __construct() {
       global $CFG_GLPI;
       parent::__construct();
       $this->base_urls = array(
-         'fi.base' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory",
-         'fi.ajax' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/ajax",
-         'fi.front' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front",
-         'fi.pics' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/pics",
+         'fi.base'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory",
+         'fi.ajax'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/ajax",
+         'fi.front'  => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front",
+         'fi.pics'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/pics",
          'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
       );
    }

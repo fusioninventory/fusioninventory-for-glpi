@@ -53,13 +53,46 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
-   // From CommonDBRelation
+   /**
+    * Itemtype for the first part of relation
+    *
+    * @var string
+    */
    static public $itemtype_1    = 'PluginFusioninventoryIPRange';
+
+   /**
+    * id field name for the first part of relation
+    *
+    * @var string
+    */
    static public $items_id_1    = 'plugin_fusioninventory_ipranges_id';
+
+   /**
+    * Restrict the first item to the current entity
+    *
+    * @var string
+    */
    static public $take_entity_1 = true ;
 
+   /**
+    * Itemtype for the second part of relation
+    *
+    * @var string
+    */
    static public $itemtype_2    = 'PluginFusioninventoryConfigSecurity';
+
+   /**
+    * id field name for the second part of relation
+    *
+    * @var string
+    */
    static public $items_id_2    = 'plugin_fusioninventory_configsecurities_id';
+
+   /**
+    * Not restrict the second item to the current entity
+    *
+    * @var string
+    */
    static public $take_entity_2 = false ;
 
 

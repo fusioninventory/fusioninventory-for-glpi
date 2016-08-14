@@ -53,17 +53,55 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
-   /*
-    * Define different state
+   /**
+    * Define state task started
+    *
+    * @var integer
     */
+   const TASK_STARTED = 1;
 
-   const TASK_STARTED            = 1;
-   const TASK_OK                 = 2;
+   /**
+    * Define state task OK / successful
+    *
+    * @var integer
+    */
+   const TASK_OK = 2;
+
+   /**
+    * Define state task in error or replanned
+    *
+    * @var integer
+    */
    const TASK_ERROR_OR_REPLANNED = 3;
-   const TASK_ERROR              = 4;
-   const TASK_INFO               = 5;
-   const TASK_RUNNING            = 6;
-   const TASK_PREPARED           = 7;
+
+   /**
+    * Define state task in error
+    *
+    * @var integer
+    */
+   const TASK_ERROR = 4;
+
+   /**
+    * Define state task information
+    *
+    * @var integer
+    */
+   const TASK_INFO = 5;
+
+   /**
+    * Define state task running
+    *
+    * @var integer
+    */
+   const TASK_RUNNING = 6;
+
+   /**
+    * Define state task prepared, so wait agent contact the server to get
+    * this task
+    *
+    * @var integer
+    */
+   const TASK_PREPARED = 7;
 
 
 

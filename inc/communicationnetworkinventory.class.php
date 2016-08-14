@@ -55,6 +55,11 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryCommunicationNetworkInventory {
 
+   /**
+    * Define protected variables
+    *
+    * @var null
+    */
    private $logFile, $agent, $arrayinventory;
 
    /**
@@ -65,6 +70,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
 
+   /**
+    * __contruct function where fill logFile if extradebug enabled
+    */
    function __construct() {
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';

@@ -54,6 +54,9 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
+   /**
+    * __contruct function where initialize base URLs
+    */
    function __construct() {
       parent::__construct();
       $this->base_urls = array_merge( $this->base_urls, array(

@@ -53,7 +53,19 @@ if (!defined('GLPI_ROOT')) {
  * Used to convert inventory from agent to inventory ready to inject in GLPI.
  */
 class PluginFusioninventoryFormatconvert {
+
+   /**
+    * Initialize the foreignkey itemtypes
+    *
+    * @var array
+    */
    var $foreignkey_itemtype = array();
+
+   /**
+    * Initialize the manufacturer cache
+    *
+    * @var array
+    */
    var $manufacturer_cache = array();
 
 

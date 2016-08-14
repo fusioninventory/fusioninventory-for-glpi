@@ -60,6 +60,12 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_task';
 
+
+   /**
+    * __contruct function where add variable in $CFG_GLPI
+    *
+    * @global array $CFG_GLPI
+    */
    function __construct() {
       global $CFG_GLPI;
 

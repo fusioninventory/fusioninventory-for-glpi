@@ -54,14 +54,47 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
 
-   // From CommonDBRelation
-   static public $itemtype_1          = 'PluginFusioninventoryDeployPackage';
-   static public $items_id_1          = 'plugin_fusioninventory_deploypackages_id';
-   static public $itemtype_2          = 'Entity';
-   static public $items_id_2          = 'entities_id';
+   /**
+    * Itemtype for the first part of relation
+    *
+    * @var string
+    */
+   static public $itemtype_1 = 'PluginFusioninventoryDeployPackage';
 
-   static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
-   static public $logs_for_item_2     = false;
+   /**
+    * id field name for the first part of relation
+    *
+    * @var string
+    */
+   static public $items_id_1 = 'plugin_fusioninventory_deploypackages_id';
+
+   /**
+    * Itemtype for the second part of relation
+    *
+    * @var string
+    */
+   static public $itemtype_2 = 'Entity';
+
+   /**
+    * id field name for the second part of relation
+    *
+    * @var string
+    */
+   static public $items_id_2 = 'entities_id';
+
+   /**
+    * Set we don't check parent right of the second item
+    *
+    * @var integer
+    */
+   static public $checkItem_2_Rights = self::DONT_CHECK_ITEM_RIGHTS;
+
+   /**
+    * Logs for the second item are disabled
+    *
+    * @var type
+    */
+   static public $logs_for_item_2 = false;
 
 
    /**

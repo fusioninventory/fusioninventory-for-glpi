@@ -53,18 +53,60 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
-   /*
-    * Taskjobstate status definitions
+   /**
+    * Define constant state prepared.
+    * The job is just prepared and waiting for agent request
+    *
+    * @var integer
     */
+   const PREPARED = 0;
 
-   const PREPARED             = 0;  // the job is just prepared and waiting for agent request
-   const SERVER_HAS_SENT_DATA = 1;  // the job is running and the server sent the job config
-   const AGENT_HAS_SENT_DATA  = 2;  // the job is running and the agent sent reply to the server
-   const FINISHED             = 3;  // the agent completed successfully the job
-   const IN_ERROR             = 4;  // the agent failed to complete the job
-   const CANCELLED            = 5;  // the job has been cancelled either by a user or the agent
-                                    // himself (eg. if it has been forbidden to run this taskjob)
+   /**
+    * Define constant state has sent data to agent and not have the answer.
+    * The job is running and the server sent the job config
+    *
+    * @var integer
+    */
+   const SERVER_HAS_SENT_DATA = 1;
 
+   /**
+    * Define constant state agent has sent data.
+    * The job is running and the agent sent reply to the server
+    *
+    * @var integer
+    */
+   const AGENT_HAS_SENT_DATA = 2;
+
+   /**
+    * Define constant state finished.
+    * The agent completed successfully the job
+    *
+    * @var integer
+    */
+   const FINISHED = 3;
+
+   /**
+    * Define constant state in error.
+    * The agent failed to complete the job
+    *
+    * @var integer
+    */
+   const IN_ERROR = 4;
+
+   /**
+    * Define constant state cancelled
+    * The job has been cancelled either by a user or the agent himself (eg. if
+    * it has been forbidden to run this taskjob)
+    *
+    * @var integer
+    */
+   const CANCELLED = 5;
+
+   /**
+    * Initialize the public method
+    *
+    * @var string
+    */
    public $method = '';
 
 

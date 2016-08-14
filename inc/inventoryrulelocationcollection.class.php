@@ -61,9 +61,18 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
     */
    static $rightname = "plugin_fusioninventory_rulelocation";
 
-   // From RuleCollection
+   /**
+    * Set stop play rules when have the first rule of list match
+    *
+    * @var boolean
+    */
    public $stop_on_first_match=TRUE;
-   //public $right='rule_import';
+
+   /**
+    * Define the name of menu option
+    *
+    * @var string
+    */
    public $menu_option='test';
 
 

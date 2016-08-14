@@ -54,9 +54,19 @@ if (!defined('GLPI_ROOT')) {
  * Manage communication with agents using XML
  */
 class PluginFusioninventoryCommunication {
+
+   /**
+    * Define message variable
+    *
+    * @var null
+    */
    protected $message;
 
 
+
+   /**
+    * __contruct function used to initialize protected message variable
+    */
    function __construct() {
       $this->message = new SimpleXMLElement(
                  "<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>"

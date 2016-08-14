@@ -54,13 +54,46 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDeployPackage_Profile extends CommonDBRelation {
 
-   // From CommonDBRelation
+   /**
+    * Itemtype for the first part of relation
+    *
+    * @var string
+    */
    static public $itemtype_1          = 'PluginFusioninventoryDeployPackage';
+
+   /**
+    * id field name for the first part of relation
+    *
+    * @var string
+    */
    static public $items_id_1          = 'plugin_fusioninventory_deploypackages_id';
+
+   /**
+    * Itemtype for the second part of relation
+    *
+    * @var string
+    */
    static public $itemtype_2          = 'Profile';
+
+   /**
+    * id field name for the second part of relation
+    *
+    * @var string
+    */
    static public $items_id_2          = 'profiles_id';
 
+   /**
+    * Set we don't check parent right of the second item
+    *
+    * @var integer
+    */
    static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
+
+   /**
+    * Logs for the second item are disabled
+    *
+    * @var type
+    */
    static public $logs_for_item_2     = false;
 
 

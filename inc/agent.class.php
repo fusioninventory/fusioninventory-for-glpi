@@ -55,7 +55,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    /**
     * We activate the history.
-    * 
+    *
     * @var boolean
     */
    public $dohistory = TRUE;

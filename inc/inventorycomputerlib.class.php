@@ -54,18 +54,44 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
+   /**
+    * Define the name of the table
+    *
+    * @var string
+    */
    var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
+
+   /**
+    * Initialize the list of software
+    *
+    * @var array
+    */
    var $softList = array();
+
+   /**
+    * Initialize the list of software versions
+    *
+    * @var array
+    */
    var $softVersionList = array();
+
+   /**
+    * Initilize the list of logs to add in the database
+    *
+    * @var array
+    */
    var $log_add = array();
 
 
+   /**
+    * __contruct function where initialize many variables
+    */
    function __construct() {
-      $this->software                  = new Software();
-      $this->softwareVersion           = new SoftwareVersion();
-      $this->computer_SoftwareVersion  = new Computer_SoftwareVersion();
-      $this->softcatrule               = new RuleSoftwareCategoryCollection();
-      $this->computer                  = new Computer();
+      $this->software                = new Software();
+      $this->softwareVersion         = new SoftwareVersion();
+      $this->computerSoftwareVersion = new Computer_SoftwareVersion();
+      $this->softcatrule             = new RuleSoftwareCategoryCollection();
+      $this->computer                = new Computer();
    }
 
 
@@ -874,13 +900,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_software) > 0) {
                      // Delete softwares in DB
                      foreach ($db_software as $idtmp) {
-                        $this->computer_SoftwareVersion->getFromDB($idtmp);
-                        $this->softwareVersion->getFromDB($this->computer_SoftwareVersion->fields['softwareversions_id']);
-//                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
+                        $this->computerSoftwareVersion->getFromDB($idtmp);
+                        $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
+//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
 
                         if (!$no_history) {
                            $changes[0] = '0';
-                           $changes[1] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
+                           $changes[1] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
                            $changes[2] = "";
                            $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
@@ -2345,17 +2371,17 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['_no_history']          = TRUE;
       $a_software['entities_id']          = $computers_id['entities_id'];
 
-      if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
+      if ($this->computerSoftwareVersion->add($a_software, $options, FALSE)) {
          if (!$no_history) {
             $changes[0] = '0';
             $changes[1] = "";
-            $changes[2] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
+            $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
             $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
                          Log::HISTORY_INSTALL_SOFTWARE);
 
             $changes[0] = '0';
             $changes[1] = "";
-            $changes[2] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem2($this->computer, 'add'));
+            $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem2($this->computer, 'add'));
             $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                          Log::HISTORY_INSTALL_SOFTWARE);
          }

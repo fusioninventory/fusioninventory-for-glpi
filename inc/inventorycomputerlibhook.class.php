@@ -56,15 +56,18 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerLibhook {
 
 
-    function __construct() {
-       if (!isset($_SESSION["plugin_fusioninventory_history_add"])) {
+   /**
+    * __contruct function where initilize sessions variables
+    */
+   function __construct() {
+      if (!isset($_SESSION["plugin_fusioninventory_history_add"])) {
          $_SESSION["plugin_fusioninventory_history_add"] = TRUE;
-       }
-       if (!isset($_SESSION["plugin_fusioninventory_no_history_add"])) {
+      }
+      if (!isset($_SESSION["plugin_fusioninventory_no_history_add"])) {
          $_SESSION["plugin_fusioninventory_no_history_add"] = FALSE;
-       }
-       $_SESSION["plugin_fusioninventory_userdefined"] = 0;
-    }
+      }
+      $_SESSION["plugin_fusioninventory_userdefined"] = 0;
+   }
 
 
 

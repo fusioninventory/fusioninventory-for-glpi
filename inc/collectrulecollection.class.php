@@ -60,9 +60,18 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
     */
    static $rightname = "plugin_fusioninventory_rulecollect";
 
-   // From RuleCollection
+   /**
+    * Set we check all rules
+    *
+    * @var boolean
+    */
    public $stop_on_first_match=FALSE;
-   //public $right='rule_import';
+
+   /**
+    * Set the menu option name
+    *
+    * @var string
+    */
    public $menu_option='test';
 
 

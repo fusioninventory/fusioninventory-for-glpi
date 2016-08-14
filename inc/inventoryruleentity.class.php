@@ -54,9 +54,18 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
-   // From Rule
-   //public $right='rule_import';
+   /**
+    * Set these rules can be sorted
+    *
+    * @var boolean
+    */
    public $can_sort=TRUE;
+
+   /**
+    * Set these rules don't have specific parameters
+    *
+    * @var boolean
+    */
    public $specific_parameters = FALSE;
 
    /**

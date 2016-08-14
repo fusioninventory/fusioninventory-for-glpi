@@ -53,9 +53,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryCollect_File extends CommonDBTM {
 
-   const FILE = 'file';
-   const DIR  = 'dir';
-
    /**
     * The right name for this class
     *
@@ -280,8 +277,8 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray('filter_nametype', array(
-          'none'      => __('Disabled', 'fusioninventory'),
-          'name' => __('Non sentitive case', 'fusioninventory'),
+          'none'  => __('Disabled', 'fusioninventory'),
+          'name'  => __('Non sentitive case', 'fusioninventory'),
           'iname' => __('Sentitive case', 'fusioninventory')
       ));
       echo "<input type='text' name='filter_name' value='' />";
@@ -291,8 +288,8 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray('type',
-         array(self::FILE => __('File', 'fusioninventory'),
-               self::DIR  => __('Folder', 'fusioninventory')
+         array('file' => __('File', 'fusioninventory'),
+               'dir'  => __('Folder', 'fusioninventory')
          )
       );
       echo "</td>";

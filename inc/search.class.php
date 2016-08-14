@@ -56,8 +56,25 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventorySearch extends CommonDBTM {
 
+   /**
+    * Define the form URL
+    *
+    * @var string
+    */
    public $formurl = 'monitoring/front/componentscatalog_rule.form.php';
+
+   /**
+    * Define the custom id field name
+    *
+    * @var string
+    */
    public $customIdVar = 'plugin_monitoring_componentscalalog_id';
+
+   /**
+    * Set the display the delete button to yes
+    *
+    * @var boolean
+    */
    public $displaydeletebuton = TRUE;
 
    /*
@@ -68,8 +85,12 @@ class PluginFusioninventorySearch extends CommonDBTM {
 
 
 
-   /*
+   /**
     * Cloned Core function to display with our require.
+    *
+    * @global array $CFG_GLPI
+    * @param string $itemtype
+    * @param array $params
     */
    function showGenericSearch($itemtype, $params) {
       global $CFG_GLPI;
@@ -516,8 +537,14 @@ echo "<tr>";
 
 
 
-   /*
+   /**
     * Clone of Search::showList but only to have SQL query
+    *
+    * @global array $CFG_GLPI
+    * @param string $itemtype
+    * @param array $params
+    * @param integer $items_id_check
+    * @return boolean
     */
    function constructSQL($itemtype,$params, $items_id_check=0) {
       global $CFG_GLPI;

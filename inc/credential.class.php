@@ -53,8 +53,25 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryCredential extends CommonDropdown {
 
+   /**
+    * Define first level menu name
+    *
+    * @var string
+    */
    public $first_level_menu  = "plugins";
+
+   /**
+    * Define second level menu name
+    *
+    * @var string
+    */
    public $second_level_menu = "pluginfusioninventorymenu";
+
+   /**
+    * Define third level menu name
+    *
+    * @var string
+    */
    public $third_level_menu  = "credential";
 
    /**

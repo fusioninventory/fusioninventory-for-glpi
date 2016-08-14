@@ -64,11 +64,25 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    const LINK_RESULT_CREATE            = 1;
    const LINK_RESULT_LINK              = 2;
 
+   /**
+    * Define the matching only available
+    *
+    * @var type
+    */
    var $restrict_matching = Rule::AND_MATCHING;
 
-
-   // From Rule
+   /**
+    * Define the right name
+    *
+    * @var type
+    */
    static public $right = 'rule_import';
+
+   /**
+    * Set these rules can be sorted
+    *
+    * @var type
+    */
    public $can_sort = TRUE;
 
 

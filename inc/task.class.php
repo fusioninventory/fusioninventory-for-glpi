@@ -1186,6 +1186,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          /**
           * Display tmp log
           *
+          * @param array $log
           * @return string
           */
          function tmp_display_log($log) {

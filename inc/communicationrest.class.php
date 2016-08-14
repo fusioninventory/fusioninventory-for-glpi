@@ -49,19 +49,11 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
 /**
  * Manage the communication in REST with the agents.
  */
 class PluginFusioninventoryCommunicationRest {
 
-   /**
-    * Manage communication between agent and server
-    *
-    * @params an array of GET parameters given by the agent
-    *
-    * @return an array of orders to send to the agent
-    */
    /**
     * Manage communication between agent and server
     *

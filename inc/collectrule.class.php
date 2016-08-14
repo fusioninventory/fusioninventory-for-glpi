@@ -62,7 +62,18 @@ class PluginFusioninventoryCollectRule extends Rule {
     */
    static $rightname = "plugin_fusioninventory_rulecollect";
 
+   /**
+    * Set these rules can be sorted
+    *
+    * @var boolean
+    */
    public $can_sort=TRUE;
+
+   /**
+    * Set these rules not have specific parameters
+    *
+    * @var boolean
+    */
    public $specific_parameters = FALSE;
 
 

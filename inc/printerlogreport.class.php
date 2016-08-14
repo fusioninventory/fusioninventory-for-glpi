@@ -53,6 +53,11 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
 
+   /**
+    * __contruct function where initialize some variables
+    *
+    * @global array $CFG_GLPI
+    */
    function __construct() {
       global $CFG_GLPI;
       $this->table = "glpi_plugin_fusioninventory_printers";

@@ -54,8 +54,18 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
-   //Group type definition
+   /**
+    * Define constant name of static group
+    *
+    * @var string
+    */
    const STATIC_GROUP  = 'STATIC';
+
+   /**
+    * Define constant name of dynamic group
+    *
+    * @var string
+    */
    const DYNAMIC_GROUP = 'DYNAMIC';
 
    /**
@@ -65,6 +75,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    static $rightname = "plugin_fusioninventory_group";
 
+   /**
+    * Define the array of itemtype allowed in static groups
+    *
+    * @var type
+    */
    protected $static_group_types = array('Computer');
 
    /**
@@ -76,6 +91,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * __contruct function used to define the 2 types of groups
+    */
    public function __construct() {
       $this->grouptypes = array(
             self::STATIC_GROUP  => __('Static group', 'fusioninventory'),

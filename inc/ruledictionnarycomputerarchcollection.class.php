@@ -53,6 +53,12 @@ if (!defined('GLPI_ROOT')) {
  * Manage the computer architecture dictionnaries collection.
  */
 class PluginFusioninventoryRuleDictionnaryComputerArchCollection extends RuleDictionnaryDropdownCollection {
+
+   /**
+    * Define the table related with this rule
+    *
+    * @var type
+    */
    public $item_table  = "glpi_plugin_fusioninventory_computerarchs";
 
 

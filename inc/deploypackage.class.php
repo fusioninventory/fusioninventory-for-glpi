@@ -55,6 +55,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    // Tasks running with this package (updated with getRunningTasks method)
+   /**
+    * Initialize the tasks running with this package (updated with
+    * getRunningTasks method)
+    *
+    * @var array
+    */
    public $running_tasks = array();
 
    /**
@@ -64,11 +70,33 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_package';
 
-   // For visibility for self-service deploy
-   protected $users     = array();
-   protected $groups    = array();
-   protected $profiles  = array();
-   protected $entities  = array();
+   /**
+    * Initialize the users visibility of package for self-service deploy
+    *
+    * @var array
+    */
+   protected $users = array();
+
+   /**
+    * Initialize the groups visibility of package for self-service deploy
+    *
+    * @var array
+    */
+   protected $groups = array();
+
+   /**
+    * Initialize the profiles visibility of package for self-service deploy
+    *
+    * @var array
+    */
+   protected $profiles = array();
+
+   /**
+    * Initialize the entities visibility of package for self-service deploy
+    *
+    * @var array
+    */
+   protected $entities = array();
 
 
    /**
