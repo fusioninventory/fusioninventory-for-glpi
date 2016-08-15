@@ -874,7 +874,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $url_addresses = $this->getAgentStatusURLs();
 
-      $this->disableDebug();
+      PluginFusioninventoryDisplay::disableDebug();
 
       ob_start();
       ini_set("allow_url_fopen", "1");
@@ -904,7 +904,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       $error = ob_get_contents();
       ob_end_clean();
-      $this->restoreDebug();
+      PluginFusioninventoryDisplay::reenableusemode();
 
       $status = array(
          "url_ok" => $url_ok,
@@ -933,7 +933,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $ret = FALSE;
 
-      $this->disableDebug();
+      PluginFusioninventoryDisplay::disableDebug();
       $urls = $this->getAgentRunURLs();
 
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
@@ -945,46 +945,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             }
          }
       }
-      $this->restoreDebug();
+      PluginFusioninventoryDisplay::reenableusemode();
 
       return $ret;
-   }
-
-
-
-   /**
-    * Disable debug mode because we don't want see warning / errors
-    */
-   function disableDebug() {
-      error_reporting(0);
-      set_error_handler(array($this, 'errorempty'));
-   }
-
-
-
-   /**
-    * When debug is disabled, we transfer every errors in this emtpy function.
-    */
-   static function errorempty() {}
-
-
-
-   /**
-    * Restore debug mode if it has been explicitly set by the user in his
-    * settings.
-    */
-   function restoreDebug() {
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-         ini_set('display_errors', 'On');
-         // Recommended development settings
-         error_reporting(E_ALL | E_STRICT);
-         set_error_handler(array('Toolbox', 'userErrorHandlerDebug'));
-      } else {
-         ini_set('display_errors', 'Off');
-         error_reporting(E_ALL);
-         set_error_handler(array('Toolbox', 'userErrorHandlerNormal'));
-      }
-
    }
 
 

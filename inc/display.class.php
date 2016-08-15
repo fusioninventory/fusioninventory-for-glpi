@@ -145,11 +145,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    * Enable debug mode if user is in debug mode
    **/
    static function reenableusemode() {
-      if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
-         ini_set('display_errors', 'On');
-         error_reporting(E_ALL | E_STRICT);
-         set_error_handler("userErrorHandler");
-      }
+      Toolbox::setDebugMode();
    }
 
 
