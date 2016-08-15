@@ -360,8 +360,9 @@ class PluginFusioninventoryFormatconvert {
 
       // * BIOS
       if (isset($array['BIOS'])) {
-         if (isset($array['BIOS']['ASSETTAG'])) {
-            $a_inventory['fusioninventorycomputer']['bios_assettag']= $array['BIOS']['ASSETTAG'];
+         if (isset($array['BIOS']['ASSETTAG'])
+                 && !empty($array['BIOS']['ASSETTAG'])) {
+            $a_inventory['Computer']['otherserial'] = $array['BIOS']['ASSETTAG'];
          }
          if ((isset($array['BIOS']['SMANUFACTURER']))
                AND (!empty($array['BIOS']['SMANUFACTURER']))) {

@@ -935,6 +935,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
    }
 
+   // Add computer otherserial lock for version before 9.1+1.0 because we put
+   // BIOS/assettag as computer.otherserial in 9.1+1.0.
+   if ($current_version < 9.1) {
+      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/lock.class.php");
+      PluginFusioninventoryLock::addLocks('Computer', 0, array('otherserial'));
+   }
+
    //Migrate search params for dynamic groups
    doDynamicDataSearchParamsMigration();
 }
@@ -2697,8 +2704,6 @@ function do_computercomputer_migration($migration) {
                                                         'value'   => NULL);
    $a_table['fields']['bios_version']           = array('type'    => 'string',
                                                         'value'   => NULL);
-   $a_table['fields']['bios_assettag']          = array('type'    => 'string',
-                                                        'value'   => NULL);
    $a_table['fields']['bios_manufacturers_id']  = array('type'    => 'integer',
                                                         'value'   => NULL);
    $a_table['fields']['operatingsystem_installationdate'] = array('type'    => 'datetime',
@@ -2720,7 +2725,8 @@ function do_computercomputer_migration($migration) {
    $a_table['fields']['oscomment']              = array('type'    => 'text',
                                                         'value'   => NULL);
 
-   $a_table['oldfields']  = array('plugin_fusioninventory_computerarchs_id');
+   $a_table['oldfields']  = array('plugin_fusioninventory_computerarchs_id',
+                                  'bios_assettag');
 
    $a_table['renamefields'] = array();
 
