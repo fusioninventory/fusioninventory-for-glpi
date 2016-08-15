@@ -1,52 +1,67 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage network inventory task jobs.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage network inventory task jobs.
+ */
 class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstate each task for each device for each agent
+
+   /**
+    * Get all devices and put in taskjobstate each task for each device for
+    * each agent
+    *
+    * @global object $DB
+    * @param integer $taskjobs_id
+    * @return string
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -266,7 +281,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $a_subnet = array();
          $a_agentList = array();
          $a_devicesubnet = array();
-         foreach($a_NetworkEquipment as $items_id) {
+         foreach ($a_NetworkEquipment as $items_id) {
             $NetworkEquipment->getFromDB($items_id);
             $a_ip = explode(".", $NetworkEquipment->fields['ip']);
             $ip_subnet = $a_ip[0].".".$a_ip[1].".".$a_ip[2].".";
@@ -276,11 +291,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $a_subnet[$ip_subnet]++;
             $a_devicesubnet[$ip_subnet]['NetworkEquipment'][$items_id] = 1;
          }
-         foreach($a_Printer as $items_id) {
+         foreach ($a_Printer as $items_id) {
             $a_ports = $NetworkPort->find("`itemtype`='Printer'
                                           AND `items_id`='".$items_id."'
                                           AND `ip`!='127.0.0.1'");
-            foreach($a_ports as $a_port) {
+            foreach ($a_ports as $a_port) {
                $a_ip = explode(".", $a_port['ip']);
                $ip_subnet = $a_ip[0].".".$a_ip[1].".".$a_ip[2].".";
                if (!isset($a_subnet[$ip_subnet])) {
@@ -309,7 +324,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $a_input['execution_id'] = $task->fields['execution_id'];
 
          $taskvalid = 0;
-         foreach($a_agentsubnet as $subnet=>$a_agentList) {
+         foreach ($a_agentsubnet as $subnet=>$a_agentList) {
             if (!isset($a_agentList)
                     OR (isset($a_agentList)
                        && is_array($a_agentList)
@@ -325,7 +340,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      $itemtype = 'NetworkEquipment';
                   }
                   if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                     foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
+                     foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
                         $a_input['specificity'] = exportArrayToDB(
@@ -341,9 +356,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                                             '',
                                                             1,
                                                             "Unable to find agent to inventory ".
-                                                               "this ".$itemtype,
-                                                            0,
-                                                            0);
+                                                               "this ".$itemtype);
                         $a_input['state'] = 1;
                      }
                   }
@@ -368,7 +381,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      $itemtype = 'NetworkEquipment';
                   }
                   if (isset($a_devicesubnet[$subnet][$itemtype])) {
-                     foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
+                     foreach ($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
                         $a_input['specificity'] = exportArrayToDB(
@@ -407,7 +420,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
 
             $agent_require_model = 0;
-            foreach($a_actions as $a_action) {
+            foreach ($a_actions as $a_action) {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
 
@@ -552,10 +565,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
 
-   // When agent contact server, this function send datas to agent
-   /*
-    * $a_Taskjobstate array with all taskjobstate
+   /**
+    * When agent contact server, this function send datas to agent
     *
+    * @param object $jobstate PluginFusioninventoryTaskjobstate instance
+    * @return string
     */
    function run($jobstate) {
 
@@ -614,7 +628,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                '0',
                'PluginFusioninventoryAgent',
                '1',
-               $pfAgent->fields["threads_networkinventory"].' threads',
+               $pfAgent->fields["threads_networkinventory"].' threads '.
                $pfAgent->fields["timeout_networkinventory"].' timeout'
             );
             $changestate = $pfTaskjobstate->fields['id'];
@@ -626,8 +640,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                "Merged with ".$changestate);
          }
          $snmpauthlist=$pfConfigSecurity->find();
-         if (count($snmpauthlist)){
-            foreach ($snmpauthlist as $snmpauth){
+         if (count($snmpauthlist)) {
+            foreach ($snmpauthlist as $snmpauth) {
                $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
             }
          }
@@ -637,6 +651,17 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
 
+   /**
+    * Get agents by the subnet given
+    *
+    * @global object $DB
+    * @param integer $nb_computers
+    * @param string $communication
+    * @param string $subnet
+    * @param string $ipstart
+    * @param string $ipend
+    * @return array
+    */
    function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
 
@@ -658,7 +683,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKINVENTORY');
       $a_agentsid = array();
-      foreach($a_agents as $a_agent) {
+      foreach ($a_agents as $a_agent) {
          $a_agentsid[] = $a_agent['id'];
       }
       if (count($a_agentsid) == '0') {
@@ -714,7 +739,14 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
 
-   function getDevicesOfIPRange($items_id) {
+   /**
+    * Get the devices have an IP in the IP range
+    *
+    * @global object $DB
+    * @param integer $ipranges_id
+    * @return array
+    */
+   function getDevicesOfIPRange($ipranges_id) {
       global $DB;
 
       $devicesList = array();
@@ -723,7 +755,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       // get all snmpauth
       $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
 
-      $pfIPRange->getFromDB($items_id);
+      $pfIPRange->getFromDB($ipranges_id);
    // Search NetworkEquipment
       $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,

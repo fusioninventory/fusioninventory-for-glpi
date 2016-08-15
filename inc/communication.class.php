@@ -1,43 +1,49 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the communication between the plugin and the
+ * agents.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -45,12 +51,22 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class to communicate with agents using XML
- **/
+ * Manage communication with agents using XML
+ */
 class PluginFusioninventoryCommunication {
+
+   /**
+    * Define message variable
+    *
+    * @var null
+    */
    protected $message;
 
 
+
+   /**
+    * __contruct function used to initialize protected message variable
+    */
    function __construct() {
       $this->message = new SimpleXMLElement(
                  "<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>"
@@ -66,8 +82,8 @@ class PluginFusioninventoryCommunication {
    /**
     * Get readable XML message (add carriage returns)
     *
-    * @return readable XML message
-    **/
+    * @return object SimpleXMLElement
+    */
    function getMessage() {
       return $this->message;
    }
@@ -77,10 +93,8 @@ class PluginFusioninventoryCommunication {
    /**
     * Set XML message
     *
-    * @param $message XML message
-    *
-    * @return nothing
-    **/
+    * @param string $message XML in string format
+    */
    function setMessage($message) {
       // avoid xml warnings
       $this->message = @simplexml_load_string(
@@ -89,10 +103,13 @@ class PluginFusioninventoryCommunication {
       );
    }
 
+
+
    /**
-    * Send data, using given compression algorithm
+    * Send response to agent, using given compression algorithm
     *
-    **/
+    * @param string $compressmode compressed mode: none|zlib|deflate|gzip
+    */
    function sendMessage($compressmode = 'none') {
 
       if (!$this->message) {
@@ -135,12 +152,10 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Add logs
+    * If extra-debug is active, write log
     *
-    * @param $p_logs logs to write
-    *
-    * @return nothing (write text in log file)
-    **/
+    * @param string $p_logs log message to write
+    */
    static function addLog($p_logs) {
 
       if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
@@ -155,12 +170,11 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Import data
+    * Import and parse the XML sent by the agent
     *
-    * @param $arrayinventory array to import
-    *
-    * @return TRUE (import ok) / FALSE (import ko)
-    **/
+    * @param object $arrayinventory SimpleXMLElement
+    * @return boolean
+    */
    function import($arrayinventory) {
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -183,7 +197,7 @@ class PluginFusioninventoryCommunication {
       }
 
       if (!isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-         $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
+         $agent = $pfAgent->infoByKey($this->message['DEVICEID']);
       } else {
          $agent = array('id' => $_SESSION['plugin_fusioninventory_agents_id']);
       }
@@ -213,7 +227,6 @@ class PluginFusioninventoryCommunication {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
@@ -240,11 +253,10 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * Get all tasks prepared for this agent
+    * Get all tasks prepared for the agent
     *
-    * @param $agent_id interger id of agent
-    *
-    **/
+    * @param integer $agent_id id of the agent
+    */
    function getTaskAgent($agent_id) {
 
       $pfTask = new PluginFusioninventoryTask();
@@ -255,7 +267,7 @@ class PluginFusioninventoryCommunication {
        */
       $methods = array();
       $classnames = array();
-      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+      foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          if (isset($method['classname'])) {
             $methods[] = $method['method'];
             $classnames[$method['method']] = $method['classname'];
@@ -270,13 +282,12 @@ class PluginFusioninventoryCommunication {
              * TODO: check if use_rest is enabled in Staticmisc::get_methods.
              * Also, this get_methods function need to be reviewed
              */
-            if (  $className != "PluginFusioninventoryInventoryComputerESX"
-               && $className != "PluginFusioninventoryDeployCommon"
-               && $className != "PluginFusioninventoryCollect"
-            ) {
+            if ($className != "PluginFusioninventoryInventoryComputerESX"
+                    && $className != "PluginFusioninventoryDeployCommon"
+                    && $className != "PluginFusioninventoryCollect") {
                $class = new $className();
                $sxml_temp = $class->run($jobstate);
-               PluginFusioninventoryToolbox::append_simplexml(
+               PluginFusioninventoryToolbox::appendSimplexml(
                   $this->message, $sxml_temp
                );
             }
@@ -288,8 +299,7 @@ class PluginFusioninventoryCommunication {
 
    /**
     * Set prolog for agent
-    *
-    **/
+    */
    function addProlog() {
       $pfConfig = new PluginFusioninventoryConfig();
       $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
@@ -298,14 +308,14 @@ class PluginFusioninventoryCommunication {
 
 
    /**
-    * order to agent to do inventory if module inventory is activated for this agent
+    * Order to agent to do inventory if module inventory is activated for the
+    * agent
     *
-    * @param $items_id interger Id of this agent
-    *
-    **/
-   function addInventory($items_id) {
+    * @param integer $agents_id id of the agent
+    */
+   function addInventory($agents_id) {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      if ($pfAgentmodule->isAgentCanDo('INVENTORY', $items_id)) {
+      if ($pfAgentmodule->isAgentCanDo('INVENTORY', $agents_id)) {
          $this->message->addChild('RESPONSE', "SEND");
       }
    }
@@ -316,6 +326,14 @@ class PluginFusioninventoryCommunication {
     * Manage communication with old protocol (XML over POST)
     *
     **/
+   /**
+    * Manage communication with old protocol (XML over POST).
+    * Used for inventory, network discovery, network inventory and wake on lan
+    *
+    * @param string $rawdata data get from agent (compressed or not)
+    * @param string $xml
+    * @param string $output
+    */
    function handleOCSCommunication($rawdata, $xml='', $output='ext') {
 
       // ***** For debug only ***** //
@@ -325,7 +343,6 @@ class PluginFusioninventoryCommunication {
       $config = new PluginFusioninventoryConfig();
       $user   = new User();
 
-//      ob_start();
       if (!isset($_SESSION['glpiID'])) {
          $users_id  = $config->getValue('users_id');
          $_SESSION['glpiID'] = $users_id;
@@ -351,19 +368,19 @@ class PluginFusioninventoryCommunication {
       $agent = new PluginFusioninventoryAgent();
       $agent->disableDebug();
       $compressmode = '';
+      $content_type = filter_input(INPUT_SERVER, "CONTENT_TYPE");
       if (!empty($xml)) {
             $compressmode = 'none';
-      } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
+      } else if ($content_type == "application/x-compress-zlib") {
             $xml = gzuncompress($rawdata);
             $compressmode = "zlib";
-      } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
+      } else if ($content_type == "application/x-compress-gzip") {
             $xml = $pfToolbox->gzdecode($rawdata);
             $compressmode = "gzip";
-      } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
+      } else if ($content_type == "application/xml") {
             $xml = $rawdata;
             $compressmode = 'none';
       } else {
-
          # try each algorithm successively
          if (($xml = gzuncompress($rawdata))) {
             $compressmode = "zlib";
@@ -387,11 +404,7 @@ class PluginFusioninventoryCommunication {
 
       // check if we are in ssl only mode
       $ssl = $config->getValue('ssl_only');
-      if (
-         $ssl == "1"
-            AND
-         (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
-      ) {
+      if ($ssl == "1" AND filter_input(INPUT_SERVER, "HTTPS") != "on") {
          if ($output == 'glpi') {
             Session::addMessageAfterRedirect('SSL REQUIRED BY SERVER', false, ERROR);
          } else {
@@ -410,7 +423,6 @@ class PluginFusioninventoryCommunication {
       );
 
       // Check XML integrity
-      $pxml = '';
       if (($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA))) {
 
       } else if (($pxml = @simplexml_load_string(utf8_encode($xml),
@@ -457,7 +469,7 @@ class PluginFusioninventoryCommunication {
 <REPLY>
 </REPLY>");
 
-            $a_agent = $agent->InfosByKey($deviceid);
+            $a_agent = $agent->infoByKey($deviceid);
 
             // Get taskjob in waiting
             $communication->getTaskAgent($a_agent['id']);

@@ -1,50 +1,58 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage import rules for inventory (local, network
+ * discovery, network inventory).
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-/// FusionInventory Rules class
+/**
+ * Manage import rules for inventory (local, network discovery, network
+ * inventory).
+ */
 class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    const PATTERN_IS_EMPTY              = 30;
@@ -56,31 +64,59 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    const LINK_RESULT_CREATE            = 1;
    const LINK_RESULT_LINK              = 2;
 
+   /**
+    * Define the matching only available
+    *
+    * @var type
+    */
    var $restrict_matching = Rule::AND_MATCHING;
 
-
-   // From Rule
+   /**
+    * Define the right name
+    *
+    * @var type
+    */
    static public $right = 'rule_import';
+
+   /**
+    * Set these rules can be sorted
+    *
+    * @var type
+    */
    public $can_sort = TRUE;
 
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
-
       return __('Rules for import and link computers');
-
    }
 
 
+
+   /**
+    * Define maximum number of actions possible in a rule
+    *
+    * @return integer
+    */
    function maxActionsCount() {
-      // Unlimited
       return 1;
    }
 
 
+
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
-      $criterias = array ();
+      $criterias = array();
       $criterias['entities_id']['table']     = 'glpi_entities';
       $criterias['entities_id']['field']     = 'entities_id';
       $criterias['entities_id']['name']      = __('Assets to import', 'fusioninventory').' : '.
@@ -184,6 +220,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions = array();
@@ -198,6 +239,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get action values
+    *
+    * @return array
+    */
    static function getRuleActionValues() {
 
       return array(self::RULE_ACTION_LINK   => __('Link', 'fusioninventory'),
@@ -209,10 +255,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    /**
     * Add more action values specific to this type of rule
     *
-    * @param value the value for this action
-    *
-    * @return the label's value or ''
-   **/
+    * @param string$value the value for this action
+    * @return string the label's value or ''
+    */
    function displayAdditionRuleActionValue($value) {
 
       $values = self::getRuleActionValues();
@@ -224,18 +269,21 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Manage the specific criteria values
+    *
+    * @param array $criteria
+    * @param string $name
+    * @param string $value
+    * @return boolean
+    */
    function manageSpecificCriteriaValues($criteria, $name, $value) {
-
-      switch ($criteria['type']) {
-         case "state" :
-            $link_array = array("0" => __('No'),
-
-                                "1" => __('Yes')." : ".__('equal', 'fusioninventory'),
-
-                                "2" => __('Yes')." : ".__('empty', 'fusioninventory'));
-
-
-            Dropdown::showFromArray($name, $link_array, array('value' => $value));
+      if  ($criteria['type'] == 'state') {
+         $link_array = array("0" => __('No'),
+                             "1" => __('Yes')." : ".__('equal', 'fusioninventory'),
+                             "2" => __('Yes')." : ".__('empty', 'fusioninventory'));
+         Dropdown::showFromArray($name, $link_array, array('value' => $value));
+         return TRUE;
       }
       return FALSE;
    }
@@ -243,8 +291,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    /**
-    * Add more criteria specific to this type of rule
-   **/
+    * Add more criteria
+    *
+    * @param string $criterion
+    * @return array
+    */
    static function addMoreCriteria($criterion='') {
 
       return array(Rule::PATTERN_FIND     => __('is already present in GLPI'),
@@ -255,6 +306,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get additional criteria pattern
+    *
+    * @param integer $ID
+    * @param integer $condition
+    * @param string $pattern
+    * @return string|false
+    */
    function getAdditionalCriteriaDisplayPattern($ID, $condition, $pattern) {
 
       if ($condition == self::PATTERN_IS_EMPTY) {
@@ -265,16 +324,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       if ($condition==self::PATTERN_IS || $condition==self::PATTERN_IS_NOT) {
          $crit = $this->getCriteria($ID);
-
-         if (isset($crit['type'])) {
-            switch ($crit['type']) {
-
-               case "dropdown_itemtype":
-                  $array = $this->getTypes();
-                  return $array[$pattern];
-                  break;
-
-            }
+         if (isset($crit['type'])
+                 && $crit['type'] == 'dropdown_itemtype') {
+            $array = $this->getTypes();
+            return $array[$pattern];
          }
       }
       return FALSE;
@@ -282,6 +335,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Display more confitions
+    *
+    * @param integer $condition
+    * @param string $criteria
+    * @param string $name
+    * @param string $value
+    * @param boolean $test
+    * @return boolean
+    */
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
 
       if ($test) {
@@ -292,7 +355,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
          case self::PATTERN_ENTITY_RESTRICT:
             return TRUE;
-            break;
 
          case Rule::PATTERN_EXISTS:
          case Rule::PATTERN_DOES_NOT_EXISTS:
@@ -307,23 +369,28 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Display more actions
+    *
+    * @param array $action
+    * @param string $value
+    * @return boolean
+    */
    function displayAdditionalRuleAction(array $action, $value='') {
-
-      switch ($action['type']) {
-
-         case 'fusion_type':
-            Dropdown::showFromArray('value', self::getRuleActionValues());
-            break;
-
-         default:
-            break;
-
+      if ($action['type'] == 'fusion_type') {
+         Dropdown::showFromArray('value', self::getRuleActionValues());
       }
       return TRUE;
    }
 
 
 
+   /**
+    * Get criteria by criteria name
+    *
+    * @param string $critname
+    * @return string
+    */
    function getCriteriaByID($critname) {
       $criteria = array();
       foreach ($this->criterias as $criterion) {
@@ -336,6 +403,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Find a device in GLPI
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $input
+    * @return boolean
+    */
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
@@ -345,8 +420,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       );
 
       $complex_criterias = array();
-      $sql_where         = '';
-      $sql_from          = '';
       $sql_where_computer= '';
       $sql_where_domain  = '';
       $sql_from_computer = '';
@@ -385,7 +458,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                           OR empty($input[$crit->fields['criteria']])) {
                      return FALSE;
                   }
-               } else if($crit->fields["criteria"] == 'itemtype') {
+               } else if ($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
                } else if ($crit->fields["criteria"] == 'entityrestrict') {
                   $entityRestrict = TRUE;
@@ -438,7 +511,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
          $itemtypeselected[] = $input['itemtype'];
       } else {
-         foreach($CFG_GLPI["state_types"] as $itemtype) {
+         foreach ($CFG_GLPI["state_types"] as $itemtype) {
             if (class_exists($itemtype)) {
                $itemtypeselected[] = $itemtype;
             }
@@ -650,13 +723,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    /**
-    * Execute the actions as defined in the rule
+    * Code execution of actions of the rule
     *
-    * @param $output the fields to manipulate
-    * @param $params parameters
-    *
-    * @return the $output array modified
-   **/
+    * @param array $output
+    * @param array $params
+    * @return array
+    */
    function executeActions($output, $params) {
       if (isset($params['class'])) {
          $class = $params['class'];
@@ -715,7 +787,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      // Import into new equipment
                      $itemtype_found = 0;
                      if (count($this->criterias)) {
-                        foreach ($this->criterias as $criteria){
+                        foreach ($this->criterias as $criteria) {
                            if ($criteria->fields['criteria'] == 'itemtype') {
                               $itemtype = $criteria->fields['pattern'];
                               if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
@@ -768,7 +840,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                // no import
                $itemtype_found = 0;
                if (count($this->criterias)) {
-                  foreach ($this->criterias as $criteria){
+                  foreach ($this->criterias as $criteria) {
                      if ($criteria->fields['criteria'] == 'itemtype') {
                         $itemtype = $criteria->fields['pattern'];
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
@@ -809,6 +881,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Display the pattern form selection
+    *
+    * @param string $name
+    * @param integer $ID
+    * @param integer $condition
+    * @param string $value
+    * @param boolean $test
+    * @return type
+    */
    function displayCriteriaSelectPattern($name, $ID, $condition, $value="", $test=FALSE) {
 
       $crit    = $this->getCriteria($ID);
@@ -833,7 +915,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
 
             if (($criteria->fields['condition'] == Rule::PATTERN_IS
-             || $criteria->fields['condition'] == Rule::PATTERN_IS_NOT)
+                        || $criteria->fields['condition'] == Rule::PATTERN_IS_NOT)
                     AND ($name != "itemtype" AND $name != 'states_id')) {
 
                $rc = new $this->rulecriteriaclass();
@@ -841,7 +923,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                                        'value' => $value,
                                                        'size'  => 70));
                return;
-
             }
          }
       }
@@ -902,11 +983,17 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Get itemtypes have state_type and unmanaged devices
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
    function getTypes() {
       global $CFG_GLPI;
 
       $types = array();
-      foreach($CFG_GLPI["state_types"] as $itemtype) {
+      foreach ($CFG_GLPI["state_types"] as $itemtype) {
          if (class_exists($itemtype)) {
             $item = new $itemtype();
             $types[$itemtype] = $item->getTypeName();
@@ -921,10 +1008,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    /**
-   * Function used to display type specific criterias during rule's preview
-   *
-   * @param $fields fields values
-   **/
+    * Display type specific criterias during rule's preview
+    *
+    * @param array $fields
+    */
    function showSpecificCriteriasForPreview($fields) {
 
       $entity_as_criteria = FALSE;
@@ -941,6 +1028,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
 
       //If ticket is assign to an object, display this information first

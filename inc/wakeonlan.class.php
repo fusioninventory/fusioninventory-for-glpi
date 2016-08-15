@@ -1,52 +1,68 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the wake on lan of computers by the agent.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the wake on lan of computers by the agent.
+ */
 class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
-   // Get all devices and put in taskjobstate each task for each device for each agent
+
+   /**
+    * Prepare a taskjob
+    * Get all devices and put in taskjobstate each task for each device for
+    * each agent
+    *
+    * @global object $DB
+    * @param integer $taskjobs_id
+    * @return string
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -130,7 +146,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      if (count($get_tmp) > 0) {
                         $_GET = $get_tmp;
                      }
-
                      break;
 
                }
@@ -143,7 +158,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       if ((!strstr($pfTaskjob->fields['action'], '".1"'))
             AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
 
-         foreach($a_actions as $a_action) {
+         foreach ($a_actions as $a_action) {
             if ((!in_array('.1', $a_action))
                && (!in_array('.2', $a_action))) {
 
@@ -171,7 +186,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
        */
       else if (in_array('.2', $a_actions)) {
          $subnet = '';
-         foreach($a_computers_to_wake as $items_id) {
+         foreach ($a_computers_to_wake as $items_id) {
             $sql = "SELECT * FROM `glpi_networkports`
                WHERE `items_id`='".$items_id."'
                   AND `itemtype`='Computer'
@@ -216,7 +231,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $a_input['state'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['uniqid'] = $uniqid;
-         while(count($a_computers_to_wake) != 0) {
+         while (count($a_computers_to_wake) != 0) {
             $agent_id = array_pop($a_agentList);
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             for ($i=0; $i < $nb_computers; $i++) {
@@ -244,7 +259,10 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
 
    /**
-    *  When agent contact server, this function send datas to agent
+    * When agent contact server, this function send datas to agent
+    *
+    * @param object $jobstate
+    * @return string
     */
    function run($jobstate) {
 
@@ -290,8 +308,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                                                       $data['items_id'],
                                                       $data['itemtype'],
                                                       0,
-                                                      'WakeOnLan have not return state',
-                                                      1);
+                                                      'WakeOnLan have not return state');
                }
             //}
          }
@@ -309,6 +326,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
 
 
+   /**
+    * Get agents on the subnet
+    *
+    * @global object $DB
+    * @param integer $nb_computers
+    * @param string $communication
+    * @param string $subnet
+    * @return array
+    */
    function getAgentsSubnet($nb_computers, $communication, $subnet='') {
       global $DB;
 
@@ -356,7 +382,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          }
          $a_agents = $pfAgentmodule->getAgentsCanDo('WAKEONLAN');
          $a_agentsid = array();
-         foreach($a_agents as $a_agent) {
+         foreach ($a_agents as $a_agent) {
             $a_agentsid[] = $a_agent['id'];
          }
          if (count($a_agentsid) == '0') {
@@ -400,6 +426,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
       }
+      return $a_agentList;
    }
 }
 

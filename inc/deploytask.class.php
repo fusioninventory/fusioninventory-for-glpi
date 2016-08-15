@@ -1,43 +1,48 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the deploy task.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Alexandre Delaunay
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -46,10 +51,20 @@ if (!defined('GLPI_ROOT')) {
 
 include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/task.class.php");
 
+/**
+ * Manage the deploy task.
+ */
 class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
-      if ($nb>1) {
+      if ($nb > 1) {
          return __('Group of computers', 'fusioninventory');
       }
       return __('Task', 'fusioninventory');
@@ -57,23 +72,39 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Is this use can create a deploy task
+    *
+    * @return boolean
+    */
    static function canCreate() {
       return TRUE;
    }
 
 
 
+   /**
+    * Is this use can view a deploy task
+    *
+    * @return boolean
+    */
    static function canView() {
       return TRUE;
    }
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
 
       $ong = array();
 
-      if ($this->fields['id'] > 0){
+      if ($this->fields['id'] > 0) {
          $this->addStandardTab(__CLASS__, $ong, $options);
       }
       return $ong;
@@ -81,6 +112,13 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
@@ -89,23 +127,36 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
             return __('Order list', 'fusioninventory');
 
       }
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
 
          case __CLASS__:
             $obj = new self;
             $obj->showActions($_POST["id"]);
-            break;
+            return TRUE;
 
       }
+      return FALSE;
    }
 
 
 
+   /**
+    * Show list of deploy tasks
+    */
    function showList() {
       self::title();
       Search::show('PluginFusioninventoryDeployTask');
@@ -113,6 +164,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Display the title of the page
+    *
+    * @global array $CFG_GLPI
+    */
    function title() {
       global  $CFG_GLPI;
 
@@ -129,6 +185,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Show actions of the deploy task
+    *
+    * @param integer $id
+    */
    function showActions($id) {
 
       //load extjs plugins library
@@ -138,9 +199,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       echo "</script>";
 
       $this->getFromDB($id);
-      $disabled = "false";
       if ($this->getField('is_active') == 1) {
-         $disabled = "true";
          echo "<div class='box' style='margin-bottom:20px;'>";
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
          echo "</div></div></div>";
@@ -168,6 +227,12 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Do this before delete a deploy task
+    *
+    * @global array $CFG_GLPI
+    * @return boolean
+    */
    function pre_deleteItem() {
       global $CFG_GLPI;
 
@@ -189,13 +254,13 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       // clean all sub-tables
       $a_taskjobs = $job->find("`plugin_fusioninventory_tasks_id`='$task_id'");
-      foreach($a_taskjobs as $a_taskjob) {
+      foreach ($a_taskjobs as $a_taskjob) {
          $a_taskjobstatuss = $status->find("`plugin_fusioninventory_taskjobs_id`='".
             $a_taskjob['id']."'");
-         foreach($a_taskjobstatuss as $a_taskjobstatus) {
+         foreach ($a_taskjobstatuss as $a_taskjobstatus) {
             $a_taskjoblogs = $log->find("`plugin_fusioninventory_taskjobstates_id`='".
                $a_taskjobstatus['id']."'");
-            foreach($a_taskjoblogs as $a_taskjoblog) {
+            foreach ($a_taskjoblogs as $a_taskjoblog) {
                $log->delete($a_taskjoblog, 1);
             }
             $status->delete($a_taskjobstatus, 1);
@@ -207,6 +272,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
 
+   /**
+    * Do this after added an item
+    */
    function post_addItem() {
       $options = array(
          'id'              => $this->getField('id'),

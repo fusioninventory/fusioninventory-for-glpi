@@ -1,68 +1,90 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2014
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the hours in the timeslot.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the hours in the timeslot.
+ */
 class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
+   /**
+    * We activate the history.
+    *
+    * @var boolean
+    */
    public $dohistory = TRUE;
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_task';
 
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Time slot entry', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -97,8 +119,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
 
+   /**
+    * Display form to add a new time entry in timeslot
+    *
+    * @param integer $timeslots_id
+    */
    function formEntry($timeslots_id) {
-
       $ID = 0;
       $options = array();
       $this->initForm($ID, $options);
@@ -123,7 +149,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       echo '</div>';
       $hours = array();
       $dec = 15 * 60;
-      for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec){
+      for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
          $hours[$timestamp] = date('H:i', $timestamp);
       }
       PluginFusioninventoryToolbox::showHours('beginhours', array('step' => 15));
@@ -152,8 +178,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
    /**
-    * TODO: rename this method in showTimeslots() since it's not only used to delete but also to
-    * show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
+    * Display delete form
+    *
+    * @todo rename this method in showTimeslots() since it's not only used to delete but also to
+    *       show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
+    *
+    * @param integer $timeslots_id
     */
    function formDeleteEntry($timeslots_id) {
 
@@ -186,15 +216,19 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-
       $this->showFormButtons(array('canedit' => false));
    }
 
 
+
    /**
+    * Display timeslot graph
+    *
     * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
     * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
     * -- Kevin 'kiniou' Roy
+    *
+    * @param integer $timeslots_id
     */
    function showTimeSlot($timeslots_id) {
       echo "<div id='chart'></div>";
@@ -228,14 +262,17 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
             );
          }
       }
-
       echo '<script>timeslot(\''.json_encode($dates).'\')</script>';
    }
 
 
 
+   /**
+    * Add a new entry
+    *
+    * @param array $data
+    */
    function addEntry($data) {
-
       if ($data['lastday'] < $data['beginday']) {
          return;
       } else if ($data['lastday'] == $data['beginday']
@@ -265,7 +302,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
          $rangeToUpdate = $dbentries;
          $rangeToAdd = array();
-         $rangeToDelete = array();
 
          foreach ($dbentries as $entries) {
             // the entry if before this db entry
@@ -343,6 +379,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
 
+   /**
+    * Merge 2 periods when 2 entries have a same time part
+    *
+    * @param array $periods
+    * @return array
+    */
    function mergePeriods($periods) {
 
       $update = false;

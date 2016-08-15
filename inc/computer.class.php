@@ -1,53 +1,71 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the search in groups (static and dynamic).
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the search in groups (static and dynamic).
+ */
 class PluginFusioninventoryComputer extends Computer {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = "plugin_fusioninventory_group";
 
+
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
       $computer = new Computer();
       $options  = $computer->getSearchOptions();
@@ -68,6 +86,14 @@ class PluginFusioninventoryComputer extends Computer {
       return $options;
    }
 
+
+
+   /**
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
+    */
    function getSpecificMassiveActions($checkitem=NULL) {
 
       $actions = array();
@@ -93,7 +119,7 @@ class PluginFusioninventoryComputer extends Computer {
          if ($_POST['custom_action'] == 'add_to_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
                = _x('button', 'Add');
-         } elseif($_POST['custom_action'] == 'delete_from_group') {
+         } elseif ($_POST['custom_action'] == 'delete_from_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
                = _x('button','Delete permanently');
          }
@@ -101,9 +127,13 @@ class PluginFusioninventoryComputer extends Computer {
       return $actions;
    }
 
+
+
    /**
-    * @since version 0.84
-   **/
+    * Define the standard massive actions to hide for this class
+    *
+    * @return array list of massive actions to hide
+    */
    function getForbiddenStandardMassiveAction() {
 
       $forbidden   = parent::getForbiddenStandardMassiveAction();
@@ -114,18 +144,21 @@ class PluginFusioninventoryComputer extends Computer {
    }
 
 
+
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
       $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
       switch ($ma->getAction()) {
+
          case 'add' :
-            $input = $ma->getInput();
             foreach ($ids as $key) {
                if ($item->can($key, UPDATE)) {
                   if (!countElementsInTable($group_item->getTable(),
@@ -142,15 +175,14 @@ class PluginFusioninventoryComputer extends Computer {
                   } else {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                   }
-            } else {
-               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
-               $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+               } else {
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                  $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+               }
             }
-         }
-         return;
+            return;
 
          case 'deleteitem':
-
             foreach ($ids as $key) {
                if ($group_item->deleteByCriteria(array('items_id' => $key,
                                                        'itemtype' => 'Computer',
@@ -160,24 +192,24 @@ class PluginFusioninventoryComputer extends Computer {
                } else {
                   $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                }
-         }
+            }
+
       }
    }
 
+
+
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      global $CFG_GLPI;
-
-      switch ($ma->getAction()) {
-         case 'add' :
-            echo "<br><br>".Html::submit(_x('button', 'Add'),
-                                         array('name' => 'massiveaction'));
-            return true;
-
+      if ($ma->getAction() == 'add') {
+         echo "<br><br>".Html::submit(_x('button', 'Add'),
+                                      array('name' => 'massiveaction'));
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }

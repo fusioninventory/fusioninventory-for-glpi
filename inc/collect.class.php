@@ -1,65 +1,111 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the collect (registry, file, wmi) module of
+ * the agents
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the collect information by the agent.
+ */
 class PluginFusioninventoryCollect extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_collect';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Collect information', 'fusioninventory');
    }
 
+
+
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return array();
+      return '';
    }
 
+
+
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      return TRUE;
+      return FALSE;
    }
 
+
+
+   /**
+    * Get all collect types
+    *
+    * @return array [name] => description
+    */
    static function getTypes() {
       $elements             = array();
       $elements['registry'] = __('Registry', 'fusioninventory');
@@ -69,6 +115,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return $elements;
    }
 
+
+
+   /**
+    * Add search options
+    *
+    * @return array
+    */
    static function getSearchOptionsToAdd() {
       $tab = array();
 
@@ -149,12 +202,18 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $i++;
          }
       }
-
       return $tab;
    }
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $ID
+    * @param array $options
+    * @return true
+    */
    function showForm($ID, $options=array()) {
 
       $this->initForm($ID, $options);
@@ -196,6 +255,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
 
 
+   /**
+    * Prepare run, so it prepare the taskjob with module 'collect'.
+    * It prepare collect information and computer list for task run
+    *
+    * @global object $DB
+    * @param integer $taskjobs_id id of taskjob
+    */
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -204,7 +270,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $joblog     = new PluginFusioninventoryTaskjoblog();
       $jobstate   = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
-      $uniqid     = uniqid();
 
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
@@ -241,14 +306,14 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                foreach ($members as $member) {
                   $computers = $computer_object->find("users_id = '${member['id']}'");
-                  foreach($computers as $computer) {
+                  foreach ($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
 
                //find computers directly associated with this group
                $computers = $computer_object->find("groups_id = '$items_id'");
-               foreach($computers as $computer) {
+               foreach ($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
 
@@ -327,20 +392,18 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       $pfCollect = new PluginFusioninventoryCollect();
 
-      foreach($computers as $computer_id) {
+      foreach ($computers as $computer_id) {
          //get agent if for this computer
          $agents_id = $agent->getAgentWithComputerid($computer_id);
-         if($agents_id === FALSE) {
+         if ($agents_id === FALSE) {
             $jobstates_id = $jobstate->add($c_input);
             $jobstate->changeStatusFinish($jobstates_id,
                                           0,
                                           '',
                                           1,
-                                          "No agent found for [[Computer::".$computer_id."]]",
-                                          0,
-                                          0);
+                                          "No agent found for [[Computer::".$computer_id."]]");
          } else {
-            foreach($definitions as $definition) {
+            foreach ($definitions as $definition) {
                $pfCollect->getFromDB($definition['PluginFusioninventoryCollect']);
 
                switch ($pfCollect->fields['type']) {
@@ -454,6 +517,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
 
 
+   /**
+    * run function, so return data to send to the agent for collect information
+    *
+    * @param object $taskjobstate PluginFusioninventoryTaskjobstate instance
+    * @param array $agent agent information from agent table in database
+    * @return array
+    */
    function run($taskjobstate, $agent) {
       $output = array();
 

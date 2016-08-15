@@ -1,108 +1,177 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the state of task jobs.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access this file directly");
+}
+
+/**
+ * Manage the state of task jobs.
+ */
 class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
-   /*
-    * Taskjobstate status definitions
+   /**
+    * Define constant state prepared.
+    * The job is just prepared and waiting for agent request
+    *
+    * @var integer
     */
+   const PREPARED = 0;
 
-   const PREPARED             = 0;  // the job is just prepared and waiting for agent request
-   const SERVER_HAS_SENT_DATA = 1;  // the job is running and the server sent the job config
-   const AGENT_HAS_SENT_DATA  = 2;  // the job is running and the agent sent reply to the server
-   const FINISHED             = 3;  // the agent completed successfully the job
-   const IN_ERROR             = 4;  // the agent failed to complete the job
-   const CANCELLED            = 5;  // the job has been cancelled either by a user or the agent
-                                    // himself (eg. if it has been forbidden to run this taskjob)
+   /**
+    * Define constant state has sent data to agent and not have the answer.
+    * The job is running and the server sent the job config
+    *
+    * @var integer
+    */
+   const SERVER_HAS_SENT_DATA = 1;
 
+   /**
+    * Define constant state agent has sent data.
+    * The job is running and the agent sent reply to the server
+    *
+    * @var integer
+    */
+   const AGENT_HAS_SENT_DATA = 2;
+
+   /**
+    * Define constant state finished.
+    * The agent completed successfully the job
+    *
+    * @var integer
+    */
+   const FINISHED = 3;
+
+   /**
+    * Define constant state in error.
+    * The agent failed to complete the job
+    *
+    * @var integer
+    */
+   const IN_ERROR = 4;
+
+   /**
+    * Define constant state cancelled
+    * The job has been cancelled either by a user or the agent himself (eg. if
+    * it has been forbidden to run this taskjob)
+    *
+    * @var integer
+    */
+   const CANCELLED = 5;
+
+   /**
+    * Initialize the public method
+    *
+    * @var string
+    */
    public $method = '';
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
 
-      $tab_names = array();
-      $tab_names[] = __("Job executions");
-      //Return tab names if list is not empty
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      return __("Job executions");
    }
 
+
+
+   /**
+    * Get all states name
+    *
+    * @return array
+    */
    static function getStateNames() {
       return array(
-         self::PREPARED => __('Prepared', 'fusioninventory'),
+         self::PREPARED             => __('Prepared', 'fusioninventory'),
          self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
-         self::AGENT_HAS_SENT_DATA => __('Agent replied with data to the server', 'fusioninventory'),
-         self::FINISHED => __('Finished', 'fusioninventory'),
-         self::IN_ERROR => __('Error' , 'fusioninventory'),
-         self::CANCELLED => __('Cancelled', 'fusioninventory')
+         self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'fusioninventory'),
+         self::FINISHED             => __('Finished', 'fusioninventory'),
+         self::IN_ERROR             => __('Error' , 'fusioninventory'),
+         self::CANCELLED            => __('Cancelled', 'fusioninventory')
       );
    }
 
+
+
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
-      global $DB;
-
-
-      if ($item->getType() == 'PluginFusioninventoryTask' ) {
+      if ($item->getType() == 'PluginFusioninventoryTask') {
          $item->showJobLogs();
+         return TRUE;
       }
+      return FALSE;
    }
+
+
+
    /**
    * Display state of taskjob
    *
-   * @param $taskjobs_id integer id of the taskjob
-   * @param $width integer how large in pixel display array
-   * @param $return value display or return in var (html or htmlvar or other value
+   * @param integer $taskjobs_id id of the taskjob
+   * @param integer $width how large in pixel display array
+   * @param string $return display or return in var (html or htmlvar or other value
    *        to have state number in %)
-   * @param $style '' = normal or 'simple' for very simple display
+   * @param string $style '' = normal or 'simple' for very simple display
    *
-   * @return nothing, html or pourcentage value
+   * @return string
    *
    **/
-   function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
-
+   function stateTaskjob ($taskjobs_id, $width=930, $return='html', $style='') {
       $state = array();
       $state[0] = 0;
       $state[1] = 0;
@@ -112,12 +181,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                                         $taskjobs_id."' AND `state`!='".self::FINISHED."'");
       $total = 0;
       if (count($a_taskjobstates) > 0) {
-
          foreach ($a_taskjobstates as $data) {
             $total++;
             $state[$data['state']]++;
          }
-         $globalState = 0;
          if ($total == '0') {
             $globalState = 0;
          } else {
@@ -144,20 +211,20 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             return ceil($globalState);
          }
       }
+      return '';
    }
 
 
 
    /**
-   * Display state of an item of a taskjob
-   *
-   * @param $items_id integer id of the item
-   * @param $itemtype value type of the item
-   * @param $state value (all or each state : running, finished, nostarted)
-   *
-   * @return nothing
-   *
-   **/
+    * Display state of an item of a taskjob
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param integer $items_id id of the item
+    * @param string $itemtype type of the item
+    * @param string $state (all or each state : running, finished, nostarted)
+    */
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB, $CFG_GLPI;
 
@@ -254,16 +321,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    /**
-   * Change the state
-   *
-   * @param $id integer id of the taskjobstate
-   * @param $state value state to set
-   *
-   * @return nothing
-   *
-   * TODO: There is no need to pass $id since we should use this method with an instantiated
-   * object!!
-   **/
+    * Change the state
+    *
+    * @todo There is no need to pass $id since we should use this method with
+    *       an instantiated object
+    *
+    * @param integer $id id of the taskjobstate
+    * @param integer $state state to set
+    */
    function changeStatus($id, $state) {
       $input = array();
       $input['id'] = $id;
@@ -274,19 +339,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    /**
-   * Get taskjobs of an agent
-   *
-   * @param $agent_id integer id of the agent
-   *
-   * @return nothing
-   *
-   **/
+    * Get taskjobs of an agent
+    *
+    * @param integer $agent_id id of the agent
+    */
    function getTaskjobsAgent($agent_id) {
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-
       $moduleRun = array();
-
       $a_taskjobstates = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
                                      "' AND `state`='".self::PREPARED."'",
                                      "`id`");
@@ -304,39 +364,42 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       return $moduleRun;
    }
 
+
+
    /**
     * Process ajax parameters for getLogs() methods
     *
     * since 0.85+1.0
-    * @param $options  array of ajax expected 'id' and 'last_date' parameters
-    * @return a json encoded list of logs grouped by jobstates
+    * @param array $params list of ajax expected 'id' and 'last_date' parameters
+    * @return string in json format, encoded list of logs grouped by jobstates
     */
-
    function ajaxGetLogs($params) {
-      $result = array();
-
       $id = null;
       $last_date = null;
 
-      if( isset($params['id']) and $params['id'] > 0){
+      if (isset($params['id']) and $params['id'] > 0) {
          $id = $params['id'];
       }
-      if( isset($params['last_date'])){
+      if (isset($params['last_date'])) {
          $last_date = $params['last_date'];
       }
 
       if (!is_null($id) and !is_null($last_date)) {
          echo json_encode($this->getLogs($id, $last_date));
       }
-
    }
+
+
 
    /**
     * Get logs associated to a jobstate.
     *
-    * since 0.85+1.0
+    * @global object $DB
+    * @param integer $id
+    * @param string $last_date
+    * @return array
     */
-   function getLogs( $id, $last_date ) {
+   function getLogs($id, $last_date) {
       global $DB;
 
       $fields = array(
@@ -360,10 +423,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          "ORDER BY log.`id` DESC"
       ));
 
-
       $res = $DB->query($query);
       $logs = array();
-      while( $result = $res->fetch_row() ) {
+      while ($result = $res->fetch_row()) {
          $run_id = $result[$fields['run.id']];
          $logs['run']  = $run_id;
          $logs['logs'][] = array(
@@ -376,26 +438,21 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       return $logs;
    }
 
+
+
    /**
-   * Change the status to finish
-   *
-   * @param $taskjobstates_id integer id of the taskjobstates
-   * @param $items_id integer id of the item
-   * @param $itemtype value type of the item
-   * @param $error bool error
-   * @param $message value message for the status
-   * @param $unknown bool unmanaged or not device
-   *
-   * @return nothing
-   *
-   **/
-   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='',
-                               $unmanaged=0, $reinitialize=1) {
-      global $DB;
+    * Change the status to finish
+    *
+    * @param integer $taskjobstates_id id of the taskjobstates
+    * @param integer $items_id id of the item
+    * @param string $itemtype type of the item
+    * @param integer $error error
+    * @param string $message message for the status
+    */
+   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='') {
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTask = new PluginFusioninventoryTask();
 
       $this->getFromDB($taskjobstates_id);
       $input = array();
@@ -403,10 +460,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $input['state'] = self::FINISHED;
 
       $log_input = array();
-      if ($unmanaged ==  "1") {
-         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
-         $input['state'] = self::FINISHED;
-      } else if ($error == "1") {
+      if ($error == "1") {
          $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          $input['state'] = self::IN_ERROR;
       } else {
@@ -426,6 +480,12 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
+
+   /**
+    * Update taskjob(log) in error
+    *
+    * @param string $reason
+    */
    function fail($reason='') {
       $log = new PluginFusioninventoryTaskjoblog();
 
@@ -437,19 +497,23 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'state' => PluginFusioninventoryTaskjoblog::TASK_ERROR,
          'comment' => Toolbox::addslashes_deep($reason)
       );
-
       $log->add($log_input);
-
       $this->update(array(
          'id' => $this->fields['id'],
          'state' => self::IN_ERROR
          ));
    }
 
+
+
+   /**
+    * Cancel a taskjob
+    *
+    * @param string $reason
+    */
    function cancel($reason='') {
 
       $log = new PluginFusioninventoryTaskjoblog();
-
       $log_input = array(
          'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
          'items_id' => $this->fields['items_id'],
@@ -467,10 +531,12 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          ));
    }
 
+
+
    /**
-    * Cron for clean taskjob
+    * Cron task: clean taskjob (retention time)
     *
-    * @return nothing
+    * @global object $DB
     */
    static function cronCleantaskjob() {
       global $DB;

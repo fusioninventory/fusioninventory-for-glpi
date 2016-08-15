@@ -1,58 +1,67 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Walid Nouh
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the taskjob for VMWARE ESX / VCENTER remote
+ * inventory.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Walid Nouh
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the taskjob for VMWARE ESX / VCENTER remote inventory.
+ */
 class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCommunication {
+
 
    /**
     * Get all devices and put in taskjobstate each task for
     * each device for each agent
     *
-    * @param type $taskjobs_id id of taskjob esx
-    *
-    * @return uniqid value
+    * @param integer $taskjobs_id id of taskjob esx
+    * @return string uniqid value
     */
    function prepareRun($taskjobs_id) {
 
@@ -72,18 +81,18 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       $agent_actions     = importArrayFromDB($job->fields['action']);
       $task_definitions  = importArrayFromDB($job->fields['definition']);
       $agent_actionslist = array();
-      foreach($agent_actions as $targets) {
+      foreach ($agent_actions as $targets) {
          foreach ($targets as $itemtype => $items_id) {
             $item = new $itemtype();
             // Detect if agent exists
-            if($item->getFromDB($items_id)) {
+            if ($item->getFromDB($items_id)) {
                $agent_actionslist[$items_id] = 1;
             }
          }
       }
 
       // *** Add jobstate
-      if(empty($agent_actionslist)) {
+      if (empty($agent_actionslist)) {
          $a_input= array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state']                              = 0;
@@ -111,7 +120,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
          }
          $job->update($job->fields);
       } else {
-         foreach($agent_actions as $targets) {
+         foreach ($agent_actions as $targets) {
             foreach ($targets as $items_id) {
 
                if ($communication == "push") {
@@ -153,9 +162,8 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
    /**
     * Get ESX jobs for this agent
     *
-    * @param type $device_id deviceid of the agent runing and want job info to run
-    *
-    * @return $response array
+    * @param object $taskjobstate
+    * @return array
     */
    function run($taskjobstate) {
       $credential     = new PluginFusioninventoryCredential();

@@ -1,63 +1,94 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the dynamic groups (based on search engine
+ * of GLPI).
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Alexandre Delaunay
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the dynamic groups (based on search engine of GLPI).
+ */
 class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = "plugin_fusioninventory_group";
 
-   // From CommonDBChild
+   /**
+    * Itemtype of the item linked
+    *
+    * @var string
+    */
    static public $itemtype = 'PluginFusioninventoryDeployGroup';
+
+   /**
+    * id field of the item linked
+    *
+    * @var string
+    */
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
           && $item->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-         return array (_n('Criterion', 'Criteria', 2), _n('Associated item','Associated items', 2));
+         return array(_n('Criterion', 'Criteria', 2), _n('Associated item','Associated items', 2));
       }
       return '';
    }
@@ -65,10 +96,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
    /**
-    * @param $item         CommonGLPI object
-    * @param $tabnum       (default 1)
-    * @param $withtemplate (default 0)
-   **/
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
 
@@ -78,7 +112,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                unset($search_params['metacriteria']);
             }
             PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
-            break;
+            return TRUE;
 
          case 1:
             $params_dyn = array();
@@ -101,17 +135,21 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
                                 "?id=".$item->getID();
             self::showList('PluginFusioninventoryComputer', $params, array('2', '1'));
-            break;
+            return TRUE;
 
       }
-
-      return true;
+      return FALSE;
    }
 
 
 
-   // override Search method to gain performance and decrease memory usage
-   // we dont need to display search criteria result
+   /**
+    * Display list of computers in the group
+    *
+    * @param string $itemtype
+    * @param array $params
+    * @param array $forcedisplay
+    */
    static function showList($itemtype, $params, $forcedisplay) {
       $_GET['_in_modal'] = true;
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
@@ -129,8 +167,14 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
 
-   // override Search method to gain performance and decrease memory usage
-   // we dont need to display search criteria result
+   /**
+    * Get data, so computer list
+    *
+    * @param string $itemtype
+    * @param array $params
+    * @param array $forcedisplay
+    * @return array
+    */
    static function getDatas($itemtype, $params, array $forcedisplay=array()) {
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
@@ -142,11 +186,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
    /**
-   * Get computers belonging to a dynamic group
-   * @since 0.85+1.0
-   * @param group the group object
-   * @return an array of computer ids
-   */
+    * Get computers belonging to a dynamic group
+    *
+    * @since 0.85+1.0
+    *
+    * @param object $group PluginFusioninventoryDeployGroup instance
+    * @return array
+    */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
       $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, false,true);
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
@@ -155,19 +201,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $search_params['sort'] = '';
 
       //Only retrieve computers IDs
-      $results = Search::getDatas(
-         'PluginFusioninventoryComputer',
-         $search_params,
-         array('2')
-      );
-
       $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, array('2'));
       Search::constructSQL($results);
       $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
               "`mainitemtype` = 'Computer'", $results['sql']['search']);
       Search::constructDatas($results);
 
-      $ids     = array();
+      $ids = array();
       foreach ($results['data']['rows'] as $row) {
          $ids[$row['id']] = $row['id'];
       }

@@ -1,99 +1,126 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2014
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the entity configuration.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the entity configuration.
+ */
 class PluginFusioninventoryEntity extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'entity';
 
    /**
-   * Get name of this type
-   *
-   *@return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Entity');
    }
 
 
+
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      $array_ret = array();
       if ($item->getID() > -1) {
          if (Session::haveRight("config", READ)) {
-            $array_ret[0] = self::createTabEntry('Fusioninventory');
+            return self::createTabEntry('Fusioninventory');
          }
       }
-      return $array_ret;
-   }
-
-
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
-      if ($item->getID() > -1) {
-         $pmEntity = new PluginFusionInventoryEntity();
-         $pmEntity->showForm($item->fields['id']);
-      }
-      return true;
+      return '';
    }
 
 
 
    /**
-   * Display form for service configuration
-   *
-   * @param $items_id integer ID
-   * @param $options array
-   *
-   *@return bool true if form is ok
-   *
-   **/
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getID() > -1) {
+         $pmEntity = new PluginFusioninventoryEntity();
+         $pmEntity->showForm($item->fields['id']);
+         return TRUE;
+      }
+      return FALSE;
+   }
+
+
+
+   /**
+    * Display form
+    *
+    * @global array $CFG_GLPI
+    * @param integer $entities_id
+    * @param array $options
+    * @return true
+    */
    function showForm($entities_id, $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $CFG_GLPI;
 
       $a_configs = $this->find("`entities_id`='".$entities_id."'", "", 1);
       $id = 0;
@@ -178,19 +205,18 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
 
 
 
-/**
+   /**
     * Get value of config
     *
     * @global object $DB
-    * @param value $name field name
+    * @param string $name field name
     * @param integer $entities_id
-    *
-    * @return value of field
+    * @return string value of field
     */
    function getValueAncestor($name, $entities_id) {
       global $DB;
@@ -226,10 +252,9 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * Get the value (of this entity or parent entity or in general config
     *
     * @global object $DB
-    * @param value $name field name
-    * @param integet $entities_id
-    *
-    * @return value value of this field
+    * @param string $name field name
+    * @param integer $entities_id
+    * @return string value of this field
     */
    function getValue($name, $entities_id) {
       global $DB;
@@ -253,6 +278,10 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
+
+   /**
+    * Initialize a field when get empty item (default values)
+    */
    function post_getEmpty() {
       $this->fields['transfers_id_auto'] = -1;
    }

@@ -1,63 +1,108 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the IP of VMWARE ESX and link to
+ * credentials to be able to inventory these specific systems througth the
+ * webservice.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the IP of VMWARE ESX and link to credentials to be able to inventory
+ * these specific systems througth the webservice.
+ */
 class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
+   /**
+    * Define first level menu name
+    *
+    * @var string
+    */
    public $first_level_menu  = "plugins";
+
+   /**
+    * Define second level menu name
+    *
+    * @var string
+    */
    public $second_level_menu = "pluginfusioninventorymenu";
+
+   /**
+    * Define third level menu name
+    *
+    * @var string
+    */
    public $third_level_menu  = "credentialip";
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_credentialip';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Remote device inventory', 'fusioninventory');
    }
 
-   function getAdditionalFields() {
 
+
+   /**
+    * Add more fields
+    *
+    * @return array
+    */
+   function getAdditionalFields() {
       return array(array('name'  => 'itemtype',
                          'label' => __('Type'),
                          'type'  => 'credentials'),
@@ -69,14 +114,15 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
    /**
-    * Display specific fields for FieldUnicity
+    * Display specific fields
     *
-    * @param $ID
-    * @param $field array
-   **/
+    * @param integer $ID
+    * @param array $field
+    */
    function displaySpecificTypeField($ID, $field=array()) {
 
       switch ($field['type']) {
+
          case 'credentials' :
             if ($ID > 0) {
                $field['id'] = $this->fields['plugin_fusioninventory_credentials_id'];
@@ -90,6 +136,11 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -123,19 +174,9 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
 
 
-   function title() {
-
-      //Leave empty !
-      $buttons = array();
-      if (Session::haveRight('plugin_fusioninventory_credential', READ)) {
-         $buttons["credential.php"] =
-                  __('Authentication for remote devices (VMware)', 'fusioninventory');
-
-      }
-   }
-
-
-
+   /**
+    * Display a specific header
+    */
    function displayHeader() {
       //Common dropdown header
       parent::displayHeader();

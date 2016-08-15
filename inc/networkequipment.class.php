@@ -1,62 +1,92 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage and display extended information of
+ * network equipments.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage and display extended information of network equipments.
+ */
 class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
 
@@ -72,20 +102,32 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                  array('target'=>$CFG_GLPI['root_doc'].
                                     '/plugins/fusioninventory/front/switch_info.form.php'));
          }
+         return TRUE;
       }
-
-      return TRUE;
+      return FALSE;
    }
 
 
 
-
+   /**
+    * Get the type of the itemtype
+    *
+    * @return string
+    */
    static function getType() {
       return "NetworkEquipment";
    }
 
 
 
+   /**
+    * Display form
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param object $item
+    * @param array $options
+    */
    function showForm(CommonDBTM $item, $options=array()) {
       global $DB, $CFG_GLPI;
 
@@ -329,7 +371,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-   function displayHubConnections($items_id, $background_img){
+   /**
+    * Display connections with hub
+    *
+    * @param integer $items_id
+    * @param string $background_img
+    */
+   function displayHubConnections($items_id, $background_img) {
 
       $NetworkPort = new NetworkPort();
 
@@ -408,8 +456,15 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
-   function update_network_infos($id, $configsecurities_id,
-           $sysdescr) {
+   /**
+    * Update the network equipement extended information
+    *
+    * @global object $DB
+    * @param integer $id
+    * @param integer $configsecurities_id
+    * @param string $sysdescr
+    */
+   function updateNetworkInfo($id, $configsecurities_id, $sysdescr) {
       global $DB;
 
       $query = "SELECT *
@@ -423,7 +478,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          $DB->query($queryInsert);
       }
       if (empty($configsecurities_id)) {
-         $plugin_fusinvsnmp_configsecurities_id = 0;
+         $configsecurities_id = 0;
       }
       $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                 SET `plugin_fusioninventory_configsecurities_id`=
@@ -436,6 +491,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
+   /**
+    * Display network equipment extended information
+    *
+    * @global object $DB
+    * @param object $item
+    * @param array $options
+    */
    function showNetworkEquipmentInformation(CommonDBTM $item, $options) {
       global $DB;
 
@@ -481,7 +543,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown(
+      PluginFusioninventoryConfigSecurity::authDropdown(
                  $this->fields['plugin_fusioninventory_configsecurities_id']
               );
       echo "</td>";
@@ -538,7 +600,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    /**
     * Display informations about networkequipment (automatic inventory)
     *
-    * @param type $networkequipments_id
+    * @param object $item NetworkEquipment instance
     */
    static function showInfo($item) {
 
@@ -586,7 +648,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             $day = 0;
             $hour = 0;
             list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
-         } else if($sysUpTime == "0") {
+         } else if ($sysUpTime == "0") {
             $day = 0;
             $hour = 0;
             $minute = 0;
@@ -610,6 +672,15 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
+   /**
+    * Display network port detail header
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param string $monitoring
+    * @param string $query
+    * @return object
+    */
    function showNetworkPortDetailHeader($monitoring, $query) {
       global $DB, $CFG_GLPI;
 
@@ -751,6 +822,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
       return $result;
    }
+
 
 
    /**
@@ -899,7 +971,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
             case 10:
                if ($pfNetworkPort->fields["portduplex"] == 2) {
-                  echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
+                  echo "<td class='tab_bg_1_2' style='background-color:#cf9b9b'>";
                   echo __('Half', 'fusioninventory');
                   echo '</td>';
                } else if ($pfNetworkPort->fields["portduplex"] == 3) {
@@ -946,8 +1018,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                            echo "<td style='background:#bfec75'
                                      class='tab_bg_1_2'>".$icon.$link1;
                         } else {
-                           echo "<td background='#cf9b9b'
-                                     class='tab_bg_1_2'>".$icon.$link1;
+                           echo "<td class='tab_bg_1_2' style='background-color:#cf9b9b'>".$icon.$link1;
                         }
                         if (!empty($link)) {
                            echo "<br/>".$link;
@@ -1121,6 +1192,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
+   /**
+    * Display serialized inventory
+    *
+    * @global array $CFG_GLPI
+    * @param integer $items_id
+    */
    function displaySerializedInventory($items_id) {
       global $CFG_GLPI;
 
@@ -1182,6 +1259,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 
+   /**
+    * Get the icon related to the itemtype
+    *
+    * @global array $CFG_GLPI
+    * @param string $itemtype
+    * @return string
+    */
    function getItemtypeIcon($itemtype) {
       global $CFG_GLPI;
 

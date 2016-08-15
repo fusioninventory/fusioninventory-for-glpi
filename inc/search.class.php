@@ -1,54 +1,80 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   Plugin Monitoring for GLPI
-   Copyright (C) 2011-2013 by the Plugin Monitoring for GLPI Development Team.
-
-   https://forge.indepnet.net/projects/monitoring/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of Plugin Monitoring project.
-
-   Plugin Monitoring for GLPI is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   Plugin Monitoring for GLPI is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with Monitoring. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   Plugin Monitoring for GLPI
-   @author    David Durieux
-   @co-author
-   @comment
-   @copyright Copyright (c) 2011-2013 Plugin Monitoring for GLPI team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      https://forge.indepnet.net/projects/monitoring/
-   @since     2011
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the search engine. Same than GLPI search
+ * engine but with little modifications.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
+
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-//class PluginMonitoringSearch extends CommonDBTM {
+/**
+ * Manage the search engine. Same than GLPI search engine but with little
+ * modifications.
+ */
 class PluginFusioninventorySearch extends CommonDBTM {
 
+   /**
+    * Define the form URL
+    *
+    * @var string
+    */
    public $formurl = 'monitoring/front/componentscatalog_rule.form.php';
+
+   /**
+    * Define the custom id field name
+    *
+    * @var string
+    */
    public $customIdVar = 'plugin_monitoring_componentscalalog_id';
+
+   /**
+    * Set the display the delete button to yes
+    *
+    * @var boolean
+    */
    public $displaydeletebuton = TRUE;
 
    /*
@@ -59,8 +85,12 @@ class PluginFusioninventorySearch extends CommonDBTM {
 
 
 
-   /*
+   /**
     * Cloned Core function to display with our require.
+    *
+    * @global array $CFG_GLPI
+    * @param string $itemtype
+    * @param array $params
     */
    function showGenericSearch($itemtype, $params) {
       global $CFG_GLPI;
@@ -507,8 +537,14 @@ echo "<tr>";
 
 
 
-   /*
+   /**
     * Clone of Search::showList but only to have SQL query
+    *
+    * @global array $CFG_GLPI
+    * @param string $itemtype
+    * @param array $params
+    * @param integer $items_id_check
+    * @return boolean
     */
    function constructSQL($itemtype,$params, $items_id_check=0) {
       global $CFG_GLPI;

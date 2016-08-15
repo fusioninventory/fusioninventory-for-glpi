@@ -1,43 +1,48 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the network equipment port not have
+ * connection since xx days.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 //Options for GLPI 0.71 and newer : need slave db to access the report
@@ -46,17 +51,19 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "utils", "report");
 
 Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
-if (isset($_GET["reset_search"])) {
+$reset_search = filter_input(INPUT_GET, "reset_search");
+if ($reset_search != '') {
    resetSearch();
 }
 
-if (!isset($_GET["start"])) {
-   $_GET["start"] = 0;
-}
+$options=array('options'=>array('default'=>0));
+$start = filter_input(INPUT_GET, "start", FILTER_VALIDATE_INT, $options);
+$_GET["start"] = $start;
+
 $_GET=getValues($_GET, $_POST);
 displaySearchForm();
 
@@ -115,6 +122,15 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 }
 Html::footer();
 
+
+
+/**
+ * Display special search form
+ *
+ * @global array $_SERVER
+ * @global array $_GET
+ * @global array $CFG_GLPI
+ */
 function displaySearchForm() {
    global $_SERVER, $_GET, $CFG_GLPI;
 
@@ -196,30 +212,51 @@ function displaySearchForm() {
 
 
 
+/**
+ * Get array in GET for search
+ *
+ * @param array $get
+ * @return string
+ */
 function getContainsArray($get) {
    if (isset($get["dropdown_sup_inf"])) {
       switch ($get["dropdown_sup_inf"]) {
+
          case "sup":
             return ">'".$get["dropdown_calendar"]." 00:00:00'";
 
          case "equal":
-
             return "LIKE '".$get["dropdown_calendar"]."%'";
-         case "inf":
 
+         case "inf":
             return "<'".$get["dropdown_calendar"]." 00:00:00'";
+
       }
    }
 }
 
 
 
+/**
+ * Generate the URL bookmark
+ *
+ * @param string $url
+ * @param array $get
+ * @return string
+ */
 function buildBookmarkUrl($url, $get) {
     return $url."?field[0]=3&contains[0]=".getContainsArray($get);
 }
 
 
 
+/**
+ * Get values
+ *
+ * @param array $get
+ * @param array $post
+ * @return array
+ */
 function getValues($get, $post) {
    $get=array_merge($get, $post);
    if (isset($get["field"])) {
@@ -247,6 +284,9 @@ function getValues($get, $post) {
 
 
 
+/**
+ * Reset the search engine
+ */
 function resetSearch() {
    $_GET["start"]=0;
    $_GET["order"]="ASC";

@@ -1,49 +1,57 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Walid Nouh
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the checks before deploy a package.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Walid Nouh
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the checks before deploy a package.
+ */
 class PluginFusioninventoryDeployCheck {
 
    /**
@@ -88,8 +96,7 @@ class PluginFusioninventoryDeployCheck {
     * Get the number to multiply to have in B relative to the unit
     *
     * @param string $unit the unit of number
-    *
-    * @return int the number to multiply
+    * @return integer the number to multiply
     */
    static function getUnitSize($unit) {
       $units = array(
@@ -107,6 +114,14 @@ class PluginFusioninventoryDeployCheck {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param array $request_data
+    * @param string $rand unique element id used to identify/update an element
+    * @param string $mode possible values: init|edit|create
+    */
    static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
@@ -169,9 +184,10 @@ class PluginFusioninventoryDeployCheck {
    /**
     * Display list of checks
     *
-    * @param PluginFusioninventoryDeployPackage $package
+    * @global array $CFG_GLPI
+    * @param object $package PluginFusioninventoryDeployPackage instance
     * @param array $datas array converted of 'json' field in DB where stored checks
-    * @param integer $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
@@ -239,8 +255,9 @@ class PluginFusioninventoryDeployCheck {
    /**
     * Display the dropdown to select type of element
     *
+    * @global array $CFG_GLPI
     * @param array $config order item configuration
-    * @param ingeter $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
    static function displayDropdownType($config, $rand, $mode) {
@@ -303,7 +320,7 @@ class PluginFusioninventoryDeployCheck {
     * @param array $data fields yet defined in edit mode
     * @param string $mode mode in use (create, edit...)
     *
-    * @return string|boolean
+    * @return string|false
     */
    static function getValues($type, $data, $mode) {
       $values = array(
@@ -373,9 +390,8 @@ class PluginFusioninventoryDeployCheck {
     *
     * @param array $config
     * @param array $request_data
-    * @param type $rand
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
-    *
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
@@ -597,7 +613,6 @@ class PluginFusioninventoryDeployCheck {
     * Remove an item
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function remove_item($params) {
@@ -621,6 +636,7 @@ class PluginFusioninventoryDeployCheck {
 
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      return TRUE;
    }
 
 

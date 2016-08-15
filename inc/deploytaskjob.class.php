@@ -1,60 +1,91 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author Alexandre Delaunay
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the deploy task job.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @author    Alexandre Delaunay
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
-/* TODO: This class should inherit the PluginFusioninventoryTaskjob
- */
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
 
+/**
+ * Manage the deploy task job.
+ *
+ * @todo This class should inherit the PluginFusioninventoryTaskjob
+ */
 class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
+
+   /**
+    * Is this use can create a deploy task job
+    *
+    * @return boolean
+    */
    static function canCreate() {
       return TRUE;
    }
 
+
+
+   /**
+    * Is this use can view a deploy task job
+    *
+    * @return boolean
+    */
    static function canView() {
       return TRUE;
    }
 
 
 
+   /**
+    * Get all data
+    *
+    * @global object $DB
+    * @param array $params
+    * @return string in JSON format
+    */
    function getAllDatas($params) {
       global $DB;
 
@@ -68,7 +99,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $res  = $DB->query($sql);
       $json  = array();
       $temp_tasks = array();
-      while($row = $DB->fetch_assoc($res)) {
+      while ($row = $DB->fetch_assoc($res)) {
          $row['packages'] = importArrayFromDB($row['definition']);
          $row['actions'] = importArrayFromDB($row['action']);
 
@@ -106,6 +137,12 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
 
 
+   /**
+    * Save data
+    *
+    * @global object $DB
+    * @param array $params
+    */
    function saveDatas($params) {
       global $DB;
 
@@ -115,7 +152,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       //remove old jobs from task
       $query = "DELETE FROM ".$this->getTable()."
       WHERE plugin_fusioninventory_deploytasks_id = '".$tasks_id."'";
-      $res = $DB->query($query);
+      $DB->query($query);
 
       //get plugin id
       $plug = new Plugin;
@@ -126,7 +163,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $sql_tasks = array();
       $i = 0;
 
-      foreach($tasks as $task) {
+      foreach ($tasks as $task) {
          $task = get_object_vars($task);
 
          //encode action and definition
@@ -148,13 +185,18 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          )";
          $i++;
       }
-      foreach($sql_tasks as $query) {
-         $res = $DB->query($query);
+      foreach ($sql_tasks as $query) {
+         $DB->query($query);
       }
    }
 
 
 
+   /**
+    * Get the different type of task job actions
+    *
+    * @return array
+    */
    static function getActionTypes() {
 
       return array(
@@ -175,6 +217,13 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
 
 
+   /**
+    * Get actions
+    *
+    * @global object $DB
+    * @param array $params
+    * @return string in JSON format
+    */
    static function getActions($params) {
       global $DB;
 
@@ -219,7 +268,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                   $group = new Group;
                   $group_datas = $group->find($like);
                   $i=0;
-                  foreach($group_datas as $group_data) {
+                  foreach ($group_datas as $group_data) {
                      $res['action_selections'][$i]['id'] = $group_data['id'];
                      $res['action_selections'][$i]['name'] = $group_data['name'];
                      $i++;

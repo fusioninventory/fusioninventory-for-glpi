@@ -1,82 +1,118 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the menu of plugin FusionInventory.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
+/**
+ * Manage the menu of plugin FusionInventory.
+ */
 class PluginFusioninventoryMenu extends CommonGLPI {
 
    /**
-    * Name of the type
+    * Get name of this type by language of the user connected
     *
-    * @param $nb  integer  number of item in the type (default 0)
-   **/
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return 'FusionInventory';
    }
 
+
+
+   /**
+    * Check if can view item
+    *
+    * @return boolean
+    */
    static function canView() {
-      $can_display = false;
-      $profile     = new PluginFusioninventoryProfile();
+      $can_display = FALSE;
+      $profile = new PluginFusioninventoryProfile();
 
       foreach ($profile->getAllRights() as $right) {
          if (Session::haveRight($right['field'], READ)) {
-            $can_display = true;
+            $can_display = TRUE;
             break;
          }
       }
       return $can_display;
    }
 
+
+
+   /**
+    * Check if can create an item
+    *
+    * @return boolean
+    */
    static function canCreate() {
-      return false;
+      return FALSE;
    }
 
+
+
+   /**
+    * Get the menu name
+    *
+    * @return string
+    */
    static function getMenuName() {
       return self::getTypeName();
    }
 
+
+
+   /**
+    * Get additional menu options and breadcrumb
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
    static function getAdditionalMenuOptions() {
       global $CFG_GLPI;
 
@@ -139,8 +175,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                       array('alt' => __('Import', 'fusioninventory')));
       $options['menu']['links'][$img] = '/plugins/fusioninventory/front/documentation.php';
 
-
-
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
            'page'  => PluginFusioninventoryAgent::getSearchURL(false),
@@ -155,9 +189,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Get additional menu content
+    *
+    * @return array
+    */
    static function getAdditionalMenuContent() {
-      global $CFG_GLPI;
-
       $menu = array();
 
 //      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
@@ -175,13 +212,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
+
    /**
-   * Display the menu of FusionInventory
-   *
-   *@param type value "big" or "mini"
-   *
-   *@return nothing
-   **/
+    * Display the menu of plugin FusionInventory
+    *
+    * @global array $CFG_GLPI
+    * @param string $type
+    */
    static function displayMenu($type = "big") {
       global $CFG_GLPI;
 
@@ -265,7 +302,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        * Tasks
        */
       $a_menu = array();
-      if(Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
          //$a_menu[1]['name'] = __('Task management', 'fusioninventory')." (".__s('Summary').")";
          //$a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          //$a_menu[1]['link'] = $CFG_GLPI['root_doc'].
@@ -295,7 +332,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
       }
 
-      if(Session::haveRight('plugin_fusioninventory_task', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
          $a_menu[12]['name'] = __('Time slot', 'fusioninventory');
          $a_menu[12]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_timeslot.png";
          $a_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
@@ -514,12 +551,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    /**
     * Menu for computer inventory
+    *
+    * @global array $CFG_GLPI
     */
    static function displayMenuInventory() {
       global $CFG_GLPI;
-
-      $pfConfig = new PluginFusioninventoryConfig();
-
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -580,7 +616,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          echo "</tr>";
          $i++;
       }
-
       echo "</table>";
    }
 
@@ -588,12 +623,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    /**
     * Menu for SNMP inventory
+    *
+    * @global array $CFG_GLPI
     */
    static function displayMenuSNMPInventory() {
       global $CFG_GLPI;
-
-      $pfConfig = new PluginFusioninventoryConfig();
-
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -617,7 +651,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       );
       echo "<tr class='tab_bg_1' height='100'>";
       echo "<td colspan='2' height='220'>";
-      self::showChart('snmp', $dataSNMP, '', 940);
+      self::showChart('snmp', $dataSNMP);
       echo "</td>";
       echo "</tr>";
 
@@ -703,23 +737,22 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          }
          echo "</tr>";
       }
-
       echo "</table>";
    }
 
 
 
    /**
-    * htmlMenu
+    * Display menu in html
     *
-    *@param $menu_name value of the menu
-    *@param $a_menu array menu of each module
-    *@param $type value "big" or "mini"
-    *@param $width_status integer width of space before and after menu position
-    *
-    *@return $width_status integer total width used by menu
-    **/
-   static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status='300') {
+    * @global array $CFG_GLPI
+    * @param string $menu_name
+    * @param array $a_menu
+    * @param string $type
+    * @param integer $width_status
+    * @return integer
+    */
+   static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status=300) {
       global $CFG_GLPI;
 
       $width_max = 1250;
@@ -778,6 +811,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   /**
+    * Display the board (graph / stats on FusionInventory plugin page)
+    *
+    * @global object $DB
+    */
    static function board() {
       global $DB;
 
@@ -988,7 +1026,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "<td width='380'>";
       $title = __('Number of computer inventories of last hours', 'fusioninventory');
-      $title = '';
       self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";
@@ -1008,10 +1045,17 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-
    }
 
 
+
+   /**
+    * Display chart
+    *
+    * @param string $name
+    * @param array $data list of data for the chart
+    * @param string $title
+    */
    static function showChart($name, $data, $title='') {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
@@ -1022,6 +1066,15 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
+
+   /**
+    * Display chart bar
+    *
+    * @param string $name
+    * @param array $data list of data for the chart
+    * @param string $title
+    * @param integer $width
+    */
    static function showChartBar($name, $data, $title='', $width=370) {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 

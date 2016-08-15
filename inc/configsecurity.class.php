@@ -1,57 +1,81 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the SNMP authentication: v1, v2c and v3
+ * support.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the SNMP authentication: v1, v2c and v3 support.
+ */
 class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
+   /**
+    * We activate the history.
+    *
+    * @var boolean
+    */
    public $dohistory = TRUE;
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_configsecurity';
 
 
-   function defineTabs($options=array()){
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
+   function defineTabs($options=array()) {
       $ong = array();
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
@@ -59,6 +83,13 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $id
+    * @param array $options
+    * @return true
+    */
    function showForm($id, $options=array()) {
 
       Session::checkRight('plugin_fusioninventory_configsecurity', READ);
@@ -145,107 +176,16 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
-   // for file stored snmp authentication
-   function add_xml() {
-      global $CFG_GLPI;
-
-      // Get new id
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
-                                 'SimpleXMLElement',
-                                 LIBXML_NOCDATA);
-
-      $id = $xml->incrementID[0] + 1;
-
-      // Write XML file
-      $xml_write = "<snmp>\n";
-      $xml_write .= "   <incrementID>".$id."</incrementID>\n";
-      $xml_write .= "   <auth>\n";
-      for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
-         $xml_write .= "      <conf>\n";
-         $j = 0;
-         foreach($xml->auth->conf[$i] as $item) {
-            $j++;
-            switch ($j) {
-               case 1:
-                  $xml_write .= "         <Num>".$item."</Num>\n";
-                  break;
-
-               case 2:
-                  $xml_write .= "         <Name><![CDATA[".$item."]]></Name>\n";
-                  break;
-
-               case 3:
-                  $xml_write .= "         <snmp_version>".$item."</snmp_version>\n";
-                  break;
-
-               case 4:
-                  $xml_write .= "         <community><![CDATA[".$item."]]></community>\n";
-                  break;
-
-               case 5:
-                  $xml_write .= "         <sec_name><![CDATA[".$item."]]></sec_name>\n";
-                  break;
-
-               case 7:
-                  $xml_write .= "         <auth_protocol>".$item."</auth_protocol>\n";
-                  break;
-
-               case 8:
-                  $xml_write .= "         <auth_passphrase><![CDATA[".$item.
-                                "]]></auth_passphrase>\n";
-                  break;
-
-               case 9:
-                  $xml_write .= "         <priv_protocol>".$item."</encryption>\n";
-                  break;
-
-               case 10:
-                  $xml_write .= "         <priv_passphrase><![CDATA[".$item.
-                                "]]></priv_passphrase>\n";
-                  break;
-            }
-         }
-         $xml_write .= "      </conf>\n";
-      }
-      // Write new Line
-      $xml_write .= "      <conf>\n";
-      $xml_write .= "         <Num>".$id."</Num>\n";
-      $xml_write .= "         <Name><![CDATA[".$_POST["name"]."]]></Name>\n";
-      $xml_write .= "         <snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"].
-                                 "</snmp_version>\n";
-      $xml_write .= "         <community><![CDATA[".$_POST["community"]."]]></community>\n";
-      $xml_write .= "         <sec_name><![CDATA[".$_POST["username"]."]]></sec_name>\n";
-      $xml_write .= "         <auth_protocol>".$_POST["authentication"]."</auth_protocol>\n";
-      $xml_write .= "         <auth_passphrase><![CDATA[".$_POST["auth_passphrase"].
-                    "]]></auth_passphrase>\n";
-      $xml_write .= "         <priv_protocol>".$_POST["encryption"]."</priv_protocol>\n";
-      $xml_write .= "         <priv_passphrase><![CDATA[".$_POST["priv_passphrase"].
-                    "]]></priv_passphrase>\n";
-      $xml_write .= "      </conf>\n";
-
-      $xml_write .= "   </auth>\n";
-      $xml_write .= "</snmp>\n";
-
-      $myFile = $CFG_GLPI['root_doc']."/plugins/fusioninventory/scripts/auth.xml";
-      $fh = fopen($myFile, 'w') or die("can't open file");
-      fwrite($fh, $xml_write);
-      fclose($fh);
-
-      return $id;
-   }
-
-
-
    /**
     * Display SNMP version (dropdown)
     *
-    * @param $p_value
+    * @param null|string $p_value
     */
    function showDropdownSNMPVersion($p_value=NULL) {
-      $snmpVersions = array(0=>'-----', '1', '2c', '3');
+      $snmpVersions = array(0 => '-----', '1', '2c', '3');
       $options = array();
       if (!is_null($p_value)) {
-         $options = array('value'=>$p_value);
+         $options = array('value' => $p_value);
       }
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
@@ -255,24 +195,20 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    /**
     * Get real version of SNMP
     *
-    * @param $id version number
-    *
-    * @return real version
+    * @param integer $id
+    * @return string
     */
    function getSNMPVersion($id) {
       switch($id) {
 
          case '1':
             return '1';
-            break;
 
          case '2':
             return '2c';
-            break;
 
          case '3':
             return '3';
-            break;
 
       }
       return '';
@@ -283,7 +219,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    /**
     * Display SNMP authentication encryption (dropdown)
     *
-    * @param $p_value
+    * @param null|string $p_value
     */
    function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
@@ -297,22 +233,19 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * Get SNMP authentication encryption
+    * Get SNMP authentication protocol
     *
-    * @param $id
-    *
-    * @return encryption
+    * @param integer $id
+    * @return string
     */
    function getSNMPAuthProtocol($id) {
       switch($id) {
 
          case '1':
             return 'MD5';
-            break;
 
          case '2':
             return 'SHA';
-            break;
 
       }
       return '';
@@ -320,17 +253,28 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
+   /**
+    * Show dropdown of SNMP encryption protocol
+    *
+    * @param string $p_value
+    */
    function showDropdownSNMPEncryption($p_value=NULL) {
-      $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
+      $encryptions = array(0 => '-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
       $options = array();
       if (!is_null($p_value)) {
-         $options = array('value'=>$p_value);
+         $options = array('value' => $p_value);
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
 
 
 
+   /**
+    * Get the SNMP encryption
+    *
+    * @param integer $id
+    * @return string
+    */
    function getSNMPEncryption($id) {
       switch($id) {
 
@@ -355,40 +299,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
 
-   function selectbox($selected=0) {
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
-                                 'SimpleXMLElement',
-                                 LIBXML_NOCDATA);
-      $selectbox = "<select name='plugin_fusioninventory_configsecurities_id' size='1'>\n
-                       <option value='0'>-----</option>\n";
-      for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
-
-         $j = 0;
-         foreach($xml->auth->conf[$i] as $item) {
-            $j++;
-            switch ($j) {
-               case 1:
-                  if ($item == $selected) {
-                     $selectbox .= "<option selected='selected' value='".$item."'>";
-                  } else {
-                     $selectbox .= "<option value='".$item."'>";
-                  }
-                  break;
-
-               case 2:
-                  $selectbox .= $item."</option>\n";
-                  break;
-            }
-         }
-      }
-      $selectbox .= "</select>\n";
-
-      return $selectbox;
-   }
-
-
-
-   static function auth_dropdown($selected="") {
+   /**
+    * Show dropdown of SNMP authentication
+    *
+    * @param string $selected
+    */
+   static function authDropdown($selected="") {
 
       Dropdown::show("PluginFusioninventoryConfigSecurity",
                       array('name' => "plugin_fusioninventory_configsecurities_id",
@@ -397,50 +313,56 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
+
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-         case "assign_auth":
-            PluginFusioninventoryConfigSecurity::auth_dropdown();
-            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-            return true;
-            break;
+      if ($ma->getAction() == 'assign_auth') {
+         PluginFusioninventoryConfigSecurity::authDropdown();
+         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+         return TRUE;
       }
+      return FALSE;
    }
 
 
+
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
       $itemtype = $item->getType();
 
       switch ($ma->getAction()) {
+
          case "assign_auth" :
             switch($itemtype) {
+
                case 'NetworkEquipment':
                   $equipement = new PluginFusioninventoryNetworkEquipment();
                   break;
+
                case 'Printer':
                   $equipement = new PluginFusioninventoryPrinter();
                   break;
+
                case 'PluginFusioninventoryUnmanaged':
                   $equipement = new PluginFusinvsnmpUnmanaged();
                   break;
+
             }
-
             $fk = getForeignKeyFieldForItemType($itemtype);
-
-
-            foreach($ids as $key) {
+            foreach ($ids as $key) {
                $found = $equipement->find("`$fk`='".$key."'");
                $input = array();
                if (count($found) > 0) {
@@ -466,6 +388,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                }
             }
          break;
+
       }
    }
 }

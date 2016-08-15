@@ -1,60 +1,96 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the network ports display and parse the
+ * inventory to add / update in database.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the network ports display and parse the  inventory to add / update
+ * in database.
+ */
 class PluginFusioninventoryNetworkPort extends CommonDBTM {
+
+   /**
+    * Initialize the port of database
+    *
+    * @var array
+    */
    private $portDB = array();
+
+   /**
+    * Initialize the port information from inventory
+    *
+    * @var array
+    */
    private $portModif = array();
+
+   /**
+    * Initialize network port id
+    *
+    * @var integer
+    */
    private $plugin_fusinvsnmp_networkports_id = 0;
-   private $cdp=FALSE; // TRUE if CDP=1
-   private $portMacs=array();  // MAC addresses
-   private $portIps=array();   // IP addresses
-   private $portVlans=array(); // number and name for each vlan
+
+   /**
+    * Initialize VLANs (number and name) of port
+    *
+    * @var array
+    */
+   private $portVlans=array();
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab                     = array();
@@ -65,12 +101,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[1]['name']          = __('Name');
       $tab[1]['type']          = 'text';
       $tab[1]['massiveaction'] = FALSE;
-
-//      $tab[2]['table']         = $this->getTable();
-//      $tab[2]['field']         = 'id';
-//      $tab[2]['name']          = __('ID');
-//      $tab[2]['massiveaction'] = FALSE;
-//      $tab[2]['datatype']      = 'number';
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'ifmtu';
@@ -136,8 +166,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    /**
     * Load an optionnaly existing port
     *
-    *@return nothing
-    **/
+    * @param integer $networkports_id
+    */
    function loadNetworkport($networkports_id) {
 
       $networkport = new NetworkPort();
@@ -195,6 +225,13 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
+   /**
+    * Get unique object fields by id of network port
+    *
+    * @global object $DB
+    * @param integer $id
+    * @return array
+    */
    static function getUniqueObjectfieldsByportID($id) {
       global $DB;
 
@@ -207,23 +244,27 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $array["items_id"] = $data["items_id"];
          $array["itemtype"] = $data["itemtype"];
       }
-      switch($array["itemtype"]) {
-         case NETWORKING_TYPE:
-            $query = "SELECT *
-                      FROM `glpi_networkequipments`
-                      WHERE `id`='".$array["itemtype"]."'
-                      LIMIT 0, 1;";
-            if (($result = $DB->query($query))) {
-               $data = $DB->fetch_array($result);
-               $array["name"] = $data["name"];
-            }
-            break;
+      if ($array["itemtype"] == NETWORKING_TYPE) {
+         $query = "SELECT *
+                   FROM `glpi_networkequipments`
+                   WHERE `id`='".$array["itemtype"]."'
+                   LIMIT 0, 1;";
+         if (($result = $DB->query($query))) {
+            $data = $DB->fetch_array($result);
+            $array["name"] = $data["name"];
+         }
       }
-      return($array);
+      return $array;
    }
 
 
 
+   /**
+    * Get a value
+    *
+    * @param string $name
+    * @return string
+    */
    function getValue($name) {
       if (isset($this->portModif[$name])) {
          return $this->portModif[$name];
@@ -235,7 +276,12 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
-   function getNetworkPorts_id() {
+   /**
+    * Get the network port id
+    *
+    * @return integer
+    */
+   function getNetworkPortsID() {
       if (isset($this->portDB['id'])) {
          return $this->portDB['id'];
       } else if (isset($this->portModif['id'])) {
@@ -246,8 +292,16 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
-   /*
-    * Search networkport with ip and ifdescr
+   /**
+    * Search networkport with IP and ifdescr
+    *
+    * @global object $DB
+    * @param string $IP
+    * @param string $ifDescr
+    * @param string $sysdescr
+    * @param string $sysname
+    * @param string $model
+    * @return integer
     */
    function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
       global $DB;
@@ -474,15 +528,22 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $input['name'] = $IP;
          $iPAddress->add($input);
 
-         return($PortID);
+         return $PortID;
       }
-      return($PortID);
+      return $PortID;
    }
 
 
 
-   /*
-    * Used to find port of a device tell LLDP
+   /**
+    * Find a port of a device with MAC address and port number (from LLDP
+    * information)
+    *
+    * @global object $DB
+    * @param string $sysmac
+    * @param integer $ifnumber
+    * @param array $params
+    * @return integer
     */
    function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber, $params = array()) {
       global $DB;
@@ -577,16 +638,19 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          }
          $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
-         return($PortID);
+         return $PortID;
       }
 
-      return($PortID);
+      return $PortID;
    }
 
 
 
    /**
     * Function used to detect if port has multiple mac connected
+    *
+    * @param integer $networkports_id
+    * @return boolean
     */
    static function isPortHasMultipleMac($networkports_id) {
       $nw = new NetworkPort_NetworkPort();

@@ -1,57 +1,78 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the communication for the network inventory
+ * with the agents.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the communication of network inventory feature with the agents.
+ */
 class PluginFusioninventoryCommunicationNetworkInventory {
 
-   private $ptd, $logFile, $agent, $arrayinventory;
-   private $a_ports = array();
+   /**
+    * Define protected variables
+    *
+    * @var null
+    */
+   private $logFile, $agent, $arrayinventory;
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
 
+   /**
+    * __contruct function where fill logFile if extradebug enabled
+    */
    function __construct() {
       if (PluginFusioninventoryConfig::isExtradebugActive()) {
          $this->logFile = GLPI_LOG_DIR.'/fusioninventorycommunication.log';
@@ -61,15 +82,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Import data
+    * Import data, so get data from agent to put in GLPI
     *
-    *@param $p_DEVICEID XML code to import
-    *@param $p_CONTENT XML code to import
-    *@return "" (import ok) / error string (import ko)
-    **/
+    * @param string $p_DEVICEID device_id of the agent
+    * @param array $a_CONTENT
+    * @param array $arrayinventory
+    */
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
-
-      //$_SESSION['SOURCEXML'] = $p_xml;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->import().');
@@ -77,8 +96,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-      $this->agent = $pfAgent->InfosByKey($p_DEVICEID);
-
+      $this->agent = $pfAgent->infoByKey($p_DEVICEID);
       $this->arrayinventory = $arrayinventory;
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
@@ -100,7 +118,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
           $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
               ' ==devicesqueried==';
           $this->addtaskjoblog();
-
       }
 
       $this->importContent($a_CONTENT);
@@ -132,10 +149,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
    /**
     * Import the content (where have all devices)
-    *@param $p_content CONTENT code to import
     *
-    *@return errors string to be alimented if import ko / '' if ok
-    **/
+    * @param array $arrayinventory
+    * @return string errors or empty string
+    */
    function importContent($arrayinventory) {
 
       PluginFusioninventoryCommunication::addLog(
@@ -196,7 +213,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
             case 'AGENT' :
                if (isset($this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'])) {
-                  $agent = $pfAgent->InfosByKey($this->arrayinventory['DEVICEID']);
+                  $agent = $pfAgent->infoByKey($this->arrayinventory['DEVICEID']);
                   $agent['fusioninventory_agent_version'] =
                                        $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
                   $agent['last_agent_update'] = date("Y-m-d H:i:s");
@@ -222,12 +239,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Import one device
+    * import process of one device
     *
-    * @param type $itemtype
-    * @param type $items_id
-    *
-    * @return errors string to be alimented if import ko / '' if ok
+    * @global SimpleXMLElement $PLUGIN_FUSIONINVENTORY_XML
+    * @param string $itemtype
+    * @param integer $items_id
+    * @param array $a_inventory
+    * @return string errors or empty string
     */
    function importDevice($itemtype, $items_id, $a_inventory) {
       global $PLUGIN_FUSIONINVENTORY_XML;
@@ -280,19 +298,18 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             break;
 
          default:
-            $errors.=__('Unattended element in', 'fusioninventory').' TYPE : '
-                              .$a_inventory['itemtype']."\n";
+            return __('Unattended element in', 'fusioninventory').' TYPE : '.$a_inventory['itemtype']."\n";
       }
+      return '';
    }
 
 
 
    /**
-    * Send XML of SNMP device to rules
+    * Send inventory information to import rules
     *
-    * @param simplexml $p_CONTENT
-    *
-    * @return type
+    * @param array $a_inventory
+    * @return string errors or empty string
     */
    function sendCriteria($a_inventory) {
 
@@ -329,7 +346,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                } else {
                   $a_ports[] = $a_inventory['networkport'];
                }
-               foreach($a_ports as $port) {
+               foreach ($a_ports as $port) {
                   if (!empty($port['mac'])) {
                      $input['mac'][] = $port['mac'];
                   }
@@ -419,10 +436,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    /**
     * After rules import device
     *
-    * @param integer $items_id id of the device in GLPI DB (0 = created, other = merge)
-    * @param varchar $itemtype itemtype of the device
-    *
-    * @return type
+    * @param integer $items_id id of the device in GLPI DB (0 = created,
+    *                          other = merge)
+    * @param string $itemtype itemtype of the device
+    * @return string errors or empty string
     */
    function rulepassed($items_id, $itemtype) {
 
@@ -511,7 +528,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Used to add log in the task
+    * Add log in the taskjob
     */
    function addtaskjoblog() {
 
@@ -530,6 +547,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
 
+   /**
+    * Get method name linked to this class
+    *
+    * @return string
+    */
    static function getMethod() {
       return 'snmpinventory';
    }

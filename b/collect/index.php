@@ -1,43 +1,48 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the REST communication for collect module
+ * with the agent
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 ob_start();
@@ -51,21 +56,21 @@ switch (filter_input(INPUT_GET, "action")) {
 
    case 'getJobs':
       $machineid = filter_input(INPUT_GET, "machineid");
-      if(!empty($machineid)) {
+      if (!empty($machineid)) {
          $pfAgent        = new PluginFusioninventoryAgent();
-         $pfAgentModule  = new PluginFusioninventoryAgentModule();
+         $pfAgentModule  = new PluginFusioninventoryAgentmodule();
          $pfTask         = new PluginFusioninventoryTask();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
          $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
 
-         $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($machineid));
+         $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineid));
          if (isset($agent['id'])) {
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                $agent['id'],
                array('collect')
             );
             if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
-               foreach($taskjobstates as $taskjobstate) {
+               foreach ($taskjobstates as $taskjobstate) {
                   $taskjobstate->cancel(
                      __("Collect module has been disabled for this agent", 'fusioninventory')
                   );
@@ -146,13 +151,6 @@ switch (filter_input(INPUT_GET, "action")) {
                        1,
                        'Path not found');
                }
-//               if (isset($a_values['_cpt'])
-//                       && $a_values['_cpt'] == 1) { // it last value
-//                  $pfTaskjobstate->changeStatusFinish(
-//                       $jobstate['id'],
-//                       $jobstate['items_id'],
-//                       $jobstate['itemtype']);
-//               }
                $response = "{}";
                break;
 
@@ -165,12 +163,6 @@ switch (filter_input(INPUT_GET, "action")) {
                $pfTaskjobstate->changeStatus(
                        $jobstate['id'],
                        PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-//               if ($a_values['_cpt'] == 1) { // it last value
-//                  $pfTaskjobstate->changeStatusFinish(
-//                       $jobstate['id'],
-//                       $jobstate['items_id'],
-//                       $jobstate['itemtype']);
-//               }
                $response = "{}";
                break;
 
@@ -195,11 +187,6 @@ switch (filter_input(INPUT_GET, "action")) {
                                          filter_input(INPUT_GET, "_sid"),
                                          $jobstate['id']);
                }
-//                  $pfTaskjobstate->changeStatusFinish(
-//                       $jobstate['id'],
-//                       $jobstate['items_id'],
-//                       $jobstate['itemtype']);
-//               }
                $response = "{}";
                break;
 

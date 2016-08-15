@@ -1,58 +1,69 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the prepare task job and give the data to
+ * the agent when request what to deploy.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Alexandre Delaunay
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
-if(!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the prepare task job and give the data to the agent when request what
+ * to deploy.
+ */
 class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
 
    /**
     * Check if definition_type is present in definitions_filter array.
-    * This function returns TRUE if the definition_type is not in definitions_filter array.
+    * This function returns TRUE if the definition_type is not in
+    * definitions_filter array.
     * If definitions_filter is NULL, this check is inhibited and return FALSE.
     *
-    * @param type $definition_type
-    * @param type $definitions_filter
+    * @param string $definition_type
+    * @param null|array $definitions_filter
     * @return boolean
     */
    public function definitionFiltered($definition_type, $definitions_filter) {
@@ -71,8 +82,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * Prepare a takjob, get all devices and put in taskjobstate each task
     * for each device for each agent
     *
+    * @global object $DB
     * @param integer $taskjob_id id of the taskjob
-    * @param type $definitions_filter
+    * @param null|array $definitions_filter
     */
    function prepareRun($taskjob_id , $definitions_filter=NULL) {
       global $DB;
@@ -101,7 +113,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          switch($itemtype) {
 
             case 'Computer':
-               if ($this->definitionFiltered("Computer", $definitions_filter) ) {
+               if ($this->definitionFiltered("Computer", $definitions_filter)) {
                   break;
                }
                $computers[] = $items_id;
@@ -127,7 +139,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                foreach ($members as $member) {
                   $computers = $computer_object->find("users_id = '".$member['id']."' "
                   . " AND `is_deleted`='0' AND `is_template`='0'");
-                  foreach($computers as $computer) {
+                  foreach ($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
@@ -135,7 +147,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                //find computers directly associated with this group
                $computers = $computer_object->find("groups_id = '$items_id' "
                        . " AND `is_deleted`='0' AND `is_template`='0'");
-               foreach($computers as $computer) {
+               foreach ($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
 
@@ -226,10 +238,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //We are using isset for faster processing than array_unique because we might have many
       //entries in this list.
       $tmp_computers = array();
-      foreach($computers as $computer) {
-         if(!isset($tmp_computers[$computer])) {
+      foreach ($computers as $computer) {
+         if (!isset($tmp_computers[$computer])) {
             $tmp_computers[$computer] = 1;
-
          }
       }
       $computers = array_keys($tmp_computers);
@@ -242,10 +253,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
       $package = new PluginFusioninventoryDeployPackage();
 
-      foreach($computers as $computer_id) {
+      foreach ($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
 
-         foreach($definitions as $definition) {
+         foreach ($definitions as $definition) {
             $uniqid= uniqid();
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
 
@@ -257,15 +268,13 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
             //get agent for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);
-            if($agents_id === FALSE) {
+            if ($agents_id === FALSE) {
                $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
                                              0,
                                              '',
                                              1,
-                                             "No agent found for [[Computer::".$computer_id."]]",
-                                             0,
-                                             0);
+                                             "No agent found for [[Computer::".$computer_id."]]");
             } else {
                if ($agentmodule->isAgentCanDo('DEPLOY', $agents_id)) {
                   $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
@@ -312,11 +321,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
 
    /**
-    * When agent contact server, this function prepare data to be sent
+    * run function, so return data to send to the agent for deploy
     *
-    * @param type $taskjobstate
-    *
-    * @return type
+    * @param object $taskjobstate PluginFusioninventoryTaskjobstate instance
+    * @return array
     */
    function run($taskjobstate) {
       //get order by type and package id
@@ -338,7 +346,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
        * list inside Orders data like the following :
        *
        * $order_files = array()
-       * foreach($order_job["associatedFiles"] as $hash) {
+       * foreach ($order_job["associatedFiles"] as $hash) {
        *    if (!isset($order_files[$hash]) {
        *       $order_files[$hash] = PluginFusioninventoryDeployFile::getByHash($hash);
        *       $order_files[$hash]['mirrors'] = $mirrors
@@ -351,7 +359,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $mirrors = PluginFusioninventoryDeployMirror::getList(
          $taskjobstate->fields['plugin_fusioninventory_agents_id']
       );
-      foreach($order_files as $hash => $params) {
+      foreach ($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
          $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
          $order_files[$hash]['multiparts'] = array();

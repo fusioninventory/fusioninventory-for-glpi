@@ -41,7 +41,7 @@ $task = new PluginFusioninventoryTask();
 $staticmisc_methods = PluginFusioninventoryStaticmisc::getmethods();
 
 $methods = array();
-foreach($staticmisc_methods as $method) {
+foreach ($staticmisc_methods as $method) {
    $methods[$method['method']] = $method['method'];
 }
 
@@ -59,7 +59,7 @@ if (count($args['<device_ids>']) == 0) {
 
 //$logger->debug($device_ids);
 
-foreach($device_ids as $device_id) {
+foreach ($device_ids as $device_id) {
    $logger->info("Get prepared jobs for Agent '$device_id'");
 //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods, array('read_only'=>true));
    //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods);

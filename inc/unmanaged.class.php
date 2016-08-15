@@ -1,80 +1,113 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the unmanaged devices (not manage into GLPI).
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access this file directly");
+}
+
+/**
+ * Manage the unmanaged devices (not manage into GLPI).
+ */
 class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
+   /**
+    * We activate the history.
+    *
+    * @var boolean
+    */
    public $dohistory = TRUE;
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_unmanaged';
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Unmanaged device', 'fusioninventory');
    }
 
 
+
    /**
-    * @see CommonDBTM::useDeletedToLockIfDynamic()
+    * Check is use deleted to lock if dynamic
     *
-    * @since version 0.85+1.0
-   **/
+    * @return boolean
+    */
    function useDeletedToLockIfDynamic() {
       return false;
    }
 
 
 
+   /**
+    * Get menu name
+    *
+    * @return string
+    */
    static function getMenuName() {
       return self::getTypeName();
    }
 
+
+
+   /**
+    * Get content menu breadcrumb
+    *
+    * @return array
+    */
    static function getMenuContent() {
-      global $CFG_GLPI;
-      $menu          = array();
+      $menu = array();
       if (Session::haveRight(static::$rightname, READ)) {
          $menu['title']           = self::getTypeName();
          $menu['page']            = self::getSearchURL(false);
@@ -83,6 +116,13 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       return $menu;
    }
 
+
+
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -177,18 +217,18 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
+
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $ong = array();
-      if ($item->fields['id'] > 0){
+      if ($item->fields['id'] > 0) {
          $ong[1]=__('Import');
 
          $pfConfig = new PluginFusioninventoryConfig();
@@ -203,13 +243,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
@@ -219,12 +258,19 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          $pfUnmanaged->importForm($CFG_GLPI['root_doc'] .
                '/plugins/fusioninventory/front/unmanaged.form.php?id='.$item->fields["id"],
                                    $item->fields["id"]);
+         return TRUE;
       }
-      return TRUE;
+      return FALSE;
    }
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -238,7 +284,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
@@ -246,7 +295,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       if (Session::haveRight('plugin_fusioninventory_unmanaged', UPDATE)) {
          $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'import']    = __('Import');
       }
-      if(Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
          $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
                                        __('Assign SNMP authentication', 'fusioninventory');
       }
@@ -256,25 +305,29 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-
-      switch ($ma->getAction()) {
-
-         case "assign_auth" :
-            PluginFusioninventoryConfigSecurity::auth_dropdown();
-            echo "<br><br>";
-            break;
-
+      if ($ma->getAction() == 'assign_auth') {
+         PluginFusioninventoryConfigSecurity::authDropdown();
+         echo "<br><br>";
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
 
 
 
+   /**
+    * Execution code for massive action
+    *
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
 
@@ -294,20 +347,17 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             break;
 
       }
-      return;
    }
 
 
 
    /**
-   * Display form for unmanaged device
-   *
-   * @param $id integer id of the unmanaged device
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for unmanaged device
+    *
+    * @param integer $id id of the unmanaged device
+    * @param array $options
+    * @return true
+    */
    function showForm($id, $options=array()) {
 
       $this->initForm($id, $options);
@@ -421,7 +471,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown(
+      PluginFusioninventoryConfigSecurity::authDropdown(
                $this->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
@@ -434,7 +484,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-
       $this->showFormButtons($options);
 
       return TRUE;
@@ -443,14 +492,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Form to import devices in GLPI inventory (computer, printer...)
-   *
-   * @param $target target page
-   * @param $id integer id of the unmanaged
-   *
-   * @return nothing
-   *
-   **/
+    * Form to import devices in GLPI inventory (computer, printer...)
+    *
+    * @param string $target target page
+    * @param integer $id id of the unmanaged
+    */
    function importForm($target, $id) {
 
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
@@ -477,12 +523,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Clean orphelins connections
-   *
-   * @return nothing
-   *
-   **/
-   function CleanOrphelinsConnections() {
+    * Clean orphelins connections
+    *
+    * @global object $DB
+    */
+   function cleanOrphelinsConnections() {
       global $DB;
 
       $query = "SELECT `glpi_networkports`.`id`
@@ -511,13 +556,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 // ************************* Hub Management ************************ //
 
    /**
-   * Manage a hub (many mac on a port mean you have a hub)
-   *
-   * @param $pfNetworkport object Informations of the network port (switch port)
-   *
-   * @return bool
-   *
-   **/
+    * Manage a hub (many mac on a port mean you have a hub)
+    *
+    * @param object $pfNetworkport  Informations of the network port (switch port)
+    * @param array $a_mac
+    */
    function hubNetwork($pfNetworkport, $a_mac) {
 
       $nn = new NetworkPort_NetworkPort();
@@ -602,14 +645,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Delete all ports connected in hub and not found in last inventory
-   *
-   * @param $hub_id integer id of the hub (unmanaged device)
-   * @param $a_portUsed array list of the ports found in last inventory
-   *
-   * @return nothing
-   *
-   **/
+    * Delete all ports connected in hub and not found in last inventory
+    *
+    * @param integer $hub_id id of the hub (unmanaged device)
+    * @param array $a_portUsed list of the ports found in last inventory
+    */
    function deleteNonUsedPortHub($hub_id, $a_portUsed) {
 
       $Netport = new NetworkPort();
@@ -629,14 +669,13 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Connect a port to hub
-   *
-   * @param $a_port array datas of a port
-   * @param $hub_id integer id of the hub (unmanaged device)
-   *
-   * @return id of the port of the hub where port is connected
-   *
-   **/
+    * Connect a port to hub
+    *
+    * @global object $DB
+    * @param array $a_port datas of a port
+    * @param integer $hub_id id of the hub (unmanaged device)
+    * @return integer id of the port of the hub where port is connected
+    */
    function connectPortToHub($a_port, $hub_id) {
       global $DB;
 
@@ -677,16 +716,21 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
 
-   function disconnectDB($p_port) {
+   /**
+    * Disconnect a port
+    *
+    * @param integer $ports_id
+    */
+   function disconnectDB($ports_id) {
       $nn = new NetworkPort_NetworkPort();
 
-      if ($nn->getOppositeContact($p_port)
-              && $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
+      if ($nn->getOppositeContact($ports_id)
+              && $nn->getFromDBForNetworkPort($nn->getOppositeContact($ports_id))) {
          if ($nn->delete($nn->fields)) {
             plugin_item_purge_fusioninventory($nn);
          }
       }
-      if ($nn->getFromDBForNetworkPort($p_port)) {
+      if ($nn->getFromDBForNetworkPort($ports_id)) {
          if ($nn->delete($nn->fields)) {
             plugin_item_purge_fusioninventory($nn);
          }
@@ -696,16 +740,13 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Search if port yet connected to hub
-   *
-   * @param $a_port array datas of a port
-   * @param $a_portglpi array all ports connected to the hub
-   *
-   * @return id of the port of the hub where port is connected
-   *
-   **/
+    * Search if port yet connected to hub
+    *
+    * @param array $a_port datas of a port
+    * @param array $a_portglpi all ports connected to the hub
+    * @return false|integer id of the port of the hub where port is connected
+    */
    function searchIfmacOnHub($a_port, $a_portglpi) {
-
       $data = current($a_port);
       if (isset($a_portglpi[$data['id']])) {
          return $a_portglpi[$data['id']];
@@ -716,13 +757,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Creation of a hub
-   *
-   * @param $pfNetworkport object Informations of the network port
-   *
-   * @return id of the hub (unmanageddevice)
-   *
-   **/
+    * Creation of a hub
+    *
+    * @param object$pfNetworkport Informations of the network port
+    * @param array $a_mac
+    * @return integer id of the hub (unmanageddevice)
+    */
    function createHub($pfNetworkport, $a_mac) {
 
       $Netport = new NetworkPort();
@@ -733,7 +773,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       foreach ($a_mac as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
-            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
+            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPortsID());
             if ($ID) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -786,14 +826,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-   * Remove all connections on a hub
-   *
-   * @param $hub_id integer id of the hub
-   * @param $pfNetworkport object Informations of the network port
-   *
-   * @return nothing
-   *
-   **/
+    * Remove all connections on a hub
+    *
+    * @param integer $hub_id id of the hub
+    * @param object $pfNetworkport Informations of the network port
+    * @param array $a_mac
+    */
    function releaseHub($hub_id, $pfNetworkport, $a_mac) {
 
       $Netport = new NetworkPort();
@@ -824,15 +862,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 // *************************** end hub management ****************************** //
 
    /**
-   * Purge unmanaged devices
-   *
-   * @param $pram object to purge
-   *
-   * @return nothing
-   *
-   **/
+    * Purge unmanaged devices
+    *
+    * @param object $parm object to purge
+    */
    static function purgeUnmanagedDevice($parm) {
-
       // Delete XML file if exist
       $folder = substr($parm->fields["id"], 0, -1);
       if (empty($folder)) {
@@ -850,10 +884,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $NetworkPort = new NetworkPort();
       $a_ports = $NetworkPort->find("`items_id`='".$parm->fields["id"]."'
                      AND `itemtype`='PluginFusioninventoryUnmanaged'");
-      foreach($a_ports as $a_port) {
+      foreach ($a_ports as $a_port) {
          $NetworkPort->delete($a_port, 1);
       }
-
    }
 
 
@@ -861,11 +894,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    /**
     * Function to import discovered device
     *
-    * @param $items_id id of the device to import
-    *
-    * @return nothing
-    *
-   **/
+    * @global object $DB
+    * @param integer $items_id
+    * @param integer $Import
+    * @param integer $NoImport
+    * @return array
+    */
    function import($items_id, $Import=0, $NoImport=0) {
       global $DB;
 
@@ -920,8 +954,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             } else {
                $pfPrinter->update($data);
             }
-
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -972,7 +1005,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $pfNetworkEquipment->update($data);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -997,7 +1030,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -1022,8 +1055,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $data_Port['itemtype'] = $Computer->getType();
                $NetworkPort->update($data_Port);
             }
-
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -1046,7 +1078,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id, 1);
+            $this->deleteFromDB(1);
             $Import++;
             break;
 
@@ -1060,6 +1092,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
 
+   /**
+    * Clean linked elements when purge an item
+    */
    function cleanDBonPurge() {
       $networkPort= new NetworkPort();
       $networkPort->cleanDBonItemDelete($this->getType(), $this->fields['id']);

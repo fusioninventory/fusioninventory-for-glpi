@@ -1,63 +1,97 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the update / add information of computer
+ * inventory into GLPI database.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the update / add information of computer inventory into GLPI database.
+ */
 class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
+   /**
+    * Define the name of the table
+    *
+    * @var string
+    */
    var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
+
+   /**
+    * Initialize the list of software
+    *
+    * @var array
+    */
    var $softList = array();
+
+   /**
+    * Initialize the list of software versions
+    *
+    * @var array
+    */
    var $softVersionList = array();
+
+   /**
+    * Initilize the list of logs to add in the database
+    *
+    * @var array
+    */
    var $log_add = array();
 
 
+   /**
+    * __contruct function where initialize many variables
+    */
    function __construct() {
-      $this->software                  = new Software();
-      $this->softwareVersion           = new SoftwareVersion();
-      $this->computer_SoftwareVersion  = new Computer_SoftwareVersion();
-      $this->softcatrule               = new RuleSoftwareCategoryCollection();
-      $this->computer                  = new Computer();
+      $this->software                = new Software();
+      $this->softwareVersion         = new SoftwareVersion();
+      $this->computerSoftwareVersion = new Computer_SoftwareVersion();
+      $this->softcatrule             = new RuleSoftwareCategoryCollection();
+      $this->computer                = new Computer();
    }
 
 
@@ -65,13 +99,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Update computer data
     *
-    * @global type $DB
-    *
-    * @param php array $a_computerinventory all data from the agent
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $a_computerinventory all data from the agent
     * @param integer $computers_id id of the computer
     * @param boolean $no_history set true if not want history
-    *
-    * @return nothing
+    * @param integer $setdynamic
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB, $CFG_GLPI;
@@ -90,10 +123,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
-      $networkPort                  = new NetworkPort();
-      $networkName                  = new NetworkName();
-      $iPAddress                    = new IPAddress();
-      $ipnetwork                    = new IPNetwork();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
@@ -112,7 +141,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
 
       // * Computer
-         $db_computer = array();
          $db_computer = $computer->fields;
          $computerName = $a_computerinventory['Computer']['name'];
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
@@ -140,7 +168,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                 LIMIT 1";
             $result = $DB->query($query);
             while ($data = $DB->fetch_assoc($result)) {
-               foreach($data as $key=>$value) {
+               foreach ($data as $key=>$value) {
                   $data[$key] = Toolbox::addslashes_deep($value);
                }
                $db_computer = $data;
@@ -265,7 +293,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['processor']) != 0) {
-                     foreach($a_computerinventory['processor'] as $a_processor) {
+                     foreach ($a_computerinventory['processor'] as $a_processor) {
                         $this->addProcessor($a_processor, $computers_id, $no_history);
                      }
                   }
@@ -332,7 +360,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['memory']) != 0) {
-                     foreach($a_computerinventory['memory'] as $a_memory) {
+                     foreach ($a_computerinventory['memory'] as $a_memory) {
                         $this->addMemory($a_memory, $computers_id, $no_history);
                      }
                   }
@@ -395,7 +423,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['harddrive']) != 0) {
-                     foreach($a_computerinventory['harddrive'] as $a_harddrive) {
+                     foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
                         $this->addHardDisk($a_harddrive, $computers_id, $no_history);
                      }
                   }
@@ -461,7 +489,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['drive']) != 0) {
-                     foreach($a_computerinventory['drive'] as $a_drive) {
+                     foreach ($a_computerinventory['drive'] as $a_drive) {
                         $this->addDrive($a_drive, $computers_id, $no_history);
                      }
                   }
@@ -521,7 +549,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['graphiccard']) != 0) {
-                     foreach($a_computerinventory['graphiccard'] as $a_graphiccard) {
+                     foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
                         $this->addGraphicCard($a_graphiccard, $computers_id, $no_history);
                      }
                   }
@@ -582,7 +610,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['networkcard']) != 0) {
-                     foreach($a_computerinventory['networkcard'] as $a_networkcard) {
+                     foreach ($a_computerinventory['networkcard'] as $a_networkcard) {
                         $this->addNetworkCard($a_networkcard, $computers_id, $no_history);
                      }
                   }
@@ -640,7 +668,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['soundcard']) != 0) {
-                     foreach($a_computerinventory['soundcard'] as $a_soundcard) {
+                     foreach ($a_computerinventory['soundcard'] as $a_soundcard) {
                         $this->addSoundCard($a_soundcard, $computers_id, $no_history);
                      }
                   }
@@ -696,7 +724,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['controller']) != 0) {
-                     foreach($a_computerinventory['controller'] as $a_control) {
+                     foreach ($a_computerinventory['controller'] as $a_control) {
                         $this->addControl($a_control, $computers_id, $no_history);
                      }
                   }
@@ -775,14 +803,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if ($nb_unicity == 0) {
                   $options['disable_unicity_check'] = TRUE;
                }
-               $a_softwareInventory = array();
-               $a_softwareVersionInventory = array();
 
                $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
                      SET `value`='1'";
                $CFG_GLPI["use_log_in_files"] = FALSE;
-               while(!$DB->query($queryDBLOCK)) {
+               while (!$DB->query($queryDBLOCK)) {
                   usleep(100000);
                }
                $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -803,7 +829,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
                      SET `value`='1'";
                $CFG_GLPI["use_log_in_files"] = FALSE;
-               while(!$DB->query($queryDBLOCK)) {
+               while (!$DB->query($queryDBLOCK)) {
                   usleep(100000);
                }
                $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -873,15 +899,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                } else {
                   if (count($db_software) > 0) {
                      // Delete softwares in DB
-                     $a_delete = array();
                      foreach ($db_software as $idtmp) {
-                        $this->computer_SoftwareVersion->getFromDB($idtmp);
-                        $this->softwareVersion->getFromDB($this->computer_SoftwareVersion->fields['softwareversions_id']);
-//                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
+                        $this->computerSoftwareVersion->getFromDB($idtmp);
+                        $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
+//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
 
                         if (!$no_history) {
                            $changes[0] = '0';
-                           $changes[1] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
+                           $changes[1] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
                            $changes[2] = "";
                            $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
@@ -908,7 +933,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
                            SET `value`='1'";
                      $CFG_GLPI["use_log_in_files"] = FALSE;
-                     while(!$DB->query($queryDBLOCK)) {
+                     while (!$DB->query($queryDBLOCK)) {
                         usleep(100000);
                      }
                      $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -930,7 +955,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
                            SET `value`='1'";
                      $CFG_GLPI["use_log_in_files"] = FALSE;
-                     while(!$DB->query($queryDBLOCK)) {
+                     while (!$DB->query($queryDBLOCK)) {
                         usleep(100000);
                      }
                      $CFG_GLPI["use_log_in_files"] = TRUE;
@@ -1050,7 +1075,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
                if (count($a_computerinventory['virtualmachine']) != 0) {
-                  foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
+                  foreach ($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
                      $a_virtualmachine['computers_id'] = $computers_id;
                      $computerVirtualmachine->add($a_virtualmachine, array(), !$no_history);
                   }
@@ -1159,7 +1184,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
                if (count($a_computerinventory['computerdisk']) != 0) {
-                  foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
+                  foreach ($a_computerinventory['computerdisk'] as $a_computerdisk) {
                      $a_computerdisk['computers_id']  = $computers_id;
                      $a_computerdisk['is_dynamic']    = 1;
                      $a_computerdisk['_no_history']   = $no_history;
@@ -1226,7 +1251,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['antivirus']) != 0) {
-               foreach($a_computerinventory['antivirus'] as $a_antivirus) {
+               foreach ($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $computers_id;
                   $pfInventoryComputerAntivirus->add($a_antivirus, array(), !$no_history);
                }
@@ -1270,7 +1295,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['licenseinfo']) != 0) {
-               foreach($a_computerinventory['licenseinfo'] as $a_licenseinfo) {
+               foreach ($a_computerinventory['licenseinfo'] as $a_licenseinfo) {
                   $a_licenseinfo['computers_id'] = $computers_id;
                   $pfComputerLicenseInfo->add($a_licenseinfo, array(), !$no_history);
                }
@@ -1313,7 +1338,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['remote_mgmt']) != 0) {
-               foreach($a_computerinventory['remote_mgmt'] as $a_remotemgmt) {
+               foreach ($a_computerinventory['remote_mgmt'] as $a_remotemgmt) {
                   $a_remotemgmt['computers_id'] = $computers_id;
                   $pfComputerRemotemgmt->add($a_remotemgmt, array(), !$no_history);
                }
@@ -1371,7 +1396,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['batteries']) != 0) {
-               foreach($a_computerinventory['batteries'] as $a_batteries) {
+               foreach ($a_computerinventory['batteries'] as $a_batteries) {
                   $a_batteries['computers_id'] = $computers_id;
                   $pfInventoryComputerBatteries->add($a_batteries, array(), FALSE);
                }
@@ -1451,7 +1476,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_monitors) != 0) {
-               foreach($a_monitors as $key => $monitors_id) {
+               foreach ($a_monitors as $key => $monitors_id) {
                   $input = array();
                   $input['computers_id']   = $computers_id;
                   $input['itemtype']       = 'Monitor';
@@ -1684,6 +1709,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Manage network ports
+    *
+    * @global object $DB
+    * @param array $inventory_networkports
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
    function manageNetworkPort($inventory_networkports, $computers_id, $no_history) {
       global $DB;
 
@@ -1737,7 +1770,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $simplenetworkport = array();
       foreach ($inventory_networkports as $key=>$a_networkport) {
          // Add ipnetwork if not exist
-         if (       $a_networkport['gateway'] != ''
+         if ($a_networkport['gateway'] != ''
                  && $a_networkport['netmask'] != ''
                  && $a_networkport['subnet']  != '') {
 
@@ -1957,11 +1990,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new processor component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addProcessor($data, $computers_id, $no_history) {
       $item_DeviceProcessor         = new Item_DeviceProcessor();
@@ -1981,11 +2012,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new memory component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addMemory($data, $computers_id, $no_history) {
       $item_DeviceMemory            = new Item_DeviceMemory();
@@ -2005,11 +2034,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new hard disk component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addHardDisk($data, $computers_id, $no_history) {
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
@@ -2029,11 +2056,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new drive component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addDrive($data, $computers_id, $no_history) {
       $item_DeviceDrive         = new Item_DeviceDrive();
@@ -2053,11 +2078,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new graphic card component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addGraphicCard($data, $computers_id, $no_history) {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
@@ -2077,11 +2100,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new network card component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addNetworkCard($data, $computers_id, $no_history) {
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
@@ -2101,11 +2122,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new sound card component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addSoundCard($data, $computers_id, $no_history) {
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
@@ -2125,11 +2144,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new controller component
     *
-    * @param type $data
-    * @param type $computers_id
-    * @param type $no_history
-    *
-    * @return nothing
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
     */
    function addControl($data, $computers_id, $no_history) {
       $item_DeviceControl           = new Item_DeviceControl();
@@ -2149,13 +2166,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Load software from DB are in the incomming inventory
     *
-    * @global type $DB
-    *
+    * @global object $DB
     * @param integer $entities_id entitity id
     * @param array $a_soft list of software from the agent inventory
     * @param integer $lastid last id search to not search from beginning
-    *
-    * @return integer last id
+    * @return integer last software id
     */
    function loadSoftwares($entities_id, $a_soft, $lastid = 0) {
       global $DB;
@@ -2205,13 +2220,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Load software versions from DB are in the incomming inventory
     *
-    * @global type $DB
-    *
+    * @global object $DB
     * @param integer $entities_id entitity id
     * @param array $a_softVersion list of software versions from the agent inventory
     * @param integer $lastid last id search to not search from beginning
-    *
-    * @return type
+    * @return integer last software version id
     */
    function loadSoftwareVersions($entities_id, $a_softVersion, $lastid = 0) {
       global $DB;
@@ -2231,7 +2244,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $nbVersions = 0;
       foreach ($a_versions as $name=>$a_softwares_id) {
-         foreach($a_softwares_id as $softwares_id) {
+         foreach ($a_softwares_id as $softwares_id) {
             $arr[] = "'".$name."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']."'";
          }
          $nbVersions++;
@@ -2266,12 +2279,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new software
     *
-    * @global type $DB
-    *
     * @param array $a_software
     * @param array $options
-    *
-    * @return nothing
     */
    function addSoftware($a_software, $options) {
 
@@ -2283,6 +2292,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Add a software version
+    *
+    * @param array $a_software
+    * @param integer $softwares_id
+    */
    function addSoftwareVersion($a_software, $softwares_id) {
 
       $options = array();
@@ -2297,6 +2312,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
+
+   /**
+    * Link software versions with the computer
+    *
+    * @global object $DB
+    * @param array $a_input
+    */
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
@@ -2325,6 +2347,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Link software version with the computer
+    *
+    * @param array $a_software
+    * @param integer $computers_id
+    * @param boolean $no_history
+    * @param array $options
+    */
    function addSoftwareVersionComputer($a_software, $computers_id, $no_history, $options) {
 
       $options['disable_unicity_check'] = TRUE;
@@ -2339,19 +2369,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['is_template_computer'] = FALSE;
       $a_software['is_deleted_computer']  = FALSE;
       $a_software['_no_history']          = TRUE;
-      $a_software['entities_id']          = $a_software['entities_id'];
+      $a_software['entities_id']          = $computers_id['entities_id'];
 
-      if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
+      if ($this->computerSoftwareVersion->add($a_software, $options, FALSE)) {
          if (!$no_history) {
             $changes[0] = '0';
             $changes[1] = "";
-            $changes[2] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
+            $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
             $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
                          Log::HISTORY_INSTALL_SOFTWARE);
 
             $changes[0] = '0';
             $changes[1] = "";
-            $changes[2] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem2($this->computer, 'add'));
+            $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem2($this->computer, 'add'));
             $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
                          Log::HISTORY_INSTALL_SOFTWARE);
          }
@@ -2360,6 +2390,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Arraydiff function to have real diff between 2 arrays
+    *
+    * @param array $arrayFrom
+    * @param array $arrayAgainst
+    * @return array
+    */
    function arrayDiffEmulation($arrayFrom, $arrayAgainst) {
       $arrayAgainsttmp = array();
       foreach ($arrayAgainst as $key => $data) {
@@ -2376,11 +2413,26 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Prepare add history in database
+    *
+    * @param integer $items_id
+    * @param string $itemtype
+    * @param string $itemtype_link
+    * @param array $changes
+    * @param integer $linked_action
+    */
    function addPrepareLog($items_id, $itemtype, $itemtype_link='', $changes=array('0', '', ''), $linked_action=Log::HISTORY_CREATE_ITEM) {
       $this->log_add[] = array($items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"], $changes, $linked_action);
    }
 
 
+
+   /**
+    * Insert logs are in queue
+    *
+    * @global object $DB
+    */
    function addLog() {
       global $DB;
 
@@ -2416,6 +2468,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
+   /**
+    * Define items link to computer in dynamic mode
+    *
+    * @global object $DB
+    * @param integer $computers_id
+    */
    function setDynamicLinkItems($computers_id) {
       global $DB;
 

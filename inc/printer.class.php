@@ -1,73 +1,114 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the printer extended information.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the printer extended information.
+ */
 class PluginFusioninventoryPrinter extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_printer';
 
-   static function getTypeName($nb=0) {
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
+   static function getTypeName($nb=0) {
+      return '';
    }
 
 
 
+   /**
+    * Get the type
+    *
+    * @return string
+    */
    static function getType() {
       return "Printer";
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
 
@@ -87,20 +128,17 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
          $pfPrinterLog->showGraph($item->getID(),
                      array('target' => $CFG_GLPI['root_doc'].
                                           '/plugins/fusioninventory/front/printer_info.form.php'));
+         return TRUE;
       }
-
-      return TRUE;
+      return FALSE;
    }
 
 
 
    /**
-    * Update an existing preloaded printer with the instance values
-    *
-    *@return nothing
-    **/
+    * Update an existing printer with last_fusioninventory_update value
+    */
    function updateDB() {
-
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
@@ -109,9 +147,14 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $item Printer instance
+    * @param array $options
+    * @return true
+    */
    function showForm(Printer $item, $options=array()) {
-      global $DB;
-
       Session::checkRight('plugin_fusioninventory_printer', READ);
 
       $id = $item->getID();
@@ -167,7 +210,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown(
+      PluginFusioninventoryConfigSecurity::authDropdown(
               $this->fields["plugin_fusioninventory_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
@@ -183,14 +226,21 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
+      return TRUE;
    }
 
 
 
-   function displaySerializedInventory($items_id) {
+   /**
+    * Display serialized inventory
+    *
+    * @global array $CFG_GLPI
+    * @param integer $printers_id
+    */
+   function displaySerializedInventory($printers_id) {
       global $CFG_GLPI;
 
-      $a_printerextend = current($this->find("`printers_id`='".$items_id."'",
+      $a_printerextend = current($this->find("`printers_id`='".$printers_id."'",
                                                "", 1));
 
       $this->getFromDB($a_printerextend['id']);
@@ -221,7 +271,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
               "/plugins/fusioninventory/front/send_inventory.php".
               "?itemtype=PluginFusioninventoryPrinter".
               "&function=sendSerializedInventory&items_id=".$a_printerextend['id'].
-              "&filename=Printer-".$items_id.".json'".
+              "&filename=Printer-".$printers_id.".json'".
               "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
       echo "</td>";
       echo "</tr>";
@@ -233,6 +283,11 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
 
+   /**
+    * Display extended printer information
+    *
+    * @param object $item
+    */
    static function showInfo($item) {
 
       // Manage locks pictures

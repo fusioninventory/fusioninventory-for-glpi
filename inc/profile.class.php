@@ -1,52 +1,64 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the profiles in plugin.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the profiles in plugin.
+ */
 class PluginFusioninventoryProfile extends Profile {
 
-      static $rightname = "config";
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
+   static $rightname = "config";
 
       /*
        * Old profile names:
@@ -74,40 +86,63 @@ class PluginFusioninventoryProfile extends Profile {
        *    status
        */
 
+   /**
+    * Get the mapping old rights => new rights. Require it for upgrade from old
+    * version of plugin FusionInventory
+    *
+    * @return array
+    */
    static function getOldRightsMappings() {
-      $types = array ('agent'                  => 'plugin_fusioninventory_agent',
-                      'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
-                      'configuration'          => 'plugin_fusioninventory_configuration',
-                      'wol'                    => 'plugin_fusioninventory_wol',
-                      'unmanaged'              => 'plugin_fusioninventory_unmanaged',
-                      'task'                   => 'plugin_fusioninventory_task',
-                      'credential'             => 'plugin_fusioninventory_credential',
-                      'credentialip'           => 'plugin_fusioninventory_credentialip',
-                      'existantrule'           => array('plugin_fusioninventory_ruleimport',
-                                                         'plugin_fusioninventory_ruleentity',
-                                                         'plugin_fusioninventory_rulelocation'),
-                      'importxml'              => 'plugin_fusioninventory_importxml',
-                      'blacklist'              => 'plugin_fusioninventory_blacklist',
-                      'ESX'                    => 'plugin_fusioninventory_esx',
-                      'configsecurity'         => 'plugin_fusioninventory_configsecurity',
-                      'networkequipment'       => 'plugin_fusioninventory_networkequipment',
-                      'printer'                => 'plugin_fusioninventory_printer',
-                      'reportprinter'          => 'plugin_fusioninventory_reportprinter',
-                      'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
-                      'packages'               => 'plugin_fusioninventory_package',
-                      'status'                 => 'plugin_fusioninventory_status',
-                      'collect'                => array('plugin_fusioninventory_collect',
-                                                        'plugin_fusioninventory_rulecollect'));
+      $types = array('agent'                  => 'plugin_fusioninventory_agent',
+                     'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
+                     'configuration'          => 'plugin_fusioninventory_configuration',
+                     'wol'                    => 'plugin_fusioninventory_wol',
+                     'unmanaged'              => 'plugin_fusioninventory_unmanaged',
+                     'task'                   => 'plugin_fusioninventory_task',
+                     'credential'             => 'plugin_fusioninventory_credential',
+                     'credentialip'           => 'plugin_fusioninventory_credentialip',
+                     'existantrule'           => array('plugin_fusioninventory_ruleimport',
+                                                        'plugin_fusioninventory_ruleentity',
+                                                        'plugin_fusioninventory_rulelocation'),
+                     'importxml'              => 'plugin_fusioninventory_importxml',
+                     'blacklist'              => 'plugin_fusioninventory_blacklist',
+                     'ESX'                    => 'plugin_fusioninventory_esx',
+                     'configsecurity'         => 'plugin_fusioninventory_configsecurity',
+                     'networkequipment'       => 'plugin_fusioninventory_networkequipment',
+                     'printer'                => 'plugin_fusioninventory_printer',
+                     'reportprinter'          => 'plugin_fusioninventory_reportprinter',
+                     'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
+                     'packages'               => 'plugin_fusioninventory_package',
+                     'status'                 => 'plugin_fusioninventory_status',
+                     'collect'                => array('plugin_fusioninventory_collect',
+                                                       'plugin_fusioninventory_rulecollect'));
 
       return $types;
    }
 
+
+
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       return self::createTabEntry('FusionInventory');
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       $pfProfile = new self();
       if ($item->fields['interface'] == 'central') {
@@ -120,14 +155,14 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
-    /**
-    * Show profile form
+   /**
+    * Display form
     *
-    * @param $items_id integer id of the profile
-    * @param $target value url of target
-    *
-    * @return nothing
-    **/
+    * @param integer $profiles_id
+    * @param boolean $openform
+    * @param boolean $closeform
+    * @return true
+    */
    function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
       echo "<div class='firstbloc'>";
@@ -170,18 +205,18 @@ class PluginFusioninventoryProfile extends Profile {
       echo "</div>";
 
       $this->showLegend();
+      return TRUE;
    }
 
 
 
-    /**
-    * Show profile form for helpdesk interface
+   /**
+    * Display profile form for helpdesk interface
     *
-    * @param $items_id integer id of the profile
-    * @param $target value url of target
-    *
-    * @return nothing
-    **/
+    * @param integer $profiles_id
+    * @param boolean $openform
+    * @param boolean $closeform
+    */
    function showFormSelf($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
       echo "<div class='firstbloc'>";
@@ -217,6 +252,9 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Delete profiles
+    */
    static function uninstallProfile() {
       $pfProfile = new self();
       $a_rights = $pfProfile->getAllRights();
@@ -227,6 +265,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get all rights
+    *
+    * @return array
+    */
    function getAllRights() {
       $a_rights = array();
       $a_rights = array_merge($a_rights, $this->getRightsGeneral());
@@ -238,6 +281,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get rights for rules part
+    *
+    * @return array
+    */
    function getRightsRules() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
@@ -270,6 +318,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get rights for deploy part
+    *
+    * @return array
+    */
    function getRightsDeploy() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryDeployPackage',
@@ -284,6 +337,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get rights for inventory part
+    *
+    * @return array
+    */
    function getRightsInventory() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryIprange',
@@ -328,6 +386,11 @@ class PluginFusioninventoryProfile extends Profile {
 
 
 
+   /**
+    * Get general rights
+    *
+    * @return array
+    */
    function getRightsGeneral() {
       $rights = array(
           array('rights'    => array(READ => __('Read')),
@@ -360,6 +423,14 @@ class PluginFusioninventoryProfile extends Profile {
       return $rights;
    }
 
+
+
+   /**
+    * Add the default profile
+    *
+    * @param integer $profiles_id
+    * @param array $rights
+    */
    static function addDefaultProfileInfos($profiles_id, $rights) {
       $profileRight = new ProfileRight();
       foreach ($rights as $right => $value) {
@@ -376,8 +447,12 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
 
+
+
    /**
-    * @param $ID  integer
+    * Create first access (so default profile)
+    *
+    * @param integer $profiles_id id of profile
     */
    static function createFirstAccess($profiles_id) {
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
@@ -388,6 +463,11 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
 
+
+
+   /**
+    * Delete rights stored in session
+    */
    static function removeRightsFromSession() {
       $profile = new self();
       foreach ($profile->getAllRights() as $right) {
@@ -411,8 +491,12 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
 
+
+
+   /**
+    * Migration script for old rights from old version of plugin FusionInventory
+    */
    static function migrateProfiles() {
-      global $DB;
       //Get all rights from the old table
       $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
 
@@ -420,7 +504,7 @@ class PluginFusioninventoryProfile extends Profile {
       $oldrights = self::getOldRightsMappings();
 
       //For each old profile : translate old right the new one
-      foreach ($profiles as $id => $profile) {
+      foreach ($profiles as $profile) {
          switch ($profile['right']) {
             case 'r' :
                $value = READ;
@@ -450,11 +534,13 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
 
+
+
    /**
-   * Init profiles during installation :
-   * - add rights in profile table for the current user's profile
-   * - current profile has all rights on the plugin
-   */
+    * Init profiles during installation:
+    * - add rights in profile table for the current user's profile
+    * - current profile has all rights on the plugin
+    */
    static function initProfile() {
       $pfProfile = new self();
       $profile   = new Profile();

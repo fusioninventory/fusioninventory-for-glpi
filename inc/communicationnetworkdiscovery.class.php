@@ -1,62 +1,69 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the communication of network discovery
+ * feature with the agents.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the communication of network discovery feature with the agents.
+ */
 class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
    /**
-    * Import data
+    * Import data, so get data from agent to put in GLPI
     *
-    * @param $p_DEVICEID XML code to import
-    * @param $p_CONTENT XML code to import
-    * @param $p_xml value XML code to import
-    *
-    * @return "" (import ok) / error string (import ko)
-    *
-    **/
+    * @param string $p_DEVICEID device_id of agent
+    * @param array $a_CONTENT
+    * @param array $arrayinventory
+    * @return string errors or empty string
+    */
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent = new PluginFusioninventoryAgent();
@@ -65,7 +72,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
               'Function PluginFusioninventoryCommunicationNetworkDiscovery->import().');
 
       $errors = '';
-      $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
+      $a_agent = $pfAgent->infoByKey($p_DEVICEID);
       if (isset($a_CONTENT['PROCESSNUMBER'])) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
          if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
@@ -81,7 +88,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                         $nb_devices = 1;
                      }
                   }
-
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
                                  $a_CONTENT['PROCESSNUMBER'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
@@ -99,7 +105,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
          if ($pfTaskjobstate->fields['state'] != "3") {
             $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
-            $errors.=$pfImportExport->import_netdiscovery($a_CONTENT, $p_DEVICEID);
+            $errors .= $pfImportExport->import_netdiscovery($a_CONTENT, $p_DEVICEID);
             if (isset($a_CONTENT['AGENT']['END'])) {
                if ((isset($a_CONTENT['DICO'])) AND ($a_CONTENT['DICO'] == "REQUEST")) {
                   $pfAgent->getFromDB($pfTaskjobstate->fields["plugin_fusioninventory_agents_id"]);
@@ -147,7 +153,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    /**
     * Prepare data and send them to rule engine
     *
-    * @param type $p_xml simpleXML object
+    * @param array $arrayinventory inventory array
     */
    function sendCriteria($arrayinventory) {
 
@@ -262,7 +268,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $inputdb['itemtype'] = $input['itemtype'];
          }
          if (isset($input['serial'])) {
-            $input['serial'] = $input['serial'];
+            $inputdb['serial'] = $input['serial'];
          }
          if (isset($input['ip'])) {
             $inputdb['ip'] = exportArrayToDB($input['ip']);
@@ -301,9 +307,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    /**
     * After rule engine passed, update task (log) and create item if required
     *
-    * @param type $items_id
-    * @param type $itemtype
-    * @param type $entities_id
+    * @param integer $items_id id of the item (0 = not exist in database)
+    * @param string $itemtype
+    * @param integer $entities_id
     */
    function rulepassed($items_id, $itemtype, $entities_id=0) {
 
@@ -443,7 +449,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $item->update($input);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'Computer',
                $item->getID(),
@@ -497,9 +503,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['plugin_fusioninventory_agents_id'] =
                            $_SESSION['glpi_plugin_fusioninventory_agentid'];
 
-            $this->_updateSNMPInfo($arrayinventory, $input, $item);
+            $this->updateSNMPInfo($arrayinventory, $input, $item);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'PluginFusioninventoryUnmanaged',
                $item->getID(),
@@ -521,7 +527,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             $item->update($input);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'NetworkEquipment',
                $item->getID(),
@@ -530,12 +536,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
 
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $input = $this->_initSpecificInfo(
+            $input = $this->initSpecificInfo(
                'networkequipments_id',
                $item->getID(),
                $pfNetworkEquipment
             );
-            $this->_updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
+            $this->updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
 
             break;
 
@@ -552,7 +558,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['have_ethernet'] = '1';
             $item->update($input);
 
-            $this->_updateNetworkInfo(
+            $this->updateNetworkInfo(
                $arrayinventory,
                'Printer',
                $item->getID(),
@@ -561,22 +567,33 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
 
             $pfPrinter = new PluginFusioninventoryPrinter();
-            $input = $this->_initSpecificInfo(
+            $input = $this->initSpecificInfo(
                'printers_id',
                $item->getID(),
                $pfPrinter
             );
-            $this->_updateSNMPInfo($arrayinventory, $input, $pfPrinter);
+            $this->updateSNMPInfo($arrayinventory, $input, $pfPrinter);
 
             break;
 
       }
    }
 
-   function _updateNetworkInfo($arrayinventory, $item_type, $id, $instanciation_type, $check_addresses) {
+
+
+   /**
+    * Update networkport information
+    *
+    * @param array $arrayinventory
+    * @param string $itemtype
+    * @param integer $items_id
+    * @param string $instanciation_type type of port (ethernet, wifi...)
+    * @param boolean $check_addresses
+    */
+   function updateNetworkInfo($arrayinventory, $itemtype, $items_id, $instanciation_type, $check_addresses) {
       $NetworkPort = new NetworkPort();
       $port = current($NetworkPort->find(
-           "`itemtype`='$item_type' AND `items_id`='$id'".
+           "`itemtype`='$itemtype' AND `items_id`='$items_id'".
            " AND `instantiation_type`='$instanciation_type'",
            "",
            1
@@ -592,11 +609,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
          $port_id = $port['id'];
       } else {
-         $item = new $item_type;
-         $item->getFromDB($id);
+         $item = new $itemtype;
+         $item->getFromDB($items_id);
          $input = array();
-         $input['itemtype']           = $item_type;
-         $input['items_id']           = $id;
+         $input['itemtype']           = $itemtype;
+         $input['items_id']           = $items_id;
          $input['instantiation_type'] = $instanciation_type;
          $input['name']               = "management";
          $input['entities_id']        = $item->fields['entities_id'];
@@ -662,40 +679,53 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
 
-   function _initSpecificInfo($key_field, $id, $class) {
-      $instances = $class->find("`$key_field`='$id'");
+   /**
+    * Get info from database
+    *
+    * @param string $key_field
+    * @param integer $id
+    * @param object $item
+    * @return array
+    */
+   function initSpecificInfo($key_field, $id, $item) {
+      $instances = $item->find("`$key_field`='$id'");
       $input = array();
       if (count($instances) > 0) {
          $input = Toolbox::addslashes_deep(current($instances));
       } else {
          $input[$key_field] = $id;
-         $id = $class->add($input);
-         $class->getFromDB($id);
-         $input = $class->fields;
+         $id = $item->add($input);
+         $item->getFromDB($id);
+         $input = $item->fields;
       }
-
       return $input;
    }
 
 
 
-   function _updateSNMPInfo($arrayinventory, $input, $class) {
+   /**
+    * Update SNMP information of a device (sysdescr, SNMP authentication...)
+    *
+    * @param array $arrayinventory
+    * @param array $input
+    * @param object $item
+    */
+   function updateSNMPInfo($arrayinventory, $input, $item) {
       if (isset($arrayinventory['DESCRIPTION'])
-                    && !empty($arrayinventory['DESCRIPTION'])) {
+              && !empty($arrayinventory['DESCRIPTION'])) {
          $input['sysdescr']  = $arrayinventory['DESCRIPTION'];
       }
-
-      if (isset($arrayinventory['AUTHSNMP']) AND !empty($arrayinventory['AUTHSNMP'])) {
+      if (isset($arrayinventory['AUTHSNMP'])
+              && !empty($arrayinventory['AUTHSNMP'])) {
          $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
       }
-
-      $class->update($input);
+      $item->update($input);
    }
 
 
 
    /**
-    * Used to add log in the task
+    * Used to add log in the taskjob
     */
    function addtaskjoblog() {
 
@@ -710,6 +740,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
 
+   /**
+    * Get method name linked to this class
+    *
+    * @return string
+    */
    static function getMethod() {
       return 'netdiscovery';
    }

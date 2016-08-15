@@ -1,53 +1,61 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the actions in package for deploy system.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
    @author    Alexandre Delaunay
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the actions in package for deploy system.
+ */
 class PluginFusioninventoryDeployAction {
 
    /**
-    * Get array for dropdown with code => description
+    * Get list of return actions available
     *
     * @return array
     */
@@ -84,8 +92,7 @@ class PluginFusioninventoryDeployAction {
     * Get description of the type name
     *
     * @param string $type name of the type
-    *
-    * @return text mapped with the type
+    * @return string mapped with the type
     */
    static function getType($type) {
       $a_types = PluginFusioninventoryDeployAction::getTypes();
@@ -97,6 +104,14 @@ class PluginFusioninventoryDeployAction {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param array $request_data
+    * @param string $rand unique element id used to identify/update an element
+    * @param string $mode possible values: init|edit|create
+    */
    static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
 
       /*
@@ -161,9 +176,10 @@ class PluginFusioninventoryDeployAction {
    /**
     * Display list of actions
     *
-    * @param PluginFusioninventoryDeployPackage $package
+    * @global array $CFG_GLPI
+    * @param object $package PluginFusioninventoryDeployPackage instance
     * @param array $datas array converted of 'json' field in DB where stored actions
-    * @param integer $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
@@ -186,9 +202,9 @@ class PluginFusioninventoryDeployAction {
          echo "</a><br />";
 
          foreach ($action[$action_type] as $key => $value) {
-            if (is_array($value) ) {
+            if (is_array($value)) {
                if ($key === "list") {
-                  foreach($value as $list) {
+                  foreach ($value as $list) {
                      echo $list;
                      echo " ";
                   }
@@ -245,10 +261,11 @@ class PluginFusioninventoryDeployAction {
 
 
    /**
-    * Display the dropdown to select type of element
+    * Display dropdown type
     *
+    * @global array $CFG_GLPI
     * @param array $config order item configuration
-    * @param ingeter $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
    static function displayDropdownType($config, $rand, $mode) {
@@ -311,7 +328,6 @@ class PluginFusioninventoryDeployAction {
     * @param array $config
     * @param array $request_data
     * @param string $mode mode in use (create, edit...)
-    *
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $mode) {
@@ -404,7 +420,7 @@ class PluginFusioninventoryDeployAction {
             break;
 
          case "textarea":
-            echo "<textarea name='$name_label_1' rows='3'>$value_1</textarea>";
+            echo "<textarea name='$name_label_1' rows='3' style='width: 760px;'>$value_1</textarea>";
             break;
 
       }
@@ -424,10 +440,6 @@ class PluginFusioninventoryDeployAction {
          PluginFusioninventoryDeployPackage::plusButton("retchecks", ".table_retchecks.template");
          echo "</th>";
          echo "<td>";
-         $display = "style='display:none'";
-         if ($retChecks) {
-            $display = "style='display:block'";
-         }
          echo "<span id='retchecks' style='display:block'>";
 
          if (is_array($retChecks)
@@ -594,7 +606,6 @@ class PluginFusioninventoryDeployAction {
     * Remove an item
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function remove_item($params) {

@@ -1,76 +1,112 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the extended information of a computer.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the extended information of a computer.
+ */
 class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'computer';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return "";
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return array();
-   }
-
-
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      return TRUE;
+      return '';
    }
 
 
 
    /**
-    * Display informations about computer (bios...)
+    * Display the content of the tab
     *
-    * @param type $computers_id
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      return FALSE;
+   }
+
+
+
+   /**
+    * Display information about computer (bios, last contact...)
+    *
+    * @global array $CFG_GLPI
+    * @param object $item
+    * @return true
     */
    static function showInfo($item) {
       global $CFG_GLPI;
@@ -246,25 +282,32 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</tr>';
       }
       echo '</table>';
+      return TRUE;
    }
 
 
 
-   function displaySerializedInventory($items_id) {
+   /**
+    * Display a serialized inventory
+    *
+    * @global array $CFG_GLPI
+    * @param integer $computers_id
+    */
+   function displaySerializedInventory($computers_id) {
       global $CFG_GLPI;
 
-      $a_computerextend = current($this->find("`computers_id`='".$items_id."'",
+      $a_computerextend = current($this->find("`computers_id`='".$computers_id."'",
                                                "", 1));
 
       $this->getFromDB($a_computerextend['id']);
 
-      $folder = substr($items_id, 0, -1);
+      $folder = substr($computers_id, 0, -1);
       if (empty($folder)) {
          $folder = '0';
       }
 
       if (empty($this->fields['serialized_inventory'])
-              && !file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
+              && !file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
          return;
       }
 
@@ -293,18 +336,18 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
               "/plugins/fusioninventory/front/send_inventory.php".
               "?itemtype=PluginFusioninventoryInventoryComputerComputer".
               "&function=sendSerializedInventory&items_id=".$a_computerextend['id'].
-              "&filename=Computer-".$items_id.".json'".
+              "&filename=Computer-".$computers_id.".json'".
               "target='_blank'>".__('PHP Array', 'fusioninventory')."</a> ";
       }
-      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
          if (!empty($this->fields['serialized_inventory'])) {
             echo "/ ";
          }
          echo "<a href='".$CFG_GLPI['root_doc'].
         "/plugins/fusioninventory/front/send_inventory.php".
         "?itemtype=PluginFusioninventoryInventoryComputerComputer".
-        "&function=sendXML&items_id=computer/".$folder."/".$items_id.
-        "&filename=Computer-".$items_id.".xml'".
+        "&function=sendXML&items_id=computer/".$folder."/".$computers_id.
+        "&filename=Computer-".$computers_id.".xml'".
         "target='_blank'>XML</a>";
       }
 
@@ -319,17 +362,14 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
 
    /**
-   * Delete extended information of computer
-   *
-   * @param $items_id integer id of the computer
-   *
-   * @return nothing
-   *
-   **/
-   static function cleanComputer($items_id) {
+    * Delete extended information of computer
+    *
+    * @param integer $computers_id
+    */
+   static function cleanComputer($computers_id) {
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$items_id."'",
+                                              "`computers_id`='".$computers_id."'",
                                               "", 1));
       if (!empty($a_computerextend)) {
          $pfInventoryComputerComputer->delete($a_computerextend);
@@ -337,6 +377,14 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
 
+
+   /**
+    * Get entity lock. If true, computer can't be transfered to another entity
+    * by agent inventory (so in automatic)
+    *
+    * @param integer $computers_id
+    * @return boolean
+    */
    function getLock($computers_id) {
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();

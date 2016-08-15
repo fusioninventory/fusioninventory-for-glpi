@@ -1,43 +1,47 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the history of network port changes.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
@@ -45,20 +49,22 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
+/**
+ * Manage the history of network port changes.
+ */
 class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if ($item->getID() > 0 ) {
+      if ($item->getID() > 0) {
          return __('FusionInventory historical', 'fusioninventory');
       }
       return '';
@@ -67,16 +73,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfNetworkPortLog = new self();
       echo $pfNetworkPortLog->showHistory($item->getID());
       return TRUE;
@@ -87,14 +91,12 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    /**
     * Insert port history with connection and disconnection
     *
-    * @param $status status of port ('make' or 'remove')
-    * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"]
-    *                and $array["device_ID"]
-    *
-    * @return id of inserted line
-    *
-   **/
-   function insert_connection($status, $array) {
+    * @global object $DB
+    * @param string $status status of port ('make' or 'remove')
+    * @param array $array with values : $array["networkports_id"], $array["value"], $array["itemtype"]
+    *                     and $array["device_ID"]
+    */
+   function insertConnection($status, $array) {
       global $DB;
 
       $input = array();
@@ -116,6 +118,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
+    /**
+     * Display form
+     *
+     * @global object $DB
+     * @param integer $id
+     * @param array $options
+     * @return true
+     */
    function showForm($id, $options=array()) {
       global $DB;
 
@@ -238,6 +248,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
+   /**
+    * Cron task: clean networkport logs too old
+    *
+    * @global object $DB
+    */
    static function cronCleannetworkportlogs() {
       global $DB;
 
@@ -245,8 +260,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
 
       $a_list = $pfConfigLogField->find();
-      if (count($a_list)){
-         foreach ($a_list as $data){
+      if (count($a_list)) {
+         foreach ($a_list as $data) {
 
             $query_delete = "DELETE FROM `".$pfNetworkPortLog->getTable()."`
                WHERE `plugin_fusioninventory_mappings_id`='".
@@ -274,6 +289,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
+   /**
+    * Add log of networkport
+    *
+    * @param integer $port_id
+    * @param string $value_new
+    * @param string $field
+    */
    static function networkport_addLog($port_id, $value_new, $field) {
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
@@ -325,7 +347,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $pfNetworkPort->getValue($db_field);
             $array["value_new"] = $value_new;
-            $pfNetworkPortLog->insert_connection("field", $array);
+            $pfNetworkPortLog->insertConnection("field", $array);
          }
       }
    }
@@ -333,7 +355,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    // $status = connection or disconnection
-   static function addLogConnection($status, $port) {
+   /**
+    * Add log when connect or disconnect
+    *
+    * @param string $status values possible: make|remove
+    * @param integer $ports_id
+    */
+   static function addLogConnection($status, $ports_id) {
 
       $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
@@ -343,8 +371,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       // Récupérer le port de la machine associé au port du switch
 
       // Récupérer le type de matériel
-      $input["networkports_id_source"] = $port;
-      $opposite_port = $NetworkPort_NetworkPort->getOppositeContact($port);
+      $input["networkports_id_source"] = $ports_id;
+      $opposite_port = $NetworkPort_NetworkPort->getOppositeContact($ports_id);
       if (!$opposite_port) {
          return;
       }
@@ -363,7 +391,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
-   // List of history in networking display
+   /**
+    * Get the history list of the port
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param integer $ID_port
+    * @return string the html prepared to display
+    */
    static function showHistory($ID_port) {
       global $DB, $CFG_GLPI;
 
@@ -497,7 +532,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $text .= "</tr>";
          }
       }
-
       $text .= "</table>";
       return $text;
    }

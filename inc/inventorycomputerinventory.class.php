@@ -1,66 +1,85 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the import of computer inventory.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the import of computer inventory.
+ */
 class PluginFusioninventoryInventoryComputerInventory {
-   private $arrayinventory = array();
-   private $device_id = '';
 
    /**
-   * Import data
-   *
-   * @param $p_DEVICEID XML code to import
-   * @param $p_CONTENT XML code of the Computer
-   * @param $p_CONTENT XML code of all agent have sent
-   *
-   * @return nothing (import ok) / error string (import ko)
-   **/
+    * Initialize the array of inventory
+    *
+    * @var array
+    */
+   private $arrayinventory = array();
+
+   /**
+    * initialize the device_id of the agent
+    *
+    * @var string
+    */
+   private $device_id = '';
+
+
+   /**
+    * import data
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param string $p_DEVICEID
+    * @param array $a_CONTENT
+    * @param array $arrayinventory
+    * @return string errors
+    */
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       global $DB, $CFG_GLPI;
-
-      $pfConfig = new PluginFusioninventoryConfig();
 
       $errors = '';
       $_SESSION["plugin_fusioninventory_entity"] = -1;
@@ -92,7 +111,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             SET `value`='".$name."'";
       $CFG_GLPI["use_log_in_files"] = FALSE;
       $start_time = date('U');
-      while(!$DB->query($query)) {
+      while (!$DB->query($query)) {
          usleep(100000);
          if ((date('U') - $start_time) > 5) {
             $communication = new PluginFusioninventoryCommunication();
@@ -116,15 +135,11 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
    /**
-   * Send Computer to inventoryruleimport
-   *
-   * @param $p_DEVICEID XML code to import
-   * @param $p_CONTENT XML code of the Computer
-   * @param $p_CONTENT XML code of all agent have sent
-   *
-   * @return nothing
-   *
-   **/
+    * Send Computer to inventoryruleimport
+    *
+    * @param string $p_DEVICEID
+    * @param array $arrayinventory
+    */
    function sendCriteria($p_DEVICEID, $arrayinventory) {
 
       if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
@@ -154,7 +169,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // Hack for USB Printer serial
          if (isset($arrayinventory['CONTENT']['PRINTERS'])) {
-            foreach($arrayinventory['CONTENT']['PRINTERS'] as $key=>$printer) {
+            foreach ($arrayinventory['CONTENT']['PRINTERS'] as $key=>$printer) {
                if ((isset($printer['SERIAL']))
                        AND (preg_match('/\/$/', $printer['SERIAL']))) {
                   $arrayinventory['CONTENT']['PRINTERS'][$key]['SERIAL'] =
@@ -166,7 +181,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // Hack to remove Memories with Flash types see ticket
          // http://forge.fusioninventory.org/issues/1337
          if (isset($arrayinventory['CONTENT']['MEMORIES'])) {
-            foreach($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
+            foreach ($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
                if ((isset($memory['TYPE']))
                        AND (preg_match('/Flash/', $memory['TYPE']))) {
 
@@ -203,7 +218,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $a_computerinventory['monitor'][$num] = $pfBlacklist->cleanBlacklist($a_monit);
          }
       }
-      $this->fill_arrayinventory($a_computerinventory);
+      $this->fillArrayInventory($a_computerinventory);
 
       $input = array();
 
@@ -217,10 +232,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['Computer']['uuid'];
          }
-         foreach($a_computerinventory['networkport'] as $network) {
+         foreach ($a_computerinventory['networkport'] as $network) {
             if (((isset($network['virtualdev']))
                     && ($network['virtualdev'] != 1))
-                    OR (!isset($network['virtualdev']))){
+                    OR (!isset($network['virtualdev']))) {
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
                   $input['mac'][] = $network['mac'];
                }
@@ -237,7 +252,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // Case of virtualmachines
          if (!isset($input['mac'])
                  && !isset($input['ip'])) {
-            foreach($a_computerinventory['networkport'] as $network) {
+            foreach ($a_computerinventory['networkport'] as $network) {
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
                   $input['mac'][] = $network['mac'];
                }
@@ -260,9 +275,9 @@ class PluginFusioninventoryInventoryComputerInventory {
                AND (!empty($a_computerinventory['Computer']['operatingsystems_id']))) {
             $input['osname'] = $a_computerinventory['Computer']['operatingsystems_id'];
          }
-         if ((isset($a_inventory['fusioninventorycomputer']['oscomment']))
-               AND (!empty($a_inventory['fusioninventorycomputer']['oscomment']))) {
-            $input['oscomment'] = $a_inventory['fusioninventorycomputer']['oscomment'];
+         if ((isset($a_computerinventory['fusioninventorycomputer']['oscomment']))
+               AND (!empty($a_computerinventory['fusioninventorycomputer']['oscomment']))) {
+            $input['oscomment'] = $a_computerinventory['fusioninventorycomputer']['oscomment'];
          }
          if ((isset($a_computerinventory['Computer']['computermodels_id']))
                  AND (!empty($a_computerinventory['Computer']['computermodels_id']))) {
@@ -275,14 +290,14 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // TODO
 //         if (isset($arrayinventory['CONTENT']['STORAGES'])) {
-//            foreach($arrayinventory['CONTENT']['STORAGES'] as $storage) {
+//            foreach ($arrayinventory['CONTENT']['STORAGES'] as $storage) {
 //               if ((isset($storage['SERIALNUMBER'])) AND (!empty($storage['SERIALNUMBER']))) {
 //                  $input['partitionserial'][] = $storage['SERIALNUMBER'];
 //               }
 //            }
 //         }
 //         if (isset($arrayinventory['CONTENT']['computerdisk'])) {
-//            foreach($arrayinventory['CONTENT']['DRIVES'] as $drive) {
+//            foreach ($arrayinventory['CONTENT']['DRIVES'] as $drive) {
 //               if ((isset($drive['SERIAL'])) AND (!empty($drive['SERIAL']))) {
 //                  $input['hdserial'][] = $drive['SERIAL'];
 //               }
@@ -300,8 +315,6 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // If transfer is disable, get entity and search only on this entity
          // (see http://forge.fusioninventory.org/issues/1503)
-         $pfConfig = new PluginFusioninventoryConfig();
-         $pfEntity = new PluginFusioninventoryEntity();
 
          // * entity rules
             $inputent = $input;
@@ -406,14 +419,15 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
    /**
-   * If rule have found computer or rule give to create computer
-   *
-   * @param $items_id integer id of the computer found (or 0 if must be created)
-   * @param $itemtype value Computer type here
-   *
-   * @return nothing
-   *
-   **/
+    * After rule engine passed, update task (log) and create item if required
+    *
+    * @global object $DB
+    * @global string $PLUGIN_FUSIONINVENTORY_XML
+    * @global boolean $PF_ESXINVENTORY
+    * @global array $CFG_GLPI
+    * @param integer $items_id id of the item (0 = not exist in database)
+    * @param string $itemtype
+    */
    function rulepassed($items_id, $itemtype) {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
 
@@ -522,8 +536,6 @@ class PluginFusioninventoryInventoryComputerInventory {
             $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
          }
 
-         $pfConfig = new PluginFusioninventoryConfig();
-
          $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventories`
             SET `value`='".$items_id."'";
          $CFG_GLPI["use_log_in_files"] = FALSE;
@@ -599,7 +611,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          $class = new $itemtype();
          if ($items_id == "0") {
             if ($entities_id == -1) {
-               $entities_id = 0;
                $_SESSION["plugin_fusioninventory_entity"] = 0;
             }
             $input = array();
@@ -654,10 +665,10 @@ class PluginFusioninventoryInventoryComputerInventory {
    /**
     * Get default value for state of devices (monitor, printer...)
     *
-    * @param type $input
-    * @param type $check_management
-    * @param type $management_value
-    *
+    * @param array $input
+    * @param boolean $check_management
+    * @param integer $management_value
+    * @return array
     */
    static function addDefaultStateIfNeeded(&$input, $check_management = FALSE,
                                            $management_value = 0) {
@@ -676,7 +687,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    /**
     * Return method name of this class/plugin
     *
-    * @return value
+    * @return string
     */
    static function getMethod() {
       return 'inventory';
@@ -684,7 +695,12 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
 
-   function fill_arrayinventory($data) {
+   /**
+    * Fill internal variable with the inventory array
+    *
+    * @param array $data
+    */
+   function fillArrayInventory($data) {
       $this->arrayinventory = $data;
    }
 }

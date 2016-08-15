@@ -1,82 +1,129 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the collect rules.
+ * The goal is to fill inventory with collect information.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Rules for collect information.
+ * The goal is to fill inventory with collect information.
+ */
 class PluginFusioninventoryCollectRule extends Rule {
 
-   // From Rule
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = "plugin_fusioninventory_rulecollect";
 
+   /**
+    * Set these rules can be sorted
+    *
+    * @var boolean
+    */
    public $can_sort=TRUE;
+
+   /**
+    * Set these rules not have specific parameters
+    *
+    * @var boolean
+    */
    public $specific_parameters = FALSE;
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
       return __('Computer information rules', 'fusioninventory');
    }
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
       return $output;
    }
 
 
 
+   /**
+    * Define maximum number of actions possible in a rule
+    *
+    * @return integer
+    */
    function maxActionsCount() {
-      // Unlimited
       return 8;
    }
 
 
 
+   /**
+    * Code execution of actions of the rule
+    *
+    * @param array $output
+    * @param array $params
+    * @return array
+    */
    function executeActions($output, $params) {
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             switch ($action->fields["action_type"]) {
+
                case "assign" :
                   $output[$action->fields["field"]] = $action->fields["value"];
                   break;
@@ -107,8 +154,9 @@ class PluginFusioninventoryCollectRule extends Rule {
                default:
                   //plugins actions
                   $executeaction = clone $this;
-                  $ouput = $executeaction->executePluginsActions($action, $output, $params);
+                  $output = $executeaction->executePluginsActions($action, $output, $params);
                   break;
+
             }
          }
       }
@@ -117,9 +165,14 @@ class PluginFusioninventoryCollectRule extends Rule {
 
 
 
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
-      $criterias = array ();
+      $criterias = array();
 
       $criterias['regkey']['field']       = 'name';
       $criterias['regkey']['name']        = __('Registry key', 'fusioninventory');
@@ -149,6 +202,11 @@ class PluginFusioninventoryCollectRule extends Rule {
 
 
 
+   /**
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions = array();

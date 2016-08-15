@@ -1,59 +1,86 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the windows registry keys found by agent and
+ * linked to the computer
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the registry keys found by the collect module of agent.
+ */
 class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_collect';
 
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Windows registry content', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -62,28 +89,35 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
                $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries',
                                                  "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
                if (count($a_colregs) == 0) {
-                  return array();
+                  return '';
                }
                $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_registries_contents',
                                 "`plugin_fusioninventory_collects_registries_id` IN ('".implode("','", $in)."')") > 0) {
-                  return array(__('Windows registry content', 'fusioninventory'));
+                  return __('Windows registry content', 'fusioninventory');
                }
             }
          } else if (get_class($item) == 'Computer') {
             if (countElementsInTable('glpi_plugin_fusioninventory_collects_registries_contents',
                              "`computers_id`='".$item->getID()."'") > 0) {
-               return array(__('Windows registry content', 'fusioninventory'));
+               return __('Windows registry content', 'fusioninventory');
             }
          }
       }
-      return array();
+      return '';
    }
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_Registry->showForCollect($item->getID());
@@ -95,6 +129,15 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Update computer registry values (add and update) related to this
+    * collect registry id
+    *
+    * @global object $DB
+    * @param integer $computers_id id of the computer
+    * @param array $registry_data registry info sent by agent
+    * @param integer $collects_registries_id id of collect_registry
+    */
    function updateComputer($computers_id, $registry_data, $collects_registries_id) {
       global $DB;
 
@@ -140,7 +183,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
             }
          }
          if (count($registry_data) != 0) {
-            foreach($registry_data as $key=>$value) {
+            foreach ($registry_data as $key=>$value) {
                $input = array(
                    'computers_id' => $computers_id,
                    'plugin_fusioninventory_collects_registries_id' => $collects_registries_id,
@@ -155,6 +198,11 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display registries keys related with collect id
+    *
+    * @param integer $collects_id id of collect
+    */
    function showForCollect($collects_id) {
 
       $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries',
@@ -166,12 +214,14 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Show registries keys of the computer
+    *
+    * @param integer $computers_id id of the computer
+    */
    function showForComputer($computers_id) {
-
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-
       echo "<table class='tab_cadre_fixe'>";
-
       $a_data = $this->find("`computers_id`='".$computers_id."'",
                               "`plugin_fusioninventory_collects_registries_id`,
                                  `key`");
@@ -212,6 +262,11 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
 
 
+   /**
+    * Display registry keys / values of collect_registry id
+    *
+    * @param integer $collects_registries_id
+    */
    function showForCollectRegistry($collects_registries_id) {
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
       $computer = new Computer();

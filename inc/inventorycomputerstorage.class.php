@@ -1,60 +1,85 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the special storage of computer (like LVM).
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the special storage of computer (like LVM).
+ */
 class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'computer';
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Storage', 'fusioninventory');
    }
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType() == 'Computer') {
@@ -64,7 +89,6 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                         "`computers_id`='".$item->getID()."'");
             if (count($a_nb) > 0) {
 //               return self::createTabEntry(__('Storage', 'fusioninventory'));
-
             }
          }
       }
@@ -73,18 +97,32 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > 0) {
          $pfInventoryComputerStorage = new self();
          $pfInventoryComputerStorage->showStorage($item->getID());
+         return TRUE;
       }
-
-      return TRUE;
+      return FALSE;
    }
 
 
 
+   /**
+    * Display storage form
+    *
+    * @global object $DB
+    * @param integer $computers_id
+    */
    function showStorage($computers_id) {
       global $DB;
 
@@ -257,16 +295,16 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
       echo '<script>
          function chbgHover(params) {
-            for(i=0;i<params.length;i++){
-               if(document.getElementById(\'storage\' + params[i])) {
+            for (var i=0;i<params.length;i++) {
+               if (document.getElementById(\'storage\' + params[i])) {
                  document.getElementById(\'storage\' + params[i]).style.backgroundColor = "#fb8080";
                }
             }
          }
          function chbgOut(params) {
-            for(i=0;i<params.length;i++){
-               if(document.getElementById(\'storage\' + params[i])) {
-                  document.getElementById(\'storage\' + params[i]).style.backgroundColor = "white";
+            for (var j=0;j<params.length;j++) {
+               if (document.getElementById(\'storage\' + params[j])) {
+                  document.getElementById(\'storage\' + params[j]).style.backgroundColor = "white";
                }
             }
          }
@@ -275,6 +313,15 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
 
 
+   /**
+    * Get link between storages
+    *
+    * @param array $a_link
+    * @param integer $id
+    * @param integer $lev
+    * @param integer $a_position
+    * @return array
+    */
    function getStorageLinks($a_link, $id, $lev, $a_position) {
       $pficStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
       $a_par = $pficStorage_Storage->getParent($id, $lev);

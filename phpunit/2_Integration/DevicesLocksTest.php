@@ -94,7 +94,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
           'itemtype'       => 'Computer'
       );
 
-      $pfInventoryComputerInventory->fill_arrayinventory($a_computerinventory);
+      $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
       $pfInventoryComputerInventory->rulepassed(0, 'Computer');
 
       $this->assertEquals(countElementsInTable('glpi_computers'), 1, 'Must have 1 computer created');
@@ -113,7 +113,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
 
       $a_computerinventory['Computer']['computermodels_id'] = "model yyy";
       $a_computerinventory['Computer']['manufacturers_id'] = "Dell inc.";
-      $pfInventoryComputerInventory->fill_arrayinventory($a_computerinventory);
+      $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
       $pfInventoryComputerInventory->rulepassed(1, 'Computer');
 
       $this->assertEquals(countElementsInTable('glpi_computers'), 1, 'More than 1 computer created');
@@ -191,7 +191,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       );
       $pfLock->add($input);
 
-      $pfInventoryComputerInventory->fill_arrayinventory($a_computerinventory);
+      $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
       $pfInventoryComputerInventory->rulepassed(1, 'Computer');
 
       $this->assertEquals(countElementsInTable('glpi_computers'), 1, 'More than 1 computer created');
@@ -280,7 +280,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       );
       $pfLock->add($input);
 
-      $pfInventoryComputerInventory->fill_arrayinventory($a_computerinventory);
+      $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
       $pfInventoryComputerInventory->rulepassed($computers_id, 'Computer');
 
       $this->assertEquals(countElementsInTable('glpi_computers'), 1, 'More than 1 computer created');

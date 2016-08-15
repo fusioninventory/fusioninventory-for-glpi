@@ -1,47 +1,62 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author Kevin Roy
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the display part of tasks.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @author    Kevin Roy
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access this file directly");
+}
+
+/**
+ * Manage the display part of tasks.
+ */
 class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
+   /**
+    * __contruct function where initialize base URLs
+    */
    function __construct() {
       parent::__construct();
       $this->base_urls = array_merge( $this->base_urls, array(
@@ -51,28 +66,33 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Get the tab name used for item
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
-
       $tab_names = array();
 
-      if ( $this->can("task", "r") ) {
+      if ($this->can("task", "r")) {
          if ($item->getType() == 'Computer') {
-            $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
+            return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
          }
       }
-
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
+      return '';
    }
 
 
 
-   function defineTabs($options=array()){
-      global $CFG_GLPI;
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
+   function defineTabs($options=array()) {
       $ong = array();
 
       $this->addDefaultFormTab($ong);
@@ -82,25 +102,37 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
          echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
+         return TRUE;
       }
+      return FALSE;
    }
 
 
 
+   /**
+    * Show job logs
+    */
    function showJobLogs() {
-
       $refresh_intervals = array(
-         "off" => __('Off', 'fusioninventory'),
-         "1"   => '1 ' . _n('second','seconds',1),
-         "5"   => '5 ' . _n('second','seconds',5),
-         "10"  => '10 ' . _n('second', 'seconds', 10),
-         "60"  => '1 ' . _n('minute', 'minutes', 1),
-         "120"  => '2 ' . _n('minute', 'minutes', 2),
-         "300"  => '5 ' . _n('minute', 'minutes', 5),
-         "600"  => '10 ' . _n('minute', 'minutes', 10),
+         "off"  => __('Off', 'fusioninventory'),
+         "1"    => '1 '._n('second','seconds',1),
+         "5"    => '5 '._n('second','seconds',5),
+         "10"   => '10 '._n('second', 'seconds', 10),
+         "60"   => '1 '._n('minute', 'minutes', 1),
+         "120"  => '2 '._n('minute', 'minutes', 2),
+         "300"  => '5 '._n('minute', 'minutes', 5),
+         "600"  => '10 '._n('minute', 'minutes', 10),
       );
       echo "<div class='fusinv_panel'>";
       echo "   <div class='fusinv_form large'>";
@@ -177,7 +209,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "</script>",
       ));
 
-
       // Template for counters' blocks
       echo implode("\n", array(
          "<script id='template_counter_block' type='x-tmpl-mustache'>",
@@ -244,7 +275,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 //         "<pre class='debuglogs' style='text-align:left;'></pre>"
       ));
 
-      if (isset($this->fields['id']) ){
+      if (isset($this->fields['id']) ) {
          $task_id = $this->fields['id'];
       } else {
          $task_id = json_encode(array());
@@ -253,8 +284,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $Computer = new Computer();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
-         "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
-         "  taskjobs.computers_url = '". $Computer->getFormUrl()."'",
+         "  taskjobs.agents_url = '". $pfAgent->getFormURL()."'",
+         "  taskjobs.computers_url = '". $Computer->getFormURL()."'",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
@@ -272,26 +303,35 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
-   // TODO: Move this method in task.class
-   function ajaxGetJobLogs($options) {
-
-      if (isset($options['task_id'])) {
-         if (is_array($options['task_id'])) {
-            $task_ids = $options['task_id'];
+   /**
+    * Ajax called to get job logs
+    *
+    * @todo Move this method in task.class
+    *
+    * @param integer $task_id
+    */
+   function ajaxGetJobLogs($task_id) {
+      if (!empty($task_id)) {
+         if (is_array($task_id)) {
+            $task_ids = $task_id;
          } else {
-            $task_ids = array($options['task_id']);
+            $task_ids = array($task_id);
          }
       } else {
          $task_ids = array();
       }
       $logs = $this->getJoblogs($task_ids);
       echo json_encode($logs);
-      return;
-
    }
 
 
 
+   /**
+    * Get translated name of counter type
+    *
+    * @param string $type
+    * @return string
+    */
    function getCounterTypeName($type = "") {
       $typenames = array(
          "agents_notdone"   => __('Not done yet', 'fusioninventory'),
@@ -302,7 +342,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "agents_cancelled" => __('Cancelled', 'fusioninventory')
       );
 
-      if ( isset($typenames[$type]) ) {
+      if (isset($typenames[$type])) {
          return $typenames[$type];
       } else {
          return __('N/A', 'fusioninventory');
@@ -311,23 +351,29 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Get agents logs
+    *
+    * @param array $agents
+    * @param array $counters
+    * @param string $target_id
+    * @return array
+    */
    function getAgentsLogs($agents = array(), $counters = array(), $target_id = "") {
       $display_list = array();
       $display_list[] = "<div class='job_agents'>";
       $display_list[] = "<ul>";
 
-      foreach ( $agents as $agent ) {
+      foreach ($agents as $agent) {
          $agent_id = $target_id . "_agent_".$agent['id'];
          $display_tags = array();
          $agent_css = array();
-         foreach($counters as $type=>$list) {
-            if ( isset( $list[$agent['id']] ) ) {
+         foreach ($counters as $type=>$list) {
+            if (isset( $list[$agent['id']])) {
                $display_tags[] = "<span class='".$type."'>";
                $display_tags[] = $this->getCounterTypeName($type);
                $display_tags[] = "</span>";
-               //if( in_array($type, array("agents_error", "agents_success", "agents_notdone")) ) {
-                  $agent_css[] = $type;
-               //}
+               $agent_css[] = $type;
             }
          }
          $display_list[] = "<li class='".implode(" ", $agent_css)."'>";
@@ -345,7 +391,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $display_list = array_merge($display_list, $display_tags);
          $display_list[] = "</div>"; //end of .agent_block
          $display_list[] = "<div class='runs_block'>";
-         foreach( $agent['runs'] as $run) {
+         foreach ($agent['runs'] as $run) {
             $display_list = array_merge($display_list, $this->getRunLogs($run));
          }
          $display_list[] = "</div>"; //end of .run_block
@@ -359,6 +405,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Get run logs
+    *
+    * @param array $run
+    * @return array
+    */
    function getRunLogs($run = array()) {
 
       $logClass = new PluginFusioninventoryTaskjoblog();
@@ -366,7 +418,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $display[] = "<div class='run_block'>";
       $display[] = " <h4>" . __('Execution', 'fusioninventory')." ".$run['uniqid']."</h4>";
       $display[] = " <table class='logs_block'>";
-      foreach( $run['logs'] as $log) {
+      foreach ($run['logs'] as $log) {
          $css_state = $logClass::getStateCSSName($log['state']);
          $state_name = $logClass::getStateName($log['state']);
          $display[] = "<tr>";
@@ -387,10 +439,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    /**
     * Display form for task configuration
     *
-    * @param $items_id integer ID of the task
+    * @param integer $id ID of the task
     * @param $options array
-    *
-    * @return bool TRUE if form is ok
+    * @return boolean TRUE if form is ok
     *
     **/
    function showForm($id, $options=array()) {
@@ -422,7 +473,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                                "reprepare_if_successful");
 
       echo "</div>";
-      if ( ! $new_item ) {
+      if (!$new_item) {
          echo "<div class='fusinv_form'>";
          $this->showCheckboxField( __('Active'), "is_active" );
 
@@ -473,6 +524,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
 
 
+   /**
+    * Manage the different actions in when submit form (add, update,purge...)
+    *
+    * @param array $postvars
+    */
    public function submitForm($postvars) {
 
       if (isset($postvars['forcestart'])) {
@@ -482,55 +538,41 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
           * TODO: forcing the task execution should be done in the task object
           */
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-
          $pfTaskjob->forceRunningTask($postvars['id']);
-
          Html::back();
-
       } else if (isset ($postvars["add"])) {
-
          Session::checkRight('plugin_fusioninventory_task', CREATE);
-
          $items_id = $this->add($postvars);
-
          Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."?id=".$items_id);
-
       } else if (isset($postvars["purge"])) {
-
          Session::checkRight('plugin_fusioninventory_task', PURGE);
-
          $pfTaskJob = new PluginFusioninventoryTaskjob();
-
          $taskjobs = $pfTaskJob->find("`plugin_fusioninventory_tasks_id` = '".$postvars['id']."' ");
-
          foreach ($taskjobs as $taskjob) {
             $pfTaskJob->delete($taskjob);
          }
-
          $this->delete($postvars);
          Html::redirect(Toolbox::getItemTypeSearchURL(get_class($this)));
-
       } else if (isset($_POST["update"])) {
-
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
-
          $this->getFromDB($postvars['id']);
-
          //Ensure empty value are set to NULL for datetime fields
-         if( isset($postvars['datetime_start']) and $postvars['datetime_start'] === '') {
+         if (isset($postvars['datetime_start']) and $postvars['datetime_start'] === '') {
             $postvars['datetime_start'] = 'NULL';
          }
-         if( isset($postvars['datetime_end']) and $postvars['datetime_end'] === '') {
+         if (isset($postvars['datetime_end']) and $postvars['datetime_end'] === '') {
             $postvars['datetime_end'] = 'NULL';
          }
          $this->update($postvars);
-
          Html::back();
       }
    }
 
 
 
+   /**
+    * Define reprepare_if_successful field when get empty item
+    */
    function getEmpty() {
       parent::getEmpty();
       $this->fields['reprepare_if_successful'] = 1;

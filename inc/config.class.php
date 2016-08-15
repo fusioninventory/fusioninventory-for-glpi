@@ -1,65 +1,93 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the configuration of the plugin.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the configuration of the plugin.
+ */
 class PluginFusioninventoryConfig extends CommonDBTM {
+
+   /**
+    * Initialize the displaylist public variable
+    *
+    * @var boolean
+    */
    public $displaylist = FALSE;
 
-
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_configuration';
 
+   /**
+    * Define number to the action 'clean' of agents
+    *
+    * @var integer
+    */
    CONST ACTION_CLEAN = 0;
+
+   /**
+    * Define number to the action 'change status' of agents
+    *
+    * @var integer
+    */
    CONST ACTION_STATUS = 1;
 
 
    /**
-   * Initialize config values of fusioninventory plugin
-   *
-   * @return nothing
-   *
-   **/
+    * Initialize config values of fusioninventory plugin
+    *
+    * @param boolean $getOnly
+    * @return array
+    */
    function initConfigModule($getOnly=FALSE) {
 
       $input = array();
@@ -119,19 +147,20 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
 
-      if ($getOnly) {
-         return $input;
+      if (!$getOnly) {
+         $this->addValues($input);
       }
-      $this->addValues($input);
+      return $input;
    }
 
 
 
    /**
-    * Display name of itemtype
+    * Get name of this type by language of the user connected
     *
-    * @return value name of this itemtype
-    **/
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
 
       return __('General setup');
@@ -141,18 +170,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * add multiple configuration values
+    * Add multiple configuration values
     *
-    * @param $values array of configuration values, indexed by name
-    *
-    * @return nothing
-    **/
+    * @param array $values configuration values, indexed by name
+    * @param boolean $update say if add or update in database
+    */
    function addValues($values, $update=TRUE) {
 
       foreach ($values as $type=>$value) {
          if ($this->getValue($type) === NULL) {
             $this->addValue($type, $value);
-         } else if ($update == TRUE){
+         } else if ($update == TRUE) {
             $this->updateValue($type, $value);
          }
       }
@@ -160,7 +188,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
-   function defineTabs($options=array()){
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
+   function defineTabs($options=array()) {
 
       $plugin = new Plugin;
 
@@ -190,26 +224,21 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Display tab
+    * Get the tab name used for item
     *
-    * @param CommonGLPI $item
-    * @param integer $withtemplate
-    *
-    * @return varchar name of the tab(s) to display
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string|array name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()==__CLASS__) {
-         $array_ret = array();
-         $array_ret[0] = __('General setup');
-
-         $array_ret[1] = __('Computer Inventory', 'fusioninventory');
-
-         $array_ret[2] = __('Network Inventory', 'fusioninventory');
-
-         $array_ret[3] = __('Package management', 'fusioninventory');
-
-         return $array_ret;
+         return array(
+             __('General setup'),
+             __('Computer Inventory', 'fusioninventory'),
+             __('Network Inventory', 'fusioninventory'),
+             __('Package management', 'fusioninventory')
+         );
       }
       return '';
    }
@@ -217,43 +246,46 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Display content of tab
+    * Display the content of the tab
     *
-    * @param CommonGLPI $item
-    * @param integer $tabnum
-    * @param interger $withtemplate
-    *
-    * @return boolean TRUE
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       switch ($tabnum) {
+
          case 0:
             $item->showForm();
-            break;
+            return TRUE;
+
          case 1:
             $item->showFormInventory();
-            break;
+            return TRUE;
+
          case 2:
             $item->showFormNetworkInventory();
-            break;
+            return TRUE;
+
          case 3:
             $item->showFormDeploy();
-            break;
+            return TRUE;
+
       }
-      return TRUE;
+      return FALSE;
    }
 
 
 
-
    /**
-   * Get configuration value
-   *
-   * @param $name field name
-   *
-   * @return field value for an existing field, FALSE otherwise
-   **/
+    * Get configuration value with name
+    *
+    * @global array $PF_CONFIG
+    * @param string $name name in configuration
+    * @return null|string|integer
+    */
    function getValue($name) {
       global $PF_CONFIG;
 
@@ -271,12 +303,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * give state of a config field for a fusioninventory plugin
-   *
-   * @param $name field name
-   *
-   * @return TRUE for an existing field, FALSE otherwise
-   **/
+    * Give state of a config field for a fusioninventory plugin
+    *
+    * @param string $name name in configuration
+    * @return boolean
+    */
    function isActive($name) {
       if (!($this->getValue($name))) {
          return FALSE;
@@ -288,13 +319,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Display form for config
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form
+    *
+    * @param array $options
+    * @return true
+    */
    function showForm($options=array()) {
-      global $CFG_GLPI;
 
       $this->showFormHeader($options);
 
@@ -336,32 +366,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
       echo "</td>";
       echo "<td colspan=2></td>";
-/*
-      No more parameter in configuration; parameter is now in entity configuration.
-
-      echo "<td>";
-      echo __('Service URL', 'fusioninventory').'&nbsp;';
-      Html::showToolTip('ex: http://192.168.20.1/glpi');
-      echo "&nbsp;:";
-      $ctx = stream_context_create(array(
-          'http' => array(
-              'timeout' => 3
-              )
-          )
-      );
-      PluginFusioninventoryDisplay::disableDebug();
-      if (!file_exists($this->getValue('agent_base_url').'/plugins/fusioninventory/index.php')
-            && !file_get_contents($this->getValue('agent_base_url').
-                                    '/plugins/fusioninventory/index.php', FALSE, $ctx)) {
-           echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
-      }
-      PluginFusioninventoryDisplay::reenableusemode();
-      echo "</td>";
-      echo "<td>";
-      echo "<input type='text' name='agent_base_url' size='50' ".
-               "value='".$this->getValue('agent_base_url')."'/>";
-      echo "</td>";
-*/
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -396,8 +400,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                                       array('value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();'));
       //if action == action_status => show blocation else hide blocaction
       echo Html::scriptBlock("
-         function changestatus(){
-            if($('#dropdown_agents_action$rand').val() != 0){
+         function changestatus() {
+            if ($('#dropdown_agents_action$rand').val() != 0) {
                $('#blocaction1').show();
                $('#blocaction2').show();
             } else {
@@ -433,25 +437,34 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return TRUE;
    }
 
-   static function getActions($action){
+
+
+   /**
+    * Get the action for agent action
+    *
+    * @param integer $action
+    * @return string
+    */
+   static function getActions($action) {
       switch ($action) {
+
          case self::ACTION_STATUS :
               return __('Change the status', 'fusioninventory');
-            break;
+
          case self::ACTION_CLEAN :
               return __('Clean agents', 'fusioninventory');
-            break;
+
       }
    }
 
+
+
    /**
-   * Display form for config tab in fusioninventory config form
-   *
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for tab 'Inventory'
+    *
+    * @param array $options
+    * @return true
+    */
    static function showFormInventory($options=array()) {
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -639,13 +652,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-   * Display form for config tab in network inventory config form
-   *
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for tab 'Network inventory'
+    *
+    * @param array $options
+    * @return true
+    */
    static function showFormNetworkInventory($options=array()) {
       global $CFG_GLPI;
 
@@ -718,14 +729,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return TRUE;
    }
 
+
+
    /**
-   * Display form for config tab in fusioninventory config form
-   *
-   * @param $options array
-   *
-   * @return bool TRUE if form is ok
-   *
-   **/
+    * Display form for tab 'Deploy'
+    *
+    * @param array $options
+    * @return true
+    */
    static function showFormDeploy($options=array()) {
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -757,32 +768,31 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Add configuration value, if not already present
+    * Add name + value in configuration if not exist
     *
-    * @param $name field name
-    * @param $value field value
-    *
-    * @return integer the new id of the added item (or FALSE if fail)
-    **/
+    * @param string $name
+    * @param string $value
+    * @return integer|false integer is the id of this configuration name
+    */
    function addValue($name, $value) {
       $existing_value = $this->getValue($name);
       if (!is_null($existing_value)) {
          return $existing_value;
       } else {
-         return $this->add(array('type'       => $name,
-                                 'value'      => $value));
+         return $this->add(array('type'  => $name,
+                                 'value' => $value));
       }
    }
+
 
 
    /**
     * Update configuration value
     *
-    * @param $name field name
-    * @param $value field value
-    *
-    * @return boolean : TRUE on success
-    **/
+    * @param string $name name of configuration
+    * @param string $value
+    * @return boolean
+    */
    function updateValue($name, $value) {
       $config = current($this->find("`type`='".$name."'"));
       if (isset($config['id'])) {
@@ -796,6 +806,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    /**
     * Check if extradebug mode is activate
+    *
+    * @return null|integer the integer is 1 or 0 (it's like boolean)
     */
    static function isExtradebugActive() {
       $fConfig = new self();
@@ -806,6 +818,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
    /**
     * Log when extra-debug is activated
+    *
+    * @param string $file name of log file to update
+    * @param string $message the message to put in log file
     */
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
@@ -818,12 +833,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
+   /**
+    * Load all configuration in global variable $PF_CONFIG
+    *
+    * Test if table exists before loading cache
+    * The only case where table doesn't exists is when you click on
+    * uninstall the plugin and it's already uninstalled
+    *
+    * @global object $DB
+    * @global array $PF_CONFIG
+    */
    static function loadCache() {
       global $DB, $PF_CONFIG;
 
-      //Test if table exists before loading cache
-      //The only case where table doesn't exists is when you click on
-      //uninstall the plugin and it's already uninstalled
       if (TableExists('glpi_plugin_fusioninventory_configs')) {
          $PF_CONFIG = array();
          foreach ($DB->request('glpi_plugin_fusioninventory_configs') as $data) {

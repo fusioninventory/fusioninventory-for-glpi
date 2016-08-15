@@ -1,63 +1,99 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the deploy groups.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Alexandre Delaunay
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the deploy groups.
+ */
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
-   //Group type definition
+   /**
+    * Define constant name of static group
+    *
+    * @var string
+    */
    const STATIC_GROUP  = 'STATIC';
+
+   /**
+    * Define constant name of dynamic group
+    *
+    * @var string
+    */
    const DYNAMIC_GROUP = 'DYNAMIC';
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = "plugin_fusioninventory_group";
 
+   /**
+    * Define the array of itemtype allowed in static groups
+    *
+    * @var type
+    */
    protected $static_group_types = array('Computer');
 
+   /**
+    * We activate the history.
+    *
+    * @var boolean
+    */
    public $dohistory = TRUE;
 
 
 
+   /**
+    * __contruct function used to define the 2 types of groups
+    */
    public function __construct() {
       $this->grouptypes = array(
             self::STATIC_GROUP  => __('Static group', 'fusioninventory'),
@@ -67,6 +103,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       if ($nb>1) {
          return __('Task');
@@ -76,6 +118,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
    function defineTabs($options=array()) {
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -86,7 +134,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
       $actions = array();
@@ -97,19 +148,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Display form related to the massive action selected
     *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    * @param object $ma MassiveAction instance
+    * @return boolean
+    */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->getAction()) {
-
-        case 'add_to_static_group':
-           Dropdown::show('PluginFusioninventoryDeployGroup',
-                           array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
-           echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-           return true;
-
+      if ($ma->getAction() == 'add_to_static_group') {
+         Dropdown::show('PluginFusioninventoryDeployGroup',
+                         array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
+         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+         return TRUE;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
@@ -117,10 +166,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * @since version 0.85
+    * Execution code for massive action
     *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-   **/
+    * @param object $ma MassiveAction instance
+    * @param object $item item on which execute the code
+    * @param array $ids list of ID on which execute the code
+    */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
       switch ($ma->getAction()) {
@@ -155,6 +206,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Display title of the page
+    *
+    * @global array $CFG_GLPI
+    */
    function title() {
       global $CFG_GLPI;
 
@@ -171,6 +227,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param integer $ID
+    * @param array $options
+    * @return true
+    */
    function showForm($ID, $options = array()) {
 
       $this->initForm($ID, $options);
@@ -201,6 +264,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -248,16 +316,21 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get a specific value to display
+    *
+    * @param string $field
+    * @param array $values
+    * @param array $options
+    * @return string
+    */
    static function getSpecificValueToDisplay($field, $values, array $options=array()) {
       $group = new self();
       if (!is_array($values)) {
          $values = array($field => $values);
       }
-      switch ($field) {
-
-         case 'type' :
-            return $group->grouptypes[$values[$field]];
-
+      if ($field == 'type') {
+         return $group->grouptypes[$values[$field]];
       }
       return '';
    }
@@ -265,8 +338,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-   * Display dropdown to select dynamic of static group
-   */
+    * Display dropdown to select dynamic of static group
+    *
+    * @param string $name
+    * @param string $value
+    * @return string
+    */
    static function dropdownGroupType($name = 'type', $value = 'STATIC') {
       $group = new self();
       return Dropdown::showFromArray($name, $group->grouptypes, array('value'=>$value));
@@ -274,6 +351,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get specific value to select
+    *
+    * @param string $field
+    * @param string $name
+    * @param string|array $values
+    * @param array $options
+    * @return string
+    */
    static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
 
       if (!is_array($values)) {
@@ -281,11 +367,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
 
       $options['display'] = false;
-      switch ($field) {
-
-         case 'type':
-            return self::dropdownGroupType($name, $values[$field]);
-
+      if ($field == 'type') {
+         return self::dropdownGroupType($name, $values[$field]);
       }
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
@@ -293,13 +376,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    /**
-    * Displays tab content
-    * This function adapted from Search::showGenericSearch with controls removed
-    * @param  bool $formcontrol : display form buttons
-    * @return nothing, displays a seach form
+    * Show criteria to search computers
+    *
+    * @param object $item PluginFusioninventoryDeployGroup instance
+    * @param array $p
     */
    static function showCriteria(PluginFusioninventoryDeployGroup $item, $p) {
-      global $CFG_GLPI;
 
       $is_dynamic = $item->isDynamicGroup();
       $itemtype   = "PluginFusioninventoryComputer";
@@ -382,18 +464,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<input type='hidden' name='start' value='0'>";
 
       Html::closeForm();
-
-      //clean with javascript search control
-      /*
-      $clean_script = "jQuery( document ).ready(function( $ ) {
-         $('#parent_criteria img').remove();
-         $('.tabs_criteria img[name=img_deleted').remove();
-      });";
-      echo Html::scriptBlock($clean_script);*/
    }
 
 
 
+   /**
+    * Get targets for the group
+    *
+    * @param integer $groups_id id of the group
+    * @return array list of computers
+    */
    static function getTargetsForGroup($groups_id) {
       $group = new self();
       $group->getFromDB($groups_id);
@@ -413,6 +493,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Get search parameters as an array
+    *
+    * @global object $DB
+    * @param object $group PluginFusioninventoryDeployGroup instance
+    * @param boolean $check_post_values
+    * @param boolean $getAll
+    * @return array
+    */
    static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values=FALSE, $getAll=FALSE) {
       global $DB;
 
@@ -442,6 +531,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
+   /**
+    * Clean when purge a deploy group
+    */
    function cleanDBOnPurge() {
       $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();

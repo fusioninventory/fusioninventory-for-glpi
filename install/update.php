@@ -1,47 +1,57 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the termas of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the agents
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/install/update.tasks.php" );
 
+/**
+ * Get the current version of the plugin
+ *
+ * @global object $DB
+ * @return string
+ */
 function pluginFusioninventoryGetCurrentVersion() {
    global $DB;
 
@@ -117,7 +127,7 @@ function pluginFusioninventoryGetCurrentVersion() {
             return $data['value'];
          }
       }
-      if (FieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')){
+      if (FieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')) {
          $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
             WHERE `modulename`='WAKEONLAN'
             LIMIT 1";
@@ -158,15 +168,19 @@ function pluginFusioninventoryGetCurrentVersion() {
 
 
 
-/*
- * find files recursively filtered with pattern
+/**
+ * Find files recursively filtered with pattern
  * (grabbed from http://rosettacode.org/wiki/Walk_a_directory/Recursively#PHP)
+ *
+ * @param string $dir
+ * @param string $pattern
+ * @return array
  */
 function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
    $files = array();
    $prefix = $dir . '/';
    $dir = dir($dir);
-   while (FALSE !== ($file = $dir->read())){
+   while (FALSE !== ($file = $dir->read())) {
       if ($file === '.' || $file === '..') {
          continue;
       }
@@ -175,20 +189,25 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
          $files[] = pluginFusioninventoryFindFiles($file, $pattern);
          continue;
       }
-      if (preg_match($pattern, $file)){
+      if (preg_match($pattern, $file)) {
           $files[] = $file;
       }
    }
-
    return pluginFusioninventoryFlatArray($files);
 }
 
 
 
+/**
+ * Flat a multi-dimensional array
+ *
+ * @param array $array
+ * @return array
+ */
 function pluginFusioninventoryFlatArray($array) {
    $tmp = array();
-   foreach($array as $a) {
-      if ( is_array($a) ) {
+   foreach ($array as $a) {
+      if (is_array($a)) {
          $tmp = array_merge($tmp, pluginFusioninventoryFlatArray($a));
       } else {
          $tmp[] = $a;
@@ -199,6 +218,13 @@ function pluginFusioninventoryFlatArray($array) {
 
 
 
+/**
+ * The main function to update the plugin FusionInventory
+ *
+ * @global object $DB
+ * @param string $current_version
+ * @param string $migrationname
+ */
 function pluginFusioninventoryUpdate($current_version, $migrationname='Migration') {
    global $DB;
 
@@ -293,9 +319,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    // ********* Rename fileparts without .gz extension (cf #1999) *********** //
 
-   if ( is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files') ) {
+   if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
       $gzfiles = pluginFusioninventoryFindFiles(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files', '/\.gz$/');
-      foreach($gzfiles as $file) {
+      foreach ($gzfiles as $file) {
          $fileWithoutExt =
             pathinfo($file, PATHINFO_DIRNAME) .
             '/' . pathinfo($file, PATHINFO_FILENAME);
@@ -585,7 +611,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DBf_handle = fopen($DB_file, "rt");
          $sql_query = fread($DBf_handle, filesize($DB_file));
          fclose($DBf_handle);
-         foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         foreach (explode(";\n", "$sql_query") as $sql_line) {
             if (Toolbox::get_magic_quotes_runtime()) {
                $sql_line=Toolbox::stripslashes_deep($sql_line);
             }
@@ -834,14 +860,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query($query);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob')) {
-      Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
+      CronTask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
    }
    if ($crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs')) {
       $crontask->delete($crontask->fields);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs')) {
-      Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
+      CronTask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
    if ($crontask->getFromDBbyName('PluginFusioninventoryConfigurationManagement', 'checkdevices')) {
@@ -851,7 +877,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $crontask->delete($crontask->fields);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryAgent', 'cleanoldagents')) {
-      Crontask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,
+      CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'hourmin' =>22, 'hourmax'=>6,
                                'comment'=>'Clean agents not contacted since xxx days'));
@@ -862,7 +888,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * computer.
     */
    if (!$crontask->getFromDBbyName('PluginFusioninventoryAgentWakeup', 'wakeupAgents')) {
-      Crontask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
+      CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'comment'=>'Wake agents ups'));
    }
@@ -905,7 +931,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
    //Create first access to the current profile is needed
-   if ( isset( $_SESSION['glpiactiveprofile'] ) ) {
+   if (isset($_SESSION['glpiactiveprofile'])) {
       PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
    }
 
@@ -915,6 +941,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 
+/**
+ * Manage the agent part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ * @return array
+ */
 function do_agent_migration($migration) {
    global $DB;
 
@@ -1255,6 +1288,13 @@ function do_agent_migration($migration) {
 
 
 
+/**
+ * Manage the configuration part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ * @return array
+ */
 function do_config_migration($migration) {
    global $DB;
 
@@ -1352,6 +1392,12 @@ function do_config_migration($migration) {
 
 
 
+/**
+ * Manage the entities part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_entities_migration($migration) {
    global $DB;
 
@@ -1421,6 +1467,13 @@ function do_entities_migration($migration) {
 
 
 
+/**
+ * Manage the IP range part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ * @return array
+ */
 function do_iprange_migration($migration) {
    global $DB;
 
@@ -1515,6 +1568,11 @@ function do_iprange_migration($migration) {
 
 
 
+/**
+ * Manage the locks part migration
+ *
+ * @param object $migration
+ */
 function do_locks_migration($migration) {
 
    /*
@@ -1551,6 +1609,12 @@ function do_locks_migration($migration) {
 
 
 
+/**
+ * Manage the SNMP communities linked to IP range part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_iprangeconfigsecurity_migration($migration) {
    global $DB;
 
@@ -1601,6 +1665,12 @@ function do_iprangeconfigsecurity_migration($migration) {
 
 
 
+/**
+ * Manage the mapping part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_mapping_migration($migration) {
    global $DB;
 
@@ -1659,7 +1729,7 @@ function do_mapping_migration($migration) {
          $a_mappingdouble[$data['id']] = $data['itemtype'].".".$data['name'];
       }
    }
-   foreach($a_mappingdouble as $mapping_id=>$mappingkey) {
+   foreach ($a_mappingdouble as $mapping_id=>$mappingkey) {
       $query = "UPDATE `glpi_plugin_fusioninventory_printercartridges`
          SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
          WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
@@ -1680,6 +1750,12 @@ function do_mapping_migration($migration) {
 
 
 
+/**
+ * Manage the profile part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_profile_migration($migration) {
    global $DB;
 
@@ -1771,6 +1847,11 @@ function do_profile_migration($migration) {
 
 
 
+/**
+ * Manage the timeslot (of task) part migration
+ *
+ * @param object $migration
+ */
 function do_timeslot_migration($migration) {
    /*
     * Table glpi_plugin_fusioninventory_timeslots
@@ -1839,6 +1920,12 @@ function do_timeslot_migration($migration) {
 
 
 
+/**
+ * Manage the unmanaged devices part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_unmanaged_migration($migration) {
    global $DB;
 
@@ -1979,6 +2066,11 @@ function do_unmanaged_migration($migration) {
 
 
 
+/**
+ * Manage the ignored import rules part migration
+ *
+ * @param object $migration
+ */
 function do_ignoredimport_migration($migration) {
    /*
     * Table glpi_plugin_fusioninventory_ignoredimportdevices
@@ -2025,6 +2117,12 @@ function do_ignoredimport_migration($migration) {
 
 
 
+/**
+ * Manage the computer blacklist part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_blacklist_migration($migration) {
    global $DB;
    /*
@@ -2307,6 +2405,12 @@ function do_blacklist_migration($migration) {
 
 
 
+/**
+ * Manage the rules matched log part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_rulematchedlog_migration($migration) {
    global $DB;
 
@@ -2352,6 +2456,12 @@ function do_rulematchedlog_migration($migration) {
 
 
 
+/**
+ * Manage the antivirus part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_antivirus_migration($migration) {
    global $DB;
 
@@ -2403,6 +2513,12 @@ function do_antivirus_migration($migration) {
 
 
 
+/**
+ * Manage the computer batteries part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_computerbattery_migration($migration) {
    global $DB;
 
@@ -2491,6 +2607,12 @@ function do_computerbattery_migration($migration) {
 
 
 
+/**
+ * Manage the computer chemistry part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_computerchemistry_migration($migration) {
    global $DB;
 
@@ -2530,6 +2652,12 @@ function do_computerchemistry_migration($migration) {
 
 
 
+/**
+ * Manage the computer extended part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_computercomputer_migration($migration) {
    global $DB;
 
@@ -2645,6 +2773,11 @@ function do_computercomputer_migration($migration) {
 
 
 
+/**
+ * Manage the computer inventory staistics part migration
+ *
+ * @param object $migration
+ */
 function do_computerstat_migration($migration) {
 
    /*
@@ -2683,6 +2816,12 @@ function do_computerstat_migration($migration) {
 
 
 
+/**
+ * Manage the computer storage part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_computerstorage_migration($migration) {
    global $DB;
 
@@ -2863,6 +3002,13 @@ function do_computerstorage_migration($migration) {
 
 
 
+/**
+ * Manage the configuration log fields (for network equipment and printer)
+ * part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_configlogfield_migration($migration) {
    global $DB;
 
@@ -2943,6 +3089,12 @@ function do_configlogfield_migration($migration) {
 
 
 
+/**
+ * Manage the network port part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_networkport_migration($migration) {
    global $DB;
 
@@ -3557,6 +3709,12 @@ function do_networkport_migration($migration) {
 
 
 
+/**
+ * Manage the printer part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_printer_migration($migration) {
    global $DB;
 
@@ -4017,6 +4175,12 @@ function do_printer_migration($migration) {
 
 
 
+/**
+ * Manage the network equipment part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_networkequipment_migration($migration) {
    global $DB;
 
@@ -4343,6 +4507,12 @@ function do_networkequipment_migration($migration) {
 
 
 
+/**
+ * Manage the Config security (SNMP anthentication) part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_configsecurity_migration($migration) {
    global $DB;
 
@@ -4467,6 +4637,12 @@ function do_configsecurity_migration($migration) {
 
 
 
+/**
+ * Manage the discovery state part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_statediscovery_migration($migration) {
    global $DB;
 
@@ -4573,6 +4749,12 @@ function do_statediscovery_migration($migration) {
 
 
 
+/**
+ * Manage the computer license part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_computerlicense_migration($migration) {
    global $DB;
 
@@ -4625,6 +4807,11 @@ function do_computerlicense_migration($migration) {
 
 
 
+/**
+ * Manage the computer remote management part migration
+ *
+ * @param object $migration
+ */
 function do_computerremotemgmt_migration($migration) {
 
    /*
@@ -4658,6 +4845,11 @@ function do_computerremotemgmt_migration($migration) {
 
 
 
+/**
+ * Manage the computer architecture part migration
+ *
+ * @param object $migration
+ */
 function do_computerarch_migration($migration) {
    /*
     * Table glpi_plugin_fusioninventory_computerarches
@@ -4688,6 +4880,11 @@ function do_computerarch_migration($migration) {
 
 
 
+/**
+ * Manage the computer operating system part migration
+ *
+ * @param object $migration
+ */
 function do_computeroperatingsystem_migration($migration) {
    /*
     * Table glpi_plugin_fusioninventory_computeroperatingsystems
@@ -4811,6 +5008,12 @@ function do_computeroperatingsystem_migration($migration) {
 
 
 
+/**
+ * Manage the deploy files part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_deployfile_migration($migration) {
    global $DB;
 
@@ -4935,6 +5138,12 @@ function do_deployfile_migration($migration) {
 
 
 
+/**
+ * Manage the deploy package part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_deploypackage_migration($migration) {
    global $DB;
 
@@ -5172,6 +5381,11 @@ function do_deploypackage_migration($migration) {
 
 
 
+/**
+ * Manage the deploy mirror part migration
+ *
+ * @param object $migration
+ */
 function do_deploymirror_migration($migration) {
 
    /*
@@ -5249,6 +5463,11 @@ function do_deploymirror_migration($migration) {
 
 
 
+/**
+ * Manage the deploy group part migration
+ *
+ * @param object $migration
+ */
 function do_deploygroup_migration($migration) {
 
    /*
@@ -5401,6 +5620,11 @@ function do_deploygroup_migration($migration) {
 
 
 
+/**
+ * Manage the database locks part migration
+ *
+ * @param object $migration
+ */
 function do_dblocks_migration($migration) {
 
    /*
@@ -5508,6 +5732,12 @@ function do_dblocks_migration($migration) {
 
 
 
+/**
+ * Manage the ESX credentials part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_credentialESX_migration($migration) {
    global $DB;
 
@@ -5590,6 +5820,11 @@ function do_credentialESX_migration($migration) {
 
 
 
+/**
+ * Manage the collect part migration
+ *
+ * @param object $migration
+ */
 function do_collect_migration($migration) {
 
    /*
@@ -5841,6 +6076,12 @@ function do_collect_migration($migration) {
 
 
 
+/**
+ * Manage the SNMP models part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_snmpmodel_migration($migration) {
    global $DB;
 
@@ -5856,6 +6097,12 @@ function do_snmpmodel_migration($migration) {
 
 
 
+/**
+ * Manage the rules part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_rule_migration($migration) {
    global $DB;
 
@@ -6138,6 +6385,12 @@ function do_rule_migration($migration) {
 
 
 
+/**
+ * Manage the task part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function do_task_migration($migration) {
    global $DB;
 
@@ -6190,45 +6443,14 @@ function do_task_migration($migration) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
-* @since 0.85+1.0
-* Migrate search params from the old system to the new one
-* As search engine integration has been improved with GLPI 0.85
-*/
+ * Migrate search params from the old system to the new one
+ * As search engine integration has been improved with GLPI 0.85
+ *
+ * @since 0.85+1.0
+ *
+ * @global object $DB
+ */
 function doDynamicDataSearchParamsMigration() {
    global $DB;
 
@@ -6242,13 +6464,16 @@ function doDynamicDataSearchParamsMigration() {
    }
 }
 
+
+
 /**
-* @since 0.85+1.0
-*
-* Migration of one dynamic group
-* @param fields search paramas in old format (serialized)
-* @return search paramas in new format (serialized)
-*/
+ * Migration of one dynamic group
+ *
+ * @since 0.85+1.0
+ *
+ * @param array $fields search paramas in old format (serialized)
+ * @return string search paramas in new format (serialized)
+ */
 function migrationDynamicGroupFields($fields) {
    $data       = json_decode($fields, true);
    $new_fields = array();
@@ -6284,7 +6509,7 @@ function migrationDynamicGroupFields($fields) {
             $new_fields['metacriteria'][] = $new_value;
          }
       }
-   } elseif(isset($data['itemtype']) && isset($data['name'])) {
+   } elseif (isset($data['itemtype']) && isset($data['name'])) {
       //Ugrapde from 0.83, where the number of fields to search was fixed
       $oldfields = array('name'                => 2,
                          'serial'              => 5,
@@ -6308,31 +6533,15 @@ function migrationDynamicGroupFields($fields) {
    return serialize($new_fields);
 }
 
-function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
-   static $created=0;
-   static $deb;
 
-   if ($created != $id) {
-      if (empty($msg)) {
-         $msg=__('Work in progress...');
-      }
 
-      echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
-      $created = $id;
-      $deb = time();
-   } else {
-      if (empty($msg)) {
-         $msg=__('Task completed.');
-      }
-
-      $fin = time();
-      $tps = Html::timestampToString($fin-$deb);
-      echo "<script type='text/javascript'>document.getElementById('migration_message_$id').".
-              "innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
-   }
-   Html::glpi_flush();
-}
-
+/**
+ * Manage the display preference part migration
+ *
+ * @global object $DB
+ * @param string $olditemtype
+ * @param string $newitemtype
+ */
 function changeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
 
@@ -6360,6 +6569,9 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
 
 
 
+/**
+ * Manage the update of mapping part migration
+ */
 function pluginFusioninventoryUpdatemapping() {
 
    /*
@@ -7526,6 +7738,14 @@ function pluginFusioninventoryUpdatemapping() {
 
 }
 
+
+
+/**
+ * Manage the update from 2.13 to 2.20 version (very old) part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
 function update213to220_ConvertField($migration) {
    global $DB;
 
@@ -8038,7 +8258,7 @@ function update213to220_ConvertField($migration) {
                          "Field_3");
       $migration->migrationOneTable("glpi_plugin_tracker_snmp_history");
 
-      foreach($constantsfield as $langvalue=>$mappingvalue) {
+      foreach ($constantsfield as $langvalue=>$mappingvalue) {
          $i++;
          $query_update = "UPDATE `glpi_plugin_tracker_snmp_history`
             SET `Field`='".$mappingvalue."'
@@ -8168,6 +8388,14 @@ function update213to220_ConvertField($migration) {
 }
 
 
+
+/**
+ * Manage the migration of MySQL tables / fields
+ *
+ * @global object $DB
+ * @param object $migration
+ * @param array $a_table
+ */
 function migrateTablesFusionInventory($migration, $a_table) {
    global $DB;
 
@@ -8241,22 +8469,22 @@ function migrateTablesFusionInventory($migration, $a_table) {
    $DB->list_fields($a_table['name'], FALSE);
 }
 
+
+
 /**
  * Migrate tables from plugin fusinvdeploy to fusioninventory
  *    all datas in exploded tables are merged and stored in json in order table
- * @param  Migration $migration
- * @return nothing
+ *
+ * @global object $DB
+ * @param  object $migration
  */
 function migrateTablesFromFusinvDeploy ($migration) {
    global $DB;
 
-
-
-   if (     TableExists("glpi_plugin_fusioninventory_deployorders")
+   if (TableExists("glpi_plugin_fusioninventory_deployorders")
          && TableExists("glpi_plugin_fusinvdeploy_checks")
          && TableExists("glpi_plugin_fusinvdeploy_files")
          && TableExists("glpi_plugin_fusinvdeploy_actions")) {
-
 
       //add json field in deploy order table to store datas from old misc tables
       $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
@@ -8269,7 +8497,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       //== glpi_plugin_fusioninventory_deployorders ==
       $o_query = "SELECT * FROM glpi_plugin_fusioninventory_deployorders";
       $o_res = $DB->query($o_query);
-      while($o_datas = $DB->fetch_assoc($o_res)) {
+      while ($o_datas = $DB->fetch_assoc($o_res)) {
          $order_id = $o_datas['id'];
 
          $o_line = array();
@@ -8291,11 +8519,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
             while ($c_datas = $DB->fetch_assoc($c_res)) {
                foreach ($c_datas as $c_key => $c_value) {
                   //specific case for filesytem sizes, convert to bytes
-                  if (
-                     !empty($c_value)
-                     && is_numeric($c_value)
-                     && $c_datas['type'] !== 'freespaceGreater'
-                  ) {
+                  if (!empty($c_value)
+                          && is_numeric($c_value)
+                          && $c_datas['type'] !== 'freespaceGreater') {
                      $c_value = $c_value * 1024 * 1024;
                   }
 
@@ -8329,7 +8555,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                foreach ($f_datas as $f_key => $f_value) {
 
                   //we don't store the sha512 field in json
-                  if (  $f_key == "sha512"
+                  if ($f_key == "sha512"
                      || $f_key == "id"
                      || $f_key == "filesize"
                      || $f_key == "mimetype") {
@@ -8346,8 +8572,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
             }
          }
-
-
 
          //=== Actions ===
          $cmdStatus['RETURNCODE_OK'] = 'okCode';
@@ -8378,8 +8602,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
                   FROM $a_table
                   WHERE id = ".$a_datas['items_id'];
                $at_res = $DB->query($at_query);
-               while($at_datas = $DB->fetch_assoc($at_res)) {
-                  foreach($at_datas as $at_key => $at_value) {
+               while ($at_datas = $DB->fetch_assoc($at_res)) {
+                  foreach ($at_datas as $at_key => $at_value) {
                      //we don't store the id field of action itemtype table in json
                      if ($at_key == "id") {
                         continue;
@@ -8436,17 +8660,14 @@ function migrateTablesFromFusinvDeploy ($migration) {
       }
    }
 
-
-
    //=== Fileparts ===
-   if (     TableExists('glpi_plugin_fusinvdeploy_fileparts')
-         && TableExists('glpi_plugin_fusinvdeploy_files')
-   ) {
+   if (TableExists('glpi_plugin_fusinvdeploy_fileparts')
+           && TableExists('glpi_plugin_fusinvdeploy_files')) {
       $files_list = $DB->request('glpi_plugin_fusinvdeploy_files');
       // multipart file datas
       foreach ($files_list as $file) {
          $sha = $file['sha512'];
-         if( empty($sha) ){
+         if (empty($sha)) {
             continue;
          }
          $shortsha = substr($sha, 0, 6);
@@ -8458,7 +8679,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
             "     AND f.`shortsha512` = '{$shortsha}' ".
             "GROUP BY fp.`sha512` ".
             "ORDER BY fp.`id`";
-
 
          $fp_res = $DB->query($fp_query);
          if ($DB->numrows($fp_res) > 0) {
@@ -8493,7 +8713,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "  files.`shortsha512` != \"\""
             ), " \n");
          $f_res = $DB->query($f_query);
-         while($f_datas = $DB->fetch_assoc($f_res)) {
+         while ($f_datas = $DB->fetch_assoc($f_res)) {
             $entry = array(
                "id"        => $f_datas["id"],
                "name"      => $f_datas["name"],
@@ -8534,32 +8754,32 @@ function migrateTablesFromFusinvDeploy ($migration) {
     */
 
    $packages = $DB->request('glpi_plugin_fusioninventory_deploypackages');
-   foreach( $packages as $order_config ) {
+   foreach ($packages as $order_config) {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $json_order = json_decode($order_config['json']);
       //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
       // Checks for /jobs json property
-      if( !isset($json_order->jobs) || !is_object($json_order->jobs) ) {
+      if (!isset($json_order->jobs) || !is_object($json_order->jobs)) {
          //print("deployorders fixer : create missing required 'jobs' property\n");
          $json_order->jobs = new stdClass();
       }
 
-      if ( !isset($json_order->jobs->checks) ) {
+      if (!isset($json_order->jobs->checks)) {
          //print("deployorders fixer : create missing required '/jobs/checks' array property\n");
          $json_order->jobs->checks = array();
       }
-      if ( !isset($json_order->jobs->actions) ) {
+      if (!isset($json_order->jobs->actions)) {
          //print("deployorders fixer : create missing required '/jobs/actions' array property\n");
          $json_order->jobs->actions = array();
       }
-      if ( !isset($json_order->jobs->associatedFiles) ) {
+      if (!isset($json_order->jobs->associatedFiles)) {
          //print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
          $json_order->jobs->associatedFiles = array();
       }
 
       // Checks for /associatedFiles json property
-      if( !isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles) ) {
+      if (!isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles)) {
          //print("deployorders fixer : create missing required 'associatedFiles' property\n");
          $json_order->associatedFiles = new stdClass();
       }

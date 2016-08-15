@@ -1,59 +1,66 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the update of information into network
+ * equipment in GLPI.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the update of information into network equipment in GLPI.
+ */
 class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
    /**
     * Function to update NetworkEquipment
     *
+    * @global object $DB
     * @param array $a_inventory data fron agent inventory
-    * @param id $items_id id of the networkequipment
-    *
-    * @return nothing
+    * @param integer $items_id id of the networkequipment
     */
    function updateNetworkEquipment($a_inventory, $items_id) {
       global $DB;
@@ -103,7 +110,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             WHERE `networkequipments_id` = '$items_id'";
          $result = $DB->query($query);
          while ($data = $DB->fetch_assoc($result)) {
-            foreach($data as $key=>$value) {
+            foreach ($data as $key=>$value) {
                $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
             }
          }
@@ -134,13 +141,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
    /**
-    * Import IPs
+    * IMport internal ports (so internal IP, management IP)
     *
-    * @param $p_ips IPs code to import
-    * @param $networkequipments_id id of network equipment
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
+    * @param array $a_ips
+    * @param integer $networkequipments_id
+    * @param string $mac
+    * @param string $networkname_name
+    */
    function internalPorts($a_ips, $networkequipments_id, $mac, $networkname_name) {
 
       $networkPort = new NetworkPort();
@@ -155,7 +162,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                        AND `instantiation_type`='NetworkPortAggregate'
                        AND `logical_number` = '0'", '', 1));
       $a_ips_DB = array();
-      $networkports_id = 0;
       if (isset($a_networkPortAggregates['id'])) {
          $a_networkPortAggregates['mac'] = $mac;
          $networkPort->update($a_networkPortAggregates);
@@ -173,7 +179,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       // Get networkname
       $a_networknames_find = current($networkName->find("`items_id`='".$networkports_id."'
                                                          AND `itemtype`='NetworkPort'", "", 1));
-      $networknames_id = 0;
       if (isset($a_networknames_find['id'])) {
          $networknames_id = $a_networknames_find['id'];
          $a_networknames_find['name'] = $networkname_name;
@@ -211,7 +216,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
          }
          if (count($a_ips) != 0) {
-            foreach($a_ips as $ip) {
+            foreach ($a_ips as $ip) {
                if ($ip != '127.0.0.1') {
                   $input = array();
                   $input['entities_id'] = 0;
@@ -222,8 +227,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
                   // Search in unmanaged device if device with IP (LLDP) is yet added, in this case,
                   // we get id of this unmanaged device
-                  $a_manageds = $pfUnmanaged->find("`ip`='".$ip."'", "", 1);
-                  if (count($a_manageds) > 0) {
+                  $a_unmanageds = $pfUnmanaged->find("`ip`='".$ip."'", "", 1);
+                  if (count($a_unmanageds) > 0) {
                      $datas= current($a_unmanageds);
                      $this->unmanagedCDP = $datas['id'];
                   }
@@ -235,6 +240,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import ports
+    *
+    * @param array $a_inventory
+    * @param integer $items_id
+    */
    function importPorts($a_inventory, $items_id) {
 
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
@@ -333,6 +344,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import LLDP connexions
+    *
+    * @param array $a_lldp
+    * @param integer $networkports_id
+    */
    function importConnectionLLDP($a_lldp, $networkports_id) {
 
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
@@ -374,6 +391,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import connexion with MAC address
+    *
+    * @param array $a_portconnection
+    * @param integer $networkports_id
+    */
    function importConnectionMac($a_portconnection, $networkports_id) {
 
       $wire = new NetworkPort_NetworkPort();
@@ -572,6 +595,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import VLANs
+    *
+    * @global object $DB
+    * @param array $a_vlans
+    * @param integer $networkports_id
+    */
    function importPortVlan($a_vlans, $networkports_id) {
       global $DB;
 
@@ -613,7 +643,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                }
             }
             if (count($a_vlans) != 0) {
-               foreach($a_vlans as $a_vlan) {
+               foreach ($a_vlans as $a_vlan) {
                   $this->addVlan($a_vlan, $networkports_id);
                }
             }
@@ -623,6 +653,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Add VLAN if not exist
+    *
+    * @param array $a_vlan
+    * @param integer $networkports_id
+    */
    function addVlan($a_vlan, $networkports_id) {
 
       $networkPort_Vlan = new NetworkPort_Vlan();
@@ -649,6 +685,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
 
+   /**
+    * Import aggregate ports
+    *
+    * @param array $a_ports
+    * @param integer $networkports_id
+    * @param integer $networkequipments_id
+    */
    function importPortAggregate($a_ports, $networkports_id, $networkequipments_id) {
 
       $networkPort = new NetworkPort();

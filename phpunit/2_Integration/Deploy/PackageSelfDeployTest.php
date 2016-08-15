@@ -83,7 +83,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
           'entities_id' => 0,
           'plugin_fusioninventory_deploygroups_id' => 0);
       $pfDeployPackage->add($input);
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
    }
 
@@ -104,7 +104,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $packages_id = $pfDeployPackage->add($input);
       $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id));
 
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
       $reference = array(
           $packages_id => $pfDeployPackage->fields
@@ -133,12 +133,12 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $pfDeployPackage_Group->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
                                         'groups_id' => 1,
                                         'entities_id' => 0));
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
 
       $_SESSION['glpigroups'] = array(0 => 1);
 
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
       $reference = array(
           $packages_id => $pfDeployPackage->fields
@@ -164,13 +164,13 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
 
       $pfDeployPackage_User->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
                                         'users_id' => 1));
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
 
       $pfDeployPackage_User->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
                                         'users_id' => $_SESSION['glpiID']));
 
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
       $reference = array(
           $packages_id => $pfDeployPackage->fields
@@ -196,13 +196,13 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
 
       $pfDeployPackage_Profile->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
                                           'profiles_id' => 4));
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
 
       $pfDeployPackage_Profile->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
                                         'profiles_id' => $_SESSION['glpiactiveprofile']['id']));
 
-      $packages = $pfDeployPackage->can_user_deploy_self();
+      $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
       $reference = array(
           $packages_id => $pfDeployPackage->fields
@@ -233,15 +233,15 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id));
 
       // Create task
-      $pfDeployPackage->deploy_to_computer(1, $packages_id, $_SESSION['glpiID']);
+      $pfDeployPackage->deployToComputer(1, $packages_id, $_SESSION['glpiID']);
       $users_id = $_SESSION['glpiID'];
       $_SESSION['glpiID'] = 2;
-      $pfDeployPackage->deploy_to_computer(2, $packages_id, $_SESSION['glpiID']);
+      $pfDeployPackage->deployToComputer(2, $packages_id, $_SESSION['glpiID']);
       $_SESSION['glpiID'] = $users_id;
       // Prepare task
       PluginFusioninventoryTask::cronTaskscheduler();
 
-      $packages = $pfDeployPackage->get_package_for_me($users_id);
+      $packages = $pfDeployPackage->getPackageForMe($users_id);
       $packages_deploy = array();
       foreach ($packages as $computers_id=>$data) {
          foreach ($data as $packages_id => $package_info) {

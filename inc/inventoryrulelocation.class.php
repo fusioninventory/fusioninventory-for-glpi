@@ -1,82 +1,125 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Walid Nouh
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the location rules for computer.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Walid Nouh
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the location rules for computer.
+ */
 class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = "plugin_fusioninventory_rulelocation";
 
-   // From Rule
-   //public $right='rule_import';
+   /**
+    * Set these rules can be sorted
+    *
+    * @var boolean
+    */
    public $can_sort=TRUE;
+
+   /**
+    * Set these rules don't have specific parameters
+    *
+    * @var boolean
+    */
    public $specific_parameters = FALSE;
 
    const PATTERN_CIDR     = 333;
    const PATTERN_NOT_CIDR = 334;
 
 
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @return string name of this type
+    */
    function getTitle() {
       return __('Location rules', 'fusioninventory');
-
    }
 
 
 
+   /**
+    * Make some changes before process review result
+    *
+    * @param array $output
+    * @return array
+    */
    function preProcessPreviewResults($output) {
       return $output;
    }
 
 
 
+   /**
+    * Define maximum number of actions possible in a rule
+    *
+    * @return integer
+    */
    function maxActionsCount() {
-      // Unlimited
       return 2;
    }
 
 
 
+   /**
+    * Code execution of actions of the rule
+    *
+    * @param array $output
+    * @param array $params
+    * @return array
+    */
    function executeActions($output, $params) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -126,9 +169,14 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
 
+   /**
+    * Get the criteria available for the rule
+    *
+    * @return array
+    */
    function getCriterias() {
 
-      $criterias = array ();
+      $criterias = array();
 
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
@@ -160,6 +208,11 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
 
+   /**
+    * Get the actions available for the rule
+    *
+    * @return array
+    */
    function getActions() {
 
       $actions = array();
@@ -186,6 +239,16 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
 
+   /**
+    * Display more conditions
+    *
+    * @param integer $condition
+    * @param object $criteria
+    * @param string $name
+    * @param string $value
+    * @param boolean $test
+    * @return boolean
+    */
    function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
       if ($test) {
          return FALSE;
@@ -194,7 +257,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       switch ($condition) {
          case Rule::PATTERN_FIND:
             return FALSE;
-            break;
 
          case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
@@ -214,9 +276,13 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
+
    /**
-    * Add more criteria specific to this type of rule
-   **/
+    * Add more criteria
+    *
+    * @param string $criterion
+    * @return array
+    */
    static function addMoreCriteria($criterion='') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
@@ -228,12 +294,18 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
 
+   /**
+    * Check criteria
+    *
+    * @param object $criteria
+    * @param array $input
+    * @return boolean
+    */
    function checkCriteria(&$criteria, &$input) {
 
       $res = parent::checkCriteria($criteria, $input);
 
       if (in_array($criteria->fields["condition"], array(self::PATTERN_CIDR))) {
-         $condition = $criteria->fields['condition'];
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -263,7 +335,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             }
          }
       } else if (in_array($criteria->fields["condition"], array(self::PATTERN_NOT_CIDR))) {
-         $condition = $criteria->fields['condition'];
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -294,10 +365,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             }
          }
       }
-
       return $res;
    }
-
 }
 
 ?>

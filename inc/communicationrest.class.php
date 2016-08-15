@@ -1,58 +1,64 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Vincent Mazzoni
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the communication in REST with the agents.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Vincent Mazzoni
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
+/**
+ * Manage the communication in REST with the agents.
+ */
 class PluginFusioninventoryCommunicationRest {
 
    /**
     * Manage communication between agent and server
     *
-    * @params an array of GET parameters given by the agent
-    *
-    * @return an array of orders to send to the agent
+    * @param array $params
+    * @return array|false array return jobs ready for the agent
     */
    static function communicate($params = array()) {
       $response = array();
@@ -63,8 +69,11 @@ class PluginFusioninventoryCommunicationRest {
                case 'getConfig':
                   $response = self::getConfigByAgent($params);
                   break;
+
                case 'getJobs':
                   $response = self::getJobsByAgent($params);
+                    break;
+
                case 'wait':
                   break;
 
@@ -81,11 +90,10 @@ class PluginFusioninventoryCommunicationRest {
 
 
    /**
-    * Get configuration for an agent
+    * Get configuration for an agent and for modules requested
     *
-    * @params an array of GET parameters given by the agent
-    *
-    * @return an array of orders to send to the agent
+    * @param array $params
+    * @return array
     */
    static function getConfigByAgent($params = array()) {
       $schedule = array();
@@ -110,7 +118,7 @@ class PluginFusioninventoryCommunicationRest {
                if (strstr($taskname, 'deploy')) {
                   $taskname = $method['task'];
                }
-               $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
+               $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($method['module']);
 
                if (
                      (isset($method['task']) && strtolower($method['task']) == strtolower($task))
@@ -120,8 +128,7 @@ class PluginFusioninventoryCommunicationRest {
                   && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
                           "`plugin_fusioninventory_agents_id`='".$a_agent['id']."' "
                           . " AND `itemtype`='".$classname."'"
-                          . " AND `state`='0'") > 0
-               ) {
+                          . " AND `state`='0'") > 0) {
                   /*
                    * Since migration, there is only one plugin in one directory
                    * It's maybe time to redo this function -- kiniou
@@ -135,22 +142,28 @@ class PluginFusioninventoryCommunicationRest {
       return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
 
+
+
    /**
     * Get jobs for an agent
     * TODO: This methods must be used inplace of other methods in order to mutualize code and
     * to fully support FusionInventory REST API for every task's types
     *       -- kiniou
+    *
+    * @param array $params
+    * @return false
     */
    static function getJobsByAgent($params = array()) {
 //      $jobs = array();
 //      $methods = PluginFusioninventoryStaticmisc::getmethods();
-//      if( isset($params['task']) ) {
-//         foreach(array_keys($params['task']) as $task) {
+//      if (isset($params['task'])) {
+//         foreach (array_keys($params['task']) as $task) {
 //
 //         }
 //      }
       return FALSE;
    }
+
 
 
    /**
@@ -172,6 +185,12 @@ class PluginFusioninventoryCommunicationRest {
 
 
 
+   /**
+    * Generate the function name related to the module to get parameters
+    *
+    * @param string $task
+    * @return string
+    */
    static function getMethodForParameters($task) {
       return "task_".strtolower($task)."_getParameters";
    }
@@ -179,11 +198,10 @@ class PluginFusioninventoryCommunicationRest {
 
 
    /**
-    * Update agent status for a task
+    * Update agent status for a taskjob
     *
-    * @param params parameters from the GET HTTP request
-    *
-    * @return nothing
+    * @global object $DB
+    * @param array $params
     */
    static function updateLog($params = array()) {
       global $DB;
@@ -194,6 +212,7 @@ class PluginFusioninventoryCommunicationRest {
       $p['msg']       = 'ok'; //status of the task
       $p['code']      = ''; //current step of processing
       $p['sendheaders'] = True;
+
       foreach ($params as $key => $value) {
          $p[$key] = $value;
       }
@@ -213,15 +232,16 @@ class PluginFusioninventoryCommunicationRest {
       );
 
       $taskjobstate = new PluginFusioninventoryTaskjobstate();
-      foreach( $taskjobstates as $jobstate ) {
+      foreach ($taskjobstates as $jobstate) {
          $taskjobstate->getFromDB($jobstate['id']);
 
          //Get taskjoblog associated
-         $taskjoblog = new PluginFusioninventoryTaskjobLog();
+         $taskjoblog = new PluginFusioninventoryTaskjoblog();
          $taskjoblog->getFromDBByQuery(
             "WHERE `plugin_fusioninventory_taskjobstates_id`=". $jobstate['id']
          );
          switch($p['code']) {
+
             case 'running':
                $taskjoblog->addTaskjoblog(
                   $taskjobstate->fields['id'],
@@ -231,6 +251,7 @@ class PluginFusioninventoryCommunicationRest {
                   $p['msg']
                );
                break;
+
             case 'ok':
                $taskjobstate->changeStatusFinish(
                   $taskjobstate->fields['id'],
@@ -240,6 +261,7 @@ class PluginFusioninventoryCommunicationRest {
                   $p['msg']
                );
                break;
+
             case 'ko':
                $taskjobstate->changeStatusFinish(
                   $taskjobstate->fields['id'],
@@ -249,6 +271,7 @@ class PluginFusioninventoryCommunicationRest {
                   $p['msg']
                );
                break;
+
          }
       }
       if ($p['sendheaders']) {
@@ -257,12 +280,12 @@ class PluginFusioninventoryCommunicationRest {
    }
 
 
+
    /**
     * Test a given url
     *
-    * @param url the url to test
-    *
-    * @return TRUE if url is valid, FALSE otherwise
+    * @param string $url
+    * @return boolean
     */
    static function testRestURL($url) {
 

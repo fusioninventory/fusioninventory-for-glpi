@@ -1,78 +1,104 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Walid Nouh
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the wake up the agents
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Walid Nouh
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
+
+/**
+ * Manage the wake up the agents remotely.
+ */
 class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
-   static $rightname = 'plugin_fusioninventory_taskjob';
-
-   function __construct() {
-      parent::__construct();
-   }
 
    /**
-   * Get name of this type
-   *
-   * @return text name of this type by language of the user connected
-   *
-   **/
+    * The right name for this class
+    *
+    * @var string
+    */
+   static $rightname = 'plugin_fusioninventory_taskjob';
+
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
       return __('Job', 'fusioninventory');
    }
 
 
+
    /**
-    * This class can be created by GLPI framework.
+    * Check if can wake up an agent
+    *
+    * @return true
     */
    static function canCreate() {
       return true;
    }
 
+
+
    /*
     * @function cronWakeupAgents
     * This function update already running tasks with dynamic groups
     */
+   /**
+    * Cron task: wake up agents. Configuration is in each tasks
+    *
+    * @global object $DB
+    * @param object $crontask
+    * @return boolean true if successfully, otherwise false
+    */
    static function cronWakeupAgents($crontask) {
       global $DB;
-
 
       $wakeupArray = array();
       $tasks       = array();
@@ -154,7 +180,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
       //Number of agents successfully woken up
       $wokeup = 0;
-      $myTask = new PluginFusioninventoryTask();
       if (!empty($tasks)) {
          //Update last wake up time each task
          $query_lastrun = "UPDATE `glpi_plugin_fusioninventory_tasks`
@@ -164,7 +189,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
          $agent  = new PluginFusioninventoryAgent();
          //Try to wake up agents one by one
-         foreach ($wakeupArray as $ID => $value) {
+         foreach (array_keys($wakeupArray) as $ID) {
             $agent->getFromDB($ID);
             if ($agent->wakeUp()) {
                $wokeup++;
@@ -173,7 +198,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       }
 
       $crontask->addVolume($wokeup);
-      return true;
+      return TRUE;
    }
 }
 

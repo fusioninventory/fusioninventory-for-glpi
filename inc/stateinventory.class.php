@@ -1,53 +1,71 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the network inventory state.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the network inventory state.
+ */
 class PluginFusioninventoryStateInventory extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_task';
 
+
+   /**
+    * __contruct function where add variable in $CFG_GLPI
+    *
+    * @global array $CFG_GLPI
+    */
    function __construct() {
       global $CFG_GLPI;
 
@@ -57,6 +75,13 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
 
 
+   /**
+    * Display network inventory state
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param array $options
+    */
    function display($options=array()) {
       global $DB, $CFG_GLPI;
 
@@ -129,7 +154,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          foreach ($a_taskjobstates as $datastate) {
             $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
                                                    $datastate['id']."'");
-            foreach($a_taskjoblog as $taskjoblog) {
+            foreach ($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
                   $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);
                } else if (strstr($taskjoblog['comment'], " No response from remote host")) {
@@ -180,8 +205,6 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
             echo "<td>-</td>";
             echo "<td>-</td>";
          } else {
-            $interval = '';
-
             $date1 = new DateTime($start_date);
             $date2 = new DateTime($end_date);
             $interval = $date1->diff($date2);
@@ -207,7 +230,14 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    }
 
 
-   function date_diff($date1, $date2) {
+
+   /**
+    * Display diff between 2 dates, so the time elapsed of execution
+    *
+    * @param string $date1
+    * @param string $date2
+    */
+   function dateDiff($date1, $date2) {
       $timestamp1 = strtotime($date1);
       $timestamp2 = strtotime($date2);
 

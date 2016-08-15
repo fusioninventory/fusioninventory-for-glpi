@@ -1,43 +1,48 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the setup / initialize plugin
+ * FusionInventory.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.1+1.0");
@@ -65,17 +70,26 @@ $options = array(
 
 $fi_loader = new FusioninventoryIncludePathAutoloader($options);
 $fi_loader->register();
-/*
- * @function script_endswith()
- * @param $scriptname : string representing the script to test
- * test the end of the called scriptname ( this is usefull to load )
+
+/**
+ * Check if the script name finish by
  *
+ * @param string $scriptname
+ * @return boolean
  */
 function script_endswith($scriptname) {
-   return substr($_SERVER['SCRIPT_FILENAME'], -strlen($scriptname))===$scriptname;
+   $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
+   return substr($script_name, -strlen($scriptname))===$scriptname;
 }
 
-// Init the hooks of fusioninventory
+
+
+/**
+ * Init the hooks of FusionInventory
+ *
+ * @global array $PLUGIN_HOOKS
+ * @global array $CFG_GLPI
+ */
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
 
@@ -84,17 +98,16 @@ function plugin_init_fusioninventory() {
    $Plugin = new Plugin();
    $moduleId = 0;
 
-   if ( isset($_SESSION['glpi_use_mode']) ) {
+   $debug_mode = false;
+   if (isset($_SESSION['glpi_use_mode'])) {
       $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
-   } else {
-      $debug_mode = false;
    }
 
    if ($Plugin->isActivated('fusioninventory')) { // check if plugin is active
 
       // Register classes into GLPI plugin factory
 
-      Plugin::registerClass('PluginFusioninventoryAgent',
+      $Plugin->registerClass('PluginFusioninventoryAgent',
          array(
             'addtabon' => array(
                'Computer',
@@ -104,9 +117,9 @@ function plugin_init_fusioninventory() {
             )
          )
       );
-      Plugin::registerClass('PluginFusioninventoryAgentmodule');
-      Plugin::registerClass('PluginFusioninventoryConfig');
-      Plugin::registerClass('PluginFusioninventoryTask',
+      $Plugin->registerClass('PluginFusioninventoryAgentmodule');
+      $Plugin->registerClass('PluginFusioninventoryConfig');
+      $Plugin->registerClass('PluginFusioninventoryTask',
          array(
             'addtabon' => array(
                'Computer',
@@ -116,7 +129,7 @@ function plugin_init_fusioninventory() {
             )
          )
       );
-      Plugin::registerClass('PluginFusioninventoryTaskjob',
+      $Plugin->registerClass('PluginFusioninventoryTaskjob',
          array(
             'addtabon' => array(
                //'Computer',
@@ -128,7 +141,7 @@ function plugin_init_fusioninventory() {
          )
       );
 
-      Plugin::registerClass('PluginFusioninventoryTaskjobstate',
+      $Plugin->registerClass('PluginFusioninventoryTaskjobstate',
          array(
             'addtabon' => array(
                'PluginFusioninventoryTask'
@@ -136,58 +149,57 @@ function plugin_init_fusioninventory() {
          )
       );
 
-      Plugin::registerClass('PluginFusioninventoryUnmanaged');
-      Plugin::registerClass('PluginFusioninventoryModule');
-      Plugin::registerClass('PluginFusioninventoryProfile',
+      $Plugin->registerClass('PluginFusioninventoryUnmanaged');
+      $Plugin->registerClass('PluginFusioninventoryModule');
+      $Plugin->registerClass('PluginFusioninventoryProfile',
               array('addtabon' => array('Profile')));
-      Plugin::registerClass('PluginFusioninventoryEntity',
+      $Plugin->registerClass('PluginFusioninventoryEntity',
               array('addtabon' => array('Entity')));
-      Plugin::registerClass('PluginFusioninventorySetup');
-      Plugin::registerClass('PluginFusioninventoryIPRange');
-      Plugin::registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
+      $Plugin->registerClass('PluginFusioninventorySetup');
+      $Plugin->registerClass('PluginFusioninventoryIPRange');
+      $Plugin->registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
               array('addtabon' => 'PluginFusioninventoryIPRange'));
-      Plugin::registerClass('PluginFusioninventoryCredential');
-      Plugin::registerClass('PluginFusioninventoryTimeslot');
-      Plugin::registerClass('PluginFusioninventoryLock',
+      $Plugin->registerClass('PluginFusioninventoryCredential');
+      $Plugin->registerClass('PluginFusioninventoryTimeslot');
+      $Plugin->registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
+      $Plugin->registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryCollect');
-      Plugin::registerClass('PluginFusioninventoryCollect_Registry',
+      $Plugin->registerClass('PluginFusioninventoryCollect');
+      $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
               array('addtabon' => array('PluginFusioninventoryCollect')));
-      Plugin::registerClass('PluginFusioninventoryCollect_Registry_Content',
+      $Plugin->registerClass('PluginFusioninventoryCollect_Registry_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      Plugin::registerClass('PluginFusioninventoryCollect_Wmi',
+      $Plugin->registerClass('PluginFusioninventoryCollect_Wmi',
               array('addtabon' => array('PluginFusioninventoryCollect')));
-      Plugin::registerClass('PluginFusioninventoryCollect_Wmi_Content',
+      $Plugin->registerClass('PluginFusioninventoryCollect_Wmi_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      Plugin::registerClass('PluginFusioninventoryCollect_File',
+      $Plugin->registerClass('PluginFusioninventoryCollect_File',
               array('addtabon' => array('PluginFusioninventoryCollect')));
-      Plugin::registerClass('PluginFusioninventoryCollect_File_Content',
+      $Plugin->registerClass('PluginFusioninventoryCollect_File_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
+      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryComputerRemoteManagement',
+      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement',
               array('addtabon' => array('Computer')));
-
 
          //Classes for rulesengine
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocation');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
               array('rulecollections_types'=>TRUE));
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntity');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
               array('rulecollections_types'=>TRUE));
-      Plugin::registerClass('PluginFusioninventoryRulematchedlog',
+      $Plugin->registerClass('PluginFusioninventoryRulematchedlog',
               array('addtabon' => array('Computer',
                                         'PluginFusioninventoryAgent',
                                         'PluginFusioninventoryUnmanaged',
@@ -195,38 +207,38 @@ function plugin_init_fusioninventory() {
                                         'NetworkEquipment')));
 
       //Classes for rulesengine
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
-      Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleImport');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleImportCollection',
               array('rulecollections_types'=>TRUE));
-      Plugin::registerClass('PluginFusioninventoryConstructDevice');
+      $Plugin->registerClass('PluginFusioninventoryConstructDevice');
 
       //Computer arch dictionnary
-      Plugin::registerClass('PluginFusioninventoryRuleDictionnaryComputerArch');
-      Plugin::registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
+      $Plugin->registerClass('PluginFusioninventoryRuleDictionnaryComputerArch');
+      $Plugin->registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
               array('rulecollections_types'=>TRUE));
       array_push($CFG_GLPI["dictionnary_types"], 'PluginFusioninventoryRuleDictionnaryComputerArchCollection');
 
       // Networkinventory and networkdiscovery
-      Plugin::registerClass('PluginFusioninventorySnmpmodel');
-      Plugin::registerClass('PluginFusioninventoryNetworkEquipment',
+      $Plugin->registerClass('PluginFusioninventorySnmpmodel');
+      $Plugin->registerClass('PluginFusioninventoryNetworkEquipment',
               array('addtabon' => array('NetworkEquipment')));
-      Plugin::registerClass('PluginFusioninventoryPrinter',
+      $Plugin->registerClass('PluginFusioninventoryPrinter',
               array('addtabon' => array('Printer')));
-      Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
-      Plugin::registerClass('PluginFusioninventoryConfigSecurity');
-      Plugin::registerClass('PluginFusioninventoryNetworkPortLog',
+      $Plugin->registerClass('PluginFusioninventoryPrinterCartridge');
+      $Plugin->registerClass('PluginFusioninventoryConfigSecurity');
+      $Plugin->registerClass('PluginFusioninventoryNetworkPortLog',
               array('addtabon' => array('NetworkPort')));
-      Plugin::registerClass('PluginFusinvsnmpAgentconfig');
-      Plugin::registerClass('PluginFusioninventoryNetworkPort',
+      $Plugin->registerClass('PluginFusinvsnmpAgentconfig');
+      $Plugin->registerClass('PluginFusioninventoryNetworkPort',
               array('classname'=>'glpi_networkports'));
-      Plugin::registerClass('PluginFusioninventoryStateDiscovery');
-      Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
-      Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
+      $Plugin->registerClass('PluginFusioninventoryStateDiscovery');
+      $Plugin->registerClass('PluginFusioninventoryPrinterLogReport');
+      $Plugin->registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
-      Plugin::registerClass('PluginFusioninventoryDeployGroup');
-      Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
+      $Plugin->registerClass('PluginFusioninventoryDeployGroup');
+      $Plugin->registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
-      Plugin::registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
+      $Plugin->registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
@@ -265,14 +277,13 @@ function plugin_init_fusioninventory() {
        */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array();
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = array();
-      if (strpos($_SERVER['SCRIPT_FILENAME'], "plugins/fusioninventory") != false) {
+      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            "lib/d3-3.4.3/d3".($debug_mode?"":".min").".js",
-            "lib/nvd3/nv.d3".($debug_mode?"":".min").".js",
+            "lib/d3/d3".($debug_mode?"":".min").".js",
             "lib/expanding/expanding".($debug_mode?"":".min").".js"
          );
       }
@@ -303,7 +314,7 @@ function plugin_init_fusioninventory() {
          );
       }
       if (script_endswith("menu.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats".($debug_mode?"":".min").".js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats.js";
       }
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
@@ -358,8 +369,7 @@ function plugin_init_fusioninventory() {
                  'PluginFusioninventoryUnmanaged' => array('PluginFusioninventoryUnmanaged',
                                                                'purgeUnmanaged'),
                  'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
-                 'Printer'                            => 'plugin_item_purge_fusinvsnmp',
-                 'PluginFusioninventoryUnmanaged' => 'plugin_item_purge_fusinvsnmp');
+                 'Printer'                            => 'plugin_item_purge_fusinvsnmp');
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
 
@@ -376,14 +386,14 @@ function plugin_init_fusioninventory() {
       if (isset($_SESSION['glpiactiveprofile']['interface'])
               && $_SESSION['glpiactiveprofile']['interface'] == 'helpdesk') {
          $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-         if ($pfDeployPackage->can_user_deploy_self()) {
+         if ($pfDeployPackage->canUserDeploySelf()) {
             $PLUGIN_HOOKS['helpdesk_menu_entry']['fusioninventory'] = '/front/deploypackage.public.php';
          }
       }
 
       if (isset($_SESSION["glpiname"])) {
-         if (strstr($_SERVER['SCRIPT_FILENAME'], '/front/')
-              && !strstr($_SERVER['SCRIPT_FILENAME'], 'report.dynamic.php')) {
+         if (strstr(filter_input(INPUT_SERVER, "SCRIPT_NAME"), '/front/')
+              && !strstr(filter_input(INPUT_SERVER, "SCRIPT_NAME"), 'report.dynamic.php')) {
             register_shutdown_function('plugin_fusioninventory_footer', $CFG_GLPI['root_doc']);
          }
          $report_list = array();
@@ -415,42 +425,31 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
          // Hack for NetworkEquipment display ports
-         if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
-            if (isset($_GET['_target'])
-                    && strstr($_GET['_target'], '/front/networkequipment.form.php')
-                    && $_GET['_itemtype'] == 'NetworkEquipment') {
+         if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/ajax/common.tabs.php')) {
+            if (strstr(filter_input(INPUT_GET, "_target"), '/front/networkequipment.form.php')
+                    && filter_input(INPUT_GET, "_itemtype") == 'NetworkEquipment') {
 
-               if ($_GET['_glpi_tab'] == 'NetworkPort$1') {
+               if (filter_input(INPUT_GET, "_glpi_tab") == 'NetworkPort$1') {
                   $_GET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
-               } else if ($_GET['_glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
+               } else if (filter_input(INPUT_GET, "_glpi_tab") == 'PluginFusioninventoryNetworkEquipment$1') {
                   $_GET['displaysnmpinfo'] = 1;
                }
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
-                 || strstr($_SERVER['PHP_SELF'], 'fusioninventory/front/menu.php')) {
+         if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/front/printer.form.php')
+                 || strstr(filter_input(INPUT_SERVER, "PHP_SELF"), 'fusioninventory/front/menu.php')) {
 
             // Add graph javascript
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
                   $PLUGIN_HOOKS['add_javascript']['fusioninventory'], array(
-                     "lib/nvd3/lib/d3.v2.min.js",
-                     "lib/nvd3/nv.d3.min.js",
-                     "lib/nvd3/src/tooltip.js",
-                     "lib/nvd3/src/utils.js",
-                     "lib/nvd3/src/models/legend.js",
-                     "lib/nvd3/src/models/axis.js",
-                     "lib/nvd3/src/models/scatter.js",
-                     "lib/nvd3/src/models/line.js",
-                     "lib/nvd3/src/models/multiBar.js",
-                     "lib/nvd3/src/models/multiBarChart.js",
-                     "lib/nvd3/src/models/lineChart.js"
+                     "lib/nvd3/nv.d3.min.js"
                   )
             );
             // Add graph css
             $PLUGIN_HOOKS['add_css']['fusioninventory'] = array_merge(
                   $PLUGIN_HOOKS['add_css']['fusioninventory'], array(
-                     "lib/nvd3/src/nv.d3.css"
+                     "lib/nvd3/nv.d3.css"
                   )
             );
          }
@@ -462,11 +461,11 @@ function plugin_init_fusioninventory() {
    }
 
    // Check for uninstall
-   if (isset($_GET['id'])
-      && ($_GET['id'] == $moduleId)
-         && (isset($_GET['action'])
-            && $_GET['action'] == 'uninstall')
-               && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
+   $id = filter_input(INPUT_GET, "id");
+   $action = filter_input(INPUT_GET, "action");
+   if ($id == $moduleId
+           && $action == 'uninstall'
+           && (strstr(filter_input(INPUT_SERVER, "HTTP_REFERER"), "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(TRUE)) {
           Session::addMessageAfterRedirect(__('Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin'));
@@ -487,7 +486,11 @@ function plugin_init_fusioninventory() {
 
 
 
-// Name and Version of the plugin
+/**
+ * Manage the version information of the plugin
+ *
+ * @return array
+ */
 function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
@@ -503,7 +506,12 @@ function plugin_version_fusioninventory() {
 
 
 
-// Optional : check prerequisites before install : may print errors or add to message after redirect
+/**
+ * Manage / check the prerequisites of the plugin
+ *
+ * @global object $DB
+ * @return boolean
+ */
 function plugin_fusioninventory_check_prerequisites() {
    global $DB;
 
@@ -553,18 +561,35 @@ function plugin_fusioninventory_check_prerequisites() {
 
 
 
+/**
+ * Check if the config is ok
+ *
+ * @return boolean
+ */
 function plugin_fusioninventory_check_config() {
    return TRUE;
 }
 
 
 
-function plugin_fusioninventory_haveTypeRight($type,$right) {
+/**
+ * Check the rights
+ *
+ * @param string $type
+ * @param string $right
+ * @return boolean
+ */
+function plugin_fusioninventory_haveTypeRight($type, $right) {
    return TRUE;
 }
 
 
 
+/**
+ * Add the FusionInventory footer in GLPI interface
+ *
+ * @param string $baseroot
+ */
 function plugin_fusioninventory_footer($baseroot) {
 
       echo "<div id='footer'>";

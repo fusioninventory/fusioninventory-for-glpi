@@ -1,51 +1,64 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    Alexandre Delaunay
-   @co-author David Durieux
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the files to deploy.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    Alexandre Delaunay
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the files to deploy.
+ */
 class PluginFusioninventoryDeployFile extends CommonDBTM {
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_package';
 
    const REGISTRY_NO_DB_ENTRY = 0x1;
@@ -55,7 +68,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Get the 2 types to add files
     *
-    * @return type
+    * @return array
     */
    static function getTypes() {
       return array(
@@ -66,6 +79,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
+   /**
+    * Display form
+    *
+    * @param object $package PluginFusioninventoryDeployPackage instance
+    * @param array $request_data
+    * @param string $rand unique element id used to identify/update an element
+    * @param string $mode possible values: init|edit|create
+    */
    static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
       /*
        * Get element config in 'edit' mode
@@ -127,9 +148,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Display list of files
     *
-    * @param PluginFusioninventoryDeployPackage $package
+    * @global array $CFG_GLPI
+    * @param object $package PluginFusioninventoryDeployPackage instance
     * @param array $datas array converted of 'json' field in DB where stored actions
-    * @param integer $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     */
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
@@ -147,7 +169,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       );
       // do a quick mapping between database id and short shas
       $files_mapping = array();
-      foreach($files as $file) {
+      foreach ($files as $file) {
          $files_mapping[$file['shortsha512']] = $file['id'];
       }
 
@@ -238,7 +260,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
          //sha fingerprint
          $sha_status = "good";
-         if($fileregistry_error != 0) {
+         if ($fileregistry_error != 0) {
             $sha_status = "bad";
          }
          echo "<div class='fingerprint'>";
@@ -260,7 +282,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
          //filesize
-         if(!$fileregistry_error) {
+         if (!$fileregistry_error) {
             echo "<div class='size'>";
             echo __('Size').": ".self::processFilesize($file_size);
             echo "</div>";
@@ -291,8 +313,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Display the dropdown to select type of file
     *
+    * @global array $CFG_GLPI
     * @param array $config order item configuration
-    * @param ingeter $rand random number used to identify/update an element
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
     */
    static function displayDropdownType($config, $rand, $mode) {
@@ -356,11 +379,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Display different fields relative the file selected
     *
+    * @global array $CFG_GLPI
     * @param array $config
     * @param array $request_data
-    * @param type $rand
+    * @param string $rand unique element id used to identify/update an element
     * @param string $mode mode in use (create, edit...)
-    *
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
@@ -378,7 +401,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $p2p_retention_duration = 0;
       $uncompress = 0;
 
-      if ($mode === 'create' ) {
+      if ($mode === 'create') {
          $source = $request_data['value'];
          /**
           * No need to continue if there is no selected source
@@ -405,12 +428,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             case "Computer":
                echo "<input type='file' name='file' value='".
                   __("filename", 'fusioninventory')."' />";
-               echo "<i>".self::getMaxUploadSize()."</i>";
+               echo " <i>".self::getMaxUploadSize()."</i>";
                break;
 
             case "Server":
                echo "<input type='text' name='filename' id='server_filename$rand'".
-                  " style='width:120px;float:left' />";
+                  " style='width:500px;float:left' />";
                echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
                   "' onclick='fileModal$rand.dialog(\"open\");' />";
                Ajax::createModalWindow("fileModal$rand",
@@ -480,12 +503,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Show files / directory on server.
     * This is used when get a file on the server
     *
-    * @param array $params
+    * @global array $CFG_GLPI
+    * @param string $rand unique element id used to identify/update an element
     */
-   static function showServerFileTree($params) {
+   static function showServerFileTree($rand) {
       global $CFG_GLPI;
-
-      $rand = $params['rand'];
 
       echo "<script type='text/javascript'>";
       echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
@@ -507,7 +529,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          loader           : Tree_Category_Loader$rand,
          rootVisible      : false,
          listeners: {
-            click: function(node, event){
+            click: function(node, event) {
                if (node.leaf == true) {
                   console.log('server_filename$rand');
                   Ext.get('server_filename$rand').dom.value = node.id;
@@ -540,20 +562,30 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Get files / directories on server
     *
-    * @param array $params
+    * @param string $node
     */
-   static function getServerFileTree($params) {
+   static function getServerFileTree($node) {
 
       $nodes = array();
+      $pfConfig = new PluginFusioninventoryConfig();
+      $dir = $pfConfig->getValue('server_upload_path');
 
-      if (isset($params['node'])) {
-         //root node
-         $pfConfig = new PluginFusioninventoryConfig();
-         $dir = $pfConfig->getValue('server_upload_path');
+      $security_problem = FALSE;
+      if ($node != "-1") {
+         if (strstr($node, "..")) {
+            $security_problem = TRUE;
+         }
+         $matches = array();
+         preg_match("/^(".str_replace("/", "\/", $dir).")(.*)$/", $node, $matches);
+         if (count($matches) != 3) {
+            $security_problem = TRUE;
+         }
+      }
 
+      if (!$security_problem) {
          // leaf node
-         if ($params['node'] != -1) {
-            $dir = $params['node'];
+         if ($node != -1) {
+            $dir = $node;
          }
 
          if (($handle = opendir($dir))) {
@@ -629,7 +661,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Remove an item
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function remove_item($params) {
@@ -658,16 +689,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      return TRUE;
    }
 
 
 
    /**
-    * Remove an item
+    * Move an item
     *
     * @param array $params
-    *
-    * @return boolean
     */
    static function move_item($params) {
       //get current order json
@@ -724,7 +754,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Upload file from user computer
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function uploadFileFromComputer($params) {
@@ -732,7 +761,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //file uploaded?
          if (isset($_FILES['file']['tmp_name'])
-                 && !empty($_FILES['file']['tmp_name'])){
+                 && !empty($_FILES['file']['tmp_name'])) {
             $file_tmp_name = $_FILES['file']['tmp_name'];
          }
          if (isset($_FILES['file']['name'])
@@ -766,7 +795,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                   $msg = __("Failed to write file to disk", 'fusioninventory');
                   break;
 
-               case UPLOAD_ERR_CANT_WRITE:
+               case UPLOAD_ERR_EXTENSION:
                   $msg = __("PHP extension stopped the file upload", 'fusioninventory');
                   break;
 
@@ -813,10 +842,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
    /**
-    * Upload file from server
+    * Upload file from temp folder in server
     *
     * @param array $params
-    *
     * @return boolean
     */
    static function uploadFileFromServer($params) {
@@ -873,7 +901,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Get directories based on sha512
     *
     * @param string $sha512
-    *
     * @return string the directories based on sha512
     */
    static function getDirBySha512 ($sha512) {
@@ -891,8 +918,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * @param string $repoPath path of the repository
     * @param string $filePath path of the file + filename
     * @param boolean $skip_creation
-    *
-    * @return type
+    * @return string
     */
    function registerFilepart ($repoPath, $filePath, $skip_creation=FALSE) {
       $sha512 = hash_file('sha512', $filePath);
@@ -914,10 +940,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Add file in the fusioninventory repository
     *
     * @param array $params
-    *
     * @return boolean
     */
-   static function addFileInRepo ($params) {
+   static function addFileInRepo($params) {
       $deployFile = new self;
 
       $filename = addslashes($params['filename']);
@@ -931,7 +956,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $short_sha512 = substr($sha512, 0, 6);
 
       $file_present_in_repo = FALSE;
-      if($deployFile->checkPresenceFile($sha512)) {
+      if ($deployFile->checkPresenceFile($sha512)) {
          $file_present_in_repo = TRUE;
       }
 
@@ -988,7 +1013,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
            $manifest_filename, "w+"
          );
          if ($handle) {
-            foreach($multiparts as $sha) {
+            foreach ($multiparts as $sha) {
                fwrite($handle, $sha."\n");
             }
             fclose($handle);
@@ -1032,7 +1057,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     *
     * @param string $sha512 sha512 of the file
     * @param integer $packages_id id of the package
-    *
     * @return boolean
     */
    static function removeFileInRepo($sha512, $packages_id) {
@@ -1070,7 +1094,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Check if the manifest relative to the sha512 exist
     *
     * @param string $sha512 sha512 of the file
-    *
     * @return boolean
     */
    function checkPresenceManifest($sha512) {
@@ -1088,7 +1111,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Check if the file relative to the sha512 exist
     *
     * @param string $sha512 sha512 of the file
-    *
     * @return boolean
     */
    function checkPresenceFile($sha512) {
@@ -1109,11 +1131,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $fileparts_cnt = 0;
       $handle = fopen($manifests_path.$sha512, "r");
       if ($handle) {
-         while(($buffer = fgets($handle) !== FALSE)) {
+         while (($buffer = fgets($handle) !== FALSE)) {
             $fileparts_cnt++;
             $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;
             //Check if the filepart exists
-            if(!file_exists($parts_path.$path)) {
+            if (!file_exists($parts_path.$path)) {
                $fileparts_ok = FALSE;
                break;
             }
@@ -1155,11 +1177,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Get the size of file
     *
     * @param integer $filesize
-    *
     * @return string
     */
    static function processFilesize($filesize) {
-      if(is_numeric($filesize)) {
+      if (is_numeric($filesize)) {
          if ($filesize >= (1024 * 1024 * 1024)) {
             $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
          } else if ($filesize >= 1024 * 1024) {
@@ -1180,7 +1201,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * List number of files not used in packages
     */
-   function numberUnusedFiles(){
+   function numberUnusedFiles() {
       echo "<table width='950' class='tab_cadre_fixe'>";
 
       echo "<tr>";
@@ -1215,7 +1236,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Delete the files not used in packages
     */
-   function deleteUnusedFiles(){
+   function deleteUnusedFiles() {
       $manifests_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
       $parts_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
@@ -1227,7 +1248,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             $this->delete($data);
             $handle = fopen($manifests_path.$data['sha512'], "r");
             if ($handle) {
-               while(!feof($handle)){
+               while (!feof($handle)) {
                   $buffer = trim(fgets($handle));
                   if ($buffer != '') {
                      $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;

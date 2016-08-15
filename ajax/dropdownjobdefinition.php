@@ -1,43 +1,48 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is called by ajax function and display dropdown task job
+ * definition.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 include ("../../../inc/includes.php");
@@ -47,31 +52,36 @@ Html::header_nocache();
 Session::checkCentralAccess();
 
 // Make a select box
-if (isset($_POST["type"]) && isset($_POST["actortype"])) {
+$type = filter_input(INPUT_POST, "type");
+$actortype = filter_input(INPUT_POST, "actortype");
+
+if (!empty($type) && !empty($actortype)) {
    $rand = mt_rand();
 
-   switch ($_POST["type"]) {
+   $entity_restrict = filter_input(INPUT_POST, "entity_restrict");
+   switch ($type) {
       case "user" :
          $right = 'all';
          /// TODO : review depending of itil object
          // Only steal or own ticket whit empty assign
-         if ($_POST["actortype"]=='assign') {
+         if ($actortype == 'assign') {
             $right = "own_ticket";
             if (!$item->canAssign()) {
                $right = 'id';
             }
          }
 
-         $options = array('name'        => '_itil_'.$_POST["actortype"].'[users_id]',
-                          'entity'      => $_POST['entity_restrict'],
+         $options = array('name'        => '_itil_'.$actortype.'[users_id]',
+                          'entity'      => $entity_restrict,
                           'right'       => $right,
                           'ldap_import' => TRUE);
          $withemail = FALSE;
          if ($CFG_GLPI["use_mailing"]) {
-            $withemail = (isset($_POST["allow_email"]) ? $_POST["allow_email"] : FALSE);
+            $allow_email = filter_input(INPUT_POST, "allow_email");
+            $withemail = (!empty($allow_email) ? $allow_email : FALSE);
             $paramscomment = array('value'       => '__VALUE__',
                                    'allow_email' => $withemail,
-                                   'field'       => "_itil_".$_POST["actortype"]);
+                                   'field'       => "_itil_".$actortype);
             // Fix rand value
             $options['rand']     = $rand;
             $options['toupdate'] = array('value_fieldname' => 'value',
@@ -85,24 +95,24 @@ if (isset($_POST["type"]) && isset($_POST["actortype"])) {
             echo "<br><span id='notif_user_$rand'>";
             if ($withemail) {
                echo __('Email followup').'&nbsp;:&nbsp;';
-               $rand = Dropdown::showYesNo('_itil_'.$_POST["actortype"].'[use_notification]', 1);
+               $rand = Dropdown::showYesNo('_itil_'.$actortype.'[use_notification]', 1);
                echo '<br>'.__('Email').'&nbsp;:&nbsp;';
-               echo "<input type='text' size='25' name='_itil_".$_POST["actortype"]."[alternative_email]'>";
+               echo "<input type='text' size='25' name='_itil_".$actortype."[alternative_email]'>";
             }
             echo "</span>";
          }
          break;
 
       case "group" :
-         $cond = ($_POST["actortype"]=='assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
-         Dropdown::show('Group', array('name'      => '_itil_'.$_POST["actortype"].'[groups_id]',
-                                       'entity'    => $_POST['entity_restrict'],
+         $cond = ($actortype=='assign' ? $cond = '`is_assign`' : $cond = '`is_requester`');
+         Dropdown::show('Group', array('name'      => '_itil_'.$actortype.'[groups_id]',
+                                       'entity'    => $entity_restrict,
                                        'condition' => $cond));
          break;
 
       case "supplier" :
          Dropdown::show('Supplier', array('name'   => 'suppliers_id_assign',
-                                          'entity' => $_POST['entity_restrict']));
+                                          'entity' => $entity_restrict));
          break;
    }
 }

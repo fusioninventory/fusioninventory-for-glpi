@@ -72,10 +72,8 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $query = "SHOW TABLES";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         if (
-            strstr($data[0], "tracker")
-            OR strstr($data[0], "fusi")
-         ) {
+         if (strstr($data[0], "tracker")
+                 OR strstr($data[0], "fusi")) {
             $DB->query("DROP TABLE ".$data[0]);
          }
       }
@@ -114,7 +112,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
 
       $this->verifyEntityRules($nbrules);
 
-      if ( $verify ) {
+      if ($verify) {
          $this->verifyConfig();
       }
 

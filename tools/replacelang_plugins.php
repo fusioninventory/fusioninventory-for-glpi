@@ -8,12 +8,12 @@
 $DB_file = 'locales/en_GB.php';
 
 $sql_query = file_get_contents($DB_file);
-foreach ( explode(";\n", "$sql_query") as $line) {
+foreach (explode(";\n", "$sql_query") as $line) {
    $split = explode("=", $line, 2);
    $string = $split[1];
    $string = str_replace('"', '', $string);
    echo $split[0]." => ".$string."\n";
-   foreach(array("./",
+   foreach (array("./",
                  "./inc/",
                  "./ajax/",
                  "./b/deploy/",

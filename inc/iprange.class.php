@@ -1,82 +1,113 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the IP ranges for network discovery and
+ * network inventory.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Manage the IP ranges for network discovery and network inventory.
+ */
 class PluginFusioninventoryIPRange extends CommonDBTM {
 
+   /**
+    * We activate the history.
+    *
+    * @var boolean
+    */
    public $dohistory = TRUE;
 
+   /**
+    * The right name for this class
+    *
+    * @var string
+    */
    static $rightname = 'plugin_fusioninventory_iprange';
 
+   /**
+    * Check if can create an IP range
+    *
+    * @return true
+    */
    static function canCreate() {
       return true;
    }
 
+
+
+   /**
+    * Get name of this type by language of the user connected
+    *
+    * @param integer $nb number of elements
+    * @return string name of this type
+    */
    static function getTypeName($nb=0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
-
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
             return __('Communication mode', 'fusioninventory');
-
          } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
             // Permanent task inventory
             return __('See all informations of task', 'fusioninventory');
-
          } else {
             return __('IP Ranges', 'fusioninventory');
-
          }
-      } else {
-         return __('IP Ranges', 'fusioninventory');
-
       }
+      return __('IP Ranges', 'fusioninventory');
    }
 
 
+
+   /**
+    * Get comments of the object
+    *
+    * @return string comments in HTML format
+    */
    function getComments() {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
       return Html::showToolTip($comment, array('display' => FALSE));
@@ -84,6 +115,11 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
       $tab = array();
 
@@ -116,7 +152,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
-   function defineTabs($options=array()){
+   /**
+    * Define tabs to display on form page
+    *
+    * @param array $options
+    * @return array containing the tabs name
+    */
+   function defineTabs($options=array()) {
 
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -127,21 +169,32 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($tabnum == 'task') {
          $pfTask = new PluginFusioninventoryTask();
-            $pfTask->showJobLogs();
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $a_taskjobs = $pfTaskjob->find('`targets` LIKE \'%"PluginFusioninventoryIPRange":"'.$item->getID().'"%\'');
-         foreach ($a_taskjobs as $data) {
-            //$pfTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
-         }
+         $pfTask->showJobLogs();
+         return TRUE;
       }
+      return FALSE;
    }
 
 
 
-
+   /**
+    * Display form
+    *
+    * @param integer $id
+    * @param array $options
+    * @return true
+    */
    function showForm($id, $options=array()) {
 
       $this->initForm($id, $options);
@@ -187,12 +240,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $this->fields["ip_end"] = "...";
       }
       $ipexploded = explode(".", $this->fields["ip_end"]);
-      $i = 0;
+      $j = 0;
       foreach ($ipexploded as $ipnum) {
          if ($ipnum > 255) {
-            $ipexploded[$i] = '';
+            $ipexploded[$j] = '';
          }
-         $i++;
+         $j++;
       }
 
       echo "<script type='text/javascript'>
@@ -234,7 +287,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
 
 
@@ -242,9 +295,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    /**
     * Check if IP is valid
     *
-    * @param $a_input array of IPs
-    *
-    * @return TRUE or FALSE
+    * @param array $a_input array of IPs
+    * @return boolean
     */
    function checkip($a_input) {
 
@@ -278,9 +330,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    /**
     * Get ip in long format
     *
-    * @param $ip ip in format ipv4
-    *
-    * @return $int integer
+    * @param string $ip IP in format IPv4
+    * @return integer $int
     */
    function getIp2long($ip) {
       $int = ip2long($ip);
@@ -292,6 +343,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
 
+   /**
+    * After purge item, delete SNMP authentication linked to this ip range
+    */
    function post_purgeItem() {
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
       $a_data = getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
@@ -299,13 +353,16 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       foreach ($a_data as $data) {
          $pfIPRange_ConfigSecurity->delete($data);
       }
-
       parent::post_deleteItem();
    }
 
 
+
    /**
-    * Massive action ()
+    * Get the massive actions for this object
+    *
+    * @param object|null $checkitem
+    * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
@@ -315,7 +372,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $actions;
    }
-
 }
 
 ?>

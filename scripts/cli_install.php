@@ -67,7 +67,7 @@ $args = $docopt->handle($doc);
 $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
 $_SESSION['glpilanguage']  = "en_GB";
 
-Session::LoadLanguage();
+Session::loadLanguage();
 
 // Only show errors
 $CFG_GLPI["debug_sql"]        = $CFG_GLPI["debug_vars"] = 0;
@@ -134,7 +134,7 @@ if ($args['--force-upgrade']) {
 }
 
 
-if ( !is_null($args['--as-user']) ) {
+if (!is_null($args['--as-user'])) {
    $user = new User();
    $user->getFromDBbyName($args['--as-user']);
    $auth = new Auth();

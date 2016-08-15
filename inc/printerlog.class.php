@@ -1,51 +1,64 @@
 <?php
 
-/*
-   ------------------------------------------------------------------------
-   FusionInventory
-   Copyright (C) 2010-2016 by the FusionInventory Development Team.
-
-   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
-   ------------------------------------------------------------------------
-
-   LICENSE
-
-   This file is part of FusionInventory project.
-
-   FusionInventory is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   FusionInventory is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
-
-   ------------------------------------------------------------------------
-
-   @package   FusionInventory
-   @author    David Durieux
-   @co-author
-   @copyright Copyright (c) 2010-2016 FusionInventory team
-   @license   AGPL License 3.0 or (at your option) any later version
-              http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   @link      http://www.fusioninventory.org/
-   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
-
-   ------------------------------------------------------------------------
+/**
+ * FusionInventory
+ *
+ * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ *
+ * http://www.fusioninventory.org/
+ * https://github.com/fusioninventory/fusioninventory-for-glpi
+ * http://forge.fusioninventory.org/
+ *
+ * ------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of FusionInventory project.
+ *
+ * FusionInventory is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FusionInventory is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ------------------------------------------------------------------------
+ *
+ * This file is used to manage the printer changes (history).
+ *
+ * ------------------------------------------------------------------------
+ *
+ * @package   FusionInventory
+ * @author    David Durieux
+ * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @license   AGPL License 3.0 or (at your option) any later version
+ *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ * @link      http://www.fusioninventory.org/
+ * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
+ *
  */
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+/**
+ * Manage the printer changes (history).
+ */
 class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
+
+   /**
+    * Get search function for the class
+    *
+    * @return array
+    */
    function getSearchOptions() {
 
       $tab = array();
@@ -204,13 +217,20 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   function countAllEntries($id) {
+   /**
+    * Count number entries for the printer
+    *
+    * @global object $DB
+    * @param integer $printers_id
+    * @return integer
+    */
+   function countAllEntries($printers_id) {
       global $DB;
 
       $num = 0;
       $query = "SELECT count(DISTINCT `id`)
                 FROM ".$this->getTable()."
-                WHERE `printers_id` = '".$id."';";
+                WHERE `printers_id` = '".$printers_id."';";
       $result_num=$DB->query($query);
       if ($result_num) {
          $field = $DB->result($result_num, 0, 0);
@@ -223,14 +243,22 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   /* Gets history (and the number of entries) of one printer */
-   function getEntries($id, $begin, $limit) {
+   /**
+    * Get logs of printer
+    *
+    * @global object $DB
+    * @param integer $printers_id
+    * @param integer $begin
+    * @param integer $limit
+    * @return array|false
+    */
+   function getEntries($printers_id, $begin, $limit) {
       global $DB;
 
       $datas=array();
       $query = "SELECT *
                 FROM ".$this->getTable()."
-                WHERE `printers_id` = '".$id."'
+                WHERE `printers_id` = '".$printers_id."'
                 LIMIT ".$begin.", ".$limit.";";
       $result=$DB->query($query);
       if ($result) {
@@ -247,13 +275,20 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   function stats($id) {
+   /**
+    * Get printed pages statistics
+    *
+    * @global object $DB
+    * @param integer $printers_id
+    * @return array|false
+    */
+   function stats($printers_id) {
       global $DB;
 
       $query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
                   "MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->getTable()."
-                WHERE `printers_id` = '".$id."';";
+                WHERE `printers_id` = '".$printers_id."';";
       $result = $DB->query($query);
       if ($result) {
          $fields = $DB->fetch_assoc($result);
@@ -271,14 +306,21 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 
 
-   function showForm($id, $options=array()) {
+   /**
+    * Display form
+    *
+    * @param integer $printers_id
+    * @param array $options
+    * @return boolean
+    */
+   function showForm($printers_id, $options=array()) {
 
       if (!Session::haveRight('plugin_fusioninventory_printer', READ)) {
          return FALSE;
       }
 
       // display stats
-      $stats = $this->stats($id);
+      $stats = $this->stats($printers_id);
       if ($stats) {
          $this->showTabs($options);
          $this->showFormHeader($options);
@@ -300,7 +342,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $_GET['start'] = 0;
       }
 
-      $numrows = $this->countAllEntries($id);
+      $numrows = $this->countAllEntries($printers_id);
       $parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"];
 
       echo "<br>";
@@ -311,7 +353,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $limit = $_SESSION["glpilist_limit"];
       }
       // Get history
-      $data = $this->getEntries($id, $_GET['start'], $limit);
+      $data = $this->getEntries($printers_id, $_GET['start'], $limit);
       if (!($data)) {
          return FALSE;
       }
@@ -348,7 +390,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                  return FALSE;\"
                  href='".$_SERVER['PHP_SELF']."?select=all'>".
                  __('Check All', 'fusioninventory')."</a>";
-      echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return FALSE;\"
+      echo " - <a onclick= \"if (unMarkAllRows('printer_history_form')) return FALSE;\"
                   href='".$_SERVER['PHP_SELF']."?select=none'>".
                   __('Uncheck All', 'fusioninventory')."</a> ";
       echo "<input type='submit' name='delete' value=\"".__('Delete', 'fusioninventory').
@@ -356,13 +398,19 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
+      return TRUE;
    }
 
 
 
    /**
-    * Show printer graph form
-    **/
+    * Display printer graph form
+    *
+    * @global object $DB
+    * @global array $CFG_GLPI
+    * @param integer $id the id of printer
+    * @param array $options
+    */
    function showGraph($id, $options=array()) {
       global $DB, $CFG_GLPI;
 
@@ -375,10 +423,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $graphField='pages_total';
       $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
-         $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
+         $begin = $_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
-      if ( $begin == 'NULL' OR $begin == '' ) {
-         $begin=date("Y-m-01"); // first day of current month
+      if ($begin == 'NULL' OR $begin == '') {
+         $begin = date("Y-m-01"); // first day of current month
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
          $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
@@ -386,21 +434,21 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
          $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
       }
-      if ( $end == 'NULL' OR $end == '' ) {
-         $end=date("Y-m-d"); // today
+      if ($end == 'NULL' OR $end == '') {
+         $end = date("Y-m-d"); // today
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) {
-         $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+         $timeUnit = $_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
       }
       if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
          $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
-         $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
+         $printerCompAdd = $_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
          if (!key_exists($printerCompAdd,
                          $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
             $oPrinter = new Printer();
-            if ($oPrinter->getFromDB($printerCompAdd)){
+            if ($oPrinter->getFromDB($printerCompAdd)) {
                $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] =
                      $oPrinter->getField('name');
             }
@@ -414,7 +462,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       if (isset($printersView[$id])) {
          unset($printersView[$id]);
       } else {
-         if ($oPrinter->getFromDB($id)){
+         if ($oPrinter->getFromDB($id)) {
             $printers[$id] = $oPrinter->getField('name');
          }
       }
@@ -529,7 +577,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<td class='left'>".__('Add a printer', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
-      foreach($printersView as $printer_id=>$name) {
+      foreach ($printersView as $printer_id=>$name) {
          $printersused[] = $printer_id;
       }
       $printer->getFromDB($id);
@@ -576,7 +624,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<br/>";
       $a_graph = array();
-      foreach($elementsField as $graphField=>$name) {
+      foreach ($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
                     `$graphField`
@@ -589,7 +637,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             unset($elementsField[$graphField]);
          }
       }
-      foreach($elementsField as $graphField=>$name) {
+      foreach ($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
                     `$graphField`

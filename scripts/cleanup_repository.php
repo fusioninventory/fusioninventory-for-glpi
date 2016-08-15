@@ -59,25 +59,24 @@ class MyRecursiveFilterIterator extends RecursiveFilterIterator {
  * Get every files used at least by one package.
  */
 
-function getManifestsUsed( $logger ) {
+function getManifestsUsed($logger) {
    global $DB;
 
    $result = array();
 
    $orders = $DB->request('glpi_plugin_fusioninventory_deployorders');
 
-   foreach($orders as $order_data) {
+   foreach ($orders as $order_data) {
 
       $logger->debug(" Get Files from Order ID ". $order_data['id']);
       $order_config = json_decode($order_data['json']);
 
-      if (  isset($order_config->jobs)
-         && isset($order_config->jobs->associatedFiles)
-         && count($order_config->jobs->associatedFiles) > 0
-      ) {
-         foreach( $order_config->jobs->associatedFiles as $manifest) {
+      if (isset($order_config->jobs)
+              && isset($order_config->jobs->associatedFiles)
+              && count($order_config->jobs->associatedFiles) > 0) {
+         foreach ($order_config->jobs->associatedFiles as $manifest) {
             $logger->debug($manifest);
-            if ( !in_array($manifest, $result) ) {
+            if (!in_array($manifest, $result)) {
                $result[] = $manifest;
             }
          }
@@ -92,19 +91,19 @@ function getManifestsUsed( $logger ) {
  * Get every files used at least by one package.
  */
 
-function getManifestsRegistered( $logger ) {
+function getManifestsRegistered($logger) {
    global $DB;
 
    $result = array();
 
    $files = $DB->request('glpi_plugin_fusioninventory_deployfiles');
 
-   foreach($files as $file_data) {
+   foreach ($files as $file_data) {
 
       $logger->debug(" Get File ID ". $file_data['id']);
 
       $logger->debug($file_data);
-      if ( !in_array($file_data['sha512'], $result) ) {
+      if (!in_array($file_data['sha512'], $result)) {
          $result[] = $file_data['sha512'];
       }
    }
@@ -116,14 +115,14 @@ function getManifestsRegistered( $logger ) {
  * Get the manifest files list in the repository.
  */
 
-function getManifests( $logger ) {
+function getManifests($logger) {
 
    $result = array();
 
    $manifests = new DirectoryIterator( MANIFESTS_PATH );
 
-   foreach( $manifests as $manifest ) {
-      if ( $manifest->isFile()) {
+   foreach ($manifests as $manifest) {
+      if ($manifest->isFile()) {
          $logger->debug( $manifest->getFilename() );
          $result[] = $manifest->getFilename();
       }
@@ -142,13 +141,13 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
    $logger->info("Removing ".count($invalid_manifests)." invalid manifests");
 
    $invalid_fileparts = array();
-   foreach( $invalid_manifests as $manifest) {
+   foreach ($invalid_manifests as $manifest) {
       $filepath = implode( DIRECTORY_SEPARATOR, array(MANIFESTS_PATH,$manifest) );
-      if ( file_exists($filepath) ) {
+      if (file_exists($filepath)) {
          $file = fopen($filepath, 'r');
-         while ( ( $buffer =  fgets($file) ) !== false ) {
+         while (($buffer = fgets($file)) !== false) {
             $buffer = trim($buffer);
-            if ( !in_array( $buffer, $invalid_fileparts ) ) {
+            if (!in_array($buffer, $invalid_fileparts)) {
                $invalid_fileparts[] = $buffer;
             }
          }
@@ -157,12 +156,12 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
    }
 
    //Excluding valid fileparts shared with invalid fileparts.
-   foreach( $valid_manifests as $manifest) {
+   foreach ($valid_manifests as $manifest) {
       $filepath = implode( DIRECTORY_SEPARATOR, array(MANIFESTS_PATH,$manifest) );
       //No need to process the file if it doesn't exist.
-      if ( file_exists($filepath) ) {
+      if (file_exists($filepath)) {
          $file = fopen($filepath, 'r');
-         while ( ( $buffer =  fgets($file) ) !== false) {
+         while (($buffer = fgets($file)) !== false) {
             $buffer = trim($buffer);
             // Exclude the valid filepart from invalid list if it exists in the latter.
             if (($index = array_search($buffer, $invalid_fileparts)) !== FALSE) {
@@ -182,8 +181,8 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
    $fileparts_iterator = new RecursiveIteratorIterator($fileparts_repository);
 
    $total = 0;
-   foreach($fileparts_iterator as $filepart) {
-      if ( $filepart->isFile() && in_array($filepart->getFilename(), $invalid_fileparts)) {
+   foreach ($fileparts_iterator as $filepart) {
+      if ($filepart->isFile() && in_array($filepart->getFilename(), $invalid_fileparts)) {
          $logger->debug( "Start removing " . $filepart->getFileName() .".");
          if (!$dryrun) {
             $logger->debug( "Removing " . $filepart->getPathName() .".");
@@ -201,20 +200,18 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
 /**
  * Unregister the invalid manifests from database.
  */
-function unregisterInvalidManifests( $logger, $dryrun, $invalid_manifests ) {
+function unregisterInvalidManifests($logger, $dryrun, $invalid_manifests) {
 
-   global $DB;
    $logger->info("Unregistering ".count($invalid_manifests)." manifests from database.");
-
 
    $pfDeployFile = new PluginFusioninventoryDeployFile();
 
-   foreach($invalid_manifests as $manifest) {
+   foreach ($invalid_manifests as $manifest) {
       $short_sha512 = substr($manifest, 0, 6);
       $data = $pfDeployFile->find(
          "shortsha512 = '". $short_sha512 ."'"
       );
-      foreach($data as $config) {
+      foreach ($data as $config) {
          $pfDeployFile->getFromDB($config['id']);
          $logger->info("Unregister file " . $pfDeployFile->fields['name']);
          if(!$dryrun) {
@@ -234,9 +231,9 @@ $args = $docopt->handle($doc);
 
 $loglevel = Logging::$LOG_INFO;
 $dryrun = $args['--dry-run'];
-if          ( $args['--quiet'] ) {
+if ($args['--quiet']) {
    $loglevel = Logging::$LOG_QUIET;
-} else if   ( $args['--debug'] ) {
+} else if ($args['--debug']) {
    $loglevel = Logging::$LOG_DEBUG;
 } else {
    $loglevel = Logging::$LOG_INFO;
@@ -249,7 +246,7 @@ $logger = new Logging($loglevel);
  */
 
 $logger->debug( "Script " . $_SERVER['argv'][0] . "called with following arguments:");
-foreach ($args as $k=>$v){
+foreach ($args as $k=>$v) {
    $logger->debug( $k.': '.json_encode($v));
 }
 
