@@ -648,6 +648,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "<td>";
+      echo _n('Removable medias', 'Removable medias', 2, "fusioninventory")."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_removablemedia", $pfConfig->getValue('component_removablemedia'));
+      echo "</td>";
+      echo "</tr>";
+
       $options['candel'] = FALSE;
       $pfConfig->showFormButtons($options);
 
