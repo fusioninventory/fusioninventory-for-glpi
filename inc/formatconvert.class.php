@@ -886,15 +886,26 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['computerdisk'] = array();
       if (isset($array['DRIVES'])) {
          foreach ($array['DRIVES'] as $a_drives) {
+            $isNetworkDriveOrFS = false;
+            $iseRemovableMedia = false;
+            if (isset($a_drives['TYPE'])) {
+               switch ($a_drives['TYPE']) {
+                  case 'Network Drive':
+                     $isNetworkDriveOrFS = true;
+                     break;
+
+                  case 'Removable Disk':
+                  case 'Compact Disc':
+                     $iseRemovableMedia = true;
+                     break;
+               }
+            }
+            if (isset($a_drives['FILESYSTEM']) && $a_drives['FILESYSTEM'] == 'nfs') {
+               $isNetworkDriveOrFS = true;
+            }
             if ($pfConfig->getValue("component_drive") == '0'
-                OR ($pfConfig->getValue("component_networkdrive") == '0'
-                    AND ((isset($a_drives['TYPE'])
-                       AND $a_drives['TYPE'] == 'Network Drive')
-                        OR isset($a_drives['FILESYSTEM'])
-                       AND $a_drives['FILESYSTEM'] == 'nfs'))
-                /*OR ((isset($a_drives['TYPE'])) AND
-                    (($a_drives['TYPE'] == "Removable Disk")
-                   OR ($a_drives['TYPE'] == "Compact Disc")))*/) {
+                OR ($pfConfig->getValue("component_networkdrive") == '0' AND $isNetworkDriveOrFS)
+                OR ($pfConfig->getValue("component_removablemedia") == '0' AND $iseRemovableMedia)) {
 
             } else {
                if ($pfConfig->getValue('import_volume') == 1) {
