@@ -86,6 +86,11 @@ $_GET['target']="printer_counter.php";
 Search::show('PluginFusioninventoryPrinterLogReport');
 
 
+/**
+ * Display special search form
+ *
+ * @global array $_SERVER
+ */
 function displaySearchForm() {
    global $_SERVER;
 

@@ -286,9 +286,9 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function findItemtypeType($credential_itemtype) {
 
-      $credential = array ('itemtype'  => 'PluginFusioninventoryInventoryComputerESX', //Credential itemtype
-                           'name'      => __('VMware host', 'fusioninventory'), //Label
-                           'targets'   => array('Computer'));
+      $credential = array('itemtype' => 'PluginFusioninventoryInventoryComputerESX', //Credential itemtype
+                           'name'    => __('VMware host', 'fusioninventory'), //Label
+                           'targets' => array('Computer'));
       if ($credential['itemtype'] == $credential_itemtype) {
          return $credential;
       }
@@ -389,7 +389,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
 
       // params
-      // Array ( [itemtype] => PluginFusioninventoryInventoryComputerESX [id] => 0 )
+      // Array([itemtype] => PluginFusioninventoryInventoryComputerESX [id] => 0)
       if ($params['itemtype'] == 'PluginFusioninventoryInventoryComputerESX') {
          $params['itemtype'] = 'PluginFusioninventoryCredential';
       }

@@ -57,7 +57,7 @@ class PluginFusioninventoryStaticmisc {
    /**
     * Get task methods of this plugin fusioninventory
     *
-    * @return array ('module'=>'value', 'method'=>'value')
+    * @return array('module'=>'value', 'method'=>'value')
     *   module value name of plugin
     *   method value name of method
     */
@@ -150,7 +150,7 @@ class PluginFusioninventoryStaticmisc {
     * Get types of datas available to select for taskjob definition for WakeOnLan method
     *
     * @param array $a_itemtype types yet added for definitions
-    * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
+    * @return array('itemtype'=>'value', 'itemtype'=>'value'...)
     *   itemtype itemtype of object
     *   value name of the itemtype
     */
@@ -202,7 +202,7 @@ class PluginFusioninventoryStaticmisc {
    /**
     * Get all methods of this plugin
     *
-    * @return array ('module'=>'value', 'method'=>'value')
+    * @return array('module'=>'value', 'method'=>'value')
     *   module value name of plugin
     *   method value name of method
     *
@@ -238,7 +238,7 @@ class PluginFusioninventoryStaticmisc {
     * Get types of datas available to select for taskjob definition for ESX method
     *
     * @param array $a_itemtype array types yet added for definitions
-    * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
+    * @return array('itemtype'=>'value', 'itemtype'=>'value'...)
     *   itemtype itemtype of object
     *   value name of the itemtype
     */
@@ -360,7 +360,7 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_ESX_getParameters($entities_id) {
-      return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
+      return array('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
                     "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('ESX', $entities_id));
 
    }

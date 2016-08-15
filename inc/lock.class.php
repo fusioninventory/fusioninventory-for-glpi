@@ -665,7 +665,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    /**
     * convert an array resulting from many form checks (0=>on 2=>on 5=>on ...)
-    * into a classical array (0=>0 1=>2 2=>5 ...)
+    * into a classical array(0=>0 1=>2 2=>5 ...)
     *
     * @param array $p_checksArray checkbox array from form
     * @return array

@@ -163,7 +163,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          //Add extra parameters for massive action display : only the Add action should be displayed
          $search_params['massiveactionparams']['extraparams']['id'] = $item->getID();
          $search_params['massiveactionparams']['extraparams']['custom_action'] = 'add_to_group';
-         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
+         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
          Search::showList('PluginFusioninventoryComputer', $search_params);
       }
    }
@@ -183,7 +183,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
-      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
+      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
       Search::showList('PluginFusioninventoryComputer', $search_params);
    }
 }

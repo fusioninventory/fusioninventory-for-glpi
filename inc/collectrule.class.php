@@ -172,7 +172,7 @@ class PluginFusioninventoryCollectRule extends Rule {
     */
    function getCriterias() {
 
-      $criterias = array ();
+      $criterias = array();
 
       $criterias['regkey']['field']       = 'name';
       $criterias['regkey']['name']        = __('Registry key', 'fusioninventory');

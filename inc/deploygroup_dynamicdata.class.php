@@ -88,7 +88,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       if (!$withtemplate
           && $item->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-         return array (_n('Criterion', 'Criteria', 2), _n('Associated item','Associated items', 2));
+         return array(_n('Criterion', 'Criteria', 2), _n('Associated item','Associated items', 2));
       }
       return '';
    }

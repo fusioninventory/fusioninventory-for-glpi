@@ -192,7 +192,7 @@ class PluginFusioninventoryFormatconvert {
 
 
    /**
-    * Clean the php array (remove unwanted characters, potential attack code...)
+    * Clean the php array(remove unwanted characters, potential attack code...)
     *
     * @param array $data
     * @return array cleaned php array

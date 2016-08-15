@@ -70,18 +70,26 @@ $options = array(
 
 $fi_loader = new FusioninventoryIncludePathAutoloader($options);
 $fi_loader->register();
-/*
- * @function script_endswith()
- * @param $scriptname : string representing the script to test
- * test the end of the called scriptname ( this is usefull to load )
+
+/**
+ * Check if the script name finish by
  *
+ * @param string $scriptname
+ * @return boolean
  */
 function script_endswith($scriptname) {
    $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
    return substr($script_name, -strlen($scriptname))===$scriptname;
 }
 
-// Init the hooks of fusioninventory
+
+
+/**
+ * Init the hooks of FusionInventory
+ *
+ * @global array $PLUGIN_HOOKS
+ * @global array $CFG_GLPI
+ */
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
 
@@ -478,7 +486,11 @@ function plugin_init_fusioninventory() {
 
 
 
-// Name and Version of the plugin
+/**
+ * Manage the version information of the plugin
+ *
+ * @return array
+ */
 function plugin_version_fusioninventory() {
    return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
@@ -494,7 +506,12 @@ function plugin_version_fusioninventory() {
 
 
 
-// Optional : check prerequisites before install : may print errors or add to message after redirect
+/**
+ * Manage / check the prerequisites of the plugin
+ *
+ * @global object $DB
+ * @return boolean
+ */
 function plugin_fusioninventory_check_prerequisites() {
    global $DB;
 
@@ -544,18 +561,35 @@ function plugin_fusioninventory_check_prerequisites() {
 
 
 
+/**
+ * Check if the config is ok
+ *
+ * @return boolean
+ */
 function plugin_fusioninventory_check_config() {
    return TRUE;
 }
 
 
 
-function plugin_fusioninventory_haveTypeRight($type,$right) {
+/**
+ * Check the rights
+ *
+ * @param string $type
+ * @param string $right
+ * @return boolean
+ */
+function plugin_fusioninventory_haveTypeRight($type, $right) {
    return TRUE;
 }
 
 
 
+/**
+ * Add the FusionInventory footer in GLPI interface
+ *
+ * @param string $baseroot
+ */
 function plugin_fusioninventory_footer($baseroot) {
 
       echo "<div id='footer'>";

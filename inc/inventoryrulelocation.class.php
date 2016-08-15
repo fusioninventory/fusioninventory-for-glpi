@@ -176,7 +176,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     */
    function getCriterias() {
 
-      $criterias = array ();
+      $criterias = array();
 
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');

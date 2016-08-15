@@ -116,7 +116,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     */
    function getCriterias() {
 
-      $criterias = array ();
+      $criterias = array();
       $criterias['entities_id']['table']     = 'glpi_entities';
       $criterias['entities_id']['field']     = 'entities_id';
       $criterias['entities_id']['name']      = __('Assets to import', 'fusioninventory').' : '.

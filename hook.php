@@ -44,6 +44,12 @@
  *
  */
 
+/**
+ * Add search options for GLPI objects
+ *
+ * @param string $itemtype
+ * @return array
+ */
 function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
    $sopt = array();
@@ -397,6 +403,16 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
 
 
+/**
+ * Manage search give items (display information in the search page)
+ *
+ * @global array $CFG_GLPI
+ * @param string $type
+ * @param integer $id
+ * @param array $data
+ * @param integer $num
+ * @return string
+ */
 function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
    global $CFG_GLPI;
 
@@ -836,6 +852,13 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
 
 
+/**
+ * Manage search options values
+ *
+ * @global object $DB
+ * @param object $item
+ * @return boolean
+ */
 function plugin_fusioninventory_searchOptionsValues($item) {
    global $DB;
 
@@ -862,12 +885,22 @@ function plugin_fusioninventory_searchOptionsValues($item) {
 
 
 
-// Define Dropdown tables to be manage in GLPI :
+/**
+ * Define Dropdown tables to be manage in GLPI
+ *
+ * @return array
+ */
 function plugin_fusioninventory_getDropdown() {
-   return array ();
+   return array();
 }
 
-/* Cron */
+
+
+/**
+ * Manage GLPI cron
+ *
+ * @return integer
+ */
 function cron_plugin_fusioninventory() {
 //   TODO :Disable for the moment (may be check if functions is good or not
 //   $ptud = new PluginFusioninventoryUnmanaged;
@@ -883,8 +916,12 @@ function cron_plugin_fusioninventory() {
 
 
 
+/**
+ * Manage the installation process
+ *
+ * @return boolean
+ */
 function plugin_fusioninventory_install() {
-
    ini_set("max_execution_time", "0");
 
    if (basename(filter_input(INPUT_SERVER, "SCRIPT_NAME")) != "cli_install.php") {
@@ -914,13 +951,16 @@ function plugin_fusioninventory_install() {
       require_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migrationname);
    }
-
    return TRUE;
 }
 
 
 
-// Uninstall process for plugin : need to return TRUE if succeeded
+/**
+ * Manage the uninstallation of the plugin
+ *
+ * @return boolean
+ */
 function plugin_fusioninventory_uninstall() {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
@@ -929,10 +969,16 @@ function plugin_fusioninventory_uninstall() {
 
 
 
+/**
+ * Add massive actions to GLPI itemtypes
+ *
+ * @param string $type
+ * @return array
+ */
 function plugin_fusioninventory_MassiveActions($type) {
 
    $sep = MassiveAction::CLASS_ACTION_SEPARATOR;
-   $ma = array ();
+   $ma = array();
 
    switch ($type) {
 
@@ -967,6 +1013,14 @@ function plugin_fusioninventory_MassiveActions($type) {
    return $ma;
 }
 
+
+
+/**
+ * Manage massice actions fields display
+ *
+ * @param array $options
+ * @return boolean
+ */
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
    $table = $options['options']['table'];
@@ -1026,6 +1080,15 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 }
 
 
+
+/**
+ * Manage Add select to search query
+ *
+ * @param string $type
+ * @param integer $id
+ * @param integer $num
+ * @return string
+ */
 function plugin_fusioninventory_addSelect($type, $id, $num) {
 
    $searchopt = &Search::getOptions($type);
@@ -1145,11 +1208,29 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
 }
 
 
+
+/**
+ * Manage group by in search query
+ *
+ * @param string $type
+ * @return boolean
+ */
 function plugin_fusioninventory_forceGroupBy($type) {
     return FALSE;
 }
 
 
+
+/**
+ * Manage left join in search query
+ *
+ * @param string $itemtype
+ * @param string $ref_table
+ * @param string $new_table
+ * @param string $linkfield
+ * @param string $already_link_tables
+ * @return string
+ */
 function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield,
                                             &$already_link_tables) {
 
@@ -1236,12 +1317,10 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                    ORDER BY id DESC LIMIT 1
                   )";
          }
-
          break;
 
       case 'Computer':
       case 'PluginFusioninventoryComputer':
-
           switch ($new_table.".".$linkfield) {
 
               case 'glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id':
@@ -1298,7 +1377,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_20 ON (FUSIONINVENTORY_20.items_id = glpi_computers.id AND FUSIONINVENTORY_20.itemtype='Computer') ".
                      " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_1 OR FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.networkports_id_1 = FUSIONINVENTORY_20.id THEN FUSIONINVENTORY_21.networkports_id_2 ELSE FUSIONINVENTORY_21.networkports_id_1 END ";
-
                }
                break;
 
@@ -1326,7 +1404,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 
             $leftjoin_fusioninventory_networkequipments = 0;
          }
-
          switch ($new_table.".".$linkfield) {
 
             // ** FusionInventory - last inventory
@@ -1347,7 +1424,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                              "glpi_plugin_fusioninventory_networkequipments.networkequipments_id) ";
                }
                return " ";
-
 
             // ** FusionInventory - SNMP authentification
             case "glpi_plugin_fusioninventory_configsecurities.".
@@ -1450,16 +1526,13 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_20 ON (FUSIONINVENTORY_20.items_id = glpi_printers.id AND FUSIONINVENTORY_20.itemtype='Printer') ".
                      " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_21 ON FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_1 OR FUSIONINVENTORY_20.id = FUSIONINVENTORY_21.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.id = CASE WHEN FUSIONINVENTORY_21.networkports_id_1 = FUSIONINVENTORY_20.id THEN FUSIONINVENTORY_21.networkports_id_2 ELSE FUSIONINVENTORY_21.networkports_id_1 END ";
-
                }
                break;
-
 
          }
          break;
 
       case 'PluginFusioninventoryPrinterLogReport':
-//echo $new_table.".".$linkfield."<br/>";
          switch ($new_table.".".$linkfield) {
 
             case 'glpi_locations.locations_id':
@@ -1505,11 +1578,27 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 
 
 
+/**
+ * Manage order in search query
+ *
+ * @param string $type
+ * @param integer $id
+ * @param string $order
+ * @param integer $key
+ * @return string
+ */
 function plugin_fusioninventory_addOrderBy($type, $id, $order, $key=0) {
    return "";
 }
 
 
+
+/**
+ * Add where in search query
+ *
+ * @param string $type
+ * @return string
+ */
 function plugin_fusioninventory_addDefaultWhere($type) {
    if ($type == 'PluginFusioninventoryTaskjob') {
       return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
@@ -1519,6 +1608,17 @@ function plugin_fusioninventory_addDefaultWhere($type) {
 }
 
 
+
+/**
+ * Manage where in search query
+ *
+ * @param string $link
+ * @param string $nott
+ * @param string $type
+ * @param integer $id
+ * @param string $val
+ * @return string
+ */
 function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
    $searchopt = &Search::getOptions($type);
@@ -1565,7 +1665,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                }
             }
          }
-      break;
+         break;
 
       case 'PluginFusioninventoryAgent':
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -1699,7 +1799,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
             // ** FusionInventory - CPU
             case "glpi_plugin_fusioninventory_networkequipments.cpu":
-
                break;
 
          }
@@ -1838,7 +1937,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
 
          }
-
          switch ($table.".".$field) {
 
             case "glpi_plugin_fusinvsnmp_agents.plugin_fusinvsnmp_agents_id_query" :
@@ -1851,7 +1949,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                return $link." (gpta.name  LIKE '%".$val."%' $ADD ) ";
 
          }
-
          break;
 
       case 'PluginFusioninventoryNetworkPortLog' :
@@ -1889,12 +1986,17 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
          }
          break;
 
-         }
+      }
    return "";
 }
 
 
 
+/**
+ * Manage pre-item update an item
+ *
+ * @param object $parm
+ */
 function plugin_pre_item_update_fusioninventory($parm) {
    if ($parm->fields['directory'] == 'fusioninventory') {
       $plugin = new Plugin();
@@ -1906,6 +2008,15 @@ function plugin_pre_item_update_fusioninventory($parm) {
    }
 }
 
+
+
+/**
+ * Manage pre-item purge an item
+ *
+ * @global object $DB
+ * @param object $parm
+ * @return object
+ */
 function plugin_pre_item_purge_fusioninventory($parm) {
    global $DB;
 
@@ -1945,6 +2056,13 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 
 
 
+/**
+ * Manage pre-item delete an item
+ *
+ * @global object $DB
+ * @param object $parm
+ * @return object
+ */
 function plugin_pre_item_delete_fusioninventory($parm) {
    global $DB;
 
@@ -1965,12 +2083,10 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 
 
 /**
- * Hook after updates
+ * Manage when update an item
  *
- * @param $parm
- * @return nothing
- *
-**/
+ * @param object $parm
+ */
 function plugin_item_update_fusioninventory($parm) {
    if (isset($_SESSION["glpiID"])
            && $_SESSION["glpiID"]!=''
@@ -1987,6 +2103,13 @@ function plugin_item_update_fusioninventory($parm) {
 }
 
 
+
+/**
+ * Manage when add an item
+ *
+ * @param object $parm
+ * @return object
+ */
 function plugin_item_add_fusioninventory($parm) {
 
    switch (get_class($parm)) {
@@ -2018,6 +2141,13 @@ function plugin_item_add_fusioninventory($parm) {
 }
 
 
+
+/**
+ * Manage when purge an item
+ *
+ * @param object $parm
+ * @return object
+ */
 function plugin_item_purge_fusioninventory($parm) {
 
    switch (get_class($parm)) {
@@ -2149,6 +2279,13 @@ function plugin_item_purge_fusioninventory($parm) {
 }
 
 
+
+/**
+ * Manage when transfer an item
+ *
+ * @param object $parm
+ * @return boolean
+ */
 function plugin_item_transfer_fusioninventory($parm) {
 
    switch ($parm['type']) {
@@ -2172,6 +2309,11 @@ function plugin_item_transfer_fusioninventory($parm) {
 
 
 
+/**
+ * Register the webservices methods
+ *
+ * @global array $WEBSERVICES_METHOD
+ */
 function plugin_fusioninventory_registerMethods() {
    global $WEBSERVICES_METHOD;
 
@@ -2184,7 +2326,11 @@ function plugin_fusioninventory_registerMethods() {
 }
 
 
-// Define dropdown relations
+/**
+ * Define dropdown relations
+ *
+ * @return array
+ */
 function plugin_fusioninventory_getDatabaseRelations() {
 
    $plugin = new Plugin();

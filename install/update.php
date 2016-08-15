@@ -5384,7 +5384,7 @@ function do_deploypackage_migration($migration) {
 /**
  * Manage the deploy mirror part migration
  *
- * @param type $migration
+ * @param object $migration
  */
 function do_deploymirror_migration($migration) {
 
@@ -6444,9 +6444,10 @@ function do_task_migration($migration) {
 
 
 /**
- * @since 0.85+1.0
  * Migrate search params from the old system to the new one
  * As search engine integration has been improved with GLPI 0.85
+ *
+ * @since 0.85+1.0
  *
  * @global object $DB
  */
@@ -6466,9 +6467,10 @@ function doDynamicDataSearchParamsMigration() {
 
 
 /**
+ * Migration of one dynamic group
+ *
  * @since 0.85+1.0
  *
- * Migration of one dynamic group
  * @param array $fields search paramas in old format (serialized)
  * @return string search paramas in new format (serialized)
  */
@@ -6537,8 +6539,8 @@ function migrationDynamicGroupFields($fields) {
  * Manage the display preference part migration
  *
  * @global object $DB
- * @param type $olditemtype
- * @param type $newitemtype
+ * @param string $olditemtype
+ * @param string $newitemtype
  */
 function changeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
