@@ -2495,52 +2495,11 @@ function do_rulematchedlog_migration($migration) {
  * @param object $migration
  */
 function do_antivirus_migration($migration) {
-   global $DB;
-
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputerantiviruses
     */
    $newTable = "glpi_plugin_fusioninventory_inventorycomputerantiviruses";
    $migration->renameTable("glpi_plugin_fusinvinventory_antivirus", $newTable);
-   if (!TableExists($newTable)) {
-      $DB->query("CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                     PRIMARY KEY (`id`)
-                ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
-   }
-   $migration->addField($newTable,
-                        "id",
-                        "int(11) NOT NULL AUTO_INCREMENT");
-   $migration->addField($newTable,
-                        "computers_id",
-                        "int(11) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable,
-                        "name",
-                        "varchar(255) DEFAULT NULL");
-   $migration->addField($newTable,
-                        "manufacturers_id",
-                        "int(11) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable,
-                        "version",
-                        "varchar(255) DEFAULT NULL");
-   $migration->addField($newTable,
-                        "is_active",
-                        "tinyint(1) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable,
-                        "uptodate",
-                        "tinyint(1) NOT NULL DEFAULT '0'");
-   $migration->addKey($newTable,
-                       "name");
-   $migration->addKey($newTable,
-                       "version");
-   $migration->addKey($newTable,
-                       "is_active");
-   $migration->addKey($newTable,
-                       "uptodate");
-   $migration->addKey($newTable,
-                       "computers_id");
-   $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, FALSE);
 }
 
 

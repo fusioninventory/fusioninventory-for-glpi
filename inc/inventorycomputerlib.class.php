@@ -123,11 +123,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
-      if (!class_exists('ComputerAntivirus')) {
-         $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
-      } else {
-         $pfInventoryComputerAntivirus = new ComputerAntivirus();
-      }
+      $pfInventoryComputerAntivirus = new ComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
       $computer_Item                = new Computer_Item();
