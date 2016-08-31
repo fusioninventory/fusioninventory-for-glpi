@@ -198,7 +198,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
 
       //Second, clean and check if it has been removed
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
-      $pfComputerLicenseInfo->cleancomputer(1);
+      $pfComputerLicenseInfo->cleanComputer(1);
 
       $pfComputerLicenseInfo->getFromDB(1);
       $this->assertEquals(0, count($pfComputerLicenseInfo->fields));
