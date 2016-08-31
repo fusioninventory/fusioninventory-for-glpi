@@ -164,8 +164,6 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
-      $Plugin->registerClass('PluginFusioninventoryInventoryComputerAntivirus',
-              array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
@@ -350,9 +348,6 @@ function plugin_init_fusioninventory() {
                                     'Peripheral'       => 'plugin_item_update_fusioninventory',
                                     'Phone'            => 'plugin_item_update_fusioninventory',
                                     'NetworkPort'      => 'plugin_item_update_fusioninventory',
-                                    'PluginFusioninventoryInventoryComputerAntivirus' => array(
-                                          'PluginFusioninventoryInventoryComputerAntivirus',
-                                          'addhistory'),
                                     'PluginFusioninventoryLock' => array('PluginFusioninventoryLock', 'deleteLock'));
 
 

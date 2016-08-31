@@ -930,6 +930,23 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->dropTable('glpi_plugin_fusioninventory_profiles');
    }
 
+   //Antivirus stuff has been integrated in GLPI's core
+   if (TableExists('glpi_plugin_fusioninventory_inventorycomputerantiviruses')) {
+      //Antivirus migration from FI table to GLPi core table
+      $antivirus = new ComputerAntivirus();
+      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
+         unset($ant['id']);
+         $ant['is_dynamic'] = 1;
+         $ant['is_uptodate'] = $ant['uptodate'];
+         unset($ant['uptodate']);
+         $ant['antivirus_version'] = $ant['version'];
+         unset($ant['version']);
+         $antivirus->add($ant, array(), false);
+      }
+      $migration->dropTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses');
+   }
+
+
    //Create first access to the current profile is needed
    if (isset($_SESSION['glpiactiveprofile'])) {
       PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
@@ -2470,52 +2487,11 @@ function do_rulematchedlog_migration($migration) {
  * @param object $migration
  */
 function do_antivirus_migration($migration) {
-   global $DB;
-
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputerantiviruses
     */
    $newTable = "glpi_plugin_fusioninventory_inventorycomputerantiviruses";
    $migration->renameTable("glpi_plugin_fusinvinventory_antivirus", $newTable);
-   if (!TableExists($newTable)) {
-      $DB->query("CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                     PRIMARY KEY (`id`)
-                ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
-   }
-   $migration->addField($newTable,
-                        "id",
-                        "int(11) NOT NULL AUTO_INCREMENT");
-   $migration->addField($newTable,
-                        "computers_id",
-                        "int(11) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable,
-                        "name",
-                        "varchar(255) DEFAULT NULL");
-   $migration->addField($newTable,
-                        "manufacturers_id",
-                        "int(11) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable,
-                        "version",
-                        "varchar(255) DEFAULT NULL");
-   $migration->addField($newTable,
-                        "is_active",
-                        "tinyint(1) NOT NULL DEFAULT '0'");
-   $migration->addField($newTable,
-                        "uptodate",
-                        "tinyint(1) NOT NULL DEFAULT '0'");
-   $migration->addKey($newTable,
-                       "name");
-   $migration->addKey($newTable,
-                       "version");
-   $migration->addKey($newTable,
-                       "is_active");
-   $migration->addKey($newTable,
-                       "uptodate");
-   $migration->addKey($newTable,
-                       "computers_id");
-   $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, FALSE);
 }
 
 
