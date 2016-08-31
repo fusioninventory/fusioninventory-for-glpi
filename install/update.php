@@ -932,23 +932,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    //Antivirus stuff has been integrated in GLPI's core
    if (TableExists('glpi_plugin_fusioninventory_inventorycomputerantiviruses')) {
-      $migration->changeField("glpi_plugin_fusioninventory_inventorycomputerantiviruses",
-                          "uptodate", "is_uptodate",
-                          "bool");
-
-      $migration->changeField("glpi_plugin_fusioninventory_inventorycomputerantiviruses",
-                          "version", "antivirus_version",
-                          "string");
-
-      $migration->migrationOneTable("glpi_plugin_fusioninventory_inventorycomputerantiviruses");
-
-
       //Antivirus migration from FI table to GLPi core table
-
       $antivirus = new ComputerAntivirus();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
          unset($ant['id']);
          $ant['is_dynamic'] = 1;
+         $ant['is_uptodate'] = $ant['uptodate'];
+         unset($ant['uptodate']);
+         $ant['antivirus_version'] = $ant['version'];
+         unset($ant['version']);
          $antivirus->add($ant, array(), false);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses');
