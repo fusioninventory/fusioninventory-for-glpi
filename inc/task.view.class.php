@@ -313,7 +313,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     * @param integer $task_id
     */
    function ajaxGetJobLogs($task_id) {
-      if (!empty($task_id)) {
+      if (!empty($task_id) && $task_id != '[]') {
          if (is_array($task_id)) {
             $task_ids = $task_id;
          } else {
