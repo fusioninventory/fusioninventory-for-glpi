@@ -1358,6 +1358,57 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
+    * Restart a task job
+    *
+    * @param array $params
+    *
+    * @return void
+    */
+   static function restartJob($params) {
+      $task     = new PluginFusioninventoryTask();
+      $job      = new PluginFusioninventoryTaskjob();
+      $jobstate = new PluginFusioninventoryTaskjobstate();
+      $joblog   = new PluginFusioninventoryTaskjoblog();
+      $agent    = new PluginFusioninventoryAgent();
+
+      // get old state
+      $jobstate->getFromDB($params['jobstate_id']);
+
+      // prepare new state (copy from old)
+      $run = $jobstate->fields;
+      unset($run['id']);
+      $run['state']  = PluginFusioninventoryTaskjobstate::PREPARED;
+      $run['uniqid'] = uniqid();
+      if ($run['specificity'] == "") {
+         $run['specificity'] = "NULL";
+      }
+
+      // add this new state and first log 
+      if($run_id = $jobstate->add($run)) {
+         $log = array(
+            'date'    => date("Y-m-d H:i:s"),
+            'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+            'plugin_fusioninventory_taskjobstates_id' => $run_id,
+            'comment' => ''
+         );
+         if ($joblog->add($log)) {
+
+            //wake up agent (only if task support wakeup)
+            $job->getFromDB($jobstate->fields['plugin_fusioninventory_taskjobs_id']);
+            $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+
+            if ($task->fields['wakeup_agent_counter'] > 0
+                && $task->fields['wakeup_agent_time'] > 0) {
+               $agent->getFromDB($params['agent_id']);
+               $agent->wakeUp();
+            }
+         }
+      }
+   }
+
+
+
+   /**
     * Update method
     *
     * @param string $method

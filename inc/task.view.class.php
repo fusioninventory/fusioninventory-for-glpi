@@ -284,6 +284,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $Computer = new Computer();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
+         "  taskjobs.task_id = '".$task_id."'",
+         "  taskjobs.ajax_url = '".$this->getBaseUrlFor('fi.job.logs')."'",
          "  taskjobs.agents_url = '". $pfAgent->getFormURL()."'",
          "  taskjobs.computers_url = '". $Computer->getFormURL()."'",
          "  taskjobs.init_templates();",
@@ -311,7 +313,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     * @param integer $task_id
     */
    function ajaxGetJobLogs($task_id) {
-      if (!empty($task_id)) {
+      if (!empty($task_id) && $task_id != '[]') {
          if (is_array($task_id)) {
             $task_ids = $task_id;
          } else {
