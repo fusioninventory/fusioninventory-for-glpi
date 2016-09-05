@@ -146,6 +146,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                );
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
+      $input['manage_osname'] = 1;
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -622,7 +623,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'>";
+      echo "<td>";
+      echo __('Manage operating system name:', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("manage_osname", $pfConfig->getValue('manage_osname'));
       echo "</td>";
       echo "<td>";
       echo __('Network drives', 'fusioninventory')."&nbsp;:";

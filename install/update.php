@@ -821,6 +821,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
+      $input['manage_osname']          = 0;
       $input['component_networkcardvirtual'] = 1;
       $config->addValues($input, FALSE);
 
