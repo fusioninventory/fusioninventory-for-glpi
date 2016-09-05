@@ -187,7 +187,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'operatingsystemversions_id'     => '',
                   'operatingsystemservicepacks_id' => '',
                   'operatingsystems_id'            => '',
-                  'plugin_fusioninventory_computerarches_id' => '',
+                  'operatingsystemarchitectures_id' => '',
                   'plugin_fusioninventory_computeroskernelnames_id' => '',
                   'plugin_fusioninventory_computeroskernelversions_id' => '',
                   'plugin_fusioninventory_computeroperatingsystemeditions_id' => ''
@@ -682,7 +682,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           ),
       );
       $mapping = array(
-          'arch'        => 'plugin_fusioninventory_computerarches_id',
+          'arch'        => 'operatingsystemarchitectures_id',
           'kernname'    => 'plugin_fusioninventory_computeroskernelnames_id',
           'kernversion' => 'plugin_fusioninventory_computeroskernelversions_id',
           'os'          => 'operatingsystems_id',
