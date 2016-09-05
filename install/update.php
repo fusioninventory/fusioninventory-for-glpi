@@ -4833,31 +4833,36 @@ function do_computerremotemgmt_migration($migration) {
  * @param object $migration
  */
 function do_computerarch_migration($migration) {
-   /*
-    * Table glpi_plugin_fusioninventory_computerarches
-    */
-   $a_table = array();
-   $a_table['name'] = 'glpi_plugin_fusioninventory_computerarches';
-   $a_table['oldname'] = array('glpi_plugin_fusioninventory_computerarchs');
+    global $DB;
 
-   $a_table['fields']  = array();
-   $a_table['fields']['id']      = array('type'    => 'autoincrement',
-                                         'value'   => '');
-   $a_table['fields']['name']    = array('type'    => 'string',
-                                         'value'   => NULL);
-   $a_table['fields']['comment'] = array('type'    => 'text',
-                                         'value'   => NULL);
+   if (TableExists('glpi_plugin_fusioninventory_computerarches')) {
+      //Rename field in coputeroperatingsystems table
+      $a_table = [
+         'name'     => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+         'renamefields' => [
+            'plugin_fusioninventory_computerarches_id' => 'operatingsystemarchitectures_id'
+         ]
+      ];
+      migrateTablesFusionInventory($migration, $a_table);
 
-   $a_table['oldfields']  = array();
+      //Arches migration from FI table to GLPi core table
+      $arches = new OperatingSystemArchitecture();
+      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computerarches') as $arch) {
+         //check if arch already exists in core
+         if ($arches->getFromDBByQuery(' WHERE name = "' . $DB->escape($arch['name']) . '"')) {
+            $new_id = $arches->fields['id'];
+         } else {
+            unset($arch['id']);
+            $new_id = $arches->add($arch, array(), false);
+         }
 
-   $a_table['renamefields'] = array();
-
-   $a_table['keys']   = array();
-   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
-
-   $a_table['oldkeys'] = array();
-
-   migrateTablesFusionInventory($migration, $a_table);
+         $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os SET "
+                     . " pf_os.operatingsystemarchitectures_id='" . $new_id . "',"
+                     . " JOIN operatingsystemarchitectures os_arch WHERE os_arch.name='" . $DB->escape($arch['name']) . "'";
+         $DB->query($sql_u);
+      }
+      $migration->dropTable('glpi_plugin_fusioninventory_computerarches');
+   }
 }
 
 
@@ -4882,7 +4887,7 @@ function do_computeroperatingsystem_migration($migration) {
                                          'value'   => NULL);
    $a_table['fields']['comment'] = array('type'    => 'text',
                                          'value'   => NULL);
-   $a_table['fields']['plugin_fusioninventory_computerarches_id'] = array('type'    => 'integer',
+   $a_table['fields']['operatingsystemarchitectures_id'] = array('type'    => 'integer',
                                                                           'value'   => NULL);
    $a_table['fields']['plugin_fusioninventory_computeroskernelnames_id'] = array('type'    => 'integer',
                                                                                               'value'   => NULL);

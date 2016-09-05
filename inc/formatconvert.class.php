@@ -485,7 +485,7 @@ class PluginFusioninventoryFormatconvert {
                     'NAME'           => 'operatingsystems_id',
                     'VERSION'        => 'operatingsystemversions_id',
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
-                    'ARCH'           => 'plugin_fusioninventory_computerarches_id',
+                    'ARCH'           => 'operatingsystemarchitectures_id',
                     'KERNEL_NAME'    => 'plugin_fusioninventory_computeroskernelnames_id',
                     'KERNEL_VERSION' => 'plugin_fusioninventory_computeroskernelversions_id'));
          $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = '';
@@ -520,8 +520,8 @@ class PluginFusioninventoryFormatconvert {
                      if (empty($array_tmp['operatingsystemversions_id'])) {
                         $array_tmp['operatingsystemversions_id'] = $matches[2];
                      }
-                     if (empty($array_tmp['plugin_fusioninventory_computerarches_id'])) {
-                        $array_tmp['plugin_fusioninventory_computerarches_id'] = $matches[3];
+                     if (empty($array_tmp['operatingsystemarchitectures_id'])) {
+                        $array_tmp['operatingsystemarchitectures_id'] = $matches[3];
                      }
                      if (empty($array_tmp['plugin_fusioninventory_computeroskernelnames_id'])) {
                         $array_tmp['plugin_fusioninventory_computeroskernelnames_id'] = 'linux';
@@ -541,16 +541,16 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
-         if (isset($array_tmp['plugin_fusioninventory_computerarches_id'])
-                 && $array_tmp['plugin_fusioninventory_computerarches_id'] != '') {
+         if (isset($array_tmp['operatingsystemarchitectures_id'])
+                 && $array_tmp['operatingsystemarchitectures_id'] != '') {
 
             $rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
-            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['plugin_fusioninventory_computerarches_id']));
+            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['operatingsystemarchitectures_id']));
             if (isset($res_rule['name'])) {
-               $array_tmp['plugin_fusioninventory_computerarches_id'] = $res_rule['name'];
+               $array_tmp['operatingsystemarchitectures_id'] = $res_rule['name'];
             }
-            if ($array_tmp['plugin_fusioninventory_computerarches_id'] == '0') {
-               $array_tmp['plugin_fusioninventory_computerarches_id'] = '';
+            if ($array_tmp['operatingsystemarchitectures_id'] == '0') {
+               $array_tmp['operatingsystemarchitectures_id'] = '';
             }
          }
          if ($array_tmp['operatingsystemservicepacks_id'] == '0') {
