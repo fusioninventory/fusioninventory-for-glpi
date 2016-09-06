@@ -2315,4 +2315,89 @@ function plugin_fusioninventory_getDatabaseRelations() {
    return array();
 }
 
+
+/**
+ * post_show_tab hook
+ *
+ * @param array $params Hook parameters
+ *
+ * @return void
+ */
+function postShowtab($params) {
+       switch($params['options']['itemtype']) {
+          case 'Computer':
+             if ($params['options']['tabnum'] == 1) {
+                $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+                $pfComputerOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
+                $a_computerextend = current($pfInventoryComputerComputer->find(
+                                              "`computers_id`='".$params['item']->getID()."'",
+                                              "", 1));
+                if (empty($a_computerextend)) {
+                   return;
+                }
+
+                echo '<table class="tab_cadre_fixe tab_glpi" width="100%">';
+
+                if ($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id'] > 0) {
+                   $pfComputerOperatingSystem->getFromDB($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id']);
+                   echo '<tr>';
+                   echo '<th colspan="2">'.__('FusionInventory operating system', 'fusioninventory').'</th>';
+                   echo '</tr>';
+
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>".__('Architecture', 'fusioninventory')."</td>";
+                   echo "<td >";
+                   PluginFusioninventoryComputerArch::dropdown(array('name' => 'fusionnull1', 'value'
+                                                    => $pfComputerOperatingSystem->fields["plugin_fusioninventory_computerarches_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>".__('Operating system')."</td>";
+                   echo "<td>";
+                   OperatingSystem::dropdown(array('name' => 'fusionnull4', 'value' => $pfComputerOperatingSystem->fields["operatingsystems_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>"._n('Version of the operating system', 'Versions of the operating systems', 1)."</td>";
+                   echo "<td>";
+                   OperatingSystemVersion::dropdown(array('name' => 'fusionnull5', 'value' => $pfComputerOperatingSystem->fields["operatingsystemversions_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>".__('Operating system kernel name', 'fusioninventory')."</td>";
+                   echo "<td >";
+                   PluginFusioninventoryComputerOSKernelName::dropdown(array('name' => 'fusionnull2', 'value'
+                                                    => $pfComputerOperatingSystem->fields["plugin_fusioninventory_computeroskernelnames_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>".__('Operating system kernel version', 'fusioninventory')."</td>";
+                   echo "<td >";
+                   PluginFusioninventoryComputerOSKernelVersion::dropdown(array('name' => 'fusionnull3', 'value'
+                                                    => $pfComputerOperatingSystem->fields["plugin_fusioninventory_computeroskernelversions_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>"._n('Service pack', 'Service packs', 1)."</td>";
+                   echo "<td>";
+                   OperatingSystemServicePack::dropdown(array('name' => 'fusionnull6', 'value' => $pfComputerOperatingSystem->fields["operatingsystemservicepacks_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+
+                   echo "<tr class='tab_bg_1'>";
+                   echo "<td>".__('Operating system edition', 'fusioninventory')."</td>";
+                   echo "<td>";
+                   PluginFusioninventoryComputerOperatingSystemEdition::dropdown(array('name' => 'fusionnull7', 'value' => $pfComputerOperatingSystem->fields["plugin_fusioninventory_computeroperatingsystemeditions_id"]));
+                   echo "</td>";
+                   echo "</tr>";
+                }
+                echo '</table>';
+                break;
+             }
+   }
+}
 ?>
