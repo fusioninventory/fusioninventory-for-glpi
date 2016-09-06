@@ -4836,6 +4836,15 @@ function do_computerarch_migration($migration) {
     global $DB;
 
    if (TableExists('glpi_plugin_fusioninventory_computerarches')) {
+      //Rename field in coputeroperatingsystems table
+      $a_table = [
+         'name'     => 'glpi_plugin_fusioninventory_computeroperatingsystems',
+         'renamefields' => [
+            'plugin_fusioninventory_computerarches_id' => 'operatingsystemarchitectures_id'
+         ]
+      ];
+      migrateTablesFusionInventory($migration, $a_table);
+
       //Arches migration from FI table to GLPi core table
       $arches = new OperatingSystemArchitecture();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computerarches') as $arch) {
