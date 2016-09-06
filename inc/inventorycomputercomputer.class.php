@@ -134,8 +134,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".__('Architecture', 'fusioninventory')."</td>";
          echo "<td >";
-         PluginFusioninventoryComputerArch::dropdown(array('name' => 'fusionnull1', 'value'
-                                                    => $pfComputerOperatingSystem->fields["plugin_fusioninventory_computerarches_id"]));
+         OperatingSystemArchitecture::dropdown(array('name' => 'fusionnull1', 'value'
+                                                    => $pfComputerOperatingSystem->fields["operatingsystemarchitectures_id"]));
          echo "</td>";
          echo "</tr>";
 

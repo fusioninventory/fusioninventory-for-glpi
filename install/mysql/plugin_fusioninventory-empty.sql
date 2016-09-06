@@ -691,25 +691,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerarches`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_computerarches` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroperatingsystems`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystems` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
-  `plugin_fusioninventory_computerarches_id` int(11) NOT NULL DEFAULT '0',
+  `operatingsystemarchitectures_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_computeroskernelnames_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_computeroskernelversions_id` int(11) NOT NULL DEFAULT '0',
   `operatingsystems_id` int(11) NOT NULL DEFAULT '0',
