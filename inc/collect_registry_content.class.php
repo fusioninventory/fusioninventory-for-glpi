@@ -127,7 +127,12 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       return TRUE;
    }
 
-
+   /**
+    * Delete all registriies contents linked to the computer (most cases when delete a
+    * computer)
+    *
+    * @param integer $computers_id
+    */
    static function cleanComputer($computers_id) {
       $registry_content = new self();
       $registry_content->deleteByCriteria(array('computers_id' => $computers_id));

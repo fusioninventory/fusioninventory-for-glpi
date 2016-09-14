@@ -107,7 +107,12 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       return '';
    }
 
-
+   /**
+    * Delete all files contents linked to the computer (most cases when delete a
+    * computer)
+    *
+    * @param integer $computers_id
+    */
    static function cleanComputer($computers_id) {
       $file_content = new self();
       $file_content->deleteByCriteria(array('computers_id' => $computers_id));

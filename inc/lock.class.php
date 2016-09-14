@@ -446,8 +446,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
    /**
    * Clean locks for an asset
    *
-   * @param itemtype asset type
-   * @param items_id asset ID
+   * @param string $itemtype asset type
+   * @param int    $items_id asset ID
    * @return Nothing
    * @since 0.90
    */

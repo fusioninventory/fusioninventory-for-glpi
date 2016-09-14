@@ -128,6 +128,12 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       return TRUE;
    }
 
+   /**
+    * Delete all WMI contents linked to the computer (most cases when delete a
+    * computer)
+    *
+    * @param integer $computers_id
+    */
    static function cleanComputer($computers_id) {
       $collect_content = new self();
       $collect_content->deleteByCriteria(array('computers_id' => $computers_id));
