@@ -323,11 +323,13 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array(
             'Computer' =>  array('PluginFusioninventoryInventoryComputerComputer',
-                                 'showInfo'),
+                                 'showComputerInfo'),
             'NetworkEquipment' => array('PluginFusioninventoryNetworkEquipment',
                                         'showInfo'),
             'Printer' => array('PluginFusioninventoryPrinter',
                                         'showInfo'));
+
+      $PLUGIN_HOOKS['post_show_tab']['fusioninventory'] = 'postShowTab';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
