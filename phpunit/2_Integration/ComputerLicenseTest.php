@@ -160,8 +160,118 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_ref,
                           $pfComputerLicenseInfo->fields,
                           'License data');
+   }
 
+   /**
+    * @test
+    */
+   public function testCleanComputer()
+   {
+      global $DB;
 
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      //First, check if license does exist
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->getFromDB(1);
+
+      $a_ref = array(
+          'id'                   => 1,
+          'computers_id'         => 1,
+          'softwarelicenses_id'  => 0,
+          'name'                 => 'Microsoft Office 2003',
+          'fullname'             => 'Microsoft Office Professional Edition 2003',
+          'serial'               => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx',
+          'is_trial'             => '0',
+          'is_update'            => '0',
+          'is_oem'               => '0',
+          'activation_date'      => NULL
+      );
+
+      $this->assertEquals($a_ref,
+                          $pfComputerLicenseInfo->fields,
+                          'License data');
+
+      //Second, clean and check if it has been removed
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->cleanComputer(1);
+
+      $pfComputerLicenseInfo->getFromDB(1);
+      $this->assertEquals(0, count($pfComputerLicenseInfo->fields));
+   }
+
+   /**
+    * @test
+    */
+   public function testDeleteComputer() {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      // Create computer
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $computer         = new Computer();
+
+      $a_computerinventory = $this->a_computer1;
+      $a_computer = $a_computerinventory['Computer'];
+      $a_computer["entities_id"] = 0;
+      $computers_id = $computer->add($a_computer);
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
+                                      1);
+
+      $computer->getFromDB(1);
+
+      //First, check if license does exist
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->getFromDB(1);
+
+      $a_ref = array(
+          'id'                   => 1,
+          'computers_id'         => 1,
+          'softwarelicenses_id'  => 0,
+          'name'                 => 'Microsoft Office 2003',
+          'fullname'             => 'Microsoft Office Professional Edition 2003',
+          'serial'               => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx',
+          'is_trial'             => '0',
+          'is_update'            => '0',
+          'is_oem'               => '0',
+          'activation_date'      => NULL
+      );
+
+      $this->assertEquals(
+         $a_ref,
+         $pfComputerLicenseInfo->fields,
+         'License data'
+      );
+
+      //delete computer and check if it has been removed
+      $computer->delete(array('id' => $computers_id));
+      $this->assertTrue($computer->getFromDB($computers_id));
+
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->getFromDB(1);
+      $this->assertEquals(10, count($pfComputerLicenseInfo->fields));
+
+      //purge computer and check if it has been removed
+      $computer->delete(array('id' => $computers_id), 1);
+      $this->assertFalse($computer->getFromDB($computers_id));
+
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      $pfComputerLicenseInfo->getFromDB(1);
+      $this->assertEquals(0, count($pfComputerLicenseInfo->fields));
    }
 }
-?>
+

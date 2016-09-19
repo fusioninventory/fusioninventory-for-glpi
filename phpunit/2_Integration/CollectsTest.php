@@ -759,4 +759,334 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $this->assertEquals($reference, $content);
    }
 
+   /**
+    * @test
+    */
+   public function testFilesCleanComputer()
+   {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfCollect = new PluginFusioninventoryCollect();
+      $input = array(
+         'name'         => 'Files collect',
+         'entities_id'  => $_SESSION['glpiactive_entity'],
+         'is_recursive' => '0',
+         'type'         => 'registry',
+         'is_active'    => 1
+     );
+      $collects_id = $pfCollect->add($input);
+      $input = array(
+         'name'                                 => 'PHP files',
+         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'dir'                                  => '/var/www',
+         'is_recursive'                         => 1,
+         'filter_regex'                         => '*\.php',
+         'filter_is_file'                       => 1,
+         'filter_is_dir'                        => 0
+      );
+      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $file_id = $pfCollect_File->add($input);
+      $input = array(
+         'computers_id'                                     => '1',
+         'plugin_fusioninventory_collects_registries_id'    => $file_id,
+         'key'                                              => 'test_key',
+         'value'                                            => 'test_value'
+      );
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->add($input);
+
+      //First, check if file contents does exist
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->getFromDB(1);
+
+      $this->assertEquals(5, count($pfCollect_File_Contents->fields));
+
+      //Second, clean and check if it has been removed
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->cleanComputer(1);
+
+      $pfCollect_File_Contents->getFromDB(1);
+      $this->assertEquals(0, count($pfCollect_File_Contents->fields));
+   }
+
+   /**
+    * @test
+    */
+   public function testRegistryCleanComputer()
+   {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfCollect = new PluginFusioninventoryCollect();
+      $input = array(
+         'name'         => 'Registry collect',
+         'entities_id'  => $_SESSION['glpiactive_entity'],
+         'is_recursive' => '0',
+         'type'         => 'registry',
+         'is_active'    => 1
+     );
+      $collects_id = $pfCollect->add($input);
+      $input = array(
+         'name'                                 => 'Registry collection',
+         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'hive'                                 => 'HKEY_LOCAL_MACHINE',
+         'path'                                 => '/',
+         'key'                                  => 'daKey'
+      );
+      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $registry_id = $pfCollect_Registry->add($input);
+      $input = array(
+         'computers_id'                                     => '1',
+         'plugin_fusioninventory_collects_registries_id'    => $registry_id,
+         'key'                                              => 'test_key',
+         'value'                                            => 'test_value'
+      );
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->add($input);
+
+      //First, check if registry contents does exist
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->getFromDB(1);
+
+      $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+
+      //Second, clean and check if it has been removed
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->cleanComputer(1);
+
+      $pfCollect_Registry_Contents->getFromDB(1);
+      $this->assertEquals(0, count($pfCollect_Registry_Contents->fields));
+   }
+
+   /**
+    * @test
+    */
+   public function testWmiCleanComputer()
+   {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfCollect = new PluginFusioninventoryCollect();
+      $input = array(
+         'name'         => 'WMI collect',
+         'entities_id'  => $_SESSION['glpiactive_entity'],
+         'is_recursive' => '0',
+         'type'         => 'registry',
+         'is_active'    => 1
+     );
+      $collects_id = $pfCollect->add($input);
+      $input = array(
+          'name'                                => 'WMI',
+          'plugin_fusioninventory_collects_id'  => $collects_id,
+          'moniker'                             => 'DaWMI'
+      );
+      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $wmi_id = $pfCollect_Wmi->add($input);
+      $input = array(
+         'computers_id'                                     => '1',
+         'plugin_fusioninventory_collects_registries_id'    => $wmi_id,
+         'key'                                              => 'test_key',
+         'value'                                            => 'test_value'
+      );
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->add($input);
+
+      //First, check if wmi contents does exist
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->getFromDB(1);
+
+      $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
+
+      //Second, clean and check if it has been removed
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->cleanComputer(1);
+
+      $pfCollect_Wmi_Contents->getFromDB(1);
+      $this->assertEquals(0, count($pfCollect_Wmi_Contents->fields));
+   }
+
+   /**
+    * @test
+    */
+   public function testDeleteComputer() {
+      global $DB;
+
+      $DB->connect();
+
+      self::restore_database();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      // Create computer
+      $computer = new Computer();
+      $input = array(
+         'name'        => 'pc01',
+         'entities_id' => 0
+      );
+
+      $computers_id = $computer->add($input);
+      $this->assertEquals($computers_id, 1);
+
+      $pfCollect = new PluginFusioninventoryCollect();
+
+      //populate wmi data
+      $input = array(
+         'name'         => 'WMI collect',
+         'entities_id'  => $_SESSION['glpiactive_entity'],
+         'is_recursive' => '0',
+         'type'         => 'registry',
+         'is_active'    => 1
+     );
+      $collects_id = $pfCollect->add($input);
+      $input = array(
+          'name'                                => 'WMI',
+          'plugin_fusioninventory_collects_id'  => $collects_id,
+          'moniker'                             => 'DaWMI'
+      );
+      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $wmi_id = $pfCollect_Wmi->add($input);
+      $input = array(
+         'computers_id'                                     => $computers_id,
+         'plugin_fusioninventory_collects_registries_id'    => $wmi_id,
+         'key'                                              => 'test_key',
+         'value'                                            => 'test_value'
+      );
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->add($input);
+
+      //check if wmi contents does exist
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->getFromDB(1);
+
+      $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
+
+      //populate files data
+      $input = array(
+         'name'         => 'Files collect',
+         'entities_id'  => $_SESSION['glpiactive_entity'],
+         'is_recursive' => '0',
+         'type'         => 'registry',
+         'is_active'    => 1
+     );
+      $collects_id = $pfCollect->add($input);
+      $input = array(
+         'name'                                 => 'PHP files',
+         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'dir'                                  => '/var/www',
+         'is_recursive'                         => 1,
+         'filter_regex'                         => '*\.php',
+         'filter_is_file'                       => 1,
+         'filter_is_dir'                        => 0
+      );
+      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $file_id = $pfCollect_File->add($input);
+      $input = array(
+         'computers_id'                                     => $computers_id,
+         'plugin_fusioninventory_collects_registries_id'    => $file_id,
+         'key'                                              => 'test_key',
+         'value'                                            => 'test_value'
+      );
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->add($input);
+
+      //check if file contents does exist
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->getFromDB(1);
+
+      $this->assertEquals(5, count($pfCollect_File_Contents->fields));
+
+      //populate registry data
+      $input = array(
+         'name'         => 'Registry collect',
+         'entities_id'  => $_SESSION['glpiactive_entity'],
+         'is_recursive' => '0',
+         'type'         => 'registry',
+         'is_active'    => 1
+     );
+      $collects_id = $pfCollect->add($input);
+      $input = array(
+         'name'                                 => 'Registry collection',
+         'plugin_fusioninventory_collects_id'   => $collects_id,
+         'hive'                                 => 'HKEY_LOCAL_MACHINE',
+         'path'                                 => '/',
+         'key'                                  => 'daKey'
+      );
+      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $registry_id = $pfCollect_Registry->add($input);
+      $input = array(
+         'computers_id'                                     => $computers_id,
+         'plugin_fusioninventory_collects_registries_id'    => $registry_id,
+         'key'                                              => 'test_key',
+         'value'                                            => 'test_value'
+      );
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->add($input);
+
+      //check if registry contents does exist
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->getFromDB(1);
+
+      $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+
+
+      //delete computer and check if it has been removed
+      $computer->delete(array('id' => $computers_id));
+      $this->assertTrue($computer->getFromDB($computers_id));
+
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->getFromDB(1);
+      $this->assertEquals(5, count($pfCollect_Wmi_Contents->fields));
+
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->getFromDB(1);
+      $this->assertEquals(5, count($pfCollect_Registry_Contents->fields));
+
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->getFromDB(1);
+      $this->assertEquals(5, count($pfCollect_File_Contents->fields));
+
+      //purge computer and check if it has been removed
+      $computer->delete(array('id' => $computers_id), 1);
+      $this->assertFalse($computer->getFromDB($computers_id));
+
+      $pfCollect_Wmi_Contents = new PluginFusioninventoryCollect_Wmi_Content();
+      $pfCollect_Wmi_Contents->getFromDB(1);
+      $this->assertEquals(0, count($pfCollect_Wmi_Contents->fields));
+
+      $pfCollect_Registry_Contents = new PluginFusioninventoryCollect_Registry_Content();
+      $pfCollect_Registry_Contents->getFromDB(1);
+      $this->assertEquals(0, count($pfCollect_Registry_Contents->fields));
+
+      $pfCollect_File_Contents = new PluginFusioninventoryCollect_File_Content();
+      $pfCollect_File_Contents->getFromDB(1);
+      $this->assertEquals(0, count($pfCollect_File_Contents->fields));
+   }
 }
