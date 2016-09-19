@@ -712,8 +712,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       } else {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] =
-               __('Unable to run task because some jobs is running yet!', 'fusioninventory');
+         Session::addMessageAfterRedirect(
+            __('Unable to run task because some jobs is running yet!', 'fusioninventory'),
+            ERROR
+         );
       }
       return $uniqid;
    }

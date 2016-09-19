@@ -69,7 +69,10 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 
       if (!$zip) {
          error_log("Zip failure");
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __("Can't read zip file!", 'fusioninventory');
+         Session::addMessageAfterRedirect(
+            __("Can't read zip file!", 'fusioninventory'),
+            ERROR
+         );
       } else {
          error_log("Zip ok");
          while ($zip_entry = zip_read($zip)) {
@@ -94,7 +97,10 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
       unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {
-      $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('No file to import!', 'fusioninventory');
+      Session::addMessageAfterRedirect(
+         __('No file to import!', 'fusioninventory'),
+         ERROR
+      );
    }
    Html::back();
 }

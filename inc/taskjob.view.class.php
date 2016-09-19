@@ -817,7 +817,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             $uniqid = $pfTaskjob->forceRunningTask($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
             $_SESSION["plugin_fusioninventory_forcerun"][$taskjobs_id] = $uniqid;
          }
-         unset($_SESSION["MESSAGE_AFTER_REDIRECT"]);
       } else if (isset($postvars['add']) || isset($postvars['update'])) {
          // * Add and update taskjob
          Session::checkRight('plugin_fusioninventory_task', CREATE);
