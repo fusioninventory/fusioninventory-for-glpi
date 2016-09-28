@@ -55,7 +55,7 @@ if ((isset($_GET['action'])
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
                 "fusioninventory");
 
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard.php");
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/menu.php");
    Html::footer();
 }
 
