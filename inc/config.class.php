@@ -147,6 +147,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
       $input['manage_osname'] = 1;
+      $input['trash_unused_softs'] = 1;
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -638,7 +639,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'>";
+      echo "<td>";
+      echo __('Trash unused softwares:', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("trash_unused_softs", $pfConfig->getValue('trash_unused_softs'));
       echo "</td>";
       echo "<td>";
       echo _n('Controller', 'Controllers', 2)."&nbsp;:";
