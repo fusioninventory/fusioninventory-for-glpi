@@ -153,6 +153,16 @@
             "NAME" : "curl",
             "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
             "VERSION" : "2.3.2 (x86 edition)"
+          },
+          {
+            "NAME" : "php",
+            "COMMENTS" : "PHP interpreter",
+            "VERSION" : "7.0.12"
+          },
+          {
+            "NAME" : "atoum",
+            "COMMENTS" : "Uit testing framework for PHP",
+            "VERSION" : "2.8.2"
           }
         ],
         "BIOS" : { "SSN" : "xxyyz6" }
@@ -163,8 +173,8 @@
       }
     },
     "expected_results" : {
-      "nb_softwares" : 1,
-      "nb_versions" : 3
+      "nb_softwares" : 3,
+      "nb_versions" : 5
     }
   }]
 ]}
