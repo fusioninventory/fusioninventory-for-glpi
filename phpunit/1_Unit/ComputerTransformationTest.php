@@ -240,7 +240,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerOperatingSystem() {
-      global $DB;
+      global $DB, $PF_CONFIG;
 
       $DB->connect();
 
@@ -350,6 +350,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
 //                  'osversion'   => '',
 //                  'servicepack' => '',
 //                  'edition'     => ''
+//              ),
+//              array(
+//                  'arch'        => '',
+//                  'kernname'    => '',
+//                  'kernversion' => '',
+//                  'os'          => '',
+//                  'osversion'   => '',
+//                  'servicepack' => '',
+//                  'edition'     => ''
 //              )
 //          ),
           array(
@@ -369,6 +378,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '7',
                   'servicepack' => '',
                   'edition'     => 'Enterprise'
+              ),
+              array(
+                  'arch'        => '64-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.1.7600',
+                  'os'          => 'Microsoft Windows 7 Enterprise',
+                  'osversion'   => '',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
           ),
           array(
@@ -388,6 +406,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '12',
                   'servicepack' => '',
                   'edition'     => 'Enterprise Server'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.12.43-52.6-default',
+                  'os'          => 'SUSE Linux Enterprise Server 12 (x86_64)',
+                  'osversion'   => '12',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
           ),
           array(
@@ -403,6 +430,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'kernname'    => 'linux',
                   'kernversion' => '3.2.0-4-amd64',
                   'os'          => 'Debian',
+                  'osversion'   => '7.8',
+                  'servicepack' => '',
+                  'edition'     => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.2.0-4-amd64',
+                  'os'          => 'Debian GNU/Linux 7.8 (wheezy)',
                   'osversion'   => '7.8',
                   'servicepack' => '',
                   'edition'     => ''
@@ -425,6 +461,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '8.4',
                   'servicepack' => '',
                   'edition'     => ''
+              ),
+              array(
+                  'arch'        => 'x86_64',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.16.0-4-amd64',
+                  'os'          => 'Debian GNU/Linux 8.4 (jessie)',
+                  'osversion'   => '8.4',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
           ),
           array(
@@ -444,6 +489,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '',
                   'servicepack' => 'Service Pack 1',
                   'edition'     => 'Embedded Standard'
+              ),
+              array(
+                  'arch'        => '32-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.1.7601',
+                  'os'          => 'Microsoft Windows Embedded Standard',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 1',
+                  'edition'     => ''
               )
           ),
           array(
@@ -462,6 +516,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2008',
                   'servicepack' => 'Service Pack 2',
                   'edition'     => 'ServerÂ® Standard'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.0.6002',
+                  'os'          => 'MicrosoftÂ® Windows ServerÂ® 2008 Standard',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 2',
+                  'edition'     => ''
               )
           ),
           array(
@@ -480,6 +543,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2003',
                   'servicepack' => 'Service Pack 2',
                   'edition'     => 'Server Standard Edition'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.2.3790',
+                  'os'          => 'Microsoft(R) Windows(R) Server 2003, Standard Edition',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 2',
+                  'edition'     => ''
               )
           ),
           array(
@@ -498,6 +570,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2012 R2',
                   'servicepack' => '',
                   'edition'     => 'Server Datacenter'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.3.9600',
+                  'os'          => 'Microsoft Windows Server 2012 R2 Datacenter',
+                  'osversion'   => '',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
           ),
           array(
@@ -517,6 +598,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2008 R2',
                   'servicepack' => 'Service Pack 1',
                   'edition'     => 'Server Datacenter'
+              ),
+              array(
+                  'arch'        => '64-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.1.7601',
+                  'os'          => 'Microsoft Windows Server 2008 R2 Datacenter',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 1',
+                  'edition'     => ''
               )
           ),
 //          array(
@@ -535,6 +625,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
 //                  'osversion'   => 'Vista',
 //                  'servicepack' => 'Service Pack 1',
 //                  'edition'     => 'Professionnel'
+//              ),
+//              array(
+//                  'arch'        => '',
+//                  'kernname'    => 'MSWin32',
+//                  'kernversion' => '6.0.6001',
+//                  'os'          => 'Microsoft® Windows Vista™ Professionnel',
+//                  'osversion'   => '',
+//                  'servicepack' => 'Service Pack 1',
+//                  'edition'     => ''
 //              )
 //          ),
           array(
@@ -553,6 +652,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2003',
                   'servicepack' => 'Service Pack 2',
                   'edition'     => 'Server Standard Edition x64'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.2.3790',
+                  'os'          => 'Microsoft(R) Windows(R) Server 2003, Standard Edition x64',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 2',
+                  'edition'     => ''
               )
           ),
           array(
@@ -571,6 +679,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => 'XP',
                   'servicepack' => 'Service Pack 3',
                   'edition'     => 'Édition familiale'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.1.2600',
+                  'os'          => 'Microsoft Windows XP Édition familiale',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 3',
+                  'edition'     => ''
               )
           ),
           array(
@@ -589,6 +706,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2000',
                   'servicepack' => 'Service Pack 4',
                   'edition'     => 'Professionnel'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '5.0.2195',
+                  'os'          => 'Microsoft Windows 2000 Professionnel',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 4',
+                  'edition'     => ''
               )
           ),
           array(
@@ -607,7 +733,17 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '2012 R2',
                   'servicepack' => '',
                   'edition'     => 'Hyper-V Server'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.3.9600',
+                  'os'          => 'Microsoft Hyper-V Server 2012 R2',
+                  'osversion'   => '',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
+
           ),
           array(
               array(
@@ -626,6 +762,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '23',
                   'servicepack' => '',
                   'edition'     => ''
+              ),
+              array(
+                  'arch'        => 'x86_64',
+                  'kernname'    => 'linux',
+                  'kernversion' => '4.4.6-301.fc23.x86_64',
+                  'os'          => 'Fedora release 23 (Twenty Three)',
+                  'osversion'   => '23',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
           ),
           array(
@@ -641,6 +786,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'kernname'    => 'linux',
                   'kernversion' => '3.8.13-hp',
                   'os'          => 'ThinPro',
+                  'osversion'   => '5.2.0',
+                  'servicepack' => '',
+                  'edition'     => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'linux',
+                  'kernversion' => '3.8.13-hp',
+                  'os'          => 'ThinPro 5.2.0',
                   'osversion'   => '5.2.0',
                   'servicepack' => '',
                   'edition'     => ''
@@ -663,6 +817,15 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '10',
                   'servicepack' => '',
                   'edition'     => 'Professionnel'
+              ),
+              array(
+                  'arch'        => '64-bit',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '10.0.10586',
+                  'os'          => 'Microsoft Windows 10 Professionnel',
+                  'osversion'   => '',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
           ),
           array(
@@ -678,8 +841,17 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'osversion'   => '7.4 (wheezy)',
                   'servicepack' => '',
                   'edition'     => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => '',
+                  'kernversion' => '',
+                  'os'          => 'Debian GNU/Linux 7.4 (wheezy)',
+                  'osversion'   => '3.2.0-2-amd64',
+                  'servicepack' => '',
+                  'edition'     => ''
               )
-          ),
+          )
       );
       $mapping = array(
           'arch'        => 'operatingsystemarchitectures_id',
@@ -697,8 +869,22 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                 'NAME'           => 'vbox-winxp',
             );
 
+         //test with managed OS name
+         $PF_CONFIG['manage_osname'] = '1';
          $a_reference = array();
          foreach ($operatingsystem[1] as $key=>$value) {
+             $a_reference[$mapping[$key]] = $value;
+         }
+         $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+         $GLPIlog = new GLPIlogs();
+         $GLPIlog->testSQLlogs();
+         $GLPIlog->testPHPlogs();
+         $this->assertEquals($a_reference, $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']);
+
+         //test with unmanaged OS name
+         $PF_CONFIG['manage_osname'] = '0';
+         $a_reference = array();
+         foreach ($operatingsystem[2] as $key=>$value) {
              $a_reference[$mapping[$key]] = $value;
          }
          $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
