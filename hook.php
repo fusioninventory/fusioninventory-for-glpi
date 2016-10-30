@@ -110,17 +110,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5161]['linkfield'] = '';
          $sopt[5161]['name']      = __('FusionInventory tag', 'fusioninventory');
 
-         $sopt[5162]['table']     = 'glpi_plugin_fusioninventory_computerarches';
-         $sopt[5162]['field']     = 'name';
-         $sopt[5162]['name']      = __('Architecture', 'fusioninventory');
-         $sopt[5162]['datatype']  = 'dropdown';
-         $sopt[5162]['massiveaction'] = FALSE;
-         $sopt[5162]['joinparams']      = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
-
-
 
 //         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
 //         $sopt[5163]['field']     = 'conform';
@@ -2362,8 +2351,8 @@ function postShowtab($params) {
                    echo "<td >";
 
                    echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computerarches',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computerarches_id']
+                      'glpi_operatingsystemarchitectures',
+                      $pfComputerOperatingSystem->fields['operatingsystemarchitectures_id']
                    );
 
                    echo "</td>";

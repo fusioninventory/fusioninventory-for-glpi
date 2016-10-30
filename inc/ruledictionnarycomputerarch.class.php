@@ -81,7 +81,7 @@ class PluginFusioninventoryRuleDictionnaryComputerArch extends RuleDictionnaryDr
 
       $criterias['name']['field'] = 'name';
       $criterias['name']['name']  = __('Architecture', 'fusioninventory');
-      $criterias['name']['table'] = 'glpi_plugin_fusioninventory_computerarchs';
+      $criterias['name']['table'] = 'glpi_operatingsystemarchitectures';
       return $criterias;
    }
 

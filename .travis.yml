@@ -9,7 +9,8 @@ php:
 env:
 #  - GLPI=0.90/bugfixes
 #  - GLPI=0.85/bugfixes
-  - GLPI=master
+  - GLPI=9.1/bugfixes
+#  - GLPI=master
 
 cache:
   directories:
@@ -27,7 +28,7 @@ before_install:
  - composer self-update
  - cd glpi
  - if [[ $GLPI != 'master' ]]; then git checkout -b $GLPI origin/$GLPI; fi
- - if [[ $GLPI == 'master' ]]; then composer install --no-dev; fi
+ - composer install --no-dev -o
  - cd ..
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
  - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"

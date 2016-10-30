@@ -109,7 +109,7 @@ class PluginFusioninventoryComputerOperatingSystem extends CommonDropdown {
     */
    function getAdditionalFields() {
 
-      return array(array('name'  => 'plugin_fusioninventory_computerarches_id',
+      return array(array('name'  => 'operatingsystemarchitectures_id',
                          'label' => __('Architecture', 'fusioninventory'),
                          'type'  => 'dropdownValue'),
                    array('name'  => 'plugin_fusioninventory_computeroskernelnames_id',
