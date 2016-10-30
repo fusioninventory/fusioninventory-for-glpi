@@ -489,7 +489,7 @@ class PluginFusioninventoryFormatconvert {
                     'KERNEL_NAME'    => 'plugin_fusioninventory_computeroskernelnames_id',
                     'KERNEL_VERSION' => 'plugin_fusioninventory_computeroskernelversions_id'));
          $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = '';
-         if (isset($array['OPERATINGSYSTEM']['FULL_NAME'])) {
+         if (isset($array['OPERATINGSYSTEM']['FULL_NAME']) && $pfConfig->getValue('manage_osname') == 1) {
             $matches = array();
             preg_match("/Microsoft Windows (XP |\d\.\d |\d{1,4} )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
             if (count($matches) == 3) {
@@ -540,6 +540,8 @@ class PluginFusioninventoryFormatconvert {
                   }
                }
             }
+         } elseif (isset($array['OPERATINGSYSTEM']['FULL_NAME'])) {
+            $array_tmp['operatingsystems_id'] = $array['OPERATINGSYSTEM']['FULL_NAME'];
          }
          if (isset($array_tmp['operatingsystemarchitectures_id'])
                  && $array_tmp['operatingsystemarchitectures_id'] != '') {

@@ -140,6 +140,46 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
 
+         // Manage operating system
+         if (isset($a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'])) {
+            $pfOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
+            $pfos = $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'];
+            $operatingsystem = current($pfOperatingSystem->find(""
+                    . "`operatingsystemarchitectures_id`='".$pfos['operatingsystemarchitectures_id']."'"
+                    . " AND `plugin_fusioninventory_computeroskernelnames_id`='".$pfos['plugin_fusioninventory_computeroskernelnames_id']."'"
+                    . " AND `plugin_fusioninventory_computeroskernelversions_id`='".$pfos['plugin_fusioninventory_computeroskernelversions_id']."'"
+                    . " AND `operatingsystems_id`='".$pfos['operatingsystems_id']."'"
+                    . " AND `operatingsystemversions_id`='".$pfos['operatingsystemversions_id']."'"
+                    . " AND `operatingsystemservicepacks_id`='".$pfos['operatingsystemservicepacks_id']."'"
+                    . " AND `plugin_fusioninventory_computeroperatingsystemeditions_id`='".$pfos['plugin_fusioninventory_computeroperatingsystemeditions_id']."'", "", "1"));
+            if (!$operatingsystem) {
+               $input_os = array(
+                   'operatingsystemarchitectures_id' => $pfos['operatingsystemarchitectures_id'],
+                   'plugin_fusioninventory_computeroskernelnames_id' => $pfos['plugin_fusioninventory_computeroskernelnames_id'],
+                   'plugin_fusioninventory_computeroskernelversions_id' => $pfos['plugin_fusioninventory_computeroskernelversions_id'],
+                   'operatingsystems_id' => $pfos['operatingsystems_id'],
+                   'operatingsystemversions_id' => $pfos['operatingsystemversions_id'],
+                   'operatingsystemservicepacks_id' => $pfos['operatingsystemservicepacks_id'],
+                   'plugin_fusioninventory_computeroperatingsystemeditions_id' => $pfos['plugin_fusioninventory_computeroperatingsystemeditions_id']
+               );
+               $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] =
+                       $pfOperatingSystem->add($input_os);
+            } else {
+               $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = $operatingsystem['id'];
+            }
+
+            //populate core data
+            $a_computerinventory['Computer']['operatingsystems_id'] = $pfos['operatingsystems_id'];
+            $a_computerinventory['Computer']['operatingsystemversions_id'] = $pfos['operatingsystemversions_id'];
+            $a_computerinventory['Computer']['operatingsystemservicepacks_id'] = $pfos['operatingsystemservicepacks_id'];
+            $a_computerinventory['Computer']['operatingsystemarchitectures_id'] = $pfos['operatingsystemarchitectures_id'];
+            if ($pfos['plugin_fusioninventory_computeroskernelversions_id'] != '') {
+               $pfKernelVersion = new PluginFusioninventoryComputerOSKernelVersion();
+               $pfKernelVersion->getFromDB($pfos['plugin_fusioninventory_computeroskernelversions_id']);
+               $a_computerinventory['Computer']['os_kernel_version'] = $pfKernelVersion->fields['name'];
+            }
+         }
+
       // * Computer
          $db_computer = $computer->fields;
          $computerName = $a_computerinventory['Computer']['name'];
@@ -172,34 +212,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $data[$key] = Toolbox::addslashes_deep($value);
                }
                $db_computer = $data;
-            }
-         }
-         // Manage operating system
-         if (isset($a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'])) {
-            $pfOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
-            $pfos = $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'];
-            $operatingsystem = current($pfOperatingSystem->find(""
-                    . "`operatingsystemarchitectures_id`='".$pfos['operatingsystemarchitectures_id']."'"
-                    . " AND `plugin_fusioninventory_computeroskernelnames_id`='".$pfos['plugin_fusioninventory_computeroskernelnames_id']."'"
-                    . " AND `plugin_fusioninventory_computeroskernelversions_id`='".$pfos['plugin_fusioninventory_computeroskernelversions_id']."'"
-                    . " AND `operatingsystems_id`='".$pfos['operatingsystems_id']."'"
-                    . " AND `operatingsystemversions_id`='".$pfos['operatingsystemversions_id']."'"
-                    . " AND `operatingsystemservicepacks_id`='".$pfos['operatingsystemservicepacks_id']."'"
-                    . " AND `plugin_fusioninventory_computeroperatingsystemeditions_id`='".$pfos['plugin_fusioninventory_computeroperatingsystemeditions_id']."'", "", "1"));
-            if (!$operatingsystem) {
-               $input_os = array(
-                   'operatingsystemarchitectures_id' => $pfos['operatingsystemarchitectures_id'],
-                   'plugin_fusioninventory_computeroskernelnames_id' => $pfos['plugin_fusioninventory_computeroskernelnames_id'],
-                   'plugin_fusioninventory_computeroskernelversions_id' => $pfos['plugin_fusioninventory_computeroskernelversions_id'],
-                   'operatingsystems_id' => $pfos['operatingsystems_id'],
-                   'operatingsystemversions_id' => $pfos['operatingsystemversions_id'],
-                   'operatingsystemservicepacks_id' => $pfos['operatingsystemservicepacks_id'],
-                   'plugin_fusioninventory_computeroperatingsystemeditions_id' => $pfos['plugin_fusioninventory_computeroperatingsystemeditions_id']
-               );
-               $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] =
-                       $pfOperatingSystem->add($input_os);
-            } else {
-               $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = $operatingsystem['id'];
             }
          }
 
