@@ -785,3 +785,8 @@ table.runs td.comment {
    background-repeat: no-repeat; 
    background-position: right;
 }
+
+.copyleft {
+  display:inline-block;
+  transform: rotate(180deg);
+}
