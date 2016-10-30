@@ -285,6 +285,7 @@ function plugin_init_fusioninventory() {
             "lib/expanding/expanding".($debug_mode?"":".min").".js"
          );
       }
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = 'js/footer.js';
       if (script_endswith("timeslot.form.php")) {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/timeslot".($debug_mode?"":".min").".js";
       }
@@ -389,10 +390,6 @@ function plugin_init_fusioninventory() {
       }
 
       if (isset($_SESSION["glpiname"])) {
-         if (strstr(filter_input(INPUT_SERVER, "SCRIPT_NAME"), '/front/')
-              && !strstr(filter_input(INPUT_SERVER, "SCRIPT_NAME"), 'report.dynamic.php')) {
-            register_shutdown_function('plugin_fusioninventory_footer', $CFG_GLPI['root_doc']);
-         }
          $report_list = array();
          if (Session::haveRight('plugin_fusioninventory_reportprinter', READ)) {
             $report_list["front/printerlogreport.php"] = __('Printed page counter', 'fusioninventory');
