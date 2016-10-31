@@ -477,11 +477,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          switch ($criteria->fields['criteria']) {
 
             case 'model':
-               $sql_from_temp = " LEFT JOIN `glpi_".strtolower("[typename]")."models`
-                                 ON (`glpi_".strtolower("[typename]")."models`.`id` = ".
-                                     "`[typetable]`.`".strtolower("[typename]models_id")."`
-                                     AND `glpi_networkports`.`itemtype` = '[typename]') ";
-               $sql_where_temp = " AND `[typetable]`.`".strtolower("[typename]")."models_id` = '".
+               $sql_from_temp = " LEFT JOIN `glpi_[typenamefortable]models`
+                                 ON (`glpi_[typenamefortable]models`.`id` = ".
+                                     "`[typetable]`.`[typenamefortable]models_id`) ";
+               $sql_where_temp = " AND `[typetable]`.`[typenamefortable]models_id` = '".
                                     $input["model"]."'";
 
                $sql_from .= $sql_from_temp;
@@ -626,6 +625,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
+            $sql_glpi = str_replace("[typenamefortable]", strtolower($itemtype), $sql_glpi);
 
             PluginFusioninventoryToolbox::logIfExtradebug(
                "pluginFusioninventory-rules",
