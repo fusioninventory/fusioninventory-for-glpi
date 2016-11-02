@@ -56,15 +56,43 @@ class RuleImportTest extends Common_TestCase {
          SET `is_active`='0'
          WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
 
+      $rule = new Rule();
+      // Add a rule test check model
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Printer model';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 198;
+      $rule_id = $rule->add($input);
+
+         // Add criteria
+         $rulecriteria = new RuleCriteria();
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "model";
+         $input['pattern']= '1';
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction();
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+
       // Add a rule to ignore import
       // Create rule for import into unknown devices
-      $rule = new Rule();
       $input = array();
       $input['is_active']=1;
       $input['name']='Import pinter';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 198;
+      $input['ranking'] = 199;
       $rule_id = $rule->add($input);
 
          // Add criteria
@@ -113,7 +141,7 @@ class RuleImportTest extends Common_TestCase {
       $input['name']='Import pinter';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = 199;
+      $input['ranking'] = 200;
       $rule_id = $rule->add($input);
 
          // Add criteria

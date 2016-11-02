@@ -100,7 +100,7 @@ class RuleLocationTest extends Common_TestCase {
 
       $a_references = array(
          'locations_id' => 1,
-         '_ruleid'      => 50
+         '_ruleid'      => $rules_id
       );
 
       $this->assertEquals($a_references, $loc, 'Location result assign_result');
@@ -159,7 +159,7 @@ class RuleLocationTest extends Common_TestCase {
 
       $a_references = array(
          'locations_id' => 1,
-         '_ruleid'      => 51
+         '_ruleid'      => $rules_id
       );
 
       $this->assertEquals($a_references, $loc, 'Location result regexp_result');
