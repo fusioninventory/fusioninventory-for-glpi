@@ -422,8 +422,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $complex_criterias = array();
       $sql_where_computer= '';
       $sql_where_domain  = '';
+      $sql_where_model   = '';
       $sql_from_computer = '';
       $sql_from_domain   = '';
+      $sql_from_model    = '';
       $continue          = TRUE;
       $entityRestrict    = FALSE;
       $global_criteria   = array('model',
@@ -550,14 +552,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          switch ($criteria->fields['criteria']) {
 
             case 'model':
-               $sql_from_temp = " LEFT JOIN `glpi_[typenamefortable]models`
+               $sql_from_model = " LEFT JOIN `glpi_[typenamefortable]models`
                                  ON (`glpi_[typenamefortable]models`.`id` = ".
                                      "`[typetable]`.`[typenamefortable]models_id`) ";
-               $sql_where_temp = " AND `[typetable]`.`[typenamefortable]models_id` = '".
+               $sql_where_model = " AND `[typetable]`.`[typenamefortable]models_id` = '".
                                     $input["model"]."'";
-
-               $sql_from .= $sql_from_temp;
-               $sql_where  .= $sql_where_temp;
                break;
 
             case 'mac':
@@ -675,6 +674,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $sql_where_temp .= $sql_where_domain;
          }
 
+         if ($itemtype != 'PluginFusioninventoryUnmanaged') {
+            $sql_from_temp .= $sql_from_model;
+            $sql_where_temp .= $sql_where_model;
+         }
+
          if ($entityRestrict) {
             if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
                $sql_where_temp .= " AND `[typetable]`.`entities_id`='".
@@ -698,7 +702,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
-            $sql_glpi = str_replace("[typenamefortable]", strtolower($itemtype), $sql_glpi);
+               $sql_glpi = str_replace("[typenamefortable]", strtolower($itemtype), $sql_glpi);
 
             PluginFusioninventoryToolbox::logIfExtradebug(
                "pluginFusioninventory-rules",
