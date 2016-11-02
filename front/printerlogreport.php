@@ -77,7 +77,7 @@ if (!isset($_SESSION['glpi_plugin_fusioninventory_date_end'])) {
 
 displaySearchForm();
 
-$_GET['target']="printer_counter.php";
+$_GET['target']="printerlogreport.php";
 
 Search::show('PluginFusioninventoryPrinterLogReport');
 
