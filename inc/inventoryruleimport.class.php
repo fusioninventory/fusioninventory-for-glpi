@@ -514,7 +514,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $itemtypeselected[] = $input['itemtype'];
       } else {
          foreach ($CFG_GLPI["state_types"] as $itemtype) {
-            if (class_exists($itemtype)) {
+            if (class_exists($itemtype) && $itemtype != 'SoftwareLicense') {
                $itemtypeselected[] = $itemtype;
             }
          }
