@@ -1524,11 +1524,10 @@ class PluginFusioninventoryFormatconvert {
          'inventory' => $a_inventory,
          'source'    => $array
       );
-      $plugin_values = Plugin::doHook(
+      $plugin_values = Plugin::doHookFunction(
          "fusioninventory_addinventoryinfos",
          $plugin_params
       );
-
       if (is_array($plugin_values) && $plugin_values !== $plugin_params) {
          $a_inventory = array_merge($a_inventory, $plugin_values);
       }
