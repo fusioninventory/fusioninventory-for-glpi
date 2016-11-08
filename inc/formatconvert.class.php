@@ -1524,7 +1524,7 @@ class PluginFusioninventoryFormatconvert {
          'inventory' => $a_inventory,
          'source'    => $array
       );
-      $plugin_values = Plugin::doHook(
+      $plugin_values = Plugin::doHookFunction(
          "fusioninventory_addinventoryinfos",
          $plugin_params
       );
