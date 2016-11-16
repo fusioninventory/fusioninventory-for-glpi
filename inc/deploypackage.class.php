@@ -1038,7 +1038,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if ($item->getType() == __CLASS__) {
          switch($tabnum) {
 
-            case 2 :
+            case 1:
                $item->showVisibility();
                return TRUE;
          }
