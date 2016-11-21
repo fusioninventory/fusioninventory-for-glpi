@@ -525,27 +525,35 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return array
     */
    function run($taskjobstate, $agent) {
+      global $DB;
+
       $output = array();
 
       $this->getFromDB($taskjobstate->fields['items_id']);
+      $sql_where = "plugin_fusioninventory_collects_id =".$this->fields['id'];
 
       switch ($this->fields['type']) {
 
          case 'registry':
             $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-            $reg_db = $pfCollect_Registry->find("`plugin_fusioninventory_collects_id`='".$this->fields['id']."'");
+            $reg_db = $pfCollect_Registry->find($sql_where);
             foreach ($reg_db as $reg) {
                $output[] = array(
                    'function' => 'getFromRegistry',
                    'path'     => $reg['hive'].$reg['path'].$reg['key'],
                    'uuid'     => $taskjobstate->fields['uniqid'],
-                   '_sid'     => $reg['id']);
+                   '_sid'     => $reg['id']
+               );
+               //clean old registries results
+               $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_registries_contents`
+                         WHERE `plugin_fusioninventory_collects_registries_id`='".$reg['id']."'";
+               $DB->query($query);
             }
             break;
 
          case 'wmi':
             $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-            $wmi_db = $pfCollect_Wmi->find("`plugin_fusioninventory_collects_id`='".$this->fields['id']."'");
+            $wmi_db = $pfCollect_Wmi->find($sql_where);
             foreach ($wmi_db as $wmi) {
                $datawmi = array(
                    'function'   => 'getFromWMI',
@@ -557,19 +565,31 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                   $datawmi['moniker'] = $wmi['moniker'];
                }
                $output[] = $datawmi;
+
+               //clean old wmi results
+               $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
+                         WHERE `plugin_fusioninventory_collects_wmis_id`='".$wmi['id']."'";
+               $DB->query($query);
             }
+
             break;
 
          case 'file':
             $pfCollect_File = new PluginFusioninventoryCollect_File();
-            $files_db = $pfCollect_File->find("`plugin_fusioninventory_collects_id`='".$this->fields['id']."'");
+            $files_db = $pfCollect_File->find($sql_where);
             foreach ($files_db as $files) {
-               $datafile = array();
-               $datafile['function'] = 'findFile';
-               $datafile['dir'] = $files['dir'];
-               $datafile['limit'] = $files['limit'];
-               $datafile['recursive'] = $files['is_recursive'];
-               $datafile['filter'] = array();
+               $datafile = array(
+                  'function'  => 'findFile',
+                  'dir'       => $files['dir'],
+                  'limit'     => $files['limit'],
+                  'recursive' => $files['is_recursive'],
+                  'filter'    => array(
+                     'is_file' => $files['filter_is_file'],
+                     'is_dir'  => $files['filter_is_dir']
+                  ),
+                  'uuid'      => $taskjobstate->fields['uniqid'],
+                  '_sid'       => $files['id']
+               );
                if ($files['filter_regex'] != '') {
                   $datafile['filter']['regex'] = $files['filter_regex'];
                }
@@ -592,11 +612,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                if ($files['filter_iname'] != '') {
                   $datafile['filter']['iname'] = $files['filter_iname'];
                }
-               $datafile['filter']['is_file'] = $files['filter_is_file'];
-               $datafile['filter']['is_dir'] = $files['filter_is_dir'];
-               $datafile['uuid'] = $taskjobstate->fields['uniqid'];
-               $datafile['_sid'] = $files['id'];
                $output[] = $datafile;
+
+               //clean old files
+               $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_files_contents`
+                         WHERE `plugin_fusioninventory_collects_files_id`='".$files['id']."'";
+               $DB->query($query);
             }
             break;
 

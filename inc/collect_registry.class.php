@@ -146,8 +146,8 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       echo "<tr>
       <th>".__("Name")."</th>
       <th>".__("Hive", "fusioninventory")."</th>
-      <th>".__("Path/key", "fusioninventory")."</th>
-      <th>".__("Value", "fusioninventory")."</th>
+      <th>".__("Path", "fusioninventory")."</th>
+      <th>".__("Key", "fusioninventory")."</th>
       <th>".__("Action")."</th>
       </tr>";
       foreach ($content as $data) {
