@@ -47,7 +47,8 @@
  */
 
 //This call is to check that the ESX inventory service is up and running
-if (!empty(filter_input(INPUT_GET, "status"))) {
+$fi_status =filter_input(INPUT_GET, "status");
+if (!empty($fi_status)) {
    return 'ok';
 }
 ob_start();
@@ -56,7 +57,8 @@ ob_end_clean();
 
 $response = FALSE;
 //Agent communication using REST protocol
-if (!empty(filter_input(INPUT_GET, "machineid"))) {
+$fi_machineid = filter_input(INPUT_GET, "machineid");
+if (!empty($fi_machineid)) {
 
    switch (filter_input(INPUT_GET, "action")) {
 
