@@ -190,7 +190,7 @@ class PluginFusioninventoryDeployAction {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'action_entries[]'));
+            Html::showCheckbox(array('name' => 'action_entries['.$i.']'));
             echo "</td>";
          }
          $keys = array_keys($action);
@@ -614,8 +614,7 @@ class PluginFusioninventoryDeployAction {
       }
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
-
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
       //remove selected checks
       foreach ($params['action_entries'] as $index => $checked) {
          if ($checked >= "1" || $checked == "on") {
@@ -628,7 +627,7 @@ class PluginFusioninventoryDeployAction {
       $datas['jobs']['actions'] = array_values($datas['jobs']['actions']);
 
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
    }
 
 
