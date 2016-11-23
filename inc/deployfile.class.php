@@ -218,7 +218,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'file_entries[]', 'value' => 0));
+            Html::showCheckbox(array('name' => 'file_entries['.$i.']', 'value' => 0));
             echo "</td>";
          }
          echo "<td class='filename'>";
