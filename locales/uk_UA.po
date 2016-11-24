@@ -1,1492 +1,1575 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Andriy Smilyanets <smile.andriy@gmail.com>, 2015
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GLPI Project - plugin FusionInventory\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 13:25+0200\n"
-"PO-Revision-Date: 2016-05-20 11:27+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/ddurieux/FusionInventory/language/uk_UA/)\n"
+"POT-Creation-Date: 2016-11-24 09:25+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: David Durieux <d.durieux@siprossii.com>, 2016\n"
+"Language-Team: Ukrainian (Ukraine) (https://www.transifex.com/ddurieux/teams/797/uk_UA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: uk_UA\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: hook.php:51 hook.php:231 hook.php:238 hook.php:257 hook.php:264
-#: hook.php:274 hook.php:284 hook.php:305 hook.php:314 hook.php:322
-#: inc/agent.class.php:192 inc/task.view.class.php:59
+#: hook.php:61 hook.php:254 hook.php:261 hook.php:283 hook.php:290
+#: hook.php:296 hook.php:306 hook.php:323 hook.php:332 hook.php:340
+#: inc/agent.class.php:228 inc/task.view.class.php:81
 msgid "FusInv"
 msgstr "FusInv"
 
-#: hook.php:52 hook.php:285 hook.php:315
-#: inc/inventorycomputercomputer.class.php:96
-#: inc/inventorycomputercomputer.class.php:231
-#: inc/networkequipment.class.php:563 inc/networkequipment.class.php:1144
-#: inc/printer.class.php:156 inc/printer.class.php:210
-#: inc/printer.class.php:256
+#: hook.php:62 hook.php:307 hook.php:333
+#: inc/inventorycomputercomputer.class.php:133
+#: inc/inventorycomputercomputer.class.php:265
+#: inc/networkequipment.class.php:625 inc/networkequipment.class.php:1221
+#: inc/printer.class.php:199 inc/printer.class.php:260
+#: inc/printer.class.php:311
 msgid "Last inventory"
 msgstr "Остання інвентаризація"
 
-#: hook.php:59
-msgid "Antivirus name"
-msgstr "Назва антивірусу"
-
-#: hook.php:68
-msgid "Antivirus version"
-msgstr "Версія антивірусу"
-
-#: hook.php:78
-msgid "Antivirus enabled"
-msgstr "Антивірус увімкнено"
-
-#: hook.php:88
-msgid "Antivirus up to date"
-msgstr "Антивірус є найновішим"
-
-#: hook.php:97 hook.php:106
+#: hook.php:69 hook.php:78
 msgid "BIOS"
 msgstr "BIOS"
 
-#: hook.php:121 inc/inventorycomputercomputer.class.php:157
+#: hook.php:93 inc/inventorycomputercomputer.class.php:184
 msgid "Owner"
 msgstr "Власник"
 
-#: hook.php:126 inc/inventorycomputercomputer.class.php:164
+#: hook.php:98 inc/inventorycomputercomputer.class.php:191
 msgid "Company"
 msgstr "Компанія"
 
-#: hook.php:132 inc/agent.class.php:131 inc/agent.class.php:223
-#: inc/agent.class.php:434 inc/agent.class.php:1201
+#: hook.php:104 inc/agent.class.php:153 inc/agent.class.php:273
+#: inc/agent.class.php:487 inc/agent.class.php:1168
 msgid "Useragent"
 msgstr "Useragent"
 
-#: hook.php:139 inc/agent.class.php:137 inc/agent.class.php:467
-#: inc/agent.class.php:1206 inc/config.class.php:533 inc/config.class.php:551
-#: inc/config.class.php:585 inc/inventoryruleentity.class.php:129
-#: inc/inventoryruleimport.class.php:143
-#: inc/inventoryrulelocation.class.php:134
+#: hook.php:111 inc/agent.class.php:159 inc/agent.class.php:519
+#: inc/agent.class.php:1173 inc/config.class.php:547 inc/config.class.php:565
+#: inc/config.class.php:599 inc/inventoryruleentity.class.php:180
+#: inc/inventoryruleimport.class.php:179
+#: inc/inventoryrulelocation.class.php:182
 msgid "FusionInventory tag"
 msgstr "Тег FusionInventory"
 
-#: hook.php:143 inc/computerarch.class.php:51
-#: inc/inventorycomputercomputer.class.php:139
-#: inc/ruledictionnarycomputerarch.class.php:65
-#: inc/ruledictionnarycomputerarch.class.php:77
-msgid "Architecture"
-msgstr "Архітектура"
-
-#: hook.php:165 hook.php:172 hook.php:179 hook.php:186 hook.php:193
-#: hook.php:200 hook.php:207 inc/agent.class.php:167 inc/agent.class.php:246
-#: inc/agentmodule.class.php:110 inc/agentmodule.class.php:221
-#: inc/agentmodule.class.php:223 inc/ignoredimportdevice.class.php:119
-#: inc/rulematchedlog.class.php:171 inc/rulematchedlog.class.php:241
+#: hook.php:129 hook.php:136 hook.php:143 hook.php:150 hook.php:157
+#: hook.php:164 hook.php:171 inc/agent.class.php:189 inc/agent.class.php:299
+#: inc/agentmodule.class.php:121 inc/agentmodule.class.php:226
+#: inc/agentmodule.class.php:228 inc/ignoredimportdevice.class.php:150
+#: inc/rulematchedlog.class.php:222 inc/rulematchedlog.class.php:296
 msgid "Module"
 msgstr "Модуль"
 
-#: hook.php:165 inc/menu.class.php:460
+#: hook.php:129 inc/menu.class.php:509
 msgid "Deploy"
 msgstr "Розгортання"
 
-#: hook.php:172
+#: hook.php:136
 msgid "WakeOnLan"
 msgstr "WakeOnLan"
 
-#: hook.php:179
+#: hook.php:143
 msgid "Local inventory"
 msgstr "Локальна інвентаризація"
 
-#: hook.php:186
+#: hook.php:150
 msgid "ESX/VMWare"
 msgstr "ESX/VMWare"
 
-#: hook.php:193
+#: hook.php:157
 msgid "Network inventory"
 msgstr "Мережева інвентаризація"
 
-#: hook.php:200 inc/agent.class.php:144 inc/agent.class.php:425
-#: inc/agent.class.php:442 inc/config.class.php:666 inc/config.class.php:688
-#: inc/staticmisc.class.php:86
+#: hook.php:164 inc/agent.class.php:166 inc/agent.class.php:478
+#: inc/agent.class.php:495 inc/config.class.php:682 inc/config.class.php:704
+#: inc/staticmisc.class.php:94
 msgid "Network discovery"
 msgstr "Мережеве виявлення"
 
-#: hook.php:207
+#: hook.php:171
 msgid "Collect"
 msgstr "Зібрати"
 
-#: hook.php:211 inc/computer.class.php:57 inc/deploygroup.class.php:73
+#: hook.php:175 inc/computer.class.php:75 inc/deploygroup.class.php:99
 msgid "Static group"
 msgstr "Статична група"
 
-#: hook.php:247
+#: hook.php:209 inc/computeroperatingsystem.class.php:116
+msgid "Kernel name"
+msgstr ""
+
+#: hook.php:219 inc/computeroperatingsystem.class.php:119
+msgid "Kernel version"
+msgstr ""
+
+#: hook.php:239 hook.php:2421 inc/computeroperatingsystem.class.php:131
+#: inc/computeroperatingsystemedition.class.php:100
+msgid "Operating system edition"
+msgid_plural "Operating system editions"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: hook.php:273
 msgid "Agent base URL"
 msgstr "Базовий URL агента"
 
-#: hook.php:275 hook.php:306 inc/menu.class.php:388
-#: inc/networkequipment.class.php:482 inc/printer.class.php:168
-#: inc/profile.class.php:255 inc/unmanaged.class.php:171
-#: inc/unmanaged.class.php:422
+#: hook.php:297 hook.php:324 inc/menu.class.php:437
+#: inc/networkequipment.class.php:544 inc/printer.class.php:211
+#: inc/profile.class.php:360 inc/unmanaged.class.php:211
+#: inc/unmanaged.class.php:472
 msgid "SNMP authentication"
 msgstr "Аутентифікація SNMP"
 
-#: hook.php:292 hook.php:330 inc/networkequipment.class.php:470
-#: inc/printer.class.php:147 inc/unmanaged.class.php:165
-#: inc/unmanaged.class.php:412
+#: hook.php:314 hook.php:348 inc/networkequipment.class.php:532
+#: inc/printer.class.php:190 inc/unmanaged.class.php:205
+#: inc/unmanaged.class.php:462
 msgid "Sysdescr"
 msgstr "Опис системи"
 
-#: hook.php:323 inc/networkequipment.class.php:492
+#: hook.php:341 inc/networkequipment.class.php:554
 msgid "CPU usage (in %)"
 msgstr "Використання CPU (%)"
 
-#: hook.php:893 hook.php:909 inc/lock.class.php:180 inc/lock.class.php:347
-#: inc/profile.class.php:276
+#: hook.php:939 hook.php:955 inc/lock.class.php:215 inc/lock.class.php:386
+#: inc/profile.class.php:381
 msgid "Lock"
 msgid_plural "Locks"
 msgstr[0] "Блокування"
 msgstr[1] "Блокування"
 msgstr[2] "Блокування"
 
-#: hook.php:897 inc/deploygroup.class.php:94 inc/iprange.class.php:314
+#: hook.php:943 inc/deploygroup.class.php:144 inc/iprange.class.php:371
 msgid "Target a task"
 msgstr "Мета завдання"
 
-#: hook.php:901
+#: hook.php:947
 msgid "Add to static group"
 msgstr "Додати статичну групу"
 
-#: hook.php:913 inc/unmanaged.class.php:251
+#: hook.php:959 inc/unmanaged.class.php:300
 msgid "Assign SNMP authentication"
 msgstr "Призначити аутентифікацію SNMP"
 
-#: index.php:55 front/agent.form.php:79 front/agent.php:45
-#: front/agentmodule.form.php:45 front/collect.php:45
-#: front/collectrule.form.php:45 front/collectrule.php:46
-#: front/configsecurity.form.php:50 front/configsecurity.php:45
-#: front/documentation.php:45 front/ignoredimportdevice.php:45
-#: front/inventorycomputerblacklist.form.php:45
-#: front/inventorycomputerblacklist.php:45
-#: front/inventorycomputerimportxml.php:45
-#: front/inventoryruleentity.form.php:45 front/inventoryruleentity.php:46
-#: front/inventoryruleimport.form.php:45 front/inventoryruleimport.php:45
-#: front/inventoryrulelocation.form.php:45 front/inventoryrulelocation.php:46
-#: front/iprange.form.php:47 front/iprange.php:45 front/menu.php:46
-#: front/menu_inventory.php:46 front/menu_snmpinventory.php:46
-#: front/printerlogreport.php:48 front/ruledictionnarycomputerarch.form.php:44
-#: front/ruledictionnarycomputerarch.php:44 front/statediscovery.php:45
-#: front/stateinventory.php:45 front/task.form.php:47 front/task.php:46
-#: front/taskjob.form.php:47 front/taskjob.php:45 front/taskjoblog.php:45
-#: front/timeslot.php:48 front/unmanaged.form.php:48 front/unmanaged.php:45
-#: inc/inventorycomputercomputer.class.php:91
-#: inc/networkequipment.class.php:558 inc/printer.class.php:251
-#: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
-#: report/ports_date_connections.php:49 report/switch_ports.history.php:50
+#: hook.php:2346
+msgid "FusionInventory operating system"
+msgstr ""
+
+#: hook.php:2350 inc/computerarch.class.php:65
+#: inc/computeroperatingsystem.class.php:113
+#: inc/ruledictionnarycomputerarch.class.php:83
+#: inc/ruledictionnarycomputerarch.class.php:98
+msgid "Architecture"
+msgstr "Архітектура"
+
+#: hook.php:2385 inc/computeroskernelname.class.php:100
+msgid "Operating system kernel name"
+msgstr ""
+
+#: hook.php:2397 inc/computeroskernelversion.class.php:101
+msgid "Operating system kernel version"
+msgstr ""
+
+#: index.php:63 front/agent.form.php:83 front/agent.php:49
+#: front/agentmodule.form.php:49 front/collect.php:49
+#: front/collectrule.form.php:49 front/collectrule.php:50
+#: front/configsecurity.form.php:54 front/configsecurity.php:49
+#: front/documentation.php:49 front/ignoredimportdevice.php:49
+#: front/inventorycomputerblacklist.form.php:49
+#: front/inventorycomputerblacklist.php:49
+#: front/inventorycomputerimportxml.php:49
+#: front/inventoryruleentity.form.php:49 front/inventoryruleentity.php:50
+#: front/inventoryruleimport.form.php:49 front/inventoryruleimport.php:49
+#: front/inventoryrulelocation.form.php:50 front/inventoryrulelocation.php:51
+#: front/iprange.form.php:51 front/iprange.php:49 front/menu.php:50
+#: front/menu_inventory.php:50 front/menu_snmpinventory.php:50
+#: front/printerlogreport.php:52 front/ruledictionnarycomputerarch.form.php:49
+#: front/ruledictionnarycomputerarch.php:49 front/statediscovery.php:49
+#: front/stateinventory.php:49 front/task.form.php:51 front/task.php:50
+#: front/taskjob.form.php:51 front/taskjob.php:49 front/taskjoblog.php:49
+#: front/timeslot.php:52 front/unmanaged.form.php:52 front/unmanaged.php:49
+#: inc/inventorycomputercomputer.class.php:128
+#: inc/networkequipment.class.php:620 inc/printer.class.php:306
+#: report/computer_last_inventory.php:53 report/not_queried_recently.php:55
+#: report/ports_date_connections.php:54 report/switch_ports.history.php:54
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: setup.php:375 inc/printerlog.class.php:476
+#: setup.php:395 inc/printerlog.class.php:524
 msgid "Printed page counter"
 msgstr "Лічильник надрукованих сторінок"
 
-#: setup.php:379
+#: setup.php:399
 msgid "Switch ports history"
 msgstr ""
 
-#: setup.php:381
+#: setup.php:401
 msgid "Unused switch ports"
 msgstr ""
 
-#: setup.php:383
+#: setup.php:403
 msgid "Number of days since last inventory"
 msgstr "Кількість днів з останньої інвентаризації"
 
-#: setup.php:387 report/computer_last_inventory.php:67
+#: setup.php:407 report/computer_last_inventory.php:69
 msgid "Computers not inventoried since xx days"
 msgstr "Інвентаризація комп’ютерів не проводилась xx днів"
 
-#: setup.php:499
-msgid "Your GLPI version not compatible, require >= 0.85"
+#: setup.php:517
+msgid "Your GLPI version not compatible, require >= 9.1.1 and < 9.2"
 msgstr ""
 
-#: setup.php:504
+#: setup.php:522
 msgid "fileinfo extension (PHP) is required..."
 msgstr "В PHP не вистачає розширення fileinfo ..."
 
-#: setup.php:517
+#: setup.php:535
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Будь ласка, видаліть каталог %s в glpi/plugins/"
 
-#: front/agent.form.php:53
+#: front/agent.form.php:57
 msgid "The agent is running"
 msgstr "Агент працює"
 
-#: front/agent.form.php:56 inc/agent.class.php:796
+#: front/agent.form.php:60 inc/agent.class.php:825
 msgid "Impossible to communicate with agent!"
 msgstr "Неможливо зв’язатись з агентом"
 
-#: front/collect.form.php:45
+#: front/collect.form.php:49
 msgid "Collect management"
 msgstr "Керування збором даних"
 
-#: front/config.form.php:47 front/configlogfield.form.php:47
+#: front/config.form.php:52 front/configlogfield.form.php:51
 msgid "Features"
 msgstr "Функції"
 
-#: front/deploygroup.php:46 inc/deploygroup.class.php:64
-#: inc/deploytaskjob.class.php:170 inc/menu.class.php:233
-#: inc/profile.class.php:306
+#: front/deploygroup.php:51 inc/deploygroup.class.php:116
+#: inc/deploytaskjob.class.php:212 inc/menu.class.php:282
+#: inc/profile.class.php:416
 msgid "Groups of computers"
 msgstr "Групи комп’ютерів"
 
-#: front/inventorycomputerimportxml.php:68
+#: front/inventorycomputerimportxml.php:73
 msgid "Can't read zip file!"
 msgstr "Не можу прочитати zip файл!"
 
-#: front/inventorycomputerimportxml.php:93
+#: front/inventorycomputerimportxml.php:101
 msgid "No file to import!"
 msgstr "Немає файлу для імпорту!"
 
-#: front/inventoryruleimport.php:61
+#: front/inventoryruleimport.php:65
 msgid "Reset import rules (define only default rules)"
 msgstr "Скинути правила імпорту (визначити лише правила по замовченню)"
 
-#: front/popup.php:64
+#: front/popup.php:68
 msgid "Cache informations"
 msgstr "Кеш інформації"
 
-#: front/popup.php:69
+#: front/popup.php:73
 msgid "Network ports display options"
 msgstr "Параметри зображення мережевих портів"
 
-#: front/printerlogreport.php:92 inc/statediscovery.class.php:141
-#: inc/stateinventory.class.php:94
+#: front/printerlogreport.php:101 inc/statediscovery.class.php:175
+#: inc/stateinventory.class.php:119
 msgid "Starting date"
 msgstr "Дата початку"
 
-#: front/printerlogreport.php:100 inc/statediscovery.class.php:142
-#: inc/stateinventory.class.php:95
+#: front/printerlogreport.php:109 inc/statediscovery.class.php:176
+#: inc/stateinventory.class.php:120
 msgid "Ending date"
 msgstr "Дата закінчення"
 
-#: front/rule.common.php:176
+#: front/rule.common.php:181
 msgid "Rules applied"
 msgstr "Застосовані правила"
 
-#: front/rule.common.php:187
+#: front/rule.common.php:192
 msgid "Local rules"
 msgstr "Локальні правила"
 
-#: front/unmanaged.form.php:82
+#: front/unmanaged.form.php:86
 msgid "restoration of the item"
 msgstr "відновлення елементу"
 
-#: front/unmanaged.form.php:103 inc/unmanaged.class.php:291
+#: front/unmanaged.form.php:107 inc/unmanaged.class.php:344
 msgid "Number of imported devices"
 msgstr "Кількість імпортованих пристроїв"
 
-#: front/unmanaged.form.php:105 inc/unmanaged.class.php:292
+#: front/unmanaged.form.php:109 inc/unmanaged.class.php:345
 msgid "Number of devices not imported because type not defined"
 msgstr "Кількість пристроїв, що не імпортовані через невизначеність типу"
 
-#: inc/agent.class.php:60 inc/agent.class.php:69 inc/agent.class.php:771
-#: inc/agent.class.php:1196 inc/ignoredimportdevice.class.php:59
-#: inc/rulematchedlog.class.php:167 inc/statediscovery.class.php:139
-#: inc/stateinventory.class.php:92 inc/taskjoblog.class.php:198
-#: inc/taskjoblog.class.php:272 inc/taskjoblog.class.php:339
-#: inc/taskjoblog.class.php:547 inc/taskjobstate.class.php:225
+#: inc/agent.class.php:77 inc/agent.class.php:91 inc/agent.class.php:800
+#: inc/agent.class.php:1163 inc/ignoredimportdevice.class.php:89
+#: inc/rulematchedlog.class.php:218 inc/statediscovery.class.php:173
+#: inc/stateinventory.class.php:117 inc/taskjoblog.class.php:263
+#: inc/taskjoblog.class.php:454 inc/taskjobstate.class.php:292
 msgid "Agent"
 msgstr "Агент"
 
-#: inc/agent.class.php:91 inc/agent.class.php:224 inc/agent.class.php:450
+#: inc/agent.class.php:113 inc/agent.class.php:274 inc/agent.class.php:503
 msgid "Last contact"
 msgstr "Останній контакт"
 
-#: inc/agent.class.php:97 inc/agent.class.php:410
+#: inc/agent.class.php:119 inc/agent.class.php:463
 msgid "locked"
 msgstr "заблоковано"
 
-#: inc/agent.class.php:103 inc/agent.class.php:383
+#: inc/agent.class.php:125 inc/agent.class.php:436
 msgid "Device_id"
 msgstr "Device_id"
 
-#: inc/agent.class.php:109 inc/agent.class.php:390
+#: inc/agent.class.php:131 inc/agent.class.php:443
 msgid "Computer link"
 msgstr "Посилання комп’ютера"
 
-#: inc/agent.class.php:143 inc/agent.class.php:150 inc/agent.class.php:424
-#: inc/agent.class.php:458 inc/config.class.php:665 inc/config.class.php:675
-#: inc/statediscovery.class.php:144 inc/stateinventory.class.php:98
+#: inc/agent.class.php:165 inc/agent.class.php:172 inc/agent.class.php:477
+#: inc/agent.class.php:510 inc/config.class.php:681 inc/config.class.php:691
+#: inc/statediscovery.class.php:178 inc/stateinventory.class.php:123
 msgid "Threads number"
 msgstr "Кількість гілок"
 
-#: inc/agent.class.php:151 inc/agent.class.php:459 inc/agent.class.php:474
-#: inc/agentmodule.class.php:135 inc/agentmodule.class.php:247
-#: inc/config.class.php:676 inc/config.class.php:697
-#: inc/staticmisc.class.php:92
+#: inc/agent.class.php:173 inc/agent.class.php:511 inc/agent.class.php:526
+#: inc/agentmodule.class.php:142 inc/agentmodule.class.php:252
+#: inc/config.class.php:692 inc/config.class.php:713
+#: inc/staticmisc.class.php:100
 msgid "Network inventory (SNMP)"
 msgstr "Мережева інвентаризація (SNMP)"
 
-#: inc/agent.class.php:158 inc/agent.class.php:488 inc/config.class.php:327
+#: inc/agent.class.php:180 inc/agent.class.php:540 inc/config.class.php:358
 msgid "Agent port"
 msgstr "Порт агента"
 
-#: inc/agent.class.php:441 inc/agent.class.php:473 inc/config.class.php:687
-#: inc/config.class.php:696
+#: inc/agent.class.php:494 inc/agent.class.php:525 inc/config.class.php:703
+#: inc/config.class.php:712
 msgid "SNMP timeout"
 msgstr "Таймаут SNMP"
 
-#: inc/agent.class.php:489
+#: inc/agent.class.php:541
 msgid "if empty use port configured in general options"
 msgstr "якщо порожнє, використовувати порт, вказаний в загальних параметрах"
 
-#: inc/agent.class.php:765
+#: inc/agent.class.php:794
 msgid "Agent state"
 msgstr "Стан агента"
 
-#: inc/agent.class.php:825
+#: inc/agent.class.php:854
 msgid "Force inventory"
 msgstr "Форсувати інвентаризацію"
 
-#: inc/agent.class.php:1140
+#: inc/agent.class.php:1108
 msgid "Informations for agent configuration"
 msgstr "Інформація для конфігурації агента"
 
-#: inc/agent.class.php:1150
+#: inc/agent.class.php:1118
 msgid "Communication url of the server"
 msgstr "Url зв’язку з сервером"
 
-#: inc/agentmodule.class.php:62 inc/agentmodule.class.php:64
-#: inc/configuration.class.php:57
+#: inc/agentmodule.class.php:73 inc/agentmodule.class.php:75
+#: inc/configuration.class.php:77
 msgid "Agents modules"
 msgstr "Модулі агента"
 
-#: inc/agentmodule.class.php:111
+#: inc/agentmodule.class.php:122
 msgid "Activation (by default)"
 msgstr "Активація (по замовчуванню)"
 
-#: inc/agentmodule.class.php:112
+#: inc/agentmodule.class.php:123
 msgid "Exceptions"
 msgstr "Винятки"
 
-#: inc/agentmodule.class.php:140 inc/agentmodule.class.php:252
+#: inc/agentmodule.class.php:147 inc/agentmodule.class.php:257
 msgid "Package deployment"
 msgstr "Розгортання пакетів"
 
-#: inc/agentwakeup.class.php:58 inc/lock.class.php:284 inc/task.class.php:1539
-#: inc/taskjob.class.php:58 inc/taskjob.class.php:767
-#: inc/taskjoblog.class.php:171 inc/taskjobstate.class.php:224
-#: inc/unmanaged.class.php:197
+#: inc/agentwakeup.class.php:73 inc/lock.class.php:317 inc/task.class.php:1573
+#: inc/taskjob.class.php:80 inc/taskjob.class.php:793
+#: inc/taskjoblog.class.php:236 inc/taskjobstate.class.php:291
+#: inc/unmanaged.class.php:237
 msgid "Job"
 msgstr "Робота"
 
-#: inc/agentwakeup.class.php:143
+#: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
 msgstr ""
 
-#: inc/collect.class.php:52 inc/staticmisc.class.php:657
+#: inc/collect.class.php:72 inc/staticmisc.class.php:695
 msgid "Collect information"
 msgstr "Збір інформації"
 
-#: inc/collect.class.php:65
+#: inc/collect.class.php:111 inc/collect.class.php:140
 msgid "Registry"
 msgstr "Реєстр"
 
-#: inc/collect.class.php:66
+#: inc/collect.class.php:112 inc/collect.class.php:158
 msgid "WMI"
 msgstr "WMI"
 
-#: inc/collect.class.php:67 inc/collect_file.class.php:55
-#: inc/collect_file.class.php:62
+#: inc/collect.class.php:113 inc/collect.class.php:177
+#: inc/collect.class.php:192 inc/collect_file.class.php:71
+#: inc/collect_file.class.php:87
 msgid "Find file"
 msgstr "Шукати файл"
 
-#: inc/collect_file.class.php:86
-msgid "Find file associated"
-msgstr "Шукати асоційований файл"
+#: inc/collect.class.php:179 inc/collect_file_content.class.php:307
+msgid "pathfile"
+msgstr "pathfile"
 
-#: inc/collect_file.class.php:90 inc/collect_file.class.php:160
-msgid "Limit"
-msgstr "Ліміт"
-
-#: inc/collect_file.class.php:91 inc/collect_file.class.php:126
-#: inc/collect_file.class.php:246
-msgid "Folder"
-msgstr "Каталог"
-
-#: inc/collect_file.class.php:92
-msgid "Recursive"
-msgstr "Рекурсивно"
-
-#: inc/collect_file.class.php:93 inc/collect_file.class.php:194
-msgid "Regex"
-msgstr "Regex"
-
-#: inc/collect_file.class.php:94 inc/collect_file.class.php:200
-#: inc/collect_file_content.class.php:189
-#: inc/collect_file_content.class.php:227 inc/deployfile.class.php:1078
+#: inc/collect.class.php:194 inc/collect_file.class.php:133
+#: inc/collect_file.class.php:246 inc/collect_file_content.class.php:266
+#: inc/collect_file_content.class.php:308 inc/deployfile.class.php:1212
 msgid "Size"
 msgstr "Розмір"
 
-#: inc/collect_file.class.php:95 inc/collect_file.class.php:215
+#: inc/collect_file.class.php:125
+msgid "Find file associated"
+msgstr "Шукати асоційований файл"
+
+#: inc/collect_file.class.php:129 inc/collect_file.class.php:206
+msgid "Limit"
+msgstr "Ліміт"
+
+#: inc/collect_file.class.php:130 inc/collect_file.class.php:165
+#: inc/collect_file.class.php:292
+msgid "Folder"
+msgstr "Каталог"
+
+#: inc/collect_file.class.php:131
+msgid "Recursive"
+msgstr "Рекурсивно"
+
+#: inc/collect_file.class.php:132 inc/collect_file.class.php:240
+msgid "Regex"
+msgstr "Regex"
+
+#: inc/collect_file.class.php:134 inc/collect_file.class.php:261
 msgid "Checksum SHA512"
 msgstr "Сума SHA512"
 
-#: inc/collect_file.class.php:96 inc/collect_file.class.php:221
+#: inc/collect_file.class.php:135 inc/collect_file.class.php:267
 msgid "Checksum SHA2"
 msgstr "Сума SHA2"
 
-#: inc/collect_file.class.php:97
+#: inc/collect_file.class.php:136
 msgid "Name"
 msgstr "Ім’я"
 
-#: inc/collect_file.class.php:98
+#: inc/collect_file.class.php:137
 msgid "Iname"
 msgstr "Iname"
 
-#: inc/collect_file.class.php:99 inc/collect_file.class.php:241
-#: inc/deployaction.class.php:258 inc/deploycheck.class.php:235
+#: inc/collect_file.class.php:138 inc/collect_file.class.php:287
+#: inc/deployaction.class.php:293 inc/deploycheck.class.php:286
 msgid "Type"
 msgstr "Тип"
 
-#: inc/collect_file.class.php:124 inc/collect_file.class.php:245
-#: inc/deploycheck.class.php:291 inc/deploycheck.class.php:297
-#: inc/deploycheck.class.php:302 inc/deployfile.class.php:393
+#: inc/collect_file.class.php:163 inc/collect_file.class.php:291
+#: inc/deploycheck.class.php:355 inc/deploycheck.class.php:362
+#: inc/deploycheck.class.php:368 inc/deployfile.class.php:423
 msgid "File"
 msgstr "Файл"
 
-#: inc/collect_file.class.php:173
+#: inc/collect_file.class.php:219
 msgid "Filter"
 msgid_plural "Filters"
 msgstr[0] "Фільтр"
 msgstr[1] "Фільтри"
 msgstr[2] "Фільтрів"
 
-#: inc/collect_file.class.php:179
+#: inc/collect_file.class.php:225
 msgid "Base folder"
 msgstr "Базовий каталог"
 
-#: inc/collect_file.class.php:185
+#: inc/collect_file.class.php:231
 msgid "Folder recursive"
 msgstr "Каталог рекурсивно"
 
-#: inc/collect_file.class.php:204 inc/collect_file.class.php:234
+#: inc/collect_file.class.php:250 inc/collect_file.class.php:280
 msgid "Disabled"
 msgstr "Вимкнено"
 
-#: inc/collect_file.class.php:230
+#: inc/collect_file.class.php:276
 msgid "Filename"
 msgstr "Назва файлу"
 
-#: inc/collect_file.class.php:235
+#: inc/collect_file.class.php:281
 msgid "Non sentitive case"
 msgstr "Ігнорувати регістр символів"
 
-#: inc/collect_file.class.php:236
+#: inc/collect_file.class.php:282
 msgid "Sentitive case"
 msgstr "Не ігнорувати регістр символів"
 
-#: inc/collect_file_content.class.php:52 inc/collect_file_content.class.php:73
-#: inc/collect_file_content.class.php:79
+#: inc/collect_file_content.class.php:72 inc/collect_file_content.class.php:97
+#: inc/collect_file_content.class.php:103
 msgid "Find file content"
 msgstr "Шукати зміст файлу"
 
-#: inc/collect_file_content.class.php:188
+#: inc/collect_file_content.class.php:265
 msgid "Path/file"
 msgstr "Шлях/файл"
 
-#: inc/collect_file_content.class.php:226
-msgid "pathfile"
-msgstr "pathfile"
-
-#: inc/collect_registry.class.php:52 inc/collect_registry.class.php:61
+#: inc/collect_registry.class.php:71 inc/collect_registry.class.php:87
 msgid "Windows registry"
 msgstr "Реєстр Windows"
 
-#: inc/collect_registry.class.php:101
+#: inc/collect_registry.class.php:144
 msgid "Windows registry associated"
 msgstr "Пов’язаний реєстр Windows"
 
-#: inc/collect_registry.class.php:105 inc/collect_registry.class.php:147
+#: inc/collect_registry.class.php:148 inc/collect_registry.class.php:197
 msgid "Hive"
 msgstr "Hive"
 
-#: inc/collect_registry.class.php:106
+#: inc/collect_registry.class.php:149
 msgid "Path/key"
 msgstr "Шлях/ключ"
 
-#: inc/collect_registry.class.php:107
-#: inc/collect_registry_content.class.php:179
-#: inc/collect_registry_content.class.php:223
-#: inc/collect_wmi_content.class.php:181 inc/collect_wmi_content.class.php:226
-#: inc/deploycheck.class.php:298 inc/deploycheck.class.php:303
-#: inc/deploycheck.class.php:308
+#: inc/collect_registry.class.php:150
+#: inc/collect_registry_content.class.php:249
+#: inc/collect_registry_content.class.php:296
+#: inc/collect_wmi_content.class.php:240 inc/collect_wmi_content.class.php:290
+#: inc/deploycheck.class.php:363 inc/deploycheck.class.php:369
+#: inc/deploycheck.class.php:375
 msgid "Value"
 msgstr "Значення"
 
-#: inc/collect_registry.class.php:155
-#: inc/collect_registry_content.class.php:178
+#: inc/collect_registry.class.php:205
+#: inc/collect_registry_content.class.php:248
 msgid "Path"
 msgstr "Шлях"
 
-#: inc/collect_registry.class.php:161 inc/deploycheck.class.php:282
-#: inc/deploycheck.class.php:286
+#: inc/collect_registry.class.php:211 inc/deploycheck.class.php:344
+#: inc/deploycheck.class.php:349
 msgid "Key"
 msgstr "Ключ"
 
-#: inc/collect_registry_content.class.php:52
-#: inc/collect_registry_content.class.php:73
-#: inc/collect_registry_content.class.php:79
+#: inc/collect_registry_content.class.php:72
+#: inc/collect_registry_content.class.php:97
+#: inc/collect_registry_content.class.php:103
 msgid "Windows registry content"
 msgstr "Зміст реєстру Windows"
 
-#: inc/collect_registry_content.class.php:180
-#: inc/collect_registry_content.class.php:224
+#: inc/collect_registry_content.class.php:250
+#: inc/collect_registry_content.class.php:297
 msgid "Data"
 msgstr "Дані"
 
-#: inc/collect_wmi.class.php:52 inc/collect_wmi.class.php:61
+#: inc/collect_wmi.class.php:71 inc/collect_wmi.class.php:87
 msgid "Windows WMI"
 msgstr "Windows WMI"
 
-#: inc/collect_wmi.class.php:87
+#: inc/collect_wmi.class.php:123
 msgid "Windows WMI associated"
 msgstr "Пов’язаний Windows WMI"
 
-#: inc/collect_wmi.class.php:91 inc/collect_wmi_content.class.php:178
+#: inc/collect_wmi.class.php:127 inc/collect_wmi_content.class.php:237
 msgid "Moniker"
 msgstr "Псевдонім"
 
-#: inc/collect_wmi.class.php:92 inc/collect_wmi.class.php:141
-#: inc/collect_wmi_content.class.php:179
+#: inc/collect_wmi.class.php:128 inc/collect_wmi.class.php:183
+#: inc/collect_wmi_content.class.php:238
 msgid "Class"
 msgstr "Клас"
 
-#: inc/collect_wmi.class.php:93 inc/collect_wmi.class.php:147
+#: inc/collect_wmi.class.php:129 inc/collect_wmi.class.php:189
 msgid "Properties"
 msgstr "Властивості"
 
-#: inc/collect_wmi.class.php:133
+#: inc/collect_wmi.class.php:175
 msgid "moniker"
 msgstr "псевдонім"
 
-#: inc/collect_wmi_content.class.php:52 inc/collect_wmi_content.class.php:73
-#: inc/collect_wmi_content.class.php:79
+#: inc/collect_wmi_content.class.php:73 inc/collect_wmi_content.class.php:98
+#: inc/collect_wmi_content.class.php:104
 msgid "Windows WMI content"
 msgstr "Зміст Windows WMI"
 
-#: inc/collect_wmi_content.class.php:180 inc/collect_wmi_content.class.php:225
+#: inc/collect_wmi_content.class.php:239 inc/collect_wmi_content.class.php:289
 msgid "Property"
 msgstr "Властивість"
 
-#: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
-#: inc/menu.class.php:335 inc/profile.class.php:213
-msgid "Additional computer information rules"
-msgstr "Додаткові правила інформації комп’ютера"
+#: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
+#: inc/menu.class.php:384 inc/profile.class.php:308
+msgid "Computer information rules"
+msgstr ""
 
-#: inc/collectrule.class.php:125
+#: inc/collectrule.class.php:178
 msgid "Registry key"
 msgstr "Ключ реєстру"
 
-#: inc/collectrule.class.php:129
+#: inc/collectrule.class.php:182
 msgid "Registry value"
 msgstr "Значення реєстру"
 
-#: inc/collectrule.class.php:132
+#: inc/collectrule.class.php:185
 msgid "WMI property"
 msgstr "Властивість WMI"
 
-#: inc/collectrule.class.php:136
+#: inc/collectrule.class.php:189
 msgid "WMI value"
 msgstr "Значення WMI"
 
-#: inc/collectrule.class.php:139
+#: inc/collectrule.class.php:192
 msgid "File name"
 msgstr "Ім’я файлу"
 
-#: inc/collectrule.class.php:142
+#: inc/collectrule.class.php:195
 msgid "File path"
 msgstr "Шлях до файлу"
 
-#: inc/collectrule.class.php:145
+#: inc/collectrule.class.php:198
 msgid "File size"
 msgstr "Розмір файлу"
 
-#: inc/collectrule.class.php:190
+#: inc/collectrule.class.php:248
 msgid "Software version"
 msgstr ""
 
-#: inc/common.view.class.php:201
+#: inc/common.view.class.php:306
 msgid "Warning:"
 msgstr "Попередження:"
 
-#: inc/common.view.class.php:205
+#: inc/common.view.class.php:311
 msgid "Error:"
 msgstr "Помилка:"
 
-#: inc/communication.class.php:224
-#: inc/communicationnetworkinventory.class.php:215
-#: inc/communicationnetworkinventory.class.php:283
+#: inc/communication.class.php:237
+#: inc/communicationnetworkinventory.class.php:232
+#: inc/communicationnetworkinventory.class.php:301
 msgid "Unattended element in"
 msgstr "Елемент, залишений без уваги в "
 
-#: inc/computerlicenseinfo.class.php:63
+#: inc/computerlicenseinfo.class.php:91
 msgid "Software licenses"
 msgstr "Ліцензії ПЗ"
 
-#: inc/computerlicenseinfo.class.php:117
+#: inc/computerlicenseinfo.class.php:159
 msgid "Serial number"
 msgstr "Серійний номер"
 
-#: inc/computerlicenseinfo.class.php:122
+#: inc/computerlicenseinfo.class.php:164
 msgid "Full name"
 msgstr "Повна назва"
 
-#: inc/computerlicenseinfo.class.php:124
+#: inc/computerlicenseinfo.class.php:166
 msgid "Option"
 msgstr "Опція"
 
-#: inc/computerlicenseinfo.class.php:148
+#: inc/computerlicenseinfo.class.php:190
 msgid "Union between computer and license"
 msgstr "Зв’язок між комп’ютером та ліцензією"
 
-#: inc/config.class.php:206 inc/staticmisc.class.php:70
+#: inc/computeroperatingsystem.class.php:100
+msgid "Operating system (computer)"
+msgid_plural "Operating systems (computer)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: inc/computerremotemanagement.class.php:73
+#: inc/computerremotemanagement.class.php:92
+#: inc/computerremotemanagement.class.php:135
+msgid "Remote management"
+msgstr ""
+
+#: inc/computerremotemanagement.class.php:142
+msgid "ID"
+msgstr ""
+
+#: inc/config.class.php:239 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
 msgstr "Інвентаризація комп’ютера"
 
-#: inc/config.class.php:208
+#: inc/config.class.php:240
 msgid "Network Inventory"
 msgstr "Інвентаризація мережі"
 
-#: inc/config.class.php:210 inc/menu.class.php:445
+#: inc/config.class.php:241 inc/menu.class.php:494
 msgid "Package management"
 msgstr "Керування пакетами"
 
-#: inc/config.class.php:302
+#: inc/config.class.php:333
 msgid "SSL-only for agent"
 msgstr "Для агентів тільки SSL"
 
-#: inc/config.class.php:306
+#: inc/config.class.php:337
 msgid "Inventory frequency (in hours)"
 msgstr "Періодичність інвентаризації (в годинах)"
 
-#: inc/config.class.php:317
+#: inc/config.class.php:348
 msgid "Delete tasks logs after"
 msgstr ""
 
-#: inc/config.class.php:334
+#: inc/config.class.php:365
 msgid "Extra-debug"
 msgstr "Додаткова відладка"
 
-#: inc/config.class.php:369
+#: inc/config.class.php:374
 msgid "Maximum number of agents to wake up in a task"
 msgstr ""
 
-#: inc/config.class.php:380
+#: inc/config.class.php:385
 msgid "Update agents"
 msgstr ""
 
-#: inc/config.class.php:382
+#: inc/config.class.php:387
 msgid "Update agents not have contacted server since (in days)"
 msgstr ""
 
-#: inc/config.class.php:417 inc/config.class.php:439
+#: inc/config.class.php:422 inc/config.class.php:453
 msgid "Change the status"
 msgstr ""
 
-#: inc/config.class.php:442
+#: inc/config.class.php:456
 msgid "Clean agents"
 msgstr ""
 
-#: inc/config.class.php:464
+#: inc/config.class.php:478
 msgid "Import options"
 msgstr "Параметри імпорту"
 
-#: inc/config.class.php:512 inc/inventorycomputerantivirus.class.php:53
-#: inc/inventorycomputerantivirus.class.php:80
-#: inc/inventorycomputerantivirus.class.php:136
-#: inc/inventorycomputerbatteries.class.php:117
+#: inc/config.class.php:526 inc/inventorycomputerbatteries.class.php:146
 msgid "Antivirus"
 msgstr "Антивірус"
 
-#: inc/config.class.php:555
+#: inc/config.class.php:569
 msgid "Virtual network card"
 msgstr "Віртуальна мережева карта"
 
-#: inc/config.class.php:564
+#: inc/config.class.php:578
 msgid "Default status"
 msgstr "Стан по замовчуванню"
 
-#: inc/config.class.php:598
+#: inc/config.class.php:612
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr "Створити комп’ютер на основі даних про віртуальну машину (тільки якщо віртуальна машина не має агента інвентаризації! )"
+msgstr ""
+"Створити комп’ютер на основі даних про віртуальну машину (тільки якщо "
+"віртуальна машина не має агента інвентаризації! )"
 
-#: inc/config.class.php:615
+#: inc/config.class.php:627
+msgid "Manage operating system name:"
+msgstr ""
+
+#: inc/config.class.php:633
 msgid "Network drives"
 msgstr "Мережеві диски"
 
-#: inc/config.class.php:660
+#: inc/config.class.php:676
 msgid "Network options"
 msgstr "Мережеві параметри"
 
-#: inc/config.class.php:737
+#: inc/config.class.php:753
 msgid "Root folder for sending files from server"
 msgstr "Кореневий каталог для надсилання файлів з сервера"
 
-#: inc/config.class.php:745
+#: inc/config.class.php:761
 msgid "Use this GLPI server as a mirror server"
 msgstr "Використовувати сервер GLPI у якості дзеркального сервера"
 
-#: inc/configlogfield.class.php:145
+#: inc/configlogfield.class.php:164
 msgid "History configuration"
 msgstr "Конфігурація історії"
 
-#: inc/configlogfield.class.php:152
+#: inc/configlogfield.class.php:171
 msgid "List of fields for which to keep history"
 msgstr "Список полів, для яких зберігати історію"
 
-#: inc/configlogfield.class.php:156
+#: inc/configlogfield.class.php:175
 msgid "Retention in days"
 msgstr "Утримування в днях"
 
-#: inc/configsecurity.class.php:82
+#: inc/configsecurity.class.php:113
 msgid "SNMP version"
 msgstr "Версія SNMP"
 
-#: inc/configsecurity.class.php:94
+#: inc/configsecurity.class.php:125
 msgid "Community"
 msgstr "Спільнота"
 
-#: inc/configsecurity.class.php:107
+#: inc/configsecurity.class.php:138
 msgid "Encryption protocol for authentication "
 msgstr "Протокол шифрування для аутентифікації"
 
-#: inc/configsecurity.class.php:124
+#: inc/configsecurity.class.php:155
 msgid "Encryption protocol for data"
 msgstr "Протокол шифрування для даних"
 
-#: inc/credential.class.php:56 inc/credential.class.php:143
-#: inc/credentialip.class.php:97 inc/credentialip.class.php:112
-#: inc/credentialip.class.php:132 inc/menu.class.php:398
-#: inc/profile.class.php:246
+#: inc/credential.class.php:92 inc/credential.class.php:191
+#: inc/credentialip.class.php:148 inc/credentialip.class.php:163
+#: inc/menu.class.php:447 inc/profile.class.php:351
 msgid "Authentication for remote devices (VMware)"
 msgstr "Аутентифікація для віддалених пристроїв (VMware)"
 
-#: inc/credential.class.php:230 inc/credential.class.php:245
-#: inc/profile.class.php:252
+#: inc/credential.class.php:290 inc/credential.class.php:307
+#: inc/profile.class.php:357
 msgid "VMware host"
 msgstr "Хост VMware"
 
-#: inc/credential.class.php:350 inc/menu.class.php:379
-#: inc/profile.class.php:249
-msgid "Remote devices to inventory (VMware)"
-msgstr "Віддалені пристрої для інвентаризації (VMware)"
-
-#: inc/credentialip.class.php:56
+#: inc/credentialip.class.php:95
 msgid "Remote device inventory"
 msgstr "Інвентаризація віддалених пристроїв"
 
-#: inc/deployaction.class.php:52
+#: inc/deployaction.class.php:65
 msgid "Return code is equal to"
 msgstr "Код повернення є рівним до"
 
-#: inc/deployaction.class.php:53
+#: inc/deployaction.class.php:66
 msgid "Return code is not equal to"
 msgstr "Код повернення не є рівним до"
 
-#: inc/deployaction.class.php:54
+#: inc/deployaction.class.php:67
 msgid "Command output contains"
 msgstr "Вивід команди містить"
 
-#: inc/deployaction.class.php:55
+#: inc/deployaction.class.php:68
 msgid "Command output does not contains"
 msgstr "Вивід команди не містить"
 
-#: inc/deployaction.class.php:63
+#: inc/deployaction.class.php:81
 msgid "Command"
 msgstr "Команда"
 
-#: inc/deployaction.class.php:64
+#: inc/deployaction.class.php:82
 msgid "Move"
 msgstr "Перенести"
 
-#: inc/deployaction.class.php:65
+#: inc/deployaction.class.php:83
 msgid "Copy"
 msgstr "Копіювати"
 
-#: inc/deployaction.class.php:66 inc/deployaction.class.php:222
-#: inc/deploycheck.class.php:206 inc/deployfile.class.php:293
-#: inc/networkequipment.class.php:1073 inc/networkequipment.class.php:1074
-#: inc/networkportlog.class.php:193 inc/networkporttype.class.php:389
-#: inc/printerlog.class.php:354 inc/printerlog.class.php:551
-#: inc/taskjob.class.php:165 inc/taskjob.class.php:1764
-#: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:446
-#: inc/taskjob.view.class.php:458
-msgid "Delete"
-msgstr "Видалити"
+#: inc/deployaction.class.php:84
+msgid "Delete directory"
+msgstr ""
 
-#: inc/deployaction.class.php:67
-msgid "Make directory"
-msgstr "Створити каталог"
+#: inc/deployaction.class.php:85
+msgid "Create directory"
+msgstr ""
 
-#: inc/deployaction.class.php:180
+#: inc/deployaction.class.php:215
 msgid "Command to execute"
 msgstr "Команда до виконання"
 
-#: inc/deployaction.class.php:194
+#: inc/deployaction.class.php:229
 msgid "return codes saved for this command"
 msgstr "збережені коди закінчення для цієї команди"
 
-#: inc/deployaction.class.php:207 inc/deploycheck.class.php:191
-#: inc/deployfile.class.php:279 inc/taskjob.class.php:1752
+#: inc/deployaction.class.php:242 inc/deploycheck.class.php:234
+#: inc/deployfile.class.php:293 inc/taskjob.class.php:1525
 msgid "drag"
 msgstr "тягти"
 
-#: inc/deployaction.class.php:330
+#: inc/deployaction.class.php:257 inc/deploycheck.class.php:249
+#: inc/deployfile.class.php:307 inc/networkequipment.class.php:1144
+#: inc/networkequipment.class.php:1145 inc/networkportlog.class.php:203
+#: inc/networkporttype.class.php:409 inc/printerlog.class.php:396
+#: inc/printerlog.class.php:599 inc/taskjob.class.php:206
+#: inc/taskjob.class.php:1537 inc/taskjob.view.class.php:301
+msgid "Delete"
+msgstr "Видалити"
+
+#: inc/deployaction.class.php:370
 msgid "From"
 msgstr "З"
 
-#: inc/deployaction.class.php:332
+#: inc/deployaction.class.php:372
 msgid "To"
 msgstr "До"
 
-#: inc/deployaction.class.php:340
+#: inc/deployaction.class.php:381
 msgid "exec"
 msgstr "виконати"
 
-#: inc/deployaction.class.php:353
+#: inc/deployaction.class.php:395
 msgid "path"
 msgstr "шлях"
 
-#: inc/deployaction.class.php:392
+#: inc/deployaction.class.php:439
 msgid "Execution checks"
 msgstr "Перевірки виконання"
 
-#: inc/deploycheck.class.php:51
+#: inc/deploycheck.class.php:64
 msgid "Registry key exists"
 msgstr "Існуючі ключі реєстру"
 
-#: inc/deploycheck.class.php:52
+#: inc/deploycheck.class.php:65
 msgid "Registry key missing"
 msgstr "Відсутні ключі реєстру"
 
-#: inc/deploycheck.class.php:53
+#: inc/deploycheck.class.php:66
 msgid "Registry key value equals to"
 msgstr "Значення ключа реєстру дорівнює"
 
-#: inc/deploycheck.class.php:54
+#: inc/deploycheck.class.php:67
 msgid "File exists"
 msgstr "Файл існує"
 
-#: inc/deploycheck.class.php:55
+#: inc/deploycheck.class.php:68
 msgid "File is missing"
 msgstr "Файл відсутній"
 
-#: inc/deploycheck.class.php:56
+#: inc/deploycheck.class.php:69
 msgid "File size is greater than"
 msgstr "Розмір файлу більше, чим"
 
-#: inc/deploycheck.class.php:57
+#: inc/deploycheck.class.php:70
 msgid "File size is equal to"
 msgstr "Розмір файлу дорівнює"
 
-#: inc/deploycheck.class.php:58
+#: inc/deploycheck.class.php:71
 msgid "File size is lower than"
 msgstr "Розмір файлу менше, чим"
 
-#: inc/deploycheck.class.php:59
+#: inc/deploycheck.class.php:72
 msgid "SHA-512 hash value is"
 msgstr "Значення SHA-512 є"
 
-#: inc/deploycheck.class.php:60
+#: inc/deploycheck.class.php:73
 msgid "Free space is greater than"
 msgstr "Вільне місце більше чим"
 
-#: inc/deploycheck.class.php:80
+#: inc/deploycheck.class.php:86
 msgid "B"
 msgstr "B"
 
-#: inc/deploycheck.class.php:81
+#: inc/deploycheck.class.php:87
 msgid "KiB"
 msgstr "KiB"
 
-#: inc/deploycheck.class.php:82
+#: inc/deploycheck.class.php:88
 msgid "MiB"
 msgstr "MiB"
 
-#: inc/deploycheck.class.php:83
+#: inc/deploycheck.class.php:89
 msgid "GiB"
 msgstr "GiB"
 
-#: inc/deploycheck.class.php:287
+#: inc/deploycheck.class.php:350
 msgid "Key value"
 msgstr "Значення ключа"
 
-#: inc/deploycheck.class.php:307
+#: inc/deploycheck.class.php:374
 msgid "Disk or directory"
 msgstr "Диск або каталог"
 
-#: inc/deploycheck.class.php:395
+#: inc/deploycheck.class.php:470
 msgid "Unit"
 msgstr "Одиниця"
 
-#: inc/deploycheck.class.php:421
+#: inc/deploycheck.class.php:494
 msgid "In case of error"
 msgstr "У випадку помилки"
 
-#: inc/deploycheck.class.php:424 inc/taskjobstate.class.php:78
+#: inc/deploycheck.class.php:497 inc/taskjobstate.class.php:137
 msgid "Error"
 msgstr "Помилка"
 
-#: inc/deploycheck.class.php:425
+#: inc/deploycheck.class.php:498
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: inc/deployfile.class.php:56
+#: inc/deployfile.class.php:75
 msgid "Upload from computer"
 msgstr "Завантажити з комп’ютера"
 
-#: inc/deployfile.class.php:57
+#: inc/deployfile.class.php:76
 msgid "Upload from server"
 msgstr "Завантажити з сервера"
 
-#: inc/deployfile.class.php:226
+#: inc/deployfile.class.php:243
 msgid "p2p"
 msgstr "p2p"
 
-#: inc/deployfile.class.php:227 inc/deployfile.class.php:438
+#: inc/deployfile.class.php:244 inc/deployfile.class.php:475
 msgid "retention"
 msgstr "утримувати"
 
-#: inc/deployfile.class.php:229 inc/deployfile.class.php:439
-#: inc/networkequipment.class.php:601 inc/taskjob.class.php:1162
+#: inc/deployfile.class.php:246 inc/deployfile.class.php:476
+#: inc/networkequipment.class.php:663 inc/taskjob.class.php:1176
 msgid "Minute(s)"
 msgstr "хвилини"
 
-#: inc/deployfile.class.php:242
+#: inc/deployfile.class.php:256
 msgid "uncompress"
 msgstr "розпакувати"
 
-#: inc/deployfile.class.php:326
+#: inc/deployfile.class.php:349
 msgid "Source"
 msgstr "Джерело"
 
-#: inc/deployfile.class.php:399
+#: inc/deployfile.class.php:430
 msgid "filename"
 msgstr "ім’я файлу"
 
-#: inc/deployfile.class.php:405
+#: inc/deployfile.class.php:437
 msgid "Choose"
 msgstr "Оберіть"
 
-#: inc/deployfile.class.php:409
+#: inc/deployfile.class.php:441
 msgid "Select the file on server"
 msgstr "Оберіть файл на сервері"
 
-#: inc/deployfile.class.php:424
+#: inc/deployfile.class.php:458
 msgid "Uncompress"
 msgstr "Розпакувати"
 
-#: inc/deployfile.class.php:430
+#: inc/deployfile.class.php:466
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:703
+#: inc/deployfile.class.php:779
 msgid "Transfer error: the file size is too big"
 msgstr "Помилка передачі: файл занадто великий"
 
-#: inc/deployfile.class.php:706
+#: inc/deployfile.class.php:783
 msgid "The uploaded file was only partially uploaded"
 msgstr "Файл був завантажений лише частково"
 
-#: inc/deployfile.class.php:709
+#: inc/deployfile.class.php:787
 msgid "No file was uploaded"
 msgstr "Файл не завантажено"
 
-#: inc/deployfile.class.php:712
+#: inc/deployfile.class.php:791
 msgid "Missing a temporary folder"
 msgstr "Відсутній тимчасовий каталог"
 
-#: inc/deployfile.class.php:715
+#: inc/deployfile.class.php:795
 msgid "Failed to write file to disk"
 msgstr "Помилка запису файлу на диск"
 
-#: inc/deployfile.class.php:718
+#: inc/deployfile.class.php:799
 msgid "PHP extension stopped the file upload"
 msgstr "Розширення PHP зупинило завантаження файлу"
 
-#: inc/deployfile.class.php:748 inc/deployfile.class.php:796
+#: inc/deployfile.class.php:831 inc/deployfile.class.php:887
 msgid "File saved!"
 msgstr "Файл збережено!"
 
-#: inc/deployfile.class.php:751 inc/deployfile.class.php:799
+#: inc/deployfile.class.php:834 inc/deployfile.class.php:890
 msgid "Failed to copy file"
 msgstr "Помилка копіювання файлу"
 
-#: inc/deployfile.class.php:755 inc/deployfile.class.php:803
+#: inc/deployfile.class.php:838 inc/deployfile.class.php:894
 msgid "File missing"
 msgstr "Файл відсутній"
 
-#: inc/deployfile.class.php:1043
+#: inc/deployfile.class.php:1170
 msgid "Max file size"
 msgstr "Максимальний розмір файлу"
 
-#: inc/deployfile.class.php:1045
+#: inc/deployfile.class.php:1171
 msgid "Mio"
 msgstr "Mio"
 
-#: inc/deployfile.class.php:1075
+#: inc/deployfile.class.php:1209
 msgid "Unused file"
 msgstr ""
 
-#: inc/deploygroup.class.php:74
+#: inc/deploygroup.class.php:100
 msgid "Dynamic group"
 msgstr "Динамічна група"
 
-#: inc/deploygroup.class.php:174
+#: inc/deploygroup.class.php:221
 msgid "Add group"
 msgstr "Додати групу"
 
-#: inc/deployinstall.class.php:50 inc/deployinstall.class.php:60
-msgid "Installation"
-msgstr "Встановлення"
+#: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
+msgid "Package actions"
+msgstr ""
 
-#: inc/deploymirror.class.php:54 inc/menu.class.php:454
-#: inc/profile.class.php:232
+#: inc/deploymirror.class.php:80 inc/menu.class.php:503
+#: inc/profile.class.php:332
 msgid "Mirror servers"
 msgstr "Дзеркальні сервери"
 
-#: inc/deploymirror.class.php:137 inc/deploymirror.class.php:193
+#: inc/deploymirror.class.php:182 inc/deploymirror.class.php:243
 msgid "Mirror server address"
 msgstr "Адреси дзеркальних серверів"
 
-#: inc/deploymirror.class.php:143
+#: inc/deploymirror.class.php:188
 msgid "Mirror location"
 msgstr "Розташування дзеркал"
 
-#: inc/deployorder.class.php:196
-msgid "The modified JSON contained a syntax error :"
-msgstr "Змінений JSON містить синтаксичну помилку :"
-
-#: inc/deploypackage.class.php:56 inc/task.class.php:1491
+#: inc/deploypackage.class.php:109 inc/task.class.php:1526
 msgid "Package"
 msgstr "Пакет"
 
-#: inc/deploypackage.class.php:68 inc/menu.class.php:128
-#: inc/menu.class.php:137
+#: inc/deploypackage.class.php:124 inc/menu.class.php:166
+#: inc/menu.class.php:175
 msgid "Import"
 msgstr "Імпорт"
 
-#: inc/deploypackage.class.php:72
+#: inc/deploypackage.class.php:128
 msgid "Export"
 msgstr "Експорт"
 
-#: inc/deploypackage.class.php:174
+#: inc/deploypackage.class.php:235
 msgid "Modification Denied"
 msgstr "Модифікація заборонена"
 
-#: inc/deploypackage.class.php:179
+#: inc/deploypackage.class.php:240
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "З цим пакетом виконуються наступне завдання"
 msgstr[1] "З цим пакетом виконуються наступні завдання"
 msgstr[2] "З цим пакетом виконуються наступні завдання"
 
-#: inc/deploypackage.class.php:371
+#: inc/deploypackage.class.php:466
+msgid "Enable self-service in defining computer group"
+msgstr ""
+
+#: inc/deploypackage.class.php:489
 msgid "Audits"
 msgstr "Аудит"
 
-#: inc/deploypackage.class.php:372
+#: inc/deploypackage.class.php:490
 msgid "Files"
 msgstr "Файли"
 
-#: inc/deploypackage.class.php:373
+#: inc/deploypackage.class.php:491
 msgid "Actions"
 msgstr "Дії"
 
-#: inc/deploypackage.class.php:705
-msgid "Item successfully added"
-msgstr "Елемент додано успішно"
-
-#: inc/deploypackage.class.php:793
+#: inc/deploypackage.class.php:779
 msgid "Package exported in"
 msgstr "Пакет експортовано до"
 
-#: inc/deploypackage.class.php:877
+#: inc/deploypackage.class.php:852
 msgid "Packages to import"
 msgstr "Пакети для імпорту"
 
-#: inc/deploytask.class.php:54
+#: inc/deploypackage.class.php:981
+msgid "The modified JSON contained a syntax error :"
+msgstr "Змінений JSON містить синтаксичну помилку :"
+
+#: inc/deploypackage.class.php:1014 inc/deploypackage.class.php:1017
+msgid "Target for self-service"
+msgid_plural "Targets for self-service"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: inc/deploypackage.class.php:1089
+msgid "Add a target for self-service"
+msgstr ""
+
+#: inc/deploypackage.class.php:1293 inc/task.view.class.php:248
+#: inc/task.view.class.php:337
+msgid "Not done yet"
+msgstr "Ще не виконано"
+
+#: inc/deploypackage.class.php:1294 inc/menu.class.php:1004
+#: inc/task.view.class.php:249 inc/task.view.class.php:338
+msgid "In error"
+msgstr "Є помилки"
+
+#: inc/deploypackage.class.php:1295 inc/task.view.class.php:250
+#: inc/task.view.class.php:339
+msgid "Successful"
+msgstr "Успішно"
+
+#: inc/deploypackage.class.php:1296 inc/menu.class.php:994
+#: inc/task.view.class.php:251 inc/task.view.class.php:340
+msgid "Running"
+msgstr "Виконуються"
+
+#: inc/deploypackage.class.php:1297 inc/statediscovery.class.php:247
+#: inc/stateinventory.class.php:183 inc/task.view.class.php:252
+#: inc/task.view.class.php:341 inc/taskjoblog.class.php:116
+#: inc/taskjoblog.class.php:578 inc/taskjoblog.class.php:915
+#: inc/taskjobstate.class.php:133
+msgid "Prepared"
+msgstr "Підготовлено"
+
+#: inc/deploypackage.class.php:1298 inc/task.view.class.php:253
+#: inc/task.view.class.php:342 inc/taskjobstate.class.php:138
+msgid "Cancelled"
+msgstr "Перервано"
+
+#: inc/deploypackage.class.php:1353
+msgid "Select packages you want install:"
+msgstr ""
+
+#: inc/deploypackage.class.php:1362
+msgid "Prepare for install"
+msgstr ""
+
+#: inc/deploypackage.class.php:1369
+msgid "No packages available to install"
+msgstr ""
+
+#: inc/deploytask.class.php:68
 msgid "Group of computers"
 msgstr "Група комп’ютерів"
 
-#: inc/deploytask.class.php:56 inc/deploytask.class.php:114
-#: inc/profile.class.php:300 inc/task.class.php:1472 inc/task.class.php:1521
-#: inc/task.view.class.php:126
+#: inc/deploytask.class.php:70 inc/deploytask.class.php:176
+#: inc/profile.class.php:410 inc/task.class.php:1507 inc/task.class.php:1555
+#: inc/task.view.class.php:165
 msgid "Task"
 msgid_plural "Tasks"
 msgstr[0] "Завдання"
 msgstr[1] "Завдання"
 msgstr[2] "Завдань"
 
-#: inc/deploytask.class.php:85
+#: inc/deploytask.class.php:127
 msgid "Order list"
 msgstr "Сортувати список"
 
-#: inc/deploytask.class.php:118
+#: inc/deploytask.class.php:179
 msgid "Add task"
 msgstr "Додати завдання"
 
-#: inc/deploytask.class.php:145
+#: inc/deploytask.class.php:207
 msgid "Edit impossible, this task is active"
 msgstr "Неможливо змінити, це завдання активне"
 
-#: inc/deploytask.class.php:175
+#: inc/deploytask.class.php:242
 msgid "This task is active. delete denied"
 msgstr "Завдання активне, видалення заборонено"
 
-#: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:60
-msgid "Uninstallation"
-msgstr "Деінсталяція"
-
-#: inc/display.class.php:174
+#: inc/display.class.php:179
 msgid "Progress"
 msgstr "Прогрес"
 
-#: inc/entity.class.php:110
+#: inc/entity.class.php:137
 msgid "Model for automatic computers transfer in an other entity"
 msgstr "Модель автоматичного перенесення комп’ютерів до іншої організації"
 
-#: inc/entity.class.php:156
+#: inc/entity.class.php:183
 msgid "Service URL"
 msgstr "URL сервісу"
 
-#: inc/ignoredimportdevice.class.php:52 inc/profile.class.php:217
+#: inc/ignoredimportdevice.class.php:75 inc/profile.class.php:312
 msgid "Equipment ignored on import"
 msgstr "Обладнання, що ігнорується протягом імпорту"
 
-#: inc/ignoredimportdevice.class.php:69 inc/rulematchedlog.class.php:163
-#: inc/rulematchedlog.class.php:229
+#: inc/ignoredimportdevice.class.php:99 inc/rulematchedlog.class.php:214
+#: inc/rulematchedlog.class.php:284
 msgid "Rule name"
 msgstr ""
 
-#: inc/inventorycomputerantivirus.class.php:165
-#: inc/inventorycomputerbatteries.class.php:146
-msgid "Up to date"
-msgstr "Up to date"
-
-#: inc/inventorycomputerbatteries.class.php:53
-#: inc/inventorycomputerbatteries.class.php:80
+#: inc/inventorycomputerbatteries.class.php:71
+#: inc/inventorycomputerbatteries.class.php:104
 msgid "Batterie"
 msgstr "Батарея"
 
-#: inc/inventorycomputerblacklist.class.php:68
-#: inc/inventorycomputerblacklist.class.php:118
+#: inc/inventorycomputerbatteries.class.php:175
+msgid "Up to date"
+msgstr "Up to date"
+
+#: inc/inventorycomputerblacklist.class.php:93
+#: inc/inventorycomputerblacklist.class.php:147
 msgid "blacklisted value"
 msgstr "заборонене значення"
 
-#: inc/inventorycomputerchemistry.class.php:55
+#: inc/inventorycomputerchemistry.class.php:86
 msgid "Chemistry"
 msgstr "Хімія"
 
-#: inc/inventorycomputercomputer.class.php:105
+#: inc/inventorycomputercomputer.class.php:142
 msgid "Public contact address"
 msgstr "Публічна контактна адреса"
 
-#: inc/inventorycomputercomputer.class.php:115
+#: inc/inventorycomputercomputer.class.php:152
 msgid "BIOS date"
 msgstr "Дата BIOS"
 
-#: inc/inventorycomputercomputer.class.php:122
+#: inc/inventorycomputercomputer.class.php:159
 msgid "BIOS version"
 msgstr "Версія BIOS"
 
-#: inc/inventorycomputercomputer.class.php:179
+#: inc/inventorycomputercomputer.class.php:206
 msgid "Automatic entity transfer"
 msgstr "Автоматичне перенесення до організації"
 
-#: inc/inventorycomputercomputer.class.php:183
+#: inc/inventorycomputercomputer.class.php:210
 msgid "No, locked (by entity configuration)"
 msgstr "Ні, заблоковано (налаштуваннями організації)"
 
-#: inc/inventorycomputercomputer.class.php:186
+#: inc/inventorycomputercomputer.class.php:213
 msgid "No, locked manually"
 msgstr "Ні, заблоковано вручну"
 
-#: inc/inventorycomputercomputer.class.php:188
+#: inc/inventorycomputercomputer.class.php:215
 msgid "Unlock it"
 msgstr "Розблокувати"
 
-#: inc/inventorycomputercomputer.class.php:192
+#: inc/inventorycomputercomputer.class.php:219
 msgid "Lock it"
 msgstr "Заблокувати"
 
-#: inc/inventorycomputercomputer.class.php:238
-#: inc/networkequipment.class.php:1151 inc/printer.class.php:217
+#: inc/inventorycomputercomputer.class.php:272
+#: inc/networkequipment.class.php:1228 inc/printer.class.php:267
 msgid "Download"
 msgstr "Завантажити"
 
-#: inc/inventorycomputercomputer.class.php:247
+#: inc/inventorycomputercomputer.class.php:281
 msgid "PHP Array"
 msgstr "PHP Array"
 
-#: inc/inventorycomputerimportxml.class.php:79
+#: inc/inventorycomputerimportxml.class.php:87
 msgid "Import XML file from an Agent"
 msgstr "Імпортувати XML файл, створений Агентом"
 
-#: inc/inventorycomputerimportxml.class.php:85
+#: inc/inventorycomputerimportxml.class.php:93
 msgid ""
 "You can use this menu to upload XML generated by an agent. The file must "
 "have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
-msgstr "Ви можете використати це меню для вивантаження XML файлу, створеного агентом. Файл мусить мати розширення .xml або .ocs. Також можливо вивантажити архів ZIP з декількома XML файлами. Зверніться до документації Агента щодо формування таких XML файлів. "
+msgstr ""
+"Ви можете використати це меню для вивантаження XML файлу, створеного "
+"агентом. Файл мусить мати розширення .xml або .ocs. Також можливо "
+"вивантажити архів ZIP з декількома XML файлами. Зверніться до документації "
+"Агента щодо формування таких XML файлів. "
 
-#: inc/inventorycomputerstorage.class.php:53
-#: inc/inventorycomputerstorage_storage.class.php:53
+#: inc/inventorycomputerstorage.class.php:71
+#: inc/inventorycomputerstorage_storage.class.php:71
 msgid "Storage"
 msgstr "Сховище"
 
-#: inc/inventorycomputerstoragetype.class.php:53
+#: inc/inventorycomputerstoragetype.class.php:71
 msgid "Storage type"
 msgstr "Тип сховища"
 
-#: inc/inventorycomputerwebservice.class.php:74
+#: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
 msgstr "Комп’ютер, внесений в GLPI"
 
-#: inc/inventoryruleentity.class.php:61
-#: inc/inventoryruleentitycollection.class.php:57 inc/profile.class.php:201
+#: inc/inventoryruleentity.class.php:88
+#: inc/inventoryruleentitycollection.class.php:86 inc/profile.class.php:296
 msgid "Entity rules"
 msgstr "Правила організації"
 
-#: inc/inventoryruleentity.class.php:138
+#: inc/inventoryruleentity.class.php:189
 msgid "IP Address"
 msgstr "IP адреса"
 
-#: inc/inventoryruleentity.class.php:141
+#: inc/inventoryruleentity.class.php:192
 msgid "Computer's name"
 msgstr "Назва комп’ютера"
 
-#: inc/inventoryruleentity.class.php:173
-#: inc/inventoryrulelocation.class.php:180
+#: inc/inventoryruleentity.class.php:229
+#: inc/inventoryrulelocation.class.php:233
 msgid "Ignore in FusionInventory import"
 msgstr "Ігнорувати в імпорті FusionInventory"
 
-#: inc/inventoryruleentity.class.php:217
-#: inc/inventoryrulelocation.class.php:223
+#: inc/inventoryruleentity.class.php:285
+#: inc/inventoryrulelocation.class.php:289
 msgid "is CIDR"
 msgstr "дорівнює CIDR"
 
-#: inc/inventoryruleentity.class.php:218
-#: inc/inventoryrulelocation.class.php:224
+#: inc/inventoryruleentity.class.php:286
+#: inc/inventoryrulelocation.class.php:290
 msgid "is not CIDR"
 msgstr "не дорівнює CIDR"
 
-#: inc/inventoryruleimport.class.php:86 inc/inventoryruleimport.class.php:111
-#: inc/inventoryruleimport.class.php:114 inc/inventoryruleimport.class.php:117
-#: inc/inventoryruleimport.class.php:120 inc/inventoryruleimport.class.php:132
-#: inc/inventoryruleimport.class.php:135 inc/inventoryruleimport.class.php:139
-#: inc/inventoryruleimport.class.php:142 inc/inventoryruleimport.class.php:146
-#: inc/inventoryruleimport.class.php:150 inc/inventoryruleimport.class.php:160
+#: inc/inventoryruleimport.class.php:122 inc/inventoryruleimport.class.php:147
+#: inc/inventoryruleimport.class.php:150 inc/inventoryruleimport.class.php:153
+#: inc/inventoryruleimport.class.php:156 inc/inventoryruleimport.class.php:168
+#: inc/inventoryruleimport.class.php:171 inc/inventoryruleimport.class.php:175
+#: inc/inventoryruleimport.class.php:178 inc/inventoryruleimport.class.php:182
+#: inc/inventoryruleimport.class.php:186 inc/inventoryruleimport.class.php:196
 msgid "Assets to import"
 msgstr "Активи до імпорту"
 
-#: inc/inventoryruleimport.class.php:87
+#: inc/inventoryruleimport.class.php:123
 msgid "Destination of equipment entity"
 msgstr "Призначення організації обладнання"
 
-#: inc/inventoryruleimport.class.php:103
+#: inc/inventoryruleimport.class.php:139
 msgid "Search GLPI equipment with the status"
 msgstr "Шукати обладнання в GLPI зі статусом"
 
-#: inc/inventoryruleimport.class.php:169
+#: inc/inventoryruleimport.class.php:205
 msgid "Restrict search in defined entity"
 msgstr "Обмежити пошук у визначеній організації"
 
-#: inc/inventoryruleimport.class.php:190
+#: inc/inventoryruleimport.class.php:231
 msgid "FusionInventory link"
 msgstr "Посилання FusionInventory"
 
-#: inc/inventoryruleimport.class.php:193
+#: inc/inventoryruleimport.class.php:234
 msgid "To be unaware of import (with log)"
 msgstr ""
 
-#: inc/inventoryruleimport.class.php:203
+#: inc/inventoryruleimport.class.php:249
 msgid "Link"
 msgstr "Посилання"
 
-#: inc/inventoryruleimport.class.php:204
+#: inc/inventoryruleimport.class.php:250
 msgid "Import denied (no log)"
 msgstr "Імпорт заборонено (протоколу немає)"
 
-#: inc/inventoryruleimport.class.php:233
+#: inc/inventoryruleimport.class.php:283
 msgid "equal"
 msgstr "дорівнює"
 
-#: inc/inventoryruleimport.class.php:235
+#: inc/inventoryruleimport.class.php:284
 msgid "empty"
 msgstr "порожнє"
 
-#: inc/inventoryruleimport.class.php:917
+#: inc/inventoryruleimport.class.php:1008
 msgid "No itemtype defined"
 msgstr ""
 
-#: inc/inventoryruleimport.class.php:960
-#: inc/inventoryruleimportcollection.class.php:110
+#: inc/inventoryruleimport.class.php:1057
+#: inc/inventoryruleimportcollection.class.php:154
 msgid "Device created"
 msgstr "Пристрій створено"
 
-#: inc/inventoryruleimport.class.php:965
-#: inc/inventoryruleimportcollection.class.php:115
-#: inc/taskjoblog.class.php:1133
+#: inc/inventoryruleimport.class.php:1062
+#: inc/inventoryruleimportcollection.class.php:159
+#: inc/taskjoblog.class.php:987
 msgid "Import denied"
 msgstr "Імпорт заборонено"
 
-#: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:305
+#: inc/inventoryruleimportcollection.class.php:85 inc/menu.class.php:354
 msgid "Equipment import and link rules"
 msgstr "Правила імпорту та прив’язання обладнання"
 
-#: inc/inventoryrulelocation.class.php:61
-#: inc/inventoryrulelocationcollection.class.php:58
+#: inc/inventoryrulelocation.class.php:88
+#: inc/inventoryrulelocationcollection.class.php:85
 msgid "Location rules"
 msgstr "Правила розташування"
 
-#: inc/iprange.class.php:63
+#: inc/iprange.class.php:93
 msgid "Communication mode"
 msgstr "Режим зв’язку"
 
-#: inc/iprange.class.php:67
+#: inc/iprange.class.php:96
 msgid "See all informations of task"
 msgstr "Переглянути всю інформацію завдання"
 
-#: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:370
-#: inc/staticmisc.class.php:366 inc/staticmisc.class.php:387
+#: inc/iprange.class.php:98 inc/iprange.class.php:101 inc/menu.class.php:419
+#: inc/staticmisc.class.php:380 inc/staticmisc.class.php:412
 msgid "IP Ranges"
 msgstr "Діапазони IP"
 
-#: inc/iprange.class.php:90 inc/profile.class.php:243
+#: inc/iprange.class.php:126 inc/profile.class.php:348
 msgid "IP range configuration"
 msgstr "Конфігурація діапазону IP"
 
-#: inc/iprange.class.php:107 inc/iprange.class.php:158
-#: inc/iprange.class.php:266
+#: inc/iprange.class.php:143 inc/iprange.class.php:211
+#: inc/iprange.class.php:318
 msgid "Start of IP range"
 msgstr "Початок діапазону IP"
 
-#: inc/iprange.class.php:112 inc/iprange.class.php:183
-#: inc/iprange.class.php:269
+#: inc/iprange.class.php:148 inc/iprange.class.php:236
+#: inc/iprange.class.php:321
 msgid "End of IP range"
 msgstr "Закінчення діапазону IP"
 
-#: inc/iprange.class.php:264
+#: inc/iprange.class.php:316
 msgid "Bad IP"
 msgstr "Неприйнятний IP"
 
-#: inc/iprange_configsecurity.class.php:64
+#: inc/iprange_configsecurity.class.php:110
 msgid "Associated SNMP authentications"
 msgstr "Пов’язана аутентифікація SNMP"
 
-#: inc/iprange_configsecurity.class.php:146
+#: inc/iprange_configsecurity.class.php:210
 msgid "SNMP Authentication"
 msgstr "Аутентифікація SNMP"
 
-#: inc/iprange_configsecurity.class.php:149
+#: inc/iprange_configsecurity.class.php:213
 msgid "Version"
 msgstr "Версія"
 
-#: inc/iprange_configsecurity.class.php:152
+#: inc/iprange_configsecurity.class.php:216
 msgid "By order of priority"
 msgstr ""
 
-#: inc/lock.class.php:177
+#: inc/lock.class.php:212
 msgid "Values GLPI"
 msgstr "Значення GLPI"
 
-#: inc/lock.class.php:178
+#: inc/lock.class.php:213
 msgid "Values of last inventory"
 msgstr "Значення з останньої інвентаризації"
 
-#: inc/lock.class.php:288
+#: inc/lock.class.php:321
 msgid "Add locks"
 msgstr "Додати блокування"
 
-#: inc/lock.class.php:294
+#: inc/lock.class.php:327
 msgid "Delete locks"
 msgstr "Видалити блокування"
 
-#: inc/mapping.class.php:112
+#: inc/mapping.class.php:129
 msgid "networking > location"
 msgstr "мережа > розміщення"
 
-#: inc/mapping.class.php:116
+#: inc/mapping.class.php:132
 msgid "networking > firmware"
 msgstr "мережа > прошивка"
 
-#: inc/mapping.class.php:120
+#: inc/mapping.class.php:135
 msgid "networking > uptime"
 msgstr "мережа > час роботи"
 
-#: inc/mapping.class.php:124
+#: inc/mapping.class.php:138
 msgid "networking > port > mtu"
 msgstr "мережа > порт > mtu"
 
-#: inc/mapping.class.php:128
+#: inc/mapping.class.php:141
 msgid "networking > port > speed"
 msgstr "мережа > порт > швидкість"
 
-#: inc/mapping.class.php:132
+#: inc/mapping.class.php:144
 msgid "networking > port > internal status"
 msgstr "мережа > порт > внутрішній статус"
 
-#: inc/mapping.class.php:136
+#: inc/mapping.class.php:147
 msgid "networking > ports > last change"
 msgstr "мережа > порти > остання зміна"
 
-#: inc/mapping.class.php:140
+#: inc/mapping.class.php:150
 msgid "networking > port > number of bytes entered"
 msgstr "мережа > порт > кількість байтів зайшло"
 
-#: inc/mapping.class.php:144
+#: inc/mapping.class.php:153
 msgid "networking > port > number of bytes out"
 msgstr "мережа > порт > кількість байтів вийшло"
 
-#: inc/mapping.class.php:148
+#: inc/mapping.class.php:156
 msgid "networking > port > number of input errors"
 msgstr "мережа > порт > клькість помилок на вході"
 
-#: inc/mapping.class.php:152
+#: inc/mapping.class.php:159
 msgid "networking > port > number of errors output"
 msgstr "мережа > порт > кількість помилок на виході"
 
-#: inc/mapping.class.php:156
+#: inc/mapping.class.php:162
 msgid "networking > CPU usage"
 msgstr "мережа > зайнятість CPU"
 
-#: inc/mapping.class.php:160
+#: inc/mapping.class.php:165
 msgid "networking > serial number"
 msgstr "мережа > серійний номер"
 
-#: inc/mapping.class.php:164
+#: inc/mapping.class.php:168
 msgid "networking > port > connection status"
 msgstr "мережа > порт > стан зв’язку"
 
-#: inc/mapping.class.php:168
+#: inc/mapping.class.php:171
 msgid "networking > port > MAC address"
 msgstr "мережа > порт > MAC адреса"
 
-#: inc/mapping.class.php:172
+#: inc/mapping.class.php:174
 msgid "networking > port > name"
 msgstr "мережа > порт > назва"
 
-#: inc/mapping.class.php:176
+#: inc/mapping.class.php:177
 msgid "networking > model"
 msgstr "мережа > модель"
 
@@ -1494,1743 +1577,1707 @@ msgstr "мережа > модель"
 msgid "networking > port > type"
 msgstr "мережа > порт > тип"
 
-#: inc/mapping.class.php:184
+#: inc/mapping.class.php:183
 msgid "networking > VLAN"
 msgstr "мережа > VLAN"
 
-#: inc/mapping.class.php:188
+#: inc/mapping.class.php:186
 msgid "networking > name"
 msgstr "мережа > назва"
 
-#: inc/mapping.class.php:192
+#: inc/mapping.class.php:189
 msgid "networking > total memory"
 msgstr "мережа > всього пам’яті"
 
-#: inc/mapping.class.php:196
+#: inc/mapping.class.php:192
 msgid "networking > free memory"
 msgstr "мережа > вільна пам’ять"
 
-#: inc/mapping.class.php:200
+#: inc/mapping.class.php:195
 msgid "networking > port > port description"
 msgstr "мережа > порт > опис порту"
 
-#: inc/mapping.class.php:204
+#: inc/mapping.class.php:198
 msgid "printer > name"
 msgstr "принтер > назва"
 
-#: inc/mapping.class.php:208
+#: inc/mapping.class.php:201
 msgid "printer > model"
 msgstr "принтер > модель"
 
-#: inc/mapping.class.php:212
+#: inc/mapping.class.php:204
 msgid "printer > total memory"
 msgstr "принтер > всього пам’яті"
 
-#: inc/mapping.class.php:216
+#: inc/mapping.class.php:207
 msgid "printer > serial number"
 msgstr "принтер > серійний номер"
 
-#: inc/mapping.class.php:220
+#: inc/mapping.class.php:210
 msgid "printer > meter > total number of printed pages"
 msgstr "принтер > лічильник > загальна кількість надрукованих сторінок"
 
-#: inc/mapping.class.php:224
+#: inc/mapping.class.php:213
 msgid "printer > meter > number of printed black and white pages"
 msgstr "принтер > лічильник > надруковано чорно-білих сторінок"
 
-#: inc/mapping.class.php:228
+#: inc/mapping.class.php:216
 msgid "printer > meter > number of printed color pages"
 msgstr "принтер > лічильник > надруковано кольорових сторінок"
 
-#: inc/mapping.class.php:232
+#: inc/mapping.class.php:219
 msgid "printer > meter > number of printed monochrome pages"
 msgstr "принтер > лічильник > надруковано монохромних сторінок"
 
-#: inc/mapping.class.php:236
+#: inc/mapping.class.php:222
 msgid "networking > port > duplex type"
 msgstr "мережа > порт > тип дуплексу"
 
-#: inc/mapping.class.php:240
+#: inc/mapping.class.php:225
 msgid "printer > consumables > black cartridge (%)"
 msgstr "принтер > матеріали > чорний картридж (%)"
 
-#: inc/mapping.class.php:244
+#: inc/mapping.class.php:228
 msgid "printer > consumables > photo black cartridge (%)"
 msgstr "принтер > матеріали > чорний картридж фото (%)"
 
-#: inc/mapping.class.php:248
+#: inc/mapping.class.php:231
 msgid "printer > consumables > cyan cartridge (%)"
 msgstr "принтер > матеріали > блакитний картридж (%) "
 
-#: inc/mapping.class.php:252
+#: inc/mapping.class.php:234
 msgid "printer > consumables > yellow cartridge (%)"
 msgstr "принтер > матеріали > жовтий картридж (%) "
 
-#: inc/mapping.class.php:256
+#: inc/mapping.class.php:237
 msgid "printer > consumables > magenta cartridge (%)"
 msgstr "принтер > матеріали > пурпурний картридж (%) "
 
-#: inc/mapping.class.php:260
+#: inc/mapping.class.php:240
 msgid "printer > consumables > light cyan cartridge (%)"
 msgstr "принтер > матеріали > світло-блакитний картридж (%) "
 
-#: inc/mapping.class.php:264
+#: inc/mapping.class.php:243
 msgid "printer > consumables > light magenta cartridge (%)"
 msgstr "принтер > матеріали > світло-пурпурний картридж (%) "
 
-#: inc/mapping.class.php:268
+#: inc/mapping.class.php:246
 msgid "printer > consumables > photoconductor (%)"
 msgstr "принтер > матеріали > фотокондуктор (%)"
 
-#: inc/mapping.class.php:272
+#: inc/mapping.class.php:249
 msgid "printer > consumables > black photoconductor (%)"
 msgstr "принтер > матеріали > чорний фотокондуктор (%)"
 
-#: inc/mapping.class.php:276
+#: inc/mapping.class.php:252
 msgid "printer > consumables > color photoconductor (%)"
 msgstr "принтер > матеріали > кольоровий фотокондуктор (%)"
 
-#: inc/mapping.class.php:280
+#: inc/mapping.class.php:255
 msgid "printer > consumables > cyan photoconductor (%)"
 msgstr "принтер > матеріали > блакитний фотокондуктор (%)"
 
-#: inc/mapping.class.php:284
+#: inc/mapping.class.php:258
 msgid "printer > consumables > yellow photoconductor (%)"
 msgstr "принтер > матеріали > жовтий фотокондуктор (%)"
 
-#: inc/mapping.class.php:288
+#: inc/mapping.class.php:261
 msgid "printer > consumables > magenta photoconductor (%)"
 msgstr "принтер > матеріали > пупурний фотокондуктор (%)"
 
-#: inc/mapping.class.php:292
+#: inc/mapping.class.php:264
 msgid "printer > consumables > black transfer unit (%)"
 msgstr "принтер > матеріали > чорний блок переносу (%)"
 
-#: inc/mapping.class.php:296
+#: inc/mapping.class.php:267
 msgid "printer > consumables > cyan transfer unit (%)"
 msgstr "принтер > матеріали > блакитний блок переносу (%)"
 
-#: inc/mapping.class.php:300
+#: inc/mapping.class.php:270
 msgid "printer > consumables > yellow transfer unit (%)"
 msgstr "принтер > матеріали > жовтий блок переносу (%)"
 
-#: inc/mapping.class.php:304
+#: inc/mapping.class.php:273
 msgid "printer > consumables > magenta transfer unit (%)"
 msgstr "принтер > матеріали > пурпурний блок переносу (%)"
 
-#: inc/mapping.class.php:308
+#: inc/mapping.class.php:276
 msgid "printer > consumables > waste bin (%)"
 msgstr "принтер > матеріали > бункер сміття (%)"
 
-#: inc/mapping.class.php:312
+#: inc/mapping.class.php:279
 msgid "printer > consumables > four (%)"
 msgstr "принтер > матеріали > four (%)"
 
-#: inc/mapping.class.php:316
+#: inc/mapping.class.php:282
 msgid "printer > consumables > cleaning module (%)"
 msgstr "принтер > матеріали > модуль очистки (%)"
 
-#: inc/mapping.class.php:320
+#: inc/mapping.class.php:285
 msgid "printer > meter > number of printed duplex pages"
 msgstr "принтер > лічильник > кількість надрукованих двосторонніх сторінок"
 
-#: inc/mapping.class.php:324
+#: inc/mapping.class.php:288
 msgid "printer > meter > nomber of scanned pages"
 msgstr "принтер > лічильник > кількість відсканованих сторінок"
 
-#: inc/mapping.class.php:328
+#: inc/mapping.class.php:291
 msgid "printer > location"
 msgstr "принтер > розташування"
 
-#: inc/mapping.class.php:332
+#: inc/mapping.class.php:294
 msgid "printer > port > name"
 msgstr "принтер > порт > назва"
 
-#: inc/mapping.class.php:336
+#: inc/mapping.class.php:297
 msgid "printer > port > MAC address"
 msgstr "принтер > порт > MAC адреса"
 
-#: inc/mapping.class.php:340
+#: inc/mapping.class.php:300
 msgid "printer > consumables > black cartridge (max ink)"
 msgstr "принтер > матеріали > чорний картридж (максимум)"
 
-#: inc/mapping.class.php:344
+#: inc/mapping.class.php:303
 msgid "printer > consumables > black cartridge (remaining ink )"
 msgstr "принтер > матеріали > чорний картридж (залишок)"
 
-#: inc/mapping.class.php:348
+#: inc/mapping.class.php:306
 msgid "printer > consumables > cyan cartridge (max ink)"
 msgstr "принтер > матеріали > блакитний картридж (максимум)"
 
-#: inc/mapping.class.php:352
+#: inc/mapping.class.php:309
 msgid "printer > consumables > cyan cartridge (remaining ink)"
 msgstr "принтер > матеріали > блакитний картридж (залишок)"
 
-#: inc/mapping.class.php:356
+#: inc/mapping.class.php:312
 msgid "printer > consumables > yellow cartridge (max ink)"
 msgstr "принтер > матеріали > жовтий картридж (максимум)"
 
-#: inc/mapping.class.php:360
+#: inc/mapping.class.php:315
 msgid "printer > consumables > yellow cartridge (remaining ink)"
 msgstr "принтер > матеріали > жовтий картридж (залишок)"
 
-#: inc/mapping.class.php:364
+#: inc/mapping.class.php:318
 msgid "printer > consumables > magenta cartridge (max ink)"
 msgstr "принтер > матеріали > пурпурний картридж (максимум)"
 
-#: inc/mapping.class.php:368
+#: inc/mapping.class.php:321
 msgid "printer > consumables > magenta cartridge (remaining ink)"
 msgstr "принтер > матеріали > пурпурний картридж (залишок)"
 
-#: inc/mapping.class.php:372
+#: inc/mapping.class.php:324
 msgid "printer > consumables > light cyan cartridge (max ink)"
 msgstr "принтер > матеріали > світло-блакитний картридж (максимум)"
 
-#: inc/mapping.class.php:376
+#: inc/mapping.class.php:327
 msgid "printer > consumables > light cyan cartridge (remaining ink)"
 msgstr "принтер > матеріали > світло-блакитний картридж (залишок)"
 
-#: inc/mapping.class.php:380
+#: inc/mapping.class.php:330
 msgid "printer > consumables > light magenta cartridge (max ink)"
 msgstr "принтер > матеріали > світло-пурпурний картридж (максимум)"
 
-#: inc/mapping.class.php:384
+#: inc/mapping.class.php:333
 msgid "printer > consumables > light magenta cartridge (remaining ink)"
 msgstr "принтер > матеріали > світло-пурпурний картридж (залишок)"
 
-#: inc/mapping.class.php:388
+#: inc/mapping.class.php:336
 msgid "printer > consumables > photoconductor (max ink)"
 msgstr "принтер > матеріали > фотокондуктор (максимум)"
 
-#: inc/mapping.class.php:392
+#: inc/mapping.class.php:339
 msgid "printer > consumables > photoconductor (remaining ink)"
 msgstr "принтер > матеріали > фотокондуктор (залишок)"
 
-#: inc/mapping.class.php:396
+#: inc/mapping.class.php:342
 msgid "printer > consumables > black photoconductor (max ink)"
 msgstr "принтер > матеріали > чорний фотокондуктор (максимум)"
 
-#: inc/mapping.class.php:400
+#: inc/mapping.class.php:345
 msgid "printer > consumables > black photoconductor (remaining ink)"
 msgstr "принтер > матеріали > чорний фотокондуктор (залишок)"
 
-#: inc/mapping.class.php:404
+#: inc/mapping.class.php:348
 msgid "printer > consumables > color photoconductor (max ink)"
 msgstr "принтер > матеріали > кольоровий фотокондуктор (максимум)"
 
-#: inc/mapping.class.php:408
+#: inc/mapping.class.php:351
 msgid "printer > consumables > color photoconductor (remaining ink)"
 msgstr "принтер > матеріали > кольоровий фотокондуктор (залишок)"
 
-#: inc/mapping.class.php:412
+#: inc/mapping.class.php:354
 msgid "printer > consumables > cyan photoconductor (max ink)"
 msgstr "принтер > матеріали > блакитний фотокондуктор (максимум)"
 
-#: inc/mapping.class.php:416
+#: inc/mapping.class.php:357
 msgid "printer > consumables > cyan photoconductor (remaining ink)"
 msgstr "принтер > матеріали > блакитний фотокондуктор (залишок)"
 
-#: inc/mapping.class.php:420
+#: inc/mapping.class.php:360
 msgid "printer > consumables > yellow photoconductor (max ink)"
 msgstr "принтер > матеріали > жовтий фотокондуктор (максимум)"
 
-#: inc/mapping.class.php:424
+#: inc/mapping.class.php:363
 msgid "printer > consumables > yellow photoconductor (remaining ink)"
 msgstr "принтер > матеріали > жовтий фотокондуктор (залишок)"
 
-#: inc/mapping.class.php:428
+#: inc/mapping.class.php:366
 msgid "printer > consumables > magenta photoconductor (max ink)"
 msgstr "принтер > матеріали > пурпурний фотокондуктор (максимум)"
 
-#: inc/mapping.class.php:432
+#: inc/mapping.class.php:369
 msgid "printer > consumables > magenta photoconductor (remaining ink)"
 msgstr "принтер > матеріали > пурпурний фотокондуктор (залишок)"
 
-#: inc/mapping.class.php:436
+#: inc/mapping.class.php:372
 msgid "printer > consumables > black transfer unit (max ink)"
 msgstr "принтер > матеріали > чорний блок переносу (максимум)"
 
-#: inc/mapping.class.php:440
+#: inc/mapping.class.php:375
 msgid "printer > consumables > black transfer unit (remaining ink)"
 msgstr "принтер > матеріали > чорний блок переносу (залишок)"
 
-#: inc/mapping.class.php:444
+#: inc/mapping.class.php:378
 msgid "printer > consumables > cyan transfer unit (max ink)"
 msgstr "принтер > матеріали > блакитний блок переносу (максимум)"
 
-#: inc/mapping.class.php:448
+#: inc/mapping.class.php:381
 msgid "printer > consumables > cyan transfer unit (remaining ink)"
 msgstr "принтер > матеріали > блакитний блок переносу (залишок)"
 
-#: inc/mapping.class.php:452
+#: inc/mapping.class.php:384
 msgid "printer > consumables > yellow transfer unit (max ink)"
 msgstr "принтер > матеріали > жовтий блок переносу (максимум)"
 
-#: inc/mapping.class.php:456
+#: inc/mapping.class.php:387
 msgid "printer > consumables > yellow transfer unit (remaining ink)"
 msgstr "принтер > матеріали > жовтий блок переносу (залишок)"
 
-#: inc/mapping.class.php:460
+#: inc/mapping.class.php:390
 msgid "printer > consumables > magenta transfer unit (max ink)"
 msgstr "принтер > матеріали > пурпурний блок переносу (максимум)"
 
-#: inc/mapping.class.php:464
+#: inc/mapping.class.php:393
 msgid "printer > consumables > magenta transfer unit (remaining ink)"
 msgstr "принтер > матеріали > пурпурний блок переносу (залишок)"
 
-#: inc/mapping.class.php:468
+#: inc/mapping.class.php:396
 msgid "printer > consumables > waste bin (max ink)"
 msgstr "принтер > матеріали > бункер сміття (максимум)"
 
-#: inc/mapping.class.php:472
+#: inc/mapping.class.php:399
 msgid "printer > consumables > waste bin (remaining ink)"
 msgstr "принтер > матеріали > бункер сміття (залишок)"
 
-#: inc/mapping.class.php:476
+#: inc/mapping.class.php:402
 msgid "printer > consumables > four (max ink)"
 msgstr "принтер > матеріали > four (максимум)"
 
-#: inc/mapping.class.php:480
+#: inc/mapping.class.php:405
 msgid "printer > consumables > four (remaining ink)"
 msgstr "принтер > матеріали > four (залишок)"
 
-#: inc/mapping.class.php:484
+#: inc/mapping.class.php:408
 msgid "printer > consumables > cleaning module (max ink)"
 msgstr "принтер > матеріали > модуль очистки (максимум)"
 
-#: inc/mapping.class.php:488
+#: inc/mapping.class.php:411
 msgid "printer > consumables > cleaning module (remaining ink)"
 msgstr "принтер > матеріали > модуль очистки (залишок)"
 
-#: inc/mapping.class.php:492
+#: inc/mapping.class.php:414
 msgid "printer > port > type"
 msgstr "принтер > порт > тип"
 
-#: inc/mapping.class.php:496
+#: inc/mapping.class.php:417
 msgid "printer > consumables > maintenance kit (max)"
 msgstr "принтер > матеріали > набір обслуговування (максимум)"
 
-#: inc/mapping.class.php:500
+#: inc/mapping.class.php:420
 msgid "printer > consumables > maintenance kit (remaining)"
 msgstr "принтер > матеріали > набір обслуговування (залишок)"
 
-#: inc/mapping.class.php:504
+#: inc/mapping.class.php:423
 msgid "printer > consumables > maintenance kit (%)"
 msgstr "принтер > матеріали > набір обслуговування (%)"
 
-#: inc/mapping.class.php:508
+#: inc/mapping.class.php:426
 msgid "networking > CPU user"
 msgstr "мережа > прикладне навантаження CPU"
 
-#: inc/mapping.class.php:512
+#: inc/mapping.class.php:429
 msgid "networking > CPU system"
 msgstr "мережа > системне навантаження CPU"
 
-#: inc/mapping.class.php:516
+#: inc/mapping.class.php:432
 msgid "networking > contact"
 msgstr "мережа > контакт"
 
-#: inc/mapping.class.php:520
+#: inc/mapping.class.php:435
 msgid "networking > comments"
 msgstr "мережа > примітки"
 
-#: inc/mapping.class.php:524
+#: inc/mapping.class.php:438
 msgid "printer > contact"
 msgstr "принтер > контакт"
 
-#: inc/mapping.class.php:528
+#: inc/mapping.class.php:441
 msgid "printer > comments"
 msgstr "принтер > примітки"
 
-#: inc/mapping.class.php:532
+#: inc/mapping.class.php:444
 msgid "printer > port > IP address"
 msgstr "принтер > порт > IP адреса"
 
-#: inc/mapping.class.php:536
+#: inc/mapping.class.php:447
 msgid "networking > port > index number"
 msgstr "мережа > порт > номер індексу"
 
-#: inc/mapping.class.php:540
+#: inc/mapping.class.php:450
 msgid "networking > Address CDP"
 msgstr "мережа > CDP адреса"
 
-#: inc/mapping.class.php:544
+#: inc/mapping.class.php:453
 msgid "networking > Port CDP"
 msgstr "мережа > Порт CDP"
 
-#: inc/mapping.class.php:548
+#: inc/mapping.class.php:456
 msgid "networking > port > trunk/tagged"
 msgstr "мережа > порт > trunk/tagged"
 
-#: inc/mapping.class.php:552
+#: inc/mapping.class.php:459
 msgid "networking > MAC address filters (dot1dTpFdbAddress)"
 msgstr "мережа > фільтри MAC адрес (dot1dTpFdbAddress)"
 
-#: inc/mapping.class.php:556
+#: inc/mapping.class.php:462
 msgid "networking > Physical addresses in memory (ipNetToMediaPhysAddress)"
 msgstr "мережа > Фізичні адреси в пам’яті (ipNetToMediaPhysAddress)"
 
-#: inc/mapping.class.php:560
+#: inc/mapping.class.php:465
 msgid "networking > instances de ports (dot1dTpFdbPort)"
 msgstr "мережа > власник портів"
 
-#: inc/mapping.class.php:568
+#: inc/mapping.class.php:471
 msgid "printer > port > index number"
 msgstr "принтер > порт > номер індексу"
 
-#: inc/mapping.class.php:572
+#: inc/mapping.class.php:474
 msgid "networking > MAC address"
 msgstr "мережа > MAC адреса"
 
-#: inc/mapping.class.php:576
+#: inc/mapping.class.php:477
 msgid "printer > Inventory number"
 msgstr "принтер > Інвентарний номер"
 
-#: inc/mapping.class.php:580
+#: inc/mapping.class.php:480
 msgid "networking > Inventory number"
 msgstr "мережа > Інвентарний номер"
 
-#: inc/mapping.class.php:584
+#: inc/mapping.class.php:483
 msgid "printer > manufacturer"
 msgstr "принтер > Виробник"
 
-#: inc/mapping.class.php:588
+#: inc/mapping.class.php:486
 msgid "networking > IP addresses"
 msgstr "мережа > IP адреси"
 
-#: inc/mapping.class.php:592
+#: inc/mapping.class.php:489
 msgid "networking > PVID (port VLAN ID)"
 msgstr "мережа > PVID (VLAN ID порту)"
 
-#: inc/mapping.class.php:596
+#: inc/mapping.class.php:492
 msgid "printer > meter > total number of printed pages (print)"
 msgstr "принтер > лічильник > загальна кількість надрукованих сторінок (друк)"
 
-#: inc/mapping.class.php:600
+#: inc/mapping.class.php:495
 msgid "printer > meter > number of printed black and white pages (print)"
 msgstr "принтер > лічильник > надруковано чорно-білих сторінок (друк)"
 
-#: inc/mapping.class.php:604
+#: inc/mapping.class.php:498
 msgid "printer > meter > number of printed color pages (print)"
 msgstr "принтер > лічильник > надруковано кольорових сторінок (друк)"
 
-#: inc/mapping.class.php:608
+#: inc/mapping.class.php:501
 msgid "printer > meter > total number of printed pages (copy)"
-msgstr "принтер > лічильник > загальна кількість надрукованих сторінок (копіювання)"
+msgstr ""
+"принтер > лічильник > загальна кількість надрукованих сторінок (копіювання)"
 
-#: inc/mapping.class.php:612
+#: inc/mapping.class.php:504
 msgid "printer > meter > number of printed black and white pages (copy)"
 msgstr "принтер > лічильник > надруковано чорно-білих сторінок (копіювання)"
 
-#: inc/mapping.class.php:616
+#: inc/mapping.class.php:507
 msgid "printer > meter > number of printed color pages (copy)"
 msgstr "принтер > лічильник > надруковано кольорових сторінок (копіювання)"
 
-#: inc/mapping.class.php:620
+#: inc/mapping.class.php:510
 msgid "printer > meter > total number of printed pages (fax)"
 msgstr "принтер > лічильник > загальна кількість надрукованих сторінок (факс)"
 
-#: inc/mapping.class.php:624
+#: inc/mapping.class.php:513
 msgid "networking > port > vlan"
 msgstr "мережа > порт > vlan"
 
-#: inc/mapping.class.php:628
+#: inc/mapping.class.php:516
 msgid "networking > CDP remote sysdescr"
 msgstr "мережа > CDP remote sysdescr"
 
-#: inc/mapping.class.php:632
+#: inc/mapping.class.php:519
 msgid "networking > CDP remote id"
 msgstr "мережа > CDP remote id"
 
-#: inc/mapping.class.php:636
+#: inc/mapping.class.php:522
 msgid "networking > CDP remote model device"
 msgstr "мережа > CDP remote model device"
 
-#: inc/mapping.class.php:640
+#: inc/mapping.class.php:525
 msgid "networking > LLDP remote sysdescr"
 msgstr "мережа > LLDP remote sysdescr"
 
-#: inc/mapping.class.php:644
+#: inc/mapping.class.php:528
 msgid "networking > LLDP remote id"
 msgstr "мережа > LLDP remote id"
 
-#: inc/mapping.class.php:648
+#: inc/mapping.class.php:531
 msgid "networking > LLDP remote port description"
 msgstr "мережа > Опис LLDP remote port"
 
-#: inc/mapping.class.php:653 inc/networkequipment.class.php:693
-#: inc/networkport.class.php:77
+#: inc/mapping.class.php:534 inc/networkequipment.class.php:764
+#: inc/networkport.class.php:107
 msgid "MTU"
 msgstr "MTU"
 
-#: inc/mapping.class.php:661 inc/networkequipment.class.php:701
-#: inc/networkport.class.php:85
+#: inc/mapping.class.php:540 inc/networkequipment.class.php:772
+#: inc/networkport.class.php:115
 msgid "Internal status"
 msgstr "Внутрішній статус"
 
-#: inc/mapping.class.php:665 inc/networkequipment.class.php:705
+#: inc/mapping.class.php:543 inc/networkequipment.class.php:776
 msgid "Last Change"
 msgstr "Остання зміна"
 
-#: inc/mapping.class.php:669
+#: inc/mapping.class.php:546
 msgid "Number of received bytes"
 msgstr "Кількість отриманих байт"
 
-#: inc/mapping.class.php:673
+#: inc/mapping.class.php:549
 msgid "Number of outgoing bytes"
 msgstr "Кількість відданих байт"
 
-#: inc/mapping.class.php:677
+#: inc/mapping.class.php:552
 msgid "Number of input errors"
 msgstr "Кількість вхідних помилок"
 
-#: inc/mapping.class.php:681
+#: inc/mapping.class.php:555
 msgid "Number of output errors"
 msgstr "Кількість вихідних"
 
-#: inc/mapping.class.php:685
+#: inc/mapping.class.php:558
 msgid "CPU usage"
 msgstr "Використання CPU"
 
-#: inc/mapping.class.php:693 inc/networkequipment.class.php:721
-#: inc/networkport.class.php:105
+#: inc/mapping.class.php:564 inc/networkequipment.class.php:792
+#: inc/networkport.class.php:135
 msgid "Internal MAC address"
 msgstr "Внутрішня MAC адреса"
 
-#: inc/mapping.class.php:713 inc/networkequipment.class.php:741
-#: inc/networkport.class.php:125
+#: inc/mapping.class.php:579 inc/networkequipment.class.php:812
+#: inc/networkport.class.php:155
 msgid "Alias"
 msgstr "Аліас"
 
-#: inc/mapping.class.php:717 inc/printerlog.class.php:145
+#: inc/mapping.class.php:582 inc/printerlog.class.php:158
 msgid "Total number of printed pages"
 msgstr "Загальна кількість надрукованих сторінок"
 
-#: inc/mapping.class.php:721 inc/printerlog.class.php:150
+#: inc/mapping.class.php:585 inc/printerlog.class.php:163
 msgid "Number of printed black and white pages"
 msgstr "Кількість надрукованих чорно-білих сторінок"
 
-#: inc/mapping.class.php:725 inc/printerlog.class.php:155
+#: inc/mapping.class.php:588 inc/printerlog.class.php:168
 msgid "Number of printed color pages"
 msgstr "Кількість надрукованих кольорових сторінок"
 
-#: inc/mapping.class.php:729
+#: inc/mapping.class.php:591
 msgid "Number of printed monochrome pages"
 msgstr "Кількість надрукованих монохромних сторінок"
 
-#: inc/mapping.class.php:733
+#: inc/mapping.class.php:594
 msgid "Black cartridge"
 msgstr "Чорний картридж"
 
-#: inc/mapping.class.php:737
+#: inc/mapping.class.php:597
 msgid "Photo black cartridge"
 msgstr "Чорний картридж фото"
 
-#: inc/mapping.class.php:741
+#: inc/mapping.class.php:600
 msgid "Cyan cartridge"
 msgstr "Блакитний картридж"
 
-#: inc/mapping.class.php:745
+#: inc/mapping.class.php:603
 msgid "Yellow cartridge"
 msgstr "Жовтий картридж"
 
-#: inc/mapping.class.php:749
+#: inc/mapping.class.php:606
 msgid "Magenta cartridge"
 msgstr "Пурпурний картридж"
 
-#: inc/mapping.class.php:753
+#: inc/mapping.class.php:609
 msgid "Light cyan cartridge"
 msgstr "Світло-блакитний картридж"
 
-#: inc/mapping.class.php:757
+#: inc/mapping.class.php:612
 msgid "Light magenta cartridge"
 msgstr "Світло-пурпуровий картридж"
 
-#: inc/mapping.class.php:761
+#: inc/mapping.class.php:615
 msgid "Photoconductor"
 msgstr "Фотокондуктор"
 
-#: inc/mapping.class.php:765
+#: inc/mapping.class.php:618
 msgid "Black photoconductor"
 msgstr "Чорний фотокондуктор"
 
-#: inc/mapping.class.php:769
+#: inc/mapping.class.php:621
 msgid "Color photoconductor"
 msgstr "Кольоровий фотокондуктор"
 
-#: inc/mapping.class.php:773
+#: inc/mapping.class.php:624
 msgid "Cyan photoconductor"
 msgstr "Блакитний фотокондуктор"
 
-#: inc/mapping.class.php:777
+#: inc/mapping.class.php:627
 msgid "Yellow photoconductor"
 msgstr "Жовтий фотокондуктор"
 
-#: inc/mapping.class.php:781
+#: inc/mapping.class.php:630
 msgid "Magenta photoconductor"
 msgstr "Пурпурний фотокондуктор"
 
-#: inc/mapping.class.php:785
+#: inc/mapping.class.php:633
 msgid "Black transfer unit"
 msgstr "Чорний блок переносу"
 
-#: inc/mapping.class.php:789
+#: inc/mapping.class.php:636
 msgid "Cyan transfer unit"
 msgstr "Блакитний блок переносу"
 
-#: inc/mapping.class.php:793
+#: inc/mapping.class.php:639
 msgid "Yellow transfer unit"
 msgstr "Жовтий блок переносу"
 
-#: inc/mapping.class.php:797
+#: inc/mapping.class.php:642
 msgid "Magenta transfer unit"
 msgstr "Пурпурний блок переносу"
 
-#: inc/mapping.class.php:801
+#: inc/mapping.class.php:645
 msgid "Waste bin"
 msgstr "Бункер сміття"
 
-#: inc/mapping.class.php:805
+#: inc/mapping.class.php:648
 msgid "Four"
 msgstr "Four"
 
-#: inc/mapping.class.php:809
+#: inc/mapping.class.php:651
 msgid "Cleaning module"
 msgstr "Модуль очистки"
 
-#: inc/mapping.class.php:813 inc/printerlog.class.php:160
+#: inc/mapping.class.php:654 inc/printerlog.class.php:173
 msgid "Number of pages printed duplex"
 msgstr "Кількість надрукованих двосторонніх сторінок"
 
-#: inc/mapping.class.php:817 inc/printerlog.class.php:165
+#: inc/mapping.class.php:657 inc/printerlog.class.php:178
 msgid "Number of scanned pages"
 msgstr "Кількість сканованих сторінок"
 
-#: inc/mapping.class.php:821
+#: inc/mapping.class.php:660
 msgid "Maintenance kit"
 msgstr "Комплект обслуговування"
 
-#: inc/mapping.class.php:825
+#: inc/mapping.class.php:663
 msgid "Black toner"
 msgstr "Чорний тонер"
 
-#: inc/mapping.class.php:829
+#: inc/mapping.class.php:666
 msgid "Cyan toner"
 msgstr "Блакитний тонер"
 
-#: inc/mapping.class.php:833
+#: inc/mapping.class.php:669
 msgid "Magenta toner"
 msgstr "Пурпурний тонер"
 
-#: inc/mapping.class.php:837
+#: inc/mapping.class.php:672
 msgid "Yellow toner"
 msgstr "Жовтий тонер"
 
-#: inc/mapping.class.php:841
+#: inc/mapping.class.php:675
 msgid "Black drum"
 msgstr "Чорний барабан"
 
-#: inc/mapping.class.php:845
+#: inc/mapping.class.php:678
 msgid "Cyan drum"
 msgstr "Блакитний барабан"
 
-#: inc/mapping.class.php:849
+#: inc/mapping.class.php:681
 msgid "Magenta drum"
 msgstr "Пурпурний барабан"
 
-#: inc/mapping.class.php:853
+#: inc/mapping.class.php:684
 msgid "Yellow drum"
 msgstr "Жовтий барабан"
 
-#: inc/mapping.class.php:857
+#: inc/mapping.class.php:687
 msgid "Many informations grouped"
 msgstr "Інформація згрупована"
 
-#: inc/mapping.class.php:861
+#: inc/mapping.class.php:690
 msgid "Black toner 2"
 msgstr "Чорний тонер 2"
 
-#: inc/mapping.class.php:865
+#: inc/mapping.class.php:693
 msgid "Black toner Utilisé"
 msgstr "Чорний тонер Використано"
 
-#: inc/mapping.class.php:869
+#: inc/mapping.class.php:696
 msgid "Black toner Restant"
 msgstr "Чорний тонер Залишок"
 
-#: inc/mapping.class.php:873
+#: inc/mapping.class.php:699
 msgid "Cyan toner Max"
 msgstr "Блакитний тонер Максимум"
 
-#: inc/mapping.class.php:877
+#: inc/mapping.class.php:702
 msgid "Cyan toner Utilisé"
 msgstr "Блакитний тонер Використано"
 
-#: inc/mapping.class.php:881
+#: inc/mapping.class.php:705
 msgid "Cyan toner Restant"
 msgstr "Блакитний тонер Залишок"
 
-#: inc/mapping.class.php:885
+#: inc/mapping.class.php:708
 msgid "Magenta toner Max"
 msgstr "Пурпурний тонер Максимум"
 
-#: inc/mapping.class.php:889
+#: inc/mapping.class.php:711
 msgid "Magenta toner Utilisé"
 msgstr "Пурпурний тонер Використано"
 
-#: inc/mapping.class.php:893
+#: inc/mapping.class.php:714
 msgid "Magenta toner Restant"
 msgstr "Пурпурний тонер Залишок"
 
-#: inc/mapping.class.php:897
+#: inc/mapping.class.php:717
 msgid "Yellow toner Max"
 msgstr "Жовтий тонер Максимум"
 
-#: inc/mapping.class.php:901
+#: inc/mapping.class.php:720
 msgid "Yellow toner Utilisé"
 msgstr "Жовтий тонер Використано"
 
-#: inc/mapping.class.php:905
+#: inc/mapping.class.php:723
 msgid "Yellow toner Restant"
 msgstr "Жовтий тонер Залишок"
 
-#: inc/mapping.class.php:909
+#: inc/mapping.class.php:726
 msgid "Black drum Max"
 msgstr "Чорний барабан Максимум"
 
-#: inc/mapping.class.php:913
+#: inc/mapping.class.php:729
 msgid "Black drum Utilisé"
 msgstr "Чорний барабан Використано"
 
-#: inc/mapping.class.php:917
+#: inc/mapping.class.php:732
 msgid "Black drum Restant"
 msgstr "Чорний барабан Залишок"
 
-#: inc/mapping.class.php:921
+#: inc/mapping.class.php:735
 msgid "Cyan drum Max"
 msgstr "Блакитний барабан Максимум"
 
-#: inc/mapping.class.php:925
+#: inc/mapping.class.php:738
 msgid "Cyan drum Utilisé"
 msgstr "Блакитний барабан Використано"
 
-#: inc/mapping.class.php:929
+#: inc/mapping.class.php:741
 msgid "Cyan drumRestant"
 msgstr "Блакитний барабан Залишок"
 
-#: inc/mapping.class.php:933
+#: inc/mapping.class.php:744
 msgid "Magenta drum Max"
 msgstr "Пурпурний барабан Максимум"
 
-#: inc/mapping.class.php:937
+#: inc/mapping.class.php:747
 msgid "Magenta drum Utilisé"
 msgstr "Пурпурний барабан Використано"
 
-#: inc/mapping.class.php:941
+#: inc/mapping.class.php:750
 msgid "Magenta drum Restant"
 msgstr "Пурпурний барабан Залишок"
 
-#: inc/mapping.class.php:945
+#: inc/mapping.class.php:753
 msgid "Yellow drum Max"
 msgstr "Жовтий барабан Максимум"
 
-#: inc/mapping.class.php:949
+#: inc/mapping.class.php:756
 msgid "Yellow drum Utilisé"
 msgstr "Жовтий барабан Використано"
 
-#: inc/mapping.class.php:953
+#: inc/mapping.class.php:759
 msgid "Yellow drum Restant"
 msgstr "Жовтий барабан Залишок"
 
-#: inc/mapping.class.php:957
+#: inc/mapping.class.php:762
 msgid "Waste bin Max"
 msgstr "Бункер сміття Максимум"
 
-#: inc/mapping.class.php:961
+#: inc/mapping.class.php:765
 msgid "Waste bin Utilisé"
 msgstr "Бункер сміття Використано"
 
-#: inc/mapping.class.php:965
+#: inc/mapping.class.php:768
 msgid "Waste bin Restant"
 msgstr "Бункер сміття Залишок"
 
-#: inc/mapping.class.php:969
+#: inc/mapping.class.php:771
 msgid "Maintenance kit Max"
 msgstr "Комплект обслуговування Максимум"
 
-#: inc/mapping.class.php:973
+#: inc/mapping.class.php:774
 msgid "Maintenance kit Utilisé"
 msgstr "Комплект обслуговування Використано"
 
-#: inc/mapping.class.php:977
+#: inc/mapping.class.php:777
 msgid "Maintenance kit Restant"
 msgstr "Комплект обслуговування Залишок"
 
-#: inc/mapping.class.php:981
+#: inc/mapping.class.php:780
 msgid "Grey ink cartridge"
 msgstr "Картридж сірих чорнил"
 
-#: inc/mapping.class.php:986 inc/printerlog.class.php:170
+#: inc/mapping.class.php:783 inc/printerlog.class.php:183
 msgid "Total number of printed pages (print)"
 msgstr "Загальна кількість надрукованих сторінок (друк)"
 
-#: inc/mapping.class.php:990 inc/printerlog.class.php:175
+#: inc/mapping.class.php:786 inc/printerlog.class.php:188
 msgid "Number of printed black and white pages (print)"
 msgstr "Надруковано чорно-білих сторінок (друк)"
 
-#: inc/mapping.class.php:994 inc/printerlog.class.php:180
+#: inc/mapping.class.php:789 inc/printerlog.class.php:193
 msgid "Number of printed color pages (print)"
 msgstr "Надруковано кольорових сторінок (друк)"
 
-#: inc/mapping.class.php:998 inc/printerlog.class.php:185
+#: inc/mapping.class.php:792 inc/printerlog.class.php:198
 msgid "Total number of printed pages (copy)"
 msgstr "Загальна кількість надрукованих сторінок (копіювання)"
 
-#: inc/mapping.class.php:1002 inc/printerlog.class.php:190
+#: inc/mapping.class.php:795 inc/printerlog.class.php:203
 msgid "Number of printed black and white pages (copy)"
 msgstr "Надруковано чорно-білих сторінок (копіювання)"
 
-#: inc/mapping.class.php:1006 inc/printerlog.class.php:195
+#: inc/mapping.class.php:798 inc/printerlog.class.php:208
 msgid "Number of printed color pages (copy)"
 msgstr "Надруковано кольорових сторінок (копіювання)"
 
-#: inc/mapping.class.php:1010 inc/printerlog.class.php:200
+#: inc/mapping.class.php:801 inc/printerlog.class.php:213
 msgid "Total number of printed pages (fax)"
 msgstr "Загальна кількість надрукованих сторінок (факс)"
 
-#: inc/mapping.class.php:1014
+#: inc/mapping.class.php:804
 msgid "Total number of large printed pages"
 msgstr "Загальна кількість надрукованих великих сторінок"
 
-#: inc/menu.class.php:132
+#: inc/menu.class.php:170
 msgid "Clean unused files"
 msgstr ""
 
-#: inc/menu.class.php:203
+#: inc/menu.class.php:242
 msgid ""
 "The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
-msgstr "Серверу необхідно знати URL, який використовують агенти для доступу в сервер. Будь ласка вкажіть його на сторінці Загальних налаштувань."
+msgstr ""
 
-#: inc/menu.class.php:227
+#: inc/menu.class.php:254
+msgid "GLPI cron not running, see "
+msgstr ""
+
+#: inc/menu.class.php:255
+msgid "documentation"
+msgstr ""
+
+#: inc/menu.class.php:276
 msgid "Agents management"
 msgstr "Керування агентами"
 
-#: inc/menu.class.php:239
+#: inc/menu.class.php:288
 msgid "General configuration"
 msgstr "Загальні налаштування"
 
-#: inc/menu.class.php:246 inc/profile.class.php:144
+#: inc/menu.class.php:295 inc/profile.class.php:181
 msgid "General"
 msgstr "Загальне"
 
-#: inc/menu.class.php:262 inc/task.class.php:54
+#: inc/menu.class.php:311 inc/task.class.php:70
 msgid "Task management"
 msgstr "Керування завданнями"
 
-#: inc/menu.class.php:266
+#: inc/menu.class.php:315
 msgid "Monitoring / Logs"
 msgstr "Моніторинг / Протоколи"
 
-#: inc/menu.class.php:273
+#: inc/menu.class.php:322
 msgid "Import agent XML file"
 msgstr "Імпортувати XML файл агента"
 
-#: inc/menu.class.php:281 inc/profile.class.php:309
-msgid "Additional computer information"
-msgstr "Додаткова інформація щодо комп’ютера"
+#: inc/menu.class.php:330 inc/profile.class.php:419
+msgid "Computer information"
+msgstr ""
 
-#: inc/menu.class.php:287 inc/timeslot.class.php:61 inc/timeslot.class.php:70
-#: inc/timeslotentry.class.php:70
+#: inc/menu.class.php:336 inc/timeslot.class.php:79 inc/timeslot.class.php:93
+#: inc/timeslotentry.class.php:92
 msgid "Time slot"
 msgstr "Діапазон часу"
 
-#: inc/menu.class.php:293
+#: inc/menu.class.php:342
 msgid "Tasks"
 msgstr "Завдання"
 
-#: inc/menu.class.php:313
+#: inc/menu.class.php:362
 msgid "Ignored import devices"
 msgstr " Пристрої, ігноровані імпортом"
 
-#: inc/menu.class.php:321
+#: inc/menu.class.php:370
 msgid "Computer entity rules"
 msgstr "Правила комп’ютерів організації"
 
-#: inc/menu.class.php:328
+#: inc/menu.class.php:377
 msgid "Computer location rules"
 msgstr "Правила розташування комп’ютерів"
 
-#: inc/menu.class.php:342 inc/ruledictionnarycomputerarch.class.php:53
-#: inc/ruledictionnarycomputerarchcollection.class.php:50
+#: inc/menu.class.php:391 inc/ruledictionnarycomputerarch.class.php:64
+#: inc/ruledictionnarycomputerarchcollection.class.php:71
 msgid "Dictionnary of computer architectures"
 msgstr "Словник архітектур комп’ютерів"
 
-#: inc/menu.class.php:357
+#: inc/menu.class.php:406
 msgid "Rules"
 msgstr "Правила"
 
-#: inc/menu.class.php:407
+#: inc/menu.class.php:428 inc/profile.class.php:354
+msgid "Remote devices to inventory (VMware)"
+msgstr "Віддалені пристрої для інвентаризації (VMware)"
+
+#: inc/menu.class.php:456
 msgid "Discovery status"
 msgstr "Стан виявлення"
 
-#: inc/menu.class.php:415
+#: inc/menu.class.php:464
 msgid "Network inventory status"
 msgstr "Стан інвентаризації мережі"
 
-#: inc/menu.class.php:425
+#: inc/menu.class.php:474
 msgid "SNMP models creation"
 msgstr "Створення моделі SNMP"
 
-#: inc/menu.class.php:432
+#: inc/menu.class.php:481
 msgid "Networking"
 msgstr "Мережа"
 
-#: inc/menu.class.php:472
+#: inc/menu.class.php:521
 msgid "Computer inv."
 msgstr "Computer inv."
 
-#: inc/menu.class.php:478
+#: inc/menu.class.php:527
 msgid "SNMP inv."
 msgstr "SNMP inv."
 
-#: inc/menu.class.php:484
+#: inc/menu.class.php:533
 msgid "Guide"
 msgstr ""
 
-#: inc/menu.class.php:515 inc/menu.class.php:589
+#: inc/menu.class.php:563 inc/menu.class.php:635
 msgid "Statistics"
 msgstr "Статистика"
 
-#: inc/menu.class.php:515 inc/menu.class.php:978
+#: inc/menu.class.php:563 inc/menu.class.php:1028
 msgid "Number of computer inventories of last hours"
 msgstr "Кількість інвентаризованих комп’ютерів за останні години"
 
-#: inc/menu.class.php:527
+#: inc/menu.class.php:575
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
 msgstr "Кроки налаштування FusionInventory для інвентаризації комп’ютерів"
 
-#: inc/menu.class.php:533
+#: inc/menu.class.php:581
 msgid "Configure frequency of agent contact (and so each inventory)"
 msgstr "Налаштувати частоту контактів з агентами (інвентаризації)"
 
-#: inc/menu.class.php:538
+#: inc/menu.class.php:586
 msgid "Configure inventory options"
 msgstr "Налаштувати параметри інвентаризації"
 
-#: inc/menu.class.php:543
+#: inc/menu.class.php:591
 msgid "Define rules for entity"
 msgstr "Визначити правила організації"
 
-#: inc/menu.class.php:548
+#: inc/menu.class.php:596
 msgid "Define rules for location"
 msgstr "Визначити правила розташування"
 
-#: inc/menu.class.php:553
+#: inc/menu.class.php:601
 msgid ""
 "Define rules for import : merge and create new computer (CAUTION: same rules"
 " for SNMP inventory)"
-msgstr "Визначити правила імпорту : об’єднати та створити новий комп’ютер (ОБЕРЕЖНО: ці ж правила застосовуються для SNMP інвентаризації)"
+msgstr ""
+"Визначити правила імпорту : об’єднати та створити новий комп’ютер (ОБЕРЕЖНО:"
+" ці ж правила застосовуються для SNMP інвентаризації)"
 
-#: inc/menu.class.php:614
+#: inc/menu.class.php:660
 msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
-msgstr "Кроки налаштування FusionInventory для SNMP інвентаризації (комутатори, роутери, мережеві принтери)"
+msgstr ""
+"Кроки налаштування FusionInventory для SNMP інвентаризації (комутатори, "
+"роутери, мережеві принтери)"
 
-#: inc/menu.class.php:620
+#: inc/menu.class.php:666
 msgid "Configure SNMP credentials"
 msgstr "Конфігурація параметрів аутентифікації SNMP"
 
-#: inc/menu.class.php:625
+#: inc/menu.class.php:671
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
-msgstr "Визначити правила імпорту : об’єднати та створити новий комп’ютер (ОБЕРЕЖНО: ці ж правила застосовуються для інвентаризації комп’ютерів)"
+msgstr ""
+"Визначити правила імпорту : об’єднати та створити новий комп’ютер (ОБЕРЕЖНО:"
+" ці ж правила застосовуються для інвентаризації комп’ютерів)"
 
-#: inc/menu.class.php:630
+#: inc/menu.class.php:676
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "Мережеве виявлення, застосовується для пошуку пристроїв в мережі"
 
-#: inc/menu.class.php:635
+#: inc/menu.class.php:681
 msgid "Define IP Ranges of your network + related SNMP authentication"
 msgstr "Визначити діапазони IP вашої мережі + відповідну SNMP аутентифікацію"
 
-#: inc/menu.class.php:640
+#: inc/menu.class.php:686
 msgid "Define an agent allowed to discover the network"
 msgstr "Визначити агента для мережевого виявлення"
 
-#: inc/menu.class.php:645
+#: inc/menu.class.php:691
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
-msgstr "Створити нове завдання з попередньо визначеними агентом та модулем виявлення"
+msgstr ""
+"Створити нове завдання з попередньо визначеними агентом та модулем виявлення"
 
-#: inc/menu.class.php:650
+#: inc/menu.class.php:696
 msgid "If you have devices not typed, import them from unmanaged devices"
-msgstr "Якщо ви маєте пристрої невизначеного типу, імпортуйте їх з некерованих пристроїв"
+msgstr ""
+"Якщо ви маєте пристрої невизначеного типу, імпортуйте їх з некерованих "
+"пристроїв"
 
-#: inc/menu.class.php:655
+#: inc/menu.class.php:701
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
-msgstr "Мережева інвентаризація, використовується для завершення інвентаризації виявлених пристроїв"
+msgstr ""
+"Мережева інвентаризація, використовується для завершення інвентаризації "
+"виявлених пристроїв"
 
-#: inc/menu.class.php:660
+#: inc/menu.class.php:706
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr "Визначити агента для інвентаризації мережі з допомогою SNMP"
 
-#: inc/menu.class.php:665
+#: inc/menu.class.php:711
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
 "previously"
-msgstr "Створити нове завдання з попередньо визначеними агентом та модулем мережевої інвентаризації"
+msgstr ""
+"Створити нове завдання з попередньо визначеними агентом та модулем мережевої"
+" інвентаризації"
 
-#: inc/menu.class.php:794
+#: inc/menu.class.php:844
 msgid "FusionInventory computers"
 msgstr ""
 
-#: inc/menu.class.php:799
+#: inc/menu.class.php:849
 msgid "Other computers"
 msgstr ""
 
-#: inc/menu.class.php:838
+#: inc/menu.class.php:888
 msgid "NetworkEquipments (SNMP)"
 msgstr ""
 
-#: inc/menu.class.php:843
+#: inc/menu.class.php:893
 msgid "Printers (SNMP)"
 msgstr ""
 
-#: inc/menu.class.php:879
+#: inc/menu.class.php:929
 msgid "SNMP switch network ports linked"
 msgstr ""
 
-#: inc/menu.class.php:884
+#: inc/menu.class.php:934
 msgid "SNMP switch network ports not linked"
 msgstr ""
 
-#: inc/menu.class.php:908
+#: inc/menu.class.php:958
 msgid "Ports connected"
 msgstr ""
 
-#: inc/menu.class.php:913
+#: inc/menu.class.php:963
 msgid "Ports not connected"
 msgstr ""
 
-#: inc/menu.class.php:939
+#: inc/menu.class.php:989
 msgid "Prepared and waiting"
 msgstr ""
 
-#: inc/menu.class.php:944 inc/task.view.class.php:213
-#: inc/task.view.class.php:289
-msgid "Running"
-msgstr "Виконуються"
-
-#: inc/menu.class.php:949
+#: inc/menu.class.php:999
 msgid "Successfull"
 msgstr ""
 
-#: inc/menu.class.php:954 inc/task.view.class.php:211
-#: inc/task.view.class.php:287
-msgid "In error"
-msgstr "Є помилки"
-
-#: inc/menu.class.php:983
+#: inc/menu.class.php:1032
 msgid "Deployment"
 msgstr "Розгортання"
 
-#: inc/networkequipment.class.php:54 inc/printer.class.php:65
+#: inc/networkequipment.class.php:75 inc/printer.class.php:97
 msgid "FusionInventory SNMP"
 msgstr "FusionInventory SNMP"
 
-#: inc/networkequipment.class.php:140
+#: inc/networkequipment.class.php:182
 msgid "Display the view"
 msgstr "Показати вигляд"
 
-#: inc/networkequipment.class.php:142
+#: inc/networkequipment.class.php:184
 msgid "If you prefer, you can display the view"
 msgstr "За необхідності можете переглянути вигляд"
 
-#: inc/networkequipment.class.php:463 inc/printer.class.php:140
+#: inc/networkequipment.class.php:525 inc/printer.class.php:183
 msgid "SNMP information"
 msgstr "SNMP інформація"
 
-#: inc/networkequipment.class.php:502
+#: inc/networkequipment.class.php:564
 msgid "Memory usage (in %)"
 msgstr "Використання пам’яті (%)"
 
-#: inc/networkequipment.class.php:516
+#: inc/networkequipment.class.php:578
 msgid "Datas not available"
 msgstr "Даних немає"
 
-#: inc/networkequipment.class.php:572
+#: inc/networkequipment.class.php:634
 msgid "Uptime"
 msgstr "Час роботи"
 
-#: inc/networkequipment.class.php:599 inc/taskjob.class.php:1174
+#: inc/networkequipment.class.php:661 inc/taskjob.class.php:1186
 msgid "day(s)"
 msgstr "дні"
 
-#: inc/networkequipment.class.php:600 inc/taskjob.class.php:1168
+#: inc/networkequipment.class.php:662 inc/taskjob.class.php:1181
 msgid "hour(s)"
 msgstr "години"
 
-#: inc/networkequipment.class.php:602
+#: inc/networkequipment.class.php:664
 msgid "sec(s)"
 msgstr "секунди"
 
-#: inc/networkequipment.class.php:622
+#: inc/networkequipment.class.php:693
 msgid "Ports array"
 msgstr "Масив портів"
 
-#: inc/networkequipment.class.php:655
+#: inc/networkequipment.class.php:726
 msgid "Legend"
 msgstr "Пояснення"
 
-#: inc/networkequipment.class.php:665
+#: inc/networkequipment.class.php:736
 msgid "Connection with a switch or a server in trunk or tagged mode"
 msgstr "Зв’язок з комутатором або сервером в режимі trunk або tagged"
 
-#: inc/networkequipment.class.php:671
+#: inc/networkequipment.class.php:742
 msgid "Other connections (with a computer, a printer...)"
 msgstr "Інші зв’язки (з комп’ютером, принтером, тощо)"
 
-#: inc/networkequipment.class.php:685
+#: inc/networkequipment.class.php:756
 msgid "Monitoring"
 msgstr "Моніторинг"
 
-#: inc/networkequipment.class.php:709
+#: inc/networkequipment.class.php:780
 msgid "Traffic received/sent"
 msgstr "Обсяги надіслані/отримані"
 
-#: inc/networkequipment.class.php:713
+#: inc/networkequipment.class.php:784
 msgid "Errors received/sent"
 msgstr "Помилки надіслані/отримані"
 
-#: inc/networkequipment.class.php:717 inc/networkport.class.php:101
+#: inc/networkequipment.class.php:788 inc/networkport.class.php:131
 msgid "Duplex"
 msgstr "Дуплекс"
 
-#: inc/networkequipment.class.php:737 inc/networkport.class.php:121
+#: inc/networkequipment.class.php:808 inc/networkport.class.php:151
 msgid "Port not connected since"
 msgstr "Порт не під’єднано з"
 
-#: inc/networkequipment.class.php:903
+#: inc/networkequipment.class.php:975
 msgid "Half"
 msgstr "Половина"
 
-#: inc/networkequipment.class.php:907
+#: inc/networkequipment.class.php:979
 msgid "Full"
 msgstr "Повний"
 
-#: inc/networkport.class.php:89
+#: inc/networkport.class.php:119
 msgid "Last change"
 msgstr "Остання зміна"
 
-#: inc/networkport.class.php:93
+#: inc/networkport.class.php:123
 msgid "Number of bytes received / Number of bytes sent"
 msgstr "Кількість байт надіслано/отримано"
 
-#: inc/networkport.class.php:97
+#: inc/networkport.class.php:127
 msgid "Number of input errors / Number of errors in reception"
 msgstr "Кількість вхідних помилок / отриманих помилок"
 
-#: inc/networkportconnectionlog.class.php:59
+#: inc/networkportconnectionlog.class.php:73
 msgid "PID"
 msgstr "PID"
 
-#: inc/networkportconnectionlog.class.php:134
-#: inc/networkportconnectionlog.class.php:160 inc/networkportlog.class.php:448
-#: inc/networkportlog.class.php:469
+#: inc/networkportconnectionlog.class.php:148
+#: inc/networkportconnectionlog.class.php:174 inc/networkportlog.class.php:483
+#: inc/networkportlog.class.php:504
 msgid "on"
 msgstr "on"
 
-#: inc/networkportlog.class.php:62
+#: inc/networkportlog.class.php:68
 msgid "FusionInventory historical"
 msgstr "FusionInventory історично"
 
-#: inc/networkportlog.class.php:127
+#: inc/networkportlog.class.php:137
 msgid "List of fields to history"
 msgstr "Перелік полів для запам’ятовування"
 
-#: inc/networkportlog.class.php:212
+#: inc/networkportlog.class.php:222
 msgid "Clean history"
 msgstr "Очистити історію"
 
-#: inc/networkporttype.class.php:358
+#: inc/networkporttype.class.php:380
 msgid "Ports types to import (for network equipments)"
 msgstr "Типи портів до імпорту (для мережевого обладнання)"
 
-#: inc/printercartridge.class.php:80
+#: inc/printercartridge.class.php:98
 msgid "Cartridge(s)"
 msgstr "Картриджи"
 
-#: inc/printercartridge.class.php:114
+#: inc/printercartridge.class.php:132
 msgid "remaining pages"
 msgstr "залишилось сторінок"
 
-#: inc/printerlog.class.php:53 inc/printerlog.class.php:323
+#: inc/printerlog.class.php:66 inc/printerlog.class.php:365
 msgid "History meter printer"
 msgstr "Історія лічильників принтера"
 
-#: inc/printerlog.class.php:287
+#: inc/printerlog.class.php:329
 msgid "Total printed pages"
 msgstr "Всього надруковано сторінок"
 
-#: inc/printerlog.class.php:291
+#: inc/printerlog.class.php:333
 msgid "Pages / day"
 msgstr "Сторінок щоденно"
 
-#: inc/printerlog.class.php:328
+#: inc/printerlog.class.php:370
 msgid "Meter"
 msgstr "Лічильник"
 
-#: inc/printerlog.class.php:350
+#: inc/printerlog.class.php:392
 msgid "Check All"
 msgstr "Позначити все"
 
-#: inc/printerlog.class.php:353
+#: inc/printerlog.class.php:395
 msgid "Uncheck All"
 msgstr "Зняти всі позначки"
 
-#: inc/printerlog.class.php:485
+#: inc/printerlog.class.php:533
 msgid "Time unit"
 msgstr "Ліміт часу"
 
-#: inc/printerlog.class.php:490
+#: inc/printerlog.class.php:538
 msgid "Year"
 msgstr ""
 
-#: inc/printerlog.class.php:502
+#: inc/printerlog.class.php:550
 msgid "Display"
 msgstr "Показати"
 
-#: inc/printerlog.class.php:504
+#: inc/printerlog.class.php:552
 msgid "Total counter"
 msgstr "Загальний лічильник"
 
-#: inc/printerlog.class.php:506
+#: inc/printerlog.class.php:554
 msgid "pages per day"
 msgstr "сторінок в день"
 
-#: inc/printerlog.class.php:521
+#: inc/printerlog.class.php:569
 msgid "Printers to compare"
 msgstr "Принтери для порівняння"
 
-#: inc/printerlog.class.php:529
+#: inc/printerlog.class.php:577
 msgid "Add a printer"
 msgstr "Додати принтер"
 
-#: inc/printerlog.class.php:545
+#: inc/printerlog.class.php:593
 msgid "Remove a printer"
 msgstr "Видалити принтер"
 
-#: inc/printerlog.class.php:671
+#: inc/printerlog.class.php:724
 msgid "Too datas to display"
 msgstr "Забагато даних для відображення"
 
-#: inc/profile.class.php:154
+#: inc/profile.class.php:191
 msgid "Inventory"
 msgstr "Інвентаризація"
 
-#: inc/profile.class.php:159
+#: inc/profile.class.php:196 inc/profile.class.php:239
 msgid "Software deployment"
 msgstr "Розгортання ПЗ"
 
-#: inc/profile.class.php:209
+#: inc/profile.class.php:234
+msgid "Self deploy package"
+msgstr ""
+
+#: inc/profile.class.php:304
 msgid "Fields blacklist"
 msgstr "Чорний список полів"
 
-#: inc/profile.class.php:258
+#: inc/profile.class.php:363
 msgid "Network equipment SNMP"
 msgstr "Мережеве обладнання SNMP"
 
-#: inc/profile.class.php:261
+#: inc/profile.class.php:366
 msgid "Printer SNMP"
 msgstr "Принтер SNMP"
 
-#: inc/profile.class.php:264
+#: inc/profile.class.php:369
 msgid "Unmanaged devices"
 msgstr "Невизначені пристрої"
 
-#: inc/profile.class.php:267
+#: inc/profile.class.php:372
 msgid "computer XML manual import"
 msgstr "Ручний імпорт XML комп’ютера"
 
-#: inc/profile.class.php:270
+#: inc/profile.class.php:375
 msgid "Printers report"
 msgstr "Звіт щодо принтерів"
 
-#: inc/profile.class.php:287
+#: inc/profile.class.php:397
 msgid "Menu"
 msgstr "Меню"
 
-#: inc/profile.class.php:290 inc/staticmisc.class.php:287
+#: inc/profile.class.php:400 inc/staticmisc.class.php:295
 msgid "Agents"
 msgstr "Агенти"
 
-#: inc/profile.class.php:293
+#: inc/profile.class.php:403
 msgid "Agent remote control"
 msgstr "Віддалений контроль Агента"
 
-#: inc/profile.class.php:297
+#: inc/profile.class.php:407
 msgid "Configuration"
 msgstr "Конфігурація"
 
-#: inc/profile.class.php:303 inc/staticmisc.class.php:62
+#: inc/profile.class.php:413 inc/staticmisc.class.php:70
 msgid "Wake On LAN"
 msgstr "Wake On LAN"
 
-#: inc/rulematchedlog.class.php:74 inc/rulematchedlog.class.php:79
+#: inc/rulematchedlog.class.php:104 inc/rulematchedlog.class.php:108
 msgid "Import information"
 msgstr "Інформація імпорту"
 
-#: inc/rulematchedlog.class.php:152 inc/rulematchedlog.class.php:218
+#: inc/rulematchedlog.class.php:203 inc/rulematchedlog.class.php:273
 msgid "Rule import logs"
 msgstr "Протоколи правил імпорту"
 
-#: inc/snmpmodelimportexport.class.php:134
-msgid "SNMP model import"
-msgstr "Імпорт моделі SNMP"
-
-#: inc/snmpmodelimportexport.class.php:161
-msgid "Mass import of models"
-msgstr "Масовий імпорт моделей"
-
-#: inc/snmpmodelimportexport.class.php:165
-msgid "Mass import of models in folder plugins/fusioninventory/snmpmodels/"
-msgstr "Масовий імпорт моделей з каталогу plugins/fusioninventory/snmpmodels/"
-
-#: inc/snmpmodelimportexport.class.php:217
-msgid "Model already exists"
-msgstr "Модель вже існую"
-
-#: inc/snmpmodelimportexport.class.php:490
-#: inc/snmpmodelimportexport.class.php:495
-msgid "Importing SNMP models, please wait..."
-msgstr "Імпортую моделі SNMP, зачекайте..."
-
-#: inc/statediscovery.class.php:137 inc/stateinventory.class.php:90
-#: inc/taskjoblog.class.php:188 inc/taskjoblog.class.php:270
-#: inc/taskjoblog.class.php:338 inc/taskjobstate.class.php:223
+#: inc/statediscovery.class.php:171 inc/stateinventory.class.php:115
+#: inc/taskjoblog.class.php:253 inc/taskjobstate.class.php:290
 msgid "Unique id"
 msgstr "Унікальний id"
 
-#: inc/statediscovery.class.php:138 inc/stateinventory.class.php:91
+#: inc/statediscovery.class.php:172 inc/stateinventory.class.php:116
 msgid "Task job"
 msgstr "Робота завдання"
 
-#: inc/statediscovery.class.php:145
+#: inc/statediscovery.class.php:179
 msgid "Total discovery devices"
 msgstr "Всього пристроїв виявлено"
 
-#: inc/statediscovery.class.php:146
+#: inc/statediscovery.class.php:180
 msgid "Devices not imported"
 msgstr "Пристрої, що не імпортовані"
 
-#: inc/statediscovery.class.php:147
+#: inc/statediscovery.class.php:181
 msgid "Devices linked"
 msgstr "Пов’язані пристрої"
 
-#: inc/statediscovery.class.php:148
+#: inc/statediscovery.class.php:182
 msgid "Devices imported"
 msgstr "Імпортовані пристрої"
 
-#: inc/statediscovery.class.php:213 inc/stateinventory.class.php:158
-#: inc/task.view.class.php:214 inc/task.view.class.php:290
-#: inc/taskjoblog.class.php:68 inc/taskjoblog.class.php:673
-#: inc/taskjoblog.class.php:1019 inc/taskjobstate.class.php:74
-msgid "Prepared"
-msgstr "Підготовлено"
-
-#: inc/statediscovery.class.php:218 inc/stateinventory.class.php:163
-#: inc/taskjoblog.class.php:70 inc/taskjoblog.class.php:679
-#: inc/taskjoblog.class.php:803 inc/taskjoblog.class.php:1024
+#: inc/statediscovery.class.php:252 inc/stateinventory.class.php:188
+#: inc/taskjoblog.class.php:117 inc/taskjoblog.class.php:584
+#: inc/taskjoblog.class.php:704 inc/taskjoblog.class.php:919
 msgid "Started"
 msgstr "Розпочато"
 
-#: inc/statediscovery.class.php:222 inc/stateinventory.class.php:167
-#: inc/taskjobstate.class.php:181
+#: inc/statediscovery.class.php:256 inc/stateinventory.class.php:192
+#: inc/taskjobstate.class.php:248
 msgid "Finished tasks"
 msgstr "Закінчені завдання"
 
-#: inc/stateinventory.class.php:97
+#: inc/stateinventory.class.php:122
 msgid "Number per second"
 msgstr "Кількість в секунду"
 
-#: inc/stateinventory.class.php:99
+#: inc/stateinventory.class.php:124
 msgid "To inventory"
 msgstr "До інвентаризації"
 
-#: inc/stateinventory.class.php:100
+#: inc/stateinventory.class.php:125
 msgid "Error(s)"
 msgstr "Помилок"
 
-#: inc/staticmisc.class.php:78
+#: inc/staticmisc.class.php:86
 msgid "VMware host remote inventory"
 msgstr "Віддалена інвентаризація VMware host"
 
-#: inc/staticmisc.class.php:98
-msgid "Package install"
-msgstr "Встановлення пакету"
-
 #: inc/staticmisc.class.php:106
-msgid "Package uninstall"
-msgstr "Деінсталяція пакету"
+msgid "Package deploy"
+msgstr ""
 
 #: inc/staticmisc.class.php:114
 msgid "Collect data"
 msgstr "Зібрати дані"
 
-#: inc/staticmisc.class.php:431 inc/staticmisc.class.php:437
-#: inc/taskjob.class.php:179 inc/taskjob.class.php:505
-#: inc/taskjob.class.php:1205 inc/taskjob.view.class.php:418
+#: inc/staticmisc.class.php:481 inc/staticmisc.class.php:487
+#: inc/taskjob.class.php:219 inc/taskjob.class.php:535
+#: inc/taskjob.class.php:1214
 msgid "Auto managenement dynamic of agents"
 msgstr "Динамічне автоматичне керування Агентами"
 
-#: inc/staticmisc.class.php:535
+#: inc/staticmisc.class.php:598
 msgid "Fusinv"
 msgstr "Fusinv"
 
-#: inc/task.class.php:81 inc/task.view.class.php:415
+#: inc/task.class.php:107 inc/task.view.class.php:485
 msgid "Schedule start"
 msgstr "Початок розкладу"
 
-#: inc/task.class.php:87 inc/task.view.class.php:421
+#: inc/task.class.php:113 inc/task.view.class.php:491
 msgid "Schedule end"
 msgstr "Закінчення розкладу"
 
-#: inc/task.class.php:313
+#: inc/task.class.php:327
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
 "error."
-msgstr "Агент запитує конфігурацію, що вже надсилалась йому сервером. Схоже, що агент має критичну помилку."
+msgstr ""
+"Агент запитує конфігурацію, що вже надсилалась йому сервером. Схоже, що "
+"агент має критичну помилку."
 
-#: inc/task.class.php:322
+#: inc/task.class.php:336
 msgid "The task has been deactivated after preparation of this job."
 msgstr "Завдання було деактивовано після підготовки цієї роботи."
 
-#: inc/task.class.php:340
+#: inc/task.class.php:354
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr "Ця робота не може більше виконуватись згідно розкладу завдання."
 
-#: inc/task.class.php:372
+#: inc/task.class.php:384
 msgid "This job can not be executed anymore due to the task's timeslot."
-msgstr "Ця робота не може більше виконуватись згідно часового діапазону завдання."
+msgstr ""
+"Ця робота не може більше виконуватись згідно часового діапазону завдання."
 
-#: inc/task.class.php:389
+#: inc/task.class.php:400
 msgid "This agent does not belong anymore in the actors defined in the job."
-msgstr "Цей агент більше не відноситься до агентів, призначених до цієї роботи."
+msgstr ""
+"Цей агент більше не відноситься до агентів, призначених до цієї роботи."
 
-#: inc/task.class.php:591
+#: inc/task.class.php:618
 msgid "Device no longer defined in definition of job"
 msgstr "Пристрій більше не входить у визначення роботи."
 
-#: inc/task.class.php:1433
+#: inc/task.class.php:1464
 msgid "Task has been disabled"
 msgstr "Завдання вимкнено"
 
-#: inc/task.class.php:1504
+#: inc/task.class.php:1539
 msgid "Create a job for each group"
 msgstr "Створити завдання для кожної групи"
 
-#: inc/task.view.class.php:81
+#: inc/task.view.class.php:115
 msgid "To Be Done"
 msgstr "Ще не зроблено"
 
-#: inc/task.view.class.php:89
+#: inc/task.view.class.php:128
 msgid "Off"
 msgstr "Off"
 
-#: inc/task.view.class.php:101
+#: inc/task.view.class.php:140
 msgid "refresh interval"
 msgstr "оновити діапазон"
 
-#: inc/task.view.class.php:181
+#: inc/task.view.class.php:219
 msgid "Show/Hide details"
 msgstr "Показати/Сховати деталі"
 
-#: inc/task.view.class.php:210 inc/task.view.class.php:286
-msgid "Not done yet"
-msgstr "Ще не виконано"
-
-#: inc/task.view.class.php:212 inc/task.view.class.php:288
-msgid "Successful"
-msgstr "Успішно"
-
-#: inc/task.view.class.php:215 inc/task.view.class.php:291
-#: inc/taskjobstate.class.php:79
-msgid "Cancelled"
-msgstr "Перервано"
-
-#: inc/task.view.class.php:297
+#: inc/task.view.class.php:348
 msgid "N/A"
 msgstr "N/A"
 
-#: inc/task.view.class.php:325
+#: inc/task.view.class.php:384
 msgid "Show/Hide Agent details"
 msgstr "Показати/Сховати деталі Агента"
 
-#: inc/task.view.class.php:352
+#: inc/task.view.class.php:419
 msgid "Execution"
 msgstr "Виконання"
 
-#: inc/task.view.class.php:427
+#: inc/task.view.class.php:472
+msgid "Re-prepare a target-actor if previous run is successful"
+msgstr ""
+
+#: inc/task.view.class.php:497
 msgid "Timeslot"
 msgstr "Проміжок часу"
 
-#: inc/task.view.class.php:432
+#: inc/task.view.class.php:502
 msgid "Agent wakeup interval (in minutes)"
 msgstr ""
 
-#: inc/task.view.class.php:438
+#: inc/task.view.class.php:508
 msgid "Number of agents to wake up"
 msgstr ""
 
-#: inc/taskjob.class.php:144 inc/taskjob.class.php:1143
-#: inc/taskjob.class.php:1716 inc/taskjoblog.class.php:569
+#: inc/taskjob.class.php:185 inc/taskjob.class.php:1157
+#: inc/taskjob.class.php:1489 inc/taskjoblog.class.php:476
 msgid "Definition"
 msgstr "Визначення"
 
-#: inc/taskjob.class.php:146 inc/taskjob.class.php:1144
-#: inc/taskjob.class.php:1733
+#: inc/taskjob.class.php:187 inc/taskjob.class.php:1158
+#: inc/taskjob.class.php:1506
 msgid "Action"
 msgstr "Дія"
 
-#: inc/taskjob.class.php:182 inc/taskjob.class.php:507
-#: inc/taskjob.class.php:1209 inc/taskjob.view.class.php:423
+#: inc/taskjob.class.php:221 inc/taskjob.class.php:537
+#: inc/taskjob.class.php:1216
 msgid "Auto managenement dynamic of agents (same subnet)"
 msgstr "Динамічне автоматичне керування Агентами (в тій самій підмережі)"
 
-#: inc/taskjob.class.php:199
+#: inc/taskjob.class.php:237
 msgid "Selection"
 msgstr "Вибір"
 
-#: inc/taskjob.class.php:690
+#: inc/taskjob.class.php:716
 msgid "Unable to run task because some jobs is running yet!"
 msgstr "Неможливо запустити задання, оскільки деякі роботи ще виконуються!"
 
-#: inc/taskjob.class.php:760
+#: inc/taskjob.class.php:786
 msgid "Action on this device"
 msgstr "Дії щодо цього пристрою"
 
-#: inc/taskjob.class.php:788 inc/taskjob.class.php:1141
+#: inc/taskjob.class.php:814 inc/taskjob.class.php:1155
 msgid "Scheduled date"
 msgstr "Запланована дата"
 
-#: inc/taskjob.class.php:1142
+#: inc/taskjob.class.php:1156
 msgid "Periodicity"
 msgstr "Періодичність"
 
-#: inc/taskjob.class.php:1367 inc/taskjob.class.php:1405
-msgid "Force start"
-msgstr "Форсувати"
-
-#: inc/taskjob.class.php:1578
-msgid "Action after finish running task"
-msgstr "Дія після завершення виконання завдання"
-
-#: inc/taskjob.class.php:1583
-msgid "Delete this task and finish"
-msgstr "Видалити це завдання та закінчити"
-
-#: inc/taskjob.class.php:1588
-msgid "Finish"
-msgstr "Закінчити"
-
-#: inc/taskjob.class.php:1593
-msgid "Run again this task"
-msgstr "Запустити це завдання знову"
-
-#: inc/taskjob.class.php:1784 inc/taskjoblog.class.php:478
-#: inc/taskjoblog.class.php:921 inc/taskjoblog.class.php:979
+#: inc/taskjob.class.php:1561 inc/taskjoblog.class.php:387
+#: inc/taskjoblog.class.php:821 inc/taskjoblog.class.php:877
 msgid "Force the end"
 msgstr "Форсувати закінчення"
 
-#: inc/taskjob.view.class.php:60
+#: inc/taskjob.view.class.php:82
 msgid "Jobs configuration"
 msgstr "Конфігурація Робіт"
 
-#: inc/taskjob.view.class.php:183
+#: inc/taskjob.view.class.php:197
 msgid "Add a job"
 msgstr "Додати Роботу"
 
-#: inc/taskjob.view.class.php:313
+#: inc/taskjob.view.class.php:372
 msgid "Actor Type"
 msgstr "Тип виконавця"
 
-#: inc/taskjob.view.class.php:317
+#: inc/taskjob.view.class.php:376
 msgid "Target Type"
 msgstr "Тип Мети"
 
-#: inc/taskjob.view.class.php:349
+#: inc/taskjob.view.class.php:417
 msgid "Actor Item"
 msgstr "Виконавець"
 
-#: inc/taskjob.view.class.php:353
+#: inc/taskjob.view.class.php:421
 msgid "Target Item"
 msgstr "Мета"
 
-#: inc/taskjob.view.class.php:612 inc/taskjob.view.class.php:616
+#: inc/taskjob.view.class.php:542 inc/taskjob.view.class.php:545
 msgid "New action"
 msgstr "Нова дія"
 
-#: inc/taskjob.view.class.php:683
+#: inc/taskjob.view.class.php:573
 msgid "Module method"
 msgstr "Модуль методу"
 
-#: inc/taskjob.view.class.php:725 inc/taskjob.view.class.php:755
+#: inc/taskjob.view.class.php:592 inc/taskjob.view.class.php:622
 msgid "Targets"
 msgstr "Цілі"
 
-#: inc/taskjob.view.class.php:730
+#: inc/taskjob.view.class.php:597
 msgid "The items that should be applied for this job."
 msgstr "Елементи, які застосовуються для цієї Роботи"
 
-#: inc/taskjob.view.class.php:736 inc/taskjob.view.class.php:777
+#: inc/taskjob.view.class.php:603 inc/taskjob.view.class.php:644
 msgid "Actors"
 msgstr "Виконавці"
 
-#: inc/taskjob.view.class.php:740
+#: inc/taskjob.view.class.php:607
 msgid "The items that should carry out those targets."
 msgstr "Елементи, які займаються цими цілями"
 
-#: inc/taskjob.view.class.php:763 inc/taskjob.view.class.php:785
+#: inc/taskjob.view.class.php:630 inc/taskjob.view.class.php:652
 msgid "Clear list"
 msgstr "Очистити список"
 
-#: inc/taskjob.view.class.php:767 inc/taskjob.view.class.php:789
+#: inc/taskjob.view.class.php:634 inc/taskjob.view.class.php:656
 msgid "Delete selected items"
 msgstr "Видалити обране"
 
-#: inc/taskjob.view.class.php:892
+#: inc/taskjob.view.class.php:681
 msgid "Cancel modifications"
 msgstr "Перервати зміни"
 
-#: inc/taskjob.view.class.php:898
+#: inc/taskjob.view.class.php:687
 msgid "Purge"
 msgstr "Витерти"
 
-#: inc/taskjob.view.class.php:900
+#: inc/taskjob.view.class.php:689
 msgid "Confirm the final deletion ?"
 msgstr "Підтвердити повне видалення ?"
 
-#: inc/taskjoblog.class.php:74 inc/taskjoblog.class.php:687
-#: inc/taskjoblog.class.php:804 inc/taskjoblog.class.php:1031
+#: inc/taskjoblog.class.php:119 inc/taskjoblog.class.php:592
+#: inc/taskjoblog.class.php:705 inc/taskjoblog.class.php:925
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/taskjoblog.class.php:76 inc/taskjoblog.class.php:695
-#: inc/taskjoblog.class.php:805 inc/taskjoblog.class.php:1038
+#: inc/taskjoblog.class.php:120 inc/taskjoblog.class.php:600
+#: inc/taskjoblog.class.php:706 inc/taskjoblog.class.php:931
 msgid "Error / rescheduled"
 msgstr "Помилка / перенесено"
 
-#: inc/taskjoblog.class.php:80 inc/taskjoblog.class.php:711
+#: inc/taskjoblog.class.php:122 inc/taskjoblog.class.php:616
 msgid "Info"
 msgstr "Інформація"
 
-#: inc/taskjoblog.class.php:271 inc/taskjoblog.class.php:531
+#: inc/taskjoblog.class.php:438
 msgid "Process number"
 msgstr "Кількість процесів"
 
-#: inc/taskjoblog.class.php:915 inc/taskjoblog.class.php:966
+#: inc/taskjoblog.class.php:815 inc/taskjoblog.class.php:864
 msgid "View logs of this execution"
 msgstr "Переглянути протоколи цього виконання"
 
-#: inc/taskjoblog.class.php:936 inc/taskjoblog.class.php:991
+#: inc/taskjoblog.class.php:836 inc/taskjoblog.class.php:889
 msgid "See all executions"
 msgstr "Дивитись всі виконання"
 
-#: inc/taskjoblog.class.php:1053
+#: inc/taskjoblog.class.php:944
 msgid "unknown"
 msgstr "невідомо"
 
-#: inc/taskjoblog.class.php:1124
+#: inc/taskjoblog.class.php:978
 msgid "devices queried"
 msgstr "опитано пристроїв"
 
-#: inc/taskjoblog.class.php:1125
+#: inc/taskjoblog.class.php:979
 msgid "devices found"
 msgstr "знайдено пристроїв"
 
-#: inc/taskjoblog.class.php:1126
+#: inc/taskjoblog.class.php:980
 msgid ""
 "SNMP equipment definition isn't up to date on agent. For the next run, it "
 "will get new version from server."
-msgstr "Агент не має свіжого визначення SNMP обладнання. При наступному запуску він отримає нову версію з сервера."
+msgstr ""
+"Агент не має свіжого визначення SNMP обладнання. При наступному запуску він "
+"отримає нову версію з сервера."
 
-#: inc/taskjoblog.class.php:1127
+#: inc/taskjoblog.class.php:981
 msgid "Add the item"
 msgstr "Додати елемент"
 
-#: inc/taskjoblog.class.php:1128
+#: inc/taskjoblog.class.php:982
 msgid "Update the item"
 msgstr "Оновити елемент"
 
-#: inc/taskjoblog.class.php:1129
+#: inc/taskjoblog.class.php:983
 msgid "Inventory started"
 msgstr "Інвентаризацію розпочато"
 
-#: inc/taskjoblog.class.php:1130
+#: inc/taskjoblog.class.php:984
 msgid "Detail"
 msgstr "Деталі"
 
-#: inc/taskjoblog.class.php:1131
+#: inc/taskjoblog.class.php:985
 msgid "Agent communication error, impossible to start agent"
 msgstr "Помилка зв’язку з Агентом, його неможливо запустити"
 
-#: inc/taskjoblog.class.php:1132
+#: inc/taskjoblog.class.php:986
 msgid "Agent stopped/crashed"
 msgstr "Агент зупинений/поламаний"
 
-#: inc/taskjoblog.class.php:1204
+#: inc/taskjoblog.class.php:1075
 msgid "Completion"
 msgstr "Завершення"
 
-#: inc/taskjobstate.class.php:75
+#: inc/taskjobstate.class.php:134
 msgid "Server has sent data to the agent"
 msgstr "Сервер надіслав інформацію Агенту"
 
-#: inc/taskjobstate.class.php:76
+#: inc/taskjobstate.class.php:135
 msgid "Agent replied with data to the server"
 msgstr "Агент відповів серверу інформацією"
 
-#: inc/taskjobstate.class.php:77
+#: inc/taskjobstate.class.php:136
 msgid "Finished"
 msgstr "Закінчено"
 
-#: inc/taskjobstate.class.php:174
+#: inc/taskjobstate.class.php:241
 msgid "Running tasks"
 msgstr "Завдання, що виконуються"
 
-#: inc/timeslotentry.class.php:61
+#: inc/timeslotentry.class.php:78
 msgid "Time slot entry"
 msgstr "Поле діапазону часу"
 
-#: inc/timeslotentry.class.php:109
+#: inc/timeslotentry.class.php:135
 msgid "Start time"
 msgstr "Час початку"
 
-#: inc/timeslotentry.class.php:135
+#: inc/timeslotentry.class.php:161
 msgid "End time"
 msgstr "Час закінчення"
 
-#: inc/unmanaged.class.php:56 inc/unmanaged.class.php:90
+#: inc/unmanaged.class.php:77 inc/unmanaged.class.php:130
 msgid "Unmanaged device"
 msgstr "Невизначений пристрій"
 
-#: inc/unmanaged.class.php:128 inc/unmanaged.class.php:388
+#: inc/unmanaged.class.php:168 inc/unmanaged.class.php:438
 msgid "Network hub"
 msgstr "Мережевий концентратор"
 
-#: inc/unmanaged.class.php:376
+#: inc/unmanaged.class.php:426
 msgid "Approved devices"
 msgstr "Затверджені пристрої"
 
-#: inc/unmanaged.class.php:460
+#: inc/unmanaged.class.php:506
 msgid "Import unmanaged device into asset"
 msgstr "Імпортувати невизначені пристрої до активів"
 
-#: report/computer_last_inventory.php:73
+#: report/computer_last_inventory.php:75
 msgid "Number of days (minimum) since last inventory"
 msgstr "Кількість днів (мінімум) з останньої інвентаризації"
