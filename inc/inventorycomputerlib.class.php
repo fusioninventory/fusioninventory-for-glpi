@@ -991,8 +991,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                             'computers_id'        => $computers_id,
                             'softwareversions_id' => $softwareversions_id,
                             'is_dynamic'          => 1,
-                            'entities_id'         => $computer->fields['entities_id']
+                            'entities_id'         => $computer->fields['entities_id'],
+                            'date_install'        => 'NULL'
                             );
+                        if (isset($a_software['date_install'])) {
+                           $a_tmp['date_install'] = $a_software['date_install'];
+                        }
                         $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                      }
                      $this->addSoftwareVersionsComputer($a_toinsert);
