@@ -5191,18 +5191,17 @@ function do_deploypackage_migration($migration) {
 
    $a_table['renamefields'] = array();
 
-   $a_table['keys'] = array(
-      array(
+   $a_table['keys']   = array();
+   $a_table['keys'][] = array(
          'field' => 'entities_id',
          'name' => '',
-         'type' => 'KEY'
-      ),
-      array(
+         'type' => 'INDEX'
+      );
+   $a_table['keys'][] = array(
          'field' => 'date_mod',
          'name' => '',
-         'type' => 'KEY'
-      ),
-   );
+         'type' => 'INDEX'
+      );
 
    $a_table['oldkeys'] = array();
 
@@ -5221,15 +5220,29 @@ function do_deploypackage_migration($migration) {
 
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/deploypackage.class.php");
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $installs = getAllDatasFromTable($order_table,
+              "`type`='0'");
+      foreach ($installs as $install) {
+         $pfDeployPackage->getFromDB($install['plugin_fusioninventory_deploypackages_id']);
+         $input = array(
+             'id'   => $pfDeployPackage->fields['id'],
+             'json' => addslashes($install['json']),
+         );
+         $pfDeployPackage->update($input);
+      }
+
       $uninstalls = getAllDatasFromTable($order_table,
               "`type`='1'");
       foreach ($uninstalls as $uninstall) {
          if (countElementsInTable($order_table, "`type`='0' "
-                 . "AND `plugin_fusioninventory_deploypackages_id`='".$uninstall['plugin_fusioninventory_deploypackages_id']."'") > 0) {
+                 . " AND `plugin_fusioninventory_deploypackages_id`='".$uninstall['plugin_fusioninventory_deploypackages_id']."'"
+                 . " AND `json` != ''") > 0) {
             // have install and uninstall, so duplicate package
             $pfDeployPackage->getFromDB($uninstall['plugin_fusioninventory_deploypackages_id']);
             $input = $pfDeployPackage->fields;
             unset($input['id']);
+            $input['json'] = $uninstall['json'];
+            $input['name'] .= " (uninstall)";
             $deploypackage_id = $pfDeployPackage->add($input);
             $DB->query("UPDATE `".$order_table."` "
                     . " SET `plugin_fusioninventory_deploypackages_id`='".$deploypackage_id."'"
