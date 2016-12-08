@@ -951,6 +951,7 @@ class PluginFusioninventoryFormatconvert {
                                            array(
                                               'MEMORY' => 'size'));
             $array_tmp['designation'] = 'Dummy Memory Module';
+            $array_tmp['frequence'] = 0;
             $a_inventory['memory'][] = $array_tmp;
          }
       }
