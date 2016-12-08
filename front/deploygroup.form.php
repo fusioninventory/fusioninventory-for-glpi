@@ -50,22 +50,23 @@ Session::checkLoginUser();
 
 $group = new PluginFusioninventoryDeployGroup();
 
-if (isset($_POST['save'])) {
+if (isset($_GET['save'])) {
+   Toolbox::logdebug($_GET);
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(),
-                             "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'")) {
-      $criteria  = array('criteria'     => $_POST['criteria'],
-                         'metacriteria' => $_POST['metacriteria']);
+                             "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'")) {
+      $criteria  = array('criteria'     => $_GET['criteria'],
+                         'metacriteria' => $_GET['metacriteria']);
       $values['fields_array'] = serialize($criteria);
-      $values['plugin_fusioninventory_deploygroups_id'] = $_POST['id'];
+      $values['plugin_fusioninventory_deploygroups_id'] = $_GET['id'];
       $group_item->add($values);
    } else {
       $item = getAllDatasFromTable($group_item->getTable(),
-                                   "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'");
+                                   "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'");
       $values                 = array_pop($item);
 
-      $criteria = array('criteria'     => $_POST['criteria'],
-                        'metacriteria' => $_POST['metacriteria']);
+      $criteria = array('criteria'     => $_GET['criteria'],
+                        'metacriteria' => $_GET['metacriteria']);
       $values['fields_array'] = serialize($criteria);
       $group_item->update($values);
    }
@@ -110,6 +111,9 @@ if (isset($_POST['save'])) {
       }
    }
    $values['id'] = $id;
+   if (isset($_GET['preview'])) {
+      $values['preview'] = $_GET['preview'];
+   }
    $group->display($values);
    Html::footer();
 }
