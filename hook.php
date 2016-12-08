@@ -890,14 +890,12 @@ function plugin_fusioninventory_install() {
       AND (
          defined('FORCE_UPGRADE')
          OR (
-            $version_detected != PLUGIN_FUSIONINVENTORY_VERSION
-            AND $version_detected!='0'
+            $version_detected!='0'
          )
       )) {
+      // note: if version detected = version found can have problem, so need
+      //       pass in upgrade to be sure all OK
       pluginFusioninventoryUpdate($version_detected, $migrationname);
-   } else if ((isset($version_detected))
-           && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
-         //Same version : Nothing to do
    } else {
       require_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migrationname);
