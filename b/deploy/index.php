@@ -149,7 +149,8 @@ switch (filter_input(INPUT_GET, "action")) {
 
       if (filter_input(INPUT_GET, "status") == 'ko') {
          $params['code'] = 'ko';
-         if (!empty(filter_input(INPUT_GET, "currentStep"))) {
+         $fi_currentStep = filter_input(INPUT_GET, "currentStep");
+         if (!empty($fi_currentStep)) {
             $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")] . ":" . filter_input(INPUT_GET, "msg");
          } else {
             $params['msg'] = filter_input(INPUT_GET, "msg");
@@ -165,7 +166,8 @@ switch (filter_input(INPUT_GET, "action")) {
             $params['msg'] = filter_input(INPUT_GET, "msg");
          } else {
             $params['code'] = 'running';
-            if (!empty(filter_input(INPUT_GET, "currentStep"))) {
+            $fi_currentStep = filter_input(INPUT_GET, "currentStep");
+            if (!empty($fi_currentStep)) {
                $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")] . ":" . filter_input(INPUT_GET, "msg");
             } else {
                $params['msg'] = filter_input(INPUT_GET, "msg");

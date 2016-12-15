@@ -387,83 +387,23 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $itemtype   = "PluginFusioninventoryComputer";
       $can_update = $item->canEdit($item->getID());
 
+      $p['target'] = '';
       if ($can_update) {
-         //show generic search form (duplicated from Search class)
-         echo "<form name='group_search_form' method='POST'>";
-         echo "<input type='hidden' name='plugin_fusioninventory_deploygroups_id' value='".$item->getID()."'>";
-         echo "<input type='hidden' name='id' value='".$item->getID()."'>";
-
-         // add tow hidden fields to permit delete of (meta)criteria
-         echo "<input type='hidden' name='criteria' value=''>";
-         echo "<input type='hidden' name='metacriteria' value=''>";
+         $p['addhidden'] = array(
+             'plugin_fusioninventory_deploygroups_id' => $item->getID(),
+             'id'    => $item->getID(),
+             'start' => 0
+         );
       }
-
-      echo "<div class='tabs_criteria'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr><th>"._n('Criterion', 'Criteria', 2)."</th></tr>";
-      echo "<tr><td>";
-
-      echo "<div id='searchcriteria'>";
-      $nb_criteria = count($p['criteria']);
-      if ($nb_criteria == 0) {
-         $nb_criteria++;
+      if ($is_dynamic) {
+         $p['actionname']   = 'save';
+         $p['actionvalue']  = _sx('button', 'Save');
+      } else {
+         $p['actionname']   = 'preview';
+         $p['actionvalue']  = __('Preview');
       }
-      $nb_meta_criteria = (isset($p['metacriteria'])?count($p['metacriteria']):0);
-      $nbsearchcountvar = 'nbcriteria'.strtolower($itemtype).mt_rand();
-      $nbmetasearchcountvar = 'nbmetacriteria'.strtolower($itemtype).mt_rand();
-      $searchcriteriatableid = 'criteriatable'.strtolower($itemtype).mt_rand();
-      // init criteria count
-      $js = "var $nbsearchcountvar=".$nb_criteria.";";
-      $js .= "var $nbmetasearchcountvar=".$nb_meta_criteria.";";
-      echo Html::scriptBlock($js);
-
-      echo "<table class='tab_format' id='$searchcriteriatableid'>";
-
-      // Displays normal search parameters
-      for ($i=0 ; $i<$nb_criteria ; $i++) {
-         $_POST['itemtype'] = $itemtype;
-         $_POST['num'] = $i ;
-         include(GLPI_ROOT.'/ajax/searchrow.php');
-      }
-
-      $linked =  Search::getMetaItemtypeAvailable('Computer');
-
-      if (is_array($linked) && (count($linked) > 0)) {
-         for ($i=0 ; $i<$nb_meta_criteria ; $i++) {
-            $_POST['itemtype'] = $itemtype;
-            $_POST['num'] = $i ;
-            include(GLPI_ROOT.'/ajax/searchmetarow.php');
-         }
-      }
-      echo "</table>\n";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>\n";
-
-      // For dropdown
-      echo "<input type='hidden' name='itemtype' value='$itemtype'>";
-
-      if ($can_update) {
-         // add new button to search form (to store and preview)
-         echo "<div class='center'>";
-         if ($is_dynamic) {
-            echo "<input type='submit' value=\" "._sx('button', 'Save').
-               " \" class='submit' name='save'>";
-         } else {
-            echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
-         }
-         echo "</div>";
-      }
-      echo "</td></tr></table>";
-      echo "</div>";
-
-      //restore search session variables
-      //$_SESSION['glpisearch'] = $glpisearch_session;
-
-      // Reset to start when submit new search
-      echo "<input type='hidden' name='start' value='0'>";
-
-      Html::closeForm();
+      $p['showbookmark'] = False;
+      Search::showGenericSearch($itemtype, $p);
    }
 
 

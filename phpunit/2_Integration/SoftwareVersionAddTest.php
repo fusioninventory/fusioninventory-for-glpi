@@ -120,5 +120,153 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
          $data['expected_results']['nb_versions']."."
       );
    }
+
+
+   /**
+    * @test
+    */
+   public function newComputerSoftwareInstalldate() {
+
+       $arrayinventory = array(
+           'CONTENT' => array(
+               'HARDWARE' => array(),
+               'SOFTWARES' => array(
+                   array(
+                       'ARCH' => 'i586',
+                       'FROM' => 'registry',
+                       'GUID' => 'ActiveTouchMeetingClient',
+                       'HELPLINK' => 'support.webex.com/',
+                       'NAME' => 'Cisco WebEx Meetings',
+                       'PUBLISHER' => 'Cisco WebEx LLC',
+                       'UNINSTALL_STRING' => 'C:\PROGRA~2\WebEx\atcliun.exe',
+                       'URL_INFO_ABOUT' => 'www.webex.com',
+                   ),
+                   array(
+                       'ARCH' => 'i586',
+                       'FROM' => 'registry',
+                       'GUID' => 'Adobe AIR',
+                       'NAME' => 'Adobe AIR',
+                       'PUBLISHER' => 'Adobe Systems Incorporated',
+                       'UNINSTALL_STRING' => 'C:\Program Files\Common Files\Adobe AIR\Versions\1.0\Resources\Adobe AIR Updater.exe -arp:uninstall',
+                       'VERSION' => '4.0.0.1390',
+                   )
+               )
+           )
+       );
+       $pfici = new PluginFusioninventoryInventoryComputerInventory();
+       $software = new Software();
+       $csv = new Computer_SoftwareVersion();
+
+       // first create without install_date
+       $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+       $soft_ids = array_keys($software->find());
+       $csoftv_ids = array_keys($csv->find());
+
+
+       // update with install_date
+       $dates = array(
+           array('06/02/2014', '27/01/2014'),
+           array('10/05/2016', '27/11/2015'),
+       );
+       foreach ($dates as $data_date) {
+          $arrayinventory['CONTENT']['SOFTWARES'][0]['INSTALLDATE'] = $data_date[0];
+          $arrayinventory['CONTENT']['SOFTWARES'][1]['INSTALLDATE'] = $data_date[1];
+          $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+          $this->assertEquals($soft_ids, array_keys($software->find()));
+          $this->assertEquals($csoftv_ids, array_keys($csv->find()));
+          foreach ($software->find() as $soft) {
+              if ($soft['name'] == 'Cisco WebEx Meetings') {
+                  $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+                  $this->assertEquals($data_date[0], $csversion['date_install']);
+              } else if ($soft['name'] == 'Adobe Systems Incorporated') {
+                  $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+                  $this->assertEquals($data_date[1], $csversion['date_install']);
+              }
+          }
+       }
+
+       // remove an installdate
+       unset($arrayinventory['CONTENT']['SOFTWARES'][0]['INSTALLDATE']);
+       $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+       $this->assertEquals($soft_ids, array_keys($software->find()));
+       $this->assertEquals($csoftv_ids, array_keys($csv->find()));
+       foreach ($software->find() as $soft) {
+          if ($soft['name'] == 'Cisco WebEx Meetings') {
+             $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+             $this->assertEquals('', $csversion['date_install']);
+          }
+       }
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function newComputerSoftwareOS() {
+
+      $arrayinventory = array(
+          'CONTENT' => array(
+              'HARDWARE' => array(
+                  'NAME' => 'portdavid'
+              ),
+              'OPERATINGSYSTEM' => array(
+                  'ARCH'           => '32-bit',
+                  'BOOT_TIME'      => '2016-04-06 11:56:40',
+                  'FULL_NAME'      => 'Microsoft Windows 7',
+                  'INSTALL_DATE'   => '2015-05-22 15:53:53',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.1.7601',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 1',
+               ),
+               'SOFTWARES' => array(
+                   array(
+                       'ARCH' => 'i586',
+                       'FROM' => 'registry',
+                       'GUID' => 'ActiveTouchMeetingClient',
+                       'HELPLINK' => 'support.webex.com/',
+                       'NAME' => 'Cisco WebEx Meetings',
+                       'PUBLISHER' => 'Cisco WebEx LLC',
+                       'UNINSTALL_STRING' => 'C:\PROGRA~2\WebEx\atcliun.exe',
+                       'URL_INFO_ABOUT' => 'www.webex.com',
+                   ),
+                   array(
+                       'ARCH' => 'i586',
+                       'FROM' => 'registry',
+                       'GUID' => 'Adobe AIR',
+                       'NAME' => 'Adobe AIR',
+                       'PUBLISHER' => 'Adobe Systems Incorporated',
+                       'UNINSTALL_STRING' => 'C:\Program Files\Common Files\Adobe AIR\Versions\1.0\Resources\Adobe AIR Updater.exe -arp:uninstall',
+                       'VERSION' => '4.0.0.1390',
+                   )
+               )
+           )
+      );
+      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      $software = new Software();
+      $softwareVersion = new SoftwareVersion();
+      $csv = new Computer_SoftwareVersion();
+
+      $soft_ids = array_keys($software->find());
+
+      $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+      $softversion_ids = array_keys($softwareVersion->find());
+
+      $arrayinventory['CONTENT']['HARDWARE']['NAME'] = 'portdavid_2';
+      $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+      $this->assertEquals($softversion_ids, array_keys($softwareVersion->find()));
+
+      $arrayinventory['CONTENT']['OPERATINGSYSTEM']['NAME'] = 'Windows XP';
+      $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+      $this->assertEquals(count($softversion_ids) + 2, count(array_keys($softwareVersion->find())));
+
+      $arrayinventory['CONTENT']['HARDWARE']['NAME'] = 'portdavid_3';
+      $arrayinventory['CONTENT']['OPERATINGSYSTEM']['NAME'] = 'Windows';
+      $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+      $this->assertEquals(count($softversion_ids) + 2, count(array_keys($softwareVersion->find())));
+
+   }
+
 }
 ?>
