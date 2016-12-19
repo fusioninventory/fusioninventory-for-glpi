@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 09:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>, 2016\n"
+"Last-Translator: Andriy Smilyanets <smile.andriy@gmail.com>, 2016\n"
 "Language-Team: Ukrainian (Ukraine) (https://www.transifex.com/ddurieux/teams/797/uk_UA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,19 +102,19 @@ msgstr "Статична група"
 
 #: hook.php:209 inc/computeroperatingsystem.class.php:116
 msgid "Kernel name"
-msgstr ""
+msgstr "Назва ядра"
 
 #: hook.php:219 inc/computeroperatingsystem.class.php:119
 msgid "Kernel version"
-msgstr ""
+msgstr "Версія ядра"
 
 #: hook.php:239 hook.php:2421 inc/computeroperatingsystem.class.php:131
 #: inc/computeroperatingsystemedition.class.php:100
 msgid "Operating system edition"
 msgid_plural "Operating system editions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Редакція операційної системи"
+msgstr[1] "Редакції операційної системи"
+msgstr[2] "Редакцій операційної системи"
 
 #: hook.php:273
 msgid "Agent base URL"
@@ -159,7 +159,7 @@ msgstr "Призначити аутентифікацію SNMP"
 
 #: hook.php:2346
 msgid "FusionInventory operating system"
-msgstr ""
+msgstr "FusionInventory операційна система"
 
 #: hook.php:2350 inc/computerarch.class.php:65
 #: inc/computeroperatingsystem.class.php:113
@@ -170,11 +170,11 @@ msgstr "Архітектура"
 
 #: hook.php:2385 inc/computeroskernelname.class.php:100
 msgid "Operating system kernel name"
-msgstr ""
+msgstr "Назва ядра операційної системи"
 
 #: hook.php:2397 inc/computeroskernelversion.class.php:101
 msgid "Operating system kernel version"
-msgstr ""
+msgstr "Версія ядра операційної системи"
 
 #: index.php:63 front/agent.form.php:83 front/agent.php:49
 #: front/agentmodule.form.php:49 front/collect.php:49
@@ -207,11 +207,11 @@ msgstr "Лічильник надрукованих сторінок"
 
 #: setup.php:399
 msgid "Switch ports history"
-msgstr ""
+msgstr "Історія портів комутатора"
 
 #: setup.php:401
 msgid "Unused switch ports"
-msgstr ""
+msgstr "Вільні порти комутатора"
 
 #: setup.php:403
 msgid "Number of days since last inventory"
@@ -223,7 +223,7 @@ msgstr "Інвентаризація комп’ютерів не проводи
 
 #: setup.php:517
 msgid "Your GLPI version not compatible, require >= 9.1.1 and < 9.2"
-msgstr ""
+msgstr "Версія GLPI не сумісна, необхідно >= 9.1.1 та < 9.2"
 
 #: setup.php:522
 msgid "fileinfo extension (PHP) is required..."
@@ -398,7 +398,7 @@ msgstr "Робота"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
-msgstr ""
+msgstr "Досягнута максимальна кількість задіяних агентів"
 
 #: inc/collect.class.php:72 inc/staticmisc.class.php:695
 msgid "Collect information"
@@ -599,7 +599,7 @@ msgstr "Властивість"
 #: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
 #: inc/menu.class.php:384 inc/profile.class.php:308
 msgid "Computer information rules"
-msgstr ""
+msgstr "Правила інформації комп’ютера"
 
 #: inc/collectrule.class.php:178
 msgid "Registry key"
@@ -631,7 +631,7 @@ msgstr "Розмір файлу"
 
 #: inc/collectrule.class.php:248
 msgid "Software version"
-msgstr ""
+msgstr "Версія ПЗ"
 
 #: inc/common.view.class.php:306
 msgid "Warning:"
@@ -670,19 +670,19 @@ msgstr "Зв’язок між комп’ютером та ліцензією"
 #: inc/computeroperatingsystem.class.php:100
 msgid "Operating system (computer)"
 msgid_plural "Operating systems (computer)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Операційна система (комп'ютера)"
+msgstr[1] "Операційні системи (комп'ютера)"
+msgstr[2] "Операційних систем (комп'ютера)"
 
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:92
 #: inc/computerremotemanagement.class.php:135
 msgid "Remote management"
-msgstr ""
+msgstr "Віддалене керування"
 
 #: inc/computerremotemanagement.class.php:142
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: inc/config.class.php:239 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
@@ -706,7 +706,7 @@ msgstr "Періодичність інвентаризації (в година
 
 #: inc/config.class.php:348
 msgid "Delete tasks logs after"
-msgstr ""
+msgstr "Видалити протоколи завдань після"
 
 #: inc/config.class.php:365
 msgid "Extra-debug"
@@ -714,23 +714,23 @@ msgstr "Додаткова відладка"
 
 #: inc/config.class.php:374
 msgid "Maximum number of agents to wake up in a task"
-msgstr ""
+msgstr "Максимальна кількість агентів, які можуть буди задіяні для завдання"
 
 #: inc/config.class.php:385
 msgid "Update agents"
-msgstr ""
+msgstr "Оновити агентів"
 
 #: inc/config.class.php:387
 msgid "Update agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Оновити агентів, що не контактували понад (днів)"
 
 #: inc/config.class.php:422 inc/config.class.php:453
 msgid "Change the status"
-msgstr ""
+msgstr "Змінити статус"
 
 #: inc/config.class.php:456
 msgid "Clean agents"
-msgstr ""
+msgstr "Очистити агентів"
 
 #: inc/config.class.php:478
 msgid "Import options"
@@ -758,7 +758,7 @@ msgstr ""
 
 #: inc/config.class.php:627
 msgid "Manage operating system name:"
-msgstr ""
+msgstr "Назва операційної системи:"
 
 #: inc/config.class.php:633
 msgid "Network drives"
@@ -849,11 +849,11 @@ msgstr "Копіювати"
 
 #: inc/deployaction.class.php:84
 msgid "Delete directory"
-msgstr ""
+msgstr "Видалити каталог"
 
 #: inc/deployaction.class.php:85
 msgid "Create directory"
-msgstr ""
+msgstr "Створити каталог"
 
 #: inc/deployaction.class.php:215
 msgid "Command to execute"
@@ -1072,7 +1072,7 @@ msgstr "Mio"
 
 #: inc/deployfile.class.php:1209
 msgid "Unused file"
-msgstr ""
+msgstr "Файли, що не використовуються"
 
 #: inc/deploygroup.class.php:100
 msgid "Dynamic group"
@@ -1084,7 +1084,7 @@ msgstr "Додати групу"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
 msgid "Package actions"
-msgstr ""
+msgstr "Дії з пакетами"
 
 #: inc/deploymirror.class.php:80 inc/menu.class.php:503
 #: inc/profile.class.php:332
@@ -1125,7 +1125,7 @@ msgstr[2] "З цим пакетом виконуються наступні за
 
 #: inc/deploypackage.class.php:466
 msgid "Enable self-service in defining computer group"
-msgstr ""
+msgstr "Дозволити самообслуговування в визначених групах комп'ютерів"
 
 #: inc/deploypackage.class.php:489
 msgid "Audits"
@@ -1154,13 +1154,13 @@ msgstr "Змінений JSON містить синтаксичну помилк
 #: inc/deploypackage.class.php:1014 inc/deploypackage.class.php:1017
 msgid "Target for self-service"
 msgid_plural "Targets for self-service"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Призначення для самообслуговування"
+msgstr[1] "Призначення для самообслуговування"
+msgstr[2] "Призначень для самообслуговування"
 
 #: inc/deploypackage.class.php:1089
 msgid "Add a target for self-service"
-msgstr ""
+msgstr "Додати призначення для самообслуговування"
 
 #: inc/deploypackage.class.php:1293 inc/task.view.class.php:248
 #: inc/task.view.class.php:337
@@ -1197,15 +1197,15 @@ msgstr "Перервано"
 
 #: inc/deploypackage.class.php:1353
 msgid "Select packages you want install:"
-msgstr ""
+msgstr "Оберіть пакети для встановлення"
 
 #: inc/deploypackage.class.php:1362
 msgid "Prepare for install"
-msgstr ""
+msgstr "Підготовка встановлення"
 
 #: inc/deploypackage.class.php:1369
 msgid "No packages available to install"
-msgstr ""
+msgstr "Немає пакетів для встановлення"
 
 #: inc/deploytask.class.php:68
 msgid "Group of computers"
@@ -1255,7 +1255,7 @@ msgstr "Обладнання, що ігнорується протягом ім�
 #: inc/ignoredimportdevice.class.php:99 inc/rulematchedlog.class.php:214
 #: inc/rulematchedlog.class.php:284
 msgid "Rule name"
-msgstr ""
+msgstr "Назва правила"
 
 #: inc/inventorycomputerbatteries.class.php:71
 #: inc/inventorycomputerbatteries.class.php:104
@@ -1400,7 +1400,7 @@ msgstr "Посилання FusionInventory"
 
 #: inc/inventoryruleimport.class.php:234
 msgid "To be unaware of import (with log)"
-msgstr ""
+msgstr "Ігнорувати імпорт (з протоколом)"
 
 #: inc/inventoryruleimport.class.php:249
 msgid "Link"
@@ -1420,7 +1420,7 @@ msgstr "порожнє"
 
 #: inc/inventoryruleimport.class.php:1008
 msgid "No itemtype defined"
-msgstr ""
+msgstr "itemtype не визначено"
 
 #: inc/inventoryruleimport.class.php:1057
 #: inc/inventoryruleimportcollection.class.php:154
@@ -1487,7 +1487,7 @@ msgstr "Версія"
 
 #: inc/iprange_configsecurity.class.php:216
 msgid "By order of priority"
-msgstr ""
+msgstr "В порядку пріоритетів"
 
 #: inc/lock.class.php:212
 msgid "Values GLPI"
@@ -2388,21 +2388,23 @@ msgstr "Загальна кількість надрукованих велик�
 
 #: inc/menu.class.php:170
 msgid "Clean unused files"
-msgstr ""
+msgstr "Очистити файли, що не використовуються"
 
 #: inc/menu.class.php:242
 msgid ""
 "The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr ""
+"Серверу необхідно знати URL, який використовують агенти для доступу в "
+"сервер. Будь ласка вкажіть його на сторінці Загальних налаштувань."
 
 #: inc/menu.class.php:254
 msgid "GLPI cron not running, see "
-msgstr ""
+msgstr "GLPI cron не працює, перевірте"
 
 #: inc/menu.class.php:255
 msgid "documentation"
-msgstr ""
+msgstr "документація"
 
 #: inc/menu.class.php:276
 msgid "Agents management"
@@ -2430,7 +2432,7 @@ msgstr "Імпортувати XML файл агента"
 
 #: inc/menu.class.php:330 inc/profile.class.php:419
 msgid "Computer information"
-msgstr ""
+msgstr "Інформація комп'ютера"
 
 #: inc/menu.class.php:336 inc/timeslot.class.php:79 inc/timeslot.class.php:93
 #: inc/timeslotentry.class.php:92
@@ -2492,7 +2494,7 @@ msgstr "SNMP inv."
 
 #: inc/menu.class.php:533
 msgid "Guide"
-msgstr ""
+msgstr "Керівництво"
 
 #: inc/menu.class.php:563 inc/menu.class.php:635
 msgid "Statistics"
@@ -2595,43 +2597,43 @@ msgstr ""
 
 #: inc/menu.class.php:844
 msgid "FusionInventory computers"
-msgstr ""
+msgstr "FusionInventory комп'ютери"
 
 #: inc/menu.class.php:849
 msgid "Other computers"
-msgstr ""
+msgstr "Інші комп'ютери"
 
 #: inc/menu.class.php:888
 msgid "NetworkEquipments (SNMP)"
-msgstr ""
+msgstr "Мережеве обладнання (SNMP)"
 
 #: inc/menu.class.php:893
 msgid "Printers (SNMP)"
-msgstr ""
+msgstr "Принтери (SNMP)"
 
 #: inc/menu.class.php:929
 msgid "SNMP switch network ports linked"
-msgstr ""
+msgstr "Задіяні мережеві порти SNMP маршрутизатора"
 
 #: inc/menu.class.php:934
 msgid "SNMP switch network ports not linked"
-msgstr ""
+msgstr "Вільні мережеві порти SNMP маршрутизатора"
 
 #: inc/menu.class.php:958
 msgid "Ports connected"
-msgstr ""
+msgstr "Під'єднані порти"
 
 #: inc/menu.class.php:963
 msgid "Ports not connected"
-msgstr ""
+msgstr "Не під’єднані порти"
 
 #: inc/menu.class.php:989
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Підготовлено та очікує"
 
 #: inc/menu.class.php:999
 msgid "Successfull"
-msgstr ""
+msgstr "Успішно"
 
 #: inc/menu.class.php:1032
 msgid "Deployment"
@@ -2797,7 +2799,7 @@ msgstr "Ліміт часу"
 
 #: inc/printerlog.class.php:538
 msgid "Year"
-msgstr ""
+msgstr "Рік"
 
 #: inc/printerlog.class.php:550
 msgid "Display"
@@ -2837,7 +2839,7 @@ msgstr "Розгортання ПЗ"
 
 #: inc/profile.class.php:234
 msgid "Self deploy package"
-msgstr ""
+msgstr "Пакет, що встановлюється самостійно"
 
 #: inc/profile.class.php:304
 msgid "Fields blacklist"
@@ -2945,7 +2947,7 @@ msgstr "Віддалена інвентаризація VMware host"
 
 #: inc/staticmisc.class.php:106
 msgid "Package deploy"
-msgstr ""
+msgstr "Розгортання пакету"
 
 #: inc/staticmisc.class.php:114
 msgid "Collect data"
@@ -3039,6 +3041,7 @@ msgstr "Виконання"
 #: inc/task.view.class.php:472
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr ""
+"Пере-підготувати виконавця-призначення, якщо попередній запуск був успішним"
 
 #: inc/task.view.class.php:497
 msgid "Timeslot"
@@ -3046,11 +3049,11 @@ msgstr "Проміжок часу"
 
 #: inc/task.view.class.php:502
 msgid "Agent wakeup interval (in minutes)"
-msgstr ""
+msgstr "Інтервал звернень до агента (в хвилинах)"
 
 #: inc/task.view.class.php:508
 msgid "Number of agents to wake up"
-msgstr ""
+msgstr "Кількість агентів для використання"
 
 #: inc/taskjob.class.php:185 inc/taskjob.class.php:1157
 #: inc/taskjob.class.php:1489 inc/taskjoblog.class.php:476

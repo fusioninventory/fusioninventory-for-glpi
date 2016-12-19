@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 09:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>, 2016\n"
+"Last-Translator: Nikolai Petrov <techobsl@yandex.ru>, 2016\n"
 "Language-Team: Russian (Russia) (https://www.transifex.com/ddurieux/teams/797/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,20 +102,20 @@ msgstr "Статическая группа"
 
 #: hook.php:209 inc/computeroperatingsystem.class.php:116
 msgid "Kernel name"
-msgstr ""
+msgstr "Имя ядра"
 
 #: hook.php:219 inc/computeroperatingsystem.class.php:119
 msgid "Kernel version"
-msgstr ""
+msgstr "Версия ядра"
 
 #: hook.php:239 hook.php:2421 inc/computeroperatingsystem.class.php:131
 #: inc/computeroperatingsystemedition.class.php:100
 msgid "Operating system edition"
 msgid_plural "Operating system editions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Выпуск операционной системы"
+msgstr[1] "Выпуск операционной системы"
+msgstr[2] "Выпуски операционных систем"
+msgstr[3] "Выпуски операционных систем"
 
 #: hook.php:273
 msgid "Agent base URL"
@@ -161,7 +161,7 @@ msgstr "Назначить SNMP аутентификацию"
 
 #: hook.php:2346
 msgid "FusionInventory operating system"
-msgstr ""
+msgstr "Операционная система FusionInventory"
 
 #: hook.php:2350 inc/computerarch.class.php:65
 #: inc/computeroperatingsystem.class.php:113
@@ -172,11 +172,11 @@ msgstr "Архитектура"
 
 #: hook.php:2385 inc/computeroskernelname.class.php:100
 msgid "Operating system kernel name"
-msgstr ""
+msgstr "Имя ядра операционной системы"
 
 #: hook.php:2397 inc/computeroskernelversion.class.php:101
 msgid "Operating system kernel version"
-msgstr ""
+msgstr "Версия ядра операционной системы"
 
 #: index.php:63 front/agent.form.php:83 front/agent.php:49
 #: front/agentmodule.form.php:49 front/collect.php:49
@@ -225,7 +225,7 @@ msgstr "ПК без инвентаризации в течении xx дней"
 
 #: setup.php:517
 msgid "Your GLPI version not compatible, require >= 9.1.1 and < 9.2"
-msgstr ""
+msgstr "Ваша версия GLPI не совместима, требуется >= 9.1.1 и < 9.2"
 
 #: setup.php:522
 msgid "fileinfo extension (PHP) is required..."
@@ -603,7 +603,7 @@ msgstr "Свойство"
 #: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
 #: inc/menu.class.php:384 inc/profile.class.php:308
 msgid "Computer information rules"
-msgstr ""
+msgstr "Правила компьютеной информации"
 
 #: inc/collectrule.class.php:178
 msgid "Registry key"
@@ -674,20 +674,20 @@ msgstr "Соединение компьютера и лицензии"
 #: inc/computeroperatingsystem.class.php:100
 msgid "Operating system (computer)"
 msgid_plural "Operating systems (computer)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Операционная система (компьютер)"
+msgstr[1] "Операционная система (компьютер)"
+msgstr[2] "Операционные системы (компьютер)"
+msgstr[3] "Операционные системы (компьютер)"
 
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:92
 #: inc/computerremotemanagement.class.php:135
 msgid "Remote management"
-msgstr ""
+msgstr "Удаленное управление"
 
 #: inc/computerremotemanagement.class.php:142
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: inc/config.class.php:239 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
@@ -763,7 +763,7 @@ msgstr ""
 
 #: inc/config.class.php:627
 msgid "Manage operating system name:"
-msgstr ""
+msgstr "Управление именем операционной системы"
 
 #: inc/config.class.php:633
 msgid "Network drives"
@@ -854,11 +854,11 @@ msgstr "Копировать"
 
 #: inc/deployaction.class.php:84
 msgid "Delete directory"
-msgstr ""
+msgstr "Удалить директорию"
 
 #: inc/deployaction.class.php:85
 msgid "Create directory"
-msgstr ""
+msgstr "Создать директорию"
 
 #: inc/deployaction.class.php:215
 msgid "Command to execute"
@@ -1089,7 +1089,7 @@ msgstr "Добавить группу"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
 msgid "Package actions"
-msgstr ""
+msgstr "Активные пакеты"
 
 #: inc/deploymirror.class.php:80 inc/menu.class.php:503
 #: inc/profile.class.php:332
@@ -1131,7 +1131,7 @@ msgstr[3] "Следующие задачи выполняются с этим п
 
 #: inc/deploypackage.class.php:466
 msgid "Enable self-service in defining computer group"
-msgstr ""
+msgstr "Включить самообслуживание при определении группы компьютера"
 
 #: inc/deploypackage.class.php:489
 msgid "Audits"
@@ -1160,14 +1160,14 @@ msgstr "Модифицированный JSON содержит синтакси�
 #: inc/deploypackage.class.php:1014 inc/deploypackage.class.php:1017
 msgid "Target for self-service"
 msgid_plural "Targets for self-service"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Цель самообслуживания"
+msgstr[1] "Цель самообслуживания"
+msgstr[2] "Цели самообслуживания"
+msgstr[3] "Цели самообслуживания"
 
 #: inc/deploypackage.class.php:1089
 msgid "Add a target for self-service"
-msgstr ""
+msgstr "Добавить цель самообслуживания"
 
 #: inc/deploypackage.class.php:1293 inc/task.view.class.php:248
 #: inc/task.view.class.php:337
@@ -1204,15 +1204,15 @@ msgstr "Отменено"
 
 #: inc/deploypackage.class.php:1353
 msgid "Select packages you want install:"
-msgstr ""
+msgstr "Выбрать пакеты, которые желаете установить:"
 
 #: inc/deploypackage.class.php:1362
 msgid "Prepare for install"
-msgstr ""
+msgstr "Подготовить для установки"
 
 #: inc/deploypackage.class.php:1369
 msgid "No packages available to install"
-msgstr ""
+msgstr "Нет пакетов доступных для установки"
 
 #: inc/deploytask.class.php:68
 msgid "Group of computers"
@@ -2417,14 +2417,16 @@ msgid ""
 "The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr ""
+"Серверу нужно знать URL агентов использующие доступ на сервер. Пожалуйста, "
+"настройте на странице Общих настроек"
 
 #: inc/menu.class.php:254
 msgid "GLPI cron not running, see "
-msgstr ""
+msgstr "GLPI cron не запущен, посмотреть"
 
 #: inc/menu.class.php:255
 msgid "documentation"
-msgstr ""
+msgstr "документация"
 
 #: inc/menu.class.php:276
 msgid "Agents management"
@@ -2452,7 +2454,7 @@ msgstr "Импорт XML файла агента"
 
 #: inc/menu.class.php:330 inc/profile.class.php:419
 msgid "Computer information"
-msgstr ""
+msgstr "Информация о компьютере"
 
 #: inc/menu.class.php:336 inc/timeslot.class.php:79 inc/timeslot.class.php:93
 #: inc/timeslotentry.class.php:92
@@ -2862,7 +2864,7 @@ msgstr "Развёртывание ПО"
 
 #: inc/profile.class.php:234
 msgid "Self deploy package"
-msgstr ""
+msgstr "Саморазвертывание пакета"
 
 #: inc/profile.class.php:304
 msgid "Fields blacklist"
@@ -2970,7 +2972,7 @@ msgstr "Удалённая инвентаризация хоста VMware"
 
 #: inc/staticmisc.class.php:106
 msgid "Package deploy"
-msgstr ""
+msgstr "Пакет для развертывания"
 
 #: inc/staticmisc.class.php:114
 msgid "Collect data"
@@ -3019,7 +3021,7 @@ msgstr ""
 #: inc/task.class.php:400
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr ""
-"Этот агент больше не относится к актёрам, определённым в этом задании."
+"Этот агент больше не относится к агентам, определённым в этом задании."
 
 #: inc/task.class.php:618
 msgid "Device no longer defined in definition of job"
@@ -3063,7 +3065,7 @@ msgstr "Выполнение"
 
 #: inc/task.view.class.php:472
 msgid "Re-prepare a target-actor if previous run is successful"
-msgstr ""
+msgstr "Повторная подготовка целевого агента, если предыдущий успешно запущен"
 
 #: inc/task.view.class.php:497
 msgid "Timeslot"
@@ -3127,7 +3129,7 @@ msgstr "Добавить задание"
 
 #: inc/taskjob.view.class.php:372
 msgid "Actor Type"
-msgstr "Тип актёра"
+msgstr "Тип агента"
 
 #: inc/taskjob.view.class.php:376
 msgid "Target Type"
@@ -3135,7 +3137,7 @@ msgstr "Тип цели"
 
 #: inc/taskjob.view.class.php:417
 msgid "Actor Item"
-msgstr "Элемент актёра"
+msgstr "Элемент агента"
 
 #: inc/taskjob.view.class.php:421
 msgid "Target Item"
@@ -3159,7 +3161,7 @@ msgstr "Элементы, которые должны применяться д�
 
 #: inc/taskjob.view.class.php:603 inc/taskjob.view.class.php:644
 msgid "Actors"
-msgstr "Актёры"
+msgstr "Агенты"
 
 #: inc/taskjob.view.class.php:607
 msgid "The items that should carry out those targets."

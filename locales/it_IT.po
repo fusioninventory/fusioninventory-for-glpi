@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 09:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>, 2016\n"
+"Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>, 2016\n"
 "Language-Team: Italian (Italy) (https://www.transifex.com/ddurieux/teams/797/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,18 +102,18 @@ msgstr "Gruppo statico"
 
 #: hook.php:209 inc/computeroperatingsystem.class.php:116
 msgid "Kernel name"
-msgstr ""
+msgstr "Nome del Kernel"
 
 #: hook.php:219 inc/computeroperatingsystem.class.php:119
 msgid "Kernel version"
-msgstr ""
+msgstr "Versione del Kernel"
 
 #: hook.php:239 hook.php:2421 inc/computeroperatingsystem.class.php:131
 #: inc/computeroperatingsystemedition.class.php:100
 msgid "Operating system edition"
 msgid_plural "Operating system editions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Edizione del sistema operativo"
+msgstr[1] "Edizioni del sistema operativo"
 
 #: hook.php:273
 msgid "Agent base URL"
@@ -157,7 +157,7 @@ msgstr "Assegna autenticazione SNMP"
 
 #: hook.php:2346
 msgid "FusionInventory operating system"
-msgstr ""
+msgstr "FusionInventory - sistema operativo"
 
 #: hook.php:2350 inc/computerarch.class.php:65
 #: inc/computeroperatingsystem.class.php:113
@@ -168,11 +168,11 @@ msgstr "Architettura"
 
 #: hook.php:2385 inc/computeroskernelname.class.php:100
 msgid "Operating system kernel name"
-msgstr ""
+msgstr "Sistema operativo - nome del kernel"
 
 #: hook.php:2397 inc/computeroskernelversion.class.php:101
 msgid "Operating system kernel version"
-msgstr ""
+msgstr "Sistema operativo - versione del kernel"
 
 #: index.php:63 front/agent.form.php:83 front/agent.php:49
 #: front/agentmodule.form.php:49 front/collect.php:49
@@ -222,6 +222,7 @@ msgstr "Computer non inventoriati da xx giorni"
 #: setup.php:517
 msgid "Your GLPI version not compatible, require >= 9.1.1 and < 9.2"
 msgstr ""
+"La tua versione di GLPI non è compatibile, è richiesta >= 9.1.1. e < 9.2"
 
 #: setup.php:522
 msgid "fileinfo extension (PHP) is required..."
@@ -265,7 +266,7 @@ msgstr "Nessun file da importare!"
 #: front/inventoryruleimport.php:65
 msgid "Reset import rules (define only default rules)"
 msgstr ""
-"Reimpostare le regole di importazione (definire solo le regole predefinite)"
+"Reimpostare le regole di importazione (abilita solo le regole predefinite)"
 
 #: front/popup.php:68
 msgid "Cache informations"
@@ -378,7 +379,7 @@ msgstr "Moduli dell'agente"
 
 #: inc/agentmodule.class.php:122
 msgid "Activation (by default)"
-msgstr "Attiva (impostazione predefinita)"
+msgstr "Attiva (per impostazione predefinita)"
 
 #: inc/agentmodule.class.php:123
 msgid "Exceptions"
@@ -597,7 +598,7 @@ msgstr "Proprietà"
 #: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
 #: inc/menu.class.php:384 inc/profile.class.php:308
 msgid "Computer information rules"
-msgstr ""
+msgstr "Regole per le informazioni computer"
 
 #: inc/collectrule.class.php:178
 msgid "Registry key"
@@ -668,18 +669,18 @@ msgstr "Unione tra computer e licenza"
 #: inc/computeroperatingsystem.class.php:100
 msgid "Operating system (computer)"
 msgid_plural "Operating systems (computer)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sistema operativo (computer)"
+msgstr[1] "Sistemi operativi (computer)"
 
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:92
 #: inc/computerremotemanagement.class.php:135
 msgid "Remote management"
-msgstr ""
+msgstr "Gestione remota"
 
 #: inc/computerremotemanagement.class.php:142
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: inc/config.class.php:239 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
@@ -727,7 +728,7 @@ msgstr "Cambia lo stato"
 
 #: inc/config.class.php:456
 msgid "Clean agents"
-msgstr "Rimuovi l'agente"
+msgstr "Rimuovi gli agenti"
 
 #: inc/config.class.php:478
 msgid "Import options"
@@ -755,7 +756,7 @@ msgstr ""
 
 #: inc/config.class.php:627
 msgid "Manage operating system name:"
-msgstr ""
+msgstr "Gestione nomi dei sistemi operativi"
 
 #: inc/config.class.php:633
 msgid "Network drives"
@@ -846,11 +847,11 @@ msgstr "Copia"
 
 #: inc/deployaction.class.php:84
 msgid "Delete directory"
-msgstr ""
+msgstr "Elimina directory"
 
 #: inc/deployaction.class.php:85
 msgid "Create directory"
-msgstr ""
+msgstr "Crea directory"
 
 #: inc/deployaction.class.php:215
 msgid "Command to execute"
@@ -1081,7 +1082,7 @@ msgstr "Nuovo gruppo"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
 msgid "Package actions"
-msgstr ""
+msgstr "Azioni del pacchetto"
 
 #: inc/deploymirror.class.php:80 inc/menu.class.php:503
 #: inc/profile.class.php:332
@@ -1121,7 +1122,7 @@ msgstr[1] "Le seguenti attività sono in esecuzione con questo pacchetto"
 
 #: inc/deploypackage.class.php:466
 msgid "Enable self-service in defining computer group"
-msgstr ""
+msgstr "Abilita la distribuzione automatica nel gruppo di computer definito"
 
 #: inc/deploypackage.class.php:489
 msgid "Audits"
@@ -1150,12 +1151,12 @@ msgstr "La JSON modificata presenta un errore di sintassi :"
 #: inc/deploypackage.class.php:1014 inc/deploypackage.class.php:1017
 msgid "Target for self-service"
 msgid_plural "Targets for self-service"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Obiettivo per la distribuzione automatica"
+msgstr[1] "Obiettivi per la distribuzione automatica"
 
 #: inc/deploypackage.class.php:1089
 msgid "Add a target for self-service"
-msgstr ""
+msgstr "Aggiungi un obiettivo per la distribuzione automatica"
 
 #: inc/deploypackage.class.php:1293 inc/task.view.class.php:248
 #: inc/task.view.class.php:337
@@ -1192,15 +1193,15 @@ msgstr "Annullato"
 
 #: inc/deploypackage.class.php:1353
 msgid "Select packages you want install:"
-msgstr ""
+msgstr "Seleziona il pacchetto che si desidera installare:"
 
 #: inc/deploypackage.class.php:1362
 msgid "Prepare for install"
-msgstr ""
+msgstr "Preparo per l'installazione"
 
 #: inc/deploypackage.class.php:1369
 msgid "No packages available to install"
-msgstr ""
+msgstr "Nessun pacchetto disponibile per l'installazione"
 
 #: inc/deploytask.class.php:68
 msgid "Group of computers"
@@ -1216,7 +1217,7 @@ msgstr[1] "Attività"
 
 #: inc/deploytask.class.php:127
 msgid "Order list"
-msgstr ""
+msgstr "Ordina"
 
 #: inc/deploytask.class.php:179
 msgid "Add task"
@@ -1267,7 +1268,7 @@ msgstr "Valori in blacklist"
 
 #: inc/inventorycomputerchemistry.class.php:86
 msgid "Chemistry"
-msgstr ""
+msgstr "Chimica"
 
 #: inc/inventorycomputercomputer.class.php:142
 msgid "Public contact address"
@@ -1283,7 +1284,7 @@ msgstr "Versione del BIOS"
 
 #: inc/inventorycomputercomputer.class.php:206
 msgid "Automatic entity transfer"
-msgstr ""
+msgstr "Trasferimento automatico dell'entità"
 
 #: inc/inventorycomputercomputer.class.php:210
 msgid "No, locked (by entity configuration)"
@@ -1434,7 +1435,7 @@ msgstr "Regole per l'importazione ed i collegamenti dei materiali"
 #: inc/inventoryrulelocation.class.php:88
 #: inc/inventoryrulelocationcollection.class.php:85
 msgid "Location rules"
-msgstr "Regole locali"
+msgstr "Regole per la posizione"
 
 #: inc/iprange.class.php:93
 msgid "Communication mode"
@@ -1717,7 +1718,7 @@ msgstr "stampante > contatore > numero pagine scansite"
 
 #: inc/mapping.class.php:291
 msgid "printer > location"
-msgstr "stampante > collocazione"
+msgstr "stampante > posizione"
 
 #: inc/mapping.class.php:294
 msgid "printer > port > name"
@@ -2177,7 +2178,7 @@ msgstr "4"
 
 #: inc/mapping.class.php:651
 msgid "Cleaning module"
-msgstr ""
+msgstr "Rimuovi il modulo"
 
 #: inc/mapping.class.php:654 inc/printerlog.class.php:173
 msgid "Number of pages printed duplex"
@@ -2392,14 +2393,16 @@ msgid ""
 "The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr ""
+"Il server ha bisogno di conoscere l'URL usato dall'agente per accedere al "
+"server stesso. Deve essere configurato nelle \"Impostazioni generali\"."
 
 #: inc/menu.class.php:254
 msgid "GLPI cron not running, see "
-msgstr ""
+msgstr "Azioni automatiche in GLPI non sono attivate"
 
 #: inc/menu.class.php:255
 msgid "documentation"
-msgstr ""
+msgstr "documentazione"
 
 #: inc/menu.class.php:276
 msgid "Agents management"
@@ -2427,7 +2430,7 @@ msgstr "Importa file XML dell'agente"
 
 #: inc/menu.class.php:330 inc/profile.class.php:419
 msgid "Computer information"
-msgstr ""
+msgstr "Informazioni del computer"
 
 #: inc/menu.class.php:336 inc/timeslot.class.php:79 inc/timeslot.class.php:93
 #: inc/timeslotentry.class.php:92
@@ -2444,11 +2447,11 @@ msgstr "Dispositivi ignorati durante l'importazione"
 
 #: inc/menu.class.php:370
 msgid "Computer entity rules"
-msgstr ""
+msgstr "Regole per le entità dei computer"
 
 #: inc/menu.class.php:377
 msgid "Computer location rules"
-msgstr ""
+msgstr "Regole per il posizionamento dei computer"
 
 #: inc/menu.class.php:391 inc/ruledictionnarycomputerarch.class.php:64
 #: inc/ruledictionnarycomputerarchcollection.class.php:71
@@ -2469,7 +2472,7 @@ msgstr "Stato del rilevamento"
 
 #: inc/menu.class.php:464
 msgid "Network inventory status"
-msgstr "Stato inventario di rete"
+msgstr "Stato dell'inventario della rete"
 
 #: inc/menu.class.php:474
 msgid "SNMP models creation"
@@ -2518,17 +2521,19 @@ msgstr "Configurazione delle opzioni di importazione"
 
 #: inc/menu.class.php:591
 msgid "Define rules for entity"
-msgstr ""
+msgstr "Definire le regole per l'entità"
 
 #: inc/menu.class.php:596
 msgid "Define rules for location"
-msgstr ""
+msgstr "Definire le regole per il posizionamento"
 
 #: inc/menu.class.php:601
 msgid ""
 "Define rules for import : merge and create new computer (CAUTION: same rules"
 " for SNMP inventory)"
 msgstr ""
+"Definire le regole per l'importazione: unire e creare un nuovo computer "
+"(ATTENZIONE: stesse regole per l'inventario SNMP)"
 
 #: inc/menu.class.php:660
 msgid ""
@@ -2547,6 +2552,8 @@ msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
 msgstr ""
+"Definire le regole per l'importazione: unire e creare un nuovo dispositivo "
+"(ATTENZIONE: stesse regole per l'inventario dei computer)"
 
 #: inc/menu.class.php:676
 msgid "`Network Discovery`, used to discover the devices on the network"
@@ -2571,6 +2578,8 @@ msgstr ""
 #: inc/menu.class.php:696
 msgid "If you have devices not typed, import them from unmanaged devices"
 msgstr ""
+"Se si possiedono dispositivi non inseriti, importarli dai dispositivi non "
+"gestiti"
 
 #: inc/menu.class.php:701
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
@@ -2711,11 +2720,11 @@ msgstr "Porta non connessa da"
 
 #: inc/networkequipment.class.php:975
 msgid "Half"
-msgstr ""
+msgstr "Metà"
 
 #: inc/networkequipment.class.php:979
 msgid "Full"
-msgstr ""
+msgstr "Piena"
 
 #: inc/networkport.class.php:119
 msgid "Last change"
@@ -2833,7 +2842,7 @@ msgstr "Distribuzione del software"
 
 #: inc/profile.class.php:234
 msgid "Self deploy package"
-msgstr ""
+msgstr "Pacchetto distribuito automaticamente"
 
 #: inc/profile.class.php:304
 msgid "Fields blacklist"
@@ -2941,7 +2950,7 @@ msgstr "Inventario host WMware remoto"
 
 #: inc/staticmisc.class.php:106
 msgid "Package deploy"
-msgstr ""
+msgstr "Distribuzione pacchetto"
 
 #: inc/staticmisc.class.php:114
 msgid "Collect data"
@@ -2996,7 +3005,7 @@ msgstr "L'agente non appartiene più all'attore definito del compito."
 
 #: inc/task.class.php:618
 msgid "Device no longer defined in definition of job"
-msgstr ""
+msgstr "Dispositivo non più definito all'interno del compito"
 
 #: inc/task.class.php:1464
 msgid "Task has been disabled"
@@ -3037,6 +3046,8 @@ msgstr "Esecuzione"
 #: inc/task.view.class.php:472
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr ""
+"Ripreparare un attore designato se la precedente esecuzione ha avuto "
+"successo"
 
 #: inc/task.view.class.php:497
 msgid "Timeslot"
