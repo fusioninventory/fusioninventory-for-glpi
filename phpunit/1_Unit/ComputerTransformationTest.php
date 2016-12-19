@@ -109,6 +109,10 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               array(
                   'size'        => '3802',
                   'designation' => 'Dummy Memory Module',
+                  'frequence' => 0,
+                  'serial' => '',
+                  'devicememorytypes_id' => '',
+                  'busID' => ''
               )
           ),
           'monitor'        => array(),
