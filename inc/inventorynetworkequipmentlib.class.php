@@ -373,8 +373,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       
       if ($a_lldp['ip'] == ''
               && $a_lldp['name'] == ''
-              && $a_lldp['sysmac'] == '') {
-              //&& $a_lldp['mac'] == '') {
+              && $a_lldp['sysmac'] == ''
+              && !is_array($a_lldp['mac'])) {
          return;
       }
 
@@ -385,14 +385,24 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                                                          $a_lldp['sysdescr'],
                                                          $a_lldp['name'],
                                                          $a_lldp['model']);
-      } else {
-         if ($a_lldp['sysmac'] != '') {
+      } elseif ($a_lldp['sysmac'] != '') {
          //if ($a_lldp['mac'] != '') {
             $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['sysmac'],
                                                                        //$a_lldp['mac'],
                                                                        $a_lldp['logical_number'],
                                                                        $a_lldp);
-         }
+         //
+            
+      } elseif (strstr($a_lldp['model'], "Phone") and is_array($a_lldp['mac'])) {
+          // only for phones if IP and SYSMAC are not detected
+          foreach ($a_lldp['mac'] as $mac) {
+              $network_port = new NetworkPort();
+              $port = current($network_port->find("mac = '" . $mac . "' AND itemtype = 'Phone'"));
+              if (isset($port['id'])) {
+                  $portID = $port['id'];
+                  break;
+              }
+          }
       }
 
       if ($portID
