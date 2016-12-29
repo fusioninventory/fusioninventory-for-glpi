@@ -150,7 +150,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param object $item PluginFusioninventoryDeployGroup instance
     */
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
-      $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
+      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
       //If metacriteria array is empty, remove it as it displays the metacriteria form,
       //and it's is not we want !
       if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {

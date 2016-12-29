@@ -30,11 +30,12 @@ function statHalfDonut(svgname, jsondata) {
 }
 
 
-function statBar(svgname, jsondata, title, width) {
+function statBar(svgname, jsondata, title) {
    
    nv.addGraph(function() {
 
-      var height = 380;
+      var width = 400,
+          height = 380;
           
       var chart = nv.models.discreteBarChart()
           .x(function(d) { return d.label })
@@ -42,7 +43,6 @@ function statBar(svgname, jsondata, title, width) {
           .width(width)
           .height(height)
           .staggerLabels(true)
-          .tooltips(false)
           .showValues(false);
 
       d3.select('#' + svgname)

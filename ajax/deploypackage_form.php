@@ -49,7 +49,8 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-if (!empty(filter_input(INPUT_POST, "move_item"))) { //ajax request
+$fi_move_item = filter_input(INPUT_POST, "move_item");
+if (!empty($fi_move_item)) { //ajax request
 
    $json_response = array(
       "success" => TRUE,
@@ -224,8 +225,9 @@ $orders_id = filter_input(INPUT_POST, "orders_id");
 $rand = filter_input(INPUT_POST, "rand");
 $mode = filter_input(INPUT_POST, "mode");
 
+$fi_subtype = filter_input(INPUT_POST, "subtype");
 if (empty($orders_id) && empty($rand)
-        && empty(filter_input(INPUT_POST, "subtype"))) {
+        && empty($fi_subtype)) {
    exit;
 }
 

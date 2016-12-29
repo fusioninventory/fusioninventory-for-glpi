@@ -890,14 +890,12 @@ function plugin_fusioninventory_install() {
       AND (
          defined('FORCE_UPGRADE')
          OR (
-            $version_detected != PLUGIN_FUSIONINVENTORY_VERSION
-            AND $version_detected!='0'
+            $version_detected!='0'
          )
       )) {
+      // note: if version detected = version found can have problem, so need
+      //       pass in upgrade to be sure all OK
       pluginFusioninventoryUpdate($version_detected, $migrationname);
-   } else if ((isset($version_detected))
-           && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
-         //Same version : Nothing to do
    } else {
       require_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migrationname);
@@ -1266,7 +1264,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                      FROM `glpi_plugin_fusioninventory_taskjoblogs`
                    WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
                    ORDER BY id DESC LIMIT 1
-                  )";
+                  ) ";
          }
          break;
 
@@ -1297,13 +1295,13 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                if ($table_networking_ports == "1") {
                   return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
 
                } else {
                   return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (FUSIONINVENTORY_10.items_id = glpi_computers.id AND FUSIONINVENTORY_10.itemtype='Computer') ".
                      " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
                }
                break;
 
@@ -1339,7 +1337,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$module."
                              ON FUSION_".$module.".`modulename`='".$module."'
                           LEFT JOIN `glpi_plugin_fusioninventory_agents` as agent".strtolower($module)."
-                             ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`)";
+                             ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`) ";
             }
          }
          break;
@@ -1446,13 +1444,13 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                if ($table_networking_ports == "1") {
                   return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
 
                } else {
                   return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (FUSIONINVENTORY_10.items_id = glpi_printers.id AND FUSIONINVENTORY_10.itemtype='Printer') ".
                      " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
                }
                break;
 

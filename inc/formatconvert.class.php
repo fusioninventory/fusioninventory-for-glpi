@@ -951,6 +951,10 @@ class PluginFusioninventoryFormatconvert {
                                            array(
                                               'MEMORY' => 'size'));
             $array_tmp['designation'] = 'Dummy Memory Module';
+            $array_tmp['frequence'] = 0;
+            $array_tmp['serial'] = '';
+            $array_tmp['devicememorytypes_id'] = '';
+            $array_tmp['busID'] = '';
             $a_inventory['memory'][] = $array_tmp;
          }
       }

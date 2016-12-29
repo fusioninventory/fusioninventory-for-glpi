@@ -1079,7 +1079,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
       echo "<script>
-         statBar('".$name."', '".json_encode($data)."', '".$title."', '".$width."');
+         statBar('".$name."', '".json_encode($data)."', '".addslashes($title)."');
 </script>";
    }
 }

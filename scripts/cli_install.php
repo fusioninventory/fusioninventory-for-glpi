@@ -97,6 +97,11 @@ $current_version = pluginFusioninventoryGetCurrentVersion();
 
 $migration = new CliMigration($current_version);
 
+if (!plugin_fusioninventory_check_prerequisites()) {
+   echo "\n";
+   exit(1);
+}
+
 if (!isset($current_version)) {
    $current_version = 0;
 }

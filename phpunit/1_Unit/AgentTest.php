@@ -145,5 +145,35 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(0, $a_agents['entities_id']);
    }
+
+
+
+   /**
+    * @test
+    */
+   public function udpateNotLog() {
+      global $DB;
+      // test update last_contact field but not have logs/ history
+
+      $DB->connect();
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $query = "UPDATE glpi_plugin_fusioninventory_agents SET `last_contact`='2015-01-01 00:00:01'";
+      $DB->query($query);
+      $arrayinventory = array(
+          'DEVICEID' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27',
+      );
+      $log = new Log();
+      $nb = count($log->find());
+
+      $pfAgent->importToken($arrayinventory);
+
+      $pfAgent->getFromDBByQuery(
+         "WHERE `device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27' ".
+         "LIMIT 1"
+      );
+      $this->assertContains(date('Y-m-d'), strstr($pfAgent->fields['last_contact'], date('Y-m-d')));
+      $this->assertEquals($nb, count($log->find()));
+   }
 }
 

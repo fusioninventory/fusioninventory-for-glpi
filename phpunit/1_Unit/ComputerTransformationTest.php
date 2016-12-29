@@ -109,6 +109,10 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               array(
                   'size'        => '3802',
                   'designation' => 'Dummy Memory Module',
+                  'frequence' => 0,
+                  'serial' => '',
+                  'devicememorytypes_id' => '',
+                  'busID' => ''
               )
           ),
           'monitor'        => array(),
@@ -1047,7 +1051,55 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return['processor']);
    }
 
+   /**
+    * @test
+    */
+   public function ComputerHook_addinventoryinfos () {
+      global $DB, $PLUGIN_HOOKS;
 
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = [
+        'HARDWARE' => [
+           'NAME'           => 'vbox-winxp',
+        ]
+      ];
+
+      $callable = function($params) {
+         $params['source']['OPERATINGSYSTEM']['FULL_NAME'] =
+            'Fedora release 23 (Twenty Three)';
+         return $params;
+      };
+      $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['tests'] = $callable;
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+
+      unset($PLUGIN_HOOKS['fusioninventory_addinventoryinfos']);
+
+      $a_reference = [
+         'name'                             => 'vbox-winxp',
+         'os_licenseid'                     => '',
+         'os_license_number'                => '',
+         'domains_id'                       => '',
+         'uuid'                             => '',
+         'manufacturers_id'                 => '',
+         'computermodels_id'                => '',
+         'serial'                           => '',
+         'computertypes_id'                 => '',
+         'is_dynamic'                       => '1',
+         'operatingsystemversions_id'       => '0',
+         'operatingsystemservicepacks_id'   => '0',
+         'operatingsystems_id'              => '0'
+      ];
+
+      $this->assertArrayHasKey('OPERATINGSYSTEM', $a_return['source']);
+      $this->assertArrayHasKey('FULL_NAME', $a_return['source']['OPERATINGSYSTEM']);
+      $this->assertEquals('Fedora release 23 (Twenty Three)', $a_return['source']['OPERATINGSYSTEM']['FULL_NAME']);
+   }
 
    /**
     * @test
