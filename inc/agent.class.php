@@ -215,57 +215,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      $tab_names = array();
-      if ( $this->can(0, CREATE)
-         && PluginFusioninventoryInventoryComputerComputer::isAFusionInventoryDevice($item)) {
-         if ($item->getType() == 'Computer') {
-            $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
-         }
-      }
-
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
-      if ($item->getType() == 'Computer') {
-
-         // Possibility to remote agent
-         if (PluginFusioninventoryToolbox::isAllowurlfopen(1)) {
-            $pfAgent = new PluginFusioninventoryAgent();
-            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
-               $pfAgent->showRemoteStatus($item);
-               return TRUE;
-            }
-         }
-      }
-      return FALSE;
-   }
-
-
-
-   /**
     * Get comments of the object
     *
     * @return string comments in HTML format
@@ -399,7 +348,21 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return;
    }
 
+   function getHTMLForAgentModalWindow() {
+      global $CFG_GLPI;
 
+      $output = '';
+      if (PluginFusioninventoryToolbox::isAllowurlfopen(1)
+         && $this->fields['computers_id']) {
+         $output  = "&nbsp;<img alt='' src='".$CFG_GLPI["root_doc"].
+                    "/pics/info-small.png' style='cursor:pointer; margin-left:2px;'
+                     onClick=\"".Html::jsGetElementbyID('agent_form').".dialog('open');\">";
+         $url     = $this->getFormURL()."?computers_id=".$this->fields['computers_id'];
+         $output .= Ajax::createIframeModalWindow('agent_form', $url);
+      }
+
+      return $output;
+   }
 
    /**
     * Display form for agent configuration
@@ -433,6 +396,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".__('Name')." :</td>";
       echo "<td align='center'>";
       Html::autocompletionTextField($this,'name', array('size' => 40));
+      echo $this->getHTMLForAgentModalWindow();
       echo "</td>";
       echo "<td>".__('Device_id', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -768,7 +732,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @param object $computer Computer object
     */
    function showRemoteStatus($computer = null) {
-      global $CFG_GLPI;
 
       /**
        * Check for initialized agent
@@ -786,9 +749,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $agent_id = $this->fields['id'];
 
-      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
-         "/plugins/fusioninventory/front/agent.form.php\">";
-      echo "<table class='tab_cadre' width='500'>";
+      echo "<form method='post' name='agent_status_form'
+             id='agent_status_form'  action=\"".$this->getFormURL()."\">";
+      echo "<table class='tab_cadre'>";
+
+
+      echo "<input type='hidden' name='_in_modal' value='1'>";
+      echo "<input type='hidden' name='computers_id' value='".$computer->fields['id']."'>";
 
       echo "<tr>";
       echo "<th colspan='2'>";
@@ -1161,8 +1128,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($this->getAgentWithComputerid($computers_id)) {
 
          echo '<tr class="tab_bg_1">';
+
          echo '<td>'.__('Agent', 'fusioninventory').'</td>';
-         echo '<td>'.$this->getLink(1).'</td>';
+         $output = '';
+         if (PluginFusioninventoryToolbox::isAllowurlfopen(1)) {
+            $output  = $this->getHTMLForAgentModalWindow();
+         }
+         echo '<td>'.$this->getLink(1).$output.'</td>';
          echo '</tr>';
 
          echo '<tr class="tab_bg_1">';

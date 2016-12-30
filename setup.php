@@ -107,16 +107,7 @@ function plugin_init_fusioninventory() {
 
       // Register classes into GLPI plugin factory
 
-      $Plugin->registerClass('PluginFusioninventoryAgent',
-         array(
-            'addtabon' => array(
-               'Computer',
-               'Printer',
-               'NetworkEquipment',
-               'PluginFusioninventoryCredentialIp'
-            )
-         )
-      );
+      $Plugin->registerClass('PluginFusioninventoryAgent');
       $Plugin->registerClass('PluginFusioninventoryAgentmodule');
       $Plugin->registerClass('PluginFusioninventoryConfig');
       $Plugin->registerClass('PluginFusioninventoryTask',
