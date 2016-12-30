@@ -227,6 +227,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</td>';
          echo '</tr>';
       }
+
+      $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
+      $pfRemoteManagement->showInformation($item->getID());
       echo '</table>';
       return TRUE;
    }

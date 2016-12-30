@@ -178,8 +178,7 @@ function plugin_init_fusioninventory() {
                                         'Computer')));
       $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement',
-              array('addtabon' => array('Computer')));
+      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement');
 
          //Classes for rulesengine
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocation');
