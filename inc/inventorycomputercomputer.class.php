@@ -279,7 +279,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo "<th>";
       echo __('Download', 'fusioninventory');
       echo "</th>";
-      echo "<td>";
+      echo "<th>";
       if (!empty($this->fields['serialized_inventory'])) {
          echo "<a href='".$CFG_GLPI['root_doc'].
               "/plugins/fusioninventory/front/send_inventory.php".
@@ -300,10 +300,12 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
         "target='_blank'>XML</a>";
       }
 
-      echo "</td>";
+      echo "</th>";
       echo "</tr>";
 
-      PluginFusioninventoryToolbox::displaySerializedValues($data);
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         PluginFusioninventoryToolbox::displaySerializedValues($data);
+      }
 
       echo "</table>";
    }

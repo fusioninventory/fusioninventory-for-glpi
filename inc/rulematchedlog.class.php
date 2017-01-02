@@ -184,7 +184,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             }
 
             if (is_object($itemtype)
-                    && $itemtype->canView()) {
+                    && $itemtype->canView()
+                     && $_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
                $itemtype->displaySerializedInventory($item->getID());
             }
             return TRUE;
