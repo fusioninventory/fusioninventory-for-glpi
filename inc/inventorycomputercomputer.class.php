@@ -105,6 +105,92 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
 
+   /**
+    * Display information about computer (bios, last contact...)
+    *
+    * @global array $CFG_GLPI
+    * @param object $item
+    * @return true
+    */
+   static function showAgentInfo($item) {
+      global $CFG_GLPI;
+
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $a_computerextend = current($pfInventoryComputerComputer->find(
+                                              "`computers_id`='".$item->getID()."'",
+                                              "", 1));
+      if (empty($a_computerextend)) {
+         return;
+      }
+
+      echo '<table class="tab_glpi" width="100%">';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->showInfoForComputer($item->getID());
+
+      if ($a_computerextend['bios_date'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
+         echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_version'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['bios_version'].'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_manufacturers_id'] > 0) {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
+         echo '<td>';
+         echo Dropdown::getDropdownName("glpi_manufacturers",
+                                        $a_computerextend['bios_manufacturers_id']);
+         echo '</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['operatingsystem_installationdate'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo "<td>".__('Operating system')." - ".__('Installation')." (".
+                 strtolower(__('Date')).")</td>";
+         echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['winowner'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['winowner'].'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['wincompany'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Company', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['wincompany'].'</td>';
+         echo '</tr>';
+      }
+      return TRUE;
+   }
+
+   /**
+   * Get automatic inventory info for a computer
+   * @since 9.1+1.2
+   * @param computers_id the computer ID to look for
+   * @return inventory computer infos or an empty array
+   */
+   function hasAutomaticInventory($computers_id) {
+      $a_computerextend = current($this->find("`computers_id`='$computers_id'",
+                                              "", 1));
+      if (empty($a_computerextend)) {
+         return [];
+      } else {
+         return $a_computerextend;
+      }
+   }
 
    /**
     * Display information about computer (bios, last contact...)
@@ -120,11 +206,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       PluginFusioninventoryLock::showLockIcon('Computer');
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$item->getID()."'",
-                                              "", 1));
+      $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($item->getID());
       if (empty($a_computerextend)) {
-         return;
+         return true;
       }
 
       echo '<table class="tab_glpi" width="100%">';

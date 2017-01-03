@@ -1123,7 +1123,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @param integer $computers_id id of the computer
     */
-   function showInfoForComputer($computers_id) {
+   function showInfoForComputer($computers_id, $colspan = 2) {
 
       if ($this->getAgentWithComputerid($computers_id)) {
 
@@ -1135,16 +1135,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $output  = $this->getHTMLForAgentModalWindow();
          }
          echo '<td>'.$this->getLink(1).$output.'</td>';
-         echo '</tr>';
 
-         echo '<tr class="tab_bg_1">';
+         if ($colspan == 2) {
+            echo '</tr>';
+            echo '<tr class="tab_bg_1">';
+         }
          echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['useragent'].'</td>';
-         echo '</tr>';
+         if ($colspan == 2) {
+            echo '</tr>';
+         }
 
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['tag'].'</td>';
+         if ($colspan == 4) {
+            echo '<td colspan=\'2\'></td>';
+         }
          echo '</tr>';
       }
    }
