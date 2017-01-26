@@ -122,7 +122,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     *
     * @return array
     */
-   static function getSearchOptionsToAdd() {
+   static function getSearchOptionsToAdd($itemtype = NULL) {
       $tab = array();
 
       $i = 5200;
