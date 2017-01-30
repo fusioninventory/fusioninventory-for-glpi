@@ -140,6 +140,7 @@ if (!defined('GLPI_ROOT')) {
    error_reporting(E_ALL | E_STRICT);
    ini_set('display_errors', 'On');
 }
+   include_once (GLPI_ROOT . "/inc/db.function.php");
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
