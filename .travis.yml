@@ -1,16 +1,15 @@
 sudo: false
 language: php
 php:
-  - 5.4
-  - 5.5
   - 5.6
   - 7.0
+  - 7.1
 
 env:
 #  - GLPI=0.90/bugfixes
 #  - GLPI=0.85/bugfixes
-  - GLPI=9.1/bugfixes
-#  - GLPI=master
+#  - GLPI=9.1/bugfixes
+  - GLPI=master
 
 cache:
   directories:
@@ -24,8 +23,7 @@ addons:
 
 before_install:
  - cd ..
- - git clone git://github.com/glpi-project/glpi.git glpi
- - composer self-update
+ - git clone --depth=10 git://github.com/glpi-project/glpi.git glpi
  - cd glpi
  - if [[ $GLPI != 'master' ]]; then git checkout -b $GLPI origin/$GLPI; fi
  - composer install --no-dev -o
