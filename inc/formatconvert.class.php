@@ -941,6 +941,8 @@ class PluginFusioninventoryFormatconvert {
                         }
                         $array_tmp["designation"] .= $a_memories["DESCRIPTION"];
                      }
+                     //agent sometimes gives " MHz" along with frequence
+                     $array_tmp['frequence'] = str_replace(' MHz', '', $array_tmp['frequence']);
                      $a_inventory['memory'][] = $array_tmp;
                   }
                }
