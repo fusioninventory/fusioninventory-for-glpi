@@ -2463,6 +2463,35 @@ function postShowtab($params) {
 
                    echo "</td>";
                    echo "</tr>";
+
+                   if ($a_computerextend['operatingsystem_installationdate'] != '') {
+                      echo '<tr class="tab_bg_1">';
+                      echo "<td>".__('Installation date')."</td>";
+                      echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+                      echo '</tr>';
+                   }
+
+                   if ($a_computerextend['winowner'] != '') {
+                      echo '<tr class="tab_bg_1">';
+                      echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+                      echo '<td>'.$a_computerextend['winowner'].'</td>';
+                      echo '</tr>';
+                   }
+
+                   if ($a_computerextend['wincompany'] != '') {
+                      echo '<tr class="tab_bg_1">';
+                      echo '<td>'.__('Company', 'fusioninventory').'</td>';
+                      echo '<td>'.$a_computerextend['wincompany'].'</td>';
+                      echo '</tr>';
+                   }
+
+                   if ($a_computerextend['oscomment'] != '') {
+                      echo '<tr class="tab_bg_1">';
+                      echo "<td>".__('Comments')."</td>";
+                      echo '<td>'.$a_computerextend['oscomment'].'</td>';
+                      echo '</tr>';
+                   }
+
                 }
                 echo '</table>';
                 break;

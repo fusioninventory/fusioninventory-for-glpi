@@ -354,8 +354,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $output = '';
       if (PluginFusioninventoryToolbox::isAllowurlfopen(1)
          && $this->fields['computers_id']) {
-         $output  = "&nbsp;<img alt='' src='".$CFG_GLPI["root_doc"].
-                    "/pics/info-small.png' style='cursor:pointer; margin-left:2px;'
+         $output  = "&nbsp;<img alt='' title='' src='".$CFG_GLPI["root_doc"].
+                    "/pics/menu_show.png' style='cursor:pointer; margin-left:2px;'
                      onClick=\"".Html::jsGetElementbyID('agent_form').".dialog('open');\">";
          $url     = $this->getFormURL()."?computers_id=".$this->fields['computers_id'];
          $output .= Ajax::createIframeModalWindow('agent_form', $url);
@@ -772,6 +772,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
+      echo '<td>'.$this->fields['tag'].'</td>';
+      echo '</tr>';
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
+      echo '<td>'.$this->fields['useragent'].'</td>';
+      echo '</tr>';
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo __('Status')."&nbsp;:";
@@ -1135,23 +1145,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $output  = $this->getHTMLForAgentModalWindow();
          }
          echo '<td>'.$this->getLink(1).$output.'</td>';
-
-         if ($colspan == 2) {
-            echo '</tr>';
-            echo '<tr class="tab_bg_1">';
-         }
-         echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
-         echo '<td>'.$this->fields['useragent'].'</td>';
-         if ($colspan == 2) {
-            echo '</tr>';
-         }
-
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
-         echo '<td>'.$this->fields['tag'].'</td>';
-         if ($colspan == 4) {
-            echo '<td colspan=\'2\'></td>';
-         }
          echo '</tr>';
       }
    }

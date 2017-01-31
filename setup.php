@@ -113,7 +113,7 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryTask',
          array(
             'addtabon' => array(
-               'Computer',
+               //'Computer',
                'Printer',
                'NetworkEquipment',
                'PluginFusioninventoryCredentialIp',
@@ -123,10 +123,6 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryTaskjob',
          array(
             'addtabon' => array(
-               //'Computer',
-               //'Printer',
-               //'NetworkEquipment',
-               //'PluginFusioninventoryUnmanaged',
                'PluginFusioninventoryTask',
             )
          )
