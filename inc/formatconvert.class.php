@@ -803,7 +803,13 @@ class PluginFusioninventoryFormatconvert {
                            $array_tmp['speed'] = 0;
                         }
 
-                        $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
+                        $uniq = '';
+                        if (!empty($array_tmp['mac'])) {
+                           $uniq = $array_tmp['mac'];
+                        } else if (!empty($array_tmp['wwn'])) {
+                           $uniq = $array_tmp['wwn'];
+                        }
+                        $a_networknames[$array_tmp['name'].'-'.$uniq] = $array_tmp;
                      }
                   }
                }
