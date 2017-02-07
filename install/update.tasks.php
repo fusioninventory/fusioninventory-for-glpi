@@ -95,7 +95,11 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
          'type'    => 'datetime',
          'value'   => NULL
       ),
-      'plugin_fusioninventory_timeslots_id' => array(
+      'plugin_fusioninventory_timeslots_prep_id' => array(
+         'type'    => 'integer',
+         'value'   => NULL
+      ),
+      'plugin_fusioninventory_timeslots_exec_id' => array(
          'type'    => 'integer',
          'value'   => NULL
       ),
@@ -111,12 +115,15 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
    );
 
    $table['renamefields'] = array(
-      'date_scheduled' => 'datetime_start'
+      'date_scheduled'                      => 'datetime_start',
+      'plugin_fusioninventory_timeslots_id' => 'plugin_fusioninventory_timeslots_prep_id'
    );
 
    $table['keys']   = array();
    $table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
    $table['keys'][] = array('field' => 'is_active', 'name' => '', 'type' => 'INDEX');
+   $table['keys'][] = array('field' => 'plugin_fusioninventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX');
+   $table['keys'][] = array('field' => 'plugin_fusioninventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX');
 
    $table['oldkeys'] = array();
 
