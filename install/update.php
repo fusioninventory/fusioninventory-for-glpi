@@ -6484,8 +6484,8 @@ function migrationDynamicGroupFields($fields) {
 
    //We're still in 0.85 or higher,
    //no need for migration !
-   if (isset($fields['criteria'])) {
-      return serialize($fields);
+   if (isset($data['criteria'])) {
+      return $fields;
    }
 
    //Upgrade from 0.84
