@@ -237,10 +237,12 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['locations_id']['name']  = __('Location');
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
+      $actions['locations_id']['force_actions'] = array('assign', 'regex_result');
 
       $actions['states_id']['name']  = __('Status');
       $actions['states_id']['type']  = 'dropdown';
       $actions['states_id']['table'] = 'glpi_states';
+      $actions['states_id']['force_actions'] = array('assign', 'regex_result');
 
       $actions['software']['name']  = __('Software');
       $actions['software']['force_actions'] = array('assign', 'regex_result');
