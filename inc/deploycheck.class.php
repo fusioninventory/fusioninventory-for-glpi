@@ -208,7 +208,7 @@ class PluginFusioninventoryDeployCheck {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'check_entries[]'));
+            Html::showCheckbox(array('name' => 'check_entries['.$i.']'));
             echo "</td>";
          }
          echo "<td>";
@@ -594,7 +594,7 @@ class PluginFusioninventoryDeployCheck {
       );
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['params_id']), TRUE);
 
       //unset index
       unset($datas['jobs']['checks'][$params['index']]);
@@ -604,7 +604,7 @@ class PluginFusioninventoryDeployCheck {
       array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['params_id'], $datas);
    }
 
 
@@ -621,7 +621,7 @@ class PluginFusioninventoryDeployCheck {
       }
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
 
       //remove selected checks
       foreach ($params['check_entries'] as $index => $checked) {
@@ -635,7 +635,7 @@ class PluginFusioninventoryDeployCheck {
       $datas['jobs']['checks'] = array_values($datas['jobs']['checks']);
 
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
       return TRUE;
    }
 
