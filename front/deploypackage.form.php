@@ -47,7 +47,6 @@
 
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
-
 $package = new PluginFusioninventoryDeployPackage();
 if (isset($_POST['update_json'])) {
    $json_clean = stripcslashes($_POST['json']);

@@ -668,7 +668,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          return FALSE;
       }
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
 
       $files = $datas['jobs']['associatedFiles'];
       //remove selected checks
@@ -688,7 +688,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
       $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
       return TRUE;
    }
 

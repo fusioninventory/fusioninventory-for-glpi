@@ -61,20 +61,34 @@ class PluginFusioninventoryDeployCheck {
     */
    static function getTypes() {
       return array(
-         'winkeyExists'     => __("Registry key exists", 'fusioninventory'),
-         'winkeyMissing'    => __("Registry key missing", 'fusioninventory'),
-         'winkeyEquals'     => __("Registry key value equals to", 'fusioninventory'),
-         'fileExists'       => __("File exists", 'fusioninventory'),
-         'fileMissing'      => __("File is missing", 'fusioninventory'),
-         'fileSizeGreater'  => __("File size is greater than", 'fusioninventory'),
-         'fileSizeEquals'   => __("File size is equal to", 'fusioninventory'),
-         'fileSizeLower'    => __("File size is lower than", 'fusioninventory'),
-         'fileSHA512'       => __("SHA-512 hash value is", 'fusioninventory'),
-         'freespaceGreater' => __("Free space is greater than", 'fusioninventory')
+         'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
+         'winkeyMissing'      => __("Registry key missing", 'fusioninventory'),
+         'winkeyEquals'       => __("Registry key value equals to", 'fusioninventory'),
+         'fileExists'         => __("File exists", 'fusioninventory'),
+         'fileMissing'        => __("File is missing", 'fusioninventory'),
+         'fileSizeGreater'    => __("File size is greater than", 'fusioninventory'),
+         'fileSizeEquals'     => __("File size is equal to", 'fusioninventory'),
+         'fileSizeLower'      => __("File size is lower than", 'fusioninventory'),
+         'fileSHA512'         => __("SHA-512 hash value matches", 'fusioninventory'),
+         'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'fusioninventory'),
+         'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
       );
    }
 
 
+   /**
+    * Get label for a type
+    * @param the type value
+    * @return the type label
+    */
+   static function getLabelForAType($type) {
+      $types = self::getTypes();
+      if (isset($types[$type])) {
+         return $types[$type];
+      } else {
+         return '';
+      }
+   }
 
    /**
     * Get Unit name
@@ -91,6 +105,20 @@ class PluginFusioninventoryDeployCheck {
    }
 
 
+   static function getAuditDescription($type, $return) {
+      $return_string = self::getLabelForAType($type);
+      //The skip case is a litte bit different. So we notice to the user
+      //that if audit is successfull, the the audit check process continue
+      if ($return == 'skip') {
+         $return_string.=' : '.__('continue', 'fusioninventory');
+      } else {
+         $return_string.=' : '.__('passed', 'fusioninventory');
+      }
+      $return_string.= ', '.__('otherwise', 'fusioninventory').' : ';
+      $return_string.= self::getValueForReturn($return);
+
+      return $return_string;
+   }
 
    /**
     * Get the number to multiply to have in B relative to the unit
@@ -208,13 +236,16 @@ class PluginFusioninventoryDeployCheck {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($package->can($package->getID(), UPDATE)) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'check_entries[]'));
+            Html::showCheckbox(array('name' => 'check_entries['.$i.']'));
             echo "</td>";
          }
+
+         $text = self::getAuditDescription($check['type'], $check['return']);
+
          echo "<td>";
          echo "<a class='edit'".
             "onclick=\"edit_subtype('check', {$package->fields['id']}, $rand ,this)\">".
-            $checks_types[$check['type']].
+            $text.
             "</a><br />";
          echo $check['path'];
          if (!empty($check['value'])) {
@@ -365,6 +396,7 @@ class PluginFusioninventoryDeployCheck {
             break;
 
          case "fileSHA512":
+         case "fileSHA512mismatch":
             $values['path_label'] = __("File", 'fusioninventory');
             $values['value_label'] = __('Value', 'fusioninventory');
             $values['value_type'] = "textarea";
@@ -491,12 +523,10 @@ class PluginFusioninventoryDeployCheck {
       }
 
       echo "<tr>";
-      echo "<th>".__("In case of error", 'fusioninventory')."</th>";
+      echo "<th>".__("If not successfull", 'fusioninventory')."</th>";
       echo "<td>";
-      Dropdown::showFromArray('return', array(
-                  "error"  => __('Error', 'fusioninventory'),
-                  "ignore" => __("Ignore", 'fusioninventory')
-               ), array('value' => $values['return']));
+      Dropdown::showFromArray('return', self::getAllReturnValues(),
+                              ['value' => $values['return']]);
       echo "</td>";
       echo "</tr>";
 
@@ -518,7 +548,31 @@ class PluginFusioninventoryDeployCheck {
       echo "</table>";
    }
 
+   /**
+   * Get all possible return values for a check
+   * @return an array of return values and their labels
+   */
+   static function getAllReturnValues() {
+      return  ["error"   => __('abort job', 'fusioninventory'),
+               "skip"    => __("skip job", 'fusioninventory'),
+               "info"    => __("report info", 'fusioninventory'),
+               "warning" => __("report warning", 'fusioninventory')
+              ];
+   }
 
+   /**
+   * Get the label for a return value
+   * @param the check return value
+   * @return the label for the return value
+   */
+   static function getValueForReturn($value) {
+      $values = self::getAllReturnValues();
+      if (isset($values[$value])) {
+         return $values[$value];
+      } else {
+         return '';
+      }
+   }
 
    /**
     * Add a new item in checks of the package
@@ -621,7 +675,7 @@ class PluginFusioninventoryDeployCheck {
       }
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
 
       //remove selected checks
       foreach ($params['check_entries'] as $index => $checked) {
@@ -635,7 +689,7 @@ class PluginFusioninventoryDeployCheck {
       $datas['jobs']['checks'] = array_values($datas['jobs']['checks']);
 
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
       return TRUE;
    }
 
