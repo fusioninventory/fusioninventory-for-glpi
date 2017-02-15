@@ -416,7 +416,19 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $inputdb['rules_id'] = $data['_ruleid'];
          $inputdb['method'] = 'inventory';
-         $pfIgnoredimportdevice->add($inputdb);
+         $inputdb['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+
+         // if existing ignored device, update it
+         if ($found = $pfIgnoredimportdevice->find("`plugin_fusioninventory_agents_id` =
+                                                    '".$inputdb['plugin_fusioninventory_agents_id']."'",
+                                                   "`date` DESC",
+                                                   1)) {
+            $agent         = array_pop($found);
+            $inputdb['id'] = $agent['id'];
+            $pfIgnoredimportdevice->update($inputdb);
+         } else {
+            $pfIgnoredimportdevice->add($inputdb);
+         }
       }
    }
 
