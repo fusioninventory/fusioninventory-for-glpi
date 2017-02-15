@@ -168,6 +168,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['uuid']['name']  = __('Assets to import', 'fusioninventory').' : '.__('UUID');
 
 
+      $criterias['device_id']['name']   = __('agent', 'fusioninventory').' : '.
+                                       __('Device_id', 'fusioninventory');
+
+
       $criterias['mskey']['name'] = __('Assets to import', 'fusioninventory').' : '.
                                        __('Serial of the operating system');
 
@@ -435,6 +439,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                  'hdserial',
                                  'partitionserial',
                                  'uuid',
+                                 'device_id',
                                  'mskey',
                                  'name',
                                  'itemtype',
@@ -634,6 +639,17 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
             case 'uuid':
                $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
+               break;
+
+            case 'device_id':
+               $sql_from_temp = " LEFT JOIN `glpi_plugin_fusioninventory_agents`
+                                 ON `glpi_plugin_fusioninventory_agents`.`computers_id` = ".
+                                     "`[typetable]`.`id` ";
+               $sql_where_temp = " AND `glpi_plugin_fusioninventory_agents`.`device_id` = '".
+                                    $input["device_id"]."'";
+
+               $sql_from .= $sql_from_temp;
+               $sql_where  .= $sql_where_temp;
                break;
 
             case 'domains_id':
