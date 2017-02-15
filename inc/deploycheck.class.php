@@ -240,12 +240,18 @@ class PluginFusioninventoryDeployCheck {
             echo "</td>";
          }
 
+         //Get the audit full description (with type and return value)
+         //to be displayed in the UI
          $text = self::getAuditDescription($check['type'], $check['return']);
-
+         if (isset($check['name']) && !empty($check['name'])) {
+            $check_label = $check['name'].': '.$text;
+         } else {
+            $check_label = $text;
+         }
          echo "<td>";
          echo "<a class='edit'".
             "onclick=\"edit_subtype('check', {$package->fields['id']}, $rand ,this)\">".
-            $text.
+            $check_label.
             "</a><br />";
          echo $check['path'];
          if (!empty($check['value'])) {
@@ -355,56 +361,62 @@ class PluginFusioninventoryDeployCheck {
     */
    static function getValues($type, $data, $mode) {
       $values = array(
+         'name_value'   => "",
+         'name_label'   => __('Name'),
+         'name_type'   => "input",
          'path_label'   => "",
          'path_value'   => "",
          'value_type'   => "input",
          'value_label'  => "",
-         'value'       => "",
+         'value'        => "",
          'return'       => "error"
       );
 
+
+      $mandatory_mark = "&nbsp;<span class='red'>*</span>";
       if ($mode === 'edit') {
+         $values['name_value'] = isset($data['name'])?$data['name']:"";
          $values['path_value'] = isset($data['path'])?$data['path']:"";
-         $values['value'] = isset($data['value'])?$data['value']:"";
-         $values['return'] = isset($data['return'])?$data['return']:"error";
+         $values['value']      = isset($data['value'])?$data['value']:"";
+         $values['return']     = isset($data['return'])?$data['return']:"error";
       }
       switch ($type) {
 
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label'] = __("Key", 'fusioninventory');
+            $values['path_label'] = __("Key", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = FALSE;
             break;
 
          case "winkeyEquals":
-            $values['path_label'] = __("Key", 'fusioninventory');
+            $values['path_label'] = __("Key", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = __('Key value', 'fusioninventory');
             break;
 
          case "fileExists":
          case "fileMissing":
-            $values['path_label'] = __("File", 'fusioninventory');
+            $values['path_label'] = __("File", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = FALSE;
             break;
 
          case "fileSizeGreater":
          case "fileSizeEquals":
          case "fileSizeLower":
-            $values['path_label'] = __("File", 'fusioninventory');
-            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['path_label'] = __("File", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
             $values['value_type'] = "input+unit";
             break;
 
          case "fileSHA512":
          case "fileSHA512mismatch":
-            $values['path_label'] = __("File", 'fusioninventory');
-            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['path_label'] = __("File", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
             $values['value_type'] = "textarea";
             break;
 
          case "freespaceGreater":
-            $values['path_label'] = __("Disk or directory", 'fusioninventory');
-            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['path_label'] = __("Disk or directory", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
             $values['value_type'] = "input+unit";
             break;
 
@@ -440,7 +452,6 @@ class PluginFusioninventoryDeployCheck {
        * Get type from request params
        */
       $type = NULL;
-
       if ($mode === 'create') {
          $type = $request_data['value'];
          $config_data = NULL;
@@ -455,6 +466,9 @@ class PluginFusioninventoryDeployCheck {
       }
       echo "<table class='package_item'>";
       echo "<tr>";
+      echo "<th>".__('Name')."</th>";
+      echo "<td><input type='text' name='name' id='check_name{$rand}' value='{$values['name_value']}' /></td>";
+      echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
       echo "<td><input type='text' name='path' id='check_path{$rand}' value='{$values['path_value']}' /></td>";
       echo "</tr>";
@@ -584,6 +598,9 @@ class PluginFusioninventoryDeployCheck {
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
+      if (!isset($params['name'])) {
+         $params['name'] = "";
+      }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
@@ -596,6 +613,7 @@ class PluginFusioninventoryDeployCheck {
 
       //prepare new check entry to insert in json
       $new_entry = array(
+         'name'   => $params['name'],
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
          'value'  => $params['value'],
@@ -629,6 +647,9 @@ class PluginFusioninventoryDeployCheck {
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
+      if (!isset($params['name'])) {
+         $params['name'] = "";
+      }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
@@ -641,6 +662,7 @@ class PluginFusioninventoryDeployCheck {
 
       //prepare updated check entry to insert in json
       $entry = array(
+         'name'   => $params['name'],
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
          'value'  => $params['value'],
