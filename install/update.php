@@ -2128,12 +2128,18 @@ function do_ignoredimport_migration($migration) {
                                             'value'   => NULL);
    $a_table['fields']['uuid']       = array('type'    => 'string',
                                             'value'   => NULL);
+   $a_table['fields']['plugin_fusioninventory_agents_id']
+                                    = array('type'    => 'integer',
+                                            'value'   => NULL);
 
    $a_table['oldfields']  = array();
 
    $a_table['renamefields'] = array();
 
    $a_table['keys']   = array();
+   $a_table['keys'][] = array('field' => 'plugin_fusioninventory_agents_id',
+                              'name' => '',
+                              'type' => 'INDEX');
 
    $a_table['oldkeys'] = array();
 
