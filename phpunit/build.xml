@@ -62,20 +62,6 @@
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
   <mkdir dir="${basedir}/build/phpdox"/>
-
-  <available file="${basedir}/glpi/plugins/fusioninventory/phpunit/2_Integration/CollectsTest.php.bkp" property="bkpfile.exists" type="file"/>
-  <sequential if:true="${bkpfile.exists}">
-   <move file="./glpi/plugins/fusioninventory/phpunit/2_Integration/CollectsTest.php.bkp" tofile="./glpi/plugins/fusioninventory/phpunit/2_Integration/CollectsTest.php" failonerror="false"/>
-  </sequential>
-  <sequential if:true="${hosts.differs}">
-   <copy file="./glpi/plugins/fusioninventory/phpunit/2_Integration/CollectsTest.php" tofile="./glpi/plugins/fusioninventory/phpunit/2_Integration/CollectsTest.php.bkp"/>
-   <replace
-    file="./glpi/plugins/fusioninventory/phpunit/2_Integration/CollectsTest.php"
-    token="localhost:8088"
-    value="${fusioninventory.http.host}"
-    failOnNoReplacements="true"
-   />
-  </sequential>
  </target>
 
  <target name="lint" description="Perform syntax check of sourcecode files">
@@ -185,6 +171,7 @@
     failonerror="false"
     resultproperty='phpunit.returncode.@{type}'
     >
+    <env key="FUSIONINVENTORY_HTTP_HOST" value="${fusioninventory.http.host}"/>
     <arg value="--verbose" />
     <arg value="--debug" />
     <arg line="--coverage-clover ${basedir}/build/logs/clover-@{type}.xml" />

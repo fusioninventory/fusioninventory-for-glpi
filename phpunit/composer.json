@@ -4,12 +4,12 @@
     "license" : "AGPL-3.0",
 
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "^5.7",
         "phploc/phploc": "*",
-        "pdepend/pdepend" : "1.1.0",
-        "theseer/phpdox" : "*",
-        "phpmd/phpmd" : "*",
-        "squizlabs/php_codesniffer" : "*",
+        "pdepend/pdepend": "^2.5",
+        "theseer/phpdox": "*",
+        "phpmd/phpmd": "*",
+        "squizlabs/php_codesniffer": "*",
         "sebastian/phpcpd": "*"
     },
 

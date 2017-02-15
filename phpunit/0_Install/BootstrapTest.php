@@ -1,6 +1,7 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class Bootstrap extends BaseTestCase {
+class Bootstrap extends TestCase {
 
    public function should_restore_install() {
       return FALSE;

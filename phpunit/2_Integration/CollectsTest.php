@@ -285,9 +285,13 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
+      $http_host = getenv('FUSIONINVENTORY_HTTP_HOST');
+      if (!$http_host) {
+         $http_host = 'localhost:8088';
+      }
 
       // Get jobs
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
       $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_tm.'"},'
                                           . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_fi.'"}]}');
       $GLPIlog->testSQLlogs();
@@ -307,7 +311,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           '_sid'                  => $registry_tm,
           'InstallationDirectory' => 'C:\\Program Files (x86)\\TeamViewer'
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -333,7 +337,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'logfile-maxsize'         => '16'
       );
 
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -345,7 +349,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'uuid'   => $jobstate['uniqid'],
           );
 
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -456,9 +460,13 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
+      $http_host = getenv('FUSIONINVENTORY_HTTP_HOST');
+      if (!$http_host) {
+         $http_host = 'localhost:8088';
+      }
 
       // Get jobs
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
       $this->assertEquals($result, '{"jobs":[{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Name"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kn.'"},'
                                           . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kd.'"}]}');
 
@@ -473,7 +481,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           '_cpt'   => '1',
           'Name'   => 'Enhanced (101- or 102-key)'
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -488,7 +496,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'Description' => 'Standard PS/2 Keyboard'
       );
 
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -500,7 +508,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'uuid'   => $jobstate['uniqid'],
           );
 
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -633,9 +641,13 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
+      $http_host = getenv('FUSIONINVENTORY_HTTP_HOST');
+      if (!$http_host) {
+         $http_host = 'localhost:8088';
+      }
 
       // Get jobs
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
       $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\totoDesktop","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_desktop.'"},'
                                           . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_down.'"}]}');
       $GLPIlog->testSQLlogs();
@@ -650,7 +662,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'path'   => 'C:\\Users\\toto\\Desktop/06_import_tickets.php',
           'size'   => 5053
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $params = array(
@@ -661,7 +673,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'path'   => 'C:\\Users\\toto\\Desktop/fusioninventory.txt',
           'size'   => 28
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $params = array(
@@ -672,7 +684,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'path'   => 'C:\\Users\\toto\\Desktop/desktop.ini',
           'size'   => 282
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -688,7 +700,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'path'   => 'C:\\Users\\toto\\Downloads/jxpiinstall.exe',
           'size'   => 738368
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $params = array(
@@ -699,7 +711,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'path'   => 'C:\\Users\\toto\\Downloads/npp.6.9.2.Installer.exe',
           'size'   => 4211112
       );
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();
@@ -711,7 +723,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
           'uuid'   => $jobstate['uniqid'],
           );
 
-      $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
+      $result = file_get_contents("http://$http_host/plugins/fusioninventory/b/collect/index.php?".http_build_query($params));
       $this->assertEquals($result, '{}');
 
       $GLPIlog->testSQLlogs();

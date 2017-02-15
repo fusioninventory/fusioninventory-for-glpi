@@ -1,6 +1,6 @@
 <?php
 require_once('commonfunction.php');
-include_once (GLPI_ROOT . "/config/based_config.php");
+include_once (GLPI_ROOT . "/inc/based_config.php");
 include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
 include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
