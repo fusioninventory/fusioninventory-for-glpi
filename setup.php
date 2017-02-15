@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.1+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.1+1.1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -55,7 +55,7 @@ $PF_ESXINVENTORY = FALSE;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.1 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
@@ -537,19 +537,6 @@ function plugin_fusioninventory_check_prerequisites() {
       }
    }
 
-   $crontask = new CronTask();
-   if ($plugin->isActivated("fusioninventory")) {
-      if ((TableExists("glpi_plugin_fusioninventory_agents")
-              AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
-           OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))
-           OR (TableExists("glpi_plugin_fusioninventory_agentmodules")
-              AND FieldExists("glpi_plugin_fusioninventory_agentmodules", "url"))) {
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4'
-                        WHERE `type`='version'");
-         $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4'
-                        WHERE `directory` LIKE 'fusi%'");
-      }
-   }
    return TRUE;
 }
 
