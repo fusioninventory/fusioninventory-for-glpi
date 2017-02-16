@@ -71,7 +71,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       // Add check
       $item = array(
          'id'               => $packages_id,
-         'name'             => 'check winkey'
+         'name'             => 'check winkey',
          'itemtype'         => 'PluginFusioninventoryDeployCheck',
          'deploy_checktype' => 'winkeyExists',
          'path'             => 'toto',
