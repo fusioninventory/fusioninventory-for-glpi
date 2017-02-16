@@ -89,29 +89,6 @@ class AgentTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
-    * @depends addAgent
-    */
-   public function disconnectAgent() {
-
-      $pfAgent  = new PluginFusioninventoryAgent();
-      $agent    = $pfAgent->find(
-         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
-      );
-      $this->assertEquals(1, count($agent));
-      $current_agent = current($agent);
-      $agent_id      = $current_agent['id'];
-
-      //Disconnect the agent from the computer
-      $pfAgent->disconnect(['computers_id' => 100, 'id' => $agent_id]);
-      $count = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                    "`computers_id`='100'");
-      $this->assertEquals(0, $count);
-
-      $pfAgent->getFromDB($agent_id);
-      $this->assertEquals(0, $pfAgent->fields['computers_id']);
-   }
-   /**
-    * @test
     */
    public function newAgentLinkedToSameAsset() {
 
@@ -197,4 +174,30 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertContains(date('Y-m-d'), strstr($pfAgent->fields['last_contact'], date('Y-m-d')));
       $this->assertEquals($nb, count($log->find()));
    }
+
+   /**
+    * @test
+    * @depends addAgent
+    */
+   public function disconnectAgent() {
+
+      $pfAgent  = new PluginFusioninventoryAgent();
+      $agent    = $pfAgent->find(
+         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
+      );
+      $this->assertEquals(1, count($agent));
+      $current_agent = current($agent);
+      $agent_id      = $current_agent['id'];
+
+      //Disconnect the agent from the computer
+      $pfAgent->disconnect(['computers_id' => 100, 'id' => $agent_id]);
+      $count = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                    "`computers_id`='100'");
+      $this->assertEquals(0, $count);
+
+      //Check that computers_id has been set to 0
+      $pfAgent->getFromDB($agent_id);
+      $this->assertEquals(0, $pfAgent->fields['computers_id']);
+   }
+
 }
