@@ -88,6 +88,10 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($a_agents), "Agent not found");
    }
 
+   /**
+    * @test
+    * @depends addAgent
+    */
    public function disconnectAgent() {
       $a_agents = $pfAgent->find(
          "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
