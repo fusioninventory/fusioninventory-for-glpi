@@ -79,8 +79,7 @@ class AgentTest extends RestoreDatabase_TestCase {
     */
    public function agentExists() {
 
-      $pfAgent = new PluginFusioninventoryAgent();
-
+      $pfAgent  = new PluginFusioninventoryAgent();
       $a_agents = $pfAgent->find(
          "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
       );
@@ -93,6 +92,8 @@ class AgentTest extends RestoreDatabase_TestCase {
     * @depends addAgent
     */
    public function disconnectAgent() {
+
+      $pfAgent  = new PluginFusioninventoryAgent();
       $a_agents = $pfAgent->find(
          "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
       );
