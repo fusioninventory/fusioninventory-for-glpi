@@ -94,7 +94,7 @@ class AgentTest extends RestoreDatabase_TestCase {
    public function disconnectAgent() {
 
       $pfAgent  = new PluginFusioninventoryAgent();
-      $a_agents = $pfAgent->find(
+      $agent    = $pfAgent->find(
          "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
       );
       $this->assertEquals(1, count($agent));
