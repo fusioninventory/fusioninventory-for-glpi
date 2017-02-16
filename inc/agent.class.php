@@ -372,6 +372,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @return boolean
     */
    function showForm($agents_id, $options=array()) {
+      global $CFG_GLPI;
 
       if ($agents_id!='') {
          $this->getFromDB($agents_id);
@@ -413,6 +414,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo $oComputer->getLink(1);
          echo Html::hidden('computers_id',
                            array('value' => $this->fields["computers_id"]));
+         echo "&nbsp;<a class='pointer' onclick='submitGetLink(\"".
+               $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agent.form.php\", ".
+               "{\"update\": \"update\",
+                 \"computers_id\": 0,
+                 \"id\": ".$this->fields['id'].",
+                 \"_glpi_csrf_token\": \"".Session::getNewCSRFToken()."\"});'>".
+               "<img src='".$CFG_GLPI['root_doc']."/pics/delete.png' /></a>";
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);

@@ -1687,7 +1687,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();
       $iPNetwork   = new IPNetwork();
-      $networkPortEthernet = new NetworkPortEthernet();
       $item_DeviceNetworkCard = new Item_DeviceNetworkCard();
 
       foreach ($inventory_networkports as $a_networkport) {
@@ -1780,19 +1779,27 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                // Add / update instantiation_type
                if (isset($inventory_networkports[$key]['instantiation_type'])) {
-                  if ($inventory_networkports[$key]['instantiation_type'] == 'NetworkPortEthernet') {
-                     $portsethernet = $networkPortEthernet->find("`networkports_id`='".$keydb."'", '', 1);
-                     if (count($portsethernet) == 1) {
-                        $portethernet = current($portsethernet);
-                        $input = $portethernet;
-                     } else {
+                  $instantiation_type = $inventory_networkports[$key]['instantiation_type'];
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
+                                                          'NetworkPortFiberchannel'))) {
+
+                     $instance = new $instantiation_type;
+                     $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
+                     if (count($portsinstance) == 1) {
+                        $portinstance = current($portsinstance);
+                        $input = $portinstance;
+                     } else{
                         $input = array(
                            'networkports_id' => $keydb
                         );
                      }
+
                      if (isset($inventory_networkports[$key]['speed'])) {
                         $input['speed'] = $inventory_networkports[$key]['speed'];
                         $input['speed_other_value'] = $inventory_networkports[$key]['speed'];
+                     }
+                     if (isset($inventory_networkports[$key]['wwn'])) {
+                        $input['wwn'] = $inventory_networkports[$key]['wwn'];
                      }
                      if (isset($inventory_networkports[$key]['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
@@ -1808,9 +1815,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      $input['_no_history'] = $no_history;
                      if (isset($input['id'])) {
-                        $networkPortEthernet->update($input);
+                        $instance->update($input);
                      } else {
-                        $networkPortEthernet->add($input);
+                        $instance->add($input);
                      }
                   }
                }
@@ -1919,13 +1926,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $iPAddress->add($input, array(), !$no_history);
                }
                if (isset($a_networkport['instantiation_type'])) {
-                  if ($a_networkport['instantiation_type'] == 'NetworkPortEthernet') {
+                  $instantiation_type = $a_networkport['instantiation_type'];
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
+                                                          'NetworkPortFiberchannel'))) {
+                     $instance = new $instantiation_type;
                      $input = array(
                         'networkports_id' => $a_networkport['items_id']
                      );
                      if (isset($a_networkport['speed'])) {
                         $input['speed'] = $a_networkport['speed'];
                         $input['speed_other_value'] = $a_networkport['speed'];
+                     }
+                     if (isset($a_networkport['wwn'])) {
+                        $input['wwn'] = $a_networkport['wwn'];
                      }
                      if (isset($a_networkport['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
@@ -1940,7 +1953,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         }
                      }
                      $input['_no_history'] = $no_history;
-                     $networkPortEthernet->add($input);
+                     $instance->add($input);
                   }
                }
             }

@@ -792,7 +792,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @return array
     */
    function getJoblogs($task_ids = array()) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
 
@@ -933,21 +933,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Query fields mapping used to easily select fields by name
       $query_fields = array(
-         array('task.id'        , 'task.`id`'),
-         array('task.name'      , 'task.`name`'),
-         array('job.id'         , 'job.`id`'),
-         array('job.name'       , 'job.`name`'),
-         array('job.method'     , 'job.`method`'),
-         array('agent.id'       , 'agent.`id`'),
-         array('agent.name'     , 'agent.`name`'),
-         array('run.id'         , 'run.`id`'),
-         array('run.itemtype'   , 'run.`itemtype`'),
-         array('run.items_id'   , 'run.`items_id`'),
-         array('run.state'      , 'run.`state`'),
-         array('log.last_date'  , 'log.`date`'),
-         array('log.last_timestamp' , 'UNIX_TIMESTAMP(log.`date`)'),
-         array('log.last_id'        , 'log.`id`'),
-         array('log.last_comment'   , 'log.`comment`'),
+         array('task.id',            'task.`id`'),
+         array('task.name',          'task.`name`'),
+         array('job.id',             'job.`id`'),
+         array('job.name',           'job.`name`'),
+         array('job.method',         'job.`method`'),
+         array('agent.id',           'agent.`id`'),
+         array('agent.name',         'agent.`name`'),
+         array('agent.computers_id', 'agent.`computers_id`'),
+         array('run.id',             'run.`id`'),
+         array('run.itemtype',       'run.`itemtype`'),
+         array('run.items_id',       'run.`items_id`'),
+         array('run.state',          'run.`state`'),
+         array('log.last_date',      'log.`date`'),
+         array('log.last_timestamp', 'UNIX_TIMESTAMP(log.`date`)'),
+         array('log.last_id',        'log.`id`'),
+         array('log.last_comment',   'log.`comment`'),
       );
       $fieldmap = array();
       foreach ($query_fields as $index=>$key) {
@@ -1168,6 +1169,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
                $targets[$target_id]['agents'][$agent_id][] = array(
                   'agent_id'      => $agent_id,
+                  'link'          => $CFG_GLPI['root_doc']."/front/computer.form.php?id="
+                                                          .$result[$fieldmap['agent.computers_id']],
                   'numstate'      => $result[$fieldmap['run.state']],
                   'state'         => $agent_state,
                   'jobstate_id'   => $result[$fieldmap['run.id']],

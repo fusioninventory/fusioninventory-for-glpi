@@ -42,26 +42,36 @@
 
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
-include ("../../../inc/includes.php");
-
 include ("./docopt.php");
 
 $doc = <<<DOC
 cli_install.php
 
 Usage:
-   cli_install.php [--no-models-update] [--force-upgrade] [--as-user USER] [--optimize]
+   cli_install.php [--no-models-update] [--force-upgrade] [--as-user USER] [--optimize] [ --tests ]
 
 Options:
    --force-upgrade      Force upgrade.
    --no-models-update   Do not perform SNMP models update.
    --as-user USER       Do install/upgrade as specified USER.
    --optimize           Optimize tables.
+   --tests              Use GLPi test database
 
 DOC;
 
 $docopt = new \Docopt\Handler();
 $args = $docopt->handle($doc);
+
+if (isset($args)) {
+   if (isset($args['--tests']) &&  $args['--tests'] !== false) {
+      // Use test GLPi's database
+      // Requires use of cliinstall of GLPI with --tests argument
+      define('GLPI_ROOT', dirname(dirname(dirname(__DIR__))));
+      define("GLPI_CONFIG_DIR", GLPI_ROOT . "/tests");
+   }
+}
+
+include ("../../../inc/includes.php");
 
 // Init debug variable
 $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;

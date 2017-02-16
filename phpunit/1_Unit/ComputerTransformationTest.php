@@ -1540,6 +1540,16 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'STATUS'      => 'Up',
             'TYPE'        => 'ethernet',
             'VIRTUALDEV'  => '0'
+         ),
+         1 => array(
+            'DESCRIPTION'  => 'HBA_Port_WWN_1 /dev/cfg/c1',
+            'DRIVER'       => 'qlc',
+            'FIRMWARE'     => '02.01.145',
+            'MANUFACTURER' => 'QLogic Corp.',
+            'MODEL'        => '2200',
+            'SPEED'        => '1000',
+            'STATUS'       => 'Up',
+            'WWN'          => '220000144f3eb274',
          )
       );
 
@@ -1559,7 +1569,23 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'netmask'            => '255.255.255.0',
             'dhcpserver'         => '192.168.20.1',
             'speed'              => 100,
-            'logical_number'     => 1
+            'logical_number'     => 1,
+            'wwn'                => ''
+         ),
+         'HBA_Port_WWN_1 /dev/cfg/c1-220000144f3eb274' => array(
+            'name'               => 'HBA_Port_WWN_1 /dev/cfg/c1',
+            'speed'              => 1000,
+            'wwn'                => '220000144f3eb274',
+            'mac'                => '',
+            'instantiation_type' => 'NetworkPortFiberchannel',
+            'virtualdev'         => 0,
+            'subnet'             => '',
+            'ssid'               => '',
+            'gateway'            => '',
+            'netmask'            => '',
+            'dhcpserver'         => '',
+            'logical_number'     => 1,
+            'ipaddress'          => [],
          )
       );
       $this->assertEquals($a_reference, $a_return['networkport']);
@@ -1631,7 +1657,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'netmask'            => '255.255.255.0',
             'dhcpserver'         => '192.168.20.1',
             'speed'              => 100,
-            'logical_number'     => 1
+            'logical_number'     => 1,
+            'wwn'                => ''
          )
       );
       $this->assertEquals($a_reference, $a_return['networkport']);
