@@ -250,7 +250,7 @@ class PluginFusioninventoryDeployCheck {
          }
          echo "<td>";
          echo "<a class='edit'".
-            "onclick=\"edit_subtype('check', {$package->fields['id']}, $rand ,this)\">".
+            "onclick=\"edit_subtype('check', {$package->getID()}, $rand ,this)\">".
             $check_label.
             "</a><br />";
          echo $check['path'];
@@ -361,15 +361,15 @@ class PluginFusioninventoryDeployCheck {
     */
    static function getValues($type, $data, $mode) {
       $values = array(
-         'name_value'   => "",
-         'name_label'   => __('Name'),
+         'name_value'  => "",
+         'name_label'  => __('Name'),
          'name_type'   => "input",
-         'path_label'   => "",
-         'path_value'   => "",
-         'value_type'   => "input",
-         'value_label'  => "",
-         'value'        => "",
-         'return'       => "error"
+         'path_label'  => "",
+         'path_value'  => "",
+         'value_type'  => "input",
+         'value_label' => "",
+         'value'       => "",
+         'return'      => "error"
       );
 
 
@@ -384,40 +384,40 @@ class PluginFusioninventoryDeployCheck {
 
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label'] = __("Key", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = FALSE;
             break;
 
          case "winkeyEquals":
-            $values['path_label'] = __("Key", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = __('Key value', 'fusioninventory');
             break;
 
          case "fileExists":
          case "fileMissing":
-            $values['path_label'] = __("File", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = FALSE;
             break;
 
          case "fileSizeGreater":
          case "fileSizeEquals":
          case "fileSizeLower":
-            $values['path_label'] = __("File", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
-            $values['value_type'] = "input+unit";
+            $values['value_type']  = "input+unit";
             break;
 
          case "fileSHA512":
          case "fileSHA512mismatch":
-            $values['path_label'] = __("File", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
-            $values['value_type'] = "textarea";
+            $values['value_type']  = "textarea";
             break;
 
          case "freespaceGreater":
-            $values['path_label'] = __("Disk or directory", 'fusioninventory').$mandatory_mark;
+            $values['path_label']  = __("Disk or directory", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = __('Value', 'fusioninventory').$mandatory_mark;
-            $values['value_type'] = "input+unit";
+            $values['value_type']  = "input+unit";
             break;
 
          default:
