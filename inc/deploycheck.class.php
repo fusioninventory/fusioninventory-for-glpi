@@ -253,8 +253,7 @@ class PluginFusioninventoryDeployCheck {
          echo "<td>";
          echo "<a class='edit'".
             "onclick=\"edit_subtype('check', $package_id, $rand ,this)\">".
-            $check_label.
-            "</a><br />";
+            $check_label."</a><br />";
          $type_values = self::getLabelsAndTypes($check['type'], false);
          echo $type_values['path_label'].': '.$check['path'];
          if (!empty($check['value'])) {
@@ -487,10 +486,10 @@ class PluginFusioninventoryDeployCheck {
       echo "<table class='package_item'>";
       echo "<tr>";
       echo "<th>".__('Name')."</th>";
-      echo "<td><input type='text' name='name' id='check_name{$rand}' value='{$values['name_value']}' /></td>";
+      echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
-      echo "<td><input type='text' name='path' id='check_path{$rand}' value='{$values['path_value']}' /></td>";
+      echo "<td><input type='text' name='path' id='check_path{$rand}' value=\"{$values['path_value']}\" /></td>";
       echo "</tr>";
       if ($values['value_label'] !== FALSE) {
          echo "<tr>";
