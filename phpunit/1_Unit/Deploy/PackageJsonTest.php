@@ -53,7 +53,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
           'entities_id' => 0);
       $packages_id = $pfDeployPackage->add($input);
       $pfDeployPackage->getFromDB(1);
-      $json_structure = '{"jobs":{"name":"","checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
    }
 
