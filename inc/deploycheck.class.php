@@ -226,7 +226,9 @@ class PluginFusioninventoryDeployCheck {
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
-         if (is_numeric($check['value'])) {
+         if (is_numeric($check['value'])
+            && in_array($check['type'], ['freespaceGreater', 'fileSizeLower',
+                                         'fileSizeEquals', 'fileSizeGreater'])) {
             if ($check['type'] == "freespaceGreater") {
                $check['value'] = $check['value'] * 1024 * 1024;
             }
