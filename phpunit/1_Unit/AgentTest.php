@@ -88,6 +88,23 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($a_agents), "Agent not found");
    }
 
+   public function disconnectAgent() {
+      $a_agents = $pfAgent->find(
+         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
+      );
+      $this->assertEquals(1, count($agent));
+      $current_agent = current($agent);
+      $agent_id      = $current_agent['id'];
+
+      //Disconnect the agent from the computer
+      $pfAgent->disconnect(['computers_id' => 100, 'id' => $agent_id]);
+      $count = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                    "`computers_id`='100'");
+      $this->assertEquals(0, $count);
+
+      $pfAgent->getFromDB($agent_id);
+      $this->assertEquals(0, $pfAgent->fields['computers_id']);
+   }
    /**
     * @test
     */
@@ -176,4 +193,3 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertEquals($nb, count($log->find()));
    }
 }
-
