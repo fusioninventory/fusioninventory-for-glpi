@@ -221,7 +221,7 @@ class PluginFusioninventoryDeployCheck {
       global $CFG_GLPI;
 
       $checks_types = self::getTypes();
-
+      $package_id   = $package->getID();
       echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
@@ -234,7 +234,7 @@ class PluginFusioninventoryDeployCheck {
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($package->can($package_id, UPDATE)) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'check_entries['.$i.']'));
             echo "</td>";
@@ -244,16 +244,17 @@ class PluginFusioninventoryDeployCheck {
          //to be displayed in the UI
          $text = self::getAuditDescription($check['type'], $check['return']);
          if (isset($check['name']) && !empty($check['name'])) {
-            $check_label = $check['name'].': '.$text;
+            $check_label = $check['name'].' ('.$text.')';
          } else {
             $check_label = $text;
          }
          echo "<td>";
          echo "<a class='edit'".
-            "onclick=\"edit_subtype('check', {$package->getID()}, $rand ,this)\">".
+            "onclick=\"edit_subtype('check', $package_id, $rand ,this)\">".
             $check_label.
             "</a><br />";
-         echo $check['path'];
+         $type_values = self::getLabelsAndTypes($check['type'], false);
+         echo $type_values['path_label'].': '.$check['path'];
          if (!empty($check['value'])) {
             echo "&nbsp;&nbsp;&nbsp;<b>";
             if (strpos($check['type'], "Greater") !== FALSE) {
@@ -267,20 +268,20 @@ class PluginFusioninventoryDeployCheck {
             echo $check['value'];
          }
          echo "</td>";
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($package->can($package_id, UPDATE)) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
          $i++;
       }
-      if ($package->can($package->getID(), UPDATE)) {
+      if ($package->can($package_id, UPDATE)) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("checksList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($package->can($package->getID(), UPDATE)) {
+      if ($package->can($package_id, UPDATE)) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit' />";
@@ -372,16 +373,35 @@ class PluginFusioninventoryDeployCheck {
          'return'      => "error"
       );
 
-
-      $mandatory_mark = "&nbsp;<span class='red'>*</span>";
       if ($mode === 'edit') {
          $values['name_value'] = isset($data['name'])?$data['name']:"";
          $values['path_value'] = isset($data['path'])?$data['path']:"";
          $values['value']      = isset($data['value'])?$data['value']:"";
          $values['return']     = isset($data['return'])?$data['return']:"error";
       }
-      switch ($type) {
 
+      $type_values = self::getLabelsAndTypes($type, true);
+      foreach ($type_values as $key => $value) {
+         $values[$key] = $value;
+      }
+      return $values;
+   }
+
+   /**
+   *  Get labels and type for a check
+   * @param check_type the type of check
+   * @param mandatory indicates if mandatory mark must be added to the label
+   * @return the labels and type for a check
+   */
+   static function getLabelsAndTypes($check_type, $mandatory = false) {
+      $values = [];
+      if ($mandatory) {
+         $mandatory_mark = "&nbsp;<span class='red'>*</span>";
+      } else {
+         $mandatory_mark = '';
+      }
+
+      switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
             $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
@@ -421,13 +441,11 @@ class PluginFusioninventoryDeployCheck {
             break;
 
          default:
-            return FALSE;
+            break;
 
       }
       return $values;
    }
-
-
 
    /**
     * Display different fields relative the check selected
