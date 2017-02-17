@@ -246,7 +246,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       if (isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
-         $a_text = '';
+         $a_text = [];
          foreach ($input as $key=>$data) {
             if (is_array($data)) {
                $a_text[] = "[".$key."]:".implode(", ", $data);
