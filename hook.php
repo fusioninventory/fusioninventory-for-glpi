@@ -2352,150 +2352,30 @@ function postItemForm($params) {
    }
 }
 
-/**
- * post_show_tab hook
- *
- * @param array $params Hook parameters
- *
- * @return void
- */
-function postShowtab($params) {
+function plugin_fusioninventory_postitemform($params) {
+   if (isset($params['item']) && is_object($params['item'])) {
+      $item = $params['item'];
 
-       switch($params['options']['itemtype']) {
-          case 'Computer':
-             if ($params['options']['tabnum'] == 1) {
-                $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-                $pfComputerOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
-                $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$params['item']->getID()."'",
-                                              "", 1));
-                if (empty($a_computerextend)) {
-                   return;
-                }
+      if ($item->getType() == 'Computer')
+         switch (Session::getActiveTab('Computer')) {
+            case 'Computer$1':
+               PluginFusioninventoryComputerOperatingSystem::showForComputer($item);
+               break;
+      }
+   }
+}
 
-                echo '<table class="tab_cadre_fixe tab_glpi" width="100%">';
-
-                if ($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id'] > 0) {
-                   $pfComputerOperatingSystem->getFromDB($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id']);
-                   echo '<tr>';
-                   echo '<th colspan="2">'.__('FusionInventory operating system', 'fusioninventory').'</th>';
-                   echo '</tr>';
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Architecture', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemarchitectures',
-                      $pfComputerOperatingSystem->fields['operatingsystemarchitectures_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system')."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystems',
-                      $pfComputerOperatingSystem->fields['operatingsystems_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>"._n('Version of the operating system', 'Versions of the operating systems', 1)."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemversions',
-                      $pfComputerOperatingSystem->fields['operatingsystemversions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system kernel name', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroskernelnames',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroskernelnames_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system kernel version', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroskernelversions',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroskernelversions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>"._n('Service pack', 'Service packs', 1)."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemservicepacks',
-                      $pfComputerOperatingSystem->fields['operatingsystemservicepacks_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system edition', 'fusioninventory')."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroperatingsystemeditions',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroperatingsystemeditions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   if ($a_computerextend['operatingsystem_installationdate'] != '') {
-                      echo '<tr class="tab_bg_1">';
-                      echo "<td>".__('Installation date')."</td>";
-                      echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
-                      echo '</tr>';
-                   }
-
-                   if ($a_computerextend['winowner'] != '') {
-                      echo '<tr class="tab_bg_1">';
-                      echo '<td>'.__('Owner', 'fusioninventory').'</td>';
-                      echo '<td>'.$a_computerextend['winowner'].'</td>';
-                      echo '</tr>';
-                   }
-
-                   if ($a_computerextend['wincompany'] != '') {
-                      echo '<tr class="tab_bg_1">';
-                      echo '<td>'.__('Company', 'fusioninventory').'</td>';
-                      echo '<td>'.$a_computerextend['wincompany'].'</td>';
-                      echo '</tr>';
-                   }
-
-                   if ($a_computerextend['oscomment'] != '') {
-                      echo '<tr class="tab_bg_1">';
-                      echo "<td>".__('Comments')."</td>";
-                      echo '<td>'.$a_computerextend['oscomment'].'</td>';
-                      echo '</tr>';
-                   }
-
-                }
-                echo '</table>';
-                break;
-             }
+function plugin_fusioninventory_preitemform($params) {
+   Toolbox::logDebug($params);
+   if (isset($params['item']) && is_object($params['item'])) {
+      $item = $params['item'];
+      if ($item->getType() == 'Computer')
+         switch (Session::getActiveTab('Computer')) {
+            case 'Computer_SoftwareVersion$1':
+               $license = PluginFusioninventoryComputerLicenseInfo();
+               $license->showForm($item->getID());
+               break;
+      }
    }
 }
 ?>

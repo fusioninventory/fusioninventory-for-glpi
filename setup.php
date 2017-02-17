@@ -170,8 +170,7 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryCollect_File_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
-              array('addtabon' => array('Computer')));
+      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo');
       $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement');
 
          //Classes for rulesengine
@@ -314,8 +313,10 @@ function plugin_init_fusioninventory() {
             'Printer' => array('PluginFusioninventoryPrinter',
                                         'showInfo'));
 
-      $PLUGIN_HOOKS['post_show_tab']['fusioninventory'] = 'postShowTab';
-      $PLUGIN_HOOKS['post_item_form']['fusioninventory'] = 'postItemForm';
+      $PLUGIN_HOOKS['post_item_form']['fusioninventory']
+               = 'plugin_fusioninventory_postitemform';
+      $PLUGIN_HOOKS['pre_item_form']['fusioninventory']
+               = 'plugin_fusioninventory_preitemform';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 

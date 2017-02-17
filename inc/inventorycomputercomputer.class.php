@@ -214,7 +214,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<table class="tab_glpi" width="100%">';
 
       echo '<tr>';
-      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
@@ -235,31 +235,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->showInfoForComputer($item->getID());
-
-      if ($a_computerextend['bios_date'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
-         echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['bios_version'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
-         echo '<td>'.$a_computerextend['bios_version'].'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['bios_manufacturers_id'] > 0) {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
-         echo '<td>';
-         echo Dropdown::getDropdownName("glpi_manufacturers",
-                                        $a_computerextend['bios_manufacturers_id']);
-         echo '</td>';
-         echo '</tr>';
-      }
-
 
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {

@@ -73,48 +73,6 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return __('License');
    }
 
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getID() > 0) {
-         if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos',
-                             "`computers_id`='".$item->getID()."'") > 0) {
-               return __('Software licenses', 'fusioninventory');
-            }
-         }
-      }
-      return '';
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
-      if (get_class($item) == 'Computer') {
-         $pfComputerLicenseInfo->showForm($item->getID());
-      }
-      return TRUE;
-   }
-
-
-
    /**
     * Display form
     *
