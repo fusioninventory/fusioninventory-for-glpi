@@ -224,7 +224,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
       if ($this->can(0, CREATE)) {
-         if ($item->getType() == 'Computer') {
+         if ($item->getType() == 'Computer'
+            && countElementsInTable('glpi_plugin_fusioninventory_agents',
+                                    "`computers_id`=".$item->getID())) {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
          }
       }
@@ -451,8 +453,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                            array('value' => $this->fields["computers_id"]));
          echo "&nbsp;<a class='pointer' onclick='submitGetLink(\"".
                $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agent.form.php\", ".
-               "{\"update\": \"update\",
-                 \"computers_id\": 0,
+               "{\"disconnect\": \"disconnect\",
+                 \"computers_id\": ".$this->fields['computers_id'].",
                  \"id\": ".$this->fields['id'].",
                  \"_glpi_csrf_token\": \"".Session::getNewCSRFToken()."\"});'>".
                "<img src='".$CFG_GLPI['root_doc']."/pics/delete.png' /></a>";
@@ -561,6 +563,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
+   /**
+   * Disconnect an agent from a computer
+   * @params POST parameters
+   * @return void
+   */
+   function disconnect($params) {
+      if (isset($params['computers_id']) && isset($params['id'])) {
+         $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+         $pfComputer->deleteByCriteria(['computers_id' => $params['computers_id']]);
+         $this->update(['id' => $params['id'], 'computers_id' => 0]);
+      }
+   }
 
    /**
     * Get agent information by device_id
