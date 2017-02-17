@@ -154,7 +154,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
             Array(
                     'size'                 => 2048,
                     'serial'               => '98F6FF18',
-                    'frequence'            => '1067 MHz',
+                    'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 1
@@ -162,7 +162,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833E',
-                    'frequence'            => '1067 MHz',
+                    'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 2

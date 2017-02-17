@@ -157,7 +157,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
             Array(
                     'size'                 => 2048,
                     'serial'               => '98F6FF18',
-                    'frequence'            => '1067 MHz',
+                    'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 1
@@ -165,7 +165,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833E',
-                    'frequence'            => '1067 MHz',
+                    'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 2
@@ -173,7 +173,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833G',
-                    'frequence'            => '1066 MHz',
+                    'frequence'            => '1066',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 3
@@ -181,7 +181,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833H',
-                    'frequence'            => '1333 MHz',
+                    'frequence'            => '1333',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 4
@@ -851,7 +851,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           '1' => array(
                      'id'                    => '1',
                      'designation'           => 'DDR3 - SODIMM (None)',
-                     'frequence'             => '1067 MHz',
+                     'frequence'             => '1067',
                      'comment'               => NULL,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
@@ -863,7 +863,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           '2' => array(
                      'id'                    => '2',
                      'designation'           => 'DDR3 - SODIMM (None)',
-                     'frequence'             => '1333 MHz',
+                     'frequence'             => '1333',
                      'comment'               => NULL,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
