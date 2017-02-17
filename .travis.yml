@@ -35,19 +35,18 @@ before_install:
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
-install:
- - composer require satooshi/php-coveralls
-
 before_script:
   - phpenv version-name | grep ^5.[34] && echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true
   - phpenv version-name | grep ^5.[34] && echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true
   - php -S localhost:8088 -t glpi > /dev/null 2>&1 &
 
-script: ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
+script:
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then ant -Dwith.coverage -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all; fi
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all; fi
 
 after_script:
  - cp -fr build glpi/plugins/fusioninventory/
  - cd glpi/plugins/fusioninventory/
- - composer require satooshi/php-coveralls
- - php vendor/bin/coveralls -v
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require satooshi/php-coveralls; fi
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/coveralls -v; fi
 
