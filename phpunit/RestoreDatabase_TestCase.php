@@ -1,4 +1,4 @@
-n<?php
+<?php
 include_once('bootstrap.php');
 include_once('commonfunction.php');
 
