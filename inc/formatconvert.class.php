@@ -953,12 +953,13 @@ class PluginFusioninventoryFormatconvert {
                         }
                         $array_tmp["designation"] .= $a_memories["DESCRIPTION"];
                      }
+                     //agent sometimes gives " MHz" along with frequence
+                     $array_tmp['frequence'] = str_replace(' MHz', '', $array_tmp['frequence']);
                      $a_inventory['memory'][] = $array_tmp;
                   }
                }
             }
-         }
-         else if (isset($array['HARDWARE']['MEMORY'])) {
+         } else if (isset($array['HARDWARE']['MEMORY'])) {
             $array_tmp = $thisc->addValues($array['HARDWARE'],
                                            array(
                                               'MEMORY' => 'size'));
