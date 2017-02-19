@@ -356,7 +356,6 @@ function plugin_init_fusioninventory() {
                  'Printer'                            => 'plugin_item_purge_fusinvsnmp');
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
-
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
       if (Session::haveRight('plugin_fusioninventory_unmanaged', READ)) {

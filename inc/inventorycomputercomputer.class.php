@@ -80,32 +80,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
    /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return '';
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      return FALSE;
-   }
-
-
-   /**
     * Display information about computer (bios, last contact...)
     *
     * @global array $CFG_GLPI
@@ -232,6 +206,32 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
          echo '</tr>';
       }
+
+      //TODO : to delete in 9.2
+      if ($a_computerextend['bios_date'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
+         echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_version'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['bios_version'].'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_manufacturers_id'] > 0) {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
+         echo '<td>';
+         echo Dropdown::getDropdownName("glpi_manufacturers",
+                                        $a_computerextend['bios_manufacturers_id']);
+         echo '</td>';
+         echo '</tr>';
+      }
+      //END TODO : to delete in 9.2
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->showInfoForComputer($item->getID());
