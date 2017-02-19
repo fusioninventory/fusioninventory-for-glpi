@@ -315,8 +315,8 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['post_item_form']['fusioninventory']
                = 'plugin_fusioninventory_postitemform';
-      $PLUGIN_HOOKS['pre_item_form']['fusioninventory']
-               = 'plugin_fusioninventory_preitemform';
+      $PLUGIN_HOOKS['post_show_tab']['fusioninventory']
+               = 'plugin_fusioninventory_postshowtab';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
@@ -343,7 +343,8 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array(
             'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
             'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
-            'PluginFusioninventoryLock'=> array('PluginFusioninventoryLock', 'deleteLock')
+            'PluginFusioninventoryLock'=> array('PluginFusioninventoryLock', 'deleteLock'),
+            'Computer_SoftwareLicense' => array('PluginFusioninventoryComputerLicenseInfo', 'cleanLicense')
           );
       $p = array('NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
                  'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',

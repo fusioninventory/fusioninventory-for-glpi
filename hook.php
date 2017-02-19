@@ -2365,14 +2365,13 @@ function plugin_fusioninventory_postitemform($params) {
    }
 }
 
-function plugin_fusioninventory_preitemform($params) {
-   Toolbox::logDebug($params);
+function plugin_fusioninventory_postshowtab($params) {
    if (isset($params['item']) && is_object($params['item'])) {
       $item = $params['item'];
       if ($item->getType() == 'Computer')
          switch (Session::getActiveTab('Computer')) {
             case 'Computer_SoftwareVersion$1':
-               $license = PluginFusioninventoryComputerLicenseInfo();
+               $license = new PluginFusioninventoryComputerLicenseInfo();
                $license->showForm($item->getID());
                break;
       }
