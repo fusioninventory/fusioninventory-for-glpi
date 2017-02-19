@@ -104,20 +104,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($item->getType()=='PluginFusioninventoryConfig') {
          return PluginFusioninventoryLock::getTypeName(2);
       }
-
-      $items_id = $item->getID();
-      $itemtype = $item->getType();
-      if ($item->getType() == 'NetworkEquipment') {
-         $itemtype = 'networking';
-      }
-
-      if (Session::haveRight(strtolower($itemtype), UPDATE)) {
-         if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
-                                        self::countForLock($item));
-         }
-         return PluginFusioninventoryLock::getTypeName(2);
-      }
       return '';
    }
 
@@ -134,35 +120,37 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pflock = new self();
-      if ($item->getType()=='PluginFusioninventoryConfig') {
-         echo "<table width='950'>";
-         echo "<tr>";
-         echo "<td valign='top' width='33%'>";
-         $pflock->showFormItemtype('Computer');
-         echo "</td>";
-         echo "<td valign='top' width='33%'>";
-         $pflock->showFormItemtype('Printer');
-         echo "</td>";
-         echo "<td valign='top' width='33%'>";
-         $pflock->showFormItemtype('NetworkEquipment');
-         echo "</td>";
-         echo "</tr>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr>";
+      echo "<td valign='top' width='33%'>";
+      $pflock->showFormItemtype('Computer');
+      echo "</td>";
+      echo "<td valign='top' width='33%'>";
+      $pflock->showFormItemtype('Printer');
+      echo "</td>";
+      echo "<td valign='top' width='33%'>";
+      $pflock->showFormItemtype('NetworkEquipment');
+      echo "</td>";
+      echo "</tr>";
 
-         echo "</table>";
-         return TRUE;
-      }
-      if ($item->getID() < 1) {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
-                           $item->getType());
-      } else {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
-                              $item->getID(),
-                           $item->getType(), $item->getID());
-      }
+      echo "</table>";
       return TRUE;
    }
 
-
+   static function showLocksForAnItem(CommonDBTM $item) {
+      $pflock = new self();
+      $itemtype = $item->getType();
+      if ($itemtype::canUpdate()) {
+         if ($item->getID() < 1) {
+            $pflock->showForm(Toolbox::getItemTypeFormURL(__CLASS__),
+                              $item->getType());
+         } else {
+            $pflock->showForm(Toolbox::getItemTypeFormURL(__CLASS__).'?id='.
+                              $item->getID(), $item->getType(), $item->getID());
+         }
+      }
+      return true;
+   }
 
    /**
     * Display locks form for an item
@@ -186,7 +174,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       $tableName = getTableForItemType($p_itemtype);
-      echo "<div width='50%'>";
+      echo "<div>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
 
       if (!count($locked)) {
@@ -209,7 +197,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
-      echo "<table class='tab_cadre'>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr><th colspan='4'>".__('FusionInventory', 'fusioninventory')."</th></tr>";
+
       echo "<tr><th>&nbsp;"._n('Field', 'Fields', 2)."&nbsp;</th>";
       if ($p_items_id != '0') {
          echo "<th>&nbsp;".__('Values GLPI', 'fusioninventory')."&nbsp;</th>";
@@ -218,10 +209,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 
-      $checked = false;
-      $a_exclude = $this->excludeFields();
+      $checked    = false;
+      $a_exclude  = $this->excludeFields();
       $serialized = $this->getSerializedInventoryArray($p_itemtype, $p_items_id);
-      $options = Search::getOptions($p_itemtype);
+      $options    = Search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
          $name = "";
          $key_source = $key;
@@ -255,8 +246,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $table = getTableNameForForeignKeyField($key);
             if ($name == "" && $table != "") {
                $linkItemtype = getItemTypeForTable($table);
-               $class = new $linkItemtype();
-               $name = $class->getTypeName();
+               $class        = new $linkItemtype();
+               $name         = $class->getTypeName();
             }
             echo "<td>".$name."</td>";
             // Current value of GLPI
@@ -331,11 +322,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
          echo "</tr>";
       }
+
+      echo "<tr><th colspan='4'></th></tr>";
+
       if ($can == '1') {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
-                         value='" . __('Update') . "'>";
+         echo Html::submit(__('Update'),
+                           ['name' => 'unlock_field_fusioninventory']);
          echo "</td>";
          echo "</tr>";
       }
@@ -355,30 +349,21 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param string $itemtype
     */
    function showFormItemtype($itemtype) {
-
-      $can = 0;
-      $typeright = strtolower($itemtype);
-      if ($typeright == "networkequipment") {
-         $typeright = "networking";
-      }
-      if (Session::haveRight($typeright, UPDATE)) {
-        $can = 1;
-      }
-
+      $can       = $itemtype::canUpdate();
       $tableName = getTableForItemType($itemtype);
-      echo "<div width='50%'>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, 0);
       if (!count($locked)) {
-         $locked = array();
+         $locked = [];
       }
       $colspan = '2';
 
-      $item = new $itemtype;
+      $item = new $itemtype();
       $item->getEmpty();
 
+      echo "<div width='50%'>";
       echo "<form method='post' action='".PluginFusioninventoryLock::getFormURL()."'>";
-      echo "<input type='hidden' name='id' value='0'>";
-      echo "<input type='hidden' name='type' value='$itemtype'>";
+      echo Html::hidden('id', ['value' => 0]);
+      echo Html::hidden('type', ['value' => $itemtype]);
       echo "<table class='tab_cadre'>";
 
       echo "<tr>";
@@ -389,11 +374,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
       echo "</tr>";
 
-      $checked = false;
+      $checked   = false;
       $a_exclude = $this->excludeFields();
-      $options = Search::getOptions($itemtype);
+      $options   = Search::getOptions($itemtype);
       foreach ($item->fields as $key=>$val) {
-         $name = "";
+         $name       = "";
          $key_source = $key;
          if (!in_array($key, $a_exclude)) {
             if (in_array($key, $locked)) {
@@ -432,11 +417,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
 
-      if ($can == '1') {
+      if ($can) {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
-                         value='" . __('Update') . "'>";
+         echo Html::submit(__('Update'),
+                           ['name' => 'unlock_field_fusioninventory']);
          echo "</td>";
          echo "</tr>";
       }
@@ -457,10 +442,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function cleanForAsset($itemtype, $items_id) {
       global $DB;
       $query = "DELETE FROM `glpi_plugin_fusioninventory_locks`
-                       WHERE `tablename`='".getTableForItemType($itemtype)."'
-                          AND `items_id`='$items_id'";
+                WHERE `tablename`='".getTableForItemType($itemtype)."'
+                   AND `items_id`='$items_id'";
       $DB->query($query);
-
    }
 
    /**

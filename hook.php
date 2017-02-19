@@ -1966,17 +1966,19 @@ function plugin_pre_item_update_fusioninventory($parm) {
  * @param object $parm
  * @return object
  */
-function plugin_pre_item_purge_fusioninventory($parm) {
+function plugin_pre_item_purge_fusioninventory(CommonDBTM $item) {
    global $DB;
 
-   $itemtype = get_class($parm);
+   $itemtype = $item->getType();
+   $items_id = $item->getID();
+
    switch ($itemtype) {
 
       case 'Computer':
          // Delete link between computer and agent fusion
          $query = "UPDATE `glpi_plugin_fusioninventory_agents`
                      SET `computers_id` = '0'
-                     WHERE `computers_id` = '".$parm->getField('id')."'";
+                     WHERE `computers_id` = '$items_id'";
          $DB->query($query);
 
          $clean = array('PluginFusioninventoryInventoryComputerComputer',
@@ -1985,21 +1987,21 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                         'PluginFusioninventoryCollect_Registry_Content',
                         'PluginFusioninventoryCollect_Wmi_Content');
          foreach ($clean as $obj) {
-            $obj::cleanComputer($parm->getID());
+            $obj::cleanComputer($items_id);
          }
          break;
 
       case 'NetworkPort_NetworkPort':
       $networkPort = new NetworkPort();
-      if ($networkPort->getFromDB($parm->fields['networkports_id_1'])) {
+      if ($networkPort->getFromDB($item->fields['networkports_id_1'])) {
          if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
             PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
-                                                                $parm->fields['networkports_id_1']);
+                                                                $item->fields['networkports_id_1']);
          } else {
-            $networkPort->getFromDB($parm->fields['networkports_id_2']);
+            $networkPort->getFromDB($item->fields['networkports_id_2']);
             if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
                PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
-                                                                $parm->fields['networkports_id_2']);
+                                                                $item->fields['networkports_id_2']);
             }
          }
       }
@@ -2008,10 +2010,10 @@ function plugin_pre_item_purge_fusioninventory($parm) {
    }
 
    $rule = new PluginFusioninventoryRulematchedlog();
-   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $parm->getID()));
+   $rule->deleteByCriteria(['itemtype' => $itemtype, 'items_id' => $items_id]);
 
-   PluginFusioninventoryLock::cleanForAsset($itemtype, $parm->getID());
-   return $parm;
+   PluginFusioninventoryLock::cleanForAsset($itemtype, $items_id);
+   return $item;
 }
 
 
@@ -2368,12 +2370,37 @@ function plugin_fusioninventory_postitemform($params) {
 function plugin_fusioninventory_postshowtab($params) {
    if (isset($params['item']) && is_object($params['item'])) {
       $item = $params['item'];
-      if ($item->getType() == 'Computer')
-         switch (Session::getActiveTab('Computer')) {
-            case 'Computer_SoftwareVersion$1':
-               $license = new PluginFusioninventoryComputerLicenseInfo();
-               $license->showForm($item->getID());
-               break;
+
+      switch ($item->getType()) {
+         case 'Computer':
+            switch (Session::getActiveTab('Computer')) {
+               case 'Computer_SoftwareVersion$1':
+                  $license = new PluginFusioninventoryComputerLicenseInfo();
+                  $license->showForm($item->getID());
+                  break;
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+
+            break;
+
+         case 'NetworkEquipment':
+            switch (Session::getActiveTab('NetworkEquipment')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+            break;
+
+         case 'Printer':
+            switch (Session::getActiveTab('Printer')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+
+            break;
       }
    }
 }
