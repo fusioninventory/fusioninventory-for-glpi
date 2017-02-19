@@ -176,20 +176,31 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showComputerInfo($item) {
       global $CFG_GLPI;
 
+      if ($item->isNewID($item->getID())) {
+         return true;
+      }
       // Manage locks pictures
       PluginFusioninventoryLock::showLockIcon('Computer');
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($item->getID());
-      if (empty($a_computerextend)) {
+
+      if (!countElementsInTable('glpi_plugin_fusioninventory_agents',
+                                "`computers_id`=".$item->getID())) {
          return true;
       }
-
-      echo '<table class="tab_glpi" width="100%">';
 
       echo '<tr>';
       echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->showInfoForComputer($item->getID());
+
+      //Check if an inventory has already been sent
+      $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($item->getID());
+      if (empty($a_computerextend)) {
+         return true;
+      }
 
       echo '<tr class="tab_bg_1">';
       echo '<td>';
@@ -233,9 +244,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
       //END TODO : to delete in 9.2
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item->getID());
-
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {
          echo '<tr class="tab_bg_1">';
@@ -261,7 +269,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
       $pfRemoteManagement->showInformation($item->getID());
-      echo '</table>';
+      //echo '</table>';
       return TRUE;
    }
 

@@ -305,8 +305,6 @@ function plugin_init_fusioninventory() {
       }
 
       $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array(
-            'Computer' =>  array('PluginFusioninventoryInventoryComputerComputer',
-                                 'showComputerInfo'),
             'NetworkEquipment' => array('PluginFusioninventoryNetworkEquipment',
                                         'showInfo'),
             'Printer' => array('PluginFusioninventoryPrinter',

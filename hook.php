@@ -2360,6 +2360,9 @@ function plugin_fusioninventory_postitemform($params) {
 
       if ($item->getType() == 'Computer')
          switch (Session::getActiveTab('Computer')) {
+            case 'Computer$main':
+               PluginFusioninventoryInventoryComputerComputer::showComputerInfo($item);
+               break;
             case 'Computer$1':
                PluginFusioninventoryComputerOperatingSystem::showForComputer($item);
                break;
