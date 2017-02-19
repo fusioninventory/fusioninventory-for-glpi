@@ -214,7 +214,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (self::canView()) {
          if ($item->getType() == 'PluginFusioninventoryAgent') {
             return [1 => self::getTypeName(1),
-                    2 => _n('Network', 'Networks', 1)];
+                    2 => __('Networking')];
          }
       }
    }
@@ -468,6 +468,25 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
    /**
+   * Add network discovery/inventory default values
+   * as defined in the plugin's general configuration
+   * @param input the agent's fields
+   * @return the agent fields with the default values set
+   */
+   function prepareInputForAdd($input) {
+      $pfConfig = new PluginFusioninventoryConfig();
+
+      $fields = ['threads_networkdiscovery', 'threads_networkinventory',
+                 'timeout_networkdiscovery', 'timeout_networkinventory'
+                ];
+      foreach ($fields as $field) {
+         $input[$field] = $pfConfig->getValue($field);
+      }
+      $input['senddico'] = 0;
+      return $input;
+   }
+
+   /**
     * Display agent's advanced informations
     *
     * @param integer $agents_id ID of the agent
@@ -477,25 +496,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function showNetworkForm($agents_id, $options=array()) {
       global $CFG_GLPI;
 
-      if ($agents_id!='') {
-         $this->getFromDB($agents_id);
-      } else {
-         $this->getEmpty();
-         $pfConfig = new PluginFusioninventoryConfig();
-         unset($this->fields['id']);
-         $this->fields['threads_networkdiscovery'] =
-                 $pfConfig->getValue('threads_networkdiscovery');
-         $this->fields['timeout_networkdiscovery'] =
-                 $pfConfig->getValue('timeout_networkdiscovery');
-         $this->fields['threads_networkinventory'] =
-                 $pfConfig->getValue('threads_networkinventory');
-         $this->fields['timeout_networkinventory'] =
-                 $pfConfig->getValue('timeout_networkinventory');
-         $this->fields['senddico'] = 0;
-      }
+      $this->getFromDB($agents_id);
+
+      $options['colspan']   = 4;
+      $options['formtitle'] = __('Networking');
       $this->initForm($agents_id, $options);
       $this->showFormHeader($options);
-
 
       /*echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Version')."&nbsp:</td>";
