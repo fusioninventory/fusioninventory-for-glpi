@@ -35,7 +35,7 @@
  * ------------------------------------------------------------------------
  *
  * @package   FusionInventory
-   @author    Alexandre Delaunay
+ * @author    Alexandre Delaunay
  * @author    David Durieux
  * @copyright Copyright (c) 2010-2016 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version

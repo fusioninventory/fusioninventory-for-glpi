@@ -239,7 +239,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "SELECT",
          "     task.`id`, task.`name`, task.`is_active`,",
          "     task.`datetime_start`, task.`datetime_end`,",
-         "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
+         "     task.`plugin_fusioninventory_timeslots_exec_id` as timeslot_id,",
          "     job.`id`, job.`name`, job.`method`, job.`actors`,",
          "     run.`itemtype`, run.`items_id`, run.`state`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
@@ -448,7 +448,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       if (empty($timeslots)) {
          $query_timeslot = '';
       } else {
-         $query_timeslot = "OR (`plugin_fusioninventory_timeslots_id` IN (".implode(',', $timeslots)."))";
+         $query_timeslot = "OR (`plugin_fusioninventory_timeslots_prep_id` IN (".implode(',', $timeslots)."))";
       }
 
       //transform methods array into string for database query
@@ -481,7 +481,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "        ( task.`datetime_start` IS NULL AND task.`datetime_end` IS NULL )",
          ")",
          "AND job.`method` IN (".$methods.")
-         AND (`plugin_fusioninventory_timeslots_id`='0'
+         AND (`plugin_fusioninventory_timeslots_prep_id`='0'
               $query_timeslot)",
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
@@ -1438,7 +1438,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             "SELECT",
             "     task.`id`, task.`name`, task.`is_active`,",
             "     task.`datetime_start`, task.`datetime_end`,",
-            "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
+            "     task.`plugin_fusioninventory_timeslots_prep_id` as timeslot_id,",
             "     job.`id`, job.`name`, job.`method`, job.`actors`,",
             "     run.`itemtype`, run.`items_id`, run.`state`,",
             "     run.`id`, run.`plugin_fusioninventory_agents_id`",

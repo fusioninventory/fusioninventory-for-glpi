@@ -102,13 +102,16 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `datetime_start` datetime DEFAULT NULL,
   `datetime_end` datetime DEFAULT NULL,
-  `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_timeslots_prep_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_timeslots_exec_id` int(11) NOT NULL DEFAULT '0',
   `last_agent_wakeup` datetime DEFAULT NULL,
   `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
   `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
   `reprepare_if_successful` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
+  KEY `plugin_fusioninventory_timeslots_prep_id` (`plugin_fusioninventory_timeslots_prep_id`),
+  KEY `plugin_fusioninventory_timeslots_exec_id` (`plugin_fusioninventory_timeslots_exec_id`),
   KEY `is_active` (`is_active`),
   KEY `wakeup_agent_counter` (`wakeup_agent_counter`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -316,6 +319,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
