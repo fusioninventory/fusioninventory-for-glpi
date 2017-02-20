@@ -574,8 +574,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-<<<<<<< HEAD
-=======
    /**
    * Disconnect an agent from a computer
    * @params POST parameters
@@ -589,7 +587,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
    }
 
->>>>>>> master
    /**
     * Get agent information by device_id
     *
