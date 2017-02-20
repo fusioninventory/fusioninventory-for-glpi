@@ -474,6 +474,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $log_input['itemtype'] = $itemtype;
       $log_input['date'] = date("Y-m-d H:i:s");
       $log_input['comment'] = $message;
+      $log_input = Toolbox::addslashes_deep($log_input);
       $pfTaskjoblog->add($log_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
