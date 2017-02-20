@@ -1060,9 +1060,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
-      echo "<script>
-         statHalfDonut('".$name."', '".json_encode($data)."');
-</script>";
+      echo "<script>$(function() { statHalfDonut('".$name."', '".json_encode($data)."');});</script>";
    }
 
 
@@ -1078,10 +1076,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function showChartBar($name, $data, $title='', $width=370) {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
-      echo "<script>
-         statBar('".$name."', '".json_encode($data)."', '".addslashes($title)."');
-</script>";
+      echo "<script>$(function() { statBar('".$name."', '".json_encode($data)."', '".addslashes($title)."'); });</script>";
    }
 }
-
-?>
