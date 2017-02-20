@@ -25,7 +25,7 @@ addons:
 
 before_install:
  - cd ..
- - git clone --depth=10 git://github.com/glpi-project/glpi.git glpi
+ - git clone git://github.com/glpi-project/glpi.git glpi
  - cd glpi
  - if [[ $GLPI != 'master' ]]; then git checkout -b $GLPI origin/$GLPI; fi
  - composer install --no-dev -o
