@@ -1,6 +1,6 @@
 <?php
 require_once('commonfunction.php');
-include_once (GLPI_ROOT . "/config/based_config.php");
+include_once (GLPI_ROOT . "/inc/based_config.php");
 include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
 include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
@@ -27,7 +27,7 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
       } else if ($glpi_version == '0.85/bugfixes') {
          $glpisql = '0.85.5';
       } else {
-         $glpisql = '9.1.1';
+         $glpisql = '9.2';
       }
 
       $result = load_mysql_file(
