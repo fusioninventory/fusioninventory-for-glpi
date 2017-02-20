@@ -81,6 +81,10 @@ if (isset ($_POST["update"])) {
    Session::checkRight('plugin_fusioninventory_agent', PURGE);
    $agent->delete($_POST, true);
    $agent->redirectToList();
+} else if (isset ($_POST["disconnect"])) {
+   Session::checkRight('plugin_fusioninventory_agent', UPDATE);
+   $agent->disconnect($_POST);
+   Html::back();
 } else if (isset ($_POST["startagent"])) {
 
    Html::back();

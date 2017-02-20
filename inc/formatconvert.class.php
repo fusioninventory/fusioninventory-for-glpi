@@ -959,8 +959,7 @@ class PluginFusioninventoryFormatconvert {
                   }
                }
             }
-         }
-         else if (isset($array['HARDWARE']['MEMORY'])) {
+         } else if (isset($array['HARDWARE']['MEMORY'])) {
             $array_tmp = $thisc->addValues($array['HARDWARE'],
                                            array(
                                               'MEMORY' => 'size'));

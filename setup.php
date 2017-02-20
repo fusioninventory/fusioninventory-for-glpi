@@ -496,8 +496,12 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '9.1.1', 'lt') || version_compare(GLPI_VERSION, '9.2', 'ge')) {
-      echo __('Your GLPI version not compatible, require >= 9.1.1 and < 9.2', 'fusioninventory');
+   if (version_compare(GLPI_VERSION, '9.1.1', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+      if (method_exists('Plugin', 'messageIncompatible')) {
+         echo Plugin::messageIncompatible('core', '9.1.1', '9.3');
+      } else {
+         echo __('Your GLPI version not compatible, require >= 9.1.1 and < 9.3', 'fusioninventory');
+      }
       return FALSE;
    }
 
