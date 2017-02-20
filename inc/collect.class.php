@@ -73,7 +73,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -82,9 +81,16 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+
+      if ($item->getID() > 0) {
+         $nb = 0;
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            $nb = self::getNumberOfCollectsForAComputer($item->getID());
+         }
+         return self::createTabEntry(self::getTypeName(Session::getPluralNumber()), $nb);
+      }
       return '';
    }
-
 
 
    /**
@@ -96,11 +102,30 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      return FALSE;
+      if ($item->getType() == 'Computer'
+         && PluginFusioninventoryInventoryComputerComputer::hasAutomaticInventory($computers_id)) {
+         $computers_id = $item->getID();
+         foreach (['PluginFusioninventoryCollect_File',
+                   'PluginFusioninventoryCollect_Wmi',
+                   'PluginFusioninventoryCollect_Registry'] as $itemtype) {
+            $collect_item = new $itemtype();
+            $collect_item->showForComputer($computers_id);
+         }
+      }
+      return TRUE;
    }
 
-
-
+   static function getNumberOfCollectsForAComputer($computers_id) {
+      $tables = ['glpi_plugin_fusioninventory_collects_registries_contents',
+                 'glpi_plugin_fusioninventory_collects_wmis_contents',
+                 'glpi_plugin_fusioninventory_collects_files_contents',
+                ];
+      $total = 0;
+      foreach ($tables as $table) {
+         $total+= countElementsInTable($table, "`computers_id`='0'");
+      }
+      return $total;
+   }
    /**
     * Get all collect types
     *
