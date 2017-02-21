@@ -1221,6 +1221,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
       // * Antivirus
+      if ($pfConfig->getValue("import_antivirus") != 0) {
          $db_antivirus = array();
          if ($no_history === FALSE) {
             $query = "SELECT `id`, `name`, `antivirus_version`
@@ -1277,6 +1278,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+      }
 
 
 

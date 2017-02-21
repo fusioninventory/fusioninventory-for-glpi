@@ -1344,16 +1344,18 @@ class PluginFusioninventoryFormatconvert {
 
       // * ANTIVIRUS
       $a_inventory['antivirus'] = array();
-      if (isset($array['ANTIVIRUS'])) {
-         foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
-            $array_tmp = $thisc->addValues($a_antiviruses,
-                                           array(
-                                              'NAME'     => 'name',
-                                              'COMPANY'  => 'manufacturers_id',
-                                              'VERSION'  => 'antivirus_version',
-                                              'ENABLED'  => 'is_active',
-                                              'UPTODATE' => 'is_uptodate'));
-            $a_inventory['antivirus'][] = $array_tmp;
+      if ($pfConfig->getValue("import_antivirus") != 0) {
+         if (isset($array['ANTIVIRUS'])) {
+            foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
+               $array_tmp = $thisc->addValues($a_antiviruses,
+                                             array(
+                                                'NAME'     => 'name',
+                                                'COMPANY'  => 'manufacturers_id',
+                                                'VERSION'  => 'antivirus_version',
+                                                'ENABLED'  => 'is_active',
+                                                'UPTODATE' => 'is_uptodate'));
+               $a_inventory['antivirus'][] = $array_tmp;
+            }
          }
       }
 
