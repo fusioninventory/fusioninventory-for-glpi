@@ -115,6 +115,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $deviceProcessor              = new DeviceProcessor();
       $item_DeviceMemory            = new Item_DeviceMemory();
       $deviceMemory                 = new DeviceMemory();
+      $item_DeviceBattery           = new Item_DeviceBattery();
+      $deviceBattery                = new DeviceBattery();
       $computerVirtualmachine       = new ComputerVirtualMachine();
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
@@ -1365,12 +1367,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
       // * Batteries
-         /* Standby, see ticket http://forge.fusioninventory.org/issues/1907
+      if ($pfConfig->getValue("component_battery") != 0) {
          $db_batteries = array();
          if ($no_history === FALSE) {
-            $query = "SELECT `id`, `name`, `serial`
-                  FROM `glpi_plugin_fusioninventory_inventorycomputerbatteries`
-               WHERE `computers_id` = '$computers_id'";
+            $query = "SELECT `glpi_items_devicebatteries`.`id`, `serial`, `voltage`, `capacity`
+                        FROM `glpi_items_devicebatteries`
+                           LEFT JOIN `glpi_devicebatteries` ON `devicebatteries_id`=`glpi_devicebatteries`.`id`
+                        WHERE `items_id` = '$computers_id'
+                           AND `itemtype`='Computer'
+                           AND `is_dynamic`='1'";
+
             $result = $DB->query($query);
             while ($data = $DB->fetch_assoc($result)) {
                $idtmp = $data['id'];
@@ -1380,48 +1386,67 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $db_batteries[$idtmp] = $data;
             }
          }
-         $simplebatteries = array();
-         foreach ($a_computerinventory['batteries'] as $key=>$a_batteries) {
-            $a_field = array('name', 'serial');
-            foreach ($a_field as $field) {
-               if (isset($a_batteries[$field])) {
-                  $simplebatteries[$key][$field] = $a_batteries[$field];
-               }
-            }
-         }
-         foreach ($simplebatteries as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_batteries as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  $input = array();
-                  $input = $a_computerinventory['batteries'][$key];
-                  $input['id'] = $keydb;
-                  $pfInventoryComputerBatteries->update($input);
-                  unset($simplebatteries[$key]);
-                  unset($a_computerinventory['batteries'][$key]);
-                  unset($db_batteries[$keydb]);
-                  break;
-               }
-            }
-         }
-         if (count($a_computerinventory['batteries']) == 0
-            AND count($db_batteries) == 0) {
-            // Nothing to do
-         } else {
-            if (count($db_batteries) != 0) {
-               foreach ($db_batteries as $idtmp => $data) {
-                  $pfInventoryComputerBatteries->delete(array('id'=>$idtmp), 1);
-               }
-            }
-            if (count($a_computerinventory['batteries']) != 0) {
-               foreach ($a_computerinventory['batteries'] as $a_batteries) {
-                  $a_batteries['computers_id'] = $computers_id;
-                  $pfInventoryComputerBatteries->add($a_batteries, array(), FALSE);
-               }
-            }
-         }
-*/
 
+         if (count($db_batteries) == 0) {
+            foreach ($a_computerinventory['batteries'] as $a_battery) {
+               $this->addBattery($a_battery, $computers_id, $no_history);
+            }
+         } else {
+            // Check all fields from source: 'designation', 'serial', 'size',
+            // 'devicebatterytypes_id', 'frequence'
+            foreach ($a_computerinventory['batteries'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_batteries as $keydb => $arraydb) {
+                  if (isset($arrayslower['serial'])
+                     && isset($arraydb['serial'])
+                     && $arrayslower['serial'] == $arraydb['serial']
+                  ) {
+                     $update = false;
+                     if ($arraydb['capacity'] == 0
+                              && $arrayslower['capacity'] > 0) {
+                        $input = array(
+                           'id'       => $keydb,
+                           'capacity' => $arrayslower['capacity']
+                        );
+                        $update = true;
+                     }
+
+                     if ($arraydb['voltage'] == 0
+                              && $arrayslower['voltage'] > 0) {
+                        $input = array(
+                           'id'        => $keydb,
+                           'voltage'   => $arrayslower['voltage']
+                        );
+                        $update = true;
+                     }
+
+                     if ($update === true) {
+                        $item_DeviceMemory->update($input);
+                     }
+
+                     unset($a_computerinventory['batteries'][$key]);
+                     unset($db_batteries[$keydb]);
+                     break;
+                  }
+               }
+
+               //delete remaining batteries in database
+               if (count($db_batteries) > 0) {
+                  // Delete battery in DB
+                  foreach ($db_batteries as $idtmp => $data) {
+                     $item_DeviceBattery->delete(array('id' => $idtmp), 1);
+                  }
+               }
+
+               //add new batteries in database
+               if (count($a_computerinventory['batteries']) != 0) {
+                  foreach ($a_computerinventory['batteries'] as $a_battery) {
+                     $this->addBattery($a_battery, $computers_id, $no_history);
+                  }
+               }
+            }
+         }
+      }
 
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
       // * Monitors
@@ -2192,6 +2217,36 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceControl->add($data, array(), !$no_history);
    }
 
+
+   /**
+    * Add a new battery component
+    *
+    * @param array   $data
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
+   function addBattery($data, $computers_id, $no_history) {
+      $item_DeviceBattery  = new Item_DeviceBattery();
+      $deviceBattery       = new DeviceBattery();
+
+      if ($data['voltage'] == '') {
+         //a numeric value is expected here
+         $data['voltage'] = 0;
+      }
+
+      if (empty($data['designation'])) {
+         //Placebo designation; sometimes missing from agent
+         $data['designation'] = __('Portable battery', 'fusioninventory');
+      }
+
+      $batteries_id = $deviceBattery->import($data);
+      $data['devicebatteries_id'] = $batteries_id;
+      $data['itemtype']           = 'Computer';
+      $data['items_id']           = $computers_id;
+      $data['is_dynamic']         = 1;
+      $data['_no_history']        = $no_history;
+      $item_DeviceBattery->add($data, array(), !$no_history);
+   }
 
 
    /**
