@@ -589,20 +589,35 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * BATTERIES
-//      $a_inventory['batteries'] = array();
-//      if (isset($array['BATTERIES'])) {
-//         foreach ($array['BATTERIES'] as $a_batteries) {
-//            $a_inventory['soundcard'][] = $thisc->addValues($a_batteries,
-//               array(
-//                  'NAME'          => 'name',
-//                  'MANUFACTURER'  => 'manufacturers_id',
-//                  'SERIAL'     => 'serial',
-//                  'DATE'       => 'date',
-//                  'CAPACITY'   => 'capacity',
-//                  'CHEMISTRY'  => 'plugin_fusioninventory_inventorycomputerchemistries_id',
-//                  'VOLTAGE'    => 'voltage'));
-//         }
-//      }
+      $a_inventory['batteries'] = array();
+      if ($pfConfig->getValue('component_battery') == 1) {
+         if (isset($array['BATTERIES'])) {
+            foreach ($array['BATTERIES'] as $a_batteries) {
+               $a_battery = $thisc->addValues($a_batteries,
+                  array(
+                     'NAME'         => 'designation',
+                     'MANUFACTURER' => 'manufacturers_id',
+                     'SERIAL'       => 'serial',
+                     'DATE'         => 'manufacturing_date',
+                     'CAPACITY'     => 'capacity',
+                     'CHEMISTRY'    => 'devicebatterytypes_id',
+                     'VOLTAGE'      => 'voltage'
+                  )
+               );
+
+               // test date_install
+               $matches = array();
+               preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_battery['manufacturing_date'], $matches);
+               if (count($matches) == 4) {
+                  $a_battery['manufacturing_date'] = $matches[3]."-".$matches[2]."-".$matches[1];
+               } else {
+                  unset($a_battery['manufacturing_date']);
+               }
+
+               $a_inventory['batteries'][] = $a_battery;
+            }
+         }
+      }
 
       // * SOUNDS
       $a_inventory['soundcard'] = array();

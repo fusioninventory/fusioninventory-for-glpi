@@ -1665,6 +1665,88 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
+   /**
+    * @test
+    */
+   public function ComputerBattery() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = [];
+      $a_computer['HARDWARE'] = [
+         'NAME'           => 'vbox-winxp',
+         'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+         'CHASSIS_TYPE'   => '',
+         'DESCRIPTION'    => '',
+         'OSCOMMENTS'     => 'Service Pack 3 BAD',
+         'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+         'OSVERSION'      => '5.1.2600 BAD',
+         'VMSYSTEM'       => 'VirtualBox',
+         'WINCOMPANY'     => 'siprossii',
+         'WINLANG'        => '1036',
+         'WINOWNER'       => 'test',
+         'WINPRODID'      => '76413-OEM-0054453-04701',
+         'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+         'WORKGROUP'      => 'WORKGROUP'
+      ];
+
+      $a_computer['BATTERIES'] = [
+         [
+            'CAPACITY'     => '57530',
+            'CHEMISTRY'    => 'Li-ION',
+            'DATE'         => '21/02/2015',
+            'NAME'         => 'THE BATTERY',
+            'SERIAL'       => '0E52B',
+            'MANUFACTURER' => 'MANU',
+            'VOLTAGE'      => '14000'
+         ]
+      ];
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+
+      $a_reference[0] = [
+         'capacity'              => '57530',
+         'designation'           => 'THE BATTERY',
+         'manufacturing_date'    => '2015-02-21',
+         'devicebatterytypes_id' => 'Li-ION',
+         'manufacturers_id'      => 'MANU',
+         'voltage'               => '14000',
+         'serial'                => '0E52B'
+      ];
+
+      $this->assertEquals($a_reference, $a_return['batteries']);
+
+      $a_computer['BATTERIES'] = [
+         [
+            'CHEMISTRY'    => 'Li-ION',
+            'SERIAL'       => '00000000',
+            'MANUFACTURER' => 'OTHER MANU'
+         ]
+      ];
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+
+      $a_reference[0] = [
+         'capacity'              => 0,
+         'designation'           => '',
+         'devicebatterytypes_id' => 'Li-ION',
+         'manufacturers_id'      => 'OTHER MANU',
+         'voltage'               => '',
+         'serial'                => '00000000'
+      ];
+
+      $this->assertEquals($a_reference, $a_return['batteries']);
+
+   }
+
 
    /**
     * @test
@@ -1823,5 +1905,3 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
    }
 }
-
-?>

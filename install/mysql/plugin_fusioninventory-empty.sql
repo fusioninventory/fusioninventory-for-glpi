@@ -365,34 +365,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerbatteries`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerbatteries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
-  `manufacturers_id` int(11) NOT NULL DEFAULT '0',
-  `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `capacity` int(11) NOT NULL DEFAULT '0',
-  `date` datetime DEFAULT NULL,
-  `plugin_fusioninventory_inventorycomputerchemistries_id` int(11) NOT NULL DEFAULT '0',
-  `voltage` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerchemistries`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerchemistries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercomputers`;
 
