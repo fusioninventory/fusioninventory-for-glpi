@@ -494,7 +494,7 @@ function plugin_version_fusioninventory() {
                 'author'         =>'<a href="mailto:david@durieux.family">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '9.1.1'
+                'minGlpiVersion' => '9.2'
    );
 }
 
@@ -513,11 +513,11 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '9.1.1', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+   if (version_compare(GLPI_VERSION, '9.2', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.1.1', '9.3');
+         echo Plugin::messageIncompatible('core', '9.2', '9.3');
       } else {
-         echo __('Your GLPI version not compatible, require >= 9.1.1 and < 9.3', 'fusioninventory');
+         echo __('Your GLPI version not compatible, require >= 9.2 and < 9.3', 'fusioninventory');
       }
       return FALSE;
    }
