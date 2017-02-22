@@ -125,6 +125,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
+      $item_DeviceBios              = new Item_DeviceFirmware();
       $pfInventoryComputerAntivirus = new ComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
@@ -243,6 +244,52 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($setdynamic == 1) {
             $this->setDynamicLinkItems($computers_id);
          }
+
+      // * BIOS
+      $db_bios = array();
+      if ($no_history === FALSE) {
+         $query = "SELECT `glpi_items_devicefirmwares`.`id`, `serial`,
+               `designation`, `version`
+               FROM `glpi_items_devicefirmwares`
+                  LEFT JOIN `glpi_devicefirmwares`
+                     ON `devicefirmwares_id`=`glpi_devicefirmwares`.`id`
+            WHERE `items_id` = '$computers_id'
+               AND `itemtype`='Computer'
+               AND `is_dynamic`='1'";
+         $result = $DB->query($query);
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);
+            $data1 = Toolbox::addslashes_deep($data);
+            $data2 = array_map('strtolower', $data1);
+            $db_bios[$idtmp] = $data2;
+         }
+      }
+
+      if (count($db_bios) == 0) {
+         $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
+      } else {
+         $arrayslower = array_map('strtolower', $a_computerinventory['bios']);
+         foreach ($db_bios as $keydb => $arraydb) {
+            if ($arrayslower['serial'] == $arraydb['serial']) {
+               unset($a_computerinventory['bios']);
+               unset($db_bios[$keydb]);
+               break;
+            }
+         }
+
+         if (isset($a_computerinventory['bios'])|| count($db_bios) != 0) {
+            if (count($db_bios) != 0) {
+               // Delete BIOS in DB
+               foreach ($db_bios as $idtmp => $data) {
+                  $item_DeviceBios->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (isset($a_computerinventory['bios'])) {
+               $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
+            }
+         }
+      }
 
       // * Processors
          if ($pfConfig->getValue("component_processor") != 0) {
@@ -2043,6 +2090,31 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
    }
 
+
+   /**
+    * Add a new bios component
+    *
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
+   function addBios($data, $computers_id, $no_history) {
+      $item_DeviceBios  = new Item_DeviceFirmware();
+      $deviceBios       = new DeviceFirmware();
+
+      $fwTypes = new DeviceFirmwareType();
+      $fwTypes->getFromDBByQuery("WHERE `name` = 'BIOS'");
+      $type_id = $fwTypes->getID();
+      $data['devicefirmwaretypes_id'] = $type_id;
+
+      $bios_id = $deviceBios->import($data);
+      $data['devicefirmwares_id']   = $bios_id;
+      $data['itemtype']             = 'Computer';
+      $data['items_id']             = $computers_id;
+      $data['is_dynamic']           = 1;
+      $data['_no_history']          = $no_history;
+      $item_DeviceBios->add($data, array(), !$no_history);
+   }
 
 
    /**

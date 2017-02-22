@@ -477,6 +477,34 @@ class PluginFusioninventoryFormatconvert {
 
       $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
 
+      // * BIOS
+      if (isset($array['BIOS'])) {
+         $a_bios = $thisc->addValues(
+            $array['BIOS'],
+            [
+               'BDATE'           => 'date',
+               'BVERSION'        => 'version',
+               'BMANUFACTURER'   => 'manufacturers_id',
+               'BIOSSERIAL'      => 'serial'
+            ]
+         );
+
+         $a_bios['designation'] = sprintf(
+            __('%1$s BIOS'),
+            $array['BIOS']['BMANUFACTURER']
+         );
+
+         $matches = array();
+         preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_bios['date'], $matches);
+         if (count($matches) == 4) {
+            $a_bios['date'] = $matches[3]."-".$matches[1]."-".$matches[2];
+         } else {
+            unset($a_bios['date']);
+         }
+
+         $a_inventory['bios'] = $a_bios;
+      }
+
       // * OPERATINGSYSTEM
       if (isset($array['OPERATINGSYSTEM'])) {
          $array_tmp = $thisc->addValues(
