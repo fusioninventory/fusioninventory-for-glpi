@@ -267,27 +267,30 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
 
       if (count($db_bios) == 0) {
-         $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
+         if (isset($a_computerinventory['bios'])) {
+            $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
+         }
       } else {
-         $arrayslower = array_map('strtolower', $a_computerinventory['bios']);
-         foreach ($db_bios as $keydb => $arraydb) {
-            if (isset($arrayslower['serial']) && $arrayslower['serial'] == $arraydb['serial']) {
-               unset($a_computerinventory['bios']);
-               unset($db_bios[$keydb]);
-               break;
+         if (isset($a_computerinventory['bios'])) {
+            $arrayslower = array_map('strtolower', $a_computerinventory['bios']);
+            foreach ($db_bios as $keydb => $arraydb) {
+               if (isset($arrayslower['serial']) && $arrayslower['serial'] == $arraydb['serial']) {
+                  unset($a_computerinventory['bios']);
+                  unset($db_bios[$keydb]);
+                  break;
+               }
             }
          }
 
-         if (isset($a_computerinventory['bios'])|| count($db_bios) != 0) {
-            if (count($db_bios) != 0) {
-               // Delete BIOS in DB
-               foreach ($db_bios as $idtmp => $data) {
-                  $item_DeviceBios->delete(array('id'=>$idtmp), 1);
-               }
+         if (count($db_bios) != 0) {
+            // Delete BIOS in DB
+            foreach ($db_bios as $idtmp => $data) {
+               $item_DeviceBios->delete(array('id'=>$idtmp), 1);
             }
-            if (isset($a_computerinventory['bios'])) {
-               $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
-            }
+         }
+
+         if (isset($a_computerinventory['bios'])) {
+            $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
          }
       }
 

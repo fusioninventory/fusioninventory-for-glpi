@@ -475,7 +475,7 @@ class PluginFusioninventoryFormatconvert {
 
          $a_bios['designation'] = sprintf(
             __('%1$s BIOS'),
-            $array['BIOS']['BMANUFACTURER']
+            isset($array['BIOS']['BMANUFACTURER']) ? $array['BIOS']['BMANUFACTURER'] : ''
          );
 
          $matches = array();
