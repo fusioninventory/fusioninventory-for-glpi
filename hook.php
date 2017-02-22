@@ -64,21 +64,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
          $sopt[5150]['massiveaction'] = FALSE;
 
-         $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5155]['field']     = 'bios_date';
-         $sopt[5155]['name']      = __('BIOS', 'fusioninventory')."-".__('Date');
-//         $sopt[5155]['forcegroupby'] = true;
-//         $sopt[5155]['usehaving'] = true;
-         $sopt[5155]['datatype']  = 'date';
-         $sopt[5155]['joinparams']  = array('jointype' => 'child');
-         $sopt[5155]['massiveaction'] = FALSE;
-
-         $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5156]['field']     = 'bios_version';
-         $sopt[5156]['name']      = __('BIOS', 'fusioninventory')."-".__('Version');
-         $sopt[5156]['joinparams']  = array('jointype' => 'child');
-         $sopt[5156]['massiveaction'] = FALSE;
-
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
          $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".

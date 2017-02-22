@@ -147,30 +147,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->showInfoForComputer($item->getID());
 
-      if ($a_computerextend['bios_date'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
-         echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['bios_version'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
-         echo '<td>'.$a_computerextend['bios_version'].'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['bios_manufacturers_id'] > 0) {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
-         echo '<td>';
-         echo Dropdown::getDropdownName("glpi_manufacturers",
-                                        $a_computerextend['bios_manufacturers_id']);
-         echo '</td>';
-         echo '</tr>';
-      }
-
       if ($a_computerextend['operatingsystem_installationdate'] != '') {
          echo '<tr class="tab_bg_1">';
          echo "<td>".__('Operating system')." - ".__('Installation')." (".
@@ -338,5 +314,3 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return $a_computerextend['is_entitylocked'];
    }
 }
-
-?>

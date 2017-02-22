@@ -948,7 +948,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->dropTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses');
    }
 
-
    //Create first access to the current profile is needed
    if (isset($_SESSION['glpiactiveprofile'])) {
       PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
@@ -2545,12 +2544,6 @@ function do_computercomputer_migration($migration) {
                                                         'value'   => '');
    $a_table['fields']['computers_id']           = array('type'    => 'integer',
                                                         'value'   => NULL);
-   $a_table['fields']['bios_date']              = array('type'    => 'datetime',
-                                                        'value'   => NULL);
-   $a_table['fields']['bios_version']           = array('type'    => 'string',
-                                                        'value'   => NULL);
-   $a_table['fields']['bios_manufacturers_id']  = array('type'    => 'integer',
-                                                        'value'   => NULL);
    $a_table['fields']['operatingsystem_installationdate'] = array('type'    => 'datetime',
                                                                   'value'   => NULL);
    $a_table['fields']['winowner']               = array('type'    => 'string',
@@ -2570,8 +2563,13 @@ function do_computercomputer_migration($migration) {
    $a_table['fields']['oscomment']              = array('type'    => 'text',
                                                         'value'   => NULL);
 
-   $a_table['oldfields']  = array('plugin_fusioninventory_computerarchs_id',
-                                  'bios_assettag');
+   $a_table['oldfields']  = array(
+      'plugin_fusioninventory_computerarchs_id',
+      'bios_assettag',
+      'bios_date',
+      'bios_version',
+      'bios_manufacturers_id'
+   );
 
    $a_table['renamefields'] = array();
 
@@ -2580,6 +2578,8 @@ function do_computercomputer_migration($migration) {
    $a_table['keys'][] = array('field' => 'last_fusioninventory_update', 'name' => '', 'type' => 'INDEX');
 
    $a_table['oldkeys'] = array();
+
+   do_biosascomponentmigration();
 
    migrateTablesFusionInventory($migration, $a_table);
 
@@ -2622,7 +2622,78 @@ function do_computercomputer_migration($migration) {
 
 }
 
+/**
+ * A firmware component with a BIOS type has been added in GLPI 9.2
+ *
+ * @return void
+ */
+function do_biosascomponentmigration() {
+   global $DB;
 
+   //BIOS as a component
+   if (FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_date')
+      || FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_version')
+      || FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_manufacturers_id')
+   ) {
+      $bioses = [];
+      //retrieve exiting
+      $query = "SELECT computers_id, bios_date, bios_version, bios_manufacturers_id, glpi_manufacturers.name AS mname
+                  FROM glpi_plugin_fusioninventory_inventorycomputercomputers
+                  LEFT JOIN glpi_manufacturers
+                     ON glpi_plugin_fusioninventory_inventorycomputercomputers.bios_manufacturers_id = glpi_manufacturers.id
+                     WHERE
+                        bios_date IS NOT NULL AND bios_date != ''
+                        OR bios_version IS NOT NULL AND bios_version != ''
+                        OR bios_manufacturers_id != 0";
+      $result = $DB->query($query);
+
+      $deviceBios = new DeviceFirmware();
+      $item_DeviceBios  = new Item_DeviceFirmware();
+      while ($data = $DB->fetch_array($result)) {
+         $key = md5($data['bios_date'] . $data['bios_version']. $data['bios_manufacturers_id']);
+         if (!isset($bioses[$key])) {
+            //look for an existing BIOS in the database
+            $query = "SELECT id FROM glpi_devicefirmwares
+                        WHERE
+                           date = '{$data['bios_date']}'
+                           AND version = '{$data['bios_version']}'
+                           AND manufacturers_id = '{$data['bios_manufacturers_id']}'
+                           LIMIT 1 OFFSET 0";
+            $result = $DB->query($query);
+            if ($DB->numrows($result)) {
+               $existing = $DB->fetch_assoc($result);
+               $bioses[$key] = $existing['id'];
+            } else {
+               $designation = sprintf(
+                  __('%1$s BIOS'),
+                  $data['mname']
+               );
+
+               //not found in database, create it
+               $deviceBios->add(
+                  [
+                     'designation'        => $designation,
+                     'date'               => $data['bios_date'],
+                     'version'            => $data['bios_version'],
+                     'manufacturers_id'   => $data['bios_manufacturers_id']
+                  ]
+               );
+               $bioses[$key] = $deviceBios->getID();
+            }
+         }
+
+         //attach found/created component to computer
+         $item_DeviceBios->add(
+            [
+               'items_id'           => $data['computers_id'],
+               'itemtype'           => 'Computer',
+               'devicefirmwares_id' => $bioses[$key],
+               'is_dynamic'         => 1
+            ]
+         );
+      }
+   }
+}
 
 /**
  * Manage the computer inventory staistics part migration
