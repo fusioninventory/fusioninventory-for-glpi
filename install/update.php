@@ -2631,9 +2631,10 @@ function do_biosascomponentmigration() {
    global $DB;
 
    //BIOS as a component
-   if (FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_date')
+   if (TableExists('glpi_plugin_fusioninventory_inventorycomputercomputers') &&
+      (FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_date')
       || FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_version')
-      || FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_manufacturers_id')
+      || FieldExists('glpi_plugin_fusioninventory_inventorycomputercomputers', 'bios_manufacturers_id'))
    ) {
       $bioses = [];
       //retrieve exiting
