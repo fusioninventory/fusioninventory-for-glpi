@@ -371,9 +371,6 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercomputers`;
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `bios_date` datetime DEFAULT NULL,
-  `bios_version` varchar(255) DEFAULT NULL,
-  `bios_manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `operatingsystem_installationdate` datetime DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,

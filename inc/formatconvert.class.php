@@ -455,25 +455,9 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-//      if (isset($array['BIOS']['SKUNUMBER'])) {
-//         $a_inventory['BIOS']['PARTNUMBER'] = $array['BIOS']['SKUNUMBER'];
-//      }
-
-      if (isset($array['BIOS']['BDATE'])) {
-         $a_split = explode("/", $array['BIOS']['BDATE']);
-         // 2011-06-29 13:19:48
-         if (isset($a_split[0])
-                 AND isset($a_split[1])
-                 AND isset($a_split[2])) {
-            $a_inventory['fusioninventorycomputer']['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
-         }
-      }
-      if (isset($array['BIOS']['BVERSION'])) {
-         $a_inventory['fusioninventorycomputer']['bios_version'] = $array['BIOS']['BVERSION'];
-      }
-      if (isset($array['BIOS']['BMANUFACTURER'])) {
-         $a_inventory['fusioninventorycomputer']['bios_manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
-      }
+      //if (isset($array['BIOS']['SKUNUMBER'])) {
+      //   $a_inventory['BIOS']['PARTNUMBER'] = $array['BIOS']['SKUNUMBER'];
+      //}
 
       $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
 
