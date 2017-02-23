@@ -1481,6 +1481,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    function getSpecificMassiveActions($checkitem=NULL) {
       $actions = array();
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate'] = _sx('button', 'Duplicate');
       return $actions;
    }
 
@@ -1500,6 +1501,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          case "transfert":
             Dropdown::show('Entity');
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            return TRUE;
+
+         case "duplicate":
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return TRUE;
 
@@ -1609,6 +1614,20 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       switch ($ma->getAction()) {
 
+         case "duplicate":
+         foreach ($ids as $key) {
+            if ($pfTask->getFromDB($key)) {
+               if ($pfTask->duplicate($pfTask->getID())) {
+                  //set action massive ok for this item
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               } else {
+                  // KO
+                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+               }
+            }
+         }
+         break;
+
          case "transfert" :
             foreach ($ids as $key) {
                if ($pfTask->getFromDB($key)) {
@@ -1676,5 +1695,31 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       }
    }
-}
 
+   /**
+   * Duplicate a task
+   * @param $source_tasks_id the ID of the task to duplicate
+   * @return void
+   */
+   function duplicate($source_tasks_id) {
+      $result = true;
+      if ($this->getFromDB($source_tasks_id)) {
+         $input              = $this->fields;
+         $input['name']      = sprintf(__('Copy of %s'),
+                                       $this->fields['name']);
+         $input['is_active'] = false;
+         unset($input['id']);
+         $input              = Toolbox::addslashes_deep($input);
+         if ($target_task_id = $this->add($input)) {
+            //Clone taskjobs
+            $result
+               = PluginFusioninventoryTaskjob::duplicate($source_tasks_id, $target_task_id);
+         } else {
+            $result = false;
+         }
+      } else {
+         $result = false;
+      }
+      return $result;
+   }
+}

@@ -213,6 +213,29 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       return $ids;
    }
+
+   /**
+   * Duplicate entries from one group to another
+   * @param $source_deploygroups_id the source group ID
+   * @param $target_deploygroups_id the target group ID
+   * @return the duplication status, as a boolean
+   */
+   static function duplicate($source_deploygroups_id, $target_deploygroups_id) {
+      $result         = true;
+      $pfDynamicGroup = new self();
+
+      $groups = $pfDynamicGroup->find("`plugin_fusioninventory_deploygroups_id`='$source_deploygroups_id'");
+      foreach ($groups as $group) {
+         unset($group['id']);
+         $group['plugin_fusioninventory_deploygroups_id']
+            = $target_deploygroups_id;
+         if (!$pfDynamicGroup->add($group)) {
+            $result |= false;
+         }
+      }
+      return $result;
+   }
+
 }
 
 ?>
