@@ -1,0 +1,138 @@
+<?php
+
+/*
+   ------------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2016 by the FusionInventory Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ------------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory project.
+
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author
+   @copyright Copyright (c) 2010-2016 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2013
+
+   ------------------------------------------------------------------------
+ */
+
+class DeploygroupTest extends RestoreDatabase_TestCase {
+
+
+   /**
+    * @test
+    */
+   public function AddGroup() {
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $input = ['name'    => 'MyGroup',
+                'type'    => PluginFusioninventoryDeployGroup::STATIC_GROUP,
+                'comment' => 'MyComment'
+               ];
+      $groups_id = $pfDeploygroup->add($input);
+      $this->assertGreaterThan(0, $groups_id);
+
+      $result = ['id'      => $groups_id,
+                 'name'    => 'MyGroup',
+                 'type'    => PluginFusioninventoryDeployGroup::STATIC_GROUP,
+                 'comment' => 'MyComment'
+                ];
+      $this->assertEquals(0, $groups_id);
+      $pfDeploygroup->getFromDB($groups_id);
+      $this->assertEquals($pfDeploygroup->fields, $result);
+
+   }
+
+   /**
+    * @test
+    */
+   public function cloneStaticGroup() {
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $groups        = $pfDeploygroup->find("`name`='MyGroup'");
+      $this->assertEquals(1, count($groups));
+      $group = current($groups);
+      $groups_id = $group['id'];
+
+      $computer = new Computer();
+
+      $computer_ids_1 = $computer->add(['name' => 'MyComputer1', 'entities_id' => 1]);
+      $computer_ids_2 = $computer->add(['name' => 'MyComputer2', 'entities_id' => 1]);
+
+      $pfStaticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
+      $pfStaticgroup->add(['plugin_fusioninventory_deploygroups_id' => $groups_id,
+                           'itemtype' => 'Computer', 'items_id' => $computer_ids_1]);
+      $pfStaticgroup->add(['plugin_fusioninventory_deploygroups_id' => $groups_id,
+                           'itemtype' => 'Computer', 'items_id' => $computer_ids_2]);
+
+      $new_groups_id = $pfDeploygroup->duplicate($groups_id);
+      $this->assertTrue($new_groups_id);
+      $this->assertFalse($pfDeploygroup->duplicate(100));
+
+      $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$new_groups_id'", "'items_id' ASC");
+      $this->assertEquals(2, count($data));
+      $tmp = array_slice($data);
+      $this->assertEquals('Computer', $tmp['itemtype']);
+      $this->assertEquals($computers_id_1, $tmp['items_id']);
+
+      $tmp = array_slice($data);
+      $this->assertEquals('Computer', $tmp['itemtype']);
+      $this->assertEquals($computers_id_2, $tmp['items_id']);
+
+   }
+
+   /**
+    * @test
+    */
+   public function cloneDynamicGroup() {
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $input = ['name'    => 'Windows computers',
+                'type'    => PluginFusioninventoryDeployGroup::DYNAMIC_GROUP,
+                'comment' => 'Group of Windows computers'
+               ];
+      $groups_id = $pfDeploygroup->add($input);
+      $this->assertGreaterThan(0, $groups_id);
+
+      $json = ""a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:2:"45";s:10:"searchtype";s:8:"contains";s:5:"value";s:7:"windows";}}s:12:"metacriteria";N;}"";
+      $pfDynamicGroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
+      $input = ['plugin_fusioninventory_deploygroups_id' => $groups_id,
+                'fields_array'     => $josn,
+                'can_update_group' => 0
+               ];
+      $dynamicgroups_id = $pfDynamicGroup->add($input);
+      $this->assertGreaterThan(0, $dynamicgroups_id);
+
+      $new_groups_id = $pfDynamicGroup->duplicate($groups_id);
+      $this->assertTrue($new_groups_id);
+      $this->assertFalse($pfDynamicGroup->duplicate(100));
+
+      $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$new_groups_id'");
+      $this->assertEquals(1, count($data));
+      $tmp = array_slice($data);
+      $this->assertEquals($json, $tmp['fields_array']);
+
+   }
+
+}
