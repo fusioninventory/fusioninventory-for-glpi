@@ -118,7 +118,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $json = ""a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:2:"45";s:10:"searchtype";s:8:"contains";s:5:"value";s:7:"windows";}}s:12:"metacriteria";N;}"";
       $pfDynamicGroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $input = ['plugin_fusioninventory_deploygroups_id' => $groups_id,
-                'fields_array'     => $josn,
+                'fields_array'     => $json,
                 'can_update_group' => 0
                ];
       $dynamicgroups_id = $pfDynamicGroup->add($input);
