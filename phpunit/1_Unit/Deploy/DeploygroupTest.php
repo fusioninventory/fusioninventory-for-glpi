@@ -68,6 +68,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddGroup
     */
    public function cloneStaticGroup() {
       $pfDeploygroup = new PluginFusioninventoryDeployGroup();
@@ -133,6 +134,60 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $tmp = array_slice($data);
       $this->assertEquals($json, $tmp['fields_array']);
 
+   }
+
+   /**
+    * @test
+    * @depends cloneDynamicGroup
+    */
+   public function deleteDynamicGroup() {
+
+      //Get the group have the name "Windows computers"
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $data = $pfDeploygroup->find("`name`='Windows computers'");
+      $this->assertEquals(1, count($data));
+      $tmp = array_slice($data);
+      //Store the group's id
+      $groups_id = $tmp['id'];
+
+      //Get group datas
+      $pfDynamicGroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
+      $data = $pfDynamicgroup->find("`plugin_fusioninventory_deploygroups_id`='$id'");
+      $this->assertEquals(1, count($data));
+      //Store group data id
+      $dynamicgroups_id = $data['id'];
+
+      //Delete the group
+      $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
+      $this->assertFalse($pfDeploygroup->getFromDBByQuery($groups_id));
+      $this->assertFalse($pfDynamicGroup->getFromDBByQuery($dynamicgroups_id));
+   }
+
+   /**
+    * @test
+    * @depends cloneStaticGroup
+    */
+   public function deleteDynamicGroup() {
+
+      //Get the group have the name "Windows computers"
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $data = $pfDeploygroup->find("`name`='MyGroup'");
+      $this->assertEquals(1, count($data));
+      $tmp = array_slice($data);
+      //Store the group's id
+      $groups_id = $tmp['id'];
+
+      //Get group datas
+      $pfStaticGroup = new PluginFusioninventoryDeployGroup_Staticdata();
+      $data = $pfStaticGroup->find("`plugin_fusioninventory_deploygroups_id`='$id'");
+      $this->assertEquals(2, count($data));
+
+      //Delete the group
+      $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
+      $this->assertFalse($pfDeploygroup->getFromDBByQuery($groups_id));
+      foreach ($data as $staticgroup) {
+         $this->assertFalse($pfStaticGroup->getFromDBByQuery($staticgroup['id']));
+      }
    }
 
 }
