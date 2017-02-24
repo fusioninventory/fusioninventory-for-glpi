@@ -60,7 +60,6 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
                  'type'    => PluginFusioninventoryDeployGroup::STATIC_GROUP,
                  'comment' => 'MyComment'
                 ];
-      $this->assertEquals(0, $groups_id);
       $pfDeploygroup->getFromDB($groups_id);
       $this->assertEquals($pfDeploygroup->fields, $result);
 
@@ -71,34 +70,42 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
     * @depends AddGroup
     */
    public function cloneStaticGroup() {
+      $computer      = new Computer();
       $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $pfStaticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
+
       $groups        = $pfDeploygroup->find("`name`='MyGroup'");
       $this->assertEquals(1, count($groups));
-      $group = current($groups);
+
+      $group     = current($groups);
       $groups_id = $group['id'];
 
-      $computer = new Computer();
+      $computers_id_1 = $computer->add(['name' => 'MyComputer1', 'entities_id' => 1]);
+      $computers_id_2 = $computer->add(['name' => 'MyComputer2', 'entities_id' => 1]);
 
-      $computer_ids_1 = $computer->add(['name' => 'MyComputer1', 'entities_id' => 1]);
-      $computer_ids_2 = $computer->add(['name' => 'MyComputer2', 'entities_id' => 1]);
-
-      $pfStaticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
       $pfStaticgroup->add(['plugin_fusioninventory_deploygroups_id' => $groups_id,
-                           'itemtype' => 'Computer', 'items_id' => $computer_ids_1]);
+                           'itemtype' => 'Computer', 'items_id' => $computers_id_1]);
       $pfStaticgroup->add(['plugin_fusioninventory_deploygroups_id' => $groups_id,
-                           'itemtype' => 'Computer', 'items_id' => $computer_ids_2]);
+                           'itemtype' => 'Computer', 'items_id' => $computers_id_2]);
 
-      $new_groups_id = $pfDeploygroup->duplicate($groups_id);
-      $this->assertTrue($new_groups_id);
+      $this->assertTrue($pfDeploygroup->duplicate($groups_id));
       $this->assertFalse($pfDeploygroup->duplicate(100));
 
-      $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$new_groups_id'", "'items_id' ASC");
+      $data = $pfDeploygroup->find("`name`='Copy of MyGroup'");
+      $this->assertEquals(1, count($data));
+      $tmp = current($data);
+
+      //Store the group's id
+      $new_groups_id = $tmp['id'];
+
+      $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$new_groups_id'",
+                                   "'items_id' ASC");
       $this->assertEquals(2, count($data));
-      $tmp = array_slice($data);
+      $tmp = current($data);
       $this->assertEquals('Computer', $tmp['itemtype']);
       $this->assertEquals($computers_id_1, $tmp['items_id']);
 
-      $tmp = array_slice($data);
+      $tmp = next($data);
       $this->assertEquals('Computer', $tmp['itemtype']);
       $this->assertEquals($computers_id_2, $tmp['items_id']);
 
@@ -106,17 +113,18 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends cloneStaticGroup
     */
    public function cloneDynamicGroup() {
       $pfDeploygroup = new PluginFusioninventoryDeployGroup();
-      $input = ['name'    => 'Windows computers',
+      $input = ['name'    => 'Dynamic group',
                 'type'    => PluginFusioninventoryDeployGroup::DYNAMIC_GROUP,
-                'comment' => 'Group of Windows computers'
+                'comment' => 'My dynamic group'
                ];
       $groups_id = $pfDeploygroup->add($input);
       $this->assertGreaterThan(0, $groups_id);
 
-      $json = ""a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:2:"45";s:10:"searchtype";s:8:"contains";s:5:"value";s:7:"windows";}}s:12:"metacriteria";N;}"";
+      $json = "a:2:{s:8:\"criteria\";a:1:{i:0;a:3:{s:5:\"field\";s:2:\"45\";s:10:\"searchtype\";s:8:\"contains\";s:5:\"value\";s:7:\"windows\";}}s:12:\"metacriteria\";N;}";
       $pfDynamicGroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $input = ['plugin_fusioninventory_deploygroups_id' => $groups_id,
                 'fields_array'     => $json,
@@ -125,14 +133,69 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $dynamicgroups_id = $pfDynamicGroup->add($input);
       $this->assertGreaterThan(0, $dynamicgroups_id);
 
-      $new_groups_id = $pfDynamicGroup->duplicate($groups_id);
-      $this->assertTrue($new_groups_id);
-      $this->assertFalse($pfDynamicGroup->duplicate(100));
+      $this->assertTrue($pfDeploygroup->duplicate($groups_id));
 
-      $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$new_groups_id'");
+      $data = $pfDeploygroup->find("`name`='Copy of Dynamic group'");
       $this->assertEquals(1, count($data));
-      $tmp = array_slice($data);
+      $tmp = current($data);
+      $new_groups_id =$tmp['id'];
+      $this->assertFalse($pfDeploygroup->duplicate(100));
+
+      $data = $pfDynamicGroup->find("`plugin_fusioninventory_deploygroups_id`='$new_groups_id'");
+      $this->assertEquals(1, count($data));
+      $tmp = current($data);
       $this->assertEquals($json, $tmp['fields_array']);
+
+   }
+
+   /**
+    * @test
+    * @depends cloneDynamicGroup
+    */
+   public function updateGroup() {
+      //Get the group have the name "Windows computers"
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $data = $pfDeploygroup->find("`name`='Copy of Dynamic group'");
+      $this->assertEquals(1, count($data));
+      $tmp = current($data);
+      //Store the group's id
+      $groups_id = $tmp['id'];
+
+      $input = ['name' => 'Second Dynamic group', 'id' => $groups_id];
+      $this->assertTrue($pfDeploygroup->update($input));
+
+      $data = $pfDeploygroup->find("`name`='Copy of Dynamic group'");
+      $this->assertEquals(0, count($data));
+
+      $data = $pfDeploygroup->find("`name`='Second Dynamic group'");
+      $this->assertEquals(1, count($data));
+
+   }
+
+   /**
+    * @test
+    * @depends updateGroup
+    */
+   public function switchDynamicToStaticGroup() {
+      //Get the group have the name "Windows computers"
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $data = $pfDeploygroup->find("`name`='Dynamic group'");
+      $this->assertEquals(1, count($data));
+      $tmp = current($data);
+      //Store the group's id
+      $groups_id = $tmp['id'];
+
+      $input = ['id'   => $groups_id,
+                'type' => PluginFusioninventoryDeployGroup::STATIC_GROUP];
+      $this->assertTrue($pfDeploygroup->update($input));
+
+      $pfDeploygroup->getFromDB($groups_id);
+      $this->assertEquals(PluginFusioninventoryDeployGroup::STATIC_GROUP,
+                           $pfDeploygroup->fields['type']);
+
+      $pfStaticGroup = new PluginFusioninventoryDeployGroup_Staticdata();
+      $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'");
+      $this->assertEquals(0, count($data));
 
    }
 
@@ -144,49 +207,50 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
       //Get the group have the name "Windows computers"
       $pfDeploygroup = new PluginFusioninventoryDeployGroup();
-      $data = $pfDeploygroup->find("`name`='Windows computers'");
+      $data = $pfDeploygroup->find("`name`='Dynamic group'");
       $this->assertEquals(1, count($data));
-      $tmp = array_slice($data);
+      $tmp = current($data);
       //Store the group's id
       $groups_id = $tmp['id'];
 
       //Get group datas
-      $pfDynamicGroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
-      $data = $pfDynamicgroup->find("`plugin_fusioninventory_deploygroups_id`='$id'");
+      $pfDynamicgroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
+      $data = $pfDynamicgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'");
       $this->assertEquals(1, count($data));
       //Store group data id
-      $dynamicgroups_id = $data['id'];
+      $tmp = current($data);
+      $dynamicgroups_id = $tmp['id'];
 
       //Delete the group
       $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
       $this->assertFalse($pfDeploygroup->getFromDBByQuery($groups_id));
-      $this->assertFalse($pfDynamicGroup->getFromDBByQuery($dynamicgroups_id));
+      $this->assertFalse($pfDynamicgroup->getFromDBByQuery($dynamicgroups_id));
    }
 
    /**
     * @test
     * @depends cloneStaticGroup
     */
-   public function deleteDynamicGroup() {
+   public function deleteStaticGroup() {
 
       //Get the group have the name "Windows computers"
       $pfDeploygroup = new PluginFusioninventoryDeployGroup();
       $data = $pfDeploygroup->find("`name`='MyGroup'");
       $this->assertEquals(1, count($data));
-      $tmp = array_slice($data);
+      $tmp = current($data);
       //Store the group's id
       $groups_id = $tmp['id'];
 
       //Get group datas
       $pfStaticGroup = new PluginFusioninventoryDeployGroup_Staticdata();
-      $data = $pfStaticGroup->find("`plugin_fusioninventory_deploygroups_id`='$id'");
+      $data = $pfStaticGroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'");
       $this->assertEquals(2, count($data));
 
       //Delete the group
       $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
-      $this->assertFalse($pfDeploygroup->getFromDBByQuery($groups_id));
+      $this->assertFalse($pfDeploygroup->getFromDB($groups_id));
       foreach ($data as $staticgroup) {
-         $this->assertFalse($pfStaticGroup->getFromDBByQuery($staticgroup['id']));
+         $this->assertFalse($pfStaticGroup->getFromDB($staticgroup['id']));
       }
    }
 
