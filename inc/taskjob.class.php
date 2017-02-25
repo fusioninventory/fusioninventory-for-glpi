@@ -1597,12 +1597,12 @@ function new_subtype(id) {
    * @param $target_task_id the ID of the cloned task
    * @return void
    */
-   static function duplicate($source_tasks_id, $target_task_id) {
+   static function duplicate($source_tasks_id, $target_tasks_id) {
       $pfTaskJob = new self();
       $result    = true;
       $taskjobs  = $pfTaskJob->find("`plugin_fusioninventory_tasks_id`='$source_tasks_id'");
       foreach ($taskjobs as $taskjob) {
-         $taskjob['plugin_fusioninventory_tasks_id'] = $target_task_id;
+         $taskjob['plugin_fusioninventory_tasks_id'] = $target_tasks_id;
          unset($taskjob['id']);
          if (!$pfTaskJob->add($taskjob)) {
             $result = false;
