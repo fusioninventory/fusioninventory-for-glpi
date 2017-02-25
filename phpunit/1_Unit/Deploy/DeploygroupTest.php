@@ -193,7 +193,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $this->assertEquals(PluginFusioninventoryDeployGroup::STATIC_GROUP,
                            $pfDeploygroup->fields['type']);
 
-      $pfStaticGroup = new PluginFusioninventoryDeployGroup_Staticdata();
+      $pfStaticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
       $data = $pfStaticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'");
       $this->assertEquals(0, count($data));
 
@@ -205,16 +205,16 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
     */
    public function deleteDynamicGroup() {
 
-      //Get the group have the name "Windows computers"
-      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
-      $data = $pfDeploygroup->find("`name`='Dynamic group'");
+      $pfDeploygroup  = new PluginFusioninventoryDeployGroup();
+      $pfDynamicgroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
+
+      $data = $pfDeploygroup->find("`name`='Second Dynamic group'");
       $this->assertEquals(1, count($data));
       $tmp = current($data);
       //Store the group's id
       $groups_id = $tmp['id'];
 
       //Get group datas
-      $pfDynamicgroup = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $data = $pfDynamicgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'");
       $this->assertEquals(1, count($data));
       //Store group data id
@@ -223,8 +223,8 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
       //Delete the group
       $this->assertTrue($pfDeploygroup->delete(['id' => $groups_id]));
-      $this->assertFalse($pfDeploygroup->getFromDBByQuery($groups_id));
-      $this->assertFalse($pfDynamicgroup->getFromDBByQuery($dynamicgroups_id));
+      $this->assertFalse($pfDeploygroup->getFromDB($groups_id));
+      $this->assertFalse($pfDynamicgroup->getFromDB($dynamicgroups_id));
    }
 
    /**
