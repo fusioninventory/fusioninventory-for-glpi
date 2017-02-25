@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the actions in package for deploy system.
  */
-class PluginFusioninventoryDeployAction {
+class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    /**
     * Get list of return actions available
@@ -94,7 +94,7 @@ class PluginFusioninventoryDeployAction {
     * @param string $type name of the type
     * @return string mapped with the type
     */
-   static function getType($type) {
+   static function getTypeDescription($type) {
       $a_types = PluginFusioninventoryDeployAction::getTypes();
       if (isset($a_types[$type])) {
          return $a_types[$type];
@@ -198,7 +198,7 @@ class PluginFusioninventoryDeployAction {
          echo "<td>";
          echo "<a class='edit' ".
                  "onclick=\"edit_subtype('action', {$package->fields['id']}, $rand, this)\">";
-         echo PluginFusioninventoryDeployAction::getType($action_type);
+         echo PluginFusioninventoryDeployAction::getTypeDescription($action_type);
          echo "</a><br />";
 
          foreach ($action[$action_type] as $key => $value) {

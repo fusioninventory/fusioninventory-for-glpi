@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the checks before deploy a package.
  */
-class PluginFusioninventoryDeployCheck {
+class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    /**
     * Get types of checks with name => description
