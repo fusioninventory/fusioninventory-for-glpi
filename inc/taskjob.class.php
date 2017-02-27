@@ -674,55 +674,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
-    * Force running a task
-    *
-    * @global object $DB
-    * @param integer $tasks_id id of the task
-    * @return string unique id
-    */
-   function forceRunningTask($tasks_id) {
-      global $DB;
-
-      $uniqid = '';
-
-      if ($this->reinitializeTaskjobs($tasks_id, 1)) {
-
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
-
-         $query = "SELECT `".$pfTaskjob->getTable()."`.*,
-               `glpi_plugin_fusioninventory_tasks`.`communication`,
-               UNIX_TIMESTAMP(datetime_start) as date_scheduled_timestamp
-            FROM ".$pfTaskjob->getTable()."
-            LEFT JOIN `glpi_plugin_fusioninventory_tasks`
-               ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `is_active`='1'
-               AND `status` = '0'
-               AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
-               AND `".$pfTaskjob->getTable()."`.`plugins_id` != '0'
-               AND `".$pfTaskjob->getTable()."`.`method` IS NOT NULL
-               AND `".$pfTaskjob->getTable()."`.`method` != ''
-            ORDER BY `id`";
-         $result = $DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            $uniqid = $pfTaskjob->prepareRunTaskjob($data);
-         }
-         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
-            $pfTaskjob->startAgentRemotly($agents_id);
-         }
-         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
-      } else {
-         Session::addMessageAfterRedirect(
-            __('Unable to run task because some jobs is running yet!', 'fusioninventory'),
-            ERROR
-         );
-      }
-      return $uniqid;
-   }
-
-
-
-   /**
     * Get period in secondes by type and count time
     *
     * @param string $periodicity_type type of time (minutes, hours...)
