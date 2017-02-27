@@ -50,7 +50,7 @@ if (PluginFusioninventoryMenu::canView()) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
                 "pluginfusioninventorymenu", "menu");
 
-   //TODO : in 9.1, to replace by Html::manageRefreshPage()
+   //TODO : in GLPI 9.2, to replace by Html::manageRefreshPage()
    if ($_SESSION['glpirefresh_ticket_list'] > 0) {
       // Refresh automatique  sur tracking.php
       echo "<script type=\"text/javascript\">\n";
