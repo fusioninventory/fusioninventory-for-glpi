@@ -530,6 +530,42 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       return true;
    }
 
+   function showFormButtons($options = array()) {
+      if (isset($this->fields['id'])) {
+         $ID = $this->fields['id'];
+      }
+
+      echo "<tr>";
+      echo "<td colspan='2'>";
+      if ($this->isNewID($ID)) {
+         echo Html::submit(_x('button','Add'), array('name' => 'add'));
+      } else {
+         echo Html::hidden('id', array('value' => $ID));
+         echo Html::submit(_x('button','Save'), array('name' => 'update'));
+      }
+      echo "</td>";
+
+      if ($this->fields['is_active']
+          && $_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         echo "<td>";
+         echo Html::submit(__('Force start', 'fusioninventory'), array('name' => 'forcestart'));
+         echo "</td>";
+      }
+
+      echo "<td>";
+      if ($this->can($ID, PURGE)) {
+         echo Html::submit(_x('button','Delete permanently'),
+                           array('name'    => 'purge',
+                                 'confirm' => __('Confirm the final deletion?')));
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      // Close for Form
+      echo "</table></div>";
+      Html::closeForm();
+   }
+
 
 
    /**
@@ -542,11 +578,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if (isset($postvars['forcestart'])) {
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
 
-         /**
-          * TODO: forcing the task execution should be done in the task object
-          */
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $pfTaskjob->forceRunningTask($postvars['id']);
+         $this->getFromDB($postvars['id']);
+         $this->forceRunning();
+
          Html::back();
       } else if (isset ($postvars["add"])) {
          Session::checkRight('plugin_fusioninventory_task', CREATE);
