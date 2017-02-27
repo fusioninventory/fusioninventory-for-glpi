@@ -525,8 +525,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    function showFormButtons($options = array()) {
       if (isset($this->fields['id'])) {
          $ID = $this->fields['id'];
-      } else {
-         $ID = 1;
       }
 
       echo "<tr>";
