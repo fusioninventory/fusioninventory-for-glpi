@@ -50,6 +50,15 @@ if (PluginFusioninventoryMenu::canView()) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
                 "pluginfusioninventorymenu", "menu");
 
+   //TODO : in 9.1, to replace by Html::manageRefreshPage()
+   if ($_SESSION['glpirefresh_ticket_list'] > 0) {
+      // Refresh automatique  sur tracking.php
+      echo "<script type=\"text/javascript\">\n";
+      echo "setInterval(\"window.location.reload()\",".
+         (60000 * $_SESSION['glpirefresh_ticket_list']).");\n";
+      echo "</script>\n";
+   }
+
    PluginFusioninventoryMenu::displayMenu();
    PluginFusioninventoryMenu::board();
 } else {
