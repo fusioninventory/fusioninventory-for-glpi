@@ -58,19 +58,6 @@ define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
-include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
-
-define("PLUGIN_FUSIONINVENTORY_ROOT",
-   implode(DIRECTORY_SEPARATOR , array(GLPI_ROOT,'plugins', 'fusioninventory', 'inc'))
-);
-
-$options = array(
-   PLUGIN_FUSIONINVENTORY_ROOT
-);
-
-$fi_loader = new FusioninventoryIncludePathAutoloader($options);
-$fi_loader->register();
-
 /**
  * Check if the script name finish by
  *
