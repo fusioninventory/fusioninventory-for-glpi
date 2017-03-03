@@ -2438,9 +2438,6 @@ function postShowtab($params) {
                    );
 
                    echo "</td>";
-
-                   echo "</tr>";
-
                    echo "</tr>";
 
                 }
