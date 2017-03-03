@@ -4992,6 +4992,9 @@ function do_computeroperatingsystem_migration($migration) {
 
    migrateTablesFusionInventory($migration, $a_table);
 
+   $migration->addField('glpi_plugin_fusioninventory_inventorycomputercomputers',
+                        "hostid", "string", ['after' => 'oscomment']);
+   $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
 }
 
 

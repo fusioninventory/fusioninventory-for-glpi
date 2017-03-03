@@ -244,6 +244,11 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                                      'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
                                                                                                  'joinparams' => array('jointype' => 'child')))));
 
+         $sopt[5178]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5178]['field']     = 'hostid';
+         $sopt[5178]['name']      = __('HostID', 'fusioninventory');
+         $sopt[5178]['joinparams']  = array('jointype' => 'child');
+         $sopt[5178]['massiveaction'] = FALSE;
    }
 
    if ($itemtype == 'Computer') {
@@ -2434,7 +2439,16 @@ function postShowtab($params) {
 
                    echo "</td>";
                    echo "</tr>";
+
                 }
+
+                echo "<tr class='tab_bg_1'>";
+                echo "<td>".__('HostID', 'fusioninventory')."</td>";
+                echo "<td>";
+                echo $a_computerextend['hostid'];
+                echo "</td>";
+                echo "</tr>";
+
                 echo '</table>';
                 break;
              }
