@@ -1959,17 +1959,19 @@ function plugin_pre_item_update_fusioninventory($parm) {
  * @param object $parm
  * @return object
  */
-function plugin_pre_item_purge_fusioninventory($parm) {
+function plugin_pre_item_purge_fusioninventory(CommonDBTM $item) {
    global $DB;
 
-   $itemtype = get_class($parm);
+   $itemtype = $item->getType();
+   $items_id = $item->getID();
+
    switch ($itemtype) {
 
       case 'Computer':
          // Delete link between computer and agent fusion
          $query = "UPDATE `glpi_plugin_fusioninventory_agents`
                      SET `computers_id` = '0'
-                     WHERE `computers_id` = '".$parm->getField('id')."'";
+                     WHERE `computers_id` = '$items_id'";
          $DB->query($query);
 
          $clean = array('PluginFusioninventoryInventoryComputerComputer',
@@ -1978,21 +1980,21 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                         'PluginFusioninventoryCollect_Registry_Content',
                         'PluginFusioninventoryCollect_Wmi_Content');
          foreach ($clean as $obj) {
-            $obj::cleanComputer($parm->getID());
+            $obj::cleanComputer($items_id);
          }
          break;
 
       case 'NetworkPort_NetworkPort':
       $networkPort = new NetworkPort();
-      if ($networkPort->getFromDB($parm->fields['networkports_id_1'])) {
+      if ($networkPort->getFromDB($item->fields['networkports_id_1'])) {
          if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
             PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
-                                                                $parm->fields['networkports_id_1']);
+                                                                $item->fields['networkports_id_1']);
          } else {
-            $networkPort->getFromDB($parm->fields['networkports_id_2']);
+            $networkPort->getFromDB($item->fields['networkports_id_2']);
             if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
                PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
-                                                                $parm->fields['networkports_id_2']);
+                                                                $item->fields['networkports_id_2']);
             }
          }
       }
@@ -2001,10 +2003,10 @@ function plugin_pre_item_purge_fusioninventory($parm) {
    }
 
    $rule = new PluginFusioninventoryRulematchedlog();
-   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $parm->getID()));
+   $rule->deleteByCriteria(['itemtype' => $itemtype, 'items_id' => $items_id]);
 
-   PluginFusioninventoryLock::cleanForAsset($itemtype, $parm->getID());
-   return $parm;
+   PluginFusioninventoryLock::cleanForAsset($itemtype, $items_id);
+   return $item;
 }
 
 
@@ -2308,7 +2310,6 @@ function plugin_fusioninventory_getDatabaseRelations() {
    return array();
 }
 
-
 /**
  * post_show_tab hook
  *
@@ -2316,113 +2317,87 @@ function plugin_fusioninventory_getDatabaseRelations() {
  *
  * @return void
  */
-function postShowtab($params) {
-       switch($params['options']['itemtype']) {
-          case 'Computer':
-             if ($params['options']['tabnum'] == 1) {
-                $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-                $pfComputerOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
-                $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$params['item']->getID()."'",
-                                              "", 1));
-                if (empty($a_computerextend)) {
-                   return;
-                }
+function postItemForm($params) {
+   $tab = 0;
 
-                echo '<table class="tab_cadre_fixe tab_glpi" width="100%">';
+   if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
+      switch (get_class($params['item'])) {
+         default:
+            break;
+         case 'Computer':
+            $id = $params['item']->getID();
+            $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+            if (!empty($pfInventoryComputerComputer->hasAutomaticInventory($id))) {
+               return true;
+            } else {
+               $pfAgent = new PluginFusioninventoryAgent();
+               if ($pfAgent->getAgentWithComputerid($id)) {
+                  echo '<tr>';
+                  echo '<td colspan=\'4\'></td>';
+                  echo '</tr>';
 
-                if ($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id'] > 0) {
-                   $pfComputerOperatingSystem->getFromDB($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id']);
-                   echo '<tr>';
-                   echo '<th colspan="2">'.__('FusionInventory operating system', 'fusioninventory').'</th>';
-                   echo '</tr>';
+                  echo '<tr>';
+                  echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+                  echo '</tr>';
+                  $pfAgent->showInfoForComputer($id, 4);
+               }
+               break;
+            }
+      }
+   }
+}
 
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Architecture', 'fusioninventory')."</td>";
-                   echo "<td >";
+function plugin_fusioninventory_postitemform($params) {
+   if (isset($params['item']) && is_object($params['item'])) {
+      $item = $params['item'];
 
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemarchitectures',
-                      $pfComputerOperatingSystem->fields['operatingsystemarchitectures_id']
-                   );
+      if ($item->getType() == 'Computer')
+         switch (Session::getActiveTab('Computer')) {
+            case 'Computer$main':
+               PluginFusioninventoryInventoryComputerComputer::showComputerInfo($item);
+               break;
+            case 'Computer$1':
+               PluginFusioninventoryComputerOperatingSystem::showForComputer($item);
+               break;
+      }
+   }
+}
 
-                   echo "</td>";
-                   echo "</tr>";
+function plugin_fusioninventory_postshowtab($params) {
+   if (isset($params['item']) && is_object($params['item'])) {
+      $item = $params['item'];
 
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system')."</td>";
-                   echo "<td>";
+      switch ($item->getType()) {
+         case 'Computer':
+            switch (Session::getActiveTab('Computer')) {
+               case 'Computer_SoftwareVersion$1':
+                  $license = new PluginFusioninventoryComputerLicenseInfo();
+                  $license->showForm($item->getID());
+                  break;
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
 
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystems',
-                      $pfComputerOperatingSystem->fields['operatingsystems_id']
-                   );
+            break;
 
-                   echo "</td>";
-                   echo "</tr>";
+         case 'NetworkEquipment':
+            switch (Session::getActiveTab('NetworkEquipment')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+            break;
 
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>"._n('Version of the operating system', 'Versions of the operating systems', 1)."</td>";
-                   echo "<td>";
+         case 'Printer':
+            switch (Session::getActiveTab('Printer')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
 
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemversions',
-                      $pfComputerOperatingSystem->fields['operatingsystemversions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system kernel name', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroskernelnames',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroskernelnames_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system kernel version', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroskernelversions',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroskernelversions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>"._n('Service pack', 'Service packs', 1)."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemservicepacks',
-                      $pfComputerOperatingSystem->fields['operatingsystemservicepacks_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system edition', 'fusioninventory')."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroperatingsystemeditions',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroperatingsystemeditions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-                }
-                echo '</table>';
-                break;
-             }
+            break;
+      }
    }
 }
 ?>

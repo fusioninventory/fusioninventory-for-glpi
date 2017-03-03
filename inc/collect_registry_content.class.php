@@ -97,11 +97,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
                   return __('Windows registry content', 'fusioninventory');
                }
             }
-         } else if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_collects_registries_contents',
-                             "`computers_id`='".$item->getID()."'") > 0) {
-               return __('Windows registry content', 'fusioninventory');
-            }
          }
       }
       return '';

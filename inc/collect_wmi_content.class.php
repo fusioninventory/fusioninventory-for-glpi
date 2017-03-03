@@ -98,11 +98,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
                   return __('Windows WMI content', 'fusioninventory');
                }
             }
-         } else if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
-                             "`computers_id`='".$item->getID()."'") > 0) {
-               return __('Windows WMI content', 'fusioninventory');
-            }
          }
       }
       return '';
@@ -122,8 +117,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_Wmi->showForCollect($item->getID());
-      } else if (get_class($item) == 'Computer') {
-         $pfCollect_Wmi->showForComputer($item->getID());
       }
       return TRUE;
    }

@@ -70,50 +70,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb=0) {
-      return __('License');
+      return __('FusionInventory', 'fusioninventory').' - '._n('License', 'Licenses', $nb);
    }
-
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getID() > 0) {
-         if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos',
-                             "`computers_id`='".$item->getID()."'") > 0) {
-               return __('Software licenses', 'fusioninventory');
-            }
-         }
-      }
-      return '';
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
-      if (get_class($item) == 'Computer') {
-         $pfComputerLicenseInfo->showForm($item->getID());
-      }
-      return TRUE;
-   }
-
-
 
    /**
     * Display form
@@ -131,97 +89,96 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       if (count($a_licenseInfo)) {
 
          echo '<div align="center">';
-         echo '<table class="tab_cadre_fixe" style="margin: 5px 0 0;">';
+         echo "<form method='POST' action='"
+            .PluginFusioninventoryComputerLicenseInfo::getFormURL()."'>";
+
+         echo '<table class="tab_cadre_fixe">';
          echo '<tr>';
-         echo '<th colspan="4">'.__('License').'</th>';
+         echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory')
+            .' - '.__('License').'</th>';
          echo '</tr>';
 
          foreach ($a_licenseInfo as $licenseInfo) {
-            $licence_link = $licence_endlink = "";
-            if (!empty($licenseInfo['softwarelicenses_id'])) {
-               $licence_link = "<a href='".$CFG_GLPI['root_doc']."/front/softwarelicense.form.php?id=".
-                  $licenseInfo['softwarelicenses_id']."'>";
-               $licence_endlink = "</a>";
-               $licence_endlink .= "<form method='post' action='".$CFG_GLPI['root_doc'].
-                        "/plugins/fusioninventory/front/licenseinfo.form.php'>";
-
-               $licence_endlink .= "<input type='hidden' name='fusioninventory_licenseinfos_id' ".
-                                      "value='".$licenseInfo['id']."' />";
-               $licence_endlink .= "<input type='hidden' name='softwarelicenses_id' value='0' />";
-               $licence_endlink .= "<input type='submit' class='submit' name='associate' ".
-                                      "value='".__('Dissociate')."'>";
-               $licence_endlink .= Html::closeForm(FALSE);
-            }
+            $is_linked = (!empty($licenseInfo['softwarelicenses_id']));
 
             echo "<tr class='tab_bg_1'>";
-            echo "<td>".__('Name')."&nbsp;:</td>";
-            echo "<td>$licence_link".$licenseInfo['name']."$licence_endlink</td>";
-            echo "<td>".__('Serial number', 'fusioninventory')."&nbsp;:</td>";
+            echo "<td>".__('Name')."</td>";
+            $license_options = '';
+            if ($licenseInfo['is_update']
+               || $licenseInfo['is_trial']
+                  || $licenseInfo['is_oem']) {
+               $options = array();
+               $fields = ['is_update' => _sx('name', 'Update'),
+                          'is_trial'  => __('Trial', 'fusioninventory'),
+                          'is_oem'    => __('OEM', 'fusioninventory')];
+               foreach ($fields as $field => $label) {
+                  if ($licenseInfo[$field]) {
+                     array_push($options, $label);
+                  }
+               }
+               $license_options = __('Option', 'fusioninventory')
+                  ."&nbsp;(".implode(', ', $options).")";
+            }
+
+            echo "<td>".$licenseInfo['fullname'].$license_options."</td>";
+
+            echo "<td>".__('Serial number', 'fusioninventory')."</td>";
             echo "<td>".$licenseInfo['serial']."</td>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
-            echo "<td>".__('Full name', 'fusioninventory')."&nbsp;:</td>";
-            echo "<td>$licence_link".$licenseInfo['fullname']."$licence_endlink</td>";
-            echo '<td>'.__('Option', 'fusioninventory').'&nbsp;:</td>';
-            echo "<td>";
-            if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
-                $options = array();
+            echo "<td>".__('Linked to')."</td>";
+            echo "<td colspan='3'>";
 
-                if ($licenseInfo['is_update']) {
-                   array_push($options, 'update');
-                }
+            if ($is_linked) {
+               $license = new SoftwareLicense();
+               $license->getFromDB($licenseInfo['softwarelicenses_id']);
 
-                if ($licenseInfo['is_trial']) {
-                   array_push($options, 'trial');
-                }
+               echo Html::hidden('id', ['value' => $licenseInfo['id']]);
+               echo Html::hidden('computers_id',
+                                 ['value' => $licenseInfo['computers_id']]);
+               echo Html::hidden('softwarelicenses_id',
+                                 ['value' => $licenseInfo['softwarelicenses_id']]);
+               echo Html::hidden('dissociate', ['value' => 'dissociate']);
+               echo $license->getLink(['comments'     => true,
+                                       'completename' => true]);
+               echo "&nbsp;";
+               echo Html::submit(_sx('button', 'Dissociate'),
+                                 ['value' => 'dissociate',
+                                  'image' => $CFG_GLPI['root_doc'].'/pics/delete.png',
+                                  'class' => ''
+                                 ]);
+            } else {
+               echo Html::hidden('computers_id',
+                                 ['value' => $licenseInfo['computers_id']]);
+               echo Html::hidden('fusioninventory_licenseinfos_id',
+                                 ['value' => $licenseInfo['id']]);
+               echo Html::hidden('key',
+                                 ['value' => $licenseInfo['serial']]);
+               echo Html::hidden('associate', ['value' => 'associate']);
 
-                if ($licenseInfo['is_oem']) {
-                   array_push($options, 'OEM');
-                }
-
-                echo implode(', ', $options);
+               $rand   = mt_rand();
+               $params = ['softwarelicenses_id' => $licenseInfo['softwarelicenses_id'],
+                          'name'                => $licenseInfo['name'],
+                          'fullname'            => $licenseInfo['fullname'],
+                          'serial'              => $licenseInfo['serial']
+                         ];
+                Ajax::updateItem("softwarelicenses_id_$rand",
+                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/".
+                                    "dropdownsoftwarelicenses.php",
+                                 $params, FALSE);
+               echo "<span id='softwarelicenses_id_$rand'></span>";
             }
             echo "</td>";
             echo "</tr>";
-
-            if (empty($licenseInfo['softwarelicenses_id'])) {
-               echo '<tr class="tab_bg_1">';
-               echo "<td>".__('Union between computer and license', 'fusioninventory').
-                        "&nbsp;:</td>";
-               echo "<td colspan='3'>";
-               echo "<form method='post' action='".$CFG_GLPI['root_doc'].
-                        "/plugins/fusioninventory/front/licenseinfo.form.php'>";
-               echo "<input type='hidden' name='computers_id' value='$computers_id'>";
-               echo "<input type='hidden' name='fusioninventory_licenseinfos_id' value='".
-                  $licenseInfo['id']."'>";
-               echo "<input type='hidden' name='key' value='".$licenseInfo['serial']."'>";
-               $rand = mt_rand();
-               $params = array(
-                     'softwarelicenses_id' => $licenseInfo['softwarelicenses_id'],
-                     'name' => $licenseInfo['name'],
-                     'fullname' => $licenseInfo['fullname'],
-                     'serial' => $licenseInfo['serial']
-                  );
-                Ajax::updateItem(
-                        "softwarelicenses_id_$rand",
-                        $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/".
-                           "dropdownsoftwarelicenses.php",
-                        $params,
-                        FALSE);
-               echo "<span id='softwarelicenses_id_$rand'></span>";
-               Html::closeForm();
-               echo "</td>";
-               echo "</tr>";
-            }
-            echo "<tr class='tab_bg_3'>";
-            echo "<td colspan='4'></td>";
-            echo "</tr>";
          }
+
+         echo '<tr><th colspan="4"></th></tr>';
          echo '</table>';
+         Html::closeForm();
          echo '</div>';
       }
-      return TRUE;
+      return true;
    }
 
 
@@ -233,7 +190,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param array $params
     */
    function dropdownSoftwareLicenses($params) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $query = "SELECT `glpi_softwares`.`name` as sname,
                        `glpi_softwarelicenses`.`name` as lname,
@@ -247,7 +204,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   OR `glpi_softwares`.`name` LIKE '%".$params['fullname']."%')
                AND `serial` = '".$params['serial']."')
          OR (`glpi_softwarelicenses`.`name` = '".$params['serial']."'
-               AND `serial` = '".$params['serial']."')";
+               OR `serial` = '".$params['serial']."')";
 
       $licenses = array();
       $result=$DB->query($query);
@@ -255,12 +212,19 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          $licenses[$data['lid']] = $data['sname']." (".$data['serial'].")";
       }
 
-      Dropdown::showFromArray('softwarelicenses_id',
-                              $licenses,
-                              array('value' => $params['softwarelicenses_id']));
+      if (!empty($licenses)) {
+         Dropdown::showFromArray('softwarelicenses_id', $licenses,
+                                 ['value' => $params['softwarelicenses_id']]);
+         echo "&nbsp;";
+         echo Html::submit(_sx('button', 'Associate'),
+                           ['value' => 'associate',
+                            'image' => $CFG_GLPI['root_doc'].'/pics/export.png',
+                            'class' => ''
+                           ]);
+      } else {
+         echo __("No item found");
+      }
 
-      echo "&nbsp;<input type='submit' class='submit' name='associate' ".
-              "value='".__('Associate')."'>";
    }
 
 
@@ -276,7 +240,9 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          $computer_slicense = new Computer_SoftwareLicense;
          $computer_slicense->add(array(
             'computers_id'        => $params['computers_id'],
-            'softwarelicenses_id' => $params['softwarelicenses_id']
+            'softwarelicenses_id' => $params['softwarelicenses_id'],
+            'is_deleted'          => 0,
+            'is_dynamic'          => 1
          ));
       }
 
@@ -287,7 +253,24 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       ));
    }
 
+   /**
+    * Dissociate a license found on computer and a license managed in GLPI
+    *
+    * @param array $params
+    */
+   function dissociate($params) {
 
+      if (isset($params['computers_id'])) {
+         $computer_slicense = new Computer_SoftwareLicense();
+         $computer_slicense->deleteByCriteria([
+            'computers_id'        => $params['computers_id'],
+            'softwarelicenses_id' => $params['softwarelicenses_id']]);
+
+         $pfLicenseInfo = new self();
+         $pfLicenseInfo->update(['id'                  => $params['id'],
+                                 'softwarelicenses_id' => 0]);
+      }
+   }
 
    /**
     * Delete all licenses linked to the computer (most cases when delete a
@@ -297,7 +280,24 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     */
    static function cleanComputer($computers_id) {
       $license = new self();
-      $license->deleteByCriteria(array('computers_id' => $computers_id));
+      $license->deleteByCriteria(['computers_id' => $computers_id]);
+   }
+
+   /**
+    * Delete all licenses linked to the computer (most cases when delete a
+    * computer)
+    *
+    * @param integer $computers_id
+    */
+   static function cleanLicense(Computer_SoftwareLicense $license) {
+      $sql = "`softwarelicenses_id`='".$license->fields['softwarelicenses_id']."'";
+      $sql.= " AND `computers_id`='".$license->fields['computers_id']."'";
+      $licenses = getAllDatasFromTable('glpi_plugin_fusioninventory_computerlicenseinfos', $sql);
+      if (!empty($licenses)) {
+         $lic = current($licenses);
+         $pfLicenseInfo = new self();
+         $pfLicenseInfo->update(['id' => $lic['id'], 'softwarelicenses_id' => 0]);
+      }
    }
 }
 

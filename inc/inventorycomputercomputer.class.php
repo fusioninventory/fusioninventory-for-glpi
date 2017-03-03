@@ -73,33 +73,11 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
 
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return '';
+   static function isAFusionInventoryDevice($item) {
+      return $item->fields['is_dynamic'] == 1
+         && countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                 "`computers_id`='".$item->getID()."'");
    }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      return FALSE;
-   }
-
-
 
    /**
     * Display information about computer (bios, last contact...)
@@ -108,11 +86,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     * @param object $item
     * @return true
     */
-   static function showComputerInfo($item) {
+   static function showAgentInfo($item) {
       global $CFG_GLPI;
-
-      // Manage locks pictures
-      PluginFusioninventoryLock::showLockIcon('Computer');
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
@@ -123,26 +98,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
 
       echo '<table class="tab_glpi" width="100%">';
-
-      echo '<tr>';
-      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
-      echo '</tr>';
-
-      echo '<tr class="tab_bg_1">';
-      echo '<td>';
-      echo __('Last inventory', 'fusioninventory');
-      echo '</td>';
-      echo '<td>';
-      echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
-      echo '</td>';
-      echo '</tr>';
-
-      if ($a_computerextend['remote_addr'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
-         echo '<td>'.$a_computerextend['remote_addr'].'</td>';
-         echo '</tr>';
-      }
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->showInfoForComputer($item->getID());
@@ -168,13 +123,102 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
          echo '</tr>';
       }
+      return TRUE;
+   }
 
-      if ($a_computerextend['oscomment'] != '') {
+   /**
+   * Get automatic inventory info for a computer
+   * @since 9.1+1.2
+   * @param computers_id the computer ID to look for
+   * @return inventory computer infos or an empty array
+   */
+   function hasAutomaticInventory($computers_id) {
+      $a_computerextend = current($this->find("`computers_id`='$computers_id'",
+                                              "", 1));
+      if (empty($a_computerextend)) {
+         return [];
+      } else {
+         return $a_computerextend;
+      }
+   }
+
+   /**
+    * Display information about computer (bios, last contact...)
+    *
+    * @global array $CFG_GLPI
+    * @param object $item
+    * @return true
+    */
+   static function showComputerInfo($item) {
+      global $CFG_GLPI;
+
+      if ($item->isNewID($item->getID())) {
+         return true;
+      }
+      // Manage locks pictures
+      PluginFusioninventoryLock::showLockIcon('Computer');
+
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+
+      if (!countElementsInTable('glpi_plugin_fusioninventory_agents',
+                                "`computers_id`=".$item->getID())) {
+         return true;
+      }
+
+      echo '<tr>';
+      echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '</tr>';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->showInfoForComputer($item->getID());
+
+      //Check if an inventory has already been sent
+      $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($item->getID());
+      if (empty($a_computerextend)) {
+         return true;
+      }
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>';
+      echo __('Last inventory', 'fusioninventory');
+      echo '</td>';
+      echo '<td>';
+      echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
+      echo '</td>';
+      echo '</tr>';
+
+      if ($a_computerextend['remote_addr'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo "<td>".__('Comments')."</td>";
-         echo '<td>'.$a_computerextend['oscomment'].'</td>';
+         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['remote_addr'].'</td>';
          echo '</tr>';
       }
+
+      //TODO : to delete in 9.2
+      if ($a_computerextend['bios_date'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
+         echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_version'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['bios_version'].'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_manufacturers_id'] > 0) {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
+         echo '<td>';
+         echo Dropdown::getDropdownName("glpi_manufacturers",
+                                        $a_computerextend['bios_manufacturers_id']);
+         echo '</td>';
+         echo '</tr>';
+      }
+      //END TODO : to delete in 9.2
 
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {
@@ -198,7 +242,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</td>';
          echo '</tr>';
       }
-      echo '</table>';
+
+      $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
+      $pfRemoteManagement->showInformation($item->getID());
+      //echo '</table>';
       return TRUE;
    }
 
@@ -247,7 +294,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo "<th>";
       echo __('Download', 'fusioninventory');
       echo "</th>";
-      echo "<td>";
+      echo "<th>";
       if (!empty($this->fields['serialized_inventory'])) {
          echo "<a href='".$CFG_GLPI['root_doc'].
               "/plugins/fusioninventory/front/send_inventory.php".
@@ -268,10 +315,12 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
         "target='_blank'>XML</a>";
       }
 
-      echo "</td>";
+      echo "</th>";
       echo "</tr>";
 
-      PluginFusioninventoryToolbox::displaySerializedValues($data);
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         PluginFusioninventoryToolbox::displaySerializedValues($data);
+      }
 
       echo "</table>";
    }

@@ -45,23 +45,30 @@
  */
 
 include ("../../../inc/includes.php");
-
 $agent = new PluginFusioninventoryAgent();
 
 Session::checkRight('plugin_fusioninventory_agent', READ);
 
-if (isset($_POST['startagent'])) {
-   $agent = new PluginFusioninventoryAgent();
-   $agent->getFromDB($_POST['agent_id']);
-   if ($agent->wakeUp()) {
-       Session::addMessageAfterRedirect(__('The agent is running', 'fusioninventory'));
+if (isset($_REQUEST['_in_modal']) && $_REQUEST['_in_modal'] == 1) {
 
-   } else {
-       Session::addMessageAfterRedirect(__('Impossible to communicate with agent!', 'fusioninventory'));
-
+   if (isset($_POST['startagent'])) {
+      if ($agent->getFromDB($_POST['agent_id'])) {
+         $agent->wakeUp();
+      }
    }
-   Html::back();
-} else if (isset ($_POST["update"])) {
+
+   Html::nullHeader(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"]);
+   if ($agent->getAgentWithComputerid($_REQUEST['computers_id'])) {
+      $computer = new Computer();
+      if ($computer->getFromDB($_REQUEST['computers_id'])) {
+         $agent->showRemoteStatus($computer);
+      }
+   }
+   Html::nullFooter();
+   return true;
+}
+
+if (isset ($_POST["update"])) {
    Session::checkRight('plugin_fusioninventory_agent', UPDATE);
    if (isset($_POST['items_id'])) {
       if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {

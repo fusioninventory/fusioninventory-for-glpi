@@ -73,49 +73,6 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       return __('Remote management', 'fusioninventory');
    }
 
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getID() > 0) {
-         if (get_class($item) == 'Computer') {
-            $nb = countElementsInTable('glpi_plugin_fusioninventory_computerremotemanagements',
-                             "`computers_id`='".$item->getID()."'");
-            if ($nb > 0) {
-               return self::createTabEntry(__('Remote management', 'fusioninventory'), $nb);
-            }
-         }
-      }
-      return '';
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $pfComputerRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
-      if (get_class($item) == 'Computer') {
-         $pfComputerRemoteManagement->showInformation($item->getID());
-      }
-      return TRUE;
-   }
-
-
-
    /**
     * Display remote management information
     *
@@ -129,22 +86,16 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
 
       if (count($a_remotemanagement)) {
 
-         echo '<div align="center">';
-         echo '<table class="tab_cadre_fixe" style="margin: 5px 0 0;">';
          echo '<tr>';
-         echo '<th colspan="4">'.__('Remote management', 'fusioninventory').'</th>';
+         echo '<th colspan="2">'.__('Remote management', 'fusioninventory').'</th>';
          echo '</tr>';
 
          foreach ($a_remotemanagement as $remotemanagement) {
             echo "<tr class='tab_bg_1'>";
-            echo "<td>".__('Type')."&nbsp;:</td>";
             echo "<td>".$remotemanagement['type']."</td>";
-            echo "<td>".__('ID', 'fusioninventory')."&nbsp;:</td>";
             echo "<td>".$remotemanagement['number']."</td>";
             echo "</tr>";
          }
-         echo '</table>';
-         echo '</div>';
       }
       return TRUE;
    }

@@ -689,7 +689,7 @@ class PluginFusioninventoryDeployCheck {
       );
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
+      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['params_id']), TRUE);
 
       //unset index
       unset($datas['jobs']['checks'][$params['index']]);
@@ -699,7 +699,7 @@ class PluginFusioninventoryDeployCheck {
       array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['params_id'], $datas);
    }
 
 

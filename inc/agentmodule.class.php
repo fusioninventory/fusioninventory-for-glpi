@@ -68,10 +68,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getType()=='PluginFusioninventoryConfig') {
-         return __('Agents modules', 'fusioninventory');
-      } else if ($item->getType()=='PluginFusioninventoryAgent') {
+      if (in_array($item->getType(), ['PluginFusioninventoryConfig',
+                                      'PluginFusioninventoryAgent'])) {
          return __('Agents modules', 'fusioninventory');
       }
       return '';

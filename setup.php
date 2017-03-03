@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.1+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.1+1.1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -55,7 +55,7 @@ $PF_ESXINVENTORY = FALSE;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.1 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
@@ -107,22 +107,13 @@ function plugin_init_fusioninventory() {
 
       // Register classes into GLPI plugin factory
 
-      $Plugin->registerClass('PluginFusioninventoryAgent',
-         array(
-            'addtabon' => array(
-               'Computer',
-               'Printer',
-               'NetworkEquipment',
-               'PluginFusioninventoryCredentialIp'
-            )
-         )
-      );
+      $Plugin->registerClass('PluginFusioninventoryAgent');
       $Plugin->registerClass('PluginFusioninventoryAgentmodule');
       $Plugin->registerClass('PluginFusioninventoryConfig');
       $Plugin->registerClass('PluginFusioninventoryTask',
          array(
             'addtabon' => array(
-               'Computer',
+               //'Computer',
                'Printer',
                'NetworkEquipment',
                'PluginFusioninventoryCredentialIp',
@@ -132,10 +123,6 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryTaskjob',
          array(
             'addtabon' => array(
-               //'Computer',
-               //'Printer',
-               //'NetworkEquipment',
-               //'PluginFusioninventoryUnmanaged',
                'PluginFusioninventoryTask',
             )
          )
@@ -161,14 +148,11 @@ function plugin_init_fusioninventory() {
               array('addtabon' => 'PluginFusioninventoryIPRange'));
       $Plugin->registerClass('PluginFusioninventoryCredential');
       $Plugin->registerClass('PluginFusioninventoryTimeslot');
-      $Plugin->registerClass('PluginFusioninventoryLock',
-              array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
+      $Plugin->registerClass('PluginFusioninventoryLock');
 
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
-      $Plugin->registerClass('PluginFusioninventoryInventoryComputerStorage',
-              array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryCollect');
       $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
               array('addtabon' => array('PluginFusioninventoryCollect')));
@@ -185,10 +169,8 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryCollect_File_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
-      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
-              array('addtabon' => array('Computer')));
-      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement',
-              array('addtabon' => array('Computer')));
+      $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo');
+      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement');
 
          //Classes for rulesengine
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocation');
@@ -323,14 +305,15 @@ function plugin_init_fusioninventory() {
       }
 
       $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array(
-            'Computer' =>  array('PluginFusioninventoryInventoryComputerComputer',
-                                 'showComputerInfo'),
             'NetworkEquipment' => array('PluginFusioninventoryNetworkEquipment',
                                         'showInfo'),
             'Printer' => array('PluginFusioninventoryPrinter',
                                         'showInfo'));
 
-      $PLUGIN_HOOKS['post_show_tab']['fusioninventory'] = 'postShowTab';
+      $PLUGIN_HOOKS['post_item_form']['fusioninventory']
+               = 'plugin_fusioninventory_postitemform';
+      $PLUGIN_HOOKS['post_show_tab']['fusioninventory']
+               = 'plugin_fusioninventory_postshowtab';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
@@ -357,7 +340,8 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array(
             'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
             'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
-            'PluginFusioninventoryLock'=> array('PluginFusioninventoryLock', 'deleteLock')
+            'PluginFusioninventoryLock'=> array('PluginFusioninventoryLock', 'deleteLock'),
+            'Computer_SoftwareLicense' => array('PluginFusioninventoryComputerLicenseInfo', 'cleanLicense')
           );
       $p = array('NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
                  'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',
@@ -369,7 +353,6 @@ function plugin_init_fusioninventory() {
                  'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
                  'Printer'                            => 'plugin_item_purge_fusinvsnmp');
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
-
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 

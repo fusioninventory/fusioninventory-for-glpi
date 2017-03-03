@@ -399,48 +399,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstats` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstorages`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `totalsize` int(11) NOT NULL DEFAULT '0',
-  `freesize` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_inventorycomputerstoragetypes_id` int(11) NOT NULL DEFAULT '0',
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `uuid` (`uuid`),
-  KEY `computers_id` (`computers_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstoragetypes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `level` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `level` (`level`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstorages_storages`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_inventorycomputerstorages_id_1` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_inventorycomputerstorages_id_2` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_inventorycomputerstorages_id_1` (`plugin_fusioninventory_inventorycomputerstorages_id_1`),
-  KEY `plugin_fusioninventory_inventorycomputerstorages_id_2` (`plugin_fusioninventory_inventorycomputerstorages_id_2`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configlogfields`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
