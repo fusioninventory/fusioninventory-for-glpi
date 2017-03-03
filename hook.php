@@ -245,7 +245,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                                                                                  'joinparams' => array('jointype' => 'child')))));
 
          $sopt[5178]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5178]['field']     = 'oscomment';
+         $sopt[5178]['field']     = 'hostid';
          $sopt[5178]['name']      = __('HostID', 'fusioninventory');
          $sopt[5178]['joinparams']  = array('jointype' => 'child');
          $sopt[5178]['massiveaction'] = FALSE;
