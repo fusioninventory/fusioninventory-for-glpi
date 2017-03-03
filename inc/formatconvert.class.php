@@ -500,6 +500,11 @@ class PluginFusioninventoryFormatconvert {
                     'ARCH'           => 'operatingsystemarchitectures_id',
                     'KERNEL_NAME'    => 'plugin_fusioninventory_computeroskernelnames_id',
                     'KERNEL_VERSION' => 'plugin_fusioninventory_computeroskernelversions_id'));
+
+         if (isset($array['OPERATINGSYSTEM']['HOSTID'])) {
+            $a_inventory['fusioninventorycomputer']['hostid'] = $array['OPERATINGSYSTEM']['HOSTID'];
+         }
+
          $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = '';
          if (isset($array['OPERATINGSYSTEM']['FULL_NAME']) && $pfConfig->getValue('manage_osname') == 1) {
             $matches = array();
