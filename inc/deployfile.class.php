@@ -872,8 +872,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'mime_type'     => $mime_type,
             'filesize'      => $filesize,
             'filename'      => $filename,
-            'p2p'           => isset($params['p2p']) ? 1 : 0,
-            'uncompress'    => isset($params['uncompress']) ? 1 : 0,
+            'p2p'           => isset($params['p2p']) ? $params['p2p'] : 0,
+            'uncompress'    => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
                is_numeric($params['p2p-retention-duration'])
                ? $params['p2p-retention-duration']
