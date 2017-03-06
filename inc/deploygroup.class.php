@@ -87,7 +87,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
 
 
@@ -160,7 +160,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             Dropdown::show('PluginFusioninventoryDeployGroup',
                             array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-            return TRUE;
+            return true;
          case 'duplicate':
             echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
             return true;
@@ -298,7 +298,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      return TRUE;
+      return true;
    }
 
 

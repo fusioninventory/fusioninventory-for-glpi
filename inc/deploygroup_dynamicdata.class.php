@@ -230,7 +230,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          $group['plugin_fusioninventory_deploygroups_id']
             = $target_deploygroups_id;
          if (!$pfDynamicGroup->add($group)) {
-            $result |= false;
+            $result = false;
          }
       }
       return $result;
