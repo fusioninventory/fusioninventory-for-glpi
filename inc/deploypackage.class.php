@@ -121,11 +121,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $actions = array();
       if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
-         $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'import'] = __('Import', 'fusioninventory');
+         $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'import'] = __('Import', 'fusioninventory');
          return $actions;
       }
-      $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
-      $actions['PluginFusioninventoryDeployPackage'.MassiveAction::CLASS_ACTION_SEPARATOR.'export'] = __('Export', 'fusioninventory');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'export'] = __('Export', 'fusioninventory');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate'] = _sx('button', 'Duplicate');
 
       return $actions;
    }
@@ -157,12 +158,16 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return boolean
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
+      switch ($ma->getAction()) {
+         case 'transfert':
+            Dropdown::show('Entity');
+            echo "<br><br>".Html::submit(__('Post'),
+                                         array('name' => 'massiveaction'));
+            return true;
 
-      if ($ma->getAction() == 'transfert') {
-         Dropdown::show('Entity');
-         echo "<br><br>".Html::submit(__('Post'),
-                                      array('name' => 'massiveaction'));
-         return TRUE;
+         case 'duplicate':
+            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            return true;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
@@ -208,6 +213,20 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             }
             break;
 
+         case 'duplicate':
+            $pfPackage = new self();
+            foreach ($ids as $key) {
+               if ($pfPackage->getFromDB($key)) {
+                  if ($pfPackage->duplicate($pfPackage->getID())) {
+                     //set action massive ok for this item
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     // KO
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
+               }
+            }
+            break;
       }
    }
 
@@ -1633,6 +1652,28 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          return $a_packages;
       }
       return False;
+   }
+
+   /**
+   * Duplicate a deploy package
+   * @param $deploypackages_id the ID of the package to duplicate
+   * @return duplication process status
+   */
+   public function duplicate($deploypackages_id) {
+      if (!$this->getFromDB($deploypackages_id)) {
+         return false;
+      }
+      $result = true;
+      $input  = $this->fields;
+      $input['name'] = sprintf(__('Copy of %s'),
+                               $this->fields['name']);
+      unset($input['id']);
+
+      $input = Toolbox::addslashes_deep($input);
+      if (!$this->add($input)) {
+         $result = false;
+      }
+      return $result;
    }
 }
 
