@@ -61,7 +61,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_collect';
 
-
    /**
     * Get name of this type by language of the user connected
     *
