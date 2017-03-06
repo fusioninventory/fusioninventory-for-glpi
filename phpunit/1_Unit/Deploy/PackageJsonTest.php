@@ -64,7 +64,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
    public function AddItem() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $input = array(
-          'name'        => 'test1',
+          'name'        => 'test2',
           'entities_id' => 0);
       $packages_id = $pfDeployPackage->add($input);
 
@@ -86,7 +86,26 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
 
    }
 
+   /**
+    * @test
+    * @depends AddItem
+    */
+   public function duplicate() {
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $packages = $pfDeployPackage->find("`name`='test2'");
+      $this->assertEquals(1, count($packages));
+      $package = current($packages);
 
+      $this->assertTrue($pfDeployPackage->duplicate($package['id']));
+
+      $packages = $pfDeployPackage->find("`name`='Copy of test2'");
+      $this->assertEquals(1, count($packages));
+      $package = current($packages);
+
+      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $this->assertEquals($json_structure, $package['json']);
+      $this->assertEquals(0, $package['entities_id']);
+   }
 
    /**
     * @test
