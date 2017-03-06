@@ -721,39 +721,39 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $content = $pfCollect_File_Content->find();
       $reference = array(
           1 => array(
-              'id' => 1,
-              'computers_id' => $computers_id,
-              'plugin_fusioninventory_collects_files_id' => $registry_desktop,
+              'id' => '1',
+              'computers_id' => "$computers_id",
+              'plugin_fusioninventory_collects_files_id' => "$registry_desktop",
               'pathfile'     => 'C:/Users/toto/Desktop/06_import_tickets.php',
-              'size'         => 5053
+              'size'         => '5053'
           ),
           2 => array(
-              'id' => 2,
-              'computers_id' => $computers_id,
-              'plugin_fusioninventory_collects_files_id' => $registry_desktop,
+              'id' => '2',
+              'computers_id' => "$computers_id",
+              'plugin_fusioninventory_collects_files_id' => "$registry_desktop",
               'pathfile'     => 'C:/Users/toto/Desktop/fusioninventory.txt',
-              'size'         => 28
+              'size'         => '28'
           ),
           3 => array(
-              'id' => 3,
-              'computers_id' => $computers_id,
-              'plugin_fusioninventory_collects_files_id' => $registry_desktop,
+              'id' => '3',
+              'computers_id' => "$computers_id",
+              'plugin_fusioninventory_collects_files_id' => "$registry_desktop",
               'pathfile'     => 'C:/Users/toto/Desktop/desktop.ini',
-              'size'         => 282
+              'size'         => '282'
           ),
           4 => array(
-              'id' => 4,
-              'computers_id' => $computers_id,
-              'plugin_fusioninventory_collects_files_id' => $registry_down,
+              'id' => '4',
+              'computers_id' => "$computers_id",
+              'plugin_fusioninventory_collects_files_id' => "$registry_down",
               'pathfile'     => 'C:/Users/toto/Downloads/jxpiinstall.exe',
-              'size'         => 738368
+              'size'         => '738368'
           ),
           5 => array(
-              'id' => 5,
-              'computers_id' => $computers_id,
-              'plugin_fusioninventory_collects_files_id' => $registry_down,
+              'id' => '5',
+              'computers_id' => "$computers_id",
+              'plugin_fusioninventory_collects_files_id' => "$registry_down",
               'pathfile'     => 'C:/Users/toto/Downloads/npp.6.9.2.Installer.exe',
-              'size'         => 4211112
+              'size'         => '4211112'
           )
       );
       $this->assertEquals($reference, $content);

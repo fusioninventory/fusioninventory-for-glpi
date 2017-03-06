@@ -152,10 +152,10 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
       $db_registries = array();
       $query = "SELECT `id`, `key`, `value`
-            FROM `glpi_plugin_fusioninventory_collects_registries_contents`
-         WHERE `computers_id` = '".$computers_id."'
-              AND `plugin_fusioninventory_collects_registries_id`=
-               '".$collects_registries_id."'";
+                FROM `glpi_plugin_fusioninventory_collects_registries_contents`
+                WHERE `computers_id` = '".$computers_id."'
+                  AND `plugin_fusioninventory_collects_registries_id` =
+                  '".$collects_registries_id."'";
       $result = $DB->query($query);
       while ($data = $DB->fetch_assoc($result)) {
          $idtmp = $data['id'];
@@ -164,16 +164,13 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
          $db_registries[$idtmp] = $data1;
       }
 
-      unset($registry_data['_cpt']);
       unset($registry_data['_sid']);
-
       foreach ($registry_data as $key => $value) {
          foreach ($db_registries as $keydb => $arraydb) {
             if ($arraydb['key'] == $key) {
-               $input = array();
-               $input['key'] = $arraydb['key'];
-               $input['id'] = $keydb;
-               $input['value'] = $value;
+               $input = array('key'   => $arraydb['key'],
+                              'id'    => $keydb,
+                              'value' => $value);
                $this->update($input);
                unset($registry_data[$key]);
                unset($db_registries[$keydb]);
@@ -182,26 +179,21 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
          }
       }
 
-      if (count($registry_data) == 0
-         AND count($db_registries) == 0) {
-         // Nothing to do
-      } else {
-         if (count($db_registries) != 0) {
-            foreach ($db_registries as $idtmp => $data) {
-               $this->delete(array('id'=>$idtmp), 1);
-            }
+
+      foreach ($db_registries as $id => $data) {
+         $this->delete(array('id' => $id), true);
+      }
+      foreach($registry_data as $key => $value) {
+         if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
+            $value = hexdec($value);
          }
-         if (count($registry_data) != 0) {
-            foreach ($registry_data as $key=>$value) {
-               $input = array(
-                   'computers_id' => $computers_id,
-                   'plugin_fusioninventory_collects_registries_id' => $collects_registries_id,
-                   'key'          => $key,
-                   'value'        => $value
-               );
-               $this->add($input);
-            }
-         }
+         $input = array(
+            'computers_id' => $computers_id,
+            'plugin_fusioninventory_collects_registries_id' => $collects_registries_id,
+            'key'          => $key,
+            'value'        => $value
+         );
+         $this->add($input);
       }
    }
 
