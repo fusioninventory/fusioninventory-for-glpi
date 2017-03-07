@@ -138,14 +138,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       //Get all mirrors for the agent's entity, or for entities above
       $table     = 'glpi_plugin_fusioninventory_deploymirrors';
       $restrict  = "`is_active`=1";
-      $restrict  = getEntitiesRestrictRequest(' AND ',
+      $restrict .= getEntitiesRestrictRequest(' AND ',
                                               $table,
                                               'entities_id',
                                               $agent['entities_id'],
                                               true);
       $results   = getAllDatasFromTable($table, $restrict, false);
-
-      $mirrors = [];
+      $mirrors   = [];
       foreach ($results as $result) {
 
          //First, check mirror by location
@@ -188,7 +187,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
-
       return $mirrors;
    }
 
