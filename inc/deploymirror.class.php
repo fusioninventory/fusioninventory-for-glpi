@@ -136,26 +136,39 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       }
 
       //Get all mirrors for the agent's entity, or for entities above
-      $table     = 'glpi_plugin_fusioninventory_deploymirrors';
-      $restrict  = "`is_active`=1";
-      $restrict .= getEntitiesRestrictRequest(' AND ',
-                                              $table,
+      $query     = "SELECT `mirror`.*, `glpi_entities`.`level`
+                    FROM `glpi_plugin_fusioninventory_deploymirrors` AS mirror
+                    LEFT JOIN `glpi_entities`
+                     ON (`mirror`.`entities_id`=`glpi_entities`.`id`)
+                    WHERE `mirror`.`is_active`='1'";
+      $query    .= getEntitiesRestrictRequest(' AND ',
+                                              'mirror',
                                               'entities_id',
                                               $agent['entities_id'],
                                               true);
-      $results   = getAllDatasFromTable($table, $restrict, false);
-      $mirrors   = [];
-      foreach ($results as $result) {
+      $query   .= " ORDER BY `glpi_entities`.`level` DESC";
+      $mirrors  = [];
+
+      foreach ($DB->request($query) as $result) {
 
          //First, check mirror by location
          if (in_array($mirror_match, [self::MATCH_LOCATION, self::MATCH_BOTH])
-             && $computer->fields['locations_id'] == $result['locations_id']) {
+             && $computer->fields['locations_id'] > 0
+               && $computer->fields['locations_id'] == $result['locations_id']) {
             $mirrors[] = $result['url'];
          }
 
          //Second, check by entity
          if (in_array($mirror_match, [self::MATCH_ENTITY, self::MATCH_BOTH])) {
+
+            //Only process a mirror with a location is matching is BOTH
+            if ($result['locations_id'] && $mirror_match == self::MATCH_ENTITY) {
+               continue;
+            }
             $entities = $result['entities_id'];
+
+            //If the mirror is visible in child entities then get all child entities
+            //and check it the agent's entity is one of it
             if ($result['is_recursive']) {
                $entities = getSonsOf('glpi_entities', $result['entities_id']);
             }
@@ -182,11 +195,10 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       if (isset($agent['entities_id'])) {
          $entities_id = $agent['entities_id'];
       }
-      if (isset($PF_CONFIG['server_as_mirror'])
-              && (bool)$PF_CONFIG['server_as_mirror'] == true) {
-         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
-            ."?action=getFilePart&file=";
-      }
+
+      //In all cases add the default server download URL
+      $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
+         ."?action=getFilePart&file=";
       return $mirrors;
    }
 
@@ -204,14 +216,17 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       global $CFG_GLPI;
 
       $this->initForm($id, $options);
-
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Name')."&nbsp;:</td>";
+      echo "<td>".__('Name')."</td>";
       echo "<td align='center'>";
       Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
+
+      echo "<tr class='tab_bg_1'><td>".__('Active')."</td><td>";
+      Dropdown::showYesNo("is_active", $this->fields["is_active"]);
+      echo "</td></tr>";
 
       echo "<td rowspan='2' class='middle right'>".__('Comments')."&nbsp;: </td>";
       echo "<td class='center middle' rowspan='2'><textarea cols='45'
