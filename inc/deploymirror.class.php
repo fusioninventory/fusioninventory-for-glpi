@@ -224,13 +224,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
 
-      echo "<tr class='tab_bg_1'><td>".__('Active')."</td><td>";
-      Dropdown::showYesNo("is_active", $this->fields["is_active"]);
-      echo "</td></tr>";
-
-      echo "<td rowspan='2' class='middle right'>".__('Comments')."&nbsp;: </td>";
+      echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
       echo "<td class='center middle' rowspan='2'><textarea cols='45'
       rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
+
+      echo "<tr class='tab_bg_1'><td>".__('Active')."</td><td align='center'>";
+      Dropdown::showYesNo("is_active", $this->fields["is_active"]);
+      echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
@@ -258,6 +258,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          Location::dropdown([ 'value'       => $this->fields["locations_id"],
                               'entity'      => $this->fields["entities_id"],
                               'entity_sons' => $this->isRecursive(),
+                              'emptylabel'  => __('None')
                             ]);
          echo "</div>";
 
