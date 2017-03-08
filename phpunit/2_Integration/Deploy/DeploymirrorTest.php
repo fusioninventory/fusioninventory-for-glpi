@@ -73,7 +73,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity_recursive'] = 1;
       $_SESSION['glpishowallentities']         = 1;
 
-      $location       = new Location();
+      $location     = new Location();
       $locations_id = $location->add(['name'         => 'MyLocation',
                                       'entities_id'  => 0,
                                       'is_recursive' => 1
