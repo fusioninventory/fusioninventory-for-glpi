@@ -331,6 +331,10 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'),
+          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'label'     => __('One time package deployment', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_onetimedeploy',
+                'rights'    => array(READ => __('Read')))
       );
       return $rights;
    }
