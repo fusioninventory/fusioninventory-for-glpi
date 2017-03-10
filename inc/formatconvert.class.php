@@ -887,7 +887,7 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['DRIVES'])) {
          foreach ($array['DRIVES'] as $a_drives) {
             $isNetworkDriveOrFS = false;
-            $iseRemovableMedia = false;
+            $isRemovableMedia = false;
             if (isset($a_drives['TYPE'])) {
                switch ($a_drives['TYPE']) {
                   case 'Network Drive':
@@ -896,7 +896,7 @@ class PluginFusioninventoryFormatconvert {
 
                   case 'Removable Disk':
                   case 'Compact Disc':
-                     $iseRemovableMedia = true;
+                     $isRemovableMedia = true;
                      break;
                }
             }
@@ -905,7 +905,7 @@ class PluginFusioninventoryFormatconvert {
             }
             if ($pfConfig->getValue("component_drive") == '0'
                 OR ($pfConfig->getValue("component_networkdrive") == '0' AND $isNetworkDriveOrFS)
-                OR ($pfConfig->getValue("component_removablemedia") == '0' AND $iseRemovableMedia)) {
+                OR ($pfConfig->getValue("component_removablemedia") == '0' AND $isRemovableMedia)) {
 
             } else {
                if ($pfConfig->getValue('import_volume') == 1) {
