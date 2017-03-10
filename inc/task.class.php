@@ -130,6 +130,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[5]['name']           = __('Active');
       $sopt[5]['datatype']       = 'bool';
 
+      $sopt[6]['table']          = $this->getTable();
+      $sopt[6]['field']          = 'reprepare_if_successful';
+      $sopt[6]['linkfield']      = 'reprepare_if_successful';
+      $sopt[6]['name']           = __('Re-prepare a target-actor if previous run is successful',
+                                      'fusioninventory');
+      $sopt[6]['datatype']       = 'bool';
+
+
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
