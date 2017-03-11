@@ -120,6 +120,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_drive']        = 1;
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
+      $input['component_removablemedia'] = 0;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
