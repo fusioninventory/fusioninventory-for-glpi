@@ -120,6 +120,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_drive']        = 1;
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
+      $input['component_removablemedia'] = 0;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
@@ -645,6 +646,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "<td>";
+      echo _n('Removable medias', 'Removable medias', 2, "fusioninventory")."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_removablemedia", $pfConfig->getValue('component_removablemedia'));
       echo "</td>";
       echo "</tr>";
 
