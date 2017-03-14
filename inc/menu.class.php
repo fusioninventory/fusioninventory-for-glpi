@@ -134,8 +134,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'deploypackage'              => 'PluginFusioninventoryDeployPackage',
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
-          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice',
-          'ruledictionnarycomputerarch'=> 'PluginFusioninventoryRuleDictionnaryComputerArch'
+          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
       );
       $options = array();
 
@@ -385,13 +384,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/collectrule.php";
-      }
-
-      if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
-         $a_menu[6]['name'] = __('Dictionnary of computer architectures', 'fusioninventory');
-         $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
-         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/ruledictionnarycomputerarch.php";
       }
 
       if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {

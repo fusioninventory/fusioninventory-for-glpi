@@ -4837,7 +4837,7 @@ function do_computerarch_migration($migration) {
     global $DB;
 
    if (TableExists('glpi_plugin_fusioninventory_computerarches')) {
-      //Rename field in coputeroperatingsystems table
+      //Rename field in computeroperatingsystems table
       $a_table = [
          'name'     => 'glpi_plugin_fusioninventory_computeroperatingsystems',
          'renamefields' => [
@@ -4857,9 +4857,10 @@ function do_computerarch_migration($migration) {
             $new_id = $arches->add($arch, array(), false);
          }
 
-         $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os SET "
-                     . " pf_os.operatingsystemarchitectures_id='" . $new_id . "',"
-                     . " JOIN operatingsystemarchitectures os_arch WHERE os_arch.name='" . $DB->escape($arch['name']) . "'";
+         $sql_u = "UPDATE `glpi_plugin_fusioninventory_computeroperatingsystems` AS pf_os
+                   SET `pf_os`.`operatingsystemarchitectures_id`='" . $new_id . "',
+                   JOIN `operatingsystemarchitectures` os_arch
+                   WHERE `os_arch`.`name`='" . $DB->escape($arch['name']) . "'";
          $DB->query($sql_u);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_computerarches');

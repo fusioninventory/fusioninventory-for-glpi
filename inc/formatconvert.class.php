@@ -551,8 +551,8 @@ class PluginFusioninventoryFormatconvert {
          if (isset($array_tmp['operatingsystemarchitectures_id'])
                  && $array_tmp['operatingsystemarchitectures_id'] != '') {
 
-            $rulecollection = new PluginFusioninventoryRuleDictionnaryComputerArchCollection();
-            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['operatingsystemarchitectures_id']));
+            $rulecollection = new RuleDictionnaryOperatingSystemArchitectureCollection();
+            $res_rule = $rulecollection->processAllRules(["name" => $array_tmp['operatingsystemarchitectures_id']]);
             if (isset($res_rule['name'])) {
                $array_tmp['operatingsystemarchitectures_id'] = $res_rule['name'];
             }
