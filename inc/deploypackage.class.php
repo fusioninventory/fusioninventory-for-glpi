@@ -1303,19 +1303,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param integer $users_id id of the user
     */
    function showPackageForMe($users_id) {
+      global $CFG_GLPI;
 
-      $computer = new Computer();
-
+      $computer    = new Computer();
       $my_packages = $this->getPackageForMe($users_id);
 
-      $states = array(
-          'agents_notdone'   => __('Not done yet', 'fusioninventory'),
-          'agents_error'     => __('In error', 'fusioninventory'),
-          'agents_success'   => __('Successful', 'fusioninventory'),
-          'agents_running'   => __('Running', 'fusioninventory'),
-          'agents_prepared'  => __('Prepared' , 'fusioninventory'),
-          'agents_cancelled' => __('Cancelled', 'fusioninventory')
-      );
+      $states = [
+                 'agents_notdone'   => __('Not done yet', 'fusioninventory'),
+                 'agents_error'     => __('In error', 'fusioninventory'),
+                 'agents_success'   => __('Successful', 'fusioninventory'),
+                 'agents_running'   => __('Running', 'fusioninventory'),
+                 'agents_prepared'  => __('Prepared' , 'fusioninventory'),
+                 'agents_cancelled' => __('Cancelled', 'fusioninventory')
+              ];
 
       // Display for each computer, list of packages you can deploy
       echo "<form name='form' method='post' action='deploypackage.public.php' "
@@ -1326,7 +1326,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $package_to_install = array();
          $computer->getFromDB($computers_id);
          echo "<tr>";
-         echo "<th><img src='../pics/computer_icon.png'/> Computer <i>".$computer->fields['name']."</i></th>";
+         $url = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/computer_icon.png'";
+         echo "<th><img src='$url'/> Computer <i>".$computer->fields['name']."</i></th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
@@ -1369,7 +1370,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         echo __('Select packages you want install:', 'fusioninventory');
+         echo __('Select packages you want install', 'fusioninventory');
          echo "<br/>";
          Dropdown::showFromArray($p['name'], $package_to_install, $p);
          echo "</td>";
@@ -1405,17 +1406,22 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $computer      = new Computer();
       $pfDeployGroup = new PluginFusioninventoryDeployGroup();
-      // get all computers of the user
-      $mycomputers = $computer->find("`users_id`='".$users_id."'"
-              . "AND `entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+
+      $query = "";
+      if ($users_id) {
+         $query = "`users_id`='".$users_id."' AND ";
+      }
+      $query.= "`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")";
+
+      //Get all computers of the user
+      $mycomputers = $computer->find($query);
 
       $my_packages = array();
       foreach ($mycomputers as $computers_id=>$data) {
-         $my_packages[$computers_id] = array();
+         $my_packages[$computers_id] = [];
       }
       $packages_used = $this->getMyDepoyPackages($my_packages, $users_id);
-
-      $packages = $this->canUserDeploySelf();
+      $packages      = $this->canUserDeploySelf();
       if ($packages) {
          foreach ($packages as $package) {
             $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_fusioninventory_deploygroups_id']);
@@ -1426,7 +1432,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $taskjobs_id = $packages_used[$computers_id][$package['id']];
                      $my_packages[$computers_id][$package['id']]['taskjobs_id'] = $taskjobs_id;
                      $last_job_state = $this->getMyDepoyPackagesState($computers_id, $taskjobs_id);
-                     $my_packages[$computers_id][$package['id']]['last_taskjobstate'] = $last_job_state;
                   }
                }
             }
@@ -1526,16 +1531,23 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       global $DB;
 
       // Get packages yet deployed by enduser
-      $packages_used = array();
-      foreach ($computers_packages as $computers_id=>$data) {
-         $packages_used[$computers_id] = array();
+      $packages_used = [];
+      foreach ($computers_packages as $computers_id => $data) {
+         $packages_used[$computers_id] = [];
       }
-      $sql = "SELECT glpi_plugin_fusioninventory_taskjobs.* FROM `glpi_plugin_fusioninventory_taskjobs`"
-              . " LEFT JOIN `glpi_plugin_fusioninventory_tasks`"
-              . "    ON glpi_plugin_fusioninventory_tasks.id = plugin_fusioninventory_tasks_id"
-              . " WHERE `enduser` IS NOT NULL"
-              . "    AND `glpi_plugin_fusioninventory_tasks`.`is_active`='1'"
-              . "    AND `glpi_plugin_fusioninventory_tasks`.`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")";
+      if ($users_id) {
+         $where = "`enduser` IS NOT NULL";
+      } else {
+         $where = "1 ";
+      }
+      $sql = "SELECT glpi_plugin_fusioninventory_taskjobs.*
+              FROM `glpi_plugin_fusioninventory_taskjobs`
+              LEFT JOIN `glpi_plugin_fusioninventory_tasks`
+                 ON glpi_plugin_fusioninventory_tasks.id = plugin_fusioninventory_tasks_id
+              WHERE $where
+                 AND `glpi_plugin_fusioninventory_tasks`.`is_active`='1'
+                 AND `glpi_plugin_fusioninventory_tasks`.`entities_id`
+                    IN (".$_SESSION['glpiactiveentities_string'].")";
       $result = $DB->query($sql);
       while ($data = $DB->fetch_array($result)) {
          $enduser = importArrayFromDB($data['enduser']);

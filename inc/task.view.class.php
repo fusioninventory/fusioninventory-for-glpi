@@ -112,7 +112,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
-         echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
+         $package = new PluginFusioninventoryDeployPackage();
+         $package->showPackageForMe($_SESSION['glpiID']);
          return TRUE;
       }
       return FALSE;
