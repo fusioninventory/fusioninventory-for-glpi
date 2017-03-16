@@ -358,11 +358,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $tab[86]['name']      = __('Child entities');
       $tab[86]['datatype']  = 'bool';
 
-      $tab[19]['table']     = $this->getTable();
-      $tab[19]['field']     = 'date_mod';
-      $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = __('Last update');
-      $tab[19]['datatype']  = 'datetime';
+      $tab[20]['table']     = 'glpi_plugin_fusioninventory_deploygroups';
+      $tab[20]['field']     = 'name';
+      $tab[20]['name']      = __('Enable self-service in defining computer group', 'fusioninventory');
+      $tab[20]['datatype']  = 'dropdown';
 
       return $tab;
    }
@@ -1294,11 +1293,38 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->profiles = PluginFusioninventoryDeployPackage_Profile::getProfiles($this->fields['id']);
    }
 
-
+   /**
+   * Get all available states for a package
+   * @return an array of states and their labels
+   */
+   static function getPackageDeploymentStates() {
+      return [
+              'agents_notdone'   => __('Not done yet', 'fusioninventory'),
+              'agents_error'     => __('In error', 'fusioninventory'),
+              'agents_success'   => __('Successful', 'fusioninventory'),
+              'agents_running'   => __('Running', 'fusioninventory'),
+              'agents_prepared'  => __('Prepared' , 'fusioninventory'),
+              'agents_cancelled' => __('Cancelled', 'fusioninventory')
+             ];
+   }
 
    /**
-    * Display form with deploy state of software user has requested on his computer(s) and form
-    * to install packages to his computer(s)
+   * Get a label for a state
+   * @param state the state
+   * @return the label associated to a state
+   */
+   static function getDeploymentLabelForAState($state) {
+      $states = self::getPackageDeploymentStates();
+      if (isset($states[$state])) {
+         return $states[$state];
+      } else {
+         return '';
+      }
+   }
+
+   /**
+    * Display a form with a list of packages and their state, that a user
+    * has request to install on it's computer
     *
     * @param integer $users_id id of the user
     */
@@ -1307,15 +1333,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $computer    = new Computer();
       $my_packages = $this->getPackageForMe($users_id);
-
-      $states = [
-                 'agents_notdone'   => __('Not done yet', 'fusioninventory'),
-                 'agents_error'     => __('In error', 'fusioninventory'),
-                 'agents_success'   => __('Successful', 'fusioninventory'),
-                 'agents_running'   => __('Running', 'fusioninventory'),
-                 'agents_prepared'  => __('Prepared' , 'fusioninventory'),
-                 'agents_cancelled' => __('Cancelled', 'fusioninventory')
-              ];
 
       // Display for each computer, list of packages you can deploy
       echo "<form name='form' method='post' action='deploypackage.public.php' "
@@ -1347,7 +1364,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                echo Html::convDateTime($package_info['last_taskjobstate']['date']);
                echo "</td>";
                echo "<td style='width: 200px'>";
-               echo $states[$package_info['last_taskjobstate']['state']];
+               echo self::getDeploymentLabelForAState($package_info['last_taskjobstate']['state']);
                echo "</td>";
                echo "</tr>";
                echo "</table>";
@@ -1459,7 +1476,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $computer  = new Computer();
       // search if a taskjob exist
       $computer->getFromDB($computers_id);
-      $sql = "SELECT glpi_plugin_fusioninventory_taskjobs.* FROM `glpi_plugin_fusioninventory_taskjobs`"
+      $sql = "SELECT glpi_plugin_fusioninventory_taskjobs.*
+              FROM `glpi_plugin_fusioninventory_taskjobs`"
               . " LEFT JOIN `glpi_plugin_fusioninventory_tasks`"
               . "    ON glpi_plugin_fusioninventory_tasks.id = plugin_fusioninventory_tasks_id"
               . " WHERE `targets`='[{\"PluginFusioninventoryDeployPackage\":\"".$packages_id."\"}]'"
@@ -1572,14 +1590,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     */
    function getMyDepoyPackagesState($computers_id, $taskjobs_id) {
       $pfTaskJobState = new PluginFusioninventoryTaskjobstate();
-      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent        = new PluginFusioninventoryAgent();
 
       // get taskjobstate with taskjobs_id and agent of computers_id
       $agents_id = $pfAgent->getAgentWithComputerid($computers_id);
 
       $last_job_state = array();
-      $taskjobstates = current($pfTaskJobState->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'"
-              . " AND `plugin_fusioninventory_agents_id`='".$agents_id."'", '`id` DESC', 1));
+      $taskjobstates  = current($pfTaskJobState->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'"
+              ." AND `plugin_fusioninventory_agents_id`='".$agents_id."'", '`id` DESC', 1));
       if ($taskjobstates) {
          $state = '';
 
@@ -1609,7 +1627,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          }
          $logs = $pfTaskJobState->getLogs($taskjobstates['id'], date("Y-m-d H:i:s"));
          $last_job_state['state'] = $state;
-         $last_job_state['date'] = $logs['logs'][0]['log.date'];
+         $last_job_state['date']  = $logs['logs'][0]['log.date'];
       }
       return $last_job_state;
    }

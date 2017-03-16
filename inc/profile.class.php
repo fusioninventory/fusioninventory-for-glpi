@@ -231,7 +231,7 @@ class PluginFusioninventoryProfile extends Profile {
 
       $rights = array(
           array('rights'    => array(READ => __('Read')),
-                'label'     => __('Self deploy package', 'fusioninventory'),
+                'label'     => __('One time package deployment', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_selfpackage')
       );
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
@@ -333,7 +333,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_deploymirror'),
           array('itemtype'  => 'PluginFusioninventoryDeployPackage',
                 'label'     => __('One time package deployment', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_onetimedeploy',
+                'field'     => 'plugin_fusioninventory_selfpackage',
                 'rights'    => array(READ => __('Read')))
       );
       return $rights;
