@@ -142,11 +142,14 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
 
       $server_download_url = "http://localhost:8080/glpi/plugins/fusioninventory/b/deploy/?action=getFilePart&file=";
 
+      //Add the server's url at the end of the mirrors list
+      $PF_CONFIG['server_as_mirror'] = true;
+
       //-------------------------------------------------------------//
       //--- First set configuration to match mirror to locations
       //-------------------------------------------------------------//
 
-      $PF_CONFIG['server_as_mirror'] = PluginFusioninventoryDeployMirror::MATCH_LOCATION;
+      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_LOCATION;
 
       //The location mirror is disabled, so return the server's download url
       $mirrors = PluginFusioninventoryDeployMirror::getList($agents_id);
@@ -191,7 +194,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       //--- Second step : set configuration to match mirror to entities
       //-------------------------------------------------------------//
 
-      $PF_CONFIG['server_as_mirror'] = PluginFusioninventoryDeployMirror::MATCH_ENTITY;
+      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_ENTITY;
 
       $mirrors = PluginFusioninventoryDeployMirror::getList($agents_id);
       $result  = [
@@ -204,7 +207,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       //--- Third step : set configuration to match mirror to entities
       //-------------------------------------------------------------//
 
-      $PF_CONFIG['server_as_mirror'] = PluginFusioninventoryDeployMirror::MATCH_BOTH;
+      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_BOTH;
 
       $mirrors = PluginFusioninventoryDeployMirror::getList($agents_id);
       $result  = [
@@ -237,6 +240,25 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
                   2 => "http://localhost:8087/mirror",
                   3 => $server_download_url
                  ];
+      $this->assertEquals($result, $mirrors);
+
+      $PF_CONFIG['server_as_mirror'] = false;
+
+      $mirrors = PluginFusioninventoryDeployMirror::getList($agents2_id);
+      $result  = [
+                  0 => "http://localhost:8089/mirror",
+                  1 => "http://localhost:8085/mirror",
+                  2 => "http://localhost:8087/mirror"
+                 ];
+      $this->assertEquals($result, $mirrors);
+
+      $PF_CONFIG['mirror_match'] = PluginFusioninventoryDeployMirror::MATCH_LOCATION;
+
+      //We run the method again
+      //In this case, the method must return the server's download location
+      //because the computer has no location
+      $mirrors = PluginFusioninventoryDeployMirror::getList($agents_id);
+      $result  = [0 => 'http://localhost:8085/mirror'];
       $this->assertEquals($result, $mirrors);
 
    }

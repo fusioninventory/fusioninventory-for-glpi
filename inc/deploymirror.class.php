@@ -110,7 +110,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @param integer $agents_id
     * @return array
     */
-   static function getList($agents_id = NULL) {
+   static function getList($agents_id) {
       global $PF_CONFIG, $DB;
 
       if (is_null($agents_id)) {
@@ -127,15 +127,20 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $computer = new Computer();
       $computer->getFromDB($agent['computers_id']);
 
+
       //If no configuration has been done in the plugin's configuration
       //then use location for mirrors as default
-      if (isset($PF_CONFIG['server_as_mirror'])) {
-         $mirror_match = $PF_CONFIG['server_as_mirror'];
-      } else {
+      //!!this should not happen!!
+      if (!isset($PF_CONFIG['mirror_match'])) {
          $mirror_match = self::MATCH_LOCATION;
+      } else {
+         //Get mirror matching from plugin's general configuration
+         $mirror_match = $PF_CONFIG['mirror_match'];
       }
 
       //Get all mirrors for the agent's entity, or for entities above
+      //sorted by entity level in a descending way (going to the closest,
+      //deepest entity, to the highest)
       $query     = "SELECT `mirror`.*, `glpi_entities`.`level`
                     FROM `glpi_plugin_fusioninventory_deploymirrors` AS mirror
                     LEFT JOIN `glpi_entities`
@@ -147,6 +152,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
                                               $agent['entities_id'],
                                               true);
       $query   .= " ORDER BY `glpi_entities`.`level` DESC";
+
+      //The list of mirrors to return
       $mirrors  = [];
 
       foreach ($DB->request($query) as $result) {
@@ -196,9 +203,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          $entities_id = $agent['entities_id'];
       }
 
-      //In all cases add the default server download URL
-      $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
-         ."?action=getFilePart&file=";
+      //If option is set to yes in general plugin configuration
+      //Add the server's url as the last url in the list
+      if (isset($PF_CONFIG['server_as_mirror'])
+         && $PF_CONFIG['server_as_mirror'] == true) {
+         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
+            ."?action=getFilePart&file=";
+      }
       return $mirrors;
    }
 

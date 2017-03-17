@@ -790,8 +790,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   )
                )
            );
-      $a_input['alert_winpath'] = 1;
+      $a_input['alert_winpath']    = 1;
       $a_input['server_as_mirror'] = 1;
+      $a_input['mirror_match']     = 0;
       $config->addValues($a_input, FALSE);
 
       $pfSetup = new PluginFusioninventorySetup();
