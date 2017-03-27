@@ -49,25 +49,28 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
 
       self::restore_database();
 
-      $computer = new Computer();
-      $user = new User();
-      $pfAgent  = new PluginFusioninventoryAgent();
+      $computer      = new Computer();
+      $user          = new User();
+      $pfAgent       = new PluginFusioninventoryAgent();
       $pfDeployGroup = new PluginFusioninventoryDeployGroup();
-      $profile = new Profile();
+      $profile       = new Profile();
 
-      $users_id = $user->add(array('name' => 'David'));
-      $computer->add(array('name' => 'pc01', 'entities_id' => 0, 'users_id' => $users_id));
-      $pfAgent->add(array('computers_id'=> 1, 'entities_id' => 0));
-      $pfDeployGroup->add(array('name' => 'all', 'type' => 'DYNAMIC'));
+      $users_id = $user->add(['name' => 'David']);
+      $computer->add(['name'        => 'pc01',
+                      'entities_id' => 0,
+                      'users_id'    => $users_id
+                     ]);
+      $pfAgent->add(['computers_id'=> 1, 'entities_id' => 0]);
+      $pfDeployGroup->add(['name' => 'all', 'type' => 'DYNAMIC']);
       $a_profile = current($profile->find("`interface`='helpdesk'", '', 1));
 
-      $_SESSION['glpiID'] = $users_id;
-      $_SESSION['glpiname'] = 'David';
-      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiID']                    = $users_id;
+      $_SESSION['glpiname']                  = 'David';
+      $_SESSION['glpiactive_entity']         = 0;
       $_SESSION['glpiactiveentities_string'] = "'0'";
-      $_SESSION['glpigroups'] = array();
-      $_SESSION['glpiactiveprofile'] = $a_profile;
-      $_SESSION['glpiparententities'] = array();
+      $_SESSION['glpigroups']                = [];
+      $_SESSION['glpiactiveprofile']         = $a_profile;
+      $_SESSION['glpiparententities']        = [];
    }
 
 
@@ -78,10 +81,11 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
    public function PackageNoTarget() {
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $input = array(
-          'name'        => 'test1',
-          'entities_id' => 0,
-          'plugin_fusioninventory_deploygroups_id' => 0);
+      $input = [
+                'name'        => 'test1',
+                'entities_id' => 0,
+                'plugin_fusioninventory_deploygroups_id' => 0
+               ];
       $pfDeployPackage->add($input);
       $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
@@ -94,21 +98,19 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
     */
    public function PackageTargetEntity() {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage        = new PluginFusioninventoryDeployPackage();
       $pfDeployPackage_Entity = new PluginFusioninventoryDeployPackage_Entity();
 
-      $input = array(
-          'name'        => 'test1',
-          'entities_id' => 0,
-          'plugin_fusioninventory_deploygroups_id' => 1);
+      $input = ['name'        => 'test1',
+                'entities_id' => 0,
+                'plugin_fusioninventory_deploygroups_id' => 1
+               ];
       $packages_id = $pfDeployPackage->add($input);
       $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id));
 
       $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
-      $reference = array(
-          $packages_id => $pfDeployPackage->fields
-      );
+      $reference = [$packages_id => $pfDeployPackage->fields];
       $this->assertEquals($reference, $packages, 'May have 1 package');
    }
 
@@ -119,30 +121,30 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
     */
    public function PackageTargetgroup() {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage       = new PluginFusioninventoryDeployPackage();
       $pfDeployPackage_Group = new PluginFusioninventoryDeployPackage_Group();
-      $group = new Group();
+      $group                 = new Group();
 
-      $group->add(array('name' => 'self-deploy', 'entities_id' => 0));
+      $group->add(['name' => 'self-deploy', 'entities_id' => 0]);
 
-      $input = array(
-          'name'        => 'test1',
-          'entities_id' => 0,
-          'plugin_fusioninventory_deploygroups_id' => 1);
+      $input = [
+                'name'        => 'test1',
+                'entities_id' => 0,
+                'plugin_fusioninventory_deploygroups_id' => 1
+               ];
       $packages_id = $pfDeployPackage->add($input);
-      $pfDeployPackage_Group->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
-                                        'groups_id' => 1,
-                                        'entities_id' => 0));
+      $pfDeployPackage_Group->add(['plugin_fusioninventory_deploypackages_id' => $packages_id,
+                                    'groups_id'   => 1,
+                                    'entities_id' => 0
+                                  ]);
       $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
 
-      $_SESSION['glpigroups'] = array(0 => 1);
+      $_SESSION['glpigroups'] = [0 => 1];
 
       $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
-      $reference = array(
-          $packages_id => $pfDeployPackage->fields
-      );
+      $reference = [$packages_id => $pfDeployPackage->fields];
       $this->assertEquals($reference, $packages, 'May have 1 package');
    }
 
@@ -153,28 +155,28 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
     */
    public function PackageTargetUser() {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage      = new PluginFusioninventoryDeployPackage();
       $pfDeployPackage_User = new PluginFusioninventoryDeployPackage_User();
 
-      $input = array(
-          'name'        => 'test1',
-          'entities_id' => 0,
-          'plugin_fusioninventory_deploygroups_id' => 1);
+      $input = ['name'        => 'test1',
+                'entities_id' => 0,
+                'plugin_fusioninventory_deploygroups_id' => 1
+               ];
       $packages_id = $pfDeployPackage->add($input);
 
-      $pfDeployPackage_User->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
-                                        'users_id' => 1));
+      $pfDeployPackage_User->add(['plugin_fusioninventory_deploypackages_id' => $packages_id,
+                                  'users_id' => 1
+                                 ]);
       $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
 
-      $pfDeployPackage_User->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
-                                        'users_id' => $_SESSION['glpiID']));
+      $pfDeployPackage_User->add(['plugin_fusioninventory_deploypackages_id' => $packages_id,
+                                  'users_id' => $_SESSION['glpiID']
+                                 ]);
 
       $packages = $pfDeployPackage->canUserDeploySelf();
       $pfDeployPackage->getFromDB($packages_id);
-      $reference = array(
-          $packages_id => $pfDeployPackage->fields
-      );
+      $reference = [$packages_id => $pfDeployPackage->fields];
       $this->assertEquals($reference, $packages, 'May have 1 package');
    }
 
@@ -185,7 +187,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
     */
    public function PackageTargetProfile() {
 
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployPackage         = new PluginFusioninventoryDeployPackage();
       $pfDeployPackage_Profile = new PluginFusioninventoryDeployPackage_Profile();
 
       $input = array(

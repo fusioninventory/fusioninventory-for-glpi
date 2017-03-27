@@ -47,9 +47,6 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
-             "pluginfusioninventorymenu", "deploypackage");
-
 $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
@@ -61,14 +58,14 @@ if (isset($_POST['prepareinstall'])) {
          }
       }
    }
-   PluginFusioninventoryTask::cronTaskscheduler();
    // Force local agent run now to deploy
    echo '<link rel="import" href="http://127.0.0.1:62354/now">';
    Html::back();
+} else {
+   Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
+                "pluginfusioninventorymenu", "deploypackage");
+
+   $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
+   $pfTaskJobView = new PluginFusioninventoryTaskjobView();
+   Html::footer();
 }
-
-$pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
-$pfTaskJobView = new PluginFusioninventoryTaskjobView();
-Html::footer();
-
-?>

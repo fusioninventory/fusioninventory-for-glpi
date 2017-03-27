@@ -76,7 +76,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
 
-      if ($this->can("task", "r")) {
+      if ($this->can("plugin_fusioninventory_selfpackage", READ)) {
          if ($item->getType() == 'Computer') {
             return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
          }
@@ -113,7 +113,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
          $package = new PluginFusioninventoryDeployPackage();
-         $package->showPackageForMe($_SESSION['glpiID']);
+         $package->showPackageForMe($_SESSION['glpiID'], $item);
          return TRUE;
       }
       return FALSE;

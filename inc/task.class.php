@@ -137,6 +137,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                                       'fusioninventory');
       $sopt[6]['datatype']       = 'bool';
 
+      $sopt[7]['table']          = $this->getTable();
+      $sopt[7]['field']          = 'is_deploy_on_demand';
+      $sopt[7]['name']           = __('One time deploy task', 'fusioninventory');
+      $sopt[7]['datatype']       = 'bool';
 
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
@@ -776,6 +780,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
+      Toolbox::logDebug($methods);
       $task->prepareTaskjobs($methods);
       return TRUE;
    }
