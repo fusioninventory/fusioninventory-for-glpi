@@ -780,11 +780,63 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
-      Toolbox::logDebug($methods);
+
       $task->prepareTaskjobs($methods);
       return TRUE;
    }
 
+   /**
+    * Cron task: prepare taskjobs
+    *
+    * @return true
+    */
+   static function cronCleanOnDemand($task=NULL) {
+      global $DB;
+
+      $config   = new PluginFusioninventoryConfig();
+      $interval = $config->getValue('clean_on_demand_tasks');
+
+      //If crontask is disabled, quit method
+      if (!$interval) {
+         return true;
+      }
+
+      $pfTask = new self();
+      $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
+                 WHERE `datetime_end` IS NOT NULL
+                    AND DATEDIFF(ADDDATE(`datetime_end`,
+                      INTERVAL $interval DAY),
+                      CURDATE()) < '0'
+                    AND `is_deploy_on_demand`='1'";
+      $index = 0;
+      foreach ($DB->request($date) as $tsk) {
+         if ($pfTask->delete($tsk, true)) {
+            $index++;
+         }
+      }
+      $task->addVolume($index);
+      return true;
+   }
+
+
+   /**
+    * Give cron information
+    *
+    * @param $name : task's name
+    *
+    * @return arrray of information
+   **/
+   static function cronInfo($name) {
+
+      switch ($name) {
+         case 'taskScheduler' :
+            return array('description' => __('FusionInventory task scheduler'));
+
+         case 'cleanOnDemand' :
+            return array('description' => __('Clean on deman deployment tasks'));
+      }
+      return array();
+   }
 
 
    /**

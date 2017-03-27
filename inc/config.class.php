@@ -790,6 +790,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "<tr>";
+      echo "<td>".__('Delete successful on demand tasks after (in days)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      Dropdown::showNumber("clean_on_demand_tasks", array(
+         'value' => $pfConfig->getValue('clean_on_demand_tasks'),
+         'min'   => 1,
+         'max'   => 1000,
+         'toadd' => array('0' => __('Disabled')))
+      );
+      echo "</td>";
+      echo "</tr>";
+
       $options['candel'] = false;
       $pfConfig->showFormButtons($options);
 

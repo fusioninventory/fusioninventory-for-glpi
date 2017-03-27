@@ -897,6 +897,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                'hourmin' =>22, 'hourmax'=>6,
                                'comment'=>'Clean agents not contacted since xxx days'));
    }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand')) {
+      CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
+                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                          'comment' => __('Clean on deman deployment tasks')]);
+   }
 
    /*
     * Update task's agents list from dynamic group periodically in order to automatically target new
