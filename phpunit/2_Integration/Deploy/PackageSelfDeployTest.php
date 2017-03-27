@@ -81,8 +81,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
    public function PackageNoTarget() {
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $input = [
-                'name'        => 'test1',
+      $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'plugin_fusioninventory_deploygroups_id' => 0
                ];
@@ -127,8 +126,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
 
       $group->add(['name' => 'self-deploy', 'entities_id' => 0]);
 
-      $input = [
-                'name'        => 'test1',
+      $input = ['name'        => 'test1',
                 'entities_id' => 0,
                 'plugin_fusioninventory_deploygroups_id' => 1
                ];

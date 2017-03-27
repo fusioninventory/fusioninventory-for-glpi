@@ -808,9 +808,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                       INTERVAL $interval DAY),
                       CURDATE()) < '0'
                     AND `is_deploy_on_demand`='1'";
+
       $index = 0;
-      foreach ($DB->request($date) as $tsk) {
-         if ($pfTask->delete($tsk, true)) {
+      $tasks = $pfTask->getOnDemandTasksToClean($interval);
+
+      foreach ($tasks as $task_id) {
+         if ($pfTask->delete(['id' => $task_id], true)) {
             $index++;
          }
       }
@@ -818,6 +821,27 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return true;
    }
 
+   /**
+   * Get all on demand tasks to clean
+   * @param $interval number of days to look for successful tasks
+   * @return an array of tasks ID to clean
+   */
+   function getOnDemandTasksToClean($interval) {
+      global $DB;
+
+      $tasks  = [];
+      $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
+                 WHERE `datetime_end` IS NOT NULL
+                    AND DATEDIFF(ADDDATE(`datetime_end`,
+                      INTERVAL $interval DAY),
+                      CURDATE()) < '0'
+                    AND `is_deploy_on_demand`='1'";
+      foreach ($DB->request($date) as $tsk) {
+         $tasks[] = $tsk['id'];
+      }
+
+      return $tasks;
+   }
 
    /**
     * Give cron information

@@ -900,7 +900,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand')) {
       CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
                          ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                          'comment' => __('Clean on deman deployment tasks')]);
+                          'comment' => __('Clean on demand deployment tasks')]);
    }
 
    /*
