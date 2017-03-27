@@ -1419,6 +1419,16 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<th colspan='2'>";
          echo Html::submit(__('Prepare for install', 'fusioninventory'),
                            ['name' => 'prepareinstall']);
+         echo "&nbsp;";
+         if (!$self_service) {
+            $options = ['local'  => __('Local wakeup', 'fusioninventory'),
+                        'remote' => __('Wakeup from the server', 'fusioninventory')
+                       ];
+            Dropdown::showFromArray('wakeup_type', $options,
+                                    ['value' => 'remote']);
+         } else {
+            echo Html::hidden('wakeup_type', ['value' => 'local']);
+         }
          echo Html::hidden('self_service', ['value' => $self_service]);
          echo "</th>";
          echo "</tr>";
@@ -1593,7 +1603,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                    'name'        => 'deploy',
                    'method'      => 'deployinstall',
                    'targets'     => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
-                   'actors'      => exportArrayToDB(['Computer' => $computers_id]),
+                   'actors'      => exportArrayToDB([['Computer' => $computers_id]]),
                    'enduser'     => exportArrayToDB([$users_id  => [$computers_id]])
                   ];
          $pfTaskJob->add($input);

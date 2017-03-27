@@ -50,7 +50,9 @@ Session::checkLoginUser();
 $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
-   foreach ($_POST as $key=>$data) {
+   $computers_id = false;
+
+   foreach ($_POST as $key => $data) {
       if (strstr($key, 'deploypackages_')) {
          $computers_id = str_replace('deploypackages_', '', $key);
          foreach ($data as $packages_id) {
@@ -58,14 +60,23 @@ if (isset($_POST['prepareinstall'])) {
          }
       }
    }
-   // Force local agent run now to deploy
-   echo '<link rel="import" href="http://127.0.0.1:62354/now">';
+
+   //Try to wakeup the agent to perform the deployment task
+   //If it's a local wakeup, local call to the agent RPC service
+   if ($_POST['wakeup_type'] == 'local') {
+      echo '<link rel="import" href="http://127.0.0.1:62354/now">';
+   } else if ($computers_id) {
+      //Remote call to wakeup the agent, from the server
+      $agent = new PluginFusioninventoryAgent();
+      $agent->getAgentWithComputerid($computers_id);
+      $agent->wakeUp();
+   }
+
    Html::back();
 } else {
    Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
                 "pluginfusioninventorymenu", "deploypackage");
 
    $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
-   $pfTaskJobView = new PluginFusioninventoryTaskjobView();
    Html::footer();
 }
