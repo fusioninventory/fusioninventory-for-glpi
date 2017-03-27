@@ -139,7 +139,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $sopt[7]['table']          = $this->getTable();
       $sopt[7]['field']          = 'is_deploy_on_demand';
-      $sopt[7]['name']           = __('One time deploy task', 'fusioninventory');
+      $sopt[7]['name']           = __('deploy on demand task', 'fusioninventory');
       $sopt[7]['datatype']       = 'bool';
 
       $sopt[30]['table']          = $this->getTable();

@@ -604,8 +604,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'is_deploy_on_demand');
    $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
 
-   //One time deploy task migration :
-   //the way to detect a one time deploy task was by looking at it's name
+   //deploy on demand task migration :
+   //the way to detect a deploy on demand task was by looking at it's name
    //we've now introduced a boolean to easily check for it
    if ($deploy_on_demand) {
       $task = new PluginFusioninventoryTask();

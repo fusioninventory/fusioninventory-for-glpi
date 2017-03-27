@@ -360,7 +360,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $tab[20]['table']     = 'glpi_plugin_fusioninventory_deploygroups';
       $tab[20]['field']     = 'name';
-      $tab[20]['name']      = __('Enable one time deploy for the following group',
+      $tab[20]['name']      = __('Enable deploy on demand for the following group',
                                  'fusioninventory');
       $tab[20]['datatype']  = 'dropdown';
 
@@ -482,7 +482,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Enable one time deploy for the following group', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>".__('Enable deploy on demand for the following group', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
       PluginFusioninventoryDeployGroup::dropdown(['value' => $this->fields["plugin_fusioninventory_deploygroups_id"]]);
       echo "</td>";
@@ -1030,13 +1030,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                if ($item->canUpdateItem()) {
                   if ($_SESSION['glpishow_count_on_tabs']) {
                      $nb = $item->countVisibilities();
-                     return self::createTabEntry(_n('Target for one time deploy',
-                                                    'Targets for one time deploy',
+                     return self::createTabEntry(_n('Target for deploy on demand',
+                                                    'Targets for deploy on demand',
                                                     $nb, 'fusioninventory'),
                                                     $nb);
                   } else {
-                     return _n('Target for one time deploy',
-                               'Targets for one time deploy', 2,
+                     return _n('Target for deploy on demand',
+                               'Targets for deploy on demand', 2,
                                'fusioninventory');
                   }
                }
@@ -1579,7 +1579,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          //Add the new task
          $input = [
-                   'name'                    => '[One time deploy] '.$this->fields['name'],
+                   'name'                    => '[deploy on demand] '.$this->fields['name'],
                    'entities_id'             => $computer->fields['entities_id'],
                    'reprepare_if_successful' => 0,
                    'is_deploy_on_demand'      => 1
@@ -1648,7 +1648,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             continue;
          }
 
-         //Look for all one time deploy packages for a user
+         //Look for all deploy on demand packages for a user
          if ($users_id) {
             $enduser = importArrayFromDB($data['enduser']);
             if (isset($enduser[$users_id])) {
@@ -1658,7 +1658,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                }
             }
 
-            //Look for all one time deploy package for a computer
+            //Look for all deploy on demand package for a computer
          } else {
             $targets = importArrayFromDB($data['targets']);
             $actors  = importArrayFromDB($data['actors']);
