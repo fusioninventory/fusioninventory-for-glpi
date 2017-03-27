@@ -63,13 +63,20 @@ if (isset($_POST['prepareinstall'])) {
 
    //Try to wakeup the agent to perform the deployment task
    //If it's a local wakeup, local call to the agent RPC service
-   if ($_POST['wakeup_type'] == 'local') {
-      echo '<link rel="import" href="http://127.0.0.1:62354/now">';
-   } else if ($computers_id) {
-      //Remote call to wakeup the agent, from the server
-      $agent = new PluginFusioninventoryAgent();
-      $agent->getAgentWithComputerid($computers_id);
-      $agent->wakeUp();
+   switch ($_POST['wakeup_type']) {
+      case 'local':
+         echo '<link rel="import" href="http://127.0.0.1:62354/now">';
+         break;
+      case 'remote':
+         if ($computers_id) {
+            //Remote call to wakeup the agent, from the server
+            $agent = new PluginFusioninventoryAgent();
+            $agent->getAgentWithComputerid($computers_id);
+            $agent->wakeUp();
+         }
+         break;
+      default:
+         break;
    }
 
    Html::back();
