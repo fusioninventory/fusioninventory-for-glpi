@@ -152,17 +152,16 @@ class TaskTest extends Common_TestCase {
                                               "`name`='TaskToClean'"), 1);
 
       //There's still 3 tasks in DB
-      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks'), 3);
+      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks'), 4);
 
       //Set the delay to 5 days
       $config->updateValue('clean_on_demand_tasks', 5);
-
 
       //Launch the crontask : one task should was deleted
       PluginFusioninventoryTask::cronCleanOnDemand($crontask);
       $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks',
                                               "`name`='TaskToClean'"), 0);
       //Only two tasks left in DB
-      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks'), 2);
+      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks'), 3);
    }
 }
