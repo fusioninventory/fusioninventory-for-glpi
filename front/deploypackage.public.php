@@ -47,6 +47,8 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
+Html::helpHeader(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
+                 "pluginfusioninventorymenu", "deploypackage");
 $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
