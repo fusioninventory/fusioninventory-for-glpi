@@ -27,7 +27,7 @@ before_install:
  - cd ..
  - git clone git://github.com/glpi-project/glpi.git glpi
  - cd glpi
- - if [[ $GLPI != 'master' ]]; then git checkout -b $GLPI origin/$GLPI; fi
+ - if [[ $GLPI != '9.1/bugfixes' ]]; then git checkout -b $GLPI origin/$GLPI; fi
  - composer install --no-dev -o
  - cd ..
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
