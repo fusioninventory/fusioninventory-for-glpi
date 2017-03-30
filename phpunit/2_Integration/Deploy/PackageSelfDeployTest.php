@@ -256,4 +256,50 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $this->assertEquals($reference, $packages_deploy);
    }
 
+   /**
+    * @test
+    */
+   public function ReportComputerPackages() {
+
+      $pfDeployPackage        = new PluginFusioninventoryDeployPackage();
+      $computer               = new Computer();
+      $pfAgent                = new PluginFusioninventoryAgent();
+      $pfDeployPackage_Entity = new PluginFusioninventoryDeployPackage_Entity();
+
+      $computer->add(array('name' => 'pc03', 'entities_id' => 0));
+      $pfAgent->add(array('computers_id'=> 3, 'entities_id' => 0));
+
+      $input = array('name'                                   => 'test1',
+                     'entities_id'                            => 0,
+                     'plugin_fusioninventory_deploygroups_id' => 1);
+      $packages_id = $pfDeployPackage->add($input);
+      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id));
+
+      $input = array('name'                                   => 'test2',
+                     'entities_id'                            => 0,
+                     'plugin_fusioninventory_deploygroups_id' => 1);
+      $packages_id = $pfDeployPackage->add($input);
+      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id));
+
+      $input = array('name'                                   => 'test3',
+                     'entities_id'                            => 0,
+                     'plugin_fusioninventory_deploygroups_id' => 0);
+      $packages_id = $pfDeployPackage->add($input);
+
+      $packages = $pfDeployPackage->getPackageForMe(false, 1);
+      $expected = ['test1', 'test2'];
+      $names    = [];
+
+      foreach ($packages as $computers_id=>$data) {
+         foreach ($data as $packages_id => $package_info) {
+            $names[] = $package_info['name'];
+         }
+      }
+      $this->assertEquals($names, $expected);
+
+      $packages = $pfDeployPackage->getPackageForMe(false, 3);
+      $this->assertEquals($packages, []);
+
+   }
+
 }
