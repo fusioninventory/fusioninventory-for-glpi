@@ -180,10 +180,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
    }
 
-   static function displayForm($order, $request_data, $rand, $mode) {
-      global $CFG_GLPI;
->>>>>>> 6536411... Improve audits : add a new audit check check registry key value
-
    /**
     * Display form
     *
@@ -366,7 +362,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       /*
        * Build actions types list
        */
-      $checks_types = self::getTypes();
+      $checks_types = [];
+      foreach (self::getTypes() as $label => $data) {
+         $checks_types+= $data;
+      }
       array_unshift($checks_types, "---");
 
       /*
