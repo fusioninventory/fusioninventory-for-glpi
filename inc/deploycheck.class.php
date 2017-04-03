@@ -63,11 +63,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       return [
                __('Registry', 'fusioninventory') => [
                   'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
-                  'winvalueExists'     => __("Registry value exists", 'fusioninventory'),
                   'winkeyMissing'      => __("Registry key missing", 'fusioninventory'),
-                  'winvalueMissing'    => __("Registry value missing", 'fusioninventory'),
-                  'winkeyEquals'       => __("Registry value equals to", 'fusioninventory'),
-                  'winvalueType'       => __("Type of registry value equals to", 'fusioninventory'),
+                  'winkeyEquals'       => __("Registry key value equals to", 'fusioninventory'),
+                  'winkeyType'         => __("Registry key type equals to", 'fusioninventory'),
          ],
                __('File') => [
                   'fileExists'         => __("File exists", 'fusioninventory'),
@@ -79,7 +77,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                   'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'fusioninventory'),
                ],
              __('Other') => [
-               'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
+            'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
             ]
       ];
    }
@@ -91,9 +89,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @return the type label
     */
    static function getLabelForAType($type) {
-      $types = self::getTypes();
-      if (isset($types[$type])) {
-         return $types[$type];
+      $alltypes = [];
+      foreach (self::getTypes() as $label => $types) {
+         $alltypes+= $types;
+      }
+      if (isset($alltypes[$type])) {
+         return $alltypes[$type];
       } else {
          return '';
       }
@@ -156,6 +157,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
               'REG_SZ'                  => 'REG_SZ',
               'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
               'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
+              'subkey'                  => __('Subkey', 'fusioninventory'),
               'REG_LINK'                => 'REG_LINK',
               'REG_QWORD_LITTLE_ENDIAN' => 'REG_QWORD_LITTLE_ENDIAN',
               'REG_DWORD_LITTLE_ENDIAN' => 'REG_DWORD_LITTLE_ENDIAN',
@@ -170,9 +172,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
    static function getRegistryTypeLabel($type) {
-      if (is_null($type)) {
-         return '';
-      }
       $types = self::getRegistryTypes();
       if (isset($types[$type])) {
          return $types[$type];
@@ -180,7 +179,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          return '';
       }
    }
->>>>>>> 2c74cd567... Add unit tests for deploychecks
+
+   static function displayForm($order, $request_data, $rand, $mode) {
+      global $CFG_GLPI;
 
    /**
     * Display form
@@ -266,13 +267,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
-         //specific case for filesystem size
-         if (is_numeric($check['value'])
-            && in_array($check['type'], ['freespaceGreater', 'fileSizeLower',
-                                         'fileSizeEquals', 'fileSizeGreater'])) {
-            if ($check['type'] == "freespaceGreater") {
+         switch ($check['type']) {
+            case 'freespaceGreater':
                $check['value'] = $check['value'] * 1024 * 1024;
-               $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
                break;
             case 'fileSizeLower':
             case 'fileSizeGreater':
@@ -310,18 +307,25 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "<br />";
          $type_values = self::getLabelsAndTypes($check['type'], false);
          echo $type_values['path_label'].': '.$check['path'];
-         if (!empty($check['value'])) {
+
+         if (!empty($check['value']) && $check['value'] != NOT_AVAILABLE) {
             echo "&nbsp;&nbsp;&nbsp;<b>";
-            if (strpos($check['type'], "Greater") !== FALSE) {
-               echo "&gt;";
-            } else if (strpos($check['type'], "Lower") !== FALSE) {
-               echo "&lt;";
-            } else {
-               echo "=";
+            switch ($check['type']) {
+               case 'freespaceGreater':
+               case 'fileSizeGreater':
+                  echo "&gt;";
+                  break;
+               case 'fileSizeLower':
+                  echo "&lt;";
+                  break;
+               default:
+                  echo "=";
+                  break;
             }
             echo "</b>&nbsp;&nbsp;&nbsp;";
             echo $check['value'];
          }
+
          echo "</td>";
          if ($canedit) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
@@ -488,6 +492,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             $values['value_type']  = 'registry_type';
             break;
 
+         case "winkeyType":
+            $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = __('Key type', 'fusioninventory').$mandatory_mark;
+            $values['value_type']  = 'registry_type';
+            break;
+
          case "fileExists":
          case "fileMissing":
             $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
@@ -586,6 +596,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                echo "<td><input type='text' name='value' id='check_value{$rand}' value='".
                   $values['value']."' /></td>";
                break;
+
+            case 'registry_type':
+               echo "<td>";
+               self::dropdownRegistryTypes($values['value']);
+               echo "</td>";
+               break;
+
+            case "input+unit":
 
             case "input+unit":
                $value = $values['value'];
