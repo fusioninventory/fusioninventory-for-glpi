@@ -180,7 +180,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
-               'system_category'      => 'devel'
+               '_system_category'      => 'devel'
             );
 
       $this->assertEquals($a_reference, $a_return);
