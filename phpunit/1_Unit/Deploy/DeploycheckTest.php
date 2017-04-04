@@ -145,6 +145,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                    'name_type'   => 'input',
                    'path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
                    'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
+                   'path_comment'=> 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
                    'value_type'  => 'input',
                    'value_label' => false,
                    'value'       => '',
@@ -197,12 +198,17 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
 
       //----------- winkeyExists --------------------------//
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyExists', false);
-      $expected = ['path_label' => 'Path to the key', 'value_label' => false];
+      $expected = ['path_label'   => 'Path to the key',
+                   'value_label'  => false,
+                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+                 ];
       $this->assertEquals($result, $expected);
 
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyExists', true);
-      $expected = ['path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
-                   'value_label' => false];
+      $expected = ['path_label'   => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'value_label'  => false,
+                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+                ];
       $this->assertEquals($result, $expected);
 
       //----------- winkeyMissing --------------------------//
