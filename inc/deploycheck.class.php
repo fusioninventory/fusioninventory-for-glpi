@@ -232,8 +232,15 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                                          'fileSizeEquals', 'fileSizeGreater'])) {
             if ($check['type'] == "freespaceGreater") {
                $check['value'] = $check['value'] * 1024 * 1024;
-            }
-            $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
+               $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
+               break;
+            case 'fileSizeLower':
+            case 'fileSizeGreater':
+            case 'fileSizeEquals':
+               $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
+               break;
+            default :
+               break;
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
