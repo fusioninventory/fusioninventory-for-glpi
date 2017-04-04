@@ -189,4 +189,187 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $this->assertEquals($result, $expected);
    }
+
+   /**
+    * @test
+    */
+   public function testGetLabelsAndTypes() {
+
+      //----------- winkeyExists --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyExists', false);
+      $expected = ['path_label' => 'Path to the key', 'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyExists', true);
+      $expected = ['path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      //----------- winkeyMissing --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyMissing', false);
+      $expected = ['path_label' => 'Path to the key', 'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyMissing', true);
+      $expected = ['path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      //----------- winvalueExists --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueExists', false);
+      $expected = ['path_label' => 'Path to the value', 'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueExists', true);
+      $expected = ['path_label' => "Path to the value&nbsp;<span class='red'>*</span>", 'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      //----------- winkeyEquals --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyEquals', false);
+      $expected = ['path_label' => 'Path to the value', 'value_label' => 'Value'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyEquals', true);
+      $expected = ['path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label' => 'Value'];
+      $this->assertEquals($result, $expected);
+
+      //----------- winvalueType --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', false);
+      $expected = ['path_label'  => 'Path to the value',
+                   'value_label' => 'Type of value',
+                   'value_type'  => 'registry_type'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', true);
+      $expected = ['path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Type of value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'registry_type'];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileExists --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileExists', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileExists', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileMissing --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileMissing', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileMissing', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => false];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileSizeGreater --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeGreater', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => 'Value',
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeGreater', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileSizeLower --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeLower', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => 'Value',
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeLower', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileSizeEquals --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeEquals', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => 'Value',
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeEquals', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileSHA512 --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => 'Value',
+                   'value_type'  => 'textarea'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'textarea'];
+      $this->assertEquals($result, $expected);
+
+      //----------- fileSHA512mismatch --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512mismatch', false);
+      $expected = ['path_label'  => 'File',
+                   'value_label' => 'Value',
+                   'value_type'  => 'textarea'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512mismatch', true);
+      $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'textarea'];
+      $this->assertEquals($result, $expected);
+
+      //----------- freespaceGreater --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('freespaceGreater', false);
+      $expected = ['path_label'  => 'Disk or directory',
+                   'value_label' => 'Value',
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('freespaceGreater', true);
+      $expected = ['path_label'  => "Disk or directory&nbsp;<span class='red'>*</span>",
+                   'value_label' => "Value&nbsp;<span class='red'>*</span>",
+                   'value_type'  => 'input+unit'];
+      $this->assertEquals($result, $expected);
+   }
+
+   /**
+   * @test
+   */
+   public function testGetAllReturnValues() {
+      $values = PluginFusioninventoryDeployCheck::getAllReturnValues();
+      $expected = ["error"   => __('abort job', 'fusioninventory'),
+                  "skip"     => __("skip job", 'fusioninventory'),
+                  "info"     => __("report info", 'fusioninventory'),
+                  "warning"  => __("report warning", 'fusioninventory')
+               ];
+      $this->assertEquals($values, $expected);
+   }
+
+   /**
+   * @test
+   */
+   public function testGetValueForReturn() {
+      $this->assertEquals('abort job', PluginFusioninventoryDeployCheck::getValueForReturn('error'));
+      $this->assertEquals('skip job', PluginFusioninventoryDeployCheck::getValueForReturn('skip'));
+      $this->assertEquals('report info', PluginFusioninventoryDeployCheck::getValueForReturn('info'));
+      $this->assertEquals('report warning', PluginFusioninventoryDeployCheck::getValueForReturn('warning'));
+      $this->assertEquals('', PluginFusioninventoryDeployCheck::getValueForReturn('foo'));
+      $this->assertEquals('', PluginFusioninventoryDeployCheck::getValueForReturn(null));
+   }
 }
