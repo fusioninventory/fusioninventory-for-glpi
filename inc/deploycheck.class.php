@@ -368,7 +368,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       /*
        * Build actions types list
        */
-      $checks_types = self::getTypes();
+      if ($mode === 'create') {
+         $checks_types = self::getTypes();
+      } else {
+         $checks_types = [];
+         foreach (self::getTypes() as $label => $data) {
+            $checks_types+= $data;
+         }
+      }
       array_unshift($checks_types, "---");
 
       /*
