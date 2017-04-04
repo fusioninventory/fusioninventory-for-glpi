@@ -372,4 +372,114 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals('', PluginFusioninventoryDeployCheck::getValueForReturn('foo'));
       $this->assertEquals('', PluginFusioninventoryDeployCheck::getValueForReturn(null));
    }
+
+   /**
+   * @test
+   */
+   public function testAdd_item() {
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $input = ['name'        => 'test1',
+                'entities_id' => 0];
+      $packages_id = $pfDeployPackage->add($input);
+
+      $params = ['id'                 => $packages_id,
+                 'name'               => 'Value exists',
+                 'deploy_checktype'   => 'winvalueExists',
+                 'path'               => 'HKLM\Software\FusionInventory-Agent\debug',
+                 'value'              => false,
+                 'return'             => 'skip'
+              ];
+      PluginFusioninventoryDeployCheck::add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $this->assertEquals($expected, $json);
+
+      $params = ['id'                 => $packages_id,
+                 'name'               => 'More than 500 Mb',
+                 'deploy_checktype'   => 'freespaceGreater',
+                 'path'               => '/tmp',
+                 'value'              => '500',
+                 'unit'               => 'MB',
+                 'return'             => 'info'
+              ];
+      PluginFusioninventoryDeployCheck::add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":false,"return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $this->assertEquals($expected, $json);
+
+   }
+
+   /**
+   * @test
+   */
+   public function testSave_item() {
+      $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $input = ['name'        => 'test1',
+                'entities_id' => 0,
+                'json'        => $json];
+      $packages_id = $pfDeployPackage->add($input);
+
+      $params = ['id'                 => $packages_id,
+                 'index'              => 0,
+                 'name'               => 'Value type is REG_SZ',
+                 'deploy_checktype'   => 'winvalueType',
+                 'path'               => 'HKLM\Software\FusionInventory-Agent\debug',
+                 'value'              => 'REG_SZ',
+                 'return'             => 'info'
+              ];
+      PluginFusioninventoryDeployCheck::save_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value type is REG_SZ","type":"winvalueType","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":"REG_SZ","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $this->assertEquals($expected, $json);
+
+   }
+
+   /**
+   * @test
+   */
+   public function testRemove_item() {
+      $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $input = ['name'        => 'test1',
+                'entities_id' => 0,
+                'json'        => $json
+               ];
+      $packages_id = $pfDeployPackage->add($input);
+
+      PluginFusioninventoryDeployCheck::remove_item(['packages_id'   => $packages_id,
+                                                     'check_entries' => [1 => 'on']]);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $this->assertEquals($expected, $json);
+
+      PluginFusioninventoryDeployCheck::remove_item(['packages_id'   => $packages_id,
+                                                     'check_entries' => [0 => 'on']]);
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $this->assertEquals($expected, $json);
+   }
+
+   /**
+   * @test
+   */
+   public function testMove_item() {
+      $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $input = ['name'        => 'test1',
+                'entities_id' => 0,
+                'json'        => $json
+               ];
+      $packages_id = $pfDeployPackage->add($input);
+
+      PluginFusioninventoryDeployCheck::move_item(['id'        => $packages_id,
+                                                   'old_index' => 0,
+                                                   'new_index' => 1]);
+      $expected = '{"jobs":{"checks":[{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"},{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $this->assertEquals($expected, $json);
+   }
 }
