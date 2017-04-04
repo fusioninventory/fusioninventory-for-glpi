@@ -134,12 +134,12 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetValues() {
-      $values = ['name'   => 'My check',
-                 'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
-                 'value'  => '',
-                 'return' => 'info'
-                ];
-      $result = PluginFusioninventoryDeployCheck::getValues('winkeyExists', $values, 'edit');
+      $values   = ['name'   => 'My check',
+                   'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
+                   'value'  => '',
+                   'return' => 'info'
+                  ];
+      $result   = PluginFusioninventoryDeployCheck::getValues('winkeyExists', $values, 'edit');
       $expected = ['name_value'  => 'My check',
                    'name_label'  => 'Audit name',
                    'name_type'   => 'input',
@@ -164,6 +164,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                    'name_label'  => 'Audit name',
                    'name_type'   => 'input',
                    'path_label'  => "File&nbsp;<span class='red'>*</span>",
+                   'path_comment'=> '',
                    'path_value'  => '/etc/passwd',
                    'value_type'  => 'input',
                    'value_label' => false,
@@ -172,17 +173,18 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $this->assertEquals($result, $expected);
 
-      $values = ['name'   => 'Key equals',
+      $values = ['name'   => 'Value equals',
                  'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
                  'value'  => '2',
                  'return' => 'error'
                 ];
       $result = PluginFusioninventoryDeployCheck::getValues('winkeyEquals', $values, 'edit');
-      $expected = ['name_value'  => 'Key equals',
+      $expected = ['name_value'  => 'Value equals',
                    'name_label'  => 'Audit name',
                    'name_type'   => 'input',
                    'path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
                    'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
+                   'path_comment'=> 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'value_type'  => 'input',
                    'value_label' => 'Value',
                    'value'       => '2',
@@ -213,44 +215,56 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
 
       //----------- winkeyMissing --------------------------//
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyMissing', false);
-      $expected = ['path_label' => 'Path to the key', 'value_label' => false];
+      $expected = ['path_label'   => 'Path to the key',
+                   'value_label'  => false,
+                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\'];
       $this->assertEquals($result, $expected);
 
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyMissing', true);
-      $expected = ['path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
-                   'value_label' => false];
+      $expected = ['path_label'   => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'value_label'  => false,
+                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\'];
       $this->assertEquals($result, $expected);
 
       //----------- winvalueExists --------------------------//
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueExists', false);
-      $expected = ['path_label' => 'Path to the value', 'value_label' => false];
+      $expected = ['path_label'   => 'Path to the value',
+                   'value_label'  => false,
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server'];
       $this->assertEquals($result, $expected);
 
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueExists', true);
-      $expected = ['path_label' => "Path to the value&nbsp;<span class='red'>*</span>", 'value_label' => false];
+      $expected = ['path_label'   => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label'  => false,
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server'];
       $this->assertEquals($result, $expected);
 
       //----------- winkeyEquals --------------------------//
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyEquals', false);
-      $expected = ['path_label' => 'Path to the value', 'value_label' => 'Value'];
+      $expected = ['path_label'   => 'Path to the value',
+                   'value_label'  => 'Value',
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server'];
       $this->assertEquals($result, $expected);
 
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyEquals', true);
-      $expected = ['path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
-                   'value_label' => 'Value'];
+      $expected = ['path_label'   => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label'  => 'Value',
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server'];
       $this->assertEquals($result, $expected);
 
       //----------- winvalueType --------------------------//
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', false);
-      $expected = ['path_label'  => 'Path to the value',
-                   'value_label' => 'Type of value',
-                   'value_type'  => 'registry_type'];
+      $expected = ['path_label'   => 'Path to the value',
+                   'value_label'  => 'Type of value',
+                   'value_type'   => 'registry_type',
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server'];
       $this->assertEquals($result, $expected);
 
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', true);
-      $expected = ['path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
-                   'value_label' => "Type of value&nbsp;<span class='red'>*</span>",
-                   'value_type'  => 'registry_type'];
+      $expected = ['path_label'   => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label'  => "Type of value&nbsp;<span class='red'>*</span>",
+                   'value_type'   => 'registry_type',
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server'];
       $this->assertEquals($result, $expected);
 
       //----------- fileExists --------------------------//
