@@ -60,19 +60,28 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @return array
     */
    static function getTypes() {
-      return array(
-         'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
-         'winkeyMissing'      => __("Registry key missing", 'fusioninventory'),
-         'winkeyEquals'       => __("Registry key value equals to", 'fusioninventory'),
-         'fileExists'         => __("File exists", 'fusioninventory'),
-         'fileMissing'        => __("File is missing", 'fusioninventory'),
-         'fileSizeGreater'    => __("File size is greater than", 'fusioninventory'),
-         'fileSizeEquals'     => __("File size is equal to", 'fusioninventory'),
-         'fileSizeLower'      => __("File size is lower than", 'fusioninventory'),
-         'fileSHA512'         => __("SHA-512 hash value matches", 'fusioninventory'),
-         'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'fusioninventory'),
-         'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
-      );
+      return [
+               __('Registry', 'fusioninventory') => [
+                  'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
+                  'winvalueExists'     => __("Registry value exists", 'fusioninventory'),
+                  'winkeyMissing'      => __("Registry key missing", 'fusioninventory'),
+                  'winvalueMissing'    => __("Registry value missing", 'fusioninventory'),
+                  'winkeyEquals'       => __("Registry value equals to", 'fusioninventory'),
+                  'winvalueType'       => __("Type of registry value equals to", 'fusioninventory'),
+         ],
+               __('File') => [
+                  'fileExists'         => __("File exists", 'fusioninventory'),
+                  'fileMissing'        => __("File is missing", 'fusioninventory'),
+                  'fileSizeGreater'    => __("File size is greater than", 'fusioninventory'),
+                  'fileSizeEquals'     => __("File size is equal to", 'fusioninventory'),
+                  'fileSizeLower'      => __("File size is lower than", 'fusioninventory'),
+                  'fileSHA512'         => __("SHA-512 hash value matches", 'fusioninventory'),
+                  'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'fusioninventory'),
+               ],
+             __('Other') => [
+               'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
+            ]
+      ];
    }
 
 
@@ -409,7 +418,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    static function getValues($type, $data, $mode) {
       $values = array(
          'name_value'  => "",
-         'name_label'  => __('Audit label'),
+         'name_label'  => __('Audit name'),
          'name_type'   => "input",
          'path_label'  => "",
          'path_value'  => "",
@@ -451,29 +460,25 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label']   = __("Path to the key", 'fusioninventory').$mandatory_mark;
-            $values['value_label']  = FALSE;
-            $values['path_comment'] = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
+            $values['path_label']  = __("Path to the key", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = FALSE;
             break;
 
          case "winvalueExists":
          case "winvalueMissing":
-            $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label']  = FALSE;
-            $values['path_comment'] = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            $values['path_label']  = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = FALSE;
             break;
 
          case "winkeyEquals":
-            $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label']  = __('Value', 'fusioninventory');
-            $values['path_comment'] = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
+            $values['path_label']  = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = __('Value', 'fusioninventory');
             break;
 
          case "winvalueType":
-            $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label']  = __('Type of value', 'fusioninventory').$mandatory_mark;
-            $values['value_type']   = 'registry_type';
-            $values['path_comment'] = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            $values['path_label']  = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = __('Type of value', 'fusioninventory').$mandatory_mark;
+            $values['value_type']  = 'registry_type';
             break;
 
          case "fileExists":
@@ -548,7 +553,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Audit label')."</th>";
+      echo "<th>".__('Audit name')."</th>";
       echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
