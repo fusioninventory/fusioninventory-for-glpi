@@ -96,12 +96,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @return array
     */
    static function getUnitLabel() {
-      return array(
-         "B"  => __("B", 'fusioninventory'),
-         "KB" => __("KiB", 'fusioninventory'),
-         "MB" => __("MiB", 'fusioninventory'),
-         "GB" => __("GiB", 'fusioninventory')
-      );
+      return [
+               "B"  => __("B", 'fusioninventory'),
+               "KB" => __("KiB", 'fusioninventory'),
+               "MB" => __("MiB", 'fusioninventory'),
+               "GB" => __("GiB", 'fusioninventory')
+             ];
    }
 
 
@@ -141,6 +141,37 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
 
+   static function getRegistryTypes() {
+      return ['REG_BINARY'              => 'REG_BINARY',
+              'REG_DWORD'               => 'REG_DWORD',
+              'REG_SZ'                  => 'REG_SZ',
+              'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
+              'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
+              'REG_LINK'                => 'REG_LINK',
+              'REG_QWORD_LITTLE_ENDIAN' => 'REG_QWORD_LITTLE_ENDIAN',
+              'REG_DWORD_LITTLE_ENDIAN' => 'REG_DWORD_LITTLE_ENDIAN',
+              'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
+              'REG_NONE'                => 'REG_NONE'
+             ];
+   }
+
+   static function dropdownRegistryTypes($value = 'REG_SZ') {
+      return Dropdown::showFromArray('value', self::getRegistryTypes(),
+                                     ['value' => $value]);
+   }
+
+   static function getRegistryTypeLabel($type) {
+      if (is_null($type)) {
+         return '';
+      }
+      $types = self::getRegistryTypes();
+      if (isset($types[$type])) {
+         return $types[$type];
+      } else {
+         return '';
+      }
+   }
+>>>>>>> 2c74cd567... Add unit tests for deploychecks
 
    /**
     * Display form

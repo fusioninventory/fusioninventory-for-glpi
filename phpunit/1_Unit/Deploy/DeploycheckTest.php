@@ -134,18 +134,17 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetValues() {
-      $values   = ['name'   => 'My check',
-                   'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
-                   'value'  => '',
-                   'return' => 'info'
-                  ];
-      $result   = PluginFusioninventoryDeployCheck::getValues('winkeyExists', $values, 'edit');
+      $values = ['name'   => 'My check',
+                 'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
+                 'value'  => '',
+                 'return' => 'info'
+                ];
+      $result = PluginFusioninventoryDeployCheck::getValues('winkeyExists', $values, 'edit');
       $expected = ['name_value'  => 'My check',
                    'name_label'  => 'Audit name',
                    'name_type'   => 'input',
                    'path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
                    'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
-                   'path_comment'=> 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
                    'value_type'  => 'input',
                    'value_label' => false,
                    'value'       => '',
@@ -164,7 +163,6 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                    'name_label'  => 'Audit name',
                    'name_type'   => 'input',
                    'path_label'  => "File&nbsp;<span class='red'>*</span>",
-                   'path_comment'=> '',
                    'path_value'  => '/etc/passwd',
                    'value_type'  => 'input',
                    'value_label' => false,
@@ -173,18 +171,17 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $this->assertEquals($result, $expected);
 
-      $values = ['name'   => 'Value equals',
+      $values = ['name'   => 'Key equals',
                  'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
                  'value'  => '2',
                  'return' => 'error'
                 ];
       $result = PluginFusioninventoryDeployCheck::getValues('winkeyEquals', $values, 'edit');
-      $expected = ['name_value'  => 'Value equals',
+      $expected = ['name_value'  => 'Key equals',
                    'name_label'  => 'Audit name',
                    'name_type'   => 'input',
                    'path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
                    'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
-                   'path_comment'=> 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'value_type'  => 'input',
                    'value_label' => 'Value',
                    'value'       => '2',
