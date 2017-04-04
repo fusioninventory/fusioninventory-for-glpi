@@ -424,7 +424,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    static function getValues($type, $data, $mode) {
       $values = array(
          'name_value'  => "",
-         'name_label'  => __('Audit name'),
+         'name_label'  => __('Audit label'),
          'name_type'   => "input",
          'path_label'  => "",
          'path_value'  => "",
@@ -563,7 +563,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Audit name')."</th>";
+      echo "<th>".__('Audit label')."</th>";
       echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
