@@ -270,6 +270,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          switch ($check['type']) {
             case 'freespaceGreater':
                $check['value'] = $check['value'] * 1024 * 1024;
+               $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
                break;
             case 'fileSizeLower':
             case 'fileSizeGreater':
