@@ -417,8 +417,16 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             break;
 
          case "winkeyEquals":
-            $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Key value', 'fusioninventory');
+            $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label']  = __('Value', 'fusioninventory');
+            $values['path_comment'] = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            break;
+
+         case "winvalueType":
+            $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label']  = __('Type of value', 'fusioninventory').$mandatory_mark;
+            $values['value_type']   = 'registry_type';
+            $values['path_comment'] = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
             break;
 
          case "fileExists":
