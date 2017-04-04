@@ -375,6 +375,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'name_type'   => "input",
          'path_label'  => "",
          'path_value'  => "",
+         'path_comment'=> "",
          'value_type'  => "input",
          'value_label' => "",
          'value'       => "",
@@ -412,14 +413,22 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = FALSE;
+            $values['path_label']   = __("Path to the key", 'fusioninventory').$mandatory_mark;
+            $values['value_label']  = FALSE;
+            $values['path_comment'] = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
+            break;
+
+         case "winvalueExists":
+         case "winvalueMissing":
+            $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label']  = FALSE;
+            $values['path_comment'] = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
             break;
 
          case "winkeyEquals":
             $values['path_label']   = __("Path to the value", 'fusioninventory').$mandatory_mark;
             $values['value_label']  = __('Value', 'fusioninventory');
-            $values['path_comment'] = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            $values['path_comment'] = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
             break;
 
          case "winvalueType":
@@ -498,17 +507,24 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       if ($values === FALSE) {
          return FALSE;
       }
+
       echo "<table class='package_item'>";
       echo "<tr>";
       echo "<th>".__('Audit label')."</th>";
       echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
-      echo "<td><input type='text' name='path' id='check_path{$rand}' value=\"{$values['path_value']}\" /></td>";
+      echo "<td><input type='text' name='path' id='check_path{$rand}' value=\"{$values['path_value']}\" />";
+      if ($values['path_comment']) {
+         echo "<br/><i>".$values['path_comment']."</i>";
+      }
+      echo "</td>";
       echo "</tr>";
+
       if ($values['value_label'] !== FALSE) {
          echo "<tr>";
          echo "<th>{$values['value_label']}</th>";
+
          switch ($values['value_type']) {
 
             case "textarea":
