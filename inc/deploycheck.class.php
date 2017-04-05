@@ -466,9 +466,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label']   = __("Path to the key", 'fusioninventory').$mandatory_mark;
-            $values['value_label']  = FALSE;
-            $values['path_comment'] = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
+            $values['path_label']      = __("Path to the key", 'fusioninventory').$mandatory_mark;
+            $values['value_label']     = FALSE;
+            $values['path_comment']    = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
             $values['warning_message'] = __('Fusioninventory-Agent 2.3.20 or higher recommended');
             break;
 
@@ -539,7 +539,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
-
+      global $CFG_GLPI;
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
       if (isset($request_data['packages_id'])) {
@@ -566,12 +566,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
 
       echo "<table class='package_item'>";
-      if ($values['warning_message']) {
-         echo "<tr>";
-         echo "<td></td><td><span class='red'>".$values['warning_message']."</span></td>";
-         echo "</tr>";
-      }
-
       echo "<tr>";
       echo "<th>".__('Audit label')."</th>";
       echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
@@ -630,6 +624,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                   }
                }
                echo "<td>";
+
                echo "<input type='text' name='value' id='check_value{$rand}' "
                    . "value='{$value}' />";
                echo "</td>";
@@ -664,6 +659,15 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                               ['value' => $values['return']]);
       echo "</td>";
       echo "</tr>";
+
+      if ($values['warning_message']) {
+         echo "<tr>";
+         echo "<td></td>";
+         echo "<td>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/pics/warning_min.png'>";
+         echo "<span class='red'><i>".$values['warning_message']."</i></span></td>";
+         echo "</tr>";
+      }
 
       echo "<tr>";
       echo "<td>";
