@@ -154,14 +154,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
 
    static function getRegistryTypes() {
-      return ['REG_BINARY'              => 'REG_BINARY',
+      return ['REG_SZ'                  => 'REG_SZ',
               'REG_DWORD'               => 'REG_DWORD',
-              'REG_SZ'                  => 'REG_SZ',
+              'REG_BINARY'              => 'REG_BINARY',
               'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
               'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
               'REG_LINK'                => 'REG_LINK',
-              'REG_QWORD_LITTLE_ENDIAN' => 'REG_QWORD_LITTLE_ENDIAN',
-              'REG_DWORD_LITTLE_ENDIAN' => 'REG_DWORD_LITTLE_ENDIAN',
               'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
               'REG_NONE'                => 'REG_NONE'
              ];

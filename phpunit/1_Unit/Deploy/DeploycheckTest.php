@@ -118,7 +118,18 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetRegistryTypes() {
-      $this->assertEquals(10, count(PluginFusioninventoryDeployCheck::getRegistryTypes()));
+      $types = PluginFusioninventoryDeployCheck::getRegistryTypes();
+      $this->assertEquals(10, count($types));
+      $expected = ['REG_SZ'                  => 'REG_SZ',
+              'REG_DWORD'               => 'REG_DWORD',
+              'REG_BINARY'              => 'REG_BINARY',
+              'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
+              'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
+              'REG_LINK'                => 'REG_LINK',
+              'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
+              'REG_NONE'                => 'REG_NONE'
+           ];
+      $this->assertEquals($expected, $types);
    }
 
    /**
