@@ -119,7 +119,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     */
    public function testGetRegistryTypes() {
       $types = PluginFusioninventoryDeployCheck::getRegistryTypes();
-      $this->assertEquals(10, count($types));
+      $this->assertEquals(8, count($types));
       $expected = ['REG_SZ'                  => 'REG_SZ',
               'REG_DWORD'               => 'REG_DWORD',
               'REG_BINARY'              => 'REG_BINARY',
@@ -152,7 +152,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                   ];
       $result   = PluginFusioninventoryDeployCheck::getValues('winkeyExists', $values, 'edit');
       $expected = ['name_value'  => 'My check',
-                   'name_label'  => 'Audit name',
+                   'name_label'  => 'Audit label',
                    'name_type'   => 'input',
                    'path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
                    'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
@@ -172,7 +172,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $result = PluginFusioninventoryDeployCheck::getValues('fileExists', $values, 'edit');
       $expected = ['name_value'  => 'File exists',
-                   'name_label'  => 'Audit name',
+                   'name_label'  => 'Audit label',
                    'name_type'   => 'input',
                    'path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'path_comment'=> '',
@@ -191,7 +191,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $result = PluginFusioninventoryDeployCheck::getValues('winkeyEquals', $values, 'edit');
       $expected = ['name_value'  => 'Value equals',
-                   'name_label'  => 'Audit name',
+                   'name_label'  => 'Audit label',
                    'name_type'   => 'input',
                    'path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
                    'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
