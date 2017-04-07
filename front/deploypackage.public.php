@@ -66,6 +66,10 @@ if (isset($_POST['prepareinstall'])) {
    switch ($_POST['wakeup_type']) {
       case 'local':
          echo '<link rel="import" href="http://127.0.0.1:62354/now">';
+         echo Html::scriptBlock("setTimeout(function(){
+            window.location='{$_SERVER['HTTP_REFERER']}';
+         }, 500);");
+         exit;
          break;
       case 'remote':
          if ($computers_id) {
