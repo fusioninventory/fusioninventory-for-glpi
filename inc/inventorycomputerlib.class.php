@@ -962,11 +962,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   // Nothing to do
                } else {
                   if (count($db_software) > 0) {
+                     $soft_versions = [];
                      // Delete softwares in DB
                      foreach ($db_software as $idtmp) {
                         $this->computerSoftwareVersion->getFromDB($idtmp);
                         $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
-//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
+                        $soft_versions[$idtmp] = $this->softwareVersion->getID();
 
                         if (!$no_history) {
                            $changes[0] = '0';
@@ -985,6 +986,24 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $query = "DELETE FROM `glpi_computers_softwareversions` "
                              ."WHERE `id` IN ('".implode("', '", $db_software)."')";
                      $DB->query($query);
+
+                     if ($pfConfig->getValue('trash_unused_softs') == 1) {
+                        //put no longer referenced softwares in trash
+                        foreach ($db_software as $idtmp) {
+                           if (countElementsInTable('glpi_computers_softwareversions', "softwareversions_id = '$idtmp'") == 0
+                              && countElementsInTable('glpi_softwarelicenses', "softwareversions_id_buy = '$idtmp'") == 0) {
+
+                              if ($this->softwareVersion->getFromDB($soft_versions[$idtmp])
+                                 && countElementsInTable('glpi_softwarelicenses', "softwares_id = '" . $this->softwareVersion->fields['softwares_id'] . "'") == 0
+                                 && countElementsInTable('glpi_softwareversions', "softwares_id = '" . $this->softwareVersion->fields['softwares_id'] . "'") == 1) {
+                                 $this->software->putInTrash(
+                                    $this->softwareVersion->fields['softwares_id'],
+                                    __('Software deleted by fusioninventory synchronization', 'fusioninventory')
+                                 );
+                              }
+                           }
+                        }
+                     }
                   }
                   if (count($a_computerinventory['software']) > 0) {
                      $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software",
@@ -1077,7 +1096,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-      // * Virtualmachines
+         // * Virtualmachines
          if ($pfConfig->getValue("import_vm") == 1) {
             $db_computervirtualmachine = array();
             if ($no_history === FALSE) {

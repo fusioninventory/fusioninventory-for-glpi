@@ -408,6 +408,28 @@ class ComputerLog extends RestoreDatabase_TestCase {
           ),
           3 => array(
               'id'               => '3',
+              'itemtype'         => 'Software',
+              'items_id'         => '3',
+              'itemtype_link'    => '',
+              'linked_action'    => '0',
+              'user_name'        => '',
+              'id_search_option' => '62',
+              'old_value'        => '&nbsp; (0)',
+              'new_value'        => 'FUSION (1)'
+          ),
+          4 => array(
+              'id'               => '4',
+              'itemtype'         => 'Software',
+              'items_id'         => '3',
+              'itemtype_link'    => '',
+              'linked_action'    => '0',
+              'user_name'        => '',
+              'id_search_option' => '16',
+              'old_value'        => '',
+              'new_value'        => 'Software deleted by fusioninventory synchronization'
+          ),
+          5 => array(
+              'id'               => '5',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'SoftwareVersion',
@@ -417,8 +439,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ORBit2 - 2.14.19 (3)',
               'new_value'        => ''
           ),
-          4 => array(
-              'id'               => '4',
+          6 => array(
+              'id'               => '6',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '3',
               'itemtype_link'    => 'Computer',
@@ -430,13 +452,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
           )
       );
 
-      $this->assertEquals($a_reference, $a_logs, "May have 5 logs (update contact, remove processor
+      $this->assertEquals($a_reference, $a_logs, "May have 6 logs (update contact, remove processor
          and remove a software)");
-
    }
- }
-
-
-
-
-?>
+}

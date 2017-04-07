@@ -68,6 +68,8 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
     * @dataProvider dataprovider
     */
    public function AddComputer($data) {
+      global $PF_CONFIG;
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
@@ -89,12 +91,33 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
 
       $this->CountSoftwares($data);
       $this->CountVersions($data);
+
+      if (count($data['inventory']['CONTENT']['SOFTWARES']) == 3) {
+          //drop software, config set not to trash => results should be the same
+          $PF_CONFIG['trash_unused_softs'] = '0';
+          unset($data['inventory']['CONTENT']['SOFTWARES'][2]);
+          $inventory['CONTENT'] = $data['inventory']['CONTENT'];
+
+          $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
+          $this->CountSoftwares($data);
+          $this->CountVersions($data);
+
+          //drop software, config set to trash => soft must disapear
+          $PF_CONFIG['trash_unused_softs'] = '1';
+          unset($data['inventory']['CONTENT']['SOFTWARES'][1]);
+          $inventory['CONTENT'] = $data['inventory']['CONTENT'];
+          $data['expected_results']['nb_softwares'] = 2;
+
+          $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
+          $this->CountSoftwares($data);
+          $this->CountVersions($data);
+      }
    }
 
    public function CountSoftwares($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
-      $nb_softwares_in_database = countElementsInTable("glpi_softwares");
+      $nb_softwares_in_database = countElementsInTable("glpi_softwares", "`is_deleted` = '0'");
       $this->assertEquals(
          $data['expected_results']['nb_softwares'],
          $nb_softwares_in_database,
