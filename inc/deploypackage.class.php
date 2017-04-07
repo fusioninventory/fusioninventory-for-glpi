@@ -264,7 +264,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          foreach ($this->running_tasks as $task) {
             $taskurl_base =
-               Toolbox::getItemTypeFormURL("PluginFusioninventoryTask", TRUE);
+               Toolbox::getItemTypeFormURL("PluginFusioninventoryTask", true);
 
             $error_message .= "<a href='$taskurl_base?id=".$task['task']['id']."'>";
             $error_message .=  $task['task']['name'];
@@ -304,10 +304,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->running_tasks =
             PluginFusioninventoryTask::getItemsFromDB(
                array(
-                   'is_active'   => TRUE,
-                   'is_running'  => TRUE,
+                   'is_active'   => true,
+                   'is_running'  => true,
                    'targets'     => array(__CLASS__ => $this->fields['id']),
-                   'by_entities' => FALSE,
+                   'by_entities' => false,
                )
             );
    }
@@ -417,7 +417,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     */
    function showMenu($options=array()) {
 
-      $this->displaylist = FALSE;
+      $this->displaylist = false;
 
       $this->fields['id'] = -1;
       $this->showList();
@@ -446,10 +446,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          $this->addStandardTab('PluginFusioninventoryDeployinstall', $ong, $options);
       }
-      if ($this->fields['plugin_fusioninventory_deploygroups_id'] > 0) {
-         $this->addStandardTab(__CLASS__, $ong, $options);
-      }
-      $ong['no_all_tab'] = TRUE;
+      $this->addStandardTab(__CLASS__, $ong, $options);
+      $ong['no_all_tab'] = true;
       return $ong;
    }
 
@@ -491,10 +489,23 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      return TRUE;
+      return true;
    }
 
+   function displayDebugTab() {
 
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         echo "<div id='json_span'>";
+         echo "<table class='tab_cadre_fixe'>";
+
+         echo "<tr><td>";
+         echo "<span id='package_json_debug'>";
+         $this->displayJSONDebug();
+         echo "</span>";
+         echo "</td></tr>";
+         echo "</table></div>";
+      }
+   }
 
    /**
     * Display order type form
@@ -516,7 +527,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       );
       $rand = mt_rand();
 
-      $datas = json_decode($this->fields['json'], TRUE);
+      $datas = json_decode($this->fields['json'], true);
 
       // Display an error if the package modification is not possible
       $error_msg = $this->getEditErrorMessage();
@@ -589,14 +600,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</tr>";
       }
 
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-         // === debug ===
-         echo "<tr><td>";
-         echo "<span id='package_json_debug'>";
-         $this->displayJSONDebug();
-         echo "</sp3an>";
-         echo "</td></tr>";
-      }
       echo "</table>";
       if (!empty($error_msg)) {
          echo "</div>";
@@ -641,12 +644,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @param string $dom_id
     * @param boolean $clone
     */
-   static function plusButton($dom_id, $clone = FALSE) {
+   static function plusButton($dom_id, $clone = false) {
       global $CFG_GLPI;
 
       echo  "&nbsp;";
       echo  "<img id='plus_$dom_id' ";
-      if ($clone !== FALSE) {
+      if ($clone !== false) {
          echo " onClick=\"plusbutton('$dom_id', '$clone')\" ";
       } else {
          echo " onClick=\"plusbutton('$dom_id')\" ";
@@ -777,8 +780,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
 
       $zip = new ZipArchive();
-      if ($zip->open($filename) == TRUE) {
-         if ($zip->open($filename, ZipArchive::CREATE) == TRUE) {
+      if ($zip->open($filename) == true) {
+         if ($zip->open($filename, ZipArchive::CREATE) == true) {
             $zip->addEmptyDir('files');
             $zip->addEmptyDir('files/manifests');
             $zip->addEmptyDir('files/repository');
@@ -815,7 +818,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $extract_folder = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/import/".$zipfile.".extract";
 
-      if ($zip->open($filename, ZipArchive::CREATE) == TRUE) {
+      if ($zip->open($filename, ZipArchive::CREATE) == true) {
          $zip->extractTo($extract_folder);
          $zip->close();
       }
@@ -923,7 +926,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return string
     */
    function getSubElement($subtype, $index) {
-      $data_o = json_decode($this->fields['json'], TRUE);
+      $data_o = json_decode($this->fields['json'], true);
       return $data_o['jobs'][$subtype][$index];
    }
 
@@ -936,7 +939,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return null|string
     */
    function getAssociatedFile($hash) {
-      $data_o = json_decode($this->fields['json'], TRUE);
+      $data_o = json_decode($this->fields['json'], true);
 
       if (array_key_exists( $hash, $data_o['associatedFiles'])) {
          return $data_o['associatedFiles'][$hash];
@@ -958,7 +961,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if (!empty($pfDeployPackage->fields['json'])) {
          return $pfDeployPackage->fields['json'];
       } else {
-         return FALSE;
+         return false;
       }
    }
 
@@ -998,7 +1001,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
             __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
-            $error_msg . "<br/>". $error_json_message, FALSE, ERROR, FALSE
+            $error_msg . "<br/>". $error_json_message, false, ERROR, false
          );
          $error = 1;
       } else {
@@ -1024,22 +1027,32 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate) {
+         $tabs = [];
          switch ($item->getType()) {
 
             case __CLASS__ :
-               if ($item->canUpdateItem()) {
+               if ($item->fields['plugin_fusioninventory_deploygroups_id'] > 0
+                  && $item->canUpdateItem()) {
                   if ($_SESSION['glpishow_count_on_tabs']) {
-                     $nb = $item->countVisibilities();
-                     return self::createTabEntry(_n('Target for self-service', 'Targets for self-service', $nb, 'fusioninventory'),
+                     $nb     = $item->countVisibilities();
+                     $tabs[1] = self::createTabEntry(_n('Target for self-service', 'Targets for self-service', $nb, 'fusioninventory'),
                                                     $nb);
                   } else {
-                     return _n('Target for self-service', 'Targets for self-service', 2, 'fusioninventory');
+                     $tabs[1] = _n('Target for self-service', 'Targets for self-service', 2, 'fusioninventory');
                   }
+               }
+
+               if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+                  $tabs[2] = __('Debug');
                }
 
          }
       }
-      return '';
+      if (!empty($tabs)) {
+         return $tabs;
+      } else {
+         return '';
+      }
    }
 
 
@@ -1059,10 +1072,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             case 1:
                $item->showVisibility();
-               return TRUE;
+               return true;
+
+            case 2:
+               $item->displayDebugTab();
+               return true;
          }
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -1271,7 +1288,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "</div>";
 
-      return TRUE;
+      return true;
    }
 
 
@@ -1651,7 +1668,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          }
          return $a_packages;
       }
-      return False;
+      return false;
    }
 
    /**

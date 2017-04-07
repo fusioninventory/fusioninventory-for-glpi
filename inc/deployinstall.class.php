@@ -94,6 +94,7 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
+    
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
 
