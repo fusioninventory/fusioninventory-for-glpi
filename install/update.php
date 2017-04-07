@@ -790,8 +790,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   )
                )
            );
-      $a_input['alert_winpath'] = 1;
+      $a_input['alert_winpath']    = 1;
       $a_input['server_as_mirror'] = 1;
+      $a_input['mirror_match']     = 0;
       $config->addValues($a_input, FALSE);
 
       $pfSetup = new PluginFusioninventorySetup();
@@ -5413,6 +5414,10 @@ function do_deploymirror_migration($migration) {
          'type' => 'int(11) NOT NULL',
          'value' => NULL
       ),
+      'is_active' =>  array(
+         'type' => 'tinyint(1) NOT NULL DEFAULT 0',
+         'value' => NULL
+      ),
       'is_recursive' =>  array(
          'type' => 'tinyint(1) NOT NULL DEFAULT 0',
          'value' => NULL
@@ -5449,6 +5454,16 @@ function do_deploymirror_migration($migration) {
    $a_table['keys'] = array(
       array(
          'field' => 'entities_id',
+         'name' => '',
+         'type' => 'KEY'
+      ),
+      array(
+         'field' => 'is_active',
+         'name' => '',
+         'type' => 'KEY'
+      ),
+      array(
+         'field' => 'is_recursive',
          'name' => '',
          'type' => 'KEY'
       ),
@@ -6245,34 +6260,97 @@ function do_rule_migration($migration) {
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "itemtype";
-         $input['pattern']= 'Peripheral';
-         $input['condition']=0;
-         $rulecriteria->add($input);
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "itemtype";
+      $input['pattern']= 'Peripheral';
+      $input['condition']=0;
+      $rulecriteria->add($input);
 
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_ignore_import';
-         $input['value'] = '1';
-         $ruleaction->add($input);
-   // Add monitor rules (in first in rule list) when use it since 0.85
-   $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
-           ." WHERE `type`='import_monitor' ";
-   $DB->query($query);
-   $query = "UPDATE `glpi_rules` "
-           ." SET `ranking` = `ranking`+3"
-           ." WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
-   $ranking = 0;
-     // Create rule for : Monitor + serial
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_ignore_import';
+      $input['value'] = '1';
+      $ruleaction->add($input);
+
+      // Add monitor rules (in first in rule list) when use it since 0.85
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
+              ." WHERE `type`='import_printer' ";
+
+
+      /*
+      *  Manage configuration of plugin
+      */
+      $config = new PluginFusioninventoryConfig();
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
+      $a_input = array();
+      $a_input['ssl_only'] = 0;
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = $users_id;
+      $a_input['agents_old_days'] = 0;
+      $a_input['agents_action'] = 0;
+      $a_input['agents_status'] = 0;
+      $config->addValues($a_input, FALSE);
+//      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
+//        WHERE `plugins_id`='0'");
+
+//      $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`
+//           WHERE `type`='version'
+//           LIMIT 1, 10";
+//      $result = $DB->query($query);
+//      while ($data=$DB->fetch_array($result)) {
+//         $config->delete($data);
+//      }
+
+      $a_input = array();
+      $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
+      $config->addValues($a_input, TRUE);
+      $a_input = array();
+      $a_input['ssl_only'] = 0;
+      if (isset($prepare_Config['ssl_only'])) {
+         $a_input['ssl_only'] = $prepare_Config['ssl_only'];
+      }
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = 0;
+
+      //Deploy configuration options
+      $a_input['server_upload_path'] =
+           Toolbox::addslashes_deep(
+               implode(
+                  DIRECTORY_SEPARATOR,
+                  array(
+                     GLPI_PLUGIN_DOC_DIR,
+                     'fusioninventory',
+                     'upload'
+                  )
+               )
+           );
+      $a_input['alert_winpath']    = 1;
+      $a_input['server_as_mirror'] = 1;
+      $a_input['mirror_match']     = 0;
+      $config->addValues($a_input, FALSE);
+
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
+      $query = "UPDATE `glpi_plugin_fusioninventory_configs`
+                         SET `value`='".$users_id."'
+                  WHERE `type`='users_id'";
+      $DB->query($query);
+
+      // Update fusinvinventory _config values to this plugin
       $input = array();
       $input['is_active']=1;
       $input['name']='Monitor serial';

@@ -2309,7 +2309,9 @@ function plugin_fusioninventory_getDatabaseRelations() {
    $plugin = new Plugin();
 
    if ($plugin->isActivated("fusioninventory")) {
-      return array("glpi_entities"
+      return array("glpi_locations"
+                        => array('glpi_plugin_fusioninventory_deploymirrors' => 'locations_id'),
+                   "glpi_entities"
                         => array("glpi_plugin_fusioninventory_agents"               => "entities_id",
                                  "glpi_plugin_fusioninventory_collects"             => "entities_id",
                                  "glpi_plugin_fusioninventory_credentialips"        => "entities_id",

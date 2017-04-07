@@ -58,7 +58,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @var boolean
     */
-   public $displaylist = FALSE;
+   public $displaylist = false;
 
    /**
     * The right name for this class
@@ -88,7 +88,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param boolean $getOnly
     * @return array
     */
-   function initConfigModule($getOnly=FALSE) {
+   function initConfigModule($getOnly=false) {
 
       $input = array();
       $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
@@ -177,12 +177,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $values configuration values, indexed by name
     * @param boolean $update say if add or update in database
     */
-   function addValues($values, $update=TRUE) {
+   function addValues($values, $update=true) {
 
       foreach ($values as $type=>$value) {
          if ($this->getValue($type) === NULL) {
             $this->addValue($type, $value);
-         } else if ($update == TRUE) {
+         } else if ($update == true) {
             $this->updateValue($type, $value);
          }
       }
@@ -261,22 +261,22 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
          case 0:
             $item->showForm();
-            return TRUE;
+            return true;
 
          case 1:
             $item->showFormInventory();
-            return TRUE;
+            return true;
 
          case 2:
             $item->showFormNetworkInventory();
-            return TRUE;
+            return true;
 
          case 3:
             $item->showFormDeploy();
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -312,9 +312,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    function isActive($name) {
       if (!($this->getValue($name))) {
-         return FALSE;
+         return false;
       } else {
-         return TRUE;
+         return true;
       }
    }
 
@@ -433,10 +433,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "</tr>";
 
-      $options['candel'] = FALSE;
+      $options['candel'] = false;
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -663,7 +663,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $options['candel'] = FALSE;
       $pfConfig->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -732,7 +732,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $options['candel'] = FALSE;
+      $options['candel'] = false;
       $pfsnmpConfig->showFormButtons($options);
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
@@ -743,7 +743,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
 
-      return TRUE;
+      return true;
    }
 
 
@@ -776,10 +776,24 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $options['candel'] = FALSE;
+      echo "<tr>";
+      echo "<td>".__('Match mirrors to agents', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>";
+      $mirror_options = [
+         PluginFusioninventoryDeployMirror::MATCH_LOCATION => __('with location', 'fusioninventory'),
+         PluginFusioninventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'fusioninventory'),
+         PluginFusioninventoryDeployMirror::MATCH_BOTH     => __('with both', 'fusioninventory')
+      ];
+      Dropdown::showFromArray('mirror_match',
+                              $mirror_options,
+                              ['value' => $pfConfig->getValue('mirror_match')]);
+      echo "</td>";
+      echo "</tr>";
+
+      $options['candel'] = false;
       $pfConfig->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -842,7 +856,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
          if (is_array($message)) {
-            $message = print_r($message, TRUE);
+            $message = print_r($message, true);
          }
          Toolbox::logInFile($file, $message);
       }
