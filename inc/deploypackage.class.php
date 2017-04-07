@@ -1421,9 +1421,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                            ['name' => 'prepareinstall']);
          echo "&nbsp;";
          if (!$self_service) {
-            $options = ['local'  => __('Local wakeup', 'fusioninventory'),
-                        'remote' => __('Wakeup from the server', 'fusioninventory'),
-                        'none'   => __('No wakeup', 'fusioninventory')
+            $options = ['local'  => __("I'm on this computer: local wakeup", 'fusioninventory'),
+                        'remote' => __("I'm not on this computer: wakeup from the server", 'fusioninventory'),
+                        'none'   => __("Don't wakeup", 'fusioninventory')
                        ];
             Dropdown::showFromArray('wakeup_type', $options,
                                     ['value' => 'remote']);
