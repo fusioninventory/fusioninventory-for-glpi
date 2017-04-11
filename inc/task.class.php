@@ -797,7 +797,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $interval = $config->getValue('clean_on_demand_tasks');
 
       //If crontask is disabled, quit method
-      if (!$interval) {
+      if (!$interval < 0) {
          return true;
       }
 
@@ -857,7 +857,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             return array('description' => __('FusionInventory task scheduler'));
 
          case 'cleanOnDemand' :
-            return array('description' => __('Clean on deman deployment tasks'));
+            return array('description' => __('Clean on demand deployment tasks'));
       }
       return array();
    }

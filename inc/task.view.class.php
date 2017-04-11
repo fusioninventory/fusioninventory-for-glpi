@@ -472,7 +472,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $this->showTextArea(__('Comments'), "comment");
       $this->showCheckboxField(__('Re-prepare a target-actor if previous run is successful', 'fusioninventory'),
                                "reprepare_if_successful");
-
+      if ($this->fields['is_deploy_on_demand']) {
+         echo "<div class='input_wrap'>";
+         echo __("This is an on demand deployment task", "fusioninventory");
+         echo "</div>";
+      }
       echo "</div>";
       if (!$new_item) {
          echo "<div class='fusinv_form'>";

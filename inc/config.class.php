@@ -148,6 +148,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
       $input['manage_osname'] = 1;
+      $input['clean_on_demand_tasks'] = 7;
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -793,11 +794,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr>";
       echo "<td>".__('Delete successful on demand tasks after (in days)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
+      $toadd = [-1 => __('Never')];
       Dropdown::showNumber("clean_on_demand_tasks", array(
          'value' => $pfConfig->getValue('clean_on_demand_tasks'),
          'min'   => 1,
          'max'   => 1000,
-         'toadd' => array('0' => __('Disabled')))
+         'toadd' => $toadd)
       );
       echo "</td>";
       echo "</tr>";

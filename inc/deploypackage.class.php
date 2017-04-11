@@ -1470,6 +1470,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       //Get all computers of the user
       $mycomputers = $computer->find($query);
 
+      $pfAgent       = new PluginFusioninventoryAgent();
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+
       foreach ($mycomputers as $mycomputers_id => $data) {
          $my_packages[$mycomputers_id] = [];
       }
@@ -1478,7 +1481,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $packages_used = $this->getMyDepoyPackages($my_packages, $users_id);
 
       //Get packages that a the user can deploy
-      $packages      = $this->canUserDeploySelf();
+      $packages = $this->canUserDeploySelf();
 
       if ($packages) {
 
@@ -1491,6 +1494,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             //Browse all computers that are target by a a package installation
             foreach ($mycomputers as $comp_id => $data) {
 
+               //If the agent associated with the computer has not the
+               //deploy feature enabled, do not propose to deploy packages on
+               if ($pfAgent->getAgentWithComputerid($mycomputers_id) &&
+                  !$pfAgentmodule->isAgentCanDo('deploy', $pfAgent->getID())) {
+                     continue;
+               }
                //If we only want packages for one computer
                //check if it's the computer we look for
                if ($computers_id && $comp_id != $computers_id) {
@@ -1593,11 +1602,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                    'name'                    => '[deploy on demand] '.$this->fields['name'],
                    'entities_id'             => $computer->fields['entities_id'],
                    'reprepare_if_successful' => 0,
-                   'is_deploy_on_demand'      => 1
+                   'is_deploy_on_demand'     => 1,
+                   'is_active'               => 1,
                   ];
          $tasks_id = $pfTask->add($input);
 
          //Add a new job for the newly created task
+         //and enable it
          $input = [
                    'plugin_fusioninventory_tasks_id' => $tasks_id,
                    'entities_id' => $computer->fields['entities_id'],
@@ -1605,13 +1616,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                    'method'      => 'deployinstall',
                    'targets'     => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
                    'actors'      => exportArrayToDB([['Computer' => $computers_id]]),
-                   'enduser'     => exportArrayToDB([$users_id  => [$computers_id]])
+                   'enduser'     => exportArrayToDB([$users_id  => [$computers_id]]),
                   ];
          $pfTaskJob->add($input);
-
-         //Enable the task
-         $input = ['id' => $tasks_id, 'is_active' => 1];
-         $pfTask->update($input);
       }
 
       //Prepare the task (and only this one)
