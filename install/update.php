@@ -5584,7 +5584,7 @@ function do_deploygroup_migration($migration) {
          'value' => 0
       ),
       'computers_id_cache' =>  array(
-         'type' => 'text',
+         'type' => 'longtext',
          'value' => NULL
       ),
    );
