@@ -43,8 +43,7 @@ before_script:
   - php -S localhost:8088 -t glpi > /dev/null 2>&1 &
 
 script:
- - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then ant -Dwith.coverage -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all; fi
- - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]]; then ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all; fi
+ - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
  - cp -fr build glpi/plugins/fusioninventory/
