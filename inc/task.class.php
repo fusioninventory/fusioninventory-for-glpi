@@ -802,15 +802,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       $pfTask = new self();
-      $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
-                 WHERE `datetime_end` IS NOT NULL
-                    AND DATEDIFF(ADDDATE(`datetime_end`,
-                      INTERVAL $interval DAY),
-                      CURDATE()) < '0'
-                    AND `is_deploy_on_demand`='1'";
-
-      $index = 0;
-      $tasks = $pfTask->getOnDemandTasksToClean($interval);
+      $index  = 0;
+      $tasks  = $pfTask->getOnDemandTasksToClean($interval);
 
       foreach ($tasks as $task_id) {
          if ($pfTask->delete(['id' => $task_id], true)) {
@@ -830,14 +823,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       global $DB;
 
       $tasks  = [];
-      $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
-                 WHERE `datetime_end` IS NOT NULL
-                    AND DATEDIFF(ADDDATE(`datetime_end`,
-                      INTERVAL $interval DAY),
-                      CURDATE()) < '0'
-                    AND `is_deploy_on_demand`='1'";
-      foreach ($DB->request($date) as $tsk) {
-         $tasks[] = $tsk['id'];
+      if ($interval > 0) {
+         $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
+                    WHERE `datetime_end` IS NOT NULL
+                       AND DATEDIFF(ADDDATE(`datetime_end`,
+                         INTERVAL $interval DAY),
+                         CURDATE()) < '0'
+                       AND `is_deploy_on_demand`='1'";
+         foreach ($DB->request($date) as $tsk) {
+            $tasks[] = $tsk['id'];
+         }
       }
 
       return $tasks;

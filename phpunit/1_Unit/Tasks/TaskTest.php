@@ -141,27 +141,28 @@ class TaskTest extends Common_TestCase {
     */
    public function cleanondemand() {
       $crontask = new Crontask();
+      $config   = new PluginFusioninventoryConfig();
 
-      $config = new PluginFusioninventoryConfig();
       //test if on demand task delay is disable by default in configuration
-      $this->assertEquals($config->getValue('clean_on_demand_tasks'), 0);
+      $this->assertEquals(-1, $config->getValue('clean_on_demand_tasks'));
 
-      //Launch the crontask : no task should be deleted
+      //Launch the crontask: no task should be deleted
       PluginFusioninventoryTask::cronCleanOnDemand($crontask);
       $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks',
                                               "`name`='TaskToClean'"), 1);
 
-      //There's still 3 tasks in DB
-      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks'), 4);
+      //There's still 4 tasks in DB
+      $this->assertEquals(4, countElementsInTable('glpi_plugin_fusioninventory_tasks'));
 
       //Set the delay to 5 days
       $config->updateValue('clean_on_demand_tasks', 5);
+      $this->assertEquals(5, $config->getValue('clean_on_demand_tasks'));
 
       //Launch the crontask : one task should was deleted
       PluginFusioninventoryTask::cronCleanOnDemand($crontask);
-      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks',
-                                              "`name`='TaskToClean'"), 0);
-      //Only two tasks left in DB
-      $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_tasks'), 3);
+      $this->assertEquals(0, countElementsInTable('glpi_plugin_fusioninventory_tasks',
+                                              "`name`='TaskToClean'"));
+      //Only 3 tasks left in DB
+      $this->assertEquals(3, countElementsInTable('glpi_plugin_fusioninventory_tasks'));
    }
 }
