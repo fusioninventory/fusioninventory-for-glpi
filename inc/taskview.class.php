@@ -76,7 +76,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
 
-      if ($this->can("task", "r")) {
+      if ($this->can("plugin_fusioninventory_selfpackage", READ)) {
          if ($item->getType() == 'Computer') {
             return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
          }
@@ -112,7 +112,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
-         echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
+         $package = new PluginFusioninventoryDeployPackage();
+         $package->showPackageForMe($_SESSION['glpiID'], $item);
          return TRUE;
       }
       return FALSE;
@@ -471,7 +472,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $this->showTextArea(__('Comments'), "comment");
       $this->showCheckboxField(__('Re-prepare a target-actor if previous run is successful', 'fusioninventory'),
                                "reprepare_if_successful");
-
+      if ($this->fields['is_deploy_on_demand']) {
+         echo "<div class='input_wrap'>";
+         echo __("This is an on demand deployment task", "fusioninventory");
+         echo "</div>";
+      }
       echo "</div>";
       if (!$new_item) {
          echo "<div class='fusinv_form'>";

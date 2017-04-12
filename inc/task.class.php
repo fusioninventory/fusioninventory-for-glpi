@@ -130,6 +130,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[5]['name']           = __('Active');
       $sopt[5]['datatype']       = 'bool';
 
+      $sopt[6]['table']          = $this->getTable();
+      $sopt[6]['field']          = 'reprepare_if_successful';
+      $sopt[6]['linkfield']      = 'reprepare_if_successful';
+      $sopt[6]['name']           = __('Re-prepare a target-actor if previous run is successful',
+                                      'fusioninventory');
+      $sopt[6]['datatype']       = 'bool';
+
+      $sopt[7]['table']          = $this->getTable();
+      $sopt[7]['field']          = 'is_deploy_on_demand';
+      $sopt[7]['name']           = __('deploy on demand task', 'fusioninventory');
+      $sopt[7]['datatype']       = 'bool';
+
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
@@ -768,10 +780,82 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
+
       $task->prepareTaskjobs($methods);
       return TRUE;
    }
 
+   /**
+    * Cron task: prepare taskjobs
+    *
+    * @return true
+    */
+   static function cronCleanOnDemand($task=NULL) {
+      global $DB;
+
+      $config   = new PluginFusioninventoryConfig();
+      $interval = $config->getValue('clean_on_demand_tasks');
+
+      //If crontask is disabled, quit method
+      if (!$interval < 0) {
+         return true;
+      }
+
+      $pfTask = new self();
+      $index  = 0;
+      $tasks  = $pfTask->getOnDemandTasksToClean($interval);
+
+      foreach ($tasks as $task_id) {
+         if ($pfTask->delete(['id' => $task_id], true)) {
+            $index++;
+         }
+      }
+      $task->addVolume($index);
+      return true;
+   }
+
+   /**
+   * Get all on demand tasks to clean
+   * @param $interval number of days to look for successful tasks
+   * @return an array of tasks ID to clean
+   */
+   function getOnDemandTasksToClean($interval) {
+      global $DB;
+
+      $tasks  = [];
+      if ($interval > 0) {
+         $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
+                    WHERE `datetime_end` IS NOT NULL
+                       AND DATEDIFF(ADDDATE(`datetime_end`,
+                         INTERVAL $interval DAY),
+                         CURDATE()) < '0'
+                       AND `is_deploy_on_demand`='1'";
+         foreach ($DB->request($date) as $tsk) {
+            $tasks[] = $tsk['id'];
+         }
+      }
+
+      return $tasks;
+   }
+
+   /**
+    * Give cron information
+    *
+    * @param $name : task's name
+    *
+    * @return arrray of information
+   **/
+   static function cronInfo($name) {
+
+      switch ($name) {
+         case 'taskScheduler' :
+            return array('description' => __('FusionInventory task scheduler'));
+
+         case 'cleanOnDemand' :
+            return array('description' => __('Clean on demand deployment tasks'));
+      }
+      return array();
+   }
 
 
    /**

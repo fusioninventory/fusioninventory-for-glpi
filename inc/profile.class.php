@@ -231,7 +231,7 @@ class PluginFusioninventoryProfile extends Profile {
 
       $rights = array(
           array('rights'    => array(READ => __('Read')),
-                'label'     => __('Self deploy package', 'fusioninventory'),
+                'label'     => __('Deploy packages on demand', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_selfpackage')
       );
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
@@ -331,6 +331,10 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'),
+          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'label'     => __('Deploy packages on demand', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_selfpackage',
+                'rights'    => array(READ => __('Read')))
       );
       return $rights;
    }
