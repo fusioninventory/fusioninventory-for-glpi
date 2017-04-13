@@ -93,6 +93,9 @@ class RepositoryTest extends RestoreDatabase_TestCase {
             'id' => $this->packages_2_id
          ], true);
       }
+
+      // remove file in upload
+      unlink($this->filename);
    }
 
    /**
