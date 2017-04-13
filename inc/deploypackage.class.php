@@ -396,11 +396,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    /**
-    * Clean orders when delete the package
+    * Clean orders after delete the package
     *
     * @global type $DB
     */
-   function cleanDBonPurge() {
+   function post_deleteFromDB() {
       global $DB;
 
       // remove file in repo

@@ -671,27 +671,27 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $shasToRemove = [];
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
+      $data = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
 
-      $files = $datas['jobs']['associatedFiles'];
+      $files = $data['jobs']['associatedFiles'];
       //remove selected checks
 
       foreach ($params['file_entries'] as $index => $checked) {
          if ($checked >= "1" || $checked == "on") {
             //get sha512
-            $sha512 = $datas['jobs']['associatedFiles'][$index];
+            $sha512 = $data['jobs']['associatedFiles'][$index];
 
             //remove file
             unset($files[$index]);
-            //array_splice($datas['jobs']['associatedFiles'], $index, 1);
-            unset($datas['associatedFiles'][$sha512]);
+            //array_splice($data['jobs']['associatedFiles'], $index, 1);
+            unset($data['associatedFiles'][$sha512]);
 
             $shasToRemove[] = $sha512;
          }
       }
-      $datas['jobs']['associatedFiles'] = array_values($files);
+      $data['jobs']['associatedFiles'] = array_values($files);
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $data);
 
       //remove files in repo
       foreach ($shasToRemove as $sha512) {
@@ -884,9 +884,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'p2p'           => isset($params['p2p']) ? $params['p2p'] : 0,
             'uncompress'    => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
-               is_numeric($params['p2p-retention-duration'])
-               ? $params['p2p-retention-duration']
-               : 0
+               isset($params['p2p-retention-duration'])
+               && is_numeric($params['p2p-retention-duration'])
+                  ? $params['p2p-retention-duration']
+                  : 0
             ),
             'id'            => $params['id']
          );
@@ -1073,7 +1074,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
       // try to find file in other packages
-      $rows = $pfDeployPackage->find("`json` LIKE '".substr($sha512, 0, 6 )."%'
+      $rows = $pfDeployPackage->find("`json` LIKE '%".substr($sha512, 0, 6 )."%'
                                   AND `json` LIKE '%$sha512%'" );
 
       if (count($rows) > 0) {
@@ -1157,9 +1158,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $fileparts_cnt = 0;
       $handle = fopen($manifests_path.$sha512, "r");
       if ($handle) {
-         while (($buffer = fgets($handle) !== FALSE)) {
+         while (($buffer = fgets($handle)) !== FALSE) {
             $fileparts_cnt++;
-            $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;
+            $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".trim($buffer, "\n");
             //Check if the filepart exists
             if (!file_exists($parts_path.$path)) {
                $fileparts_ok = FALSE;
