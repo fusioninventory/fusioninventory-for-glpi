@@ -337,6 +337,15 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                </a>
             </td>
             <td class='rowhandler control'><div class='drag'/></td>";
+
+      if (isset($_REQUEST['edit_job'])) {
+         echo Html::scriptBlock("$(document).ready(function() {
+            taskjobs.edit(
+              '".$this->getBaseUrlFor('fi.job.edit')."',
+              ".$_REQUEST['edit_job']."
+            );
+         });");
+      }
    }
 
 
@@ -580,50 +589,52 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo "</div>";
       }
 
-      $targets_display_list = $this->getItemsList('targets');
-      // Display targets and actors lists
-      echo "<hr/>
-            <div>
-               <div class='taskjob_list_header'>
-                  <label>".__('Targets', 'fusioninventory')."&nbsp;:</label>
-               </div>
-               <div id='taskjob_targets_list'>
-                  $targets_display_list
-               </div>
+      if (!$new_item) {
+         $targets_display_list = $this->getItemsList('targets');
+         // Display targets and actors lists
+         echo "<hr/>
                <div>
-                  <a class='clear_list button'
-                     data-clear-param='targets'>".
-                     __('Clear list', 'fusioninventory')."
-                  </a>
-                   /
-                  <a class='delete_items_selected'
-                     data-delete-param='targets'>".
-                     __('Delete selected items', 'fusioninventory')."
-                  </a>
-               </div>
-            </div>";
+                  <div class='taskjob_list_header'>
+                     <label>".__('Targets', 'fusioninventory')."&nbsp;:</label>
+                  </div>
+                  <div id='taskjob_targets_list'>
+                     $targets_display_list
+                  </div>
+                  <div>
+                     <a class='clear_list button'
+                        data-clear-param='targets'>".
+                        __('Clear list', 'fusioninventory')."
+                     </a>
+                      /
+                     <a class='delete_items_selected'
+                        data-delete-param='targets'>".
+                        __('Delete selected items', 'fusioninventory')."
+                     </a>
+                  </div>
+               </div>";
 
-      $actors_display_list = $this->getItemsList('actors');
-      echo "<hr/>
-            <div>
-               <div class='taskjob_list_header'>
-                  <label>".__('Actors', 'fusioninventory')."&nbsp;:</label>
-               </div>
-               <div id='taskjob_actors_list'>
-                  $actors_display_list
-               </div>
+         $actors_display_list = $this->getItemsList('actors');
+         echo "<hr/>
                <div>
-                  <a class='clear_list'
-                     data-clear-param='actors'>".
-                     __('Clear list', 'fusioninventory')."
-                  </a>
-                    /
-                  <a class='delete_items_selected'
-                     data-delete-param='actors'>".
-                     __('Delete selected items', 'fusioninventory')."
-                  </a>
-               </div>
-            </div>";
+                  <div class='taskjob_list_header'>
+                     <label>".__('Actors', 'fusioninventory')."&nbsp;:</label>
+                  </div>
+                  <div id='taskjob_actors_list'>
+                     $actors_display_list
+                  </div>
+                  <div>
+                     <a class='clear_list'
+                        data-clear-param='actors'>".
+                        __('Clear list', 'fusioninventory')."
+                     </a>
+                       /
+                     <a class='delete_items_selected'
+                        data-delete-param='actors'>".
+                        __('Delete selected items', 'fusioninventory')."
+                     </a>
+                  </div>
+               </div>";
+      }
 
       if ($new_item) {
          echo "<tr>";
@@ -677,6 +688,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * @param array $postvars
     */
    public function submitForm($postvars) {
+      global $CFG_GLPI;
+
       $mytaskjob = new PluginFusioninventoryTaskjob();
       if (isset($postvars['definition_add'])) {
          // * Add a definition
@@ -784,8 +797,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             if (!in_array($postvars['entities_id'], $entities_list)) {
                $postvars['entities_id'] = $pfTask->fields['entities_id'];
             }
-            //$postvars['execution_id'] = $pfTask->fields['execution_id'];
-            $this->add($postvars);
+            $jobs_id = $this->add($postvars);
          } else {
             if (isset($postvars['method_id'])) {
                $postvars['method']  = $postvars['method_id'];
@@ -816,9 +828,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             $postvars['actors'] = exportArrayToDB($actors);
 
             //TODO: get rid of plugins_id and just use method
-            //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
             $this->update($postvars);
          }
+
+         Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id=".
+                                 $postvars['plugin_fusioninventory_tasks_id']."&edit_job=".$jobs_id.
+                                 "#taskjobs_form");
       } else if (isset($postvars["delete"])) {
          // * delete taskjob
          Session::checkRight('plugin_fusioninventory_task', PURGE);
