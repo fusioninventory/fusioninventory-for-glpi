@@ -58,6 +58,11 @@ define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
+define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
+define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/");
+
 /**
  * Check if the script name finish by
  *
