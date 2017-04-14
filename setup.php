@@ -64,6 +64,11 @@ define("PLUGIN_FUSIONINVENTORY_ROOT",
    implode(DIRECTORY_SEPARATOR , array(GLPI_ROOT,'plugins', 'fusioninventory', 'inc'))
 );
 
+define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
+define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/");
+
 $options = array(
    PLUGIN_FUSIONINVENTORY_ROOT
 );
