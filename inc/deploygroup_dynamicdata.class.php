@@ -230,7 +230,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       return $ids;
    }
 
-   static function storeCache(PluginFusioninventoryDeployGroup $group, $ids) {
+   /**
+    * Store a set of computers id in db
+    * @param  PluginFusioninventoryDeployGroup $group the instance of fi group
+    * @param  array                            $ids   the list of id to store
+    * @return bool
+    */
+   static function storeCache(PluginFusioninventoryDeployGroup $group, $ids = []) {
       global $DB;
 
       $query = "UPDATE ".self::getTable()."
@@ -239,6 +245,11 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       return $DB->query($query);
    }
 
+   /**
+    * Retrieve the id of computer stored in db for a group
+    * @param  PluginFusioninventoryDeployGroup $group the instance of the group
+    * @return array                            the list of compuers id
+    */
    static function retrieveCache(PluginFusioninventoryDeployGroup $group) {
       global $DB;
 
