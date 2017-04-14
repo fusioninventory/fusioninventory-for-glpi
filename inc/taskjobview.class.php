@@ -690,6 +690,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    public function submitForm($postvars) {
       global $CFG_GLPI;
 
+      $jobs_id = 0;
+
       $mytaskjob = new PluginFusioninventoryTaskjob();
       if (isset($postvars['definition_add'])) {
          // * Add a definition
