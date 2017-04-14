@@ -285,8 +285,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $Computer = new Computer();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
-         "  taskjobs.agents_url = '". $pfAgent->getFormURL()."'",
-         "  taskjobs.computers_url = '". $Computer->getFormURL()."'",
+         "  taskjobs.task_id = '".$task_id."'",
+         "  taskjobs.ajax_url = '".$this->getBaseUrlFor('fi.job.logs')."'",
+         "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
+         "  taskjobs.computers_url = '". $Computer->getFormUrl()."'",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",

@@ -3,12 +3,12 @@ var taskjobs = {};
 taskjobs.show_form = function( data, textStatus, jqXHR) {
    $('#taskjobs_form')
       .html(data);
-}
+};
 
 taskjobs.hide_form = function () {
    $('#taskjobs_form')
       .html('');
-}
+};
 
 taskjobs.register_update_method = function (rand_id) {
 
@@ -24,19 +24,17 @@ taskjobs.register_update_method = function (rand_id) {
          taskjobs.clear_list('actors');
       }
       );
-}
+};
 
 taskjobs.register_update_items = function (rand_id, moduletype, ajax_url) {
    //reset onchange event
    $("#" + rand_id )
       .off("change", "*")
-      .on("change",
-         function(e) {
+      .on("change",function(e) {
             //$("#taskjob_moduleitems_dropdown").text(e.val);
-            taskjobs.show_moduleitems(ajax_url, moduletype, e.val)
-         }
-         );
-}
+            taskjobs.show_moduleitems(ajax_url, moduletype, e.val);
+         });
+};
 
 taskjobs.register_form_changed = function () {
    //reset onchange event
@@ -47,7 +45,7 @@ taskjobs.register_form_changed = function () {
             $('#cancel_job_changes_button').show();
          }
          );
-}
+};
 
 taskjobs.create = function(ajax_url, task_id) {
    $.ajax({
@@ -56,8 +54,8 @@ taskjobs.create = function(ajax_url, task_id) {
          "task_id" : task_id
       },
       success: taskjobs.show_form
-   })
-}
+   });
+};
 
 taskjobs.edit = function(ajax_url, taskjob_id) {
    $.ajax({
@@ -66,40 +64,40 @@ taskjobs.edit = function(ajax_url, taskjob_id) {
          "id" : taskjob_id
       },
       success: taskjobs.show_form
-   })
-}
+   });
+};
 
 taskjobs.hide_moduletypes_dropdown = function() {
    $('#taskjob_moduletypes_dropdown')
       .html('');
-}
+};
 
 taskjobs.show_moduletypes_dropdown = function(dropdown_dom) {
    $('#taskjob_moduletypes_dropdown')
       .html(dropdown_dom);
-}
+};
 
 taskjobs.hide_moduleitems_dropdown = function() {
    $('#taskjob_moduleitems_dropdown')
       .html('');
-}
+};
 
 taskjobs.show_moduleitems_dropdown = function(dropdown_dom) {
    $('#taskjob_moduleitems_dropdown')
       .html(dropdown_dom);
-}
+};
 
 taskjobs.clear_list = function(moduletype) {
    $('#taskjob_'+moduletype+'_list')
       .html('');
-}
+};
 
 taskjobs.delete_items_selected = function(moduletype) {
    $('#taskjob_'+moduletype+'_list')
       .find(".taskjob_item")
       .has('input[type=checkbox]:checked')
-      .remove()
-}
+      .remove();
+};
 
 taskjobs.add_item = function (moduletype, itemtype, itemtype_name, rand_id) {
    item_id = $("#"+rand_id).val();
@@ -108,9 +106,9 @@ taskjobs.add_item = function (moduletype, itemtype, itemtype_name, rand_id) {
       item_to_add = {
          'id' : itemtype + "-" + item_id,
          'name' : item_name
-      }
+      };
       item_exists = $('#taskjob_' + moduletype + '_list').find('#'+item_to_add.id);
-      if (item_exists.length == 0) {
+      if (item_exists.length === 0) {
          // Append the element to the list input
          // TODO: replace this with an ajax call to taskjobview class.
          $('#taskjob_' + moduletype + '_list')
@@ -133,7 +131,7 @@ taskjobs.add_item = function (moduletype, itemtype, itemtype_name, rand_id) {
          item_exists.fadeOut(100).fadeIn(100);
       }
    }
-}
+};
 
 taskjobs.show_moduletypes = function(ajax_url, moduletype) {
    taskjobs.hide_moduletypes_dropdown();
@@ -145,10 +143,10 @@ taskjobs.show_moduletypes = function(ajax_url, moduletype) {
          "method" : $('#method_selected').text()
       },
       success: function( data, textStatus, jqXHR) {
-         taskjobs.show_moduletypes_dropdown( data )
+         taskjobs.show_moduletypes_dropdown( data );
       }
    });
-}
+};
 
 taskjobs.show_moduleitems = function(ajax_url, moduletype, itemtype) {
    taskjobs.hide_moduleitems_dropdown();
@@ -160,10 +158,10 @@ taskjobs.show_moduleitems = function(ajax_url, moduletype, itemtype) {
          "method" : $('#method_selected').text()
       },
       success: function( data, textStatus, jqXHR) {
-         taskjobs.show_moduleitems_dropdown( data )
+         taskjobs.show_moduleitems_dropdown( data );
       }
    });
-}
+};
 
 ///////////////////////////////////////////////////////////
 
@@ -179,7 +177,7 @@ taskjobs.unfolds = {
    targets : {},
    agents : {},
    executions : {}
-}
+};
 
 var agents_dispatch = d3.dispatch('view');
 
@@ -207,7 +205,7 @@ function add_runlogs(extra) {
          agents_dispatch.view(extra.chart_id);
       }
    };
-};
+}
 
 taskjobs.refresh_pinned_agents = function(chart_id) {
    var chart = taskjobs.agents_chart[chart_id];
@@ -220,12 +218,9 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
             max_iteration = agent.length;
          }
          for (i=0; i< max_iteration; i++) {
-            if(   i > 0
-                  && agent.length > 1
-                  && agent[i].jobstate_id == agent[i-1].jobstate_id
-              ) {
-                 break;
-              }
+            if(i > 0 && agent.length > 1 && agent[i].jobstate_id == agent[i-1].jobstate_id) {
+               break;
+            }
 
             $.ajax( {
                url: '../ajax/jobstates_logs.php',
@@ -238,7 +233,7 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
          }
       }
    });
-}
+};
 
 
 function unpin_agent(args) {
@@ -283,7 +278,7 @@ function agents_chart(chart_id) {
                   classes.push('agent_' + d[1][num_classes - i]['state']);
                }*/
 
-               classes.push('agent_' + d[1][0]['state']);
+               classes.push('agent_' + d[1][0].state);
                return classes.join(' ');
             }).each( function(d) {
                 //TODO: instead of using d3.selection.each, we should prepare
@@ -292,15 +287,35 @@ function agents_chart(chart_id) {
                 //speed things up and getting translated element from
                 //templates.
 
-                var names = d3.select(this).selectAll('a.link').data([d]);
-                  names.enter().append('a')
-                  .attr('class', 'link')
+
+                // add a link to another page
+                var links = d3.select(this).selectAll('a.link').data([d]);
+                  links.enter().append('a')
+                  .attr('class', 'link btn')
                   .attr('href', d[1][0].link);
 
-                var names = d3.select(this).selectAll('a.name').data([d]);
+                // add a checkbox for bulk actions
+                var checkb = d3.select(this).selectAll('input').data([d]);
+                  checkb.enter().append('input')
+                  .attr('type', 'checkbox')
+                  .attr('class', 'check_restart')
+                  .attr('value', d[0])
+                  .on('click', function(d) {
+                     var chart = taskjobs.agents_chart[chart_id];
+                     var agent_id = d[1][0].agent_id;
+                     if ($(this).is(':checked')) {
+                        chart.checked_agents[agent_id] = agent_id;
+                     } else {
+                        delete chart.checked_agents[agent_id];
+                     }
+                     taskjobs.update_agents_view(chart_id);
+                  });
 
+                // display name
+                var names = d3.select(this).selectAll('a.name').data([d]);
                 names.enter().append('a')
-                  .attr('class', 'name').on('click', function(d) {
+                  .attr('class', 'name')
+                  .on('click', function(d) {
                      var args = {
                         chart_id: chart_id,
                         data: d
@@ -310,32 +325,53 @@ function agents_chart(chart_id) {
                      } else {
                         unpin_agent(args);
                      }
-                  })
+                  });
 
                 names.exit().remove();
-
-                //names.attr('href', taskjobs.agents_url + '?id='+ d[0])
-                //    .attr('target', '_blank')
-                //    .text(taskjobs.data.agents[d[0]]);
                 names.attr('href', 'javascript:void(0)')
                     .text(taskjobs.data.agents[d[0]]);
 
+                //add date
                 var dates = d3.select(this).selectAll('span.date').data([d]);
                 dates.enter().append('span')
                     .attr('class', 'date');
                 dates.html( [
                     d[1][0].last_log_date,
-//                    [d[1][0].last_log_id,d[1][0].timestamp].join(','),
                 ].join("<br/>"));
 
+
+                //add comment
                 var log = d3.select(this).selectAll('span.comment').data([d]);
                 log.enter().append('span')
                     .attr('class', 'comment');
                 log.text(function(d) { return [
-//                    d[1][0].jobstate_id,
-                    d[1][0].last_log
+                    d[1][0].last_log + " "
                 ].join(',');});
                 log.exit().remove();
+
+
+                // if agent in error, add a control to relanch it
+                if (d[1][0].state == 'error') {
+                    var restarts =  d3.select(this).selectAll('a.restart').data([d]);
+                    names.enter().append('a')
+                        .attr('class', 'restart btn')
+                        .attr('title', 'restart')
+                        .on('click', function(d) {
+                            $.ajax({
+                               url: '../ajax/restart_job.php',
+                               data: {
+                                  'jobstate_id': d[1][0].jobstate_id,
+                                  'agent_id':   d[1][0].agent_id
+                               },
+                               complete: function() {
+                                 taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
+                               }
+                            });
+                        });
+                    names.exit().remove();
+                    names.attr('href', 'javascript:void(0)');
+                }
+
 
                 // add executions logs for pinned agents
                 args = {
@@ -344,7 +380,7 @@ function agents_chart(chart_id) {
                 };
                 var runs = d3.select(this).selectAll('table.runs')
                    .data([agent_is_pinned(args)].filter(function(d) {
-                      return (d && d.logs)?true:false
+                      return (d && d.logs)?true:false;
                    }));
                 runs.exit().remove();
                 runs.enter().append('table').attr('class', 'runs');
@@ -430,13 +466,13 @@ taskjobs.update_agents_view = function (chart_id) {
      taskjobs.agents_chart[chart_id].debug = total_agents_to_view;
    }
    taskjobs.agents_chart[chart_id].display_agents = true;
-}
+};
 
 taskjobs.display_agents_view = function(chart_id) {
 
       if(taskjobs.agents_chart[chart_id].display_agents) {
          var chart = taskjobs.agents_chart[chart_id];
-         var agents = chart.agents_to_view
+         var agents = chart.agents_to_view;
 
          d3.select(chart.selector)
             .datum(agents)
@@ -447,7 +483,7 @@ taskjobs.display_agents_view = function(chart_id) {
             taskjobs.agents_chart[chart_id].view_limit = 10;
          }
          var limit_to_add = 10;
-         var button_text = []
+         var button_text = [];
          if (agents_hidden > 0) {
              limit_to_add = Math.min(agents_hidden, 10);
          } else {
@@ -458,14 +494,52 @@ taskjobs.display_agents_view = function(chart_id) {
                  'text' : 'Show '+ limit_to_add +' more (' + (agents_hidden) + ' left)' ,
                  'limit' : limit_to_add
              }
-         ]
-         var chart_anchor = $(chart.selector).parent()[0]
+         ];
+         var chart_anchor = $(chart.selector).parent()[0];
+
+         var restart = d3.select(chart_anchor).selectAll("div.show_more")
+            .selectAll('input.restart')
+            .data(button_text);
+         restart.enter().append('input');
+         restart.exit().remove();
+         restart
+               .attr('type', 'button')
+               .attr('class', 'submit restart')
+               .attr('value', 'Restart selected jobs')
+               .style('display', function(d) {
+                  return (Object.keys(chart.checked_agents).length > 0)?null:'none'; 
+               })
+               .on('click', function(e) {
+                  $('.refresh_button > span').addClass('fetching');
+                  var params = [];
+                  $("input.check_restart:checked").each(function(index) {
+                     var position = $(this).parent().index();
+                     var agents = chart.agents.toArray();
+                     params.push({
+                        'agent_id': agents[position][1][0].agent_id, 
+                        'jobstate_id': agents[position][1][0].jobstate_id
+                     });
+                  });
+
+                  $.ajax({
+                      url: '../ajax/restart_job.php',
+                      method: 'post',
+                      data: {
+                         'params': params
+                      }, 
+                      complete: function() {
+                        taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
+                        $("input.check_restart:checked").each(function() {
+                           $(this).attr('checked', false);
+                        });
+                        $('.refresh_button > span').removeClass('fetching');
+                      }
+                   }); 
+               });
 
          var show_more = d3.select(chart_anchor).selectAll("div.show_more")
              .selectAll('input.more_button')
              .data(button_text);
-
-
          show_more.enter().append('input')
              .attr('type', 'button')
              .attr('class', 'submit more_button')
@@ -497,7 +571,7 @@ taskjobs.display_agents_view = function(chart_id) {
          taskjobs.agents_chart[chart_id].display_agents = false;
       }
 
-}
+};
 
 agents_dispatch.on('view', function(chart_id) {
    taskjobs.update_agents_view(chart_id);
@@ -506,7 +580,7 @@ agents_dispatch.on('view', function(chart_id) {
 taskjobs.toggle_details_type = function(element, counter_type, chart_id) {
    view = false;
    if (element._view) {
-      view = element._view
+      view = element._view;
    }
    //store the boolean on the <a> itself
    element._view = !view;
@@ -521,20 +595,20 @@ taskjobs.toggle_details_type = function(element, counter_type, chart_id) {
       .toggleClass('expanded',element.view);
 
    // Request an update
-   agents_dispatch.view(chart_id)
-}
+   agents_dispatch.view(chart_id);
+};
 
 // Create block element if it does not already exists
 taskjobs.create_block = function(selector, parent_selector, content) {
    element = $(selector);
 
-   if (element.length == 0) {
+   if (element.length === 0) {
       $(parent_selector).append($(content));
    } else {
-      $(selector).remove(); 
+      $(selector).remove();
       $(parent_selector).append($(content));
    }
-}
+};
 
 // Load templates
 var templates = {};
@@ -551,7 +625,7 @@ taskjobs.init_templates = function() {
       agent          : $('#template_agent').html(),
    };
    Lazy(templates).each( function(d) { Mustache.parse(d); });
-}
+};
 
 taskjobs.charts = {};
 taskjobs.agents_chart = {};
@@ -569,8 +643,8 @@ taskjobs.update_logs = function (data) {
       targets : [],
       charts : [],
       agents_chart : [],
-   }
-   tasks = taskjobs.data['tasks'];
+   };
+   tasks = taskjobs.data.tasks;
    tasks_selector = '.tasks_block';
    //console.debug(tasks_placeholder);
    $.each(tasks, function(task_i, task_v) {
@@ -621,7 +695,7 @@ taskjobs.update_logs = function (data) {
             blocks_seen.targets.push(target_selector);
 
 
-            var chart_id = 'job_' + job_v.id + '_' + target_id
+            var chart_id = 'job_' + job_v.id + '_' + target_id;
 
             //console.debug(target_selector);
 
@@ -642,7 +716,7 @@ taskjobs.update_logs = function (data) {
             if (Object.keys(target_v.agents).length > 0) {
                 agents = target_v.agents;
             } else {
-                agents = Lazy(new Object);
+                agents = Lazy(new Object());
             }
 
             //create the agents chart object if it doesn't exist
@@ -651,11 +725,12 @@ taskjobs.update_logs = function (data) {
                   selector : agents_selector,
                   type_selected : {},
                   pinned_agents : {},
+                  checked_agents : {},
                   view_limit : 10,
                };
                d3.timer(function() {
-                  taskjobs.display_agents_view(chart_id)
-               }, 1000)
+                  taskjobs.display_agents_view(chart_id);
+               }, 1000);
             }
             // update agents chart object with new data
             taskjobs.agents_chart[chart_id].agents = agents;
@@ -666,7 +741,7 @@ taskjobs.update_logs = function (data) {
             counters_selector = target_selector + " .target_stats";
             $.each( taskjobs.statuses_order, function( stats_idx, stats_key) {
 
-               stats_type_selector = target_selector + " ." + stats_idx;   
+               stats_type_selector = target_selector + " ." + stats_idx;
                taskjobs.create_block(
                      stats_type_selector,
                      counters_selector,
@@ -679,7 +754,7 @@ taskjobs.update_logs = function (data) {
                $.each( stats_key , function(counter_idx, counter_key) {
                   counter_value = target_v.counters_computed[counter_key];
                   counter_type = counter_key;
-                  counter_empty = (counter_value.length == 0);
+                  counter_empty = (counter_value.length === 0);
                   counter_type_name = taskjobs.statuses_names[counter_type];
                   counter_selector = target_selector + ' .' + counter_type;
 
@@ -706,7 +781,7 @@ taskjobs.update_logs = function (data) {
             blocks_seen.charts.push("#chart_" + chart_id);
 
 
-            if ($('#chart_' + chart_id).length == 0) {
+            if ($('#chart_' + chart_id).length === 0) {
                taskjobs.charts[chart_id] = taskjobs.create_progressbar(
                      progressbar_selector, 'chart_'+chart_id, 400,100
                );
@@ -745,9 +820,9 @@ taskjobs.update_logs = function (data) {
          .concat(Lazy(cache.tasks).without(blocks_seen.tasks).toArray())
          .concat(Lazy(cache.jobs).without(blocks_seen.jobs).toArray())
          .concat(Lazy(cache.targets).without(blocks_seen.targets).toArray())
-         .concat(Lazy(cache.charts).without(blocks_seen.charts).toArray())
+         .concat(Lazy(cache.charts).without(blocks_seen.charts).toArray());
       $.each(node_to_drop.toArray(), function(i,d) {
-         $(d).remove()
+         $(d).remove();
       });
    }
 
@@ -759,15 +834,15 @@ taskjobs.update_logs = function (data) {
 
    taskjobs.blocks_seen = blocks_seen;
 //   taskjobs.update_folds(tasks_placeholder);
-   
+
    taskjobs.init_tasks_expand_buttons();
-}
+};
 
 
 
 taskjobs.compute_data = function() {
     //target_debug = "";
-    tasks = taskjobs.data['tasks'];
+    tasks = taskjobs.data.tasks;
     result = [];
     $.each(tasks, function(task_i, task_v) {
         task = tasks[task_i];
@@ -781,7 +856,7 @@ taskjobs.compute_data = function() {
                     agents_notdone:    Object.keys(target_v.counters.agents_notdone),
                     agents_error:      Object.keys(target_v.counters.agents_error),
                     agents_success:    Object.keys(target_v.counters.agents_success)
-                }
+                };
 
                 if (Object.keys(target_v.agents).length > 0 ) {
 
@@ -818,7 +893,7 @@ taskjobs.compute_data = function() {
     } );
     //console.log(target_debug);
     //$('.debuglogs').text(target_debug);
-}
+};
 
 // Charts functions
 // TODO: refactor those functions by defining a reusable chart object in order to simplify usage
@@ -830,7 +905,7 @@ taskjobs.create_progressbar = function(node_container, chart_id, width, height) 
       .attr('id', chart_id)
       .attr("class", "chart")
       .attr("width", width)
-      .attr("height", height)
+      .attr("height", height);
    origin = chart.append("g")
       .attr("transform", "translate(" + width / 2 + "," + height + ")");
 
@@ -842,7 +917,7 @@ taskjobs.create_progressbar = function(node_container, chart_id, width, height) 
       .attr('class', 'texts');
    chart._width = width;
    return chart;
-}
+};
 
 // TODO: put the following in the reusable object
 taskjobs.update_progressbar = function( chart ) {
@@ -939,14 +1014,14 @@ taskjobs.update_progressbar = function( chart ) {
       return function(t) {
          i = interpolate(t);
          return arc(interpolate(t));
-      }
-   }
+      };
+   };
 
    //update arcs
    arcs.transition().duration(500)
       .attrTween("d", arcTween);
 
-   arcs.exit().remove()
+   arcs.exit().remove();
    //console.debug(repartition);
 //   var text = chart.selectAll('text').data(pie(remapped));
 //   text.enter().append('text')
@@ -973,25 +1048,25 @@ taskjobs.update_progressbar = function( chart ) {
       this._current = interpolate(0);
       return function(t) {
          return 'translate(' + arc.centroid(interpolate(t)) + ')';
-      }
-   }
+      };
+   };
 
    var cursor = chart.select('g.texts').selectAll('text').data(pie(remapped));
 
    cursor.enter().append('text')
       .attr('text-anchor','middle')
       .attr('font-size', '0.5em')
-      .each(function(d) { this._current = d } );
+      .each(function(d) { this._current = d; } );
 
    cursor.text( function(d) {
-         return percent(d.data.real).toFixed(1)
-      })
+         return percent(d.data.real).toFixed(1);
+      });
 
    // Do not display value when there are none;
    cursor
       .attr('display', function(d) {
          return ((d.data.value > 0) ? '' : 'none');
-      })
+      });
 
    /*cursor.each(function(d) {
       //console.debug(JSON.stringify(this._current));
@@ -1050,7 +1125,7 @@ taskjobs.update_progressbar = function( chart ) {
 //        .attr("d", function(d) {
 //                return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
 //            });
-}
+};
 
 
 taskjobs.get_logs = function( ajax_url, task_id ) {
@@ -1073,15 +1148,15 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
             //small timeout to view icon changing
             setTimeout(function() {
                 taskjobs.update_logs(data);
-            }, 50);   
-            
+            }, 50);
+
         },
         complete: function( ) {
             taskjobs.update_refresh_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
         }
     });
-}
+};
 
 
 taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
@@ -1090,19 +1165,19 @@ taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
       .off("click");
    $('.refresh_button')
       .on('click', function(e) {
-         taskjobs.queue_refresh_logs( ajax_url, task_id )
+         taskjobs.queue_refresh_logs( ajax_url, task_id );
       });
 
-}
+};
 
 taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
    $('.include_old_jobs')
       .off("click")
       .on('change', function(e) {
          include_old_jobs = $(this).val();
-         taskjobs.queue_refresh_logs( ajax_url, task_id)
+         taskjobs.queue_refresh_logs( ajax_url, task_id);
       });
-}
+};
 
 taskjobs.init_tasks_expand_buttons = function() {
    $('.monitoring-logs .task_block > h3')
@@ -1121,18 +1196,18 @@ taskjobs.init_tasks_expand_buttons = function() {
             }
          });
       });
-}
+};
 
 taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
 
    $("#"+ refresh_id)
       .off("change")
       .on("change", function() {
-         taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
+         taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id );
       }
    );
 
-}
+};
 
 taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 
@@ -1153,20 +1228,20 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
    } else {
       window.clearTimeout(taskjobs.Queue.timer);
    }
-}
+};
 
 taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
    var n = taskjobs.Queue.queue('refresh_logs');
 
    $('.tasks_block:hidden').remove();
-   if ( $(".tasks_block:visible").length == 0 ) {
+   if ( $(".tasks_block:visible").length === 0 ) {
       window.clearTimeout(taskjobs.Queue.timer);
    }
-   if (n.length == 0 ) {
+   if (n.length === 0 ) {
       taskjobs.Queue.queue('refresh_logs', function( ) {
          taskjobs.get_logs(ajax_url, task_id);
-      })
+      });
       taskjobs.Queue.queue('refresh_logs')[0]();
    }
-}
+};
 
