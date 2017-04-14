@@ -278,16 +278,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       echo
-         "<textarea class='expanding' name='".$varname."' >".
+         "<textarea class='autogrow' name='".$varname."' >".
          $this->fields[$varname].
          "</textarea>";
       echo "</div>";
 
-      echo implode("\n", array(
-         "<script type='text/javascript'>",
-         "  $('.expanding').expanding();",
-         "</script>"
-      ));
+      echo Html::scriptBlock("$('.autogrow').autogrow();");
    }
 
 
