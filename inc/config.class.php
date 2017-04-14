@@ -148,6 +148,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
       $input['manage_osname'] = 1;
+      $input['clean_on_demand_tasks'] = -1;
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -790,6 +791,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "<tr>";
+      echo "<td>".__('Delete successful on demand tasks after (in days)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      $toadd = [-1 => __('Never')];
+      Dropdown::showNumber("clean_on_demand_tasks", array(
+         'value' => $pfConfig->getValue('clean_on_demand_tasks'),
+         'min'   => 1,
+         'max'   => 1000,
+         'toadd' => $toadd)
+      );
+      echo "</td>";
+      echo "</tr>";
+
       $options['candel'] = false;
       $pfConfig->showFormButtons($options);
 
@@ -825,12 +839,24 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return boolean
     */
    function updateValue($name, $value) {
+      global $PF_CONFIG;
+
+      // retrieve current config
       $config = current($this->find("`type`='".$name."'"));
+
+      // set in db
       if (isset($config['id'])) {
-         return $this->update(array('id'=> $config['id'], 'value'=>$value));
+         $result = $this->update(array('id'=> $config['id'], 'value'=>$value));
       } else {
-         return $this->add(array('type' => $name, 'value' => $value));
+         $result = $this->add(array('type' => $name, 'value' => $value));
       }
+
+      // set cache
+      if ($result) {
+         $PF_CONFIG[$name] = $value;
+      }
+
+      return $result;
    }
 
 

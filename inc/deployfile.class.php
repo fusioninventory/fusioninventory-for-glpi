@@ -223,10 +223,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
          echo "<td class='filename'>";
          if (!empty($file_mimetype)
-                 && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$file_mimetype.png")) {
-            echo "<img src='".$pics_path."ext/extensions/$file_mimetype.png' />";
+                 && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/extensions/$file_mimetype.png")) {
+            echo "<img src='".$pics_path."extensions/$file_mimetype.png' />";
          } else {
-            echo "<img src='".$pics_path."ext/extensions/documents.png' />";
+            echo "<img src='".$pics_path."extensions/documents.png' />";
          }
 
          //filename

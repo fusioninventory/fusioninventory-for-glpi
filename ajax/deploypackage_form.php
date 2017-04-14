@@ -76,7 +76,7 @@ if (!empty($fi_move_item)) { //ajax request
    echo json_encode( $json_response );
    //exit;
 } else {
-   $packages_id  = filter_input(INPUT_POST, "packages_id");
+   $packages_id = filter_input(INPUT_POST, "packages_id");
    $rand       = filter_input(INPUT_POST, "rand");
    $mode       = filter_input(INPUT_POST, "mode");
    $fi_subtype = filter_input(INPUT_POST, "subtype");
