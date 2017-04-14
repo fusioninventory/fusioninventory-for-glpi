@@ -728,6 +728,10 @@ table.runs td.comment {
    margin: 2px;
    padding: 5px;
 }
+.addbutton {
+   cursor: pointer
+}
+
 .refresh_button {
    padding: 5px;
    display: block;
