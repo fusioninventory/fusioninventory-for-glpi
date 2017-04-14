@@ -35,16 +35,15 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
 
    ------------------------------------------------------------------------
  */
 
 class RepositoryTest extends RestoreDatabase_TestCase {
-   private $packages_1_id = 0;
-   private $packages_2_id = 0;
-   private $filename      = "";
-   private $sha512        = "";
+   private $packages_1_id   = 0;
+   private $packages_2_id   = 0;
+   private $filename        = "";
+   private $sha512          = "";
 
 
    protected function setUp() {
@@ -119,8 +118,18 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       $json = json_decode($pfDeployPackage->fields['json'], true);
       $this->assertTrue(isset($json['associatedFiles'][$this->sha512]));
 
+      //retrieve the sha512 of the single part
+      $sha512_part = trim(file_get_contents(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$this->sha512), "\n");
+      $fulldir  = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.
+                     PluginFusioninventoryDeployFile::getDirBySha512($sha512_part);
+      $firstdir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.substr($sha512_part, 0, 1);
+
       // check presence of file in repo
       $this->assertTrue($pfDeployFile->checkPresenceFile($this->sha512));
+
+      // check the directories are created
+      $this->asserttrue(is_dir($fulldir));
+      $this->asserttrue(is_dir($firstdir));
 
       // add the same file to the second package
       $data_file['id'] = $this->packages_2_id;
@@ -159,6 +168,10 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       // check presence of file in repo
       // Now, we removed it from both package, it must be removed from repository
       $this->assertFalse($pfDeployFile->checkPresenceFile($this->sha512));
+
+      // check the previous directories created in repository are cleaned
+      $this->assertFalse(is_dir($fulldir));
+      $this->assertFalse(is_dir($firstdir));
    }
 
    /**
