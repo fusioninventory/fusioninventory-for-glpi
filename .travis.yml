@@ -22,6 +22,7 @@ addons:
     - xsltproc
 
 before_install:
+ - phpenv config-rm xdebug.ini
  - cd ..
  - git clone --depth=10 -b $GLPI git://github.com/glpi-project/glpi.git glpi
  - cd glpi
