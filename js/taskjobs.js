@@ -1245,3 +1245,49 @@ taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
    }
 };
 
+var expandtaskjobform = function() {
+   $('#taskjobdisplay').css('overflow', 'visible')
+                       .css('height', 'auto');
+   $('#seemore').css('display', 'none');
+};
+
+// declare events
+$(document).ready(function() {
+   $(document).on("click", ".toggle_details_type", function(event) {
+      taskjobs.toggle_details_type($(this)[0],
+                                   $(this).attr('data-counter_type'),
+                                   $(this).attr('data-chart_id'));
+   });
+
+   $(document).on("click", ".clear_list", function(event) {
+      taskjobs.clear_list($(this).attr('data-clear-param'));
+   });
+
+   $(document).on("click", ".delete_items_selected", function(event) {
+      taskjobs.delete_items_selected($(this).attr('data-delete-param'));
+   });
+
+   $(document).on("click", "#add_fusinv_job_item_button", function(event) {
+      taskjobs.add_item($(this).attr('data-moduletype'),
+                        $(this).attr('data-itemtype'),
+                        $(this).attr('data-itemtype_name'),
+                        $(this).attr('data-dropdown_rand_id'));
+   });
+
+   $(document).on("click", ".show_moduletypes", function(event) {
+      taskjobs.show_moduletypes($(this).attr('data-ajaxurl'),
+                                $(this).attr('data-itemtype'),
+                                $(this).attr('data-method'));
+
+   });
+
+   $(document).on("click", ".taskjobs_create", function(event) {
+      taskjobs.create($(this).attr('data-ajaxurl'),
+                      $(this).attr('data-task_id'));
+   });
+
+   $(document).on("click", ".taskjobs_edit", function(event) {
+      taskjobs.edit($(this).attr('data-ajaxurl'),
+                    $(this).attr('data-taskjob_id'));
+   });
+});

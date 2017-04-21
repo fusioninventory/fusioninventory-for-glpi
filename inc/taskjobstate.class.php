@@ -402,38 +402,36 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    function getLogs($id, $last_date) {
       global $DB;
 
-      $fields = array(
-         'log.id' => 0,
-         'log.date' => 1,
+      $fields = [
+         'log.id'      => 0,
+         'log.date'    => 1,
          'log.comment' => 2,
-         'log.state' => 3,
-         'run.id' => 4,
-         );
-      $query = implode("\n", array(
-         "SELECT log.`id` AS 'log.id',",
-         "log.`date` AS 'log.date',",
-         "log.`comment` AS 'log.comment',",
-         "log.`state` AS 'log.state',",
-         "run.`uniqid` AS 'run.id'",
-         "FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log",
-         "LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS run",
-         "ON run.`id` = log.`plugin_fusioninventory_taskjobstates_id`",
-         "WHERE run.`id` = ".$id,
-         "AND log.`date` <= '". $last_date . "'",
-         "ORDER BY log.`id` DESC"
-      ));
+         'log.state'   => 3,
+         'run.id'      => 4,
+      ];
+      $query = "SELECT log.`id` AS 'log.id',
+                  log.`date` AS 'log.date',
+                  log.`comment` AS 'log.comment',
+                  log.`state` AS 'log.state',
+                  run.`uniqid` AS 'run.id'
+                FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log
+                LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS run
+                  ON run.`id` = log.`plugin_fusioninventory_taskjobstates_id`
+                WHERE run.`id` = $id
+                  AND log.`date` <= '$last_date'
+               ORDER BY log.`id` DESC";
 
       $res = $DB->query($query);
-      $logs = array();
+      $logs = [];
       while ($result = $res->fetch_row()) {
          $run_id = $result[$fields['run.id']];
-         $logs['run']  = $run_id;
-         $logs['logs'][] = array(
+         $logs['run']    = $run_id;
+         $logs['logs'][] = [
             'log.id'      => $result[$fields['log.id']],
             'log.comment' => PluginFusioninventoryTaskjoblog::convertComment($result[$fields['log.comment']]),
             'log.date'    => $result[$fields['log.date']],
             'log.state'   => $result[$fields['log.state']]
-         );
+         ];
       }
       return $logs;
    }

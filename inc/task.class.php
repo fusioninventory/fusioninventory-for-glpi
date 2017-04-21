@@ -931,23 +931,20 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $query_select[] = $key[1] . " AS '" . $key[0] . "'";
       }
 
-      $query_joins = array();
-      $query_joins['task'] = implode("\n", array(
-         "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task",
-         "  ON job.`plugin_fusioninventory_tasks_id` = task.`id`",
-         "  AND task.`is_active` = 1",
-      ));
+      $query_joins = [];
+      $query_joins['task'] = "
+         INNER JOIN `glpi_plugin_fusioninventory_tasks` as task
+            ON job.`plugin_fusioninventory_tasks_id` = task.`id`
+            AND task.`is_active` = 1";
 
-      $data_structure = array(
-         'query' => implode("\n", array(
-            "SELECT",
-            implode(",\n", $query_select),
-            "FROM `glpi_plugin_fusioninventory_taskjobs` as job",
-            implode("\n", $query_joins),
-            implode("\n", $query_where)
-         )),
+      $data_structure = [
+         'query' => "SELECT
+                    ".implode(",\n", $query_select)."
+                    FROM `glpi_plugin_fusioninventory_taskjobs` as job
+                    ".implode("\n", $query_joins)."
+                    ".implode("\n", $query_where),
          'result' => null
-      );
+      ];
 
       $data_structure['result'] = $DB->query($data_structure['query']);
 
@@ -1035,124 +1032,101 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       // Query fields mapping used to easily select fields by name
-      $query_fields = array(
-         array('task.id',            'task.`id`'),
-         array('task.name',          'task.`name`'),
-         array('job.id',             'job.`id`'),
-         array('job.name',           'job.`name`'),
-         array('job.method',         'job.`method`'),
-         array('agent.id',           'agent.`id`'),
-         array('agent.name',         'agent.`name`'),
-         array('agent.computers_id', 'agent.`computers_id`'),
-         array('run.id',             'run.`id`'),
-         array('run.itemtype',       'run.`itemtype`'),
-         array('run.items_id',       'run.`items_id`'),
-         array('run.state',          'run.`state`'),
-         array('log.last_date',      'log.`date`'),
-         array('log.last_timestamp', 'UNIX_TIMESTAMP(log.`date`)'),
-         array('log.last_id',        'log.`id`'),
-         array('log.last_comment',   'log.`comment`'),
-      );
-      $fieldmap = array();
-      foreach ($query_fields as $index=>$key) {
+      $query_fields = [
+         ['task.id',            'task.`id`'],
+         ['task.name',          'task.`name`'],
+         ['job.id',             'job.`id`'],
+         ['job.name',           'job.`name`'],
+         ['job.method',         'job.`method`'],
+         ['agent.id',           'agent.`id`'],
+         ['agent.name',         'agent.`name`'],
+         ['agent.computers_id', 'agent.`computers_id`'],
+         ['run.id',             'run.`id`'],
+         ['run.itemtype',       'run.`itemtype`'],
+         ['run.items_id',       'run.`items_id`'],
+         ['run.state',          'run.`state`'],
+         ['log.last_date',      'log.`date`'],
+         ['log.last_timestamp', 'UNIX_TIMESTAMP(log.`date`)'],
+         ['log.last_id',        'log.`id`'],
+         ['log.last_comment',   'log.`comment`'],
+      ];
+      $fieldmap = [];
+      foreach ($query_fields as $index => $key) {
          $fieldmap[$key[0]] = $index;
       }
 
-      $query_select = array();
+      $query_select = [];
       foreach ($query_fields as $index => $key) {
          $query_select[] = $key[1] . " AS '" . $key[0] . "'";
       }
 
-      $query_joins = array();
-      $query_joins['max_run'] = implode("\n",array(
-         "INNER JOIN (",
-         "  SELECT",
-         "     MAX(run.`id`) AS max_id,",
-         "     run.`plugin_fusioninventory_agents_id`,",
-         "     run.`plugin_fusioninventory_taskjobs_id`,",
-         "     run.`items_id`, run.`itemtype`,",
-         "     MAX(log.`id`) AS max_log_id",
-         "  FROM `glpi_plugin_fusioninventory_taskjobstates` AS run",
-         "  LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log",
-         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
-         "  GROUP BY",
-         "     run.`plugin_fusioninventory_agents_id`,",
-         "     run.`plugin_fusioninventory_taskjobs_id`,",
-         "     run.`items_id`, run.`itemtype`",
-         ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
-      ));
-
-      $query_joins['run'] = implode("\n",array(
-         "INNER JOIN `glpi_plugin_fusioninventory_taskjobstates` AS run",
-         "  ON max_run.`max_id` = run.`id`",
-      ));
-      $query_joins['log'] = implode("\n", array(
-         "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
-         "  ON max_run.`max_log_id` = log.`id`",
-      ));
-      $query_joins['job'] = implode("\n", array(
-         "INNER JOIN `glpi_plugin_fusioninventory_taskjobs` AS job",
-         "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
-      ));
-      $query_joins['task'] = implode("\n", array(
-         "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task",
-         "  ON job.`plugin_fusioninventory_tasks_id` = task.`id`",
-      ));
+      $query_joins = [];
+      $query_joins['max_run'] = "INNER JOIN (
+            SELECT
+               MAX(run.`id`) AS max_id,
+               run.`plugin_fusioninventory_agents_id`,
+               run.`plugin_fusioninventory_taskjobs_id`,
+               run.`items_id`, run.`itemtype`,
+               MAX(log.`id`) AS max_log_id
+            FROM `glpi_plugin_fusioninventory_taskjobstates` AS run
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log
+               ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`
+            GROUP BY
+               run.`plugin_fusioninventory_agents_id`,
+               run.`plugin_fusioninventory_taskjobs_id`,
+               run.`items_id`, run.`itemtype`
+         ) max_run
+         ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`";
+      $query_joins['run'] = "INNER JOIN `glpi_plugin_fusioninventory_taskjobstates` AS run
+                                 ON max_run.`max_id` = run.`id`";
+      $query_joins['log'] = "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log
+                                 ON max_run.`max_log_id` = log.`id`";
+      $query_joins['job'] = "INNER JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
+                                 ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`";
+      $query_joins['task'] = "INNER JOIN `glpi_plugin_fusioninventory_tasks` as task
+                                 ON job.`plugin_fusioninventory_tasks_id` = task.`id`";
 
       $queries = array();
 
-      /*
-       * Get latest jobstates for agents
-       */
-      $queries['1_last_runs'] = array(
-         'query' => implode(" \n", array(
-            "SELECT",
-            implode(",\n", $query_select),
-            "FROM `glpi_plugin_fusioninventory_agents` AS agent",
-            implode("\n", $query_joins),
-            implode("\n", $query_where),
-            "GROUP BY job.`id`, agent.`id`, run.`id`, log.`id`",
-         )),
+      // Get latest jobstates for agents
+      $queries['1_last_runs'] = [
+         'query' => "SELECT
+                    ".implode(",\n", $query_select)."
+                    FROM `glpi_plugin_fusioninventory_agents` AS agent
+                    ".implode("\n", $query_joins)."
+                    ".implode("\n", $query_where)."
+                    GROUP BY job.`id`, agent.`id`, run.`id`, log.`id`",
          'result' => null
-      );
+      ];
 
-      /*
-       * Get last finished jobstates (ie. `state` >= 3)
-       */
-      $query_joins['max_run'] = implode("\n",array(
-         "INNER JOIN (",
-         "  SELECT",
-         "     MAX(run.`id`) AS max_id,",
-         "     run.`plugin_fusioninventory_agents_id`,",
-         "     run.`plugin_fusioninventory_taskjobs_id`,",
-         "     run.`items_id`, run.`itemtype`,",
-         "     MAX(log.`id`) AS max_log_id",
-         "  FROM `glpi_plugin_fusioninventory_taskjobstates` AS run",
-         "  LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log",
-         "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
-         "  WHERE run.`state` IN ( ".
-            implode(",", array(
-               PluginFusioninventoryTaskjobstate::FINISHED,
-               PluginFusioninventoryTaskjobstate::IN_ERROR,
-            )) .
-         " )",
-         "  GROUP BY",
-         "     run.`plugin_fusioninventory_agents_id`,",
-         "     run.`plugin_fusioninventory_taskjobs_id`,",
-         "     run.`items_id`, run.`itemtype`",
-         ") max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`",
-      ));
-      $queries['2_finished_runs'] = array(
-         'query' => implode(" \n", array(
-            "SELECT",
-            implode(",\n", $query_select),
-            "FROM `glpi_plugin_fusioninventory_agents` AS agent",
-            implode("\n", $query_joins),
-            implode("\n", $query_where),
-            "GROUP BY job.`id`, agent.`id`, run.`id`, log.`id`",
-         )),
+      // Get last finished jobstates (ie. `state` >= 3)
+      $query_joins['max_run'] = "INNER JOIN (
+            SELECT
+               MAX(run.`id`) AS max_id,
+               run.`plugin_fusioninventory_agents_id`,
+               run.`plugin_fusioninventory_taskjobs_id`,
+               run.`items_id`, run.`itemtype`,
+               MAX(log.`id`) AS max_log_id
+            FROM `glpi_plugin_fusioninventory_taskjobstates` AS run
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` AS log
+               ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`
+            WHERE run.`state` IN (".PluginFusioninventoryTaskjobstate::FINISHED.",
+                                  ".PluginFusioninventoryTaskjobstate::IN_ERROR.")
+            GROUP BY
+              run.`plugin_fusioninventory_agents_id`,
+              run.`plugin_fusioninventory_taskjobs_id`,
+              run.`items_id`, run.`itemtype`
+         ) max_run ON max_run.`plugin_fusioninventory_agents_id` = agent.`id`";
+
+      $queries['2_finished_runs'] = [
+         'query' => "SELECT
+                     ".implode(",\n", $query_select)."
+                     FROM `glpi_plugin_fusioninventory_agents` AS agent
+                     ".implode("\n", $query_joins)."
+                     ".implode("\n", $query_where)."
+                     GROUP BY job.`id`, agent.`id`, run.`id`, log.`id`",
          'result' => null
-      );
+      ];
 
       $query_chrono = array(
          "start" => microtime(true),
