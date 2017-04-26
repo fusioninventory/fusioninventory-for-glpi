@@ -213,7 +213,7 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
    $.each(chart.pinned_agents, function(agent_id, agent) {
 
       if (agent) {
-         var max_iteration = Math.min(agent.length);
+         var max_iteration = Math.min(agent.length, taskjobs.includeoldjobs);
          if (max_iteration == -1) {
             max_iteration = agent.length;
          }
@@ -1134,7 +1134,9 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         .removeClass('computing');
 
     var data = {
-        "task_id"         : task_id
+        "task_id"       : task_id,
+        "includeoldjobs": taskjobs.includeoldjobs,
+        "refresh"       : taskjobs.refresh
     };
 
     $.ajax({
@@ -1160,21 +1162,18 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
 
 
 taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
-
    $('.refresh_button')
-      .off("click");
-   $('.refresh_button')
+      .off("click")
       .on('click', function(e) {
          taskjobs.queue_refresh_logs( ajax_url, task_id );
       });
-
 };
 
-taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id) {
-   $('.include_old_jobs')
-      .off("click")
+taskjobs.init_include_old_jobs_buttons = function( ajax_url, task_id, include_oldjobs_id) {
+   $("#"+ include_oldjobs_id)
+      .off('click')
       .on('change', function(e) {
-         include_old_jobs = $(this).val();
+         taskjobs.includeoldjobs = $(this).val();
          taskjobs.queue_refresh_logs( ajax_url, task_id);
       });
 };

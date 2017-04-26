@@ -254,6 +254,14 @@ function plugin_init_fusioninventory() {
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY']
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
+      // set default values for task view
+      if (!isset($_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'])) {
+         $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'] = 2;
+      }
+      if (!isset($_SESSION['glpi_plugin_fusioninventory']['refresh'])) {
+         $_SESSION['glpi_plugin_fusioninventory']['refresh'] = 'off';
+      }
+
       $PLUGIN_HOOKS['import_item']['fusioninventory'] = array(
           'Computer' => array('Plugin'));
 
