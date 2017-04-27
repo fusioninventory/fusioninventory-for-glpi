@@ -50,13 +50,8 @@ if (strpos(filter_input(INPUT_SERVER, 'PHP_SELF'), "taskjob_logs.php")) {
    Session::checkCentralAccess();
 }
 
-//unlock session since access checks have been done
-session_write_close();
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
 $pfTask = new PluginFusioninventoryTask();
-
-$pfTask->ajaxGetJobLogs(filter_input(INPUT_GET, "task_id"));
-
-?>
+$pfTask->ajaxGetJobLogs($_GET);

@@ -160,6 +160,10 @@ td:not(#foo) > input[type=radio]:checked + label {
     margin-bottom: 1%;
 }
 
+.fusinv_panel .fusinv_form label {
+   width: initial;
+}
+
 .fusinv_form .input_wrap.split_column {
    padding: 5px;
    width:45%;
@@ -172,6 +176,11 @@ td:not(#foo) > input[type=radio]:checked + label {
     display: inline-block;
     width:60%;
     text-align: left;
+}
+
+.fusinv_panel div.input_wrap {
+    margin: 0 5px 0 0;
+    width: initial;
 }
 
 /*.fusinv_form label + div.input_wrap > span +i input,*/

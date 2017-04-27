@@ -125,39 +125,50 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     * Show job logs
     */
    function showJobLogs() {
-      $refresh_intervals = array(
-         "off"  => __('Off', 'fusioninventory'),
-         "1"    => '1 '._n('second','seconds',1),
-         "5"    => '5 '._n('second','seconds',5),
-         "10"   => '10 '._n('second', 'seconds', 10),
-         "60"   => '1 '._n('minute', 'minutes', 1),
-         "120"  => '2 '._n('minute', 'minutes', 2),
-         "300"  => '5 '._n('minute', 'minutes', 5),
-         "600"  => '10 '._n('minute', 'minutes', 10),
-      );
       echo "<div class='fusinv_panel'>";
       echo "<div class='fusinv_form large'>";
+
+      // add a list limit for include old jobs
+      $include_oldjobs_id = $this->showDropdownFromArray(
+         __("Include old jobs",'fusioninventory'),
+         null,
+         [
+            1   => __('Last'),
+            2   => 2,
+            5   => 5,
+            10  => 10,
+            25  => 25,
+            50  => 50,
+            100 => 100,
+            250 => 250,
+            -1  => __('All')
+         ],
+         ['value' => $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']]
+      );
+
+      // add an auto-refresh control
       $refresh_randid = $this->showDropdownFromArray(
          __("refresh interval", "fusioninventory"),
          null,
-         $refresh_intervals,
-         array(
-            'value' => 'off', // set default to 10 seconds
-            'width' => '20%'
-         )
+         [
+            "off"  => __('Off', 'fusioninventory'),
+            "1"    => '1 '._n('second','seconds',1),
+            "5"    => '5 '._n('second','seconds',5),
+            "10"   => '10 '._n('second', 'seconds', 10),
+            "60"   => '1 '._n('minute', 'minutes', 1),
+            "120"  => '2 '._n('minute', 'minutes', 2),
+            "300"  => '5 '._n('minute', 'minutes', 5),
+            "600"  => '10 '._n('minute', 'minutes', 10),
+         ],
+         ['value' => $_SESSION['glpi_plugin_fusioninventory']['refresh']]
       );
       // Add a manual refresh button
       echo "<div class='refresh_button submit'>";
       echo "<span></span>";
       echo "</div>"; // .refresh_button
+
       echo "</div>"; // .fusinv_form
       echo "</div>"; // .fusinv_panel
-
-      //$pfTaskjob = new PluginFusioninventoryTaskjob();
-      //$taskjobs = $pfTaskjob->find(
-      //   "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
-      //   "id"
-      //);
 
       // Template structure for tasks' blocks
       echo "<script id='template_task' type='x-tmpl-mustache'>
@@ -266,15 +277,22 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $Computer = new Computer();
 
       echo Html::scriptBlock("$(document).ready(function() {
-         taskjobs.task_id       = '".$task_id."';
-         taskjobs.ajax_url      = '".$this->getBaseUrlFor('fi.job.logs')."';
-         taskjobs.agents_url    = '".$pfAgent->getFormUrl()."';
-         taskjobs.computers_url = '".$Computer->getFormUrl()."';
+         taskjobs.task_id        = '".$task_id."';
+         taskjobs.ajax_url       = '".$this->getBaseUrlFor('fi.job.logs')."';
+         taskjobs.agents_url     = '".$pfAgent->getFormUrl()."';
+         taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']."';
+         taskjobs.refresh        = '".$_SESSION['glpi_plugin_fusioninventory']['refresh']."';
+         taskjobs.computers_url  = '".$Computer->getFormUrl()."';
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
             '".$this->getBaseUrlFor('fi.job.logs')."',
             ".$task_id.",
             'dropdown_".$refresh_randid."'
+         );
+         taskjobs.init_include_old_jobs_buttons(
+            '".$this->getBaseUrlFor('fi.job.logs')."',
+            ".$task_id.",
+            'dropdown_".$include_oldjobs_id."'
          );
          taskjobs.update_logs_timeout(
             '".$this->getBaseUrlFor('fi.job.logs')."',
@@ -283,30 +301,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          );
       });");
    }
-
-
-
-   /**
-    * Ajax called to get job logs
-    *
-    * @todo Move this method in task.class
-    *
-    * @param integer $task_id
-    */
-   function ajaxGetJobLogs($task_id) {
-      if (!empty($task_id)) {
-         if (is_array($task_id)) {
-            $task_ids = $task_id;
-         } else {
-            $task_ids = array($task_id);
-         }
-      } else {
-         $task_ids = array();
-      }
-      $logs = $this->getJoblogs($task_ids);
-      echo json_encode($logs);
-   }
-
 
 
    /**
