@@ -250,10 +250,10 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .monitoring-logs .task_block > h3 {
-   color: #659900;
    cursor: pointer; 
    background: url(../../../pics/expand.gif) no-repeat left center;
    padding-left: 20px;
+   display: inline-block;
 }
 
 .monitoring-logs .task_block.expand > h3 {
@@ -546,7 +546,7 @@ a.expanded > div.fold {
 .agent_block > *
 {
    padding: 5px;
-   display: inline-block;
+   display: block;
 }
 
 
@@ -568,7 +568,7 @@ a.expanded > div.fold {
 
 .agent_block > span.comment {
    opacity: 0.8;
-   font-weight: lighter;
+   font-weight: bold;
    min-height: 10px;
 }
 
@@ -764,6 +764,29 @@ table.runs td.comment {
    background-image: url('../pics/monitoring_computing.gif');
 }
 
+.task_export_form > label {
+   font-weight: bold;
+   display: block;
+   margin-bottom: 5px;
+}
+
+.state_checkboxes {
+   text-align: left;
+}
+
+.agent_state_type_checkbox {
+   float: left;
+   width: 33%;
+}
+
+.clear_states {
+   clear: both;
+   margin-bottom: 10px;
+}
+
+#fiTaskExport_modalWindow {
+   display: none;
+}
 
 /*
  * submit class grabbed from GLPI core

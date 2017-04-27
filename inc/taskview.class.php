@@ -162,6 +162,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          ],
          ['value' => $_SESSION['glpi_plugin_fusioninventory']['refresh']]
       );
+
+      // display export button
+      echo "<i class='openExportDialog pointer fa fa-lg fa-floppy-o'
+               title='"._sx('button', 'Export')."'></i>";
+
       // Add a manual refresh button
       echo "<div class='refresh_button submit'>";
       echo "<span></span>";
@@ -177,6 +182,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                      __("Task",'fusioninventory')."
                      <span class='task_name'>{{task_name}}</span>
                   </h3>
+                  <a href='".PluginFusioninventoryTask::getFormURL()."?id={{task_id}}'
+                     class='task_block_link'>
+                     <i class='fa fa-link pointer'></i>
+                  </a>
                   <div class='jobs_block'></div>
                </div>
             </script>";
@@ -271,13 +280,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if (isset($this->fields['id']) ) {
          $task_id = $this->fields['id'];
       } else {
-         $task_id = json_encode(array());
+         $task_id = null;
       }
-      $pfAgent = new PluginFusioninventoryAgent();
-      $Computer = new Computer();
+      $json_task_id = json_encode($task_id);
+      $pfAgent      = new PluginFusioninventoryAgent();
+      $Computer     = new Computer();
 
       echo Html::scriptBlock("$(document).ready(function() {
-         taskjobs.task_id        = '".$task_id."';
+         taskjobs.task_id        = '".$json_task_id."';
          taskjobs.ajax_url       = '".$this->getBaseUrlFor('fi.job.logs')."';
          taskjobs.agents_url     = '".$pfAgent->getFormUrl()."';
          taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']."';
@@ -286,20 +296,60 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            ".$json_task_id.",
             'dropdown_".$refresh_randid."'
          );
          taskjobs.init_include_old_jobs_buttons(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            ".$json_task_id.",
             'dropdown_".$include_oldjobs_id."'
          );
          taskjobs.update_logs_timeout(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            ".$json_task_id.",
             'dropdown_".$refresh_randid."'
          );
       });");
+
+
+      // Display Export modal
+      echo "<div id='fiTaskExport_modalWindow'>";
+      echo "<form method='POST' class='task_export_form center'
+                  action='".self::getFormURLWithID($task_id) ."'>";
+
+      // states checkboxes
+      echo "<label for='include_old_jobs'>".__("Task execution states",'fusioninventory').
+           "</label>";
+      echo "<div class='state_checkboxes'>";
+       // set options checked by default
+      $agent_state_types = array(
+         'agents_prepared'  => false,
+         'agents_running'   => true,
+         'agents_cancelled' => false,
+         'agents_success'   => true,
+         'agents_error'     => true
+      );
+      foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+         $agent_state_type = str_replace("agents_", "", $agent_state_type);
+         $locale = __(ucfirst($agent_state_type), 'fusioninventory');
+         $checked = "";
+         if ($agent_state_checked) {
+            $checked = "checked='checked'";
+         }
+         echo "<div class='agent_state_type_checkbox'>";
+         echo "<input type='checkbox' $checked name='agent_state_types[]' ".
+              "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+         echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+         echo "</div>";
+      }
+      echo "</div>"; // .state_checkboxes
+
+      echo "<div class='clear_states'></div>";
+
+      echo Html::hidden('task_id', ['value' => $task_id]);
+      echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs']);
+      Html::closeForm();
+      echo "</div>"; // #fiTaskExport_modalWindow
    }
 
 
@@ -478,6 +528,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          }
          $this->update($postvars);
          Html::back();
+      } else if (isset($postvars['export_jobs'])) {
+         Session::checkRight('plugin_fusioninventory_task', READ);
+         $this->csvExport($postvars);
       }
    }
 
