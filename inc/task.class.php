@@ -1359,7 +1359,13 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       session_write_close();
 
       $logs = $this->getJoblogs($task_ids);
-      echo json_encode($logs);
+      $out = json_encode($logs);
+      if (isset($options['display'])
+          && !$options['display']) {
+         return $out;
+      } else {
+         echo $out;
+      }
    }
 
 
@@ -1624,6 +1630,152 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
+
+   function csvExport($params) {
+      $includeoldjobs    = $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'];
+      $agent_state_types = ['prepared', 'cancelled', 'running', 'success', 'error' ];
+      if (isset($params['agent_state_types'])) {
+         $agent_state_types = $params['agent_state_types'];
+      }
+
+      // 0 : no debug (really export to csv,
+      // 1 : display final table,
+      // 2 : also display json
+      define('DEBUG_CSV', 0);
+      if (!DEBUG_CSV) {
+         header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
+         header('Pragma: private'); /// IE BUG + SSL
+         header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
+         header("Content-disposition: attachment; filename=export.csv");
+         header("Content-type: text/csv");
+      } else {
+         Html::printCleanArray($params);
+         Html::printCleanArray($agent_state_types);
+      }
+
+      $params['display'] = false;
+      $pfTask            = new PluginFusioninventoryTask();
+      $data              = json_decode($pfTask->ajaxGetJobLogs($params), true);
+
+      //clean line with state_types with unwanted states
+      foreach ($data['tasks'] as $task_id => &$task) {
+         foreach ($task['jobs'] as $job_id => &$job) {
+            foreach ($job['targets'] as $target_id => &$target) {
+               foreach ($target['agents'] as $agent_id => &$agent) {
+                  foreach ($agent as $exec_id => $exec) {
+                     if (!in_array($exec['state'], $agent_state_types)) {
+                        unset($agent[$exec_id]);
+                        if (count($agent) === 0) {
+                           unset($target['agents'][$agent_id]);
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+
+      // clean old temporary variables
+      unset($task, $job, $target, $agent);
+
+      if (!DEBUG_CSV) {
+         define('SEP', ';');
+         define('NL', "\r\n");
+      } else {
+         define('SEP', '</td><td>');
+         define('NL', '</tr><tr><td>');
+         echo "<table border=1><tr><td>";
+      }
+
+      // cols titles
+      echo "Task_name".SEP;
+      echo "Job_name".SEP;
+      echo "Method".SEP;
+      echo "Target".SEP;
+      echo "Agent".SEP;
+      echo "Computer name".SEP;
+      echo "Date".SEP;
+      echo "Status".SEP;
+      echo "Last Message".NL;
+
+      $agent_obj = new PluginFusioninventoryAgent();
+      $computer  = new Computer();
+
+      // prepare an anonymous (and temporory) function
+      // for test if an element is the last of an array
+      $last = function (&$array, $key) {
+          end($array);
+          return $key === key($array);
+      };
+
+      // display lines
+      $csv_array = array();
+      $tab = 0;
+      foreach ($data['tasks'] as $task_id => $task) {
+         echo $task['task_name'].SEP;
+
+         if (count($task['jobs']) == 0) {
+            echo NL;
+         } else foreach ($task['jobs'] as $job_id => $job) {
+            echo $job['name'].SEP;
+            echo $job['method'].SEP;
+
+            if (count($job['targets']) == 0) {
+               echo NL;
+            } else foreach ($job['targets'] as $target_id => $target) {
+               echo $target['name'].SEP;
+
+               if (count($target['agents']) == 0) {
+                  echo NL;
+               } else foreach ($target['agents'] as $agent_id => $agent) {
+                  $agent_obj->getFromDB($agent_id);
+                  echo $agent_obj->getName().SEP;
+                  $computer->getFromDB($agent_obj->fields['computers_id']);
+                  echo $computer->getname().SEP;
+
+                  $log_cpt = 0;
+                  if (count($agent) == 0) {
+                     echo NL;
+                  } else foreach ($agent as $exec_id => $exec) {
+                     echo $exec['last_log_date'].SEP;
+                     echo $exec['state'].SEP;
+                     echo $exec['last_log'].NL;
+                     $log_cpt++;
+
+                     if ($includeoldjobs != -1 && $log_cpt >= $includeoldjobs) {
+                        break;
+                     }
+
+                     if (!$last($agent, $exec_id)) {
+                        echo SEP.SEP.SEP.SEP.SEP.SEP;
+                     }
+                  }
+
+                  if (!$last($target['agents'], $agent_id)) {
+                     echo SEP.SEP.SEP.SEP;
+                  }
+               }
+
+               if (!$last($job['targets'], $target_id)) {
+                  echo SEP.SEP.SEP;
+               }
+            }
+
+            if (!$last($task['jobs'], $job_id)) {
+               echo SEP;
+            }
+         }
+      }
+      if (DEBUG_CSV === 2) {
+         echo "</td></tr></table>";
+
+         //echo original datas
+         echo "<pre>".json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)."</pre>";
+      }
+
+      // force exit to prevent further display
+      exit;
+   }
 
    /**
     * Get the massive actions for this object
