@@ -1289,4 +1289,24 @@ $(document).ready(function() {
       taskjobs.edit($(this).attr('data-ajaxurl'),
                     $(this).attr('data-taskjob_id'));
    });
+
+   $('#fiTaskExport_modalWindow').dialog({
+      modal: true,
+      autoOpen: false,
+      height: 200,
+      position: ['center', 20],
+      width: 480,
+      resizeable: true,
+   });
+
+   $(document).on("click", ".openExportDialog", function(event) {
+      var x = event.pageX - $(document).scrollLeft() - 250;
+      var y = event.pageY - $(document).scrollTop() - 75;
+      $('#fiTaskExport_modalWindow').dialog('option', 'position', [x,y]);
+      $('#fiTaskExport_modalWindow').dialog('open');
+   });
+
+   $(document).on("click", ".task_export_form .submit", function(event) {
+      $('#fiTaskExport_modalWindow').dialog('close');
+   });
 });

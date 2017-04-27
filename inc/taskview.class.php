@@ -300,6 +300,44 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'dropdown_".$refresh_randid."'
          );
       });");
+
+
+      // Display Export button and modal
+      echo "<a class='openExportDialog vsubmit'>"._sx('button', 'Export')."</a>";
+      echo "<div id='fiTaskExport_modalWindow'>";
+      echo "<form method='POST' class='task_export_form'
+                  action='".self::getFormURLWithID($task_id) ."'>";
+
+      // states checkboxes
+      echo "<label for='include_old_jobs'>".__("Agent state",'fusioninventory')."</label>";
+      echo "<div class='state_checkboxes'>";
+       // set options checked by default
+      $agent_state_types = array(
+         'agents_prepared'  => false,
+         'agents_running'   => true,
+         'agents_cancelled' => false,
+         'agents_success'   => true,
+         'agents_error'     => true
+      );
+      foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
+         $agent_state_type = str_replace("agents_", "", $agent_state_type);
+         $locale = __(ucfirst($agent_state_type), 'fusioninventory');
+         $checked = "";
+         if ($agent_state_checked) {
+            $checked = "checked='checked'";
+         }
+         echo "<div class='agent_state_type_checkbox'>";
+         echo "<input type='checkbox' $checked name='agent_state_types[]' ".
+              "value='$agent_state_type' id='agent_state_types_$agent_state_type' />";
+         echo "<label for='agent_state_types_$agent_state_type'>&nbsp;$locale</label>";
+         echo "</div>";
+      }
+      echo "</div>"; // .state_checkboxes
+
+      echo "<input type='hidden' name='task_id' value='$task_id' />";
+      echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs']);
+      Html::closeForm();
+      echo "</div>"; // #fiTaskExport_modalWindow
    }
 
 
@@ -478,6 +516,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          }
          $this->update($postvars);
          Html::back();
+      } else if (isset($postvars['export_jobs'])) {
+         $this->csvExport($postvars);
       }
    }
 
