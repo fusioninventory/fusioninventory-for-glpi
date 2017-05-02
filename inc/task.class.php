@@ -1632,6 +1632,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
 
    function csvExport($params) {
+      global $CFG_GLPI;
+
       $includeoldjobs    = $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'];
       $agent_state_types = ['prepared', 'cancelled', 'running', 'success', 'error' ];
       if (isset($params['agent_state_types'])) {
@@ -1641,7 +1643,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // 0 : no debug (really export to csv,
       // 1 : display final table,
       // 2 : also display json
-      define('DEBUG_CSV', 0);
+      define('DEBUG_CSV', 1);
       if (!DEBUG_CSV) {
          header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
          header('Pragma: private'); /// IE BUG + SSL
@@ -1679,7 +1681,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       unset($task, $job, $target, $agent);
 
       if (!DEBUG_CSV) {
-         define('SEP', ';');
+         define('SEP', $CFG_GLPI['csv_delimiter']);
          define('NL', "\r\n");
       } else {
          define('SEP', '</td><td>');
