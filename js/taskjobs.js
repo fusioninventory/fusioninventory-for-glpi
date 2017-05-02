@@ -1295,11 +1295,7 @@ $(document).ready(function() {
          modal: true,
          resizeable: true,
          height: 200,
-         width: 480,
-         position: [
-            event.pageX - $(document).scrollLeft() - 250,
-            event.pageY - $(document).scrollTop() - 75
-         ]
+         width: 480
       });
    });
 
