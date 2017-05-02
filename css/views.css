@@ -780,6 +780,10 @@ table.runs td.comment {
    margin-bottom: 10px;
 }
 
+#fiTaskExport_modalWindow {
+   display: none;
+}
+
 /*
  * submit class grabbed from GLPI core
  */
