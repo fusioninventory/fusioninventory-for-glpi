@@ -165,7 +165,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // display export button
       if (isset($this->fields['id']) ) {
-         echo "<i class='openExportDialog vsubmit fa fa-lg fa-floppy-o' title='"._sx('button', 'Export')."'></i>";
+         echo "<i class='openExportDialog pointer fa fa-lg fa-floppy-o' title='"._sx('button', 'Export')."'></i>";
       }
 
       // Add a manual refresh button
