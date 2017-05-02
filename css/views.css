@@ -770,6 +770,10 @@ table.runs td.comment {
    margin-bottom: 5px;
 }
 
+.state_checkboxes {
+   text-align: left;
+}
+
 .agent_state_type_checkbox {
    float: left;
    width: 33%;

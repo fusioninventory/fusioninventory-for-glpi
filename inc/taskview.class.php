@@ -310,11 +310,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // Display Export modal
       echo "<div id='fiTaskExport_modalWindow'>";
-      echo "<form method='POST' class='task_export_form'
+      echo "<form method='POST' class='task_export_form center'
                   action='".self::getFormURLWithID($task_id) ."'>";
 
       // states checkboxes
-      echo "<label for='include_old_jobs'>".__("task execution states",'fusioninventory').
+      echo "<label for='include_old_jobs'>".__("Task execution states",'fusioninventory').
            "</label>";
       echo "<div class='state_checkboxes'>";
        // set options checked by default
