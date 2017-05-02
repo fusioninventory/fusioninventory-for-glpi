@@ -764,6 +764,21 @@ table.runs td.comment {
    background-image: url('../pics/monitoring_computing.gif');
 }
 
+.task_export_form > label {
+   font-weight: bold;
+   display: block;
+   margin-bottom: 5px;
+}
+
+.agent_state_type_checkbox {
+   float: left;
+   width: 33%;
+}
+
+.clear_states {
+   clear: both;
+   margin-bottom: 10px;
+}
 
 /*
  * submit class grabbed from GLPI core

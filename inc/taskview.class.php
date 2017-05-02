@@ -162,6 +162,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          ],
          ['value' => $_SESSION['glpi_plugin_fusioninventory']['refresh']]
       );
+
+      // display export button
+      if (isset($this->fields['id']) ) {
+         echo "<i class='openExportDialog vsubmit fa fa-lg fa-floppy-o' title='"._sx('button', 'Export')."'></i>";
+      }
+
       // Add a manual refresh button
       echo "<div class='refresh_button submit'>";
       echo "<span></span>";
@@ -302,14 +308,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       });");
 
 
-      // Display Export button and modal
-      echo "<a class='openExportDialog vsubmit'>"._sx('button', 'Export')."</a>";
+      // Display Export modal
       echo "<div id='fiTaskExport_modalWindow'>";
       echo "<form method='POST' class='task_export_form'
                   action='".self::getFormURLWithID($task_id) ."'>";
 
       // states checkboxes
-      echo "<label for='include_old_jobs'>".__("Agent state",'fusioninventory')."</label>";
+      echo "<label for='include_old_jobs'>".__("Agent states",'fusioninventory')."</label>";
       echo "<div class='state_checkboxes'>";
        // set options checked by default
       $agent_state_types = array(
@@ -334,7 +339,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
       echo "</div>"; // .state_checkboxes
 
-      echo "<input type='hidden' name='task_id' value='$task_id' />";
+      echo "<div class='clear_states'></div>";
+
+      echo Html::hidden('task_id', ['value' => $task_id]);
       echo Html::submit(_sx('button', 'Export'), ['name' => 'export_jobs']);
       Html::closeForm();
       echo "</div>"; // #fiTaskExport_modalWindow
@@ -517,6 +524,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          $this->update($postvars);
          Html::back();
       } else if (isset($postvars['export_jobs'])) {
+         Session::checkRight('plugin_fusioninventory_task', READ);
          $this->csvExport($postvars);
       }
    }
