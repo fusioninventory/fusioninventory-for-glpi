@@ -250,7 +250,6 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .monitoring-logs .task_block > h3 {
-   color: #659900;
    cursor: pointer; 
    background: url(../../../pics/expand.gif) no-repeat left center;
    padding-left: 20px;
