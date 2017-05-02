@@ -164,9 +164,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       );
 
       // display export button
-      if (isset($this->fields['id']) ) {
-         echo "<i class='openExportDialog pointer fa fa-lg fa-floppy-o' title='"._sx('button', 'Export')."'></i>";
-      }
+      echo "<i class='openExportDialog pointer fa fa-lg fa-floppy-o'
+               title='"._sx('button', 'Export')."'></i>";
 
       // Add a manual refresh button
       echo "<div class='refresh_button submit'>";
@@ -277,13 +276,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if (isset($this->fields['id']) ) {
          $task_id = $this->fields['id'];
       } else {
-         $task_id = json_encode(array());
+         $task_id = null;
       }
-      $pfAgent = new PluginFusioninventoryAgent();
-      $Computer = new Computer();
+      $json_task_id = json_encode($task_id);
+      $pfAgent      = new PluginFusioninventoryAgent();
+      $Computer     = new Computer();
 
       echo Html::scriptBlock("$(document).ready(function() {
-         taskjobs.task_id        = '".$task_id."';
+         taskjobs.task_id        = '".$json_task_id."';
          taskjobs.ajax_url       = '".$this->getBaseUrlFor('fi.job.logs')."';
          taskjobs.agents_url     = '".$pfAgent->getFormUrl()."';
          taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']."';
@@ -292,17 +292,17 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            ".$json_task_id.",
             'dropdown_".$refresh_randid."'
          );
          taskjobs.init_include_old_jobs_buttons(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            ".$json_task_id.",
             'dropdown_".$include_oldjobs_id."'
          );
          taskjobs.update_logs_timeout(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            ".$json_task_id.",
             'dropdown_".$refresh_randid."'
          );
       });");

@@ -1334,7 +1334,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     *                          - task_id (mandatory), the current task id
     *                          - includeoldjobs: the value of "include old jobs" list
     *                          - refresh: the value of "refresh interval" list
-    * @return nothing
+    *                          - display: true for direct diplay of html or false for return
+    *
+    * @return depends on @param $options['display'].
     */
    function ajaxGetJobLogs($options = []) {
       if (!empty($options['task_id'])) {
@@ -1630,9 +1632,27 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
 
-
-   function csvExport($params) {
+   /**
+    * Export a list of jobs in CSV format
+    *
+    * @param  array  $params these possible entries:
+    *                        - agent_state_types: array of agent states to filter output
+    *                          (prepared, cancelled, running, success, error)
+    *                        - debug_csv, possible values:
+    *                           - 0 : no debug (really export to csv,
+    *                           - 1 : display params and html table,
+    *                           - 2: like 1 + display also json of jobs logs
+    *
+    * @return nothing (force a download of csv)
+    */
+   function csvExport($params = []) {
       global $CFG_GLPI;
+
+      $default_params = [
+         'agent_state_types' => [],
+         'debug_csv'         => 0
+      ];
+      $params = array_merge($default_params, $params);
 
       $includeoldjobs    = $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'];
       $agent_state_types = ['prepared', 'cancelled', 'running', 'success', 'error' ];
@@ -1640,11 +1660,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $agent_state_types = $params['agent_state_types'];
       }
 
-      // 0 : no debug (really export to csv,
-      // 1 : display final table,
-      // 2 : also display json
-      define('DEBUG_CSV', 1);
-      if (!DEBUG_CSV) {
+      if (!$params['debug_csv']) {
          header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
          header('Pragma: private'); /// IE BUG + SSL
          header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
@@ -1680,7 +1696,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // clean old temporary variables
       unset($task, $job, $target, $agent);
 
-      if (!DEBUG_CSV) {
+      if (!$params['debug_csv']) {
          define('SEP', $CFG_GLPI['csv_delimiter']);
          define('NL', "\r\n");
       } else {
@@ -1768,7 +1784,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
          }
       }
-      if (DEBUG_CSV === 2) {
+      if ($params['debug_csv'] === 2) {
          echo "</td></tr></table>";
 
          //echo original datas
