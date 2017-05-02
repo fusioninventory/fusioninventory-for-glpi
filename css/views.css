@@ -546,7 +546,7 @@ a.expanded > div.fold {
 .agent_block > *
 {
    padding: 5px;
-   display: inline-block;
+   display: block;
 }
 
 
