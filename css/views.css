@@ -253,6 +253,7 @@ td:not(#foo) > input[type=radio]:checked + label {
    cursor: pointer; 
    background: url(../../../pics/expand.gif) no-repeat left center;
    padding-left: 20px;
+   display: inline-block;
 }
 
 .monitoring-logs .task_block.expand > h3 {

@@ -182,6 +182,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                      __("Task",'fusioninventory')."
                      <span class='task_name'>{{task_name}}</span>
                   </h3>
+                  <a href='".PluginFusioninventoryTask::getFormURL()."?id={{task_id}}'
+                     class='task_block_link'>
+                     <i class='fa fa-link pointer'></i>
+                  </a>
                   <div class='jobs_block'></div>
                </div>
             </script>";
