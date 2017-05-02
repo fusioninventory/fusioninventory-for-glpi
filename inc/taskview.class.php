@@ -314,7 +314,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                   action='".self::getFormURLWithID($task_id) ."'>";
 
       // states checkboxes
-      echo "<label for='include_old_jobs'>".__("Agent states",'fusioninventory')."</label>";
+      echo "<label for='include_old_jobs'>".__("task execution states",'fusioninventory').
+           "</label>";
       echo "<div class='state_checkboxes'>";
        // set options checked by default
       $agent_state_types = array(
