@@ -568,7 +568,7 @@ a.expanded > div.fold {
 
 .agent_block > span.comment {
    opacity: 0.8;
-   font-weight: lighter;
+   font-weight: bold;
    min-height: 10px;
 }
 
