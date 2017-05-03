@@ -312,7 +312,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param string $name name in configuration
     * @return boolean
     */
-   function isActive($name) {
+   function isFieldActive($name) {
       if (!($this->getValue($name))) {
          return false;
       } else {
@@ -335,7 +335,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('SSL-only for agent', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
-      Dropdown::showYesNo("ssl_only", $this->isActive('ssl_only'));
+      Dropdown::showYesNo("ssl_only", $this->isFieldActive('ssl_only'));
       echo "</td>";
       echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
@@ -367,7 +367,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Extra-debug', 'fusioninventory')." :</td>";
       echo "<td>";
-      Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
+      Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
       echo "</td>";
       echo "<td colspan=2></td>";
       echo "</tr>";
