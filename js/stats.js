@@ -3,7 +3,7 @@ function statHalfDonut(svgname, jsondata) {
    nv.addGraph(function() {
 
       var width = 400,
-          height = 400;
+          height = 380;
 
       var chart = nv.models.pieChart()
           .x(function(d) { return d.key })
