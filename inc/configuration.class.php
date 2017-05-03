@@ -104,7 +104,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
     */
    function showForm($options=array()) {
 
-      $this->showTabs($options);
+      $this->initForm($options);
       $this->addDivForTabs();
 
       return TRUE;
