@@ -55,7 +55,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
    /**
-    * __contruct function where initialize base URLs 
+    * __contruct function where initialize base URLs
     */
    function __construct() {
       parent::__construct();
@@ -833,9 +833,13 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             $this->update($postvars);
          }
 
+         $add_redirect = "";
+         if ($jobs_id) {
+            $add_redirect = "&edit_job=$jobs_id#taskjobs_form";
+         }
+
          Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id=".
-                                 $postvars['plugin_fusioninventory_tasks_id']."&edit_job=".$jobs_id.
-                                 "#taskjobs_form");
+                                 $postvars['plugin_fusioninventory_tasks_id'].$add_redirect);
       } else if (isset($postvars["delete"])) {
          // * delete taskjob
          Session::checkRight('plugin_fusioninventory_task', PURGE);
