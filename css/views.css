@@ -886,3 +886,18 @@ table.runs td.comment {
    background-color: #f3f3f3;
 }
 
+@media screen and (max-width: 700px) {
+   .fi_board {
+      width: 95%;
+   }
+
+   .fi_board .fi_chart {
+      width: 100%;
+   }
+
+   .fi_board .fi_chart svg.nvd3-svg {
+      height: 100%;
+      width: 100%;
+   }
+}
+
