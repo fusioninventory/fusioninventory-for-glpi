@@ -613,33 +613,33 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'edition'     => ''
               )
           ),
-//          array(
-//              array(
-//                  'FULL_NAME'      => 'Microsoft® Windows Vista™ Professionnel',
-//                  'KERNEL_NAME'    => 'MSWin32',
-//                  'KERNEL_VERSION' => '6.0.6001',
-//                  'NAME'           => 'Windows',
-//                  'SERVICE_PACK'   => 'Service Pack 1'
-//              ),
-//              array(
-//                  'arch'        => '',
-//                  'kernname'    => 'MSWin32',
-//                  'kernversion' => '6.0.6001',
-//                  'os'          => 'Windows',
-//                  'osversion'   => 'Vista',
-//                  'servicepack' => 'Service Pack 1',
-//                  'edition'     => 'Professionnel'
-//              ),
-//              array(
-//                  'arch'        => '',
-//                  'kernname'    => 'MSWin32',
-//                  'kernversion' => '6.0.6001',
-//                  'os'          => 'Microsoft® Windows Vista™ Professionnel',
-//                  'osversion'   => '',
-//                  'servicepack' => 'Service Pack 1',
-//                  'edition'     => ''
-//              )
-//          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Microsoft® Windows Vista™ Professionnel',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.0.6001',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => 'Service Pack 1'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.0.6001',
+                  'os'          => 'Windows',
+                  'osversion'   => 'Vista',
+                  'servicepack' => 'Service Pack 1',
+                  'edition'     => 'Professionnel'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.0.6001',
+                  'os'          => 'Microsoft® Windows Vista™ Professionnel',
+                  'osversion'   => '',
+                  'servicepack' => 'Service Pack 1',
+                  'edition'     => ''
+              )
+          ),
           array(
               array(
                   'FULL_NAME'      => 'Microsoft(R) Windows(R) Server 2003, Standard Edition x64',
@@ -855,7 +855,61 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                   'servicepack' => '',
                   'edition'     => ''
               )
-          )
+          ),
+          array(
+              array(
+                  'FULL_NAME'      => 'Майкрософт Windows 8.1 Профессиональная',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '6.3.9600',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.3.9600',
+                  'os'          => 'Windows',
+                  'osversion'   => '8.1',
+                  'servicepack' => '',
+                  'edition'     => 'Профессиональная'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '6.3.9600',
+                  'os'          => 'Майкрософт Windows 8.1 Профессиональная',
+                  'osversion'   => '',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+         ),
+         array(
+              array(
+                  'FULL_NAME'      => 'Майкрософт Windows 10 Pro',
+                  'KERNEL_NAME'    => 'MSWin32',
+                  'KERNEL_VERSION' => '10.0.10586',
+                  'NAME'           => 'Windows',
+                  'SERVICE_PACK'   => ''
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '10.0.10586',
+                  'os'          => 'Windows',
+                  'osversion'   => '10',
+                  'servicepack' => '',
+                  'edition'     => 'Pro'
+              ),
+              array(
+                  'arch'        => '',
+                  'kernname'    => 'MSWin32',
+                  'kernversion' => '10.0.10586',
+                  'os'          => 'Майкрософт Windows 10 Pro',
+                  'osversion'   => '',
+                  'servicepack' => '',
+                  'edition'     => ''
+              )
+         )
       );
       $mapping = array(
           'arch'        => 'operatingsystemarchitectures_id',
