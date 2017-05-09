@@ -48,7 +48,9 @@ function statBar(svgname, jsondata, title) {
       d3.select('#' + svgname)
          .datum([JSON.parse(jsondata)])
          .attr('height', height)
-         .call(chart);
+         .call(chart)
+         .attr('width', width)
+         .attr('height', height);
 
       d3.select('#' + svgname)
          .append('text')
