@@ -860,11 +860,16 @@ table.runs td.comment {
 }
 
 .fi_board .fi_chart {
-   min-height: 280px;
-   min-width: 400px;
+   height: 430px; /* 380px for chart + 50px for H2 */
+   width: 400px;
    float: left;
-   margin: 0 2px 2px 2px;
+   margin: 2px;
    box-sizing:border-box;
+}
+
+.fi_board .fi_chart svg.nvd3-svg {
+   height: initial;
+   width: initial;
 }
 
 .fi_board .fi_chart .fi_chart_title {
@@ -872,7 +877,9 @@ table.runs td.comment {
    background-color: #f3f3f3;
    margin: 0;
    padding: 0.83em 5px;
+   box-sizing:border-box;
    text-align: center;
+   height: 50px;
 }
 
 .fi_board .fi_chart svg {
