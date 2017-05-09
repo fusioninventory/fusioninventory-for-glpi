@@ -496,11 +496,15 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = '';
          if (isset($array['OPERATINGSYSTEM']['FULL_NAME']) && $pfConfig->getValue('manage_osname') == 1) {
             $matches = array();
-            preg_match("/Microsoft Windows (XP |\d\.\d |\d{1,4} )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
-            if (count($matches) == 3) {
-               $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[2];
+            preg_match("/.+ Windows (XP |\d\.\d |\d{1,4} |Vista(™)? )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+            if (count($matches) == 4) {
+               $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[3];
                if ($array_tmp['operatingsystemversions_id'] == '') {
-                  $array_tmp['operatingsystemversions_id'] = trim($matches[1]);
+                  $matches[1] = trim($matches[1]);
+                  if ($matches[2] != '') {
+                     $matches[1] = trim($matches[1], $matches[2]);
+                  }
+                  $array_tmp['operatingsystemversions_id'] = $matches[1];
                }
             } else if (count($matches) == 2) {
                $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[1];
@@ -533,7 +537,7 @@ class PluginFusioninventoryFormatconvert {
                      }
                      $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]);
                   } else {
-                     preg_match("/Microsoft[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+                     preg_match("/\w[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
                      if (count($matches) == 4) {
                         $array_tmp['operatingsystemversions_id'] = $matches[2];
                         $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]." ".$matches[3]);
