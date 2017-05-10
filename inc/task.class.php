@@ -288,7 +288,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $actor_key = "".key($actor)."_".$actor[key($actor)];
             if (!isset($actors[$actor_key])) {
                $actors[$actor_key] = array();
-               foreach ($this->getAgentsFromActors(array($actor)) as $agent) {
+               foreach ($this->getAgentsFromActors(array($actor), true) as $agent) {
                   $actors[$actor_key][$agent] = true;
                }
             }
@@ -681,9 +681,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * corresponding itemtype classes.
     *
     * @param array $actors
+    * @param bool  $use_cache retrieve agents from cache or not
     * @return array list of agents
     */
-   public function getAgentsFromActors($actors = array()) {
+   public function getAgentsFromActors($actors = array(), $use_cache = false) {
       $agents = array();
       $computers = array();
       $computer = new Computer();
@@ -707,7 +708,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             case 'PluginFusioninventoryDeployGroup':
                $group_targets = $pfToolbox->executeAsFusioninventoryUser(
                   'PluginFusioninventoryDeployGroup::getTargetsForGroup',
-                  array($itemid)
+                  array($itemid, $use_cache)
                );
                foreach ($group_targets as $computerid) {
                   $computers[$computerid] = 1;
