@@ -133,13 +133,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
           'users_id'                         => 0,
-          'operatingsystems_id'              => 0,
-          'operatingsystemversions_id'       => 0,
+          'operatingsystems_id'              => 'freebsd',
+          'operatingsystemversions_id'       => '9.1-RELEASE',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'domains_id'                       => 'mydomain.local',
           'os_licenseid'                     => '',
           'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => 0,
+          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -320,13 +320,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 0,
-          'operatingsystemversions_id'       => 0,
+          'operatingsystems_id'              => 'Windows',
+          'operatingsystemversions_id'       => 'XP',
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 0,
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -939,6 +939,21 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
          $GLPIlog->testPHPlogs();
          $this->assertEquals($a_reference, $a_return['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id']);
 
+         if (trim($a_reference['operatingsystems_id']) == '') {
+            $a_reference['operatingsystems_id'] = 0;
+         }
+         $this->assertEquals($a_reference['operatingsystems_id'], $a_return['Computer']['operatingsystems_id']);
+
+         if (trim($a_reference['operatingsystemservicepacks_id']) == '') {
+            $a_reference['operatingsystemservicepacks_id'] = 0;
+         }
+         $this->assertEquals($a_reference['operatingsystemservicepacks_id'], $a_return['Computer']['operatingsystemservicepacks_id']);
+
+         if (trim($a_reference['operatingsystemversions_id']) == '') {
+            $a_reference['operatingsystemversions_id'] = 0;
+         }
+         $this->assertEquals($a_reference['operatingsystemversions_id'], $a_return['Computer']['operatingsystemversions_id']);
+
          //test with unmanaged OS name
          $PF_CONFIG['manage_osname'] = '0';
          $a_reference = array();
@@ -1026,13 +1041,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 0,
-          'operatingsystemversions_id'       => 0,
+          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
+          'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 0,
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -1362,13 +1377,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 0,
-          'operatingsystemversions_id'       => 0,
+          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
+          'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 0,
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
@@ -1469,13 +1484,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 0,
-          'operatingsystemversions_id'       => 0,
+          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
+          'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 0,
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
@@ -1856,13 +1871,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'operatingsystems_id'              => 0,
-          'operatingsystemversions_id'       => 0,
+          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
+          'operatingsystemversions_id'       => '5.1.2600',
           'uuid'                             => '',
           'domains_id'                       => 'WORKGROUP',
           'os_licenseid'                     => '76413-OEM-0054453-04701',
           'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
-          'operatingsystemservicepacks_id'   => 0,
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
@@ -1877,5 +1892,3 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
    }
 }
-
-?>
