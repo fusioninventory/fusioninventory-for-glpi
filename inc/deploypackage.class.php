@@ -658,23 +658,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function showDebug() {
       global $CFG_GLPI;
 
-      echo "<form action='".PluginFusioninventoryDeploypackage::getFormURL()
-         ."' method='POST'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr><th>".__('JSON package representation', 'fusioninventory')."</th></tr>";
       echo "<tr><td>";
       echo "<textarea cols='132' rows='50' style='border:1' name='json'>";
       echo PluginFusioninventoryToolbox::formatJson($this->fields['json']);
       echo "</textarea></td></tr>";
-      if ($this->can($this->getID(), UPDATE)) {
-         echo "<tr><td align='center'>";
-         echo Html::hidden('packages_id', ['value' => $this->fields['id']]);
-         echo "<input type='submit' name='update_json' value=\"".
-            _sx('button', 'Save')."\" class='submit'>";
-         echo "</td></tr>";
-      }
       echo "</table>";
-      Html::closeForm();
    }
 
    /**
