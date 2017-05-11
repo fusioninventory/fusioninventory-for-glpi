@@ -103,6 +103,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    const CANCELLED = 5;
 
    /**
+    * Define constant state in error.
+    * The agent failed to complete the job
+    *
+    * @var integer
+    */
+   const RESCHEDULED = 6;
+
+   /**
     * Initialize the public method
     *
     * @var string
@@ -135,7 +143,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'fusioninventory'),
          self::FINISHED             => __('Finished', 'fusioninventory'),
          self::IN_ERROR             => __('Error' , 'fusioninventory'),
-         self::CANCELLED            => __('Cancelled', 'fusioninventory')
+         self::CANCELLED            => __('Cancelled', 'fusioninventory'),
+         self::RESCHEDULED          => __('Rescheduled', 'fusioninventory')         
       );
    }
 

@@ -507,7 +507,7 @@ taskjobs.display_agents_view = function(chart_id) {
                .attr('class', 'submit restart')
                .attr('value', 'Restart selected jobs')
                .style('display', function(d) {
-                  return (Object.keys(chart.checked_agents).length > 0)?null:'none'; 
+                  return (Object.keys(chart.checked_agents).length > 0)?null:'none';
                })
                .on('click', function(e) {
                   $('.refresh_button > span').addClass('fetching');
@@ -516,7 +516,7 @@ taskjobs.display_agents_view = function(chart_id) {
                      var position = $(this).parent().index();
                      var agents = chart.agents.toArray();
                      params.push({
-                        'agent_id': agents[position][1][0].agent_id, 
+                        'agent_id': agents[position][1][0].agent_id,
                         'jobstate_id': agents[position][1][0].jobstate_id
                      });
                   });
@@ -526,7 +526,7 @@ taskjobs.display_agents_view = function(chart_id) {
                       method: 'post',
                       data: {
                          'params': params
-                      }, 
+                      },
                       complete: function() {
                         taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
                         $("input.check_restart:checked").each(function() {
@@ -534,7 +534,7 @@ taskjobs.display_agents_view = function(chart_id) {
                         });
                         $('.refresh_button > span').removeClass('fetching');
                       }
-                   }); 
+                   });
                });
 
          var show_more = d3.select(chart_anchor).selectAll("div.show_more")
@@ -794,7 +794,8 @@ taskjobs.update_logs = function (data) {
             taskjobs.charts[chart_id].new_data = [
                target_v.counters_computed.agents_success.length,
                target_v.counters_computed.agents_error.length,
-               target_v.counters_computed.agents_notdone.length
+               target_v.counters_computed.agents_notdone.length,
+               target_v.counters_computed.agents_rescheduled.length
             ];
 
             if ( ! d3.sum(taskjobs.charts[chart_id].new_data) > 0) {
@@ -852,12 +853,13 @@ taskjobs.compute_data = function() {
             job = task.jobs[job_i];
             $.each(job.targets, function( target_i, target_v) {
                 target_v.counters_computed = {
-                    agents_prepared:   Object.keys(target_v.counters.agents_prepared),
-                    agents_running:    Object.keys(target_v.counters.agents_running),
-                    agents_cancelled:  Object.keys(target_v.counters.agents_cancelled),
-                    agents_notdone:    Object.keys(target_v.counters.agents_notdone),
-                    agents_error:      Object.keys(target_v.counters.agents_error),
-                    agents_success:    Object.keys(target_v.counters.agents_success)
+                    agents_prepared:    Object.keys(target_v.counters.agents_prepared),
+                    agents_running:     Object.keys(target_v.counters.agents_running),
+                    agents_cancelled:   Object.keys(target_v.counters.agents_cancelled),
+                    agents_notdone:     Object.keys(target_v.counters.agents_notdone),
+                    agents_error:       Object.keys(target_v.counters.agents_error),
+                    agents_rescheduled: Object.keys(target_v.counters.agents_rescheduled),
+                    agents_success:     Object.keys(target_v.counters.agents_success)
                 };
 
                 if (Object.keys(target_v.agents).length > 0 ) {

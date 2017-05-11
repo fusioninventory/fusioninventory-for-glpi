@@ -185,7 +185,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             last_executions: [
                'agents_prepared',
                'agents_running',
-               'agents_cancelled'
+               'agents_cancelled',
+               'agents_rescheduled'
             ],
             last_finish_states: [
                'agents_notdone',
@@ -201,6 +202,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'agents_running':   '". __('Running', 'fusioninventory')."',
             'agents_prepared':  '". __('Prepared' , 'fusioninventory')."',
             'agents_cancelled': '". __('Cancelled', 'fusioninventory')."',
+            'agents_rescheduled': '". __('Rescheduled', 'fusioninventory')."'
          };
 
          taskjobs.logstatuses_names = ".
@@ -270,7 +272,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          'agents_running'   => true,
          'agents_cancelled' => false,
          'agents_success'   => true,
-         'agents_error'     => true
+         'agents_error'     => true,
+         'agents_rescheduled' => true
       );
       foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
          $agent_state_type = str_replace("agents_", "", $agent_state_type);

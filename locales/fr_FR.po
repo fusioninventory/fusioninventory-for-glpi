@@ -1,9 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-#, fuzzy
+#
+# Translators:
+# Alexandre Brianceau <lostprophet91@gmail.com>, 2013
+# Asmodojo <asmodojo@outlook.com>, 2013
+# CDuv <transifex.accounts@claude.duvergier.fr>, 2015
+# David Durieux <d.durieux@siprossii.com>, 2014,2016
+# EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
+# Frédéric MOHIER, 2014
+# Gonéri Le Bouder <goneri@rulezlan.org>, 2013
+# kiniou <kiniou@gmail.com>, 2014
+# Mathieu Simon <mathieu.sim@gmail.com>, 2013
+# quent1 <quentin@quent1.fr>, 2015
+# Raphaël Threis <webmaster@malmedy.be>, 2014
+# Sebastien <sebastien.janez@free.fr>, 2014
+# Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# Walid Nouh, 2014
+# Xavier CAILLAUD <tsmr@thetsmr.fr>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"

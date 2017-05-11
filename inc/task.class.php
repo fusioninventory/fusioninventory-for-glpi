@@ -1014,7 +1014,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $targets_handle = &$jobs_handle[$job_id]['targets'];
          $agent_state_types = array(
             'agents_prepared', 'agents_cancelled', 'agents_running',
-            'agents_success', 'agents_error', 'agents_notdone'
+            'agents_success', 'agents_error', 'agents_notdone', 'agents_rescheduled'
          );
 
          if ($result[$fieldmap['job.method']] == 'networkinventory') {
@@ -1302,21 +1302,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      $agent_state = 'success';
                      break;
 
-                  case PluginFusioninventoryTaskjobstate::RESCHEDULED :
-                     // drop older error
-                     if (isset($counters['agents_error'][$agent_id])
-                         && $counters['agents_error'][$agent_id] < $run_id) {
-                        unset($counters['agents_error'][$agent_id]);
-                     }
+                     case PluginFusioninventoryTaskjobstate::RESCHEDULED :
+                        // drop older error
+                        if (isset($counters['agents_rescheduled'][$agent_id])
+                            && $counters['agents_rescheduled'][$agent_id] < $run_id) {
+                           unset($counters['agents_rescheduled'][$agent_id]);
+                        }
 
-                     // if we don't have error run (more recent due to previous test)
-                     // so we are really in success
-                     if (!isset($counters['agents_error'][$agent_id])) {
-                        $counters['agents_rescheduled'][$agent_id] = $run_id;
-                     }
+                        // if we don't have error run (more recent due to previous test)
+                        // so we are really in success
+                        if (!isset($counters['agents_rescheduled'][$agent_id])) {
+                           $counters['agents_rescheduled'][$agent_id] = $run_id;
+                           unset($counters['agents_rescheduled'][$agent_id]);
+                        }
 
-                     $agent_state = 'rescheduled';
-                     break;
+                        $agent_state = 'rescheduled';
+                        break;
 
                }
                if (!isset($counters['agents_error'][$agent_id])
