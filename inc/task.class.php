@@ -578,6 +578,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   "AND `state` not in ('" . implode( "','" , array(
                      PluginFusioninventoryTaskjobstate::FINISHED,
                      PluginFusioninventoryTaskjobstate::IN_ERROR,
+                     PluginFusioninventoryTaskjobstate::RESCHEDULED,
                      PluginFusioninventoryTaskjobstate::CANCELLED
                   )) . "')",
                   "AND `plugin_fusioninventory_agents_id` IN (",
@@ -592,7 +593,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
             }
 
-            // If task have not reprepare_if_successful, not reprerare
+            // If task have not reprepare_if_successful, do not reprerare
             // successfull taskjobstate
             if (!$result['task']['reprepare_if_successful']) {
                $jobstates_running = $jobstate->find(
@@ -607,6 +608,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      ")"
                   ))
                );
+
                foreach ($jobstates_running as $jobstate_running) {
                   $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
                   if (isset( $agent_ids[$jobstate_agent_id])) {
@@ -1195,7 +1197,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                // We need to check if the results are consistent with the view's structure gathered
                // by the first query
                $task_id = $result[$fieldmap['task.id']];
-               //if (!array_key_exists($task_id, $logs)) {
                if (!isset($logs[$task_id])) {
                   continue;
                }
@@ -1276,7 +1277,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
                      // if we don't have success run (more recent due to previous test)
                      // so we are really in error
-                     if (!isset($counters['agents_success'][$agent_id])) {
+                     if (!isset($counters['agents_success'][$agent_id])
+                        && !isset($counters['agents_rescheduled'][$agent_id])) {
                         $counters['agents_error'][$agent_id] = $run_id;
                         unset($counters['agents_notdone'][$agent_id]);
                      }
@@ -1300,13 +1302,29 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      $agent_state = 'success';
                      break;
 
+                  case PluginFusioninventoryTaskjobstate::RESCHEDULED :
+                     // drop older error
+                     if (isset($counters['agents_error'][$agent_id])
+                         && $counters['agents_error'][$agent_id] < $run_id) {
+                        unset($counters['agents_error'][$agent_id]);
+                     }
+
+                     // if we don't have error run (more recent due to previous test)
+                     // so we are really in success
+                     if (!isset($counters['agents_error'][$agent_id])) {
+                        $counters['agents_rescheduled'][$agent_id] = $run_id;
+                     }
+
+                     $agent_state = 'rescheduled';
+                     break;
+
                }
                if (!isset($counters['agents_error'][$agent_id])
-                       and !isset($counters['agents_success'][$agent_id])) {
+                       && !isset($counters['agents_success'][$agent_id])) {
                   $counters['agents_notdone'][$agent_id] = $run_id;
                }
                if (isset($counters['agents_running'][$agent_id])
-                       or isset($counters['agents_prepared'][$agent_id])) {
+                       || isset($counters['agents_prepared'][$agent_id])) {
                   unset($counters['agents_cancelled'][$agent_id]);
                }
 
