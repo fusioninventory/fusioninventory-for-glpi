@@ -987,32 +987,17 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $dataDeploy[$k]['key'] .= " : ".$dataDeploy[$k]['y'];
       }
 
-      echo "<table align='center'>";
-      echo "<tr height='280'>";
-      echo "<td width='380'>";
-      self::showChart('computers', $dataComputer);
-      echo "</td>";
-      echo "<td width='380'>";
-      $title = __('Number of computer inventories of last hours', 'fusioninventory');
-      self::showChartBar('nbinventory', $dataInventory, $title);
-      echo "</td>";
-      echo "<td width='380'>";
-      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
-      echo "</td>";
-      echo "</tr>";
 
-      echo "<tr height='280'>";
-      echo "<td>";
+      echo "<div class='fi_board'>";
+      self::showChart('computers', $dataComputer);
+      self::showChartBar('nbinventory', $dataInventory,
+                         __('Number of computer inventories of last hours', 'fusioninventory'));
+      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
       self::showChart('snmp', $dataSNMP);
-      echo "</td>";
-      echo "<td>";
       self::showChart('ports', $dataPortL);
-      echo "</td>";
-      echo "<td>";
       self::showChart('portsconnected', $dataPortC);
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
+      echo "</div>";
+
    }
 
 
@@ -1024,11 +1009,14 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     * @param array $data list of data for the chart
     * @param string $title
     */
-   static function showChart($name, $data, $title='') {
-
-      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
-
-      echo "<script>$(function() { statHalfDonut('".$name."', '".json_encode($data)."');});</script>";
+   static function showChart($name, $data, $title='&nbsp;') {
+      echo "<div class='fi_chart donut'>";
+      echo "<h2 class='fi_chart_title'>$title</h2>";
+      echo '<svg id="'.$name.'"></svg>';
+      echo Html::scriptBlock("$(function() {
+         statHalfDonut('".$name."', '".json_encode($data)."');
+      });");
+      echo "</div>";
    }
 
 
@@ -1042,8 +1030,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     * @param integer $width
     */
    static function showChartBar($name, $data, $title='', $width=370) {
-      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
-
-      echo "<script>$(function() { statBar('".$name."', '".json_encode($data)."', '".addslashes($title)."'); });</script>";
+      echo "<div class='fi_chart bar'>";
+      echo "<h2 class='fi_chart_title'>$title</h2>";
+      echo '<svg id="'.$name.'"></svg>';
+      echo Html::scriptBlock("$(function() {
+         statBar('".$name."', '".json_encode($data)."');
+      });");
+      echo "</div>";
    }
 }

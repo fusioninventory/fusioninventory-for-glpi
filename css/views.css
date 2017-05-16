@@ -838,7 +838,7 @@ table.runs td.comment {
 */
 .lockfield {
    background-image: url('../../../plugins/fusioninventory/pics/lock.png');
-   background-repeat: no-repeat; 
+   background-repeat: no-repeat;
    background-position: right;
 }
 
@@ -846,3 +846,58 @@ table.runs td.comment {
   display:inline-block;
   transform: rotate(180deg);
 }
+
+.fi_board {
+   width: 1300px;
+   margin: 0 auto;
+}
+
+.fi_board::after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.fi_board .fi_chart {
+   height: 430px; /* 380px for chart + 50px for H2 */
+   width: 400px;
+   float: left;
+   margin: 2px;
+   box-sizing:border-box;
+}
+
+.fi_board .fi_chart svg.nvd3-svg {
+   height: initial;
+   width: initial;
+}
+
+.fi_board .fi_chart .fi_chart_title {
+   font-size: 1em;
+   background-color: #f3f3f3;
+   margin: 0;
+   padding: 0.83em 5px;
+   box-sizing:border-box;
+   text-align: center;
+   height: 50px;
+}
+
+.fi_board .fi_chart svg {
+   background-color: #f3f3f3;
+}
+
+@media screen and (max-width: 700px) {
+   .fi_board {
+      width: 95%;
+   }
+
+   .fi_board .fi_chart {
+      width: 100%;
+   }
+
+   .fi_board .fi_chart svg.nvd3-svg {
+      height: 100%;
+      width: 100%;
+   }
+}
+
