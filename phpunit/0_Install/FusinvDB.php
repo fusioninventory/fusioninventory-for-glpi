@@ -291,7 +291,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'agents_status' not added in config");
 
-      // TODO : test glpi_displaypreferences, rules, bookmark...
+      // TODO : test glpi_displaypreferences, rules, SavedSearch...
 
 
       /*

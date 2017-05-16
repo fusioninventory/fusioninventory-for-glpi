@@ -489,7 +489,7 @@ echo "<td colspan='2'>";
       echo "<td width='80' class='center'>";
       echo "<input type='submit' value=\""._sx('button', 'Search')."\" class='submit' >";
       echo "</td><td>";
-//      Bookmark::showSaveButton(Bookmark::SEARCH,$itemtype);
+//      SavedSearch::showSaveButton(SavedSearch::SEARCH,$itemtype);
       echo "<a href='".$this->formurl."?reset=reset&".
          "name=".$_GET['name']."&".$this->customIdVar."=".$_GET[$this->customIdVar].
               "&itemtype=".$_GET['itemtype']."' >";
@@ -598,7 +598,7 @@ $p = array();
          $p['start'] = 0;
       }
 
-      // Manage defautll seachtype value : for bookmark compatibility
+      // Manage defautll seachtype value : for SavedSearch compatibility
       if (count($p['contains'])) {
          foreach ($p['contains'] as $key => $val) {
             if (!isset($p['searchtype'][$key])) {
