@@ -172,6 +172,15 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+
+      //Fix bad WINOWNER; see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/2095
+      if (isset($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
+         if (is_array($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
+            $fixed = trim(implode(' ', $datainventory['CONTENT']['HARDWARE']['WINOWNER']));
+            $datainventory['CONTENT']['HARDWARE']['WINOWNER'] = $fixed;
+         }
+      }
+
       return $datainventory;
    }
 
@@ -1681,12 +1690,14 @@ class PluginFusioninventoryFormatconvert {
          }
          $array_tmp['operatingsystems_id'] = $operatingsystems_id;
          // test date_install
-         $matches = array();
-         preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
-         if (count($matches) == 4) {
-            $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
-         } else {
-            unset($array_tmp['date_install']);
+         if (isset($array_tmp['date_install'])) {
+            $matches = array();
+            preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
+            if (count($matches) == 4) {
+               $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
+            } else {
+               unset($array_tmp['date_install']);
+            }
          }
 
          if (!(!isset($array_tmp['name'])
@@ -2317,5 +2328,3 @@ class PluginFusioninventoryFormatconvert {
       }
    }
 }
-
-?>
