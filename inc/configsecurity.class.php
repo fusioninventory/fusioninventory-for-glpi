@@ -91,15 +91,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @return true
     */
    function showForm($id, $options=array()) {
-
       Session::checkRight('plugin_fusioninventory_configsecurity', READ);
-
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
-      $this->showTabs($options);
+      $this->initForm($id, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";

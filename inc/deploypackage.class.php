@@ -54,10 +54,8 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
-   // Tasks running with this package (updated with getRunningTasks method)
    /**
-    * Initialize the tasks running with this package (updated with
-    * getRunningTasks method)
+    * Initialize the tasks running with this package (updated with overrided getFromDB method)
     *
     * @var array
     */
@@ -109,6 +107,40 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return __('Package', 'fusioninventory');
    }
 
+   function getFromDB($ID) {
+      $found = parent::getFromDB($ID);
+
+      if ($found) {
+         // Get all tasks runnning
+         $this->running_tasks =
+               PluginFusioninventoryTask::getItemsFromDB(
+                  array(
+                      'is_active'   => TRUE,
+                      'is_running'  => TRUE,
+                      'targets'     => array(__CLASS__ => $this->fields['id']),
+                      'by_entities' => FALSE,
+                  )
+               );
+      }
+
+      return $found;
+   }
+
+   /**
+    * Have I the right to "update" the object content (package actions)
+    *
+    * Also call canUpdateItem()
+    *
+    * @return booleen
+   **/
+   function canUpdateContent() {
+      // check if a task is currenlty runnning with this package
+      if (count($this->running_tasks)) {
+         return false;
+      }
+
+      return parent::canUpdateItem();
+   }
 
 
    /**
@@ -239,37 +271,26 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return string
     */
    function getEditErrorMessage() {
-
-      $this->getRunningTasks();
       $error_message = "";
-      $tasklist = array_filter(
-         $this->running_tasks,
-         create_function('$task', 'return $task["taskjob"]["method"]=="deploy";')
-      );
-
-      if (count($tasklist) > 0) {
+      if (count($this->running_tasks) > 0) {
          // Display error message
-         $error_message .= "<h3 class='red'>";
-         $error_message .=
-            __("Modification Denied", 'fusioninventory');
-         $error_message .= "</h3>\n";
-         $error_message .=
-            "<h4>".
-               _n(
-                  "The following task is running with this package",
-                  "The following tasks are running with this package",
-                  count($this->running_tasks), 'fusioninventory'
-               ).
-            "</h4>\n";
+         $error_message .= "<div class='warning'>";
+         $error_message .= "<i class='fa fa-exclamation-triangle fa-3x'></i>";
+         $error_message .= "<h3>".__("Modification Denied", 'fusioninventory')."</h3>\n";
+         $error_message .= "<h4>".
+                              _n(
+                                 "The following task is running with this package",
+                                 "The following tasks are running with this package",
+                                 count($this->running_tasks), 'fusioninventory'
+                              ).
+                           "</h4>\n";
 
          foreach ($this->running_tasks as $task) {
-            $taskurl_base =
-               Toolbox::getItemTypeFormURL("PluginFusioninventoryTask", TRUE);
-
-            $error_message .= "<a href='$taskurl_base?id=".$task['task']['id']."'>";
-            $error_message .=  $task['task']['name'];
-            $error_message .= "</a>, ";
+            $taskurl =
+               PluginFusioninventoryDeployPackage::getFormURLWithID($task['task']['id'], true);
+            $error_message .= "<a href='$taskurl'>".$task['task']['name']."</a>, ";
          }
+         $error_message .= "</div>";
       }
       return $error_message;
    }
@@ -293,23 +314,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
              'associatedFiles' => array()));
       }
       return parent::prepareInputForAdd($input);
-   }
-
-
-
-   /**
-    * Get all tasks runnning
-    */
-   function getRunningTasks() {
-      $this->running_tasks =
-            PluginFusioninventoryTask::getItemsFromDB(
-               array(
-                   'is_active'   => TRUE,
-                   'is_running'  => TRUE,
-                   'targets'     => array(__CLASS__ => $this->fields['id']),
-                   'by_entities' => FALSE,
-               )
-            );
    }
 
 
@@ -520,15 +524,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $datas = json_decode($this->fields['json'], TRUE);
 
+      echo "<table class='tab_cadre_fixe' id='package_order_".$this->getID()."'>";
+
       // Display an error if the package modification is not possible
+      $canedit   = $this->canUpdateContent();
       $error_msg = $this->getEditErrorMessage();
       if (!empty($error_msg)) {
-         Session::addMessageAfterRedirect($error_msg);
-         Html::displayMessageAfterRedirect();
-         echo "<div id='package_order_".$this->getID()."_span'>";
+         echo "<tr><td>$error_msg</td></tr>";
       }
 
-      echo "<table class='tab_cadre_fixe' id='package_order_".$this->getID()."'>";
 
       // Display the lists of each subtypes of a package
       foreach ($subtypes as $subtype => $label) {
@@ -536,7 +540,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<th id='th_title_{$subtype}_$rand'>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
          echo "&nbsp;".__($label, 'fusioninventory');
-         $this->plusButtonSubtype($this->getID(), $subtype, $rand);
+         if ($canedit) {
+            $this->plusButtonSubtype($this->getID(), $subtype, $rand);
+         }
          echo "</th>";
          echo "</tr>";
 
@@ -600,14 +606,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</td></tr>";
       }
       echo "</table>";
-      if (!empty($error_msg)) {
-         echo "</div>";
-         echo "<script type='text/javascript'>
-                  Ext.onReady(function() {
-                     Ext.select('#package_order_".$this->getID()."_span').mask();
-                  });
-               </script>";
-      }
    }
 
 

@@ -156,7 +156,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
 
-      $o_file = new self();
+      $o_file     = new self();
+      $package_id = $package->getID();
+      $canedit    = $package->canUpdateContent();
 
       // compute short shas to find the corresponding entries in database
       $short_shas = array();
@@ -216,7 +218,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          // start new line
          $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'file_entries['.$i.']', 'value' => 0));
             echo "</td>";
@@ -230,12 +232,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
 
          //filename
-         echo "&nbsp;".
-              "<a class='edit' ".
-              "  onclick=\"edit_subtype(".
-              "   'file', {$package->fields['id']}, $rand, this ".
-              "  )\"".
-              ">$file_name</a>";
+         echo "&nbsp;";
+         if ($canedit) {
+            echo "<a class='edit'
+                     onclick=\"edit_subtype('file', $package_id, $rand ,this)\">";
+         }
+         echo $file_name;
+         if ($canedit) {
+            echo "</a>";
+         }
 
          //p2p icon
          if (isset($file_p2p)
@@ -288,20 +293,20 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "</div>";
          }
          echo "</td>";
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
             echo "<td class='rowhandler control' title='".
                     __('drag', 'fusioninventory').
                     "'><div class='drag row'></div></td>";
          }
          $i++;
       }
-      if ($package->can($package->getID(), UPDATE)) {
+      if ($canedit) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("filesList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($package->can($package->getID(), UPDATE)) {
+      if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit'>";

@@ -222,6 +222,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       $checks_types = self::getTypes();
       $package_id   = $package->getID();
+      $canedit      = $package->canUpdateContent();
       echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
@@ -236,7 +237,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($package->can($package_id, UPDATE)) {
+         if ($canedit) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'check_entries['.$i.']'));
             echo "</td>";
@@ -251,9 +252,15 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             $check_label = $text;
          }
          echo "<td>";
-         echo "<a class='edit'".
-            "onclick=\"edit_subtype('check', $package_id, $rand ,this)\">".
-            $check_label."</a><br />";
+         if ($canedit) {
+            echo "<a class='edit'
+                     onclick=\"edit_subtype('check', $package_id, $rand ,this)\">";
+         }
+         echo $check_label;
+         if ($canedit) {
+            echo "</a>";
+         }
+         echo "<br />";
          $type_values = self::getLabelsAndTypes($check['type'], false);
          echo $type_values['path_label'].': '.$check['path'];
          if (!empty($check['value'])) {
@@ -269,20 +276,20 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             echo $check['value'];
          }
          echo "</td>";
-         if ($package->can($package_id, UPDATE)) {
+         if ($canedit) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
          $i++;
       }
-      if ($package->can($package_id, UPDATE)) {
+      if ($canedit) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("checksList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($package->can($package_id, UPDATE)) {
+      if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit' />";
