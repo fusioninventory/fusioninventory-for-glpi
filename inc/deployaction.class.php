@@ -478,6 +478,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
                $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
          echo "</tr>";
+
          echo "</table>";
          echo "</span>";
          echo "</td>";
@@ -528,6 +529,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if (isset($params['exec'])) {
          $tmp['exec'] = $params['exec'];
       }
+      $tmp['logLineLimit'] = 100;
+      $tmp['name'] = "okmlkkklmlmk";
 
       //process ret checks
       if (isset($params['retchecks_type'])
@@ -576,6 +579,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if (isset($params['exec'])) {
          $tmp['exec'] = $params['exec'];
       }
+      $tmp['logLineLimit'] = -1;
+      $tmp['name'] = "okmlkkklmlmk";
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
