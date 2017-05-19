@@ -423,8 +423,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     */
    function showMenu($options=array()) {
 
-      $this->displaylist = FALSE;
-
+      $this->displaylist  = FALSE;
       $this->fields['id'] = -1;
       $this->showList();
    }
@@ -455,11 +454,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if ($this->fields['plugin_fusioninventory_deploygroups_id'] > 0) {
          $this->addStandardTab(__CLASS__, $ong, $options);
       }
+
       $ong['no_all_tab'] = TRUE;
       return $ong;
    }
-
-
 
    /**
     * Display form
@@ -597,14 +595,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</tr>";
       }
 
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-         // === debug ===
-         echo "<tr><td>";
-         echo "<span id='package_json_debug'>";
-         $this->displayJSONDebug();
-         echo "</sp3an>";
-         echo "</td></tr>";
-      }
       echo "</table>";
    }
 
@@ -663,27 +653,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     *
     * @global array $CFG_GLPI
     */
-   function displayJSONDebug() {
+   function showDebug() {
       global $CFG_GLPI;
 
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-
-         echo "<span class='red'><b>DEBUG</b></span>";
-         echo "<form action='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
-         echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo PluginFusioninventoryToolbox::formatJson($this->fields['json']);
-         echo "</textarea>";
-         if ($this->can($this->getID(), UPDATE)) {
-            echo "<input type='hidden' name='packages_id' value='{$this->fields['id']}' />";
-            echo "<input type='submit' name='update_json' value=\"".
-               _sx('button', 'Save')."\" class='submit'>";
-         }
-         Html::closeForm();
-      }
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr><th>".__('JSON package representation', 'fusioninventory')."</th></tr>";
+      echo "<tr><td>";
+      echo "<textarea cols='132' rows='50' style='border:1' name='json'>";
+      echo PluginFusioninventoryToolbox::formatJson($this->fields['json']);
+      echo "</textarea></td></tr>";
+      echo "</table>";
    }
-
-
 
    /**
     * Update the json structure
