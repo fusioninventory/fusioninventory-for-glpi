@@ -366,6 +366,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $value_1      = "";
       $value_2      = "";
       $retChecks    = NULL;
+      $name_label   = __('Name');
+      $name_value   = (isset($config_data['name']))?$config_data['name']:"";
+      $name_type    = "input";
+      $logLineLimit = (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:100;
 
       /*
        * set values from element's config in 'edit' mode
@@ -418,6 +422,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
+      echo "<th>".__('Name')."</th>";
+      echo "<td><input type='text' name='name' id='check_name' value=\"{$name_value}\" /></td>";
+      echo "</tr>";
+      echo "<tr>";
       echo "<th>$value_label_1</th>";
       echo "<td>";
       switch ($value_type_1) {
@@ -466,6 +474,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
                   $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
                echo "</tr>";
+
                echo "</table>";
             }
          }
@@ -481,6 +490,21 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
          echo "</table>";
          echo "</span>";
+         echo "</td>";
+         echo "</tr>";
+      }
+
+      if ($type == 'cmd') {
+         echo "<tr>";
+         echo "<th>".__('Number of output lines to retrieve', 'fusioninventory')."</th>";
+         echo "<td>";
+         $options = ['min'   => 0,
+                     'max'   => 5000,
+                     'step'  => 10,
+                     'toadd' => [0 => __('None'), -1 => __('All')],
+                     'value' => (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:10
+                    ];
+         Dropdown::showNumber('logLineLimit', $options);
          echo "</td>";
          echo "</tr>";
       }
@@ -517,20 +541,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
     */
    static function add_item($params) {
       //prepare new action entry to insert in json
-      if (isset($params['list'])) {
-         $tmp['list'] = $params['list'];
+      $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
+      foreach ($fields as $field) {
+         if (isset($params[$field])) {
+            $tmp[$field] = $params[$field];
+         }
       }
-      if (isset($params['from'])) {
-         $tmp['from'] = $params['from'];
-      }
-      if (isset($params['to'])) {
-         $tmp['to']   = $params['to'];
-      }
-      if (isset($params['exec'])) {
-         $tmp['exec'] = $params['exec'];
-      }
-      $tmp['logLineLimit'] = 100;
-      $tmp['name'] = "okmlkkklmlmk";
 
       //process ret checks
       if (isset($params['retchecks_type'])
@@ -566,21 +582,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
     * @param array $params list of fields with value of the action
     */
    static function save_item($params) {
-      //prepare updated action entry to insert in json
-      if (isset($params['list'])) {
-         $tmp['list'] = $params['list'];
+      $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
+      foreach ($fields as $field) {
+         if (isset($params[$field])) {
+            $tmp[$field] = $params[$field];
+         }
       }
-      if (isset($params['from'])) {
-         $tmp['from'] = $params['from'];
-      }
-      if (isset($params['to'])) {
-         $tmp['to']   = $params['to'];
-      }
-      if (isset($params['exec'])) {
-         $tmp['exec'] = $params['exec'];
-      }
-      $tmp['logLineLimit'] = -1;
-      $tmp['name'] = "okmlkkklmlmk";
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
