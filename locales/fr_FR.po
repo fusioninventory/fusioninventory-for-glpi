@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-11 00:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Durieux <david@durieux.family>, 2017\n"
+"Last-Translator: Walid Nouh <wnouh@teclib.com>, 2017\n"
 "Language-Team: French (France) (https://www.transifex.com/ddurieux/teams/797/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -117,7 +117,7 @@ msgstr[1] "Editions du système d'exploitation"
 
 #: hook.php:249 hook.php:2448
 msgid "HostID"
-msgstr ""
+msgstr "HostID"
 
 #: hook.php:277 inc/agent.class.php:113 inc/agent.class.php:276
 #: inc/agent.class.php:513 inc/agent.class.php:1200
@@ -767,8 +767,8 @@ msgstr "Lecteurs réseau"
 #: inc/config.class.php:657
 msgid "Removable medias"
 msgid_plural "Removable medias"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Media amovible"
+msgstr[1] "Media amovibles"
 
 #: inc/config.class.php:689
 msgid "Network options"
@@ -784,23 +784,23 @@ msgstr "Utiliser ce serveur GLPI comme un serveur mirroir"
 
 #: inc/config.class.php:781
 msgid "Match mirrors to agents"
-msgstr ""
+msgstr "Faire correspondre un miroir aux agents"
 
 #: inc/config.class.php:784
 msgid "with location"
-msgstr ""
+msgstr "en se basant sur le lieu"
 
 #: inc/config.class.php:785
 msgid "with entity"
-msgstr ""
+msgstr "en se basant sur l'entité"
 
 #: inc/config.class.php:786
 msgid "with both"
-msgstr ""
+msgstr "en se basant sur les deux"
 
 #: inc/config.class.php:795
 msgid "Delete successful on demand tasks after (in days)"
-msgstr ""
+msgstr "Supprimer les tâches à la demandes réussis après (en jours)"
 
 #: inc/configlogfield.class.php:164
 msgid "History configuration"
@@ -957,11 +957,11 @@ msgstr "Taille du fichier inférieure à"
 
 #: inc/deploycheck.class.php:72
 msgid "SHA-512 hash value matches"
-msgstr ""
+msgstr "La valeur du hash SHA-512 correspond à"
 
 #: inc/deploycheck.class.php:73
 msgid "SHA-512 hash value mismatch"
-msgstr ""
+msgstr "La valeur du hash SHA-512 ne correspond à"
 
 #: inc/deploycheck.class.php:74
 msgid "Free space is greater than"
@@ -985,15 +985,15 @@ msgstr "GiO"
 
 #: inc/deploycheck.class.php:113
 msgid "continue"
-msgstr ""
+msgstr "continuer"
 
 #: inc/deploycheck.class.php:115
 msgid "passed"
-msgstr ""
+msgstr "test vérifié"
 
 #: inc/deploycheck.class.php:117
 msgid "otherwise"
-msgstr ""
+msgstr "autrement"
 
 #: inc/deploycheck.class.php:414
 msgid "Key value"
@@ -1009,23 +1009,23 @@ msgstr "Unité"
 
 #: inc/deploycheck.class.php:559
 msgid "If not successfull"
-msgstr ""
+msgstr "En cas d'échec"
 
 #: inc/deploycheck.class.php:589
 msgid "abort job"
-msgstr ""
+msgstr "arrêter le job"
 
 #: inc/deploycheck.class.php:590
 msgid "skip job"
-msgstr ""
+msgstr "sauter le job"
 
 #: inc/deploycheck.class.php:591
 msgid "report info"
-msgstr ""
+msgstr "rapporter un message d'information"
 
 #: inc/deploycheck.class.php:592
 msgid "report warning"
-msgstr ""
+msgstr "rapport un message d'avertissement"
 
 #: inc/deployfile.class.php:75
 msgid "Upload from computer"
@@ -1174,7 +1174,7 @@ msgstr[1] "Les tâches suivantes sont éxécutées avec ce paquet"
 
 #: inc/deploypackage.class.php:363 inc/deploypackage.class.php:487
 msgid "Enable deploy on demand for the following group"
-msgstr ""
+msgstr "Activer le déploiement à la demande pour le groupe suivant"
 
 #: inc/deploypackage.class.php:510
 msgid "Audits"
@@ -1203,8 +1203,8 @@ msgstr "Le JSON modifié contient une erreur de syntaxe : <br/>"
 #: inc/deploypackage.class.php:1035 inc/deploypackage.class.php:1040
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Cible pour le déploiement à la demande"
+msgstr[1] "Cibles pour le déploiement à la demande"
 
 #: inc/deploypackage.class.php:1114
 msgid "Add a target for self-service"
@@ -1245,7 +1245,7 @@ msgstr "Annulé"
 
 #: inc/deploypackage.class.php:1413
 msgid "Select packages you want install"
-msgstr ""
+msgstr "Sélectionner le paquet à installer"
 
 #: inc/deploypackage.class.php:1422
 msgid "Prepare for install"
@@ -1253,15 +1253,16 @@ msgstr "Préparer l'installation"
 
 #: inc/deploypackage.class.php:1426
 msgid "I'm on this computer: local wakeup"
-msgstr ""
+msgstr "Je suis sur cet ordinateur, faire un réveil local de l'agent"
 
 #: inc/deploypackage.class.php:1427
 msgid "I'm not on this computer: wakeup from the server"
 msgstr ""
+"Je ne suis pas sur cet ordinateur, faire un réveil de l'agent à distance"
 
 #: inc/deploypackage.class.php:1428
 msgid "Don't wakeup"
-msgstr ""
+msgstr "Ne pas réveiller l'agent"
 
 #: inc/deploypackage.class.php:1441
 msgid "No packages available to install"
@@ -1452,7 +1453,7 @@ msgstr "Chercher les matériels GLPI ayant le statut"
 
 #: inc/inventoryruleimport.class.php:171
 msgid "agent"
-msgstr ""
+msgstr "agent"
 
 #: inc/inventoryruleimport.class.php:209
 msgid "Restrict search in defined entity"
@@ -2909,7 +2910,7 @@ msgstr "Déploiement d'application"
 
 #: inc/profile.class.php:234 inc/profile.class.php:335
 msgid "Deploy packages on demand"
-msgstr ""
+msgstr "Déployer des packages à la demande"
 
 #: inc/profile.class.php:304
 msgid "Fields blacklist"
@@ -3053,7 +3054,7 @@ msgstr ""
 
 #: inc/task.class.php:142
 msgid "deploy on demand task"
-msgstr ""
+msgstr "Tâche de déploiement à distance"
 
 #: inc/task.class.php:339
 msgid ""
@@ -3120,7 +3121,7 @@ msgstr "Exécution"
 
 #: inc/task.view.class.php:477
 msgid "This is an on demand deployment task"
-msgstr ""
+msgstr "Ceci est une tâche de déploiement à la demande"
 
 #: inc/task.view.class.php:502
 msgid "Timeslot"
@@ -3136,7 +3137,7 @@ msgstr "Nombre d'agents à réveiller"
 
 #: inc/task.view.class.php:548
 msgid "Force start"
-msgstr ""
+msgstr "Forcer le démarrage"
 
 #: inc/taskjob.class.php:185 inc/taskjob.class.php:1108
 #: inc/taskjob.class.php:1440 inc/taskjoblog.class.php:476

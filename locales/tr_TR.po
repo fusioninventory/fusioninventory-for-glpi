@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-11 00:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Durieux <david@durieux.family>, 2017\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2017\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/ddurieux/teams/797/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,21 +102,21 @@ msgstr "Durağan grup"
 
 #: hook.php:209 inc/computeroperatingsystem.class.php:116
 msgid "Kernel name"
-msgstr ""
+msgstr "Kernel adı"
 
 #: hook.php:219 inc/computeroperatingsystem.class.php:119
 msgid "Kernel version"
-msgstr ""
+msgstr "Kernel sürümü"
 
 #: hook.php:239 hook.php:2434 inc/computeroperatingsystem.class.php:131
 #: inc/computeroperatingsystemedition.class.php:100
 msgid "Operating system edition"
 msgid_plural "Operating system editions"
-msgstr[0] ""
+msgstr[0] "İşletim sistemi sürümü"
 
 #: hook.php:249 hook.php:2448
 msgid "HostID"
-msgstr ""
+msgstr "Sunucu Kodu"
 
 #: hook.php:277 inc/agent.class.php:113 inc/agent.class.php:276
 #: inc/agent.class.php:513 inc/agent.class.php:1200
@@ -164,7 +164,7 @@ msgstr "SNMP kimlik doğrulaması ekleyin"
 
 #: hook.php:2359
 msgid "FusionInventory operating system"
-msgstr ""
+msgstr "FusionInventory işletim sistemi"
 
 #: hook.php:2363 inc/computerarch.class.php:65
 #: inc/computeroperatingsystem.class.php:113
@@ -175,11 +175,11 @@ msgstr "Mimari"
 
 #: hook.php:2398 inc/computeroskernelname.class.php:100
 msgid "Operating system kernel name"
-msgstr ""
+msgstr "İşletim sistemi kernel adı"
 
 #: hook.php:2410 inc/computeroskernelversion.class.php:101
 msgid "Operating system kernel version"
-msgstr ""
+msgstr "İşletim sistemi kernel sürümü"
 
 #: index.php:63 front/agent.form.php:87 front/agent.php:49
 #: front/agentmodule.form.php:49 front/collect.php:49
@@ -228,7 +228,7 @@ msgstr "Bilgisayarların xx gündür envanter sayımı yapılmadı"
 
 #: setup.php:522
 msgid "Your GLPI version not compatible, require >= 9.1.1 and < 9.2"
-msgstr ""
+msgstr "Bu uygulama eki GLPI 9.1.1 ile 9.2 arasındaki sürümlerle çalışır"
 
 #: setup.php:527
 msgid "fileinfo extension (PHP) is required..."
@@ -594,7 +594,7 @@ msgstr "Varlık"
 #: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
 #: inc/menu.class.php:359 inc/profile.class.php:308
 msgid "Computer information rules"
-msgstr ""
+msgstr "Bilgisayar bilgi kuralları"
 
 #: inc/collectrule.class.php:178
 msgid "Registry key"
@@ -665,17 +665,17 @@ msgstr "Bilgisayar ve lisans arasındaki bağ"
 #: inc/computeroperatingsystem.class.php:100
 msgid "Operating system (computer)"
 msgid_plural "Operating systems (computer)"
-msgstr[0] ""
+msgstr[0] "İşletim sistemi (bilgisayar)"
 
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:92
 #: inc/computerremotemanagement.class.php:135
 msgid "Remote management"
-msgstr ""
+msgstr "Uzak yönetim"
 
 #: inc/computerremotemanagement.class.php:142
 msgid "ID"
-msgstr ""
+msgstr "Kod"
 
 #: inc/config.class.php:241 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
@@ -751,7 +751,7 @@ msgstr ""
 
 #: inc/config.class.php:629
 msgid "Manage operating system name:"
-msgstr ""
+msgstr "İşletim sistemi adı yönetimi:"
 
 #: inc/config.class.php:635
 msgid "Network drives"
@@ -760,7 +760,7 @@ msgstr "Ağ sürücüleri"
 #: inc/config.class.php:657
 msgid "Removable medias"
 msgid_plural "Removable medias"
-msgstr[0] ""
+msgstr[0] "Çıkarılabilir ortam"
 
 #: inc/config.class.php:689
 msgid "Network options"
@@ -776,23 +776,23 @@ msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
 
 #: inc/config.class.php:781
 msgid "Match mirrors to agents"
-msgstr ""
+msgstr "Yansıları ajanlarla eşleştirme"
 
 #: inc/config.class.php:784
 msgid "with location"
-msgstr ""
+msgstr "konuma göre"
 
 #: inc/config.class.php:785
 msgid "with entity"
-msgstr ""
+msgstr "varlığa göre"
 
 #: inc/config.class.php:786
 msgid "with both"
-msgstr ""
+msgstr "ikisine de göre"
 
 #: inc/config.class.php:795
 msgid "Delete successful on demand tasks after (in days)"
-msgstr ""
+msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
 
 #: inc/configlogfield.class.php:164
 msgid "History configuration"
@@ -867,11 +867,11 @@ msgstr "Kopyalansın"
 
 #: inc/deployaction.class.php:84
 msgid "Delete directory"
-msgstr ""
+msgstr "Klasörü sil"
 
 #: inc/deployaction.class.php:85
 msgid "Create directory"
-msgstr ""
+msgstr "Klasör oluştur"
 
 #: inc/deployaction.class.php:215
 msgid "Command to execute"
@@ -949,11 +949,11 @@ msgstr "Dosya boyutu şundan küçük olan"
 
 #: inc/deploycheck.class.php:72
 msgid "SHA-512 hash value matches"
-msgstr ""
+msgstr "SHA-512 karma değeri eşleşmesi"
 
 #: inc/deploycheck.class.php:73
 msgid "SHA-512 hash value mismatch"
-msgstr ""
+msgstr "SHA-512 karma değeri uyumsuzluğu"
 
 #: inc/deploycheck.class.php:74
 msgid "Free space is greater than"
@@ -977,15 +977,15 @@ msgstr "GB"
 
 #: inc/deploycheck.class.php:113
 msgid "continue"
-msgstr ""
+msgstr "devam"
 
 #: inc/deploycheck.class.php:115
 msgid "passed"
-msgstr ""
+msgstr "geçti"
 
 #: inc/deploycheck.class.php:117
 msgid "otherwise"
-msgstr ""
+msgstr "değil ise"
 
 #: inc/deploycheck.class.php:414
 msgid "Key value"
@@ -1001,23 +1001,23 @@ msgstr "Birim"
 
 #: inc/deploycheck.class.php:559
 msgid "If not successfull"
-msgstr ""
+msgstr "Başarılı değil ise"
 
 #: inc/deploycheck.class.php:589
 msgid "abort job"
-msgstr ""
+msgstr "işi durdur"
 
 #: inc/deploycheck.class.php:590
 msgid "skip job"
-msgstr ""
+msgstr "işi atla"
 
 #: inc/deploycheck.class.php:591
 msgid "report info"
-msgstr ""
+msgstr "bilgileri raporla"
 
 #: inc/deploycheck.class.php:592
 msgid "report warning"
-msgstr ""
+msgstr "uyarı olarak raporla"
 
 #: inc/deployfile.class.php:75
 msgid "Upload from computer"
@@ -1126,7 +1126,7 @@ msgstr "Grup ekleyin"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
 msgid "Package actions"
-msgstr ""
+msgstr "Paket işlemleri"
 
 #: inc/deploymirror.class.php:83 inc/menu.class.php:471
 #: inc/profile.class.php:332
@@ -1165,7 +1165,7 @@ msgstr[0] "Bu paketle birlikte şu işlemler yürütülüyor"
 
 #: inc/deploypackage.class.php:363 inc/deploypackage.class.php:487
 msgid "Enable deploy on demand for the following group"
-msgstr ""
+msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
 
 #: inc/deploypackage.class.php:510
 msgid "Audits"
@@ -1194,11 +1194,11 @@ msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
 #: inc/deploypackage.class.php:1035 inc/deploypackage.class.php:1040
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
-msgstr[0] ""
+msgstr[0] "İsteğe bağlı dağıtım için hedef"
 
 #: inc/deploypackage.class.php:1114
 msgid "Add a target for self-service"
-msgstr ""
+msgstr "Kendi kendine hizmet için bir hedef ekleyin"
 
 #: inc/deploypackage.class.php:1309 inc/task.view.class.php:249
 #: inc/task.view.class.php:338
@@ -1235,27 +1235,27 @@ msgstr "İptal edildi"
 
 #: inc/deploypackage.class.php:1413
 msgid "Select packages you want install"
-msgstr ""
+msgstr "Kurmak istediğiniz paketleri seçin"
 
 #: inc/deploypackage.class.php:1422
 msgid "Prepare for install"
-msgstr ""
+msgstr "Kurulum için hazırla"
 
 #: inc/deploypackage.class.php:1426
 msgid "I'm on this computer: local wakeup"
-msgstr ""
+msgstr "Bu bilgisayardayım: yerel uyanma"
 
 #: inc/deploypackage.class.php:1427
 msgid "I'm not on this computer: wakeup from the server"
-msgstr ""
+msgstr "Bu bilgisayarda değilim: sunucudan uyandırma"
 
 #: inc/deploypackage.class.php:1428
 msgid "Don't wakeup"
-msgstr ""
+msgstr "Uyandırma"
 
 #: inc/deploypackage.class.php:1441
 msgid "No packages available to install"
-msgstr ""
+msgstr "Kurulabilecek bir paket yok"
 
 #: inc/deploytask.class.php:68
 msgid "Group of computers"
@@ -1440,7 +1440,7 @@ msgstr "Duruma göre GLPI aygıtı arama"
 
 #: inc/inventoryruleimport.class.php:171
 msgid "agent"
-msgstr ""
+msgstr "ajan"
 
 #: inc/inventoryruleimport.class.php:209
 msgid "Restrict search in defined entity"
@@ -2446,14 +2446,16 @@ msgid ""
 "The server needs to know the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr ""
+"Sunucu, ajanların kendisine erişmek için kullandığı İnternet adresini "
+"bilmelidir. Lütfen genel ayarlar sayfasından bu adresi ayarlayın."
 
 #: inc/menu.class.php:229
 msgid "GLPI cron not running, see "
-msgstr ""
+msgstr "GLPI zamanlanmış görevi çalışmıyor, bakın:"
 
 #: inc/menu.class.php:230
 msgid "documentation"
-msgstr ""
+msgstr "belgeler"
 
 #: inc/menu.class.php:251
 msgid "Agents management"
@@ -2481,7 +2483,7 @@ msgstr "Ajan XML dosyasını alın"
 
 #: inc/menu.class.php:305 inc/profile.class.php:423
 msgid "Computer information"
-msgstr ""
+msgstr "Bilgisayar bilgileri"
 
 #: inc/menu.class.php:311 inc/timeslot.class.php:79 inc/timeslot.class.php:93
 #: inc/timeslotentry.class.php:92
@@ -2881,7 +2883,7 @@ msgstr "Yazılım geliştirme"
 
 #: inc/profile.class.php:234 inc/profile.class.php:335
 msgid "Deploy packages on demand"
-msgstr ""
+msgstr "Paketleri isteğe göre dağıt"
 
 #: inc/profile.class.php:304
 msgid "Fields blacklist"
@@ -2994,7 +2996,7 @@ msgstr "VMware uzak sunucu envanteri"
 
 #: inc/staticmisc.class.php:106
 msgid "Package deploy"
-msgstr ""
+msgstr "Paket dağıtımı"
 
 #: inc/staticmisc.class.php:114
 msgid "Collect data"
@@ -3020,11 +3022,11 @@ msgstr "Zamanlama bitişi"
 
 #: inc/task.class.php:136 inc/task.view.class.php:473
 msgid "Re-prepare a target-actor if previous run is successful"
-msgstr ""
+msgstr "Önceki çalışma başarısız olduysa bir hedef aktörünü yeniden hazırla"
 
 #: inc/task.class.php:142
 msgid "deploy on demand task"
-msgstr ""
+msgstr "isteğe bağlı görevi dağıt"
 
 #: inc/task.class.php:339
 msgid ""
@@ -3089,7 +3091,7 @@ msgstr "Yürütme"
 
 #: inc/task.view.class.php:477
 msgid "This is an on demand deployment task"
-msgstr ""
+msgstr "Bu isteğe bağlı bir dağıtım görevidir"
 
 #: inc/task.view.class.php:502
 msgid "Timeslot"
@@ -3105,7 +3107,7 @@ msgstr "Uyanacak ajan sayısı"
 
 #: inc/task.view.class.php:548
 msgid "Force start"
-msgstr ""
+msgstr "Başlatmaya zorla"
 
 #: inc/taskjob.class.php:185 inc/taskjob.class.php:1108
 #: inc/taskjob.class.php:1440 inc/taskjoblog.class.php:476
