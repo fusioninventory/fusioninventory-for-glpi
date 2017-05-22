@@ -61,12 +61,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     */
    static function getTypes() {
       return [
-               __('Registry', 'fusioninventory') => [
+         __('Registry', 'fusioninventory') => [
                   'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
+                  'winvalueExists'     => __("Registry value exists", 'fusioninventory'),
                   'winkeyMissing'      => __("Registry key missing", 'fusioninventory'),
-                  'winkeyEquals'       => __("Registry key value equals to", 'fusioninventory'),
-                  'winkeyType'         => __("Registry key type equals to", 'fusioninventory'),
-         ],
+                  'winvalueMissing'    => __("Registry value missing", 'fusioninventory'),
+                  'winkeyEquals'       => __("Registry value equals to", 'fusioninventory'),
+                  'winvalueType'       => __("Type of registry value equals to", 'fusioninventory')
+               ],
                __('File') => [
                   'fileExists'         => __("File exists", 'fusioninventory'),
                   'fileMissing'        => __("File is missing", 'fusioninventory'),
@@ -152,15 +154,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
 
    static function getRegistryTypes() {
-      return ['REG_BINARY'              => 'REG_BINARY',
+      return ['REG_SZ'                  => 'REG_SZ',
               'REG_DWORD'               => 'REG_DWORD',
-              'REG_SZ'                  => 'REG_SZ',
+              'REG_BINARY'              => 'REG_BINARY',
               'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
               'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
-              'subkey'                  => __('Subkey', 'fusioninventory'),
               'REG_LINK'                => 'REG_LINK',
-              'REG_QWORD_LITTLE_ENDIAN' => 'REG_QWORD_LITTLE_ENDIAN',
-              'REG_DWORD_LITTLE_ENDIAN' => 'REG_DWORD_LITTLE_ENDIAN',
               'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
               'REG_NONE'                => 'REG_NONE'
              ];
@@ -179,9 +178,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          return '';
       }
    }
-
-   static function displayForm($order, $request_data, $rand, $mode) {
-      global $CFG_GLPI;
 
    /**
     * Display form
@@ -428,8 +424,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     */
    static function getValues($type, $data, $mode) {
       $values = array(
+         'warning_message' => false,
          'name_value'  => "",
-         'name_label'  => __('Audit name'),
+         'name_label'  => __('Audit label', 'fusioninventory'),
          'name_type'   => "input",
          'path_label'  => "",
          'path_value'  => "",
@@ -454,6 +451,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       return $values;
    }
 
+   static function getMandatoryMark() {
+      return "&nbsp;<span class='red'>*</span>";
+   }
    /**
    *  Get labels and type for a check
    * @param check_type the type of check
@@ -462,41 +462,38 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    */
    static function getLabelsAndTypes($check_type, $mandatory = false) {
       $values = [];
-      if ($mandatory) {
-         $mandatory_mark = "&nbsp;<span class='red'>*</span>";
-      } else {
-         $mandatory_mark = '';
-      }
+      $mandatory_mark = ($mandatory?self::getMandatoryMark():'');
 
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
-            $values['path_label']  = __("Path to the key", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = FALSE;
+         $values['path_label']         = __("Path to the key", 'fusioninventory').$mandatory_mark;
+            $values['value_label']     = FALSE;
+            $values['path_comment']    = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
+            $values['warning_message'] = __('Fusioninventory-Agent 2.3.20 or higher recommended');
             break;
 
          case "winvalueExists":
          case "winvalueMissing":
-            $values['path_label']  = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = FALSE;
+            $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label']     = FALSE;
+            $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            $values['warning_message'] = __('Fusioninventory-Agent 2.3.20 or higher mandatory');
             break;
 
          case "winkeyEquals":
-            $values['path_label']  = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label']     = __('Value', 'fusioninventory');
+            $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            $values['warning_message'] = __('Fusioninventory-Agent 2.3.20 or higher recommended');
             break;
 
          case "winvalueType":
-            $values['path_label']  = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Type of value', 'fusioninventory').$mandatory_mark;
-            $values['value_type']  = 'registry_type';
-            break;
-
-         case "winkeyType":
-            $values['path_label']  = __("Key", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = __('Key type', 'fusioninventory').$mandatory_mark;
-            $values['value_type']  = 'registry_type';
-            break;
+            $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
+            $values['value_label']     = __('Type of value', 'fusioninventory').$mandatory_mark;
+            $values['value_type']      = 'registry_type';
+            $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
+            $values['warning_message'] = __('Fusioninventory-Agent 2.3.20 or higher mandatory');            break;
 
          case "fileExists":
          case "fileMissing":
@@ -542,6 +539,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @return boolean
     */
    static function displayAjaxValues($config, $request_data, $rand, $mode) {
+      global $CFG_GLPI;
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
@@ -570,7 +568,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Audit name')."</th>";
+      echo "<th>".__('Audit label', 'fusioninventory')."</th>";
       echo "<td><input type='text' name='name' id='check_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
       echo "<th>{$values['path_label']}</th>";
@@ -661,6 +659,15 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                               ['value' => $values['return']]);
       echo "</td>";
       echo "</tr>";
+
+      if ($values['warning_message']) {
+         echo "<tr>";
+         echo "<td></td>";
+         echo "<td>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/pics/warning_min.png'>";
+         echo "<span class='red'><i>".$values['warning_message']."</i></span></td>";
+         echo "</tr>";
+      }
 
       echo "<tr>";
       echo "<td>";

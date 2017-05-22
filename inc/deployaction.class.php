@@ -340,7 +340,9 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    static function displayAjaxValues($config, $request_data, $mode) {
       global $CFG_GLPI;
 
+      $mandatory_mark  = PluginFusioninventoryDeployCheck::getMandatoryMark();
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['packages_id']);
       } else {
@@ -366,7 +368,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $value_1      = "";
       $value_2      = "";
       $retChecks    = NULL;
-      $name_label   = __('Name');
+      $name_label   = __('Action label', 'fusioninventory');
       $name_value   = (isset($config_data['name']))?$config_data['name']:"";
       $name_type    = "input";
       $logLineLimit = (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:100;
@@ -422,11 +424,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__('Name')."</th>";
+      echo "<th>".__('Action label', 'fusioninventory')."</th>";
       echo "<td><input type='text' name='name' id='check_name' value=\"{$name_value}\" /></td>";
       echo "</tr>";
       echo "<tr>";
-      echo "<th>$value_label_1</th>";
+      echo "<th>$value_label_1&nbsp;".$mandatory_mark."</th>";
       echo "<td>";
       switch ($value_type_1) {
 
@@ -443,7 +445,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "</tr>";
       if ($value_label_2 !== FALSE) {
          echo "<tr>";
-         echo "<th>$value_label_2</th>";
+         echo "<th>".$value_label_2."&nbsp;".$mandatory_mark."</th>";
          echo "<td><input type='text' name='$name_label_2' value='$value_2'/></td>";
          echo "</tr>";
       }
@@ -505,7 +507,9 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                      'value' => (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:10
                     ];
          Dropdown::showNumber('logLineLimit', $options);
-         echo "</td>";
+         echo "&nbsp;<span class='red'><i>";
+         echo __('Fusioninventory-Agent 2.3.20 or higher mandatory');
+         echo "</i></span></td>";
          echo "</tr>";
       }
 
