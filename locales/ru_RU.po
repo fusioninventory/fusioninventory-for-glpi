@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-22 22:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David Durieux <david@durieux.family>, 2017\n"
+"Last-Translator: Alexey Petukhov <lexx015@gmail.com>, 2017\n"
 "Language-Team: Russian (Russia) (https://www.transifex.com/ddurieux/teams/797/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,24 +98,24 @@ msgstr "Статическая группа"
 
 #: hook.php:194 inc/computeroperatingsystem.class.php:116
 msgid "Kernel name"
-msgstr ""
+msgstr "Имя ядра"
 
 #: hook.php:204 inc/computeroperatingsystem.class.php:119
 msgid "Kernel version"
-msgstr ""
+msgstr "Версия ядра"
 
 #: hook.php:224 hook.php:2419 inc/computeroperatingsystem.class.php:131
 #: inc/computeroperatingsystemedition.class.php:100
 msgid "Operating system edition"
 msgid_plural "Operating system editions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Выпуск операционной системы"
+msgstr[1] "Выпусков операционных систем"
+msgstr[2] "Выпусков операционных систем"
+msgstr[3] "Выпуски операционных систем"
 
 #: hook.php:234 hook.php:2433
 msgid "HostID"
-msgstr ""
+msgstr "ID хоста"
 
 #: hook.php:262 inc/agent.class.php:113 inc/agent.class.php:276
 #: inc/agent.class.php:513 inc/agent.class.php:1200
@@ -166,7 +166,7 @@ msgstr "Назначить SNMP аутентификацию"
 
 #: hook.php:2344
 msgid "FusionInventory operating system"
-msgstr ""
+msgstr "Операционная система FusionInventory"
 
 #: hook.php:2348 inc/computerarch.class.php:65
 #: inc/computeroperatingsystem.class.php:113
@@ -177,11 +177,11 @@ msgstr "Архитектура"
 
 #: hook.php:2383 inc/computeroskernelname.class.php:100
 msgid "Operating system kernel name"
-msgstr ""
+msgstr "Имя ядра операционной системы"
 
 #: hook.php:2395 inc/computeroskernelversion.class.php:101
 msgid "Operating system kernel version"
-msgstr ""
+msgstr "Версия ядра операционной системы"
 
 #: index.php:63 front/agent.form.php:87 front/agent.php:49
 #: front/agentmodule.form.php:49 front/collect.php:49
@@ -230,7 +230,7 @@ msgstr "ПК без инвентаризации в течении xx дней"
 
 #: setup.php:519
 msgid "Your GLPI version not compatible, require >= 9.2 and < 9.3"
-msgstr ""
+msgstr "Ваша версия GLPI не совместима, требуется >= 9.2 и < 9.3"
 
 #: setup.php:525
 msgid "fileinfo extension (PHP) is required..."
@@ -601,7 +601,7 @@ msgstr "Свойство"
 #: inc/collectrule.class.php:86 inc/collectrulecollection.class.php:84
 #: inc/menu.class.php:359 inc/profile.class.php:308
 msgid "Computer information rules"
-msgstr ""
+msgstr "Правила компьютеной информации"
 
 #: inc/collectrule.class.php:178
 msgid "Registry key"
@@ -672,20 +672,20 @@ msgstr "Соединение компьютера и лицензии"
 #: inc/computeroperatingsystem.class.php:100
 msgid "Operating system (computer)"
 msgid_plural "Operating systems (computer)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Операционная система (компьютер)"
+msgstr[1] "Операционных систем (компьютер)"
+msgstr[2] "Операционных систем (компьютер)"
+msgstr[3] "Операционные системы (компьютер)"
 
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:92
 #: inc/computerremotemanagement.class.php:135
 msgid "Remote management"
-msgstr ""
+msgstr "Удаленное управление"
 
 #: inc/computerremotemanagement.class.php:142
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: inc/config.class.php:242 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
@@ -765,15 +765,15 @@ msgstr "Сетевые диски"
 
 #: inc/config.class.php:642
 msgid "Manage operating system name:"
-msgstr ""
+msgstr "Управление именем операционной системы"
 
 #: inc/config.class.php:670
 msgid "Removable medias"
 msgid_plural "Removable medias"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Съемный носитель"
+msgstr[1] "Съемных носителей"
+msgstr[2] "Съемных носителей"
+msgstr[3] "Съемные носители"
 
 #: inc/config.class.php:702
 msgid "Network options"
@@ -789,23 +789,23 @@ msgstr "Использовать этот сервер GLPI как зеркал�
 
 #: inc/config.class.php:794
 msgid "Match mirrors to agents"
-msgstr ""
+msgstr "Соответствие зеркал агентам"
 
 #: inc/config.class.php:797
 msgid "with location"
-msgstr ""
+msgstr "с локальным"
 
 #: inc/config.class.php:798
 msgid "with entity"
-msgstr ""
+msgstr "с организацией"
 
 #: inc/config.class.php:799
 msgid "with both"
-msgstr ""
+msgstr "с обоими"
 
 #: inc/config.class.php:808
 msgid "Delete successful on demand tasks after (in days)"
-msgstr ""
+msgstr "Удалить успешные задания по установке по требованию после (в днях)"
 
 #: inc/configlogfield.class.php:164
 msgid "History configuration"
@@ -880,11 +880,11 @@ msgstr "Копировать"
 
 #: inc/deployaction.class.php:84
 msgid "Delete directory"
-msgstr ""
+msgstr "Удалить директорию"
 
 #: inc/deployaction.class.php:85
 msgid "Create directory"
-msgstr ""
+msgstr "Создать директорию"
 
 #: inc/deployaction.class.php:222
 msgid "Command to execute"
@@ -962,11 +962,11 @@ msgstr "Размер файла меньше чем"
 
 #: inc/deploycheck.class.php:72
 msgid "SHA-512 hash value matches"
-msgstr ""
+msgstr "SHA-512 хеш совпадает"
 
 #: inc/deploycheck.class.php:73
 msgid "SHA-512 hash value mismatch"
-msgstr ""
+msgstr "SHA-512 хеш не совпадает"
 
 #: inc/deploycheck.class.php:74
 msgid "Free space is greater than"
@@ -990,15 +990,15 @@ msgstr "ГБ"
 
 #: inc/deploycheck.class.php:113
 msgid "continue"
-msgstr ""
+msgstr "продолжать"
 
 #: inc/deploycheck.class.php:115
 msgid "passed"
-msgstr ""
+msgstr "прошло"
 
 #: inc/deploycheck.class.php:117
 msgid "otherwise"
-msgstr ""
+msgstr "иначе"
 
 #: inc/deploycheck.class.php:421
 msgid "Key value"
@@ -1014,23 +1014,23 @@ msgstr "Единица"
 
 #: inc/deploycheck.class.php:566
 msgid "If not successfull"
-msgstr ""
+msgstr "Если не удалось"
 
 #: inc/deploycheck.class.php:596
 msgid "abort job"
-msgstr ""
+msgstr "прервать работу"
 
 #: inc/deploycheck.class.php:597
 msgid "skip job"
-msgstr ""
+msgstr "пропустить работу"
 
 #: inc/deploycheck.class.php:598
 msgid "report info"
-msgstr ""
+msgstr "сообщить информацию"
 
 #: inc/deploycheck.class.php:599
 msgid "report warning"
-msgstr ""
+msgstr "сообщить предупреждения"
 
 #: inc/deployfile.class.php:75
 msgid "Upload from computer"
@@ -1139,7 +1139,7 @@ msgstr "Добавить группу"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
 msgid "Package actions"
-msgstr ""
+msgstr "Активные пакеты"
 
 #: inc/deploymirror.class.php:83 inc/menu.class.php:471
 #: inc/profile.class.php:332
@@ -1181,7 +1181,7 @@ msgstr[3] "Следующие задачи выполняются с этим п
 
 #: inc/deploypackage.class.php:367 inc/deploypackage.class.php:489
 msgid "Enable deploy on demand for the following group"
-msgstr ""
+msgstr "Включить установке по требованию для следующей группы"
 
 #: inc/deploypackage.class.php:512
 msgid "Audits"
@@ -1197,7 +1197,7 @@ msgstr "Действия"
 
 #: inc/deploypackage.class.php:660
 msgid "JSON package representation"
-msgstr ""
+msgstr "Пакетное представление JSON"
 
 #: inc/deploypackage.class.php:778
 msgid "Package exported in"
@@ -1214,14 +1214,14 @@ msgstr "Модифицированный JSON содержит синтакси�
 #: inc/deploypackage.class.php:1013 inc/deploypackage.class.php:1018
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Цель для установки по требованию"
+msgstr[1] "Целей для установки по требованию"
+msgstr[2] "Целей для установки по требованию"
+msgstr[3] "Цели для установки по требованию"
 
 #: inc/deploypackage.class.php:1092
 msgid "Add a target for self-service"
-msgstr ""
+msgstr "Добавить цель самообслуживания"
 
 #: inc/deploypackage.class.php:1287 inc/taskview.class.php:255
 msgid "Not done yet"
@@ -1255,27 +1255,27 @@ msgstr "Отменено"
 
 #: inc/deploypackage.class.php:1391
 msgid "Select packages you want install"
-msgstr ""
+msgstr "Выберите пакет для установки"
 
 #: inc/deploypackage.class.php:1400
 msgid "Prepare for install"
-msgstr ""
+msgstr "Подготовить для установки"
 
 #: inc/deploypackage.class.php:1404
 msgid "I'm on this computer: local wakeup"
-msgstr ""
+msgstr "Я на этом компьютере: локальное пробуждение"
 
 #: inc/deploypackage.class.php:1405
 msgid "I'm not on this computer: wakeup from the server"
-msgstr ""
+msgstr "Я не на этом компьютере: пробуждение с сервера"
 
 #: inc/deploypackage.class.php:1406
 msgid "Don't wakeup"
-msgstr ""
+msgstr "Не пробуждать"
 
 #: inc/deploypackage.class.php:1419
 msgid "No packages available to install"
-msgstr ""
+msgstr "Нет пакетов доступных для установки"
 
 #: inc/deploytask.class.php:70
 msgid "Group of computers"
@@ -1385,7 +1385,7 @@ msgstr ""
 
 #: inc/inventorycomputerlib.class.php:2316
 msgid "Portable battery"
-msgstr ""
+msgstr "Переносной аккумулятор"
 
 #: inc/inventorycomputerstorage.class.php:71
 #: inc/inventorycomputerstorage_storage.class.php:71
@@ -1447,7 +1447,7 @@ msgstr "Поиск оборудования в GLPI со статусом"
 
 #: inc/inventoryruleimport.class.php:171
 msgid "agent"
-msgstr ""
+msgstr "агент"
 
 #: inc/inventoryruleimport.class.php:209
 msgid "Restrict search in defined entity"
@@ -2472,11 +2472,11 @@ msgstr ""
 
 #: inc/menu.class.php:229
 msgid "GLPI cron not running, see "
-msgstr ""
+msgstr "GLPI cron не запущен, посмотреть"
 
 #: inc/menu.class.php:230
 msgid "documentation"
-msgstr ""
+msgstr "документация"
 
 #: inc/menu.class.php:251
 msgid "Agents management"
@@ -2504,7 +2504,7 @@ msgstr "Импорт XML файла агента"
 
 #: inc/menu.class.php:305 inc/profile.class.php:423
 msgid "Computer information"
-msgstr ""
+msgstr "Информация о компьютере"
 
 #: inc/menu.class.php:311 inc/timeslot.class.php:79 inc/timeslot.class.php:93
 #: inc/timeslotentry.class.php:92
@@ -2909,7 +2909,7 @@ msgstr "Развёртывание ПО"
 
 #: inc/profile.class.php:234 inc/profile.class.php:335
 msgid "Deploy packages on demand"
-msgstr ""
+msgstr "Установить пакет по требованию"
 
 #: inc/profile.class.php:304
 msgid "Fields blacklist"
@@ -3022,7 +3022,7 @@ msgstr "Удалённая инвентаризация хоста VMware"
 
 #: inc/staticmisc.class.php:106
 msgid "Package deploy"
-msgstr ""
+msgstr "Пакет для развертывания"
 
 #: inc/staticmisc.class.php:114
 msgid "Collect data"
@@ -3048,11 +3048,11 @@ msgstr "Запланированное окончание"
 
 #: inc/task.class.php:136 inc/taskview.class.php:389
 msgid "Re-prepare a target-actor if previous run is successful"
-msgstr ""
+msgstr "Повторная подготовка целевого агента, если предыдущий успешно запущен"
 
 #: inc/task.class.php:142
 msgid "deploy on demand task"
-msgstr ""
+msgstr "задание по установке по требованию"
 
 #: inc/task.class.php:339
 msgid ""
@@ -3293,7 +3293,7 @@ msgstr "Подтверждаете окончательное удаление?"
 
 #: inc/taskview.class.php:133
 msgid "Include old jobs"
-msgstr ""
+msgstr "Включить старые задания"
 
 #: inc/taskview.class.php:151
 msgid "refresh interval"
@@ -3309,19 +3309,19 @@ msgstr "Показать/скрыть подробности"
 
 #: inc/taskview.class.php:321
 msgid "Task execution states"
-msgstr ""
+msgstr "Статус выполнения задачи"
 
 #: inc/taskview.class.php:393
 msgid "This is an on demand deployment task"
-msgstr ""
+msgstr "Это задание по установке по требованию"
 
 #: inc/taskview.class.php:418
 msgid "Preparation timeslot"
-msgstr ""
+msgstr "Интервал подготовки"
 
 #: inc/taskview.class.php:425
 msgid "Execution timeslot"
-msgstr ""
+msgstr "Интервал выполнения"
 
 #: inc/taskview.class.php:431
 msgid "Agent wakeup interval (in minutes)"
