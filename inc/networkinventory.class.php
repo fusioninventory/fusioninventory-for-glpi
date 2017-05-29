@@ -758,8 +758,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfIPRange->getFromDB($ipranges_id);
    // Search NetworkEquipment
       $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
-                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`
+                       `glpi_networkequipments`.`name` AS `gNAME`,
+                       `glpi_ipaddresses`.`name` AS `gnifaddr`,
+                       `plugin_fusioninventory_configsecurities_id`
                   FROM `glpi_networkequipments`
                   LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                        ON `networkequipments_id`=`glpi_networkequipments`.`id`
@@ -791,12 +792,13 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       while ($data=$DB->fetch_array($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
             $devicesList[] = array(
-               'NetworkEquipment' => $data['gID']
+               'NetworkEquipment' => $data['gID']."$#$".$data['gNAME']
             );
          }
      }
   // Search Printer
      $query = "SELECT `glpi_printers`.`id` AS `gID`,
+                      `glpi_printers`.`name` AS `gNAME`,
                       `glpi_ipaddresses`.`name` AS `gnifaddr`,
                       `plugin_fusioninventory_configsecurities_id`
                FROM `glpi_printers`
@@ -829,7 +831,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       while ($data=$DB->fetch_array($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
             $devicesList[] = array(
-               'Printer' => $data['gID']
+               'Printer' => $data['gID']."$#$".$data['gNAME']
             );
          }
       }

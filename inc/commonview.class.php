@@ -278,16 +278,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       echo
-         "<textarea class='expanding' name='".$varname."' >".
+         "<textarea class='autogrow' name='".$varname."' >".
          $this->fields[$varname].
          "</textarea>";
       echo "</div>";
 
-      echo implode("\n", array(
-         "<script type='text/javascript'>",
-         "  $('.expanding').expanding();",
-         "</script>"
-      ));
+      echo Html::scriptBlock("$('.autogrow').autogrow();");
    }
 
 
@@ -318,17 +314,25 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
             break;
 
       }
-      return implode("\n", array(
-         "<div class='box' style='margin-bottom:20px;'>",
-         "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>",
-         "</div></div></div>",
-         "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>",
-         "<span class='b $class_msg'>$msg</span>",
-         "</div></div></div>",
-         "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>",
-         "</div></div></div>",
-         "</div>",
-      ));
+      return "<div class='box' style='margin-bottom:20px;'>
+               <div class='box-tleft'>
+                  <div class='box-tright'>
+                     <div class='box-tcenter'></div>
+                  </div>
+               </div>
+               <div class='box-mleft'>
+                  <div class='box-mright'>
+                     <div class='box-mcenter'>
+                        <span class='b $class_msg'>$msg</span>
+                     </div>
+                  </div>
+               </div>
+               <div class='box-bleft'>
+                  <div class='box-bright'>
+                     <div class='box-bcenter'></div>
+                  </div>
+               </div>
+              </div>";
    }
 }
 

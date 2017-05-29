@@ -172,6 +172,15 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+
+      //Fix bad WINOWNER; see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/2095
+      if (isset($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
+         if (is_array($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
+            $fixed = trim(implode(' ', $datainventory['CONTENT']['HARDWARE']['WINOWNER']));
+            $datainventory['CONTENT']['HARDWARE']['WINOWNER'] = $fixed;
+         }
+      }
+
       return $datainventory;
    }
 
@@ -508,11 +517,15 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = '';
          if (isset($array['OPERATINGSYSTEM']['FULL_NAME']) && $pfConfig->getValue('manage_osname') == 1) {
             $matches = array();
-            preg_match("/Microsoft Windows (XP |\d\.\d |\d{1,4} )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
-            if (count($matches) == 3) {
-               $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[2];
+            preg_match("/.+ Windows (XP |\d\.\d |\d{1,4} |Vista(™)? )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+            if (count($matches) == 4) {
+               $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[3];
                if ($array_tmp['operatingsystemversions_id'] == '') {
-                  $array_tmp['operatingsystemversions_id'] = trim($matches[1]);
+                  $matches[1] = trim($matches[1]);
+                  if ($matches[2] != '') {
+                     $matches[1] = trim($matches[1], $matches[2]);
+                  }
+                  $array_tmp['operatingsystemversions_id'] = $matches[1];
                }
             } else if (count($matches) == 2) {
                $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = $matches[1];
@@ -545,7 +558,7 @@ class PluginFusioninventoryFormatconvert {
                      }
                      $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]);
                   } else {
-                     preg_match("/Microsoft[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
+                     preg_match("/\w[\s\S]{0,4} (?:Windows[\s\S]{0,4} |)(.*) (\d{4} R2|\d{4})(?:, | |)(.*|)$/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
                      if (count($matches) == 4) {
                         $array_tmp['operatingsystemversions_id'] = $matches[2];
                         $array_tmp['plugin_fusioninventory_computeroperatingsystemeditions_id'] = trim($matches[1]." ".$matches[3]);
@@ -576,9 +589,24 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['operatingsystemservicepacks_id'] = '';
          }
          $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = $array_tmp;
-         $a_inventory['Computer']['operatingsystemversions_id'] = 0;
-         $a_inventory['Computer']['operatingsystemservicepacks_id'] = 0;
-         $a_inventory['Computer']['operatingsystems_id'] = 0;
+
+         if (trim($array_tmp['operatingsystemversions_id'] != '')) {
+            $a_inventory['Computer']['operatingsystemversions_id'] = $array_tmp['operatingsystemversions_id'];
+         } else {
+            $a_inventory['Computer']['operatingsystemversions_id'] = 0;
+         }
+
+         if (trim($array_tmp['operatingsystemservicepacks_id'] != '')) {
+            $a_inventory['Computer']['operatingsystemservicepacks_id'] = $array_tmp['operatingsystemservicepacks_id'];
+         } else {
+            $a_inventory['Computer']['operatingsystemservicepacks_id'] = 0;
+         }
+
+         if (trim($array_tmp['operatingsystems_id'] != '')) {
+            $a_inventory['Computer']['operatingsystems_id'] = $array_tmp['operatingsystems_id'];
+         } else {
+            $a_inventory['Computer']['operatingsystems_id'] = 0;
+         }
       }
 
       // otherserial (on tag) if defined in config
@@ -1662,12 +1690,14 @@ class PluginFusioninventoryFormatconvert {
          }
          $array_tmp['operatingsystems_id'] = $operatingsystems_id;
          // test date_install
-         $matches = array();
-         preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
-         if (count($matches) == 4) {
-            $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
-         } else {
-            unset($array_tmp['date_install']);
+         if (isset($array_tmp['date_install'])) {
+            $matches = array();
+            preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
+            if (count($matches) == 4) {
+               $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
+            } else {
+               unset($array_tmp['date_install']);
+            }
          }
 
          if (!(!isset($array_tmp['name'])
@@ -2298,5 +2328,3 @@ class PluginFusioninventoryFormatconvert {
       }
    }
 }
-
-?>

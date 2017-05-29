@@ -48,6 +48,9 @@ include ("../../../inc/includes.php");
 
 $pfTask = new PluginFusioninventoryTask();
 
+//Submit the task form parameters
+$pfTask->submitForm($_POST);
+
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
         "plugins", "pluginfusioninventorymenu", "task");
 
@@ -58,9 +61,6 @@ Session::checkRight('plugin_fusioninventory_task', READ);
 PluginFusioninventoryMenu::displayMenu("mini");
 
 //PluginFusioninventoryTaskjob::isAllowurlfopen();
-
-//Submit the task form parameters
-$pfTask->submitForm($_POST);
 
 //If there is no form to submit, display the form
 $pfTask->display($_GET);

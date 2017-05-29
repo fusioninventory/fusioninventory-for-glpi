@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.1+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -55,8 +55,13 @@ $PF_ESXINVENTORY = FALSE;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.1+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.2+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
+
+define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
+define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/"); 
 
 /**
  * Check if the script name finish by
@@ -249,6 +254,14 @@ function plugin_init_fusioninventory() {
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY']
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
+      // set default values for task view
+      if (!isset($_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'])) {
+         $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'] = 2;
+      }
+      if (!isset($_SESSION['glpi_plugin_fusioninventory']['refresh'])) {
+         $_SESSION['glpi_plugin_fusioninventory']['refresh'] = 'off';
+      }
+
       $PLUGIN_HOOKS['import_item']['fusioninventory'] = array(
           'Computer' => array('Plugin'));
 
@@ -268,8 +281,7 @@ function plugin_init_fusioninventory() {
 
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            "lib/d3/d3".($debug_mode?"":".min").".js",
-            "lib/expanding/expanding".($debug_mode?"":".min").".js"
+            "lib/d3/d3".($debug_mode?"":".min").".js"
          );
       }
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = 'js/footer.js';

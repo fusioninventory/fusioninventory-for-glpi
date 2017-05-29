@@ -598,9 +598,22 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', "int(11) NOT NULL DEFAULT '0'");
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', "int(11) NOT NULL DEFAULT '0'");
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'reprepare_if_successful', "tinyint(1) NOT NULL DEFAULT '1'");
+   $deploy_on_demand = $migration->addField('glpi_plugin_fusioninventory_tasks', 'is_deploy_on_demand', "tinyint(1) NOT NULL DEFAULT '0'");
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter');
+   $migration->addKey('glpi_plugin_fusioninventory_tasks', 'reprepare_if_successful');
+   $migration->addKey('glpi_plugin_fusioninventory_tasks', 'is_deploy_on_demand');
    $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
 
+   //deploy on demand task migration :
+   //the way to detect a deploy on demand task was by looking at it's name
+   //we've now introduced a boolean to easily check for it
+   if ($deploy_on_demand) {
+      $task = new PluginFusioninventoryTask();
+      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_tasks',
+                                    "`name` LIKE '%[self-deploy]%'") as $tsk) {
+         $task->update(['id' => $tsk['id'], 'is_deploy_on_demand' => 1]);
+      }
+   }
 
 
       /*
@@ -787,8 +800,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   )
                )
            );
-      $a_input['alert_winpath'] = 1;
+      $a_input['alert_winpath']    = 1;
       $a_input['server_as_mirror'] = 1;
+      $a_input['mirror_match']     = 0;
       $config->addValues($a_input, FALSE);
 
       $pfSetup = new PluginFusioninventorySetup();
@@ -881,6 +895,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                'hourmin' =>22, 'hourmax'=>6,
                                'comment'=>'Clean agents not contacted since xxx days'));
    }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand')) {
+      CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
+                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                          'comment' => __('Clean on demand deployment tasks')]);
+   }
 
    /*
     * Update task's agents list from dynamic group periodically in order to automatically target new
@@ -891,25 +910,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'comment'=>'Wake agents ups'));
    }
-
-   /**
-   * Add field to manage which group can be refreshed by updatedynamictasks crontask
-   */
-   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
-      $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
-      $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-   }
-
-
-      //Change static & dynamic structure to fit the GLPI framework
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas',
-                              'groups_id',
-                              'plugin_fusioninventory_deploygroups_id', 'integer');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas',
-                              'groups_id', 'plugin_fusioninventory_deploygroups_id', 'integer');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_staticdatas');
 
 
 
@@ -5350,6 +5350,10 @@ function do_deploymirror_migration($migration) {
          'type' => 'int(11) NOT NULL',
          'value' => NULL
       ),
+      'is_active' =>  array(
+         'type' => 'tinyint(1) NOT NULL DEFAULT 0',
+         'value' => NULL
+      ),
       'is_recursive' =>  array(
          'type' => 'tinyint(1) NOT NULL DEFAULT 0',
          'value' => NULL
@@ -5386,6 +5390,16 @@ function do_deploymirror_migration($migration) {
    $a_table['keys'] = array(
       array(
          'field' => 'entities_id',
+         'name' => '',
+         'type' => 'KEY'
+      ),
+      array(
+         'field' => 'is_active',
+         'name' => '',
+         'type' => 'KEY'
+      ),
+      array(
+         'field' => 'is_recursive',
          'name' => '',
          'type' => 'KEY'
       ),
@@ -5474,7 +5488,7 @@ function do_deploygroup_migration($migration) {
          'type' => 'autoincrement',
          'value' => NULL
       ),
-      'groups_id' =>  array(
+      'plugin_fusioninventory_deploygroups_id' =>  array(
          'type' => 'integer',
          'value' => NULL
       ),
@@ -5492,11 +5506,12 @@ function do_deploygroup_migration($migration) {
    );
 
    $a_table['renamefields'] = array(
+      'groups_id' => 'plugin_fusioninventory_deploygroups_id',
    );
 
    $a_table['keys'] = array(
       array(
-         'field' => 'groups_id',
+         'field' => 'plugin_fusioninventory_deploygroups_id',
          'name' => '',
          'type' => 'KEY'
       ),
@@ -5529,12 +5544,20 @@ function do_deploygroup_migration($migration) {
          'type' => 'autoincrement',
          'value' => NULL
       ),
-      'groups_id' =>  array(
+      'plugin_fusioninventory_deploygroups_id' =>  array(
          'type' => 'integer',
          'value' => NULL
       ),
       'fields_array' =>  array(
          'type' => 'text',
+         'value' => NULL
+      ),
+      'can_update_group' =>  array(
+         'type' => 'bool',
+         'value' => 0
+      ),
+      'computers_id_cache' =>  array(
+         'type' => 'longtext',
          'value' => NULL
       ),
    );
@@ -5543,11 +5566,17 @@ function do_deploygroup_migration($migration) {
    );
 
    $a_table['renamefields'] = array(
+      'groups_id' => 'plugin_fusioninventory_deploygroups_id',
    );
 
    $a_table['keys'] = array(
       array(
-         'field' => 'groups_id',
+         'field' => 'plugin_fusioninventory_deploygroups_id',
+         'name' => '',
+         'type' => 'KEY'
+      ),
+      array(
+         'field' => 'can_update_group',
          'name' => '',
          'type' => 'KEY'
       ),
@@ -6182,34 +6211,97 @@ function do_rule_migration($migration) {
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "itemtype";
-         $input['pattern']= 'Peripheral';
-         $input['condition']=0;
-         $rulecriteria->add($input);
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "itemtype";
+      $input['pattern']= 'Peripheral';
+      $input['condition']=0;
+      $rulecriteria->add($input);
 
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_ignore_import';
-         $input['value'] = '1';
-         $ruleaction->add($input);
-   // Add monitor rules (in first in rule list) when use it since 0.85
-   $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
-           ." WHERE `type`='import_monitor' ";
-   $DB->query($query);
-   $query = "UPDATE `glpi_rules` "
-           ." SET `ranking` = `ranking`+3"
-           ." WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
-   $ranking = 0;
-     // Create rule for : Monitor + serial
-      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_ignore_import';
+      $input['value'] = '1';
+      $ruleaction->add($input);
+
+      // Add monitor rules (in first in rule list) when use it since 0.85
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
+              ." WHERE `type`='import_printer' ";
+
+
+      /*
+      *  Manage configuration of plugin
+      */
+      $config = new PluginFusioninventoryConfig();
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
+      $a_input = array();
+      $a_input['ssl_only'] = 0;
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = $users_id;
+      $a_input['agents_old_days'] = 0;
+      $a_input['agents_action'] = 0;
+      $a_input['agents_status'] = 0;
+      $config->addValues($a_input, FALSE);
+//      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
+//        WHERE `plugins_id`='0'");
+
+//      $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`
+//           WHERE `type`='version'
+//           LIMIT 1, 10";
+//      $result = $DB->query($query);
+//      while ($data=$DB->fetch_array($result)) {
+//         $config->delete($data);
+//      }
+
+      $a_input = array();
+      $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
+      $config->addValues($a_input, TRUE);
+      $a_input = array();
+      $a_input['ssl_only'] = 0;
+      if (isset($prepare_Config['ssl_only'])) {
+         $a_input['ssl_only'] = $prepare_Config['ssl_only'];
+      }
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = 0;
+
+      //Deploy configuration options
+      $a_input['server_upload_path'] =
+           Toolbox::addslashes_deep(
+               implode(
+                  DIRECTORY_SEPARATOR,
+                  array(
+                     GLPI_PLUGIN_DOC_DIR,
+                     'fusioninventory',
+                     'upload'
+                  )
+               )
+           );
+      $a_input['alert_winpath']    = 1;
+      $a_input['server_as_mirror'] = 1;
+      $a_input['mirror_match']     = 0;
+      $config->addValues($a_input, FALSE);
+
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
+      $query = "UPDATE `glpi_plugin_fusioninventory_configs`
+                         SET `value`='".$users_id."'
+                  WHERE `type`='users_id'";
+      $DB->query($query);
+
+      // Update fusinvinventory _config values to this plugin
       $input = array();
       $input['is_active']=1;
       $input['name']='Monitor serial';
