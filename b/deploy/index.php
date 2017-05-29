@@ -57,7 +57,7 @@ $deploy_task_version = 0;
 if (isset($_GET['version'])) {
    $deploy_task_version = $_GET['version'];
 }
-Toolbox::logDebug($_GET);
+
 $response = FALSE;
 //Agent communication using REST protocol
 switch (filter_input(INPUT_GET, "action")) {
