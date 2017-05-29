@@ -266,13 +266,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          switch ($check['type']) {
             case 'freespaceGreater':
                $check['value'] = $check['value'] * 1024 * 1024;
-               break;
             case 'fileSizeLower':
             case 'fileSizeGreater':
             case 'fileSizeEquals':
                $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
-               break;
-            default :
                break;
          }
 
@@ -467,7 +464,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
-         $values['path_label']         = __("Path to the key", 'fusioninventory').$mandatory_mark;
+            $values['path_label']         = __("Path to the key", 'fusioninventory').$mandatory_mark;
             $values['value_label']     = FALSE;
             $values['path_comment']    = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
             $values['warning_message'] = __('Fusioninventory-Agent 2.3.20 or higher recommended');
@@ -600,8 +597,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                self::dropdownRegistryTypes($values['value']);
                echo "</td>";
                break;
-
-            case "input+unit":
 
             case "input+unit":
                $value = $values['value'];
