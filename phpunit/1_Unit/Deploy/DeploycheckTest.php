@@ -74,10 +74,10 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    public function testGetUnitLabel() {
       $units = PluginFusioninventoryDeployCheck::getUnitLabel();
       $this->assertEquals(4, count($units));
-      $this->assertEquals($units, [ "B"  => __("B", 'fusioninventory'),
-                                    "KB" => __("KiB", 'fusioninventory'),
-                                    "MB" => __("MiB", 'fusioninventory'),
-                                    "GB" => __("GiB", 'fusioninventory')
+      $this->assertEquals($units, [ "B"  => __('o'),
+                                    "KB" => __('Kio'),
+                                    "MB" => __('Mio'),
+                                    "GB" => __('Gio')
                                   ]);
 
    }
