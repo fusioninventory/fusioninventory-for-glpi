@@ -109,10 +109,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     */
    static function getUnitLabel() {
       return [
-               "B"  => __("B", 'fusioninventory'),
-               "KB" => __("KiB", 'fusioninventory'),
-               "MB" => __("MiB", 'fusioninventory'),
-               "GB" => __("GiB", 'fusioninventory')
+               "B"  => __('o'),
+               "KB" => __('Kio'),
+               "MB" => __('Mio'),
+               "GB" => __('Gio')
              ];
    }
 
@@ -604,6 +604,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                if ($type == 'freespaceGreater') {
                   $value = $value * 1024 * 1024;
                }
+
                $options['value'] = 'KB';
                if ($mode === 'edit') {
                   if ($value >= self::getUnitSize('GB')) {
