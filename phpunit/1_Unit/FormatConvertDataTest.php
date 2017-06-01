@@ -359,4 +359,42 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
+   /**
+   * Test method getTypeDrive
+   * @test
+   */
+   function testGetTypeDrive() {
+
+      $tests['Drive'] = [
+                          ['MODEL' => 'DVD Reader',
+                           'NAME' => 'MATSHITA DVD-R UJ-85J'],
+                          ['MODEL' => 'DVD Rom',
+                           'NAME' => 'MATSHITA DVD-R UJ-85J'],
+                          ['MODEL' => 'DVD Burning Disc',
+                           'NAME' => 'MATSHITA DVD-R UJ-85J'],
+                          ['NAME'  => 'MATSHITA DVD-R UJ-85J'],
+                          ['NAME'  => 'PLDS DVD+-RW DH-16AES ATA Device'],
+                          ['TYPE'  => 'DVD Rom'],
+                          ['MODEL'  => 'MicroSD/M2', 'NAME' => 'sdb'],
+                          ['TYPE'  => 'Generic',
+                           'MODEL'  => 'SDMMC', 'NAME' => 'sda'],
+                          ['TYPE'  => 'PIONEER DVD-RW  DVR-K06A',
+                           'NAME' => 'PIONEER DVD-RW  DVR-K06A']
+                        ];
+      $tests['HardDrive'] = [
+                             ['MODEL' => '', 'NAME' => 'ST3250824AS Q'],
+                             ['TYPE' => 'DISK',
+                              'MODEL' => 'PM951NVMe SAMSUNG 256GB',
+                              'NAME' => 'nvme0n1']
+                           ];
+
+
+      foreach ($tests as $return_expected => $values) {
+         foreach ($values as $value) {
+            $result = PluginFusioninventoryFormatconvert::getTypeDrive($value);
+            $this->assertEquals($return_expected, $result);
+         }
+      }
+   }
 }
