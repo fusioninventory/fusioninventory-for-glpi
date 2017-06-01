@@ -2143,8 +2143,8 @@ class PluginFusioninventoryFormatconvert {
     * @return string "Drive" or "HardDrive"
     */
    static function getTypeDrive($data) {
-      $to_match_regex = ['rom', 'dvd', 'blue.{0, 1}ray', 'reader',
-                         'sdcard', 'microsd', 'mmc'];
+      $to_match_regex = ['rom', 'dvd', 'blue.{0,1}ray', 'reader',
+                         'sd.{0,1}card', 'micro{0,1}sd', 'mmc'];
       $found_drive    = false;
       foreach ($to_match_regex as $regex) {
          foreach (['TYPE', 'MODEL', 'NAME'] as $field) {

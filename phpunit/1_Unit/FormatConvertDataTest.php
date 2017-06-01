@@ -376,6 +376,10 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
                           ['NAME'  => 'MATSHITA DVD-R UJ-85J'],
                           ['NAME'  => 'PLDS DVD+-RW DH-16AES ATA Device'],
                           ['TYPE'  => 'DVD Rom'],
+                          ['TYPE'  => 'sdcard'],
+                          ['TYPE'  => 'sd card'],
+                          ['TYPE'  => 'blueray'],
+                          ['TYPE'  => 'blue ray'],
                           ['MODEL'  => 'MicroSD/M2', 'NAME' => 'sdb'],
                           ['TYPE'  => 'Generic',
                            'MODEL'  => 'SDMMC', 'NAME' => 'sda'],
@@ -384,6 +388,8 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
                         ];
       $tests['HardDrive'] = [
                              ['MODEL' => '', 'NAME' => 'ST3250824AS Q'],
+                             ['TYPE'  => 'sd  card'],
+                             ['TYPE'  => 'blue  ray'],
                              ['TYPE' => 'DISK',
                               'MODEL' => 'PM951NVMe SAMSUNG 256GB',
                               'NAME' => 'nvme0n1']
