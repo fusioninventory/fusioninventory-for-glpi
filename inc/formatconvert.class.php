@@ -363,6 +363,10 @@ class PluginFusioninventoryFormatconvert {
          $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
       }
 
+      if (isset($array['OPERATINGSYSTEM']['KERNEL_VERSION'])) {
+         $a_inventory['Computer']['os_kernel_version'] = $array['OPERATINGSYSTEM']['KERNEL_VERSION'];
+      }
+
       if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
       }
