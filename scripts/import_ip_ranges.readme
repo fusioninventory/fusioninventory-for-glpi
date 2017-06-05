@@ -1,0 +1,63 @@
+ Le script import_ip_ranges.php permet d'importer et/ou de mettre à jour la table des plages d'adresses IP du
+plugin FusionInventory ainsi que les relations entre les plages d'adresse IP et l'authentification SNMP à utiliser.
+
+
+ Ce script lit le contenu d'un fichier au format CSV pour réaliser l'importation. Ce fichier doit être formatté de
+la façon suivante:
+
+    Nom;Entité;Début de la plage IP;Fin de la plage IP;Authentification SNMP
+    AdmConsoles_NT 240/24;Racine > Réseau ESU;10.107.240.1;10.107.240.200;WAN
+    AdmConsoles_NT 242/24;Racine > Réseau ESU;10.107.240.2;10.107.240.201;Passerelle
+    AdmDMZ11_NT;Racine > Réseau ESU;10.107.240.3;10.107.240.202;Passerelle
+    host-BRU_A-WanX;Racine > Etranger > Crasic Bruxelles	;10.107.240.4	;10.107.240.203	;Passerelle
+    host-BRU_D-WanX;Racine > Etranger > Crasic Bruxelles	;10.107.240.5	;10.107.240.204	;Passerelle
+    host-BRU_RO-WanX;Racine > Etranger > Crasic Bruxelles	;10.107.240.6	;10.107.240.205	;Passerelle
+    host-WAS_A-WanX;Racine > Etranger > Crasic Washington	;10.107.240.7	;10.107.240.206	;Passerelle
+    host-WAS_R-WanX;Racine > Etranger > Crasic Washington	;10.107.240.8	;10.107.240.207	;Passerelle
+    net-BRU_A-Vlan1400;Racine > Etranger > Crasic Bruxelles	;10.107.240.9	;10.107.240.208	;Passerelle
+    net-BRU_A-Vlan50;Racine > Etranger > Crasic Bruxelles	;10.107.240.10	;10.107.240.209	;Passerelle
+    net-BRU_D-Vlan1400;Racine > Etranger > Crasic Bruxelles	;10.107.240.11	;10.107.240.210	;WAN
+    net-BRU_D-Vlan50-1;Racine > Etranger > Crasic Bruxelles	;10.107.240.12	;10.107.240.211	;WAN
+    net-BRU_D-Vlan50-2;Racine > Etranger > Crasic Bruxelles	;10.107.240.13	;10.107.240.212	;WAN
+    net-BRU_RO-Vlan1400;Racine > Etranger > Crasic Bruxelles	;10.107.240.14	;10.107.240.213	;WAN
+    net-BRU_RO-Vlan50;Racine > Etranger > Crasic Bruxelles	;10.107.240.15	;10.107.240.214	;WAN
+    net-WAS_A-Vlan1400;Racine > Etranger > Crasic Washington	;10.107.240.16	;10.107.240.215	;WAN
+    net-WAS_A-Vlan50-1;Racine > Etranger > Crasic Washington	;10.107.240.17	;10.107.240.216	;WAN
+    net-WAS_A-Vlan50-2;Racine > Etranger > Crasic Washington	;10.107.240.18	;10.107.240.217	;WAN
+    net-WAS_A-Vlan50-3;Racine > Etranger > Crasic Washington	;10.107.240.19	;10.107.240.218	;WAN
+    net-WAS_A-Vlan50-4;	Racine > Etranger > Crasic Washington	;10.107.240.20	;10.107.240.219	;WAN
+    net-WAS_R-Vlan1400;	Racine > Etranger > Crasic Washington	;10.107.240.21	;10.107.240.220	;WAN
+    net-WAS_R-Vlan50;	Racine > Etranger > Crasic Washington	;10.107.240.22	;10.107.240.221	;WAN
+
+    - chaque ligne doit contenir au moins 4 champs qui sont séparés par le caractère ; (point-virgule)
+    - le contenu d'un champ peut être entoure de " (double quotes) s'il contient un ;
+    - une ligne qui ne contient pas au moins 4 champs sera ignorée
+    - une ligne d'entête peut exister, elle sera ignoré par le script et ne sera pas importée. Cette ligne d'entête
+    est détectée par le fait que le premier champ sur la ligne lu contient "Nom"
+
+    - chaque ligne contient:
+        - le nom de la plage d'adresses
+        - le nom complet l'entité de rattachement. Il s'agit du chemin de l'entité depuis l'entité racine incluse, donc
+        Racine > Sous entité > Sous sous entité. Chaque élement est séparé par " > "
+        - le début de la page d'adresses
+        - la fin de la plage d'adresses
+        - le nom de l'authentification SNMP liée à la plage d'adresses (optionnel)
+
+    - les 4 premiers champs sont obligatoires alors que l'authentification SNMP est facultative
+
+    - le script vérifie les points suivants :
+        - l'entité existe dans la base de données
+        - l'adresse de début de la plage est une bien une adresse IP valide
+        - l'adresse de fin de la plage est une bien une adresse IP valide
+        - l'authentification SNMP existe dans la base de données
+    - si une des vérifications échoue, la ligne concernée n'est pas importée.
+
+    - l'import d'une ligne va créer une nouvelle plage d'adresses IP dans la base de données ou mettre à jour une
+    plage d'adresses existante si un élément de même nom est trouvé dans la base de données. De ce fait, le script
+    permet la création de nouvelles plages d'adresses et il peut être rejoué plusieurs fois pour réaliser la mise
+    à jour des plages d'adresses déjà importées
+
+    - si une authentification SNMP est indiquée dans la ligne, la relation entre la plage d'adresses IP et
+    l'authentification SNMP va être créée ou mise à jour si elle existe déjà
+    - si aucune authentification SNMP n'est indiquée dans la ligne, et qu'il existe une relation entre la plage d'adresses IP et
+          une authentification SNMP, cette relation va être supprimée

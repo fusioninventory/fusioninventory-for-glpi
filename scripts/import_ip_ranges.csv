@@ -1,0 +1,4 @@
+Nom	Entité	Début de la plage IP	Fin de la plage IP	Authentification SNMP
+IP range 1	Racine > Sous entité 2	192.168.0.1	192.168.0.254	Public community v2c
+IP range 2	Racine > Sous entité 1 > Sous entité 1.1	192.168.1.1	192.168.1.128	Public community v1
+IP range 3	Racine > Sous entité 1 > Sous entité 1.2	10.6.50.1	10.6.50.254	Public community v1	Public community v2c
