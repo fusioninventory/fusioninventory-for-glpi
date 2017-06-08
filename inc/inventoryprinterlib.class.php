@@ -95,43 +95,46 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $printer->update($input);
 
       // * Printer fusion (ext)
-         $db_printer = array();
-         $query = "SELECT *
+      $db_printer = array();
+      $query = "SELECT *
             FROM `".  getTableForItemType("PluginFusioninventoryPrinter")."`
             WHERE `printers_id` = '$printers_id'";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_assoc($result)) {
-            foreach ($data as $key=>$value) {
-               $db_printer[$key] = Toolbox::addslashes_deep($value);
-            }
+      $result = $DB->query($query);
+      while ($data = $DB->fetch_assoc($result)) {
+         foreach ($data as $key=>$value) {
+            $db_printer[$key] = Toolbox::addslashes_deep($value);
          }
-         if (count($db_printer) == '0') { // Add
-            $a_inventory['PluginFusioninventoryPrinter']['printers_id'] =
-               $printers_id;
-            $pfPrinter->add($a_inventory['PluginFusioninventoryPrinter']);
-         } else { // Update
-            $idtmp = $db_printer['id'];
-            unset($db_printer['id']);
-            unset($db_printer['printers_id']);
-            unset($db_printer['plugin_fusioninventory_configsecurities_id']);
+      }
+      if (count($db_printer) == '0') { // Add
+         $a_inventory['PluginFusioninventoryPrinter']['printers_id'] =
+            $printers_id;
+         $pfPrinter->add($a_inventory['PluginFusioninventoryPrinter']);
+      } else { // Update
+         $idtmp = $db_printer['id'];
+         unset($db_printer['id']);
+         unset($db_printer['printers_id']);
+         unset($db_printer['plugin_fusioninventory_configsecurities_id']);
 
-            $a_ret = PluginFusioninventoryToolbox::checkLock(
-                        $a_inventory['PluginFusioninventoryPrinter'],
-                        $db_printer);
-            $a_inventory['PluginFusioninventoryPrinter'] = $a_ret[0];
-            $input = $a_inventory['PluginFusioninventoryPrinter'];
-            $input['id'] = $idtmp;
-            $pfPrinter->update($input);
-         }
+         $a_ret = PluginFusioninventoryToolbox::checkLock(
+                     $a_inventory['PluginFusioninventoryPrinter'],
+                     $db_printer);
+         $a_inventory['PluginFusioninventoryPrinter'] = $a_ret[0];
+         $input = $a_inventory['PluginFusioninventoryPrinter'];
+         $input['id'] = $idtmp;
+         $pfPrinter->update($input);
+      }
 
       // * Ports
-         $this->importPorts($a_inventory, $printers_id);
+      $this->importPorts($a_inventory, $printers_id);
 
       // Page counters
-         $this->importPageCounters($a_inventory['pagecounters'], $printers_id);
+      $this->importPageCounters($a_inventory['pagecounters'], $printers_id);
+
+      //Update printer page counter
+      $this->updateGlpiPageCounter($a_inventory['pagecounters'], $printers_id);
 
       // Cartridges
-         $this->importCartridges($a_inventory['cartridge'], $printers_id);
+      $this->importCartridges($a_inventory['cartridge'], $printers_id);
 
    }
 
@@ -212,6 +215,23 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $pfPrinterLog->add($a_pagecounters);
    }
 
+   /**
+    * Fill the current counter or page of the printer in GLPI
+    * using FI counter value
+    *
+    * @param array $a_pagecounters
+    * @param integer $printers_id
+    */
+   function updateGlpiPageCounter($a_pagecounters, $printers_id) {
+      if (is_array($a_pagecounters) && isset($a_pagecounters['pages_total'])) {
+         $printer = new Printer();
+         if ($printer->getFromDB($printers_id)) {
+            $printer->update(['id'                 => $printers_id,
+                              'last_pages_counter' => $a_pagecounters['pages_total']
+                             ], 0);
+         }
+      }
+   }
 
 
    /**

@@ -80,7 +80,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @return string
     */
    static function getType() {
-      return "Printer";
+      return 'Printer';
    }
 
 
