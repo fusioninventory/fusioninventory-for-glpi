@@ -359,4 +359,40 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
+   public function deviceTypeExamplesProvider() {
+      $tests = [
+                  ['', 'DVD Reader', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', 'DVD Rom', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', 'DVD Burning Disc', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', '', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', '', 'PLDS DVD+-RW DH-16AES ATA Device', 'Drive'],
+                  ['DVD Rom', '', '', 'Drive'],
+                  ['sdcard', '', '', 'Drive'],
+                  ['sd card', '', '', 'Drive'],
+                  ['sd-card', '', '', 'Drive'],
+                  ['bluray', '', '', 'Drive'],
+                  ['blu ray', '', '', 'Drive'],
+                  ['blu-ray', '', '', 'Drive'],
+                  ['', 'MicroSD/M2', 'sdb', 'Drive'],
+                  ['Generic', 'SDMMC', 'sda', 'Drive'],
+                  ['PIONEER DVD-RW  DVR-K06A',
+                   'PIONEER DVD-RW  DVR-K06A', '', 'Drive'],
+                  ['', '', 'ST3250824AS Q', 'HardDrive'],
+                  ['DISK', 'PM951NVMe SAMSUNG 256GB',
+                   'nvme0n1', 'HardDrive']
+               ];
+      return $tests;
+   }
+
+   /**
+   * Test method getTypeDrive
+   * @dataProvider deviceTypeExamplesProvider
+   * @test
+   */
+   function testGetTypeDrive($type, $model, $name, $return_expected) {
+      $value = ['TYPE' => $type, 'MODEL' => $model, 'NAME' => $name];
+      $result = PluginFusioninventoryFormatconvert::getTypeDrive($value);
+      $this->assertEquals($return_expected, $result);
+   }
 }
