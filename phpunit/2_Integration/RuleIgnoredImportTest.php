@@ -138,14 +138,14 @@ class RuleIgnoredImport extends Common_TestCase {
           'entities_id'                      => '0',
           'ip'                               => NULL,
           'mac'                              => NULL,
-          'rules_id'                         => '48',
+          'rules_id'                         => '49',
           'method'                           => 'inventory',
           'serial'                           => '',
           'uuid'                             => '',
           'plugin_fusioninventory_agents_id' => '1'
       );
       unset($a_ignore['date']);
-      $this->assertEquals($a_ignore, $a_reference, 'Ignored import computer');
+      $this->assertEquals($a_reference, $a_ignore, 'Ignored import computer');
       $pfIgnoredimportdevice->delete($a_ignore);
    }
 
