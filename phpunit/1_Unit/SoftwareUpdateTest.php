@@ -252,7 +252,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               'system_category'      => 'devel'
+               '_system_category'      => 'devel'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -332,14 +332,14 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_reference = array();
       $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
                'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
+               'manufacturers_id'      => '2',
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               'system_category'      => 'devel'
+               '_system_category'      => 'devel'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -400,7 +400,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                'date_install'          => '2013-10-16',
-               'system_category'      => 'application'
+               '_system_category'      => 'application'
             );
       $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = array(
                'name'                  => 'AutoIt v3.3.8.1',
@@ -411,7 +411,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               'system_category'      => 'application'
+               '_system_category'      => 'application'
       );
       $this->assertEquals($a_reference, $a_return);
 
