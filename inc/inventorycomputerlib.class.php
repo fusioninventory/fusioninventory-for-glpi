@@ -2446,7 +2446,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * @param array $options
     */
    function addSoftware($a_software, $options) {
-
       $a_softwares_id = $this->software->add($a_software, $options, FALSE);
       $this->addPrepareLog($a_softwares_id, 'Software');
 

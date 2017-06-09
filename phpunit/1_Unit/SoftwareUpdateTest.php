@@ -161,7 +161,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'fusioninventory team',
                 'NAME'      => 'fusioninventory',
-                'VERSION'   => '0.85+1.0'
+                'VERSION'   => '0.85+1.0',
+                'SYSTEM_CATEGORY' => 'devel'
             );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -178,7 +179,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               'operatingsystems_id'   => 0
+               'operatingsystems_id'   => 0,
+               '_system_category'      => 'devel'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -232,7 +234,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi0.85',
-                'VERSION'   => '0.85'
+                'VERSION'   => '0.85',
+                'SYSTEM_CATEGORY' => 'devel'
             );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -248,7 +251,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
                'is_recursive'          => 0,
-               'operatingsystems_id'   => 0
+               'operatingsystems_id'   => 0,
+               '_system_category'      => 'devel'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -317,7 +321,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi0.85',
-                'VERSION'   => '0.85'
+                'VERSION'   => '0.85',
+                'SYSTEM_CATEGORY' => 'devel'
             );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -327,13 +332,14 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_reference = array();
       $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
                'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
+               'manufacturers_id'      => '2',
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
                'is_recursive'          => 0,
-               'operatingsystems_id'   => 0
+               'operatingsystems_id'   => 0,
+               '_system_category'      => 'devel'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -366,6 +372,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                 'VERSION'          => '2.0.4',
                 'VERSION_MAJOR'    => '2',
                 'VERSION_MINOR'    => '0',
+                'SYSTEM_CATEGORY'  => 'application'
             );
       $a_software['SOFTWARES'][] = array(
                 'ARCH'             => 'i586',
@@ -375,6 +382,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                 'PUBLISHER'        => 'AutoIt Team',
                 'UNINSTALL_STRING' => 'C:\\Program Files\\AutoIt3\\Uninstall.exe',
                 'URL_INFO_ABOUT'   => 'http://www.autoitscript.com/autoit3',
+                'SYSTEM_CATEGORY'  => 'application'
           );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -391,7 +399,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               'date_install'          => '2013-10-16'
+               'date_install'          => '2013-10-16',
+               '_system_category'      => 'application'
             );
       $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = array(
                'name'                  => 'AutoIt v3.3.8.1',
@@ -401,7 +410,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
                'is_recursive'          => 0,
-               'operatingsystems_id'   => 0
+               'operatingsystems_id'   => 0,
+               '_system_category'      => 'application'
       );
       $this->assertEquals($a_reference, $a_return);
 

@@ -1513,7 +1513,8 @@ class PluginFusioninventoryFormatconvert {
                                            'PUBLISHER'   => 'manufacturers_id',
                                            'NAME'        => 'name',
                                            'VERSION'     => 'version',
-                                           'INSTALLDATE' => 'date_install'));
+                                           'INSTALLDATE' => 'date_install',
+                                           'SYSTEM_CATEGORY' => '_system_category'));
          if (!isset($array_tmp['name'])
                  || $array_tmp['name'] == '') {
             if (isset($a_softwares['GUID'])
@@ -1539,12 +1540,13 @@ class PluginFusioninventoryFormatconvert {
                $res_rule = array();
                if ($nb_RuleDictionnarySoftware > 0) {
                   $res_rule = $rulecollection->processAllRules(
-                                               array(
-                                                   "name"         => $array_tmp['name'],
-                                                   "manufacturer" => $array_tmp['manufacturers_id'],
-                                                   "old_version"  => $array_tmp['version'],
-                                                   "entities_id"  => $entities_id_software
-                                                )
+                                               [
+                                                "name"         => $array_tmp['name'],
+                                                "manufacturer" => $array_tmp['manufacturers_id'],
+                                                "old_version"  => $array_tmp['version'],
+                                                "entities_id"  => $entities_id_software,
+                                                "_system_category" => $array_tmp['_system_category']
+                                                ]
                                              );
                }
 
