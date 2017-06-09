@@ -164,29 +164,16 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       );
 
       $this->assertEquals($a_reference, $printer->fields);
-   }
 
-   /**
-    * @test
-    */
-   public function printerGlpiCounter() {
-      global $DB;
-
-      $DB->connect();
-
-      $printer = new Printer();
-      $printer->getFromDB(1);
-      //Counter has been updated
-      $this->assertEquals($printer->fields['last_pages_counter'], 15134);
-
-      //No log has been added in the printer's historical
+      //Check if no log has been added for the counter's update
       $nb = countElementsInTable('glpi_logs',
                                  ['itemtype'         => 'Printer',
-                                  'items_id'         => 1,
+                                  'items_id'         => $printer->getID(),
                                   'linked_action'    => 0,
                                   'id_search_option' => 12
                                   ]);
       $this->assertEquals($nb, 0);
+
    }
 
    /**
