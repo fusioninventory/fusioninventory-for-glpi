@@ -58,7 +58,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @var boolean
     */
-   public $displaylist = FALSE;
+   public $displaylist = false;
 
    /**
     * The right name for this class
@@ -88,7 +88,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param boolean $getOnly
     * @return array
     */
-   function initConfigModule($getOnly=FALSE) {
+   function initConfigModule($getOnly=false) {
 
       $input = array();
       $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
@@ -149,6 +149,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
       $input['manage_osname'] = 1;
+      $input['clean_on_demand_tasks'] = -1;
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -178,12 +179,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $values configuration values, indexed by name
     * @param boolean $update say if add or update in database
     */
-   function addValues($values, $update=TRUE) {
+   function addValues($values, $update=true) {
 
       foreach ($values as $type=>$value) {
          if ($this->getValue($type) === NULL) {
             $this->addValue($type, $value);
-         } else if ($update == TRUE) {
+         } else if ($update == true) {
             $this->updateValue($type, $value);
          }
       }
@@ -262,22 +263,22 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
          case 0:
             $item->showForm();
-            return TRUE;
+            return true;
 
          case 1:
             $item->showFormInventory();
-            return TRUE;
+            return true;
 
          case 2:
             $item->showFormNetworkInventory();
-            return TRUE;
+            return true;
 
          case 3:
             $item->showFormDeploy();
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -311,11 +312,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param string $name name in configuration
     * @return boolean
     */
-   function isActive($name) {
+   function isFieldActive($name) {
       if (!($this->getValue($name))) {
-         return FALSE;
+         return false;
       } else {
-         return TRUE;
+         return true;
       }
    }
 
@@ -334,7 +335,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('SSL-only for agent', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
-      Dropdown::showYesNo("ssl_only", $this->isActive('ssl_only'));
+      Dropdown::showYesNo("ssl_only", $this->isFieldActive('ssl_only'));
       echo "</td>";
       echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
@@ -366,7 +367,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Extra-debug', 'fusioninventory')." :</td>";
       echo "<td>";
-      Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
+      Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
       echo "</td>";
       echo "<td colspan=2></td>";
       echo "</tr>";
@@ -434,10 +435,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "</tr>";
 
-      $options['candel'] = FALSE;
+      $options['candel'] = false;
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -676,7 +677,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $options['candel'] = FALSE;
       $pfConfig->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -745,7 +746,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $options['candel'] = FALSE;
+      $options['candel'] = false;
       $pfsnmpConfig->showFormButtons($options);
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
@@ -756,7 +757,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
 
-      return TRUE;
+      return true;
    }
 
 
@@ -789,10 +790,37 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $options['candel'] = FALSE;
+      echo "<tr>";
+      echo "<td>".__('Match mirrors to agents', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>";
+      $mirror_options = [
+         PluginFusioninventoryDeployMirror::MATCH_LOCATION => __('with location', 'fusioninventory'),
+         PluginFusioninventoryDeployMirror::MATCH_ENTITY   => __('with entity', 'fusioninventory'),
+         PluginFusioninventoryDeployMirror::MATCH_BOTH     => __('with both', 'fusioninventory')
+      ];
+      Dropdown::showFromArray('mirror_match',
+                              $mirror_options,
+                              ['value' => $pfConfig->getValue('mirror_match')]);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td>".__('Delete successful on demand tasks after (in days)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      $toadd = [-1 => __('Never')];
+      Dropdown::showNumber("clean_on_demand_tasks", array(
+         'value' => $pfConfig->getValue('clean_on_demand_tasks'),
+         'min'   => 1,
+         'max'   => 1000,
+         'toadd' => $toadd)
+      );
+      echo "</td>";
+      echo "</tr>";
+
+      $options['candel'] = false;
       $pfConfig->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -824,12 +852,24 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @return boolean
     */
    function updateValue($name, $value) {
+      global $PF_CONFIG;
+
+      // retrieve current config
       $config = current($this->find("`type`='".$name."'"));
+
+      // set in db
       if (isset($config['id'])) {
-         return $this->update(array('id'=> $config['id'], 'value'=>$value));
+         $result = $this->update(array('id'=> $config['id'], 'value'=>$value));
       } else {
-         return $this->add(array('type' => $name, 'value' => $value));
+         $result = $this->add(array('type' => $name, 'value' => $value));
       }
+
+      // set cache
+      if ($result) {
+         $PF_CONFIG[$name] = $value;
+      }
+
+      return $result;
    }
 
 
@@ -855,7 +895,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
          if (is_array($message)) {
-            $message = print_r($message, TRUE);
+            $message = print_r($message, true);
          }
          Toolbox::logInFile($file, $message);
       }

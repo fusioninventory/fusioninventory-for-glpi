@@ -321,6 +321,9 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
       CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'comment'=>'Wake agents ups'));
+      CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
+                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                          'comment' => __('Clean on demand deployment tasks')]);
 
    /*
     * Create rules

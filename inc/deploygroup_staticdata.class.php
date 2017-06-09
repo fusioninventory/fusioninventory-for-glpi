@@ -186,6 +186,28 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
       Search::showList('PluginFusioninventoryComputer', $search_params);
    }
+
+   /**
+   * Duplicate entries from one group to another
+   * @param $source_deploygroups_id the source group ID
+   * @param $target_deploygroups_id the target group ID
+   * @return the duplication status, as a boolean
+   */
+   static function duplicate($source_deploygroups_id, $target_deploygroups_id) {
+      $result        = true;
+      $pfStaticGroup = new self();
+
+      $groups = $pfStaticGroup->find("`plugin_fusioninventory_deploygroups_id`='$source_deploygroups_id'");
+      foreach ($groups as $group) {
+         unset($group['id']);
+         $group['plugin_fusioninventory_deploygroups_id']
+            = $target_deploygroups_id;
+         if (!$pfStaticGroup->add($group)) {
+            $result |= false;
+         }
+      }
+      return $result;
+   }
 }
 
 ?>

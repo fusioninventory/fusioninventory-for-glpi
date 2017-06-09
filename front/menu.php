@@ -50,6 +50,8 @@ if (PluginFusioninventoryMenu::canView()) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
                 "pluginfusioninventorymenu", "menu");
 
+   echo Html::manageRefreshPage();
+
    PluginFusioninventoryMenu::displayMenu();
    PluginFusioninventoryMenu::board();
 } else {

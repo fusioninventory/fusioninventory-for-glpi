@@ -18,7 +18,7 @@ foreach (readdir(DIRHANDLE)){
                         $lang=$_;
                         $lang=~s/\.po//;
 
-                        `wget --user=$user --password=$password --output-document=../locales/$_ http://www.transifex.net/api/2/project/FusionInventory/resource/plugin-fusioninventory-090/translation/$lang/?file=$_`;
+                        `wget --user=$user --password=$password --output-document=../locales/$_ http://www.transifex.net/api/2/project/FusionInventory/resource/plugin-fusioninventory-92/translation/$lang/?file=$_`;
                      }
             }
 

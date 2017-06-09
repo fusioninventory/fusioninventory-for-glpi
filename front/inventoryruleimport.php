@@ -52,6 +52,8 @@ Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
 Session::checkLoginUser();
 PluginFusioninventoryMenu::displayMenu("mini");
 
+RuleCollection::titleBackup();
+
 $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
 
 if (isset($_GET['resetrules'])) {

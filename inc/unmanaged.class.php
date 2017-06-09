@@ -232,7 +232,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          $ong[1]=__('Import');
 
          $pfConfig = new PluginFusioninventoryConfig();
-         if (($pfConfig->isActive('remotehttpagent'))
+         if (($pfConfig->isFieldActive('remotehttpagent'))
                  && (Session::haveRight('plugin_fusioninventory_remotecontrol', UPDATE))) {
             $ong[2]=__('Job', 'fusioninventory');
          }

@@ -188,31 +188,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-
-   /**
-    * Get additional menu content
-    *
-    * @return array
-    */
-   static function getAdditionalMenuContent() {
-      $menu = array();
-
-//      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
-//      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
-//
-//      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
-//      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
-
-//      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
-//      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
-//
-//      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
-//      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
-      return $menu;
-   }
-
-
-
    /**
     * Display the menu of plugin FusionInventory
     *
@@ -387,18 +362,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/collectrule.php";
       }
 
-      if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
-         $a_menu[6]['name'] = __('Dictionnary of computer architectures', 'fusioninventory');
-         $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
-         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/ruledictionnarycomputerarch.php";
-      }
-
       if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {
-         $a_menu[7]['name'] = _n('Blacklist', 'Blacklists', 1);
-         $a_menu[7]['pic']  = $CFG_GLPI['root_doc'].
+         $a_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
+         $a_menu[6]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
-         $a_menu[7]['link'] = $CFG_GLPI['root_doc'].
+         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
@@ -1019,32 +987,17 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $dataDeploy[$k]['key'] .= " : ".$dataDeploy[$k]['y'];
       }
 
-      echo "<table align='center'>";
-      echo "<tr height='280'>";
-      echo "<td width='380'>";
-      self::showChart('computers', $dataComputer);
-      echo "</td>";
-      echo "<td width='380'>";
-      $title = __('Number of computer inventories of last hours', 'fusioninventory');
-      self::showChartBar('nbinventory', $dataInventory, $title);
-      echo "</td>";
-      echo "<td width='380'>";
-      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
-      echo "</td>";
-      echo "</tr>";
 
-      echo "<tr height='280'>";
-      echo "<td>";
+      echo "<div class='fi_board'>";
+      self::showChart('computers', $dataComputer);
+      self::showChartBar('nbinventory', $dataInventory,
+                         __('Number of computer inventories of last hours', 'fusioninventory'));
+      self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
       self::showChart('snmp', $dataSNMP);
-      echo "</td>";
-      echo "<td>";
       self::showChart('ports', $dataPortL);
-      echo "</td>";
-      echo "<td>";
       self::showChart('portsconnected', $dataPortC);
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
+      echo "</div>";
+
    }
 
 
@@ -1056,11 +1009,14 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     * @param array $data list of data for the chart
     * @param string $title
     */
-   static function showChart($name, $data, $title='') {
-
-      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
-
-      echo "<script>$(function() { statHalfDonut('".$name."', '".json_encode($data)."');});</script>";
+   static function showChart($name, $data, $title='&nbsp;') {
+      echo "<div class='fi_chart donut'>";
+      echo "<h2 class='fi_chart_title'>$title</h2>";
+      echo '<svg id="'.$name.'"></svg>';
+      echo Html::scriptBlock("$(function() {
+         statHalfDonut('".$name."', '".json_encode($data)."');
+      });");
+      echo "</div>";
    }
 
 
@@ -1074,8 +1030,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     * @param integer $width
     */
    static function showChartBar($name, $data, $title='', $width=370) {
-      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
-
-      echo "<script>$(function() { statBar('".$name."', '".json_encode($data)."', '".addslashes($title)."'); });</script>";
+      echo "<div class='fi_chart bar'>";
+      echo "<h2 class='fi_chart_title'>$title</h2>";
+      echo '<svg id="'.$name.'"></svg>';
+      echo Html::scriptBlock("$(function() {
+         statBar('".$name."', '".json_encode($data)."');
+      });");
+      echo "</div>";
    }
 }

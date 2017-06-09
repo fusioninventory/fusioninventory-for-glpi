@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the actions in package for deploy system.
  */
-class PluginFusioninventoryDeployAction {
+class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    /**
     * Get list of return actions available
@@ -94,7 +94,7 @@ class PluginFusioninventoryDeployAction {
     * @param string $type name of the type
     * @return string mapped with the type
     */
-   static function getType($type) {
+   static function getTypeDescription($type) {
       $a_types = PluginFusioninventoryDeployAction::getTypes();
       if (isset($a_types[$type])) {
          return $a_types[$type];
@@ -184,11 +184,13 @@ class PluginFusioninventoryDeployAction {
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
 
+      $canedit    = $package->canUpdateContent();
+      $package_id = $package->getID();
       echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'action_entries['.$i.']'));
             echo "</td>";
@@ -196,10 +198,15 @@ class PluginFusioninventoryDeployAction {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
-         echo "<a class='edit' ".
-                 "onclick=\"edit_subtype('action', {$package->fields['id']}, $rand, this)\">";
-         echo PluginFusioninventoryDeployAction::getType($action_type);
-         echo "</a><br />";
+         if ($canedit) {
+            echo "<a class='edit'
+                     onclick=\"edit_subtype('action', $package_id, $rand ,this)\">";
+         }
+         echo PluginFusioninventoryDeployAction::getTypeDescription($action_type);
+         if ($canedit) {
+            echo "</a>";
+         }
+         echo "<br />";
 
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value)) {
@@ -238,20 +245,20 @@ class PluginFusioninventoryDeployAction {
          }
          echo "</td>";
          echo "</td>";
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
             echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
                "'><div class='drag row'></div></td>";
          }
          echo "</tr>";
          $i++;
       }
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit'>";
@@ -333,7 +340,9 @@ class PluginFusioninventoryDeployAction {
    static function displayAjaxValues($config, $request_data, $mode) {
       global $CFG_GLPI;
 
+      $mandatory_mark  = PluginFusioninventoryDeployCheck::getMandatoryMark();
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+
       if (isset($request_data['packages_id'])) {
          $pfDeployPackage->getFromDB($request_data['packages_id']);
       } else {
@@ -359,6 +368,10 @@ class PluginFusioninventoryDeployAction {
       $value_1      = "";
       $value_2      = "";
       $retChecks    = NULL;
+      $name_label   = __('Action label', 'fusioninventory');
+      $name_value   = (isset($config_data['name']))?$config_data['name']:"";
+      $name_type    = "input";
+      $logLineLimit = (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:100;
 
       /*
        * set values from element's config in 'edit' mode
@@ -411,7 +424,11 @@ class PluginFusioninventoryDeployAction {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>$value_label_1</th>";
+      echo "<th>".__('Action label', 'fusioninventory')."</th>";
+      echo "<td><input type='text' name='name' id='check_name' value=\"{$name_value}\" /></td>";
+      echo "</tr>";
+      echo "<tr>";
+      echo "<th>$value_label_1&nbsp;".$mandatory_mark."</th>";
       echo "<td>";
       switch ($value_type_1) {
 
@@ -428,7 +445,7 @@ class PluginFusioninventoryDeployAction {
       echo "</tr>";
       if ($value_label_2 !== FALSE) {
          echo "<tr>";
-         echo "<th>$value_label_2</th>";
+         echo "<th>".$value_label_2."&nbsp;".$mandatory_mark."</th>";
          echo "<td><input type='text' name='$name_label_2' value='$value_2'/></td>";
          echo "</tr>";
       }
@@ -459,6 +476,7 @@ class PluginFusioninventoryDeployAction {
                echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
                   $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
                echo "</tr>";
+
                echo "</table>";
             }
          }
@@ -471,9 +489,27 @@ class PluginFusioninventoryDeployAction {
          echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
                $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
          echo "</tr>";
+
          echo "</table>";
          echo "</span>";
          echo "</td>";
+         echo "</tr>";
+      }
+
+      if ($type == 'cmd') {
+         echo "<tr>";
+         echo "<th>".__('Number of output lines to retrieve', 'fusioninventory')."</th>";
+         echo "<td>";
+         $options = ['min'   => 0,
+                     'max'   => 5000,
+                     'step'  => 10,
+                     'toadd' => [0 => __('None'), -1 => __('All')],
+                     'value' => (isset($config_data['logLineLimit']))?$config_data['logLineLimit']:10
+                    ];
+         Dropdown::showNumber('logLineLimit', $options);
+         echo "&nbsp;<span class='red'><i>";
+         echo __('Fusioninventory-Agent 2.3.20 or higher mandatory');
+         echo "</i></span></td>";
          echo "</tr>";
       }
 
@@ -509,17 +545,11 @@ class PluginFusioninventoryDeployAction {
     */
    static function add_item($params) {
       //prepare new action entry to insert in json
-      if (isset($params['list'])) {
-         $tmp['list'] = $params['list'];
-      }
-      if (isset($params['from'])) {
-         $tmp['from'] = $params['from'];
-      }
-      if (isset($params['to'])) {
-         $tmp['to']   = $params['to'];
-      }
-      if (isset($params['exec'])) {
-         $tmp['exec'] = $params['exec'];
+      $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
+      foreach ($fields as $field) {
+         if (isset($params[$field])) {
+            $tmp[$field] = $params[$field];
+         }
       }
 
       //process ret checks
@@ -556,18 +586,11 @@ class PluginFusioninventoryDeployAction {
     * @param array $params list of fields with value of the action
     */
    static function save_item($params) {
-      //prepare updated action entry to insert in json
-      if (isset($params['list'])) {
-         $tmp['list'] = $params['list'];
-      }
-      if (isset($params['from'])) {
-         $tmp['from'] = $params['from'];
-      }
-      if (isset($params['to'])) {
-         $tmp['to']   = $params['to'];
-      }
-      if (isset($params['exec'])) {
-         $tmp['exec'] = $params['exec'];
+      $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
+      foreach ($fields as $field) {
+         if (isset($params[$field])) {
+            $tmp[$field] = $params[$field];
+         }
       }
 
       //process ret checks

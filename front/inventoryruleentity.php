@@ -55,6 +55,8 @@ Html::header(__('FusionInventory', 'fusioninventory'),
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
+RuleCollection::titleBackup();
+
 $rulecollection = new PluginFusioninventoryInventoryRuleEntityCollection();
 
 include (GLPI_ROOT . "/front/rule.common.php");

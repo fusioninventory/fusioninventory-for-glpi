@@ -108,11 +108,14 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
   `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
   `reprepare_if_successful` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deploy_on_demand` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `plugin_fusioninventory_timeslots_prep_id` (`plugin_fusioninventory_timeslots_prep_id`),
   KEY `plugin_fusioninventory_timeslots_exec_id` (`plugin_fusioninventory_timeslots_exec_id`),
   KEY `is_active` (`is_active`),
+  KEY `reprepare_if_successful` (`reprepare_if_successful`),
+  KEY `is_deploy_on_demand` (`is_deploy_on_demand`),
   KEY `wakeup_agent_counter` (`wakeup_agent_counter`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -843,6 +846,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploymirrors`;
 CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -851,6 +855,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   `date_mod` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
+  KEY `is_active` (`is_active`),
+  KEY `is_recursive` (`is_recursive`),
   KEY `date_mod` (`date_mod`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -889,6 +895,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
+  `computers_id_cache` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)

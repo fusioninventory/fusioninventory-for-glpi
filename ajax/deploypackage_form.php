@@ -56,10 +56,10 @@ if (!empty($fi_move_item)) { //ajax request
 
    if (Session::haveRight('plugin_fusioninventory_package', UPDATE)) {
       $params = [
-         'old_index' => filter_input(INPUT_POST, "old_index"),
-         'new_index' => filter_input(INPUT_POST, "new_index"),
-         'id'        => filter_input(INPUT_POST, "id")
-      ];
+                  'old_index' => filter_input(INPUT_POST, "old_index"),
+                  'new_index' => filter_input(INPUT_POST, "new_index"),
+                  'id'        => filter_input(INPUT_POST, "id")
+               ];
       $itemtype = filter_input(INPUT_POST, "itemtype");
       if (class_exists($itemtype)) {
          $itemtype::move_item($params);
@@ -76,32 +76,32 @@ if (!empty($fi_move_item)) { //ajax request
    echo json_encode( $json_response );
    //exit;
 } else {
-   $orders_id  = filter_input(INPUT_POST, "orders_id");
+   $packages_id = filter_input(INPUT_POST, "packages_id");
    $rand       = filter_input(INPUT_POST, "rand");
    $mode       = filter_input(INPUT_POST, "mode");
    $fi_subtype = filter_input(INPUT_POST, "subtype");
-   if (empty($orders_id) && empty($rand)
+   if (empty($packages_id) && empty($rand)
            && empty($fi_subtype)) {
       exit;
    }
 
-   if (!is_numeric($orders_id)) {
+   if (!is_numeric($packages_id)) {
       Toolbox::logDebug("Error: orders_id in request is not an integer");
-      Toolbox::logDebug(print_r($orders_id, TRUE));
+      Toolbox::logDebug(print_r($packages_id, TRUE));
       exit;
    }
 
    $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-   $pfDeployPackage->getFromDB($orders_id);
+   $pfDeployPackage->getFromDB($packages_id);
 
    //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
    // I think we could use only $order -- Kevin 'kiniou' Roy
    $input = [
-       'index'       => filter_input(INPUT_POST, "index"),
-       'value'       => filter_input(INPUT_POST, "value"),
-       'packages_id' => filter_input(INPUT_POST, "packages_id"),
-       'orders_id'   => filter_input(INPUT_POST, "orders_id"),
-   ];
+             'index'       => filter_input(INPUT_POST, "index"),
+             'value'       => filter_input(INPUT_POST, "value"),
+             'packages_id' => filter_input(INPUT_POST, "packages_id"),
+             'orders_id'   => filter_input(INPUT_POST, "orders_id"),
+            ];
    $itemtype = filter_input(INPUT_POST, "subtype");
    switch (filter_input(INPUT_POST, "subtype")) {
       case 'check':

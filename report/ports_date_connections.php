@@ -195,9 +195,9 @@ function displaySearchForm() {
    echo "</td>";
 
    echo "<td>";
-   //Add parameters to uri to be saved as bookmarks
-   $_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"], $_GET);
-   Bookmark::showSaveButton(Bookmark::SEARCH, 'PluginFusioninventoryNetworkport2');
+   //Add parameters to uri to be saved as SavedSearch
+   $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
+   SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginFusioninventoryNetworkport2');
    echo "</td>";
 
    echo "<td>";
@@ -238,13 +238,13 @@ function getContainsArray($get) {
 
 
 /**
- * Generate the URL bookmark
+ * Generate the URL SavedSearch
  *
  * @param string $url
  * @param array $get
  * @return string
  */
-function buildBookmarkUrl($url, $get) {
+function buildSavedSearchUrl($url, $get) {
     return $url."?field[0]=3&contains[0]=".getContainsArray($get);
 }
 

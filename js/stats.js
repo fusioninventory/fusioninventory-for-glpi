@@ -3,7 +3,7 @@ function statHalfDonut(svgname, jsondata) {
    nv.addGraph(function() {
 
       var width = 400,
-          height = 400;
+          height = 380;
 
       var chart = nv.models.pieChart()
           .x(function(d) { return d.key })
@@ -31,12 +31,12 @@ function statHalfDonut(svgname, jsondata) {
 
 
 function statBar(svgname, jsondata, title) {
-   
+
    nv.addGraph(function() {
 
       var width = 400,
           height = 380;
-          
+
       var chart = nv.models.discreteBarChart()
           .x(function(d) { return d.label })
           .y(function(d) { return d.value })
@@ -47,6 +47,7 @@ function statBar(svgname, jsondata, title) {
 
       d3.select('#' + svgname)
          .datum([JSON.parse(jsondata)])
+         .attr('width', width)
          .attr('height', height)
          .call(chart);
 
@@ -59,7 +60,7 @@ function statBar(svgname, jsondata, title) {
          .text(title);
 
       nv.utils.windowResize(chart.update);
-      
+
       return chart;
    });
 }

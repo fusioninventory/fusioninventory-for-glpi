@@ -156,7 +156,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
       global $CFG_GLPI;
 
-      $o_file = new self();
+      $o_file     = new self();
+      $package_id = $package->getID();
+      $canedit    = $package->canUpdateContent();
 
       // compute short shas to find the corresponding entries in database
       $short_shas = array();
@@ -216,26 +218,29 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          // start new line
          $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
             echo "<td class='control'>";
             Html::showCheckbox(array('name' => 'file_entries['.$i.']', 'value' => 0));
             echo "</td>";
          }
          echo "<td class='filename'>";
          if (!empty($file_mimetype)
-                 && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$file_mimetype.png")) {
-            echo "<img src='".$pics_path."ext/extensions/$file_mimetype.png' />";
+                 && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/extensions/$file_mimetype.png")) {
+            echo "<img src='".$pics_path."extensions/$file_mimetype.png' />";
          } else {
-            echo "<img src='".$pics_path."ext/extensions/documents.png' />";
+            echo "<img src='".$pics_path."extensions/documents.png' />";
          }
 
          //filename
-         echo "&nbsp;".
-              "<a class='edit' ".
-              "  onclick=\"edit_subtype(".
-              "   'file', {$package->fields['id']}, $rand, this ".
-              "  )\"".
-              ">$file_name</a>";
+         echo "&nbsp;";
+         if ($canedit) {
+            echo "<a class='edit'
+                     onclick=\"edit_subtype('file', $package_id, $rand ,this)\">";
+         }
+         echo $file_name;
+         if ($canedit) {
+            echo "</a>";
+         }
 
          //p2p icon
          if (isset($file_p2p)
@@ -288,20 +293,20 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "</div>";
          }
          echo "</td>";
-         if ($package->can($package->getID(), UPDATE)) {
+         if ($canedit) {
             echo "<td class='rowhandler control' title='".
                     __('drag', 'fusioninventory').
                     "'><div class='drag row'></div></td>";
          }
          $i++;
       }
-      if ($package->can($package->getID(), UPDATE)) {
+      if ($canedit) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("filesList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-      if ($package->can($package->getID(), UPDATE)) {
+      if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
             __('Delete', 'fusioninventory')."\" class='submit'>";
@@ -667,29 +672,37 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (!isset($params['file_entries'])) {
          return FALSE;
       }
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
 
-      $files = $datas['jobs']['associatedFiles'];
+      $shasToRemove = [];
+
+      //get current order json
+      $data = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
+
+      $files = $data['jobs']['associatedFiles'];
       //remove selected checks
 
       foreach ($params['file_entries'] as $index => $checked) {
          if ($checked >= "1" || $checked == "on") {
             //get sha512
-            $sha512 = $datas['jobs']['associatedFiles'][$index];
+            $sha512 = $data['jobs']['associatedFiles'][$index];
 
             //remove file
             unset($files[$index]);
-            //array_splice($datas['jobs']['associatedFiles'], $index, 1);
-            unset($datas['associatedFiles'][$sha512]);
+            unset($data['associatedFiles'][$sha512]);
 
-            //$shasToRemove[] = $sha512;
+            $shasToRemove[] = $sha512;
          }
       }
-      $datas['jobs']['associatedFiles'] = array_values($files);
+      $data['jobs']['associatedFiles'] = array_values($files);
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
-      return TRUE;
+      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $data);
+
+      //remove files in repo
+      foreach ($shasToRemove as $sha512) {
+         self::removeFileInRepo($sha512);
+      }
+
+      return true;
    }
 
 
@@ -875,9 +888,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'p2p'           => isset($params['p2p']) ? $params['p2p'] : 0,
             'uncompress'    => isset($params['uncompress']) ? $params['uncompress'] : 0,
             'p2p-retention-duration' => (
-               is_numeric($params['p2p-retention-duration'])
-               ? $params['p2p-retention-duration']
-               : 0
+               isset($params['p2p-retention-duration'])
+               && is_numeric($params['p2p-retention-duration'])
+                  ? $params['p2p-retention-duration']
+                  : 0
             ),
             'id'            => $params['id']
          );
@@ -915,16 +929,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    /**
     * Move uploaded file part in right/final directory
     *
-    * @param string $repoPath path of the repository
     * @param string $filePath path of the file + filename
     * @param boolean $skip_creation
     * @return string
     */
-   function registerFilepart ($repoPath, $filePath, $skip_creation=FALSE) {
+   function registerFilepart ($filePath, $skip_creation=FALSE) {
       $sha512 = hash_file('sha512', $filePath);
 
       if (!$skip_creation) {
-         $dir = $repoPath.'/'.self::getDirBySha512($sha512);
+         $dir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.self::getDirBySha512($sha512);
 
          if (!file_exists ($dir)) {
             mkdir($dir, 0777, TRUE);
@@ -945,15 +958,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    static function addFileInRepo($params) {
       $deployFile = new self;
 
-      $filename = addslashes($params['filename']);
+      $filename      = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
-
-      $maxPartSize = 1024*1024;
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
-      $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusioninventory/", "filestore");
-
-      $sha512 = hash_file('sha512', $file_tmp_name);
-      $short_sha512 = substr($sha512, 0, 6);
+      $maxPartSize   = 1024*1024;
+      $tmpFilepart   = tempnam(GLPI_PLUGIN_DOC_DIR."/fusioninventory/", "filestore");
+      $sha512        = hash_file('sha512', $file_tmp_name);
+      $short_sha512  = substr($sha512, 0, 6);
 
       $file_present_in_repo = FALSE;
       if ($deployFile->checkPresenceFile($sha512)) {
@@ -965,17 +975,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             "WHERE shortsha512 = '". $short_sha512 ."'"
          );
 
-      //Manifest files contains the multiparts list attached to the file
-      $manifest_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
-      $manifest_filename = $manifest_path . $sha512;
-
       $new_entry = array(
-         'name' => $filename,
-         'p2p' => $params['p2p'],
-//         'mimetype' => $params['mime_type'],
-//         'filesize' => $params['filesize'],
+         'name'                   => $filename,
+         'p2p'                    => $params['p2p'],
          'p2p-retention-duration' => $params['p2p-retention-duration'],
-         'uncompress' => $params['uncompress'],
+         'uncompress'             => $params['uncompress'],
       );
 
       $fdIn = fopen($file_tmp_name, 'rb');
@@ -989,7 +993,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          clearstatcache();
          if (file_exists($tmpFilepart)) {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
-               $part_sha512 = $deployFile->registerFilepart($repoPath, $tmpFilepart,
+               $part_sha512 = $deployFile->registerFilepart($tmpFilepart,
                                                             $file_present_in_repo);
                unlink($tmpFilepart);
 
@@ -1006,11 +1010,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          gzclose($fdPart);
       } while (1);
 
-//      $new_entry['multiparts'] = $multiparts;
       //create manifest file
       if (!$file_present_in_repo) {
          $handle = fopen(
-           $manifest_filename, "w+"
+           PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512, "w+"
          );
          if ($handle) {
             foreach ($multiparts as $sha) {
@@ -1056,36 +1059,51 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Remove file from the repository
     *
     * @param string $sha512 sha512 of the file
-    * @param integer $packages_id id of the package
     * @return boolean
     */
-   static function removeFileInRepo($sha512, $packages_id) {
-
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
-      //$manifestsPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
-
+   static function removeFileInRepo($sha512) {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $rows = $pfDeployPackage->find("id != '$packages_id'
-            AND json LIKE '%".substr($sha512, 0, 6 )."%'
-            AND json LIKE '%$sha512%'"
-      );
+
+      // try to find file in other packages
+      $rows = $pfDeployPackage->find("`json` LIKE '%".substr($sha512, 0, 6 )."%'
+                                  AND `json` LIKE '%$sha512%'" );
+
+      //file found in other packages, do not remove parts in repo
       if (count($rows) > 0) {
-         //file found in other order, do not remove part in repo
-         return FALSE;
+         return false;
       }
 
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($packages_id), TRUE);
-      $multiparts = $datas['associatedFiles'][$sha512]['multiparts'];
+      //get sha512 parts in manifest
+      $multiparts = file(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
 
       //parse all files part
       foreach ($multiparts as $part_sha512) {
-         $dir = $repoPath.self::getDirBySha512($part_sha512).'/';
+         $firstdir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.substr($part_sha512, 0, 1)."/";
+         $fulldir  = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.self::getDirBySha512($part_sha512).'/';
 
          //delete file parts
-         unlink($dir.$part_sha512);
+         unlink(trim($fulldir.$part_sha512));
+
+         //delete folders if empty
+         if (is_dir($fulldir)) {
+            $count_second_folder = count(scandir($fulldir)) - 2;
+            if ($count_second_folder === 0) {
+               rmdir($fulldir);
+            }
+         }
+         if (is_dir($firstdir)) {
+            $count_first_folder = count(scandir($firstdir)) - 2; // -2 for . and ..
+            if ($count_first_folder === 0) {
+               rmdir($firstdir);
+            }
+         }
       }
-      return TRUE;
+
+
+      //remove manifest
+      unlink(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
+
+      return true;
    }
 
 
@@ -1097,9 +1115,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * @return boolean
     */
    function checkPresenceManifest($sha512) {
-      $manifests_path =
-         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
-      if (!file_exists($manifests_path.$sha512)) {
+      if (!file_exists(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512)) {
          return FALSE;
       }
       return TRUE;
@@ -1114,11 +1130,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * @return boolean
     */
    function checkPresenceFile($sha512) {
-      $manifests_path =
-         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
-      $parts_path =
-         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
-
       //Do not continue if the manifest is not found
       if (!$this->checkPresenceManifest($sha512)) {
          return FALSE;
@@ -1129,13 +1140,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       // the manifest file is created
       $fileparts_ok = TRUE;
       $fileparts_cnt = 0;
-      $handle = fopen($manifests_path.$sha512, "r");
+      $handle = fopen(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512, "r");
       if ($handle) {
-         while (($buffer = fgets($handle) !== FALSE)) {
+         while (($buffer = fgets($handle)) !== FALSE) {
             $fileparts_cnt++;
-            $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;
+            $path = self::getDirBySha512($buffer)."/".trim($buffer, "\n");
             //Check if the filepart exists
-            if (!file_exists($parts_path.$path)) {
+            if (!file_exists(PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.$path)) {
                $fileparts_ok = FALSE;
                break;
             }
@@ -1215,8 +1226,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $a_files = $this->find();
       foreach ($a_files as $data) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deployorders',
-                 '`json` LIKE \'%"'.$data['sha512'].'"%\'');
+         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
+                                     '`json` LIKE \'%"'.$data['sha512'].'"%\'');
          if ($cnt == 0) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>";
@@ -1237,27 +1248,29 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
     * Delete the files not used in packages
     */
    function deleteUnusedFiles() {
-      $manifests_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
-      $parts_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
       $a_files = $this->find();
       foreach ($a_files as $data) {
-         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deployorders',
-                 '`json` LIKE \'%"'.$data['sha512'].'"%\'');
+         $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
+                                     '`json` LIKE \'%"'.$data['sha512'].'"%\'');
          if ($cnt == 0) {
             $this->delete($data);
-            $handle = fopen($manifests_path.$data['sha512'], "r");
-            if ($handle) {
-               while (!feof($handle)) {
-                  $buffer = trim(fgets($handle));
-                  if ($buffer != '') {
-                     $path = substr($buffer, 0, 1)."/".substr($buffer, 0, 2)."/".$buffer;
-                     unlink($parts_path.$path);
+            $manifest_filename = PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$data['sha512'];
+            if (file_exists($manifest_filename)) {
+               $handle = @fopen($manifest_filename, "r");
+               if ($handle) {
+                  while (!feof($handle)) {
+                     $buffer = trim(fgets($handle));
+                     if ($buffer != '') {
+                        $part_path = self::getDirBySha512($buffer)."/".$buffer;
+                        unlink(PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.$part_path);
+                     }
                   }
+                  fclose($handle);
                }
-               fclose($handle);
+
+               unlink($manifest_filename);
             }
-            unlink($manifests_path.$data['sha512']);
          }
       }
    }

@@ -264,8 +264,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $ref_prepared = array(
           1 => 1,
-          3 => 1,
-          4 => 1
+          3 => 3,
+          4 => 4
       );
 
       $this->assertEquals($ref_prepared, $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters']['agents_prepared']);
@@ -307,6 +307,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
     */
    public function prepareTaskNotRePrepareIfSuccessful() {
       global $DB;
+
+      $_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'] = 2;
 
       // Verify prepare a deploy task
       $DB->connect();
@@ -376,7 +378,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs(array(1));
       $reference = array(
           'agents_prepared' => array(
-              '4' => 1
+              '4' => 3
               ),
           'agents_cancelled' => array(),
           'agents_running' => array(),
@@ -384,10 +386,10 @@ class CronTaskTest extends RestoreDatabase_TestCase {
               '1' => 1
           ),
           'agents_error' => array(
-              '3' => 1
+              '3' => 2
           ),
           'agents_notdone' => array(
-              '4' => 1
+              '4' => 3
           )
       );
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
@@ -397,8 +399,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs(array(1));
       $reference = array(
           'agents_prepared' => array(
-              '3' => 1,
-              '4' => 1
+              '3' => 4,
+              '4' => 3
               ),
           'agents_cancelled' => array(),
           'agents_running' => array(),
@@ -406,10 +408,10 @@ class CronTaskTest extends RestoreDatabase_TestCase {
               '1' => 1
           ),
           'agents_error' => array(
-              '3' => 1
+              '3' => 2
           ),
           'agents_notdone' => array(
-              '4' => 1
+              '4' => 3
           )
       );
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
@@ -425,9 +427,9 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs(array(1));
       $reference = array(
           'agents_prepared' => array(
-              '1' => 1,
-              '3' => 1,
-              '4' => 1
+              '1' => 5,
+              '3' => 4,
+              '4' => 3
               ),
           'agents_cancelled' => array(),
           'agents_running' => array(),
@@ -435,10 +437,10 @@ class CronTaskTest extends RestoreDatabase_TestCase {
               '1' => 1
           ),
           'agents_error' => array(
-              '3' => 1
+              '3' => 2
           ),
           'agents_notdone' => array(
-              '4' => 1
+              '4' => 3
           )
       );
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
