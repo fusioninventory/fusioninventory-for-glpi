@@ -715,7 +715,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param array $params list of fields with value of the check
     */
    static function add_item($params) {
-
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
@@ -723,7 +722,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $params['name'] = "";
       }
 
-      if (!empty($params['value']) && is_numeric($params['value'])) {
+      if (!empty($params['value'])
+         && is_numeric($params['value'])
+            && !empty($params['unit'])) {
          $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
 
          //Make an exception for freespaceGreater check which is saved as MiB
@@ -737,7 +738,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'name'   => $params['name'],
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
-         'value'  => $params['value'],
+         'value'  => strval($params['value']),
          'return' => $params['return']
       );
 
