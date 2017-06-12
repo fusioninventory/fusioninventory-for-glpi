@@ -468,7 +468,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                  'return'             => 'info'
               ];
       PluginFusioninventoryDeployCheck::add_item($params);
-      $expected = ''{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"500","return":"info"},{"name":"Test with float","type":"winkeyEquals","path":"HKEY_LOCAL_MACHINE\SOFTWARE\FusionInventory-Agent\debug","value":"9.20","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"500","return":"info"},{"name":"Test with float","type":"winkeyEquals","path":"HKEY_LOCAL_MACHINE\SOFTWARE\FusionInventory-Agent\debug","value":"9.20","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
       $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
       $this->assertEquals($expected, $json);
 
