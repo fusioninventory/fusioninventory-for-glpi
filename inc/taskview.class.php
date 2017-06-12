@@ -466,10 +466,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
       echo "</td>";
 
-      if ($this->fields['is_active']
-          && $_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+      if ($this->fields['is_active']) {
          echo "<td>";
-         echo Html::submit(__('Force start', 'fusioninventory'), array('name' => 'forcestart'));
+         echo Html::submit(__('Force start', 'fusioninventory'),
+                           ['name' => 'forcestart']);
          echo "</td>";
       }
 
