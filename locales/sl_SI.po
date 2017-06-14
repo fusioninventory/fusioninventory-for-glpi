@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 22:16+0200\n"
+"POT-Creation-Date: 2017-06-14 08:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: David Durieux <david@durieux.family>, 2017\n"
 "Language-Team: Slovenian (Slovenia) (https://www.transifex.com/ddurieux/teams/797/sl_SI/)\n"
@@ -271,7 +271,7 @@ msgstr "Ne more brati zip datoteko!"
 msgid "No file to import!"
 msgstr "Nobena datoteka za uvoz!"
 
-#: front/inventoryruleimport.php:65
+#: front/inventoryruleimport.php:67
 msgid "Reset import rules (define only default rules)"
 msgstr ""
 
@@ -410,6 +410,7 @@ msgid "Collect information"
 msgstr ""
 
 #: inc/collect.class.php:110 inc/collect.class.php:139
+#: inc/deploycheck.class.php:64
 msgid "Registry"
 msgstr "Register"
 
@@ -471,13 +472,13 @@ msgid "Iname"
 msgstr ""
 
 #: inc/collect_file.class.php:138 inc/collect_file.class.php:287
-#: inc/deployaction.class.php:300 inc/deploycheck.class.php:332
+#: inc/deployaction.class.php:300 inc/deploycheck.class.php:383
 msgid "Type"
 msgstr "Vrsta"
 
 #: inc/collect_file.class.php:163 inc/collect_file.class.php:291
-#: inc/deploycheck.class.php:426 inc/deploycheck.class.php:433
-#: inc/deploycheck.class.php:440 inc/deployfile.class.php:428
+#: inc/deploycheck.class.php:497 inc/deploycheck.class.php:504
+#: inc/deploycheck.class.php:511 inc/deployfile.class.php:428
 msgid "File"
 msgstr "Datoteka"
 
@@ -540,7 +541,6 @@ msgid "Path"
 msgstr "Pot"
 
 #: inc/collect_registry.class.php:150 inc/collect_registry.class.php:211
-#: inc/deploycheck.class.php:415 inc/deploycheck.class.php:420
 msgid "Key"
 msgstr ""
 
@@ -553,8 +553,8 @@ msgstr ""
 #: inc/collect_registry_content.class.php:241
 #: inc/collect_registry_content.class.php:288
 #: inc/collect_wmi_content.class.php:228 inc/collect_wmi_content.class.php:278
-#: inc/deploycheck.class.php:434 inc/deploycheck.class.php:441
-#: inc/deploycheck.class.php:447
+#: inc/deploycheck.class.php:483 inc/deploycheck.class.php:505
+#: inc/deploycheck.class.php:512 inc/deploycheck.class.php:518
 msgid "Value"
 msgstr "Vrednost"
 
@@ -891,12 +891,12 @@ msgstr ""
 msgid "return codes saved for this command"
 msgstr ""
 
-#: inc/deployaction.class.php:249 inc/deploycheck.class.php:280
+#: inc/deployaction.class.php:249 inc/deploycheck.class.php:324
 #: inc/deployfile.class.php:298 inc/taskjob.class.php:1518
 msgid "drag"
 msgstr ""
 
-#: inc/deployaction.class.php:264 inc/deploycheck.class.php:295
+#: inc/deployaction.class.php:264 inc/deploycheck.class.php:339
 #: inc/deployfile.class.php:312 inc/networkequipment.class.php:1144
 #: inc/networkequipment.class.php:1145 inc/networkportlog.class.php:203
 #: inc/networkporttype.class.php:409 inc/printerlog.class.php:396
@@ -905,127 +905,144 @@ msgstr ""
 msgid "Delete"
 msgstr "Odstrani"
 
-#: inc/deployaction.class.php:377
+#: inc/deployaction.class.php:371 inc/deployaction.class.php:427
+msgid "Action label"
+msgstr ""
+
+#: inc/deployaction.class.php:383
 msgid "From"
 msgstr "Od"
 
-#: inc/deployaction.class.php:379
+#: inc/deployaction.class.php:385
 msgid "To"
 msgstr "Do"
 
-#: inc/deployaction.class.php:388
+#: inc/deployaction.class.php:394
 msgid "exec"
 msgstr ""
 
-#: inc/deployaction.class.php:402
+#: inc/deployaction.class.php:408
 msgid "path"
 msgstr "pot"
 
-#: inc/deployaction.class.php:446
+#: inc/deployaction.class.php:456
 msgid "Execution checks"
 msgstr ""
 
-#: inc/deploycheck.class.php:64
-msgid "Registry key exists"
+#: inc/deployaction.class.php:501
+msgid "Number of output lines to retrieve"
 msgstr ""
 
 #: inc/deploycheck.class.php:65
-msgid "Registry key missing"
+msgid "Registry key exists"
 msgstr ""
 
 #: inc/deploycheck.class.php:66
-msgid "Registry key value equals to"
+msgid "Registry value exists"
 msgstr ""
 
 #: inc/deploycheck.class.php:67
-msgid "File exists"
-msgstr "Datoteka obstaja"
+msgid "Registry key missing"
+msgstr ""
 
 #: inc/deploycheck.class.php:68
-msgid "File is missing"
-msgstr "Datoteka manjka"
+msgid "Registry value missing"
+msgstr ""
 
 #: inc/deploycheck.class.php:69
-msgid "File size is greater than"
+msgid "Registry value equals to"
 msgstr ""
 
 #: inc/deploycheck.class.php:70
-msgid "File size is equal to"
-msgstr "Velikost datoteke je enaka kot"
-
-#: inc/deploycheck.class.php:71
-msgid "File size is lower than"
-msgstr "Velikost datoteke je manjša kot"
-
-#: inc/deploycheck.class.php:72
-msgid "SHA-512 hash value matches"
+msgid "Type of registry value equals to"
 msgstr ""
 
 #: inc/deploycheck.class.php:73
+msgid "File exists"
+msgstr "Datoteka obstaja"
+
+#: inc/deploycheck.class.php:74
+msgid "File is missing"
+msgstr "Datoteka manjka"
+
+#: inc/deploycheck.class.php:75
+msgid "File size is greater than"
+msgstr ""
+
+#: inc/deploycheck.class.php:76
+msgid "File size is equal to"
+msgstr "Velikost datoteke je enaka kot"
+
+#: inc/deploycheck.class.php:77
+msgid "File size is lower than"
+msgstr "Velikost datoteke je manjša kot"
+
+#: inc/deploycheck.class.php:78
+msgid "SHA-512 hash value matches"
+msgstr ""
+
+#: inc/deploycheck.class.php:79
 msgid "SHA-512 hash value mismatch"
 msgstr ""
 
-#: inc/deploycheck.class.php:74
+#: inc/deploycheck.class.php:82
 msgid "Free space is greater than"
 msgstr ""
 
-#: inc/deploycheck.class.php:100
-msgid "B"
-msgstr "B"
-
-#: inc/deploycheck.class.php:101
-msgid "KiB"
-msgstr "KiB"
-
-#: inc/deploycheck.class.php:102
-msgid "MiB"
-msgstr "MiB"
-
-#: inc/deploycheck.class.php:103
-msgid "GiB"
-msgstr "GiB"
-
-#: inc/deploycheck.class.php:113
+#: inc/deploycheck.class.php:125
 msgid "continue"
 msgstr ""
 
-#: inc/deploycheck.class.php:115
+#: inc/deploycheck.class.php:127
 msgid "passed"
 msgstr ""
 
-#: inc/deploycheck.class.php:117
+#: inc/deploycheck.class.php:129
 msgid "otherwise"
 msgstr ""
 
-#: inc/deploycheck.class.php:421
-msgid "Key value"
+#: inc/deploycheck.class.php:426 inc/deploycheck.class.php:568
+msgid "Audit label"
 msgstr ""
 
-#: inc/deploycheck.class.php:446
+#: inc/deploycheck.class.php:467
+msgid "Path to the key"
+msgstr ""
+
+#: inc/deploycheck.class.php:475 inc/deploycheck.class.php:482
+#: inc/deploycheck.class.php:489
+msgid "Path to the value"
+msgstr ""
+
+#: inc/deploycheck.class.php:490
+msgid "Type of value"
+msgstr ""
+
+#: inc/deploycheck.class.php:517
 msgid "Disk or directory"
 msgstr ""
 
-#: inc/deploycheck.class.php:542
+#: inc/deploycheck.class.php:628
 msgid "Unit"
 msgstr ""
 
-#: inc/deploycheck.class.php:566
+#: inc/deploycheck.class.php:652
 msgid "If not successfull"
 msgstr ""
 
-#: inc/deploycheck.class.php:596
+#: inc/deploycheck.class.php:691
 msgid "abort job"
 msgstr ""
 
-#: inc/deploycheck.class.php:597
+#: inc/deploycheck.class.php:692
 msgid "skip job"
 msgstr ""
 
-#: inc/deploycheck.class.php:598
+#: inc/deploycheck.class.php:693
 msgid "report info"
 msgstr ""
 
-#: inc/deploycheck.class.php:599
+#: inc/deploycheck.class.php:694
 msgid "report warning"
 msgstr ""
 

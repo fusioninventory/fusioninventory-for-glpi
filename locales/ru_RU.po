@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 22:16+0200\n"
+"POT-Creation-Date: 2017-06-14 08:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Alexey Petukhov <lexx015@gmail.com>, 2017\n"
 "Language-Team: Russian (Russia) (https://www.transifex.com/ddurieux/teams/797/ru_RU/)\n"
@@ -271,7 +271,7 @@ msgstr "Невозможно прочитать zip файл"
 msgid "No file to import!"
 msgstr "Нет файла для импорта!"
 
-#: front/inventoryruleimport.php:65
+#: front/inventoryruleimport.php:67
 msgid "Reset import rules (define only default rules)"
 msgstr "Сброс правил импорта (определяются только правилами по умолчанию)"
 
@@ -411,6 +411,7 @@ msgid "Collect information"
 msgstr "Сбор сведений"
 
 #: inc/collect.class.php:110 inc/collect.class.php:139
+#: inc/deploycheck.class.php:64
 msgid "Registry"
 msgstr "Реестр"
 
@@ -472,13 +473,13 @@ msgid "Iname"
 msgstr "Деликатное имя"
 
 #: inc/collect_file.class.php:138 inc/collect_file.class.php:287
-#: inc/deployaction.class.php:300 inc/deploycheck.class.php:332
+#: inc/deployaction.class.php:300 inc/deploycheck.class.php:383
 msgid "Type"
 msgstr "Тип"
 
 #: inc/collect_file.class.php:163 inc/collect_file.class.php:291
-#: inc/deploycheck.class.php:426 inc/deploycheck.class.php:433
-#: inc/deploycheck.class.php:440 inc/deployfile.class.php:428
+#: inc/deploycheck.class.php:497 inc/deploycheck.class.php:504
+#: inc/deploycheck.class.php:511 inc/deployfile.class.php:428
 msgid "File"
 msgstr "Файл"
 
@@ -541,7 +542,6 @@ msgid "Path"
 msgstr "Путь"
 
 #: inc/collect_registry.class.php:150 inc/collect_registry.class.php:211
-#: inc/deploycheck.class.php:415 inc/deploycheck.class.php:420
 msgid "Key"
 msgstr "Ключ"
 
@@ -554,8 +554,8 @@ msgstr "Содержимое реестра Windows"
 #: inc/collect_registry_content.class.php:241
 #: inc/collect_registry_content.class.php:288
 #: inc/collect_wmi_content.class.php:228 inc/collect_wmi_content.class.php:278
-#: inc/deploycheck.class.php:434 inc/deploycheck.class.php:441
-#: inc/deploycheck.class.php:447
+#: inc/deploycheck.class.php:483 inc/deploycheck.class.php:505
+#: inc/deploycheck.class.php:512 inc/deploycheck.class.php:518
 msgid "Value"
 msgstr "Значение"
 
@@ -894,12 +894,12 @@ msgstr "Команда для выполнения"
 msgid "return codes saved for this command"
 msgstr "коды возврата, сохранённые для этой команды"
 
-#: inc/deployaction.class.php:249 inc/deploycheck.class.php:280
+#: inc/deployaction.class.php:249 inc/deploycheck.class.php:324
 #: inc/deployfile.class.php:298 inc/taskjob.class.php:1518
 msgid "drag"
 msgstr "тянуть"
 
-#: inc/deployaction.class.php:264 inc/deploycheck.class.php:295
+#: inc/deployaction.class.php:264 inc/deploycheck.class.php:339
 #: inc/deployfile.class.php:312 inc/networkequipment.class.php:1144
 #: inc/networkequipment.class.php:1145 inc/networkportlog.class.php:203
 #: inc/networkporttype.class.php:409 inc/printerlog.class.php:396
@@ -908,127 +908,144 @@ msgstr "тянуть"
 msgid "Delete"
 msgstr "Удалить"
 
-#: inc/deployaction.class.php:377
+#: inc/deployaction.class.php:371 inc/deployaction.class.php:427
+msgid "Action label"
+msgstr ""
+
+#: inc/deployaction.class.php:383
 msgid "From"
 msgstr "Из"
 
-#: inc/deployaction.class.php:379
+#: inc/deployaction.class.php:385
 msgid "To"
 msgstr "в"
 
-#: inc/deployaction.class.php:388
+#: inc/deployaction.class.php:394
 msgid "exec"
 msgstr "выполнение"
 
-#: inc/deployaction.class.php:402
+#: inc/deployaction.class.php:408
 msgid "path"
 msgstr "путь"
 
-#: inc/deployaction.class.php:446
+#: inc/deployaction.class.php:456
 msgid "Execution checks"
 msgstr "Проверки выполнения"
 
-#: inc/deploycheck.class.php:64
+#: inc/deployaction.class.php:501
+msgid "Number of output lines to retrieve"
+msgstr ""
+
+#: inc/deploycheck.class.php:65
 msgid "Registry key exists"
 msgstr "Ключ реестра существует"
 
-#: inc/deploycheck.class.php:65
+#: inc/deploycheck.class.php:66
+msgid "Registry value exists"
+msgstr ""
+
+#: inc/deploycheck.class.php:67
 msgid "Registry key missing"
 msgstr "Ключ реестра отсутствует"
 
-#: inc/deploycheck.class.php:66
-msgid "Registry key value equals to"
-msgstr "Значение ключа реестра равно"
+#: inc/deploycheck.class.php:68
+msgid "Registry value missing"
+msgstr ""
 
-#: inc/deploycheck.class.php:67
+#: inc/deploycheck.class.php:69
+msgid "Registry value equals to"
+msgstr ""
+
+#: inc/deploycheck.class.php:70
+msgid "Type of registry value equals to"
+msgstr ""
+
+#: inc/deploycheck.class.php:73
 msgid "File exists"
 msgstr "Файл существует"
 
-#: inc/deploycheck.class.php:68
+#: inc/deploycheck.class.php:74
 msgid "File is missing"
 msgstr "Файл отсутствует"
 
-#: inc/deploycheck.class.php:69
+#: inc/deploycheck.class.php:75
 msgid "File size is greater than"
 msgstr "Размер файла больше чем"
 
-#: inc/deploycheck.class.php:70
+#: inc/deploycheck.class.php:76
 msgid "File size is equal to"
 msgstr "Размер файла равен"
 
-#: inc/deploycheck.class.php:71
+#: inc/deploycheck.class.php:77
 msgid "File size is lower than"
 msgstr "Размер файла меньше чем"
 
-#: inc/deploycheck.class.php:72
+#: inc/deploycheck.class.php:78
 msgid "SHA-512 hash value matches"
 msgstr "SHA-512 хеш совпадает"
 
-#: inc/deploycheck.class.php:73
+#: inc/deploycheck.class.php:79
 msgid "SHA-512 hash value mismatch"
 msgstr "SHA-512 хеш не совпадает"
 
-#: inc/deploycheck.class.php:74
+#: inc/deploycheck.class.php:82
 msgid "Free space is greater than"
 msgstr "Свободного места больше чем"
 
-#: inc/deploycheck.class.php:100
-msgid "B"
-msgstr "Б"
-
-#: inc/deploycheck.class.php:101
-msgid "KiB"
-msgstr "кБ"
-
-#: inc/deploycheck.class.php:102
-msgid "MiB"
-msgstr "МБ"
-
-#: inc/deploycheck.class.php:103
-msgid "GiB"
-msgstr "ГБ"
-
-#: inc/deploycheck.class.php:113
+#: inc/deploycheck.class.php:125
 msgid "continue"
 msgstr "продолжать"
 
-#: inc/deploycheck.class.php:115
+#: inc/deploycheck.class.php:127
 msgid "passed"
 msgstr "прошло"
 
-#: inc/deploycheck.class.php:117
+#: inc/deploycheck.class.php:129
 msgid "otherwise"
 msgstr "иначе"
 
-#: inc/deploycheck.class.php:421
-msgid "Key value"
-msgstr "Значение ключа"
+#: inc/deploycheck.class.php:426 inc/deploycheck.class.php:568
+msgid "Audit label"
+msgstr ""
 
-#: inc/deploycheck.class.php:446
+#: inc/deploycheck.class.php:467
+msgid "Path to the key"
+msgstr ""
+
+#: inc/deploycheck.class.php:475 inc/deploycheck.class.php:482
+#: inc/deploycheck.class.php:489
+msgid "Path to the value"
+msgstr ""
+
+#: inc/deploycheck.class.php:490
+msgid "Type of value"
+msgstr ""
+
+#: inc/deploycheck.class.php:517
 msgid "Disk or directory"
 msgstr "Диск или директория"
 
-#: inc/deploycheck.class.php:542
+#: inc/deploycheck.class.php:628
 msgid "Unit"
 msgstr "Единица"
 
-#: inc/deploycheck.class.php:566
+#: inc/deploycheck.class.php:652
 msgid "If not successfull"
 msgstr "Если не удалось"
 
-#: inc/deploycheck.class.php:596
+#: inc/deploycheck.class.php:691
 msgid "abort job"
 msgstr "прервать работу"
 
-#: inc/deploycheck.class.php:597
+#: inc/deploycheck.class.php:692
 msgid "skip job"
 msgstr "пропустить работу"
 
-#: inc/deploycheck.class.php:598
+#: inc/deploycheck.class.php:693
 msgid "report info"
 msgstr "сообщить информацию"
 
-#: inc/deploycheck.class.php:599
+#: inc/deploycheck.class.php:694
 msgid "report warning"
 msgstr "сообщить предупреждения"
 

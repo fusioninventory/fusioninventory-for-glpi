@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 22:16+0200\n"
+"POT-Creation-Date: 2017-06-14 08:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: David Durieux <david@durieux.family>, 2017\n"
 "Language-Team: Czech (Czech Republic) (https://www.transifex.com/ddurieux/teams/797/cs_CZ/)\n"
@@ -146,9 +146,9 @@ msgstr "Využití CPU (v %)"
 #: inc/profile.class.php:385
 msgid "Lock"
 msgid_plural "Locks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Zámek"
+msgstr[1] "Zámky"
+msgstr[2] "Zámky"
 
 #: hook.php:939 inc/deploygroup.class.php:144 inc/iprange.class.php:371
 msgid "Target a task"
@@ -216,11 +216,11 @@ msgstr ""
 
 #: setup.php:400
 msgid "Unused switch ports"
-msgstr ""
+msgstr "Nepoužívané porty switche"
 
 #: setup.php:402
 msgid "Number of days since last inventory"
-msgstr ""
+msgstr "Počet dní od poslední inventarizace"
 
 #: setup.php:406 report/computer_last_inventory.php:69
 msgid "Computers not inventoried since xx days"
@@ -228,16 +228,16 @@ msgstr ""
 
 #: setup.php:519
 msgid "Your GLPI version not compatible, require >= 9.2 and < 9.3"
-msgstr ""
+msgstr "Vaše verze GLPI není kompatibilní, je vyžadována verze >=9.2 a < 9.3"
 
 #: setup.php:525
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "je vyžadováno rozšíření (PHP) fileinfo"
 
 #: setup.php:538
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Prosím odeberte složku %s ve složce glpi/plugins/"
 
 #: front/agent.form.php:57
 msgid "The agent is running"
@@ -249,7 +249,7 @@ msgstr ""
 
 #: front/collect.form.php:49
 msgid "Collect management"
-msgstr ""
+msgstr "Správa sběru dat"
 
 #: front/config.form.php:52 front/configlogfield.form.php:51
 msgid "Features"
@@ -259,17 +259,17 @@ msgstr ""
 #: inc/deploytaskjob.class.php:212 inc/menu.class.php:257
 #: inc/profile.class.php:420
 msgid "Groups of computers"
-msgstr ""
+msgstr "Skupiny počítačů"
 
 #: front/inventorycomputerimportxml.php:73
 msgid "Can't read zip file!"
-msgstr ""
+msgstr "Není možné přečíst zip soubor!"
 
 #: front/inventorycomputerimportxml.php:101
 msgid "No file to import!"
 msgstr ""
 
-#: front/inventoryruleimport.php:65
+#: front/inventoryruleimport.php:67
 msgid "Reset import rules (define only default rules)"
 msgstr ""
 
@@ -322,12 +322,12 @@ msgstr "Agent"
 
 #: inc/agent.class.php:119 inc/agent.class.php:473
 msgid "locked"
-msgstr ""
+msgstr "uzamčen"
 
 #: inc/agent.class.php:125 inc/agent.class.php:439
 #: inc/inventoryruleimport.class.php:172
 msgid "Device_id"
-msgstr ""
+msgstr "ID zařízení"
 
 #: inc/agent.class.php:131 inc/agent.class.php:446
 msgid "Computer link"
@@ -348,7 +348,7 @@ msgstr ""
 
 #: inc/agent.class.php:180 inc/agent.class.php:550 inc/config.class.php:361
 msgid "Agent port"
-msgstr ""
+msgstr "Port agenta"
 
 #: inc/agent.class.php:504 inc/agent.class.php:535 inc/config.class.php:729
 #: inc/config.class.php:738
@@ -361,7 +361,7 @@ msgstr ""
 
 #: inc/agent.class.php:815
 msgid "Agent state"
-msgstr ""
+msgstr "Stav agenta"
 
 #: inc/agent.class.php:875
 msgid "Force inventory"
@@ -397,7 +397,7 @@ msgstr ""
 #: inc/taskjoblog.class.php:236 inc/taskjobstate.class.php:291
 #: inc/unmanaged.class.php:237
 msgid "Job"
-msgstr ""
+msgstr "Úloha"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -408,6 +408,7 @@ msgid "Collect information"
 msgstr ""
 
 #: inc/collect.class.php:110 inc/collect.class.php:139
+#: inc/deploycheck.class.php:64
 msgid "Registry"
 msgstr ""
 
@@ -419,11 +420,11 @@ msgstr "WMI"
 #: inc/collect.class.php:191 inc/collect_file.class.php:71
 #: inc/collect_file.class.php:87
 msgid "Find file"
-msgstr ""
+msgstr "Najít soubor"
 
 #: inc/collect.class.php:178 inc/collect_file_content.class.php:243
 msgid "pathfile"
-msgstr ""
+msgstr "složka souboru"
 
 #: inc/collect.class.php:193 inc/collect_file.class.php:133
 #: inc/collect_file.class.php:246 inc/collect_file_content.class.php:202
@@ -469,15 +470,15 @@ msgid "Iname"
 msgstr ""
 
 #: inc/collect_file.class.php:138 inc/collect_file.class.php:287
-#: inc/deployaction.class.php:300 inc/deploycheck.class.php:332
+#: inc/deployaction.class.php:300 inc/deploycheck.class.php:383
 msgid "Type"
 msgstr "Typ"
 
 #: inc/collect_file.class.php:163 inc/collect_file.class.php:291
-#: inc/deploycheck.class.php:426 inc/deploycheck.class.php:433
-#: inc/deploycheck.class.php:440 inc/deployfile.class.php:428
+#: inc/deploycheck.class.php:497 inc/deploycheck.class.php:504
+#: inc/deploycheck.class.php:511 inc/deployfile.class.php:428
 msgid "File"
-msgstr ""
+msgstr "Soubor"
 
 #: inc/collect_file.class.php:219
 msgid "Filter"
@@ -504,11 +505,11 @@ msgstr "Jméno souboru"
 
 #: inc/collect_file.class.php:281
 msgid "Non sentitive case"
-msgstr ""
+msgstr "Nerozlišovat velikost písmen"
 
 #: inc/collect_file.class.php:282
 msgid "Sentitive case"
-msgstr ""
+msgstr "Rozlišovat velikost písmen"
 
 #: inc/collect_file_content.class.php:72 inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:103
@@ -534,24 +535,23 @@ msgstr ""
 #: inc/collect_registry.class.php:149 inc/collect_registry.class.php:205
 #: inc/collect_registry_content.class.php:240
 msgid "Path"
-msgstr ""
+msgstr "Složka"
 
 #: inc/collect_registry.class.php:150 inc/collect_registry.class.php:211
-#: inc/deploycheck.class.php:415 inc/deploycheck.class.php:420
 msgid "Key"
-msgstr ""
+msgstr "Klíč"
 
 #: inc/collect_registry_content.class.php:72
 #: inc/collect_registry_content.class.php:97
 #: inc/collect_registry_content.class.php:103
 msgid "Windows registry content"
-msgstr ""
+msgstr "Obsah registru Windows"
 
 #: inc/collect_registry_content.class.php:241
 #: inc/collect_registry_content.class.php:288
 #: inc/collect_wmi_content.class.php:228 inc/collect_wmi_content.class.php:278
-#: inc/deploycheck.class.php:434 inc/deploycheck.class.php:441
-#: inc/deploycheck.class.php:447
+#: inc/deploycheck.class.php:483 inc/deploycheck.class.php:505
+#: inc/deploycheck.class.php:512 inc/deploycheck.class.php:518
 msgid "Value"
 msgstr "Hodnota"
 
@@ -579,7 +579,7 @@ msgstr "Třída"
 
 #: inc/collect_wmi.class.php:129 inc/collect_wmi.class.php:189
 msgid "Properties"
-msgstr ""
+msgstr "Vlastnosti"
 
 #: inc/collect_wmi.class.php:175
 msgid "moniker"
@@ -629,15 +629,15 @@ msgstr "Velikost souboru"
 
 #: inc/collectrule.class.php:250
 msgid "Software version"
-msgstr ""
+msgstr "Verze softwaru"
 
 #: inc/commonview.class.php:302
 msgid "Warning:"
-msgstr ""
+msgstr "Upozornění:"
 
 #: inc/commonview.class.php:307
 msgid "Error:"
-msgstr ""
+msgstr "Chyba:"
 
 #: inc/communication.class.php:237
 #: inc/communicationnetworkinventory.class.php:232
@@ -651,7 +651,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:159
 msgid "Serial number"
-msgstr ""
+msgstr "Sériové/výrobní číslo"
 
 #: inc/computerlicenseinfo.class.php:164
 msgid "Full name"
@@ -659,7 +659,7 @@ msgstr "Plné jméno"
 
 #: inc/computerlicenseinfo.class.php:166
 msgid "Option"
-msgstr "Volby"
+msgstr "Volba"
 
 #: inc/computerlicenseinfo.class.php:190
 msgid "Union between computer and license"
@@ -676,11 +676,11 @@ msgstr[2] ""
 #: inc/computerremotemanagement.class.php:92
 #: inc/computerremotemanagement.class.php:135
 msgid "Remote management"
-msgstr ""
+msgstr "Vzdálená správa"
 
 #: inc/computerremotemanagement.class.php:142
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: inc/config.class.php:242 inc/staticmisc.class.php:78
 msgid "Computer Inventory"
@@ -716,23 +716,24 @@ msgstr ""
 
 #: inc/config.class.php:388
 msgid "Update agents"
-msgstr ""
+msgstr "Aktualizovat agenty"
 
 #: inc/config.class.php:390
 msgid "Update agents not have contacted server since (in days)"
 msgstr ""
+"Aktualizovat agenty pokud nebyl konaktován server více než (počet dní)"
 
 #: inc/config.class.php:425 inc/config.class.php:456
 msgid "Change the status"
-msgstr ""
+msgstr "Změnit stav"
 
 #: inc/config.class.php:459
 msgid "Clean agents"
-msgstr ""
+msgstr "Vyčistit agenty"
 
 #: inc/config.class.php:487
 msgid "Import options"
-msgstr ""
+msgstr "Volby importu"
 
 #: inc/config.class.php:541
 msgid "Antivirus"
@@ -740,7 +741,7 @@ msgstr "Antivirus"
 
 #: inc/config.class.php:566
 msgid "Virtual network card"
-msgstr ""
+msgstr "Virtuální síťová karta"
 
 #: inc/config.class.php:593
 msgid "Default status"
@@ -769,7 +770,7 @@ msgstr[2] ""
 
 #: inc/config.class.php:702
 msgid "Network options"
-msgstr ""
+msgstr "Volby sítě"
 
 #: inc/config.class.php:779
 msgid "Root folder for sending files from server"
@@ -785,15 +786,15 @@ msgstr ""
 
 #: inc/config.class.php:797
 msgid "with location"
-msgstr ""
+msgstr "s umístěním"
 
 #: inc/config.class.php:798
 msgid "with entity"
-msgstr ""
+msgstr "s entitou"
 
 #: inc/config.class.php:799
 msgid "with both"
-msgstr ""
+msgstr "s obojím"
 
 #: inc/config.class.php:808
 msgid "Delete successful on demand tasks after (in days)"
@@ -801,7 +802,7 @@ msgstr ""
 
 #: inc/configlogfield.class.php:164
 msgid "History configuration"
-msgstr ""
+msgstr "Nastavení historie"
 
 #: inc/configlogfield.class.php:171
 msgid "List of fields for which to keep history"
@@ -809,7 +810,7 @@ msgstr ""
 
 #: inc/configlogfield.class.php:175
 msgid "Retention in days"
-msgstr ""
+msgstr "Retence ve dnech"
 
 #: inc/configsecurity.class.php:106
 msgid "SNMP version"
@@ -836,7 +837,7 @@ msgstr ""
 #: inc/credential.class.php:290 inc/credential.class.php:307
 #: inc/profile.class.php:361
 msgid "VMware host"
-msgstr ""
+msgstr "VMware host"
 
 #: inc/credentialip.class.php:95
 msgid "Remote device inventory"
@@ -860,11 +861,11 @@ msgstr ""
 
 #: inc/deployaction.class.php:81
 msgid "Command"
-msgstr ""
+msgstr "Příkaz"
 
 #: inc/deployaction.class.php:82
 msgid "Move"
-msgstr ""
+msgstr "Přesunout"
 
 #: inc/deployaction.class.php:83
 msgid "Copy"
@@ -872,26 +873,26 @@ msgstr "Kopírovat"
 
 #: inc/deployaction.class.php:84
 msgid "Delete directory"
-msgstr ""
+msgstr "Smazat adresář"
 
 #: inc/deployaction.class.php:85
 msgid "Create directory"
-msgstr ""
+msgstr "Vytvořit adresář"
 
 #: inc/deployaction.class.php:222
 msgid "Command to execute"
-msgstr ""
+msgstr "Příkaz k vykonání"
 
 #: inc/deployaction.class.php:236
 msgid "return codes saved for this command"
 msgstr ""
 
-#: inc/deployaction.class.php:249 inc/deploycheck.class.php:280
+#: inc/deployaction.class.php:249 inc/deploycheck.class.php:324
 #: inc/deployfile.class.php:298 inc/taskjob.class.php:1518
 msgid "drag"
 msgstr ""
 
-#: inc/deployaction.class.php:264 inc/deploycheck.class.php:295
+#: inc/deployaction.class.php:264 inc/deploycheck.class.php:339
 #: inc/deployfile.class.php:312 inc/networkequipment.class.php:1144
 #: inc/networkequipment.class.php:1145 inc/networkportlog.class.php:203
 #: inc/networkporttype.class.php:409 inc/printerlog.class.php:396
@@ -900,127 +901,144 @@ msgstr ""
 msgid "Delete"
 msgstr "Smazat"
 
-#: inc/deployaction.class.php:377
+#: inc/deployaction.class.php:371 inc/deployaction.class.php:427
+msgid "Action label"
+msgstr ""
+
+#: inc/deployaction.class.php:383
 msgid "From"
 msgstr "Od"
 
-#: inc/deployaction.class.php:379
+#: inc/deployaction.class.php:385
 msgid "To"
 msgstr "Komu"
 
-#: inc/deployaction.class.php:388
+#: inc/deployaction.class.php:394
 msgid "exec"
 msgstr ""
 
-#: inc/deployaction.class.php:402
+#: inc/deployaction.class.php:408
 msgid "path"
 msgstr ""
 
-#: inc/deployaction.class.php:446
+#: inc/deployaction.class.php:456
 msgid "Execution checks"
 msgstr ""
 
-#: inc/deploycheck.class.php:64
-msgid "Registry key exists"
+#: inc/deployaction.class.php:501
+msgid "Number of output lines to retrieve"
 msgstr ""
 
 #: inc/deploycheck.class.php:65
-msgid "Registry key missing"
+msgid "Registry key exists"
 msgstr ""
 
 #: inc/deploycheck.class.php:66
-msgid "Registry key value equals to"
+msgid "Registry value exists"
 msgstr ""
 
 #: inc/deploycheck.class.php:67
-msgid "File exists"
+msgid "Registry key missing"
 msgstr ""
 
 #: inc/deploycheck.class.php:68
-msgid "File is missing"
+msgid "Registry value missing"
 msgstr ""
 
 #: inc/deploycheck.class.php:69
-msgid "File size is greater than"
+msgid "Registry value equals to"
 msgstr ""
 
 #: inc/deploycheck.class.php:70
-msgid "File size is equal to"
-msgstr ""
-
-#: inc/deploycheck.class.php:71
-msgid "File size is lower than"
-msgstr ""
-
-#: inc/deploycheck.class.php:72
-msgid "SHA-512 hash value matches"
+msgid "Type of registry value equals to"
 msgstr ""
 
 #: inc/deploycheck.class.php:73
-msgid "SHA-512 hash value mismatch"
+msgid "File exists"
 msgstr ""
 
 #: inc/deploycheck.class.php:74
+msgid "File is missing"
+msgstr ""
+
+#: inc/deploycheck.class.php:75
+msgid "File size is greater than"
+msgstr ""
+
+#: inc/deploycheck.class.php:76
+msgid "File size is equal to"
+msgstr ""
+
+#: inc/deploycheck.class.php:77
+msgid "File size is lower than"
+msgstr ""
+
+#: inc/deploycheck.class.php:78
+msgid "SHA-512 hash value matches"
+msgstr ""
+
+#: inc/deploycheck.class.php:79
+msgid "SHA-512 hash value mismatch"
+msgstr ""
+
+#: inc/deploycheck.class.php:82
 msgid "Free space is greater than"
 msgstr ""
 
-#: inc/deploycheck.class.php:100
-msgid "B"
-msgstr ""
-
-#: inc/deploycheck.class.php:101
-msgid "KiB"
-msgstr ""
-
-#: inc/deploycheck.class.php:102
-msgid "MiB"
-msgstr ""
-
-#: inc/deploycheck.class.php:103
-msgid "GiB"
-msgstr ""
-
-#: inc/deploycheck.class.php:113
+#: inc/deploycheck.class.php:125
 msgid "continue"
 msgstr ""
 
-#: inc/deploycheck.class.php:115
+#: inc/deploycheck.class.php:127
 msgid "passed"
 msgstr ""
 
-#: inc/deploycheck.class.php:117
+#: inc/deploycheck.class.php:129
 msgid "otherwise"
 msgstr ""
 
-#: inc/deploycheck.class.php:421
-msgid "Key value"
+#: inc/deploycheck.class.php:426 inc/deploycheck.class.php:568
+msgid "Audit label"
 msgstr ""
 
-#: inc/deploycheck.class.php:446
+#: inc/deploycheck.class.php:467
+msgid "Path to the key"
+msgstr ""
+
+#: inc/deploycheck.class.php:475 inc/deploycheck.class.php:482
+#: inc/deploycheck.class.php:489
+msgid "Path to the value"
+msgstr ""
+
+#: inc/deploycheck.class.php:490
+msgid "Type of value"
+msgstr ""
+
+#: inc/deploycheck.class.php:517
 msgid "Disk or directory"
 msgstr ""
 
-#: inc/deploycheck.class.php:542
+#: inc/deploycheck.class.php:628
 msgid "Unit"
 msgstr ""
 
-#: inc/deploycheck.class.php:566
+#: inc/deploycheck.class.php:652
 msgid "If not successfull"
 msgstr ""
 
-#: inc/deploycheck.class.php:596
+#: inc/deploycheck.class.php:691
 msgid "abort job"
 msgstr ""
 
-#: inc/deploycheck.class.php:597
+#: inc/deploycheck.class.php:692
 msgid "skip job"
 msgstr ""
 
-#: inc/deploycheck.class.php:598
+#: inc/deploycheck.class.php:693
 msgid "report info"
 msgstr ""
 
-#: inc/deploycheck.class.php:599
+#: inc/deploycheck.class.php:694
 msgid "report warning"
 msgstr ""
 
@@ -1043,35 +1061,35 @@ msgstr ""
 #: inc/deployfile.class.php:251 inc/deployfile.class.php:481
 #: inc/networkequipment.class.php:663 inc/taskjob.class.php:1127
 msgid "Minute(s)"
-msgstr ""
+msgstr "Minuta(y)"
 
 #: inc/deployfile.class.php:261
 msgid "uncompress"
-msgstr ""
+msgstr "rozbalit"
 
 #: inc/deployfile.class.php:354
 msgid "Source"
-msgstr ""
+msgstr "Zdroj"
 
 #: inc/deployfile.class.php:435
 msgid "filename"
-msgstr ""
+msgstr "název souboru"
 
 #: inc/deployfile.class.php:442
 msgid "Choose"
-msgstr ""
+msgstr "Zvolit"
 
 #: inc/deployfile.class.php:446
 msgid "Select the file on server"
-msgstr ""
+msgstr "Vyber soubor na serveru"
 
 #: inc/deployfile.class.php:463
 msgid "Uncompress"
-msgstr ""
+msgstr "Rozbalit"
 
 #: inc/deployfile.class.php:471
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:792
 msgid "Transfer error: the file size is too big"
@@ -1111,7 +1129,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:1181
 msgid "Max file size"
-msgstr ""
+msgstr "Maximální velikost souboru"
 
 #: inc/deployfile.class.php:1182
 msgid "Mio"
@@ -1123,11 +1141,11 @@ msgstr ""
 
 #: inc/deploygroup.class.php:100
 msgid "Dynamic group"
-msgstr ""
+msgstr "Dynamická skupina"
 
 #: inc/deploygroup.class.php:260
 msgid "Add group"
-msgstr ""
+msgstr "Přidat skupinu"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:82
 msgid "Package actions"
@@ -1153,15 +1171,15 @@ msgstr ""
 #: inc/deploypackage.class.php:156 inc/menu.class.php:166
 #: inc/menu.class.php:175
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: inc/deploypackage.class.php:159
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #: inc/deploypackage.class.php:279
 msgid "Modification Denied"
-msgstr ""
+msgstr "Změny zakázány"
 
 #: inc/deploypackage.class.php:282
 msgid "The following task is running with this package"
@@ -1176,11 +1194,11 @@ msgstr ""
 
 #: inc/deploypackage.class.php:512
 msgid "Audits"
-msgstr ""
+msgstr "Audity"
 
 #: inc/deploypackage.class.php:513
 msgid "Files"
-msgstr ""
+msgstr "Soubory"
 
 #: inc/deploypackage.class.php:514
 msgid "Actions"
