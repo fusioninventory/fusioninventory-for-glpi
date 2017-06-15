@@ -385,7 +385,13 @@ function plugin_init_fusioninventory() {
          $pfDeployPackage = new PluginFusioninventoryDeployPackage();
          if ($pfDeployPackage->canUserDeploySelf()) {
             $PLUGIN_HOOKS['helpdesk_menu_entry']['fusioninventory'] = '/front/deploypackage.public.php';
+            $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          }
+      }
+
+      // load task view css for computer self deploy (tech)
+      if (script_endswith("computer.form.php")) {
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       }
 
       if (isset($_SESSION["glpiname"])) {
