@@ -1408,33 +1408,33 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   echo '</div>'; // .agent_block
 
                   echo '</div>'; // .counter_block
+
+                  // js controls (toggle, restart)
+                  echo Html::scriptBlock("$(function() {
+                     $('#toggle_run_".$package_info['taskjobs_id']."').click(function(event){
+                        event.preventDefault();
+                        $('#run_".$package_info['taskjobs_id']."').toggle();
+                        $(this).toggleClass('expand');
+                     });
+
+                     $('#restart_run_".$package_info['taskjobs_id']."').click(function(event){
+                        event.preventDefault();
+                        $.ajax({
+                           url: '".$CFG_GLPI['root_doc'].
+                                   "/plugins/fusioninventory/ajax/restart_job.php',
+                           data: {
+                              'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
+                              'agent_id':    ".$package_info['agent_id']."
+                           },
+                           complete: function() {
+                              document.location.reload();
+                           }
+                        });
+                     });
+                  });");
                } else {
                   $package_to_install[$packages_id] = $package_info['name'];
                }
-
-               // js controls (toggle, restart)
-               echo Html::scriptBlock("$(function() {
-                  $('#toggle_run_".$package_info['taskjobs_id']."').click(function(event){
-                     event.preventDefault();
-                     $('#run_".$package_info['taskjobs_id']."').toggle();
-                     $(this).toggleClass('expand');
-                  });
-
-                  $('#restart_run_".$package_info['taskjobs_id']."').click(function(event){
-                     event.preventDefault();
-                     $.ajax({
-                        url: '".$CFG_GLPI['root_doc'].
-                                "/plugins/fusioninventory/ajax/restart_job.php',
-                        data: {
-                           'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
-                           'agent_id':    ".$package_info['agent_id']."
-                        },
-                        complete: function() {
-                           document.location.reload();
-                        }
-                     });
-                  });
-               });");
             }
             echo '</div>'; // .target_stats
             echo '</div>'; // .target_details
