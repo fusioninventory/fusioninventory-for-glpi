@@ -1350,97 +1350,99 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             .$computer->fields['name']."</i></th>";
          echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo '<div class="target_block">';
-         echo '<div class="target_details">';
-         echo '<div class="target_stats">';
-         foreach ($data as $packages_id => $package_info) {
-            if (isset($package_info['taskjobs_id'])) {
-               echo '<div class="counter_block '
-                  .$package_info['last_taskjobstate']['state'].'">';
-               // display deploy informations
-               echo "<table>";
-               echo "<tr>";
-               echo "<td style='width: 600px'>";
+         if (count($data)) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo '<div class="target_block">';
+            echo '<div class="target_details">';
+            echo '<div class="target_stats">';
+            foreach ($data as $packages_id => $package_info) {
+               if (isset($package_info['taskjobs_id'])) {
+                  echo '<div class="counter_block '
+                     .$package_info['last_taskjobstate']['state'].'">';
+                  // display deploy informations
+                  echo "<table>";
+                  echo "<tr>";
+                  echo "<td style='width: 600px'>";
 
-               // add a toggle control
-               echo "<a class='toggle_run'
-                        href='#'
-                        id='toggle_run_".$package_info['taskjobs_id']."'>";
-               echo $package_info['name'];
-               echo "</a>";
-               echo "</td>";
-               echo "<td style='width: 200px'>";
-               echo Html::convDateTime($package_info['last_taskjobstate']['date']);
-               echo "</td>";
-               echo "<td style='width: 200px'>";
-               echo self::getDeploymentLabelForAState($package_info['last_taskjobstate']['state']);
-               echo "</td>";
-               echo "</tr>";
-               echo "</table>";
-
-               // display also last log (folded)
-               echo "<div class='agent_block'
-                          id='run_".$package_info['taskjobs_id']."'
-                          style='display:none;'>";
-
-               // if job is in error, suggest restart
-               if ($package_info['last_taskjobstate']['state'] == "agents_error") {
-                  echo "<a class='restart btn'
+                  // add a toggle control
+                  echo "<a class='toggle_run'
                            href='#'
-                           title='".__("Restart job", 'fusioninventory')."'
-                           id='restart_run_".$package_info['taskjobs_id']."'></a>";
-               }
-
-
-               // log list
-               echo "<table class='runs'>";
-               foreach($package_info['last_taskjobstate']['logs'] as $log) {
-                  echo "<tr class='run log'>";
-                  echo "<td>".Html::convDateTime($log['log.date'])."</td>";
-                  echo "<td>".$joblogs_labels[$log['log.state']]."</td>";
-                  echo "<td>".$log['log.comment']."</td>";
+                           id='toggle_run_".$package_info['taskjobs_id']."'>";
+                  echo $package_info['name'];
+                  echo "</a>";
+                  echo "</td>";
+                  echo "<td style='width: 200px'>";
+                  echo Html::convDateTime($package_info['last_taskjobstate']['date']);
+                  echo "</td>";
+                  echo "<td style='width: 200px'>";
+                  echo self::getDeploymentLabelForAState($package_info['last_taskjobstate']['state']);
+                  echo "</td>";
                   echo "</tr>";
+                  echo "</table>";
+
+                  // display also last log (folded)
+                  echo "<div class='agent_block'
+                             id='run_".$package_info['taskjobs_id']."'
+                             style='display:none;'>";
+
+                  // if job is in error, suggest restart
+                  if ($package_info['last_taskjobstate']['state'] == "agents_error") {
+                     echo "<a class='restart btn'
+                              href='#'
+                              title='".__("Restart job", 'fusioninventory')."'
+                              id='restart_run_".$package_info['taskjobs_id']."'></a>";
+                  }
+
+
+                  // log list
+                  echo "<table class='runs'>";
+                  foreach($package_info['last_taskjobstate']['logs'] as $log) {
+                     echo "<tr class='run log'>";
+                     echo "<td>".Html::convDateTime($log['log.date'])."</td>";
+                     echo "<td>".$joblogs_labels[$log['log.state']]."</td>";
+                     echo "<td>".$log['log.comment']."</td>";
+                     echo "</tr>";
+                  }
+                  echo "</table>"; // .runs
+                  echo '</div>'; // .agent_block
+
+                  echo '</div>'; // .counter_block
+               } else {
+                  $package_to_install[$packages_id] = $package_info['name'];
                }
-               echo "</table>"; // .runs
-               echo '</div>'; // .agent_block
 
-               echo '</div>'; // .counter_block
-            } else {
-               $package_to_install[$packages_id] = $package_info['name'];
-            }
-
-            // js controls (toggle, restart)
-            echo Html::scriptBlock("$(function() {
-               $('#toggle_run_".$package_info['taskjobs_id']."').click(function(event){
-                  event.preventDefault();
-                  $('#run_".$package_info['taskjobs_id']."').toggle();
-                  $(this).toggleClass('expand');
-               });
-
-               $('#restart_run_".$package_info['taskjobs_id']."').click(function(event){
-                  event.preventDefault();
-                  $.ajax({
-                     url: '".$CFG_GLPI['root_doc'].
-                             "/plugins/fusioninventory/ajax/restart_job.php',
-                     data: {
-                        'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
-                        'agent_id':    ".$package_info['agent_id']."
-                     },
-                     complete: function() {
-                        document.location.reload();
-                     }
+               // js controls (toggle, restart)
+               echo Html::scriptBlock("$(function() {
+                  $('#toggle_run_".$package_info['taskjobs_id']."').click(function(event){
+                     event.preventDefault();
+                     $('#run_".$package_info['taskjobs_id']."').toggle();
+                     $(this).toggleClass('expand');
                   });
-               });
-            });");
-         }
-         echo '</div>'; // .target_stats
-         echo '</div>'; // .target_details
-         echo '</div>'; // .target_block
 
-         echo "</td>";
-         echo "</tr>";
+                  $('#restart_run_".$package_info['taskjobs_id']."').click(function(event){
+                     event.preventDefault();
+                     $.ajax({
+                        url: '".$CFG_GLPI['root_doc'].
+                                "/plugins/fusioninventory/ajax/restart_job.php',
+                        data: {
+                           'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
+                           'agent_id':    ".$package_info['agent_id']."
+                        },
+                        complete: function() {
+                           document.location.reload();
+                        }
+                     });
+                  });
+               });");
+            }
+            echo '</div>'; // .target_stats
+            echo '</div>'; // .target_details
+            echo '</div>'; // .target_block
+
+            echo "</td>";
+            echo "</tr>";
+         }
 
          $p['name']     = 'deploypackages_'.$computers_id;
          $p['display']  = true;
