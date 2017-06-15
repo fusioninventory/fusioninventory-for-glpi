@@ -1329,6 +1329,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $my_packages = $this->getPackageForMe($users_id);
       }
 
+      // check current interface
+      $is_tech = isset($_SESSION['glpiactiveprofile']['interface'])
+                  && $_SESSION['glpiactiveprofile']['interface'] == "central";
+
       // retrieve state name
       $joblogs_labels = PluginFusioninventoryTaskjoblog::dropdownStateValues();
 
@@ -1366,11 +1370,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   echo "<td style='width: 600px'>";
 
                   // add a toggle control
-                  echo "<a class='toggle_run'
-                           href='#'
-                           id='toggle_run_".$package_info['taskjobs_id']."'>";
-                  echo $package_info['name'];
-                  echo "</a>";
+                  if ($is_tech) {
+                     echo "<a class='toggle_run'
+                              href='#'
+                              id='toggle_run_".$package_info['taskjobs_id']."'>";
+                     echo $package_info['name'];
+                     echo "</a>";
+                  } else {
+                     echo $package_info['name'];
+                  }
                   echo "</td>";
                   echo "<td style='width: 200px'>";
                   echo Html::convDateTime($package_info['last_taskjobstate']['date']);
@@ -1381,31 +1389,32 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   echo "</tr>";
                   echo "</table>";
 
-                  // display also last log (folded)
-                  echo "<div class='agent_block'
-                             id='run_".$package_info['taskjobs_id']."'
-                             style='display:none;'>";
+                  if ($is_tech) {
+                     // display also last log (folded)
+                     echo "<div class='agent_block'
+                                id='run_".$package_info['taskjobs_id']."'
+                                style='display:none;'>";
 
-                  // if job is in error, suggest restart
-                  if ($package_info['last_taskjobstate']['state'] == "agents_error") {
-                     echo "<a class='restart btn'
-                              href='#'
-                              title='".__("Restart job", 'fusioninventory')."'
-                              id='restart_run_".$package_info['taskjobs_id']."'></a>";
+                     // if job is in error, suggest restart
+                     if ($package_info['last_taskjobstate']['state'] == "agents_error") {
+                        echo "<a class='restart btn'
+                                 href='#'
+                                 title='".__("Restart job", 'fusioninventory')."'
+                                 id='restart_run_".$package_info['taskjobs_id']."'></a>";
+                     }
+
+                     // log list
+                     echo "<table class='runs'>";
+                     foreach($package_info['last_taskjobstate']['logs'] as $log) {
+                        echo "<tr class='run log'>";
+                        echo "<td>".Html::convDateTime($log['log.date'])."</td>";
+                        echo "<td>".$joblogs_labels[$log['log.state']]."</td>";
+                        echo "<td>".$log['log.comment']."</td>";
+                        echo "</tr>";
+                     }
+                     echo "</table>"; // .runs
+                     echo '</div>'; // .agent_block
                   }
-
-
-                  // log list
-                  echo "<table class='runs'>";
-                  foreach($package_info['last_taskjobstate']['logs'] as $log) {
-                     echo "<tr class='run log'>";
-                     echo "<td>".Html::convDateTime($log['log.date'])."</td>";
-                     echo "<td>".$joblogs_labels[$log['log.state']]."</td>";
-                     echo "<td>".$log['log.comment']."</td>";
-                     echo "</tr>";
-                  }
-                  echo "</table>"; // .runs
-                  echo '</div>'; // .agent_block
 
                   echo '</div>'; // .counter_block
 
