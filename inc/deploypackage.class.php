@@ -1815,21 +1815,21 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $table = "glpi_plugin_fusioninventory_deploypackages";
       $where = " WHERE `".$table."`.`plugin_fusioninventory_deploygroups_id` > 0 "
               . " AND (";
-      // groups
+
+      //Include groups
       if (!empty($_SESSION['glpigroups'])) {
          $where .= " `glpi_plugin_fusioninventory_deploypackages_groups`.`groups_id`
-                     IN ('".implode("', '", $_SESSION['glpigroups'])."') OR ";
+                    IN ('".implode("', '", $_SESSION['glpigroups'])."') OR ";
       }
-      // entity
-      $where .= " (`glpi_plugin_fusioninventory_deploypackages_entities`.`entities_id`='".$_SESSION['glpiactive_entity']."') OR "
-              . "(`glpi_plugin_fusioninventory_deploypackages_entities`.`entities_id` IN "
-              . "('".implode("','", getAncestorsOf('glpi_entities', $_SESSION['glpiactive_entity']))."') "
-              . "AND `glpi_plugin_fusioninventory_deploypackages_entities`.`is_recursive`= '1') OR ";
-      // user
-      $where .= " `glpi_plugin_fusioninventory_deploypackages_users`.`users_id`='".$_SESSION['glpiID']."' OR ";
-      // profile
-      $where .= " `glpi_plugin_fusioninventory_deploypackages_profiles`.`profiles_id`='".$_SESSION['glpiactiveprofile']['id']."' ";
 
+      //Include entity
+      $where.= getEntitiesRestrictRequest('', 'glpi_plugin_fusioninventory_deploypackages_entities',
+                                                     'entities_id', $_SESSION['glpiactive_entity'], true);
+      //Include user
+      $where .= " OR `glpi_plugin_fusioninventory_deploypackages_users`.`users_id`='".$_SESSION['glpiID']."' OR ";
+
+      //Include profile
+      $where .= " `glpi_plugin_fusioninventory_deploypackages_profiles`.`profiles_id`='".$_SESSION['glpiactiveprofile']['id']."' ";
       $where .= " )";
 
       $query = "SELECT DISTINCT `".$table."`.*
