@@ -234,7 +234,19 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
           'entities_id' => 0,
           'plugin_fusioninventory_deploygroups_id' => 1);
       $packages_id = $pfDeployPackage->add($input);
-      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id));
+      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
+                                         'entities_id' => 0));
+
+      //The second package, test2, is not in the same entity, and is not recursive
+      //It should not be visible when requesting the list of packages the the user
+      //can deploy
+      $input = array(
+                     'name'        => 'test2',
+                     'entities_id' => 1,
+                     'plugin_fusioninventory_deploygroups_id' => 1);
+      $packages_id_2 = $pfDeployPackage->add($input);
+      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
+                                         'entities_id' => 1));
 
       // Create task
       $pfDeployPackage->deployToComputer(1, $packages_id, $_SESSION['glpiID']);
