@@ -787,7 +787,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'name'   => $params['name'],
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
-         'value'  => $params['value'],
+         'value'  => strval($params['value']),
          'return' => $params['return']
       );
 
