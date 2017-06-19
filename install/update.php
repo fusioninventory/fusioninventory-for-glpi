@@ -2559,8 +2559,6 @@ function do_computercomputer_migration($migration) {
                                                                  'value'   => NULL);
    $a_table['fields']['remote_addr']            = array('type'    => 'string',
                                                         'value'   => NULL);
-   $a_table['fields']['plugin_fusioninventory_computeroperatingsystems_id'] = array('type'    => 'integer',
-                                                                                    'value'   => NULL);
    $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
                                                         'value'   => "");
    $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
@@ -4819,6 +4817,89 @@ function do_computerarch_migration($migration) {
 }
 
 
+/**
+ * Manage the operating system edition part migration
+ *
+ * @param object $migration
+ */
+function do_operatingsystemedition_migration($migration) {
+    global $DB;
+
+   if ($DB->tableExists('glpi_plugin_fusioninventory_computeroperatingsystemeditions')) {
+      //OS editions migration from FI table to GLPi core table
+      $ose = new OperatingSystemEdition();
+      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions') as $edition) {
+         //check if arch already exists in core
+         if ($ose->getFromDBByQuery(' WHERE name = "' . $DB->escape($edition['name']) . '"')) {
+            $new_id = $ose->fields['id'];
+         } else {
+            unset($edition['id']);
+            $new_id = $ose->add($edition, array(), false);
+         }
+
+         $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os SET "
+                     . " pf_os.plugin_fusioninventory_computeroperatingsystemeditions_id='" . $new_id . "',"
+                     . " JOIN operatingsystemeditions os_edition WHERE os_edition.name='" . $DB->escape($edition['name']) . "'";
+         $DB->query($sql_u);
+      }
+      $migration->dropTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions');
+   }
+}
+
+
+/**
+ * Manage the kernel names and kernel versions part migration
+ *
+ * @param object $migration
+ *
+ * @return array
+ */
+function do_operatingsystemkernel_migration($migration) {
+   global $DB;
+
+   if ($DB->tableExists('glpi_plugin_fusioninventory_computeroskernelnames')) {
+      //Find wich version on which kernel
+      $kmapping = []; // [orig_osid|orig_osversionid => newid]
+      $mapping  = []; // [orig_computerosid => new_osversionid]
+
+      $kernels = new OperatingSystemKernel();
+      $kversions = new OperatingSystemKernelVersion();
+
+      $query = "SELECT fi_cos.id,
+            fi_kname.id AS kid, fi_kname.name AS kname,
+            fi_kversion.id AS kvid, fi_kversion.name AS kversion
+         FROM glpi_plugin_fusioninventory_computeroperatingsystems AS fi_cos
+         INNER JOIN glpi_plugin_fusioninventory_computeroskernelnames AS fi_kname
+            ON fi_kname.id = fi_cos.plugin_fusioninventory_computeroskernelnames_id
+         INNER JOIN glpi_plugin_fusioninventory_computeroskernelversions AS fi_kversion
+            ON fi_kversion.id = fi_cos.plugin_fusioninventory_computeroskernelversions_id
+      ";
+      $iterator = $DB->request($query);
+
+      while ($row = $iterator->next()) {
+         $key = "{$row['kid']}|{$row['kvid']}";
+         if (!isset($mapping[$key])) {
+            //find in db for an existing kernel name
+            if (!$kernels->getFromDBByQuery("WHERE name='" . $DB->escape($row['kname']). "'")) {
+               $kernels->add(['name' => $row['kname']]);
+            }
+            if (!$kversions->getFromDBByQuery("WHERE name='" . $DB->escape($row['kversion']). "' AND operatingsystemkernels_id = " . $kernels->getID())) {
+               $kversions->add([
+                  'name'                        => $row['kversion'],
+                  'operatingsystemkernels_id'  => $kernels->getID()
+               ]);
+            }
+            $kmapping[$key] = $kversions->getID();
+         }
+         $mapping[$row['id']] = $kmapping[$key];
+      }
+
+      $migration->dropTable('glpi_plugin_fusioninventory_computeroskernelnames');
+      $migration->dropTable('glpi_plugin_fusioninventory_computeroskernelversions');
+
+      return $mapping;
+   }
+}
 
 /**
  * Manage the computer operating system part migration
@@ -4826,123 +4907,133 @@ function do_computerarch_migration($migration) {
  * @param object $migration
  */
 function do_computeroperatingsystem_migration($migration) {
-   /*
-    * Table glpi_plugin_fusioninventory_computeroperatingsystems
-    */
-   $a_table = array();
-   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroperatingsystems';
-   $a_table['oldname'] = array();
+   global $DB;
 
-   $a_table['fields']  = array();
-   $a_table['fields']['id']      = array('type'    => 'autoincrement',
-                                         'value'   => '');
-   $a_table['fields']['name']    = array('type'    => 'string',
-                                         'value'   => NULL);
-   $a_table['fields']['comment'] = array('type'    => 'text',
-                                         'value'   => NULL);
-   $a_table['fields']['operatingsystemarchitectures_id'] = array('type'    => 'integer',
-                                                                          'value'   => NULL);
-   $a_table['fields']['plugin_fusioninventory_computeroskernelnames_id'] = array('type'    => 'integer',
-                                                                                              'value'   => NULL);
-   $a_table['fields']['plugin_fusioninventory_computeroskernelversions_id'] = array('type'    => 'integer',
-                                                                                                 'value'   => NULL);
-   $a_table['fields']['operatingsystems_id'] = array('type'    => 'integer',
-                                                     'value'   => NULL);
-   $a_table['fields']['operatingsystemversions_id'] = array('type'    => 'integer',
-                                                            'value'   => NULL);
-   $a_table['fields']['plugin_fusioninventory_computeroperatingsystemeditions_id'] = array('type'    => 'integer',
-                                                                                           'value'   => NULL);
-   $a_table['fields']['operatingsystemservicepacks_id'] = array('type'    => 'integer',
-                                                                'value'   => NULL);
+   do_operatingsystemedition_migration($migration);
+   $kversions_mapping = do_operatingsystemkernel_migration($migration);
 
-   $a_table['oldfields']  = array();
+   if ($DB->tableExists("glpi_plugin_fusioninventory_computeroperatingsystems")) {
+      $ios = new Item_OperatingSystem();
+      $query = "SELECT DISTINCT(fi_computer.id) AS cid, fi_cos.*
+         FROM glpi_plugin_fusioninventory_inventorycomputercomputers AS fi_computer
+         INNER JOIN glpi_plugin_fusioninventory_computeroperatingsystems AS fi_cos
+            ON fi_computer.plugin_fusioninventory_computeroperatingsystems_id = fi_cos.id
+         ";
+      $iterator = $DB->request($query);
 
-   $a_table['renamefields'] = array();
+      while ($row = $iterator->next()) {
+         $search = [
+            'itemtype'                          => 'Computer',
+            'items_id'                          => $row['cid'],
+            'operatingsystems_id'               => $row['operatingsystems_id'],
+            'operatingsystemarchitectures_id'   => $row['operatingsystemarchitectures_id']
+         ];
+         $input = $search + [
+            'operatingsystemversions_id'        => $row['operatingsystemversions_id'],
+            'operatingsystemservicepacks_id'    => $row['operatingsystemservicepacks_id'],
+            'operatingsystemkernelversions_id'  => $kversions_mapping[$row['id']],
+            'operatingsystemeditions_id'        => $row['plugin_fusioninventory_computeroperatingsystemeditions_id']
+         ];
+         if (!$ios->getFromDBByCrit($search)) {
+            $ios->add($input);
+         } else {
+            $ios->update(
+               ['id' => $ios->getID()] + $input
+            );
+         }
+      }
 
-   $a_table['keys']   = array();
-   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+      $migration->dropTable('glpi_plugin_fusioninventory_computeroperatingsystems');
+      $migration->dropField(
+         'glpi_plugin_fusioninventory_inventorycomputercomputers',
+         'plugin_fusioninventory_computeroperatingsystems_id'
+      );
 
-   $a_table['oldkeys'] = array();
+      //handle display preferences
+      //[oldid => newid]
+      $sopts = [
+         5172 => 45, //OS name
+         5173 => 46, //OS version
+         5174 => 64, //Kernel name
+         5175 => 48, //Kernel version
+         5176 => 41, //Service pack
+         5177 => 63  //OS edition
+      ];
+      foreach ($sopts as $oldid => $newid) {
+         $iterator = $DB->request(
+            "SELECT * FROM `glpi_displaypreferences`
+               WHERE
+                  `itemtype`='Computer' AND (
+                     `num`='$oldid' OR `num`='$newid'
+                  )"
+         );
+         $users = [];
+         while ($row = $iterator->next()) {
+            $query = null;
+            if (!in_array($row['users_id'], $users)) {
+               $users[] = $row['users_id'];
+               $query = "UPDATE `glpi_displaypreferences` SET `num`='$newid' WHERE `id`='{$row['id']}'";
+            } else if ($row['num'] == $oldid) {
+               $query = "DELETE FROM `glpi_displaypreferences` WHERE `id`='{$row['id']}'";
+            }
+            if ($query !== null) {
+               $DB->query($query);
+            }
+         }
+      }
 
-   migrateTablesFusionInventory($migration, $a_table);
+      //handle bookmarks
+      $iterator = $DB->request([
+         'FROM'   => 'glpi_savedsearches',
+         'WHERE'  => [
+            'itemtype' => 'Computer'
+         ]
+      ]);
+      while ($row = $iterator->next()) {
+         parse_str($row["query"], $options);
+         $changed = false;
+         foreach ($options['criteria'] as &$criterion) {
+            if (isset($sopts[$criterion['field']])) {
+               $criterion['field'] = $sopts[$criterion['field']];
+               $changed = true;
+            }
+         }
 
-   /*
-    * Table glpi_plugin_fusioninventory_computeroskernelnames
-    */
-   $a_table = array();
-   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroskernelnames';
-   $a_table['oldname'] = array();
+         if ($changed === true) {
+            $querystr = Toolbox::append_params($options);
+            $ssearch = new SavedSearch();
+            $ssearch->update([
+               'id'     => $row['id'],
+               'query'  => $querystr
+            ]);
+         }
+      }
 
-   $a_table['fields']  = array();
-   $a_table['fields']['id']      = array('type'    => 'autoincrement',
-                                         'value'   => '');
-   $a_table['fields']['name']    = array('type'    => 'string',
-                                         'value'   => NULL);
-   $a_table['fields']['comment'] = array('type'    => 'text',
-                                         'value'   => NULL);
+      //handle dynamic groups
+      $iterator = $DB->request([
+         'FROM'   => 'glpi_plugin_fusioninventory_deploygroups_dynamicdatas'
+      ]);
+      while ($row = $iterator->next()) {
+         $fields = unserialize($row['fields_array']);
+         $changed = false;
+         foreach ($fields as &$type) {
+            foreach ($type as &$criterion) {
+               if (isset($sopts[$criterion['field']])) {
+                  $criterion['field'] = $sopts[$criterion['field']];
+                  $changed = true;
+               }
+            }
+         }
 
-   $a_table['oldfields']  = array();
-
-   $a_table['renamefields'] = array();
-
-   $a_table['keys']   = array();
-   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
-
-   $a_table['oldkeys'] = array();
-
-   migrateTablesFusionInventory($migration, $a_table);
-
-   /*
-    * Table glpi_plugin_fusioninventory_computeroskernelversions
-    */
-   $a_table = array();
-   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroskernelversions';
-   $a_table['oldname'] = array();
-
-   $a_table['fields']  = array();
-   $a_table['fields']['id']      = array('type'    => 'autoincrement',
-                                         'value'   => '');
-   $a_table['fields']['name']    = array('type'    => 'string',
-                                         'value'   => NULL);
-   $a_table['fields']['comment'] = array('type'    => 'text',
-                                         'value'   => NULL);
-
-   $a_table['oldfields']  = array();
-
-   $a_table['renamefields'] = array();
-
-   $a_table['keys']   = array();
-   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
-
-   $a_table['oldkeys'] = array();
-
-   migrateTablesFusionInventory($migration, $a_table);
-
-   /*
-    * Table glpi_plugin_fusioninventory_computeroperatingsystemeditions
-    */
-   $a_table = array();
-   $a_table['name'] = 'glpi_plugin_fusioninventory_computeroperatingsystemeditions';
-   $a_table['oldname'] = array();
-
-   $a_table['fields']  = array();
-   $a_table['fields']['id']      = array('type'    => 'autoincrement',
-                                         'value'   => '');
-   $a_table['fields']['name']    = array('type'    => 'string',
-                                         'value'   => NULL);
-   $a_table['fields']['comment'] = array('type'    => 'text',
-                                         'value'   => NULL);
-
-   $a_table['oldfields']  = array();
-
-   $a_table['renamefields'] = array();
-
-   $a_table['keys']   = array();
-   $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
-
-   $a_table['oldkeys'] = array();
-
-   migrateTablesFusionInventory($migration, $a_table);
+         if ($changed === true) {
+            $dyndata = new PluginFusioninventoryDeployGroup_Dynamicdata();
+            $dyndata->update([
+               'id'  => $row['id'],
+               'fields_array' => serialize($fields)
+            ]);
+         }
+      }
+   }
 
    $migration->addField('glpi_plugin_fusioninventory_inventorycomputercomputers',
                         "hostid", "string", ['after' => 'oscomment']);

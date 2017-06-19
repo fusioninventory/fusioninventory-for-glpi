@@ -68,7 +68,18 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date
+              'last_fusioninventory_update'     => $date,
+              'items_operatingsystems_id'       => [
+                  'operatingsystems_id'              => 'freebsd',
+                  'operatingsystemversions_id'       => '9.1-RELEASE',
+                  'operatingsystemarchitectures_id'  => '',
+                  'operatingsystemkernels_id'        => '',
+                  'operatingsystemkernelversions_id' => '',
+                  'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
+                  'operatingsystemeditions_id'       => '',
+                  'licenseid'                        => '',
+                  'license_number'                   => ''
+              ]
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -96,13 +107,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
           'users_id'                         => 0,
-          'operatingsystems_id'              => 'freebsd',
-          'operatingsystemversions_id'       => '9.1-RELEASE',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'domains_id'                       => 'mydomain.local',
-          'os_licenseid'                     => '',
-          'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7D',
@@ -294,6 +300,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerGeneral() {
       global $DB;
@@ -336,12 +343,35 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       );
 
       $this->assertEquals($a_reference, $computer->fields);
+
+      $ios = new Item_OperatingSystem();
+      $this->assertEquals(1, $ios->countForItem($computer));
+      $ios->getFromDBByQuery("WHERE itemtype='Computer' AND items_id=" . $computer->getID());
+
+      $a_reference = [
+         'id'                                => '1',
+         'items_id'                          => '1',
+         'itemtype'                          => 'Computer',
+         'operatingsystems_id'               => '1',
+         'operatingsystemversions_id'        => '1',
+         'operatingsystemservicepacks_id'    => '1',
+         'operatingsystemarchitectures_id'   => '0',
+         'operatingsystemkernelversions_id'  => '0',
+         'license_number'                    => '',
+         'license_id'                        => '',
+         'operatingsystemeditions_id'        => '0'
+      ];
+
+      unset($ios->fields['date_mod']);
+      unset($ios->fields['date_creation']);
+      $this->assertEquals($a_reference, $ios->fields);
    }
 
 
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerExtension() {
       global $DB;
@@ -360,8 +390,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
           'remote_addr'                               => NULL,
-          'plugin_fusioninventory_computeroperatingsystems_id' => 0,
-          'is_entitylocked'                           => 0,
+          'is_entitylocked'                           => '0',
           'oscomment'                                 => NULL,
           'hostid'                                    => NULL
       );
@@ -376,6 +405,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function Softwareadded() {
       global $DB;
@@ -391,6 +421,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function SoftwareGentiumBasicadded() {
       global $DB;
@@ -432,6 +463,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function SoftwareImageMagickadded() {
       global $DB;
@@ -473,6 +505,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function SoftwareORBit2added() {
       global $DB;
@@ -514,6 +547,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function SoftwareVersionGentiumBasicadded() {
       global $DB;
@@ -543,6 +577,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function SoftwareVersionImageMagickadded() {
       global $DB;
@@ -572,6 +607,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function SoftwareVersionORBit2added() {
       global $DB;
@@ -601,6 +637,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerSoftwareGentiumBasic() {
       global $DB;
@@ -630,6 +667,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerSoftwareImageMagick() {
       global $DB;
@@ -659,6 +697,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerSoftwareORBit2() {
       global $DB;
@@ -688,6 +727,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerProcessor() {
       global $DB;
@@ -735,6 +775,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerProcessorLink() {
       global $DB;
@@ -827,6 +868,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerMemory() {
       global $DB;
@@ -872,6 +914,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerMemoryLink() {
       global $DB;
@@ -956,6 +999,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerNetworkport() {
       global $DB;
@@ -1011,6 +1055,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerMonitor() {
       global $DB;
@@ -1079,6 +1124,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @test
+    * @depends AddComputer
     */
    public function ComputerPrinter() {
       global $DB;
@@ -1161,7 +1207,18 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date
+              'last_fusioninventory_update'     => $date,
+              'items_operatingsystems_id'       => [
+                  'operatingsystems_id'              => 'freebsd',
+                  'operatingsystemversions_id'       => '9.1-RELEASE',
+                  'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
+                  'operatingsystemarchitectures_id'  => '',
+                  'operatingsystemkernels_id'        => '',
+                  'operatingsystemkernelversions_id' => '',
+                  'operatingsystemeditions_id'       => '',
+                  'licenseid'                        => '',
+                  'license_number'                   => ''
+              ]
           ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
@@ -1190,13 +1247,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'name'                             => 'pcJ1',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
-          'operatingsystems_id'              => 'freebsd',
-          'operatingsystemversions_id'       => '9.1-RELEASE',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'domains_id'                       => 'mydomain.local',
-          'os_licenseid'                     => '',
-          'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7J1',
@@ -1244,5 +1296,3 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($a_software), "Second computer added");
    }
 }
-
-?>
