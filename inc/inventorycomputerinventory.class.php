@@ -270,13 +270,13 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
 
-         if ((isset($a_computerinventory['Computer']['os_license_number']))
-               AND (!empty($a_computerinventory['Computer']['os_license_number']))) {
-            $input['mskey'] = $a_computerinventory['Computer']['os_license_number'];
+         if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))
+               AND (!empty($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))) {
+            $input['mskey'] = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'];
          }
-         if ((isset($a_computerinventory['Computer']['operatingsystems_id']))
-               AND (!empty($a_computerinventory['Computer']['operatingsystems_id']))) {
-            $input['osname'] = $a_computerinventory['Computer']['operatingsystems_id'];
+         if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))
+               AND (!empty($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))) {
+            $input['osname'] = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
          }
          if ((isset($a_computerinventory['fusioninventorycomputer']['oscomment']))
                AND (!empty($a_computerinventory['fusioninventorycomputer']['oscomment']))) {

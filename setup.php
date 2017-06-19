@@ -319,7 +319,7 @@ function plugin_init_fusioninventory() {
             'Printer' => ['PluginFusioninventoryPrinter',
                                         'showInfo']];
 
-      $PLUGIN_HOOKS['post_show_tab']['fusioninventory'] = 'postShowTab';
+      $PLUGIN_HOOKS['post_item_form']['fusioninventory'] = 'postItemForm';
       $PLUGIN_HOOKS['post_item_form']['fusioninventory'] = 'postItemForm';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
