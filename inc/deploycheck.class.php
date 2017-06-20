@@ -754,7 +754,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param array $params list of fields with value of the check
     */
    static function add_item($params) {
-      $new_entry = self::formatCheckForJson($params);
+      $entry = self::formatCheckForJson($params);
 
       //get current order json
       $datas = json_decode(
@@ -763,7 +763,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       );
 
       //add new entry
-      $datas['jobs']['checks'][] = $new_entry;
+      $datas['jobs']['checks'][] = $entry;
 
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson(
@@ -779,7 +779,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param array $params list of fields with value of the check
     */
    static function save_item($params) {
-      $new   = self::formatCheckForJson($params);
+      $entry = self::formatCheckForJson($params);
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
