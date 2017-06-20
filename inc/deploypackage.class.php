@@ -1660,7 +1660,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $pfTaskJob->update($input);
 
             //Store the task's ID
-            $tasks_id = $data['id'];
+            $pfTaskJob->getFromDB($data['id']);
+            $tasks_id = $pfTaskJob->fields['plugin_fusioninventory_tasks_id'];
          }
       } else {
       // case 2: if not exist, create a new task + taskjob
