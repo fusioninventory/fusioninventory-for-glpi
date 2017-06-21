@@ -1658,10 +1658,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             //Update the job with the new actor
             $pfTaskJob->update($input);
-
-            //Store the task's ID
-            $pfTaskJob->getFromDB($data['id']);
-            $tasks_id = $pfTaskJob->fields['plugin_fusioninventory_tasks_id'];
+            $tasks_id = $data['plugin_fusioninventory_tasks_id'];
          }
       } else {
       // case 2: if not exist, create a new task + taskjob
