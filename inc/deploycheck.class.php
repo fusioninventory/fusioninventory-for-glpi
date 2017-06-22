@@ -710,11 +710,11 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
    /**
-    * Add a new item in checks of the package
-    *
-    * @param array $params list of fields with value of the check
-    */
-   static function add_item($params) {
+   * Return an array corresponding to a check, ready to be serialized
+   * @param params the check's parameters
+   * @return array the array to be encoded in json and serialized
+   */
+   static function formatCheckForJson($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
@@ -722,19 +722,23 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $params['name'] = "";
       }
 
-      if (!empty($params['value'])
-         && is_numeric($params['value'])
-            && !empty($params['unit'])) {
-         $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
+      if (!empty($params['unit'])) {
+         $params['value'] = str_replace(",", ".", $params['value']);
+         if (!empty($params['value']) && is_numeric($params['value'])) {
 
-         //Make an exception for freespaceGreater check which is saved as MiB
-         if ($params['deploy_checktype'] == "freespaceGreater") {
-            $params['value'] = $params['value'] / (1024*1024);
+            //Make an exception for freespaceGreater check which is saved as MiB
+            if ($params['deploy_checktype'] == "freespaceGreater") {
+               $params['value'] = $params['value'] / (1024 * 1024);
+            } else {
+               $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
+            }
+
          }
+
       }
 
-      //prepare new check entry to insert in json
-      $new_entry = array(
+      //prepare updated check entry to insert in json
+      $entry = array(
          'name'   => $params['name'],
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
@@ -742,14 +746,24 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'return' => $params['return']
       );
 
+      return $entry;
+   }
+   /**
+    * Add a new item in checks of the package
+    *
+    * @param array $params list of fields with value of the check
+    */
+   static function add_item($params) {
+      $entry = self::formatCheckForJson($params);
+
       //get current order json
       $datas = json_decode(
               PluginFusioninventoryDeployPackage::getJson($params['id']),
-              TRUE
+              true
       );
 
       //add new entry
-      $datas['jobs']['checks'][] = $new_entry;
+      $datas['jobs']['checks'][] = $entry;
 
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson(
@@ -765,32 +779,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param array $params list of fields with value of the check
     */
    static function save_item($params) {
-
-      if (!isset($params['value'])) {
-         $params['value'] = "";
-      }
-      if (!isset($params['name'])) {
-         $params['name'] = "";
-      }
-
-      if (!empty($params['value']) && is_numeric($params['value'])) {
-         $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
-
-         //Make an exception for freespaceGreater check which is saved as MiB
-         if ($params['deploy_checktype'] == "freespaceGreater") {
-            $params['value'] = $params['value'] / (1024 * 1024);
-         }
-      }
-
-      //prepare updated check entry to insert in json
-      $entry = array(
-         'name'   => $params['name'],
-         'type'   => $params['deploy_checktype'],
-         'path'   => $params['path'],
-         'value'  => $params['value'],
-         'return' => $params['return']
-      );
-
+      $entry = self::formatCheckForJson($params);
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
 
@@ -804,8 +793,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       //update order
       PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
    }
-
-
 
    /**
     * Remove an item
