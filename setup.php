@@ -518,7 +518,11 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '9.2', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+   $prever = true;
+   if (defined('GLPI_PREVER') && PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE == 0) {
+      $prever = version_compare(GLPI_PREVER, '9.2', 'lt');
+   }
+   if ($prever && version_compare(GLPI_VERSION, '9.2', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
          echo Plugin::messageIncompatible('core', '9.2', '9.3');
       } else {
