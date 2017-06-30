@@ -159,8 +159,6 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
-      $Plugin->registerClass('PluginFusioninventoryInventoryComputerStorage',
-              array('addtabon' => array('Computer')));
       $Plugin->registerClass('PluginFusioninventoryCollect');
       $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
               array('addtabon' => array('PluginFusioninventoryCollect')));
@@ -179,8 +177,7 @@ function plugin_init_fusioninventory() {
                                         'Computer')));
       $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement',
-              array('addtabon' => array('Computer')));
+      $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement');
 
          //Classes for rulesengine
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleLocation');
@@ -330,6 +327,7 @@ function plugin_init_fusioninventory() {
                                         'showInfo'));
 
       $PLUGIN_HOOKS['post_show_tab']['fusioninventory'] = 'postShowTab';
+      $PLUGIN_HOOKS['post_item_form']['fusioninventory'] = 'postItemForm';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
