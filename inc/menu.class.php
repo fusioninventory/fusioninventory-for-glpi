@@ -203,7 +203,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                  "wiki/Beta_test'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
          echo "&nbsp;<a href='https://www.transifex.com/projects/p/FusionInventory/resource/".
-                 "plugin-fusioninventory-084/'>";
+                 "plugin-fusioninventory-92/'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/>".
                  "</a>";
          echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>\n";
