@@ -223,10 +223,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
-      if ($this->can(0, CREATE)) {
-         if ($item->getType() == 'Computer'
-            && countElementsInTable('glpi_plugin_fusioninventory_agents',
-                                    "`computers_id`=".$item->getID())) {
+      if ( $this->can(0, CREATE)
+         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
+         if ($item->getType() == 'Computer') {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
          }
       }
@@ -1175,8 +1174,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * Display agent information for a computer
     *
     * @param integer $computers_id id of the computer
+    * @param integer $colspan the number of columns of the form (2 by default)
     */
-   function showInfoForComputer($computers_id) {
+   function showInfoForComputer($computers_id, $colspan = 2) {
 
       if ($this->getAgentWithComputerid($computers_id)) {
 
@@ -1185,14 +1185,22 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo '<td>'.$this->getLink(1).'</td>';
          echo '</tr>';
 
-         echo '<tr class="tab_bg_1">';
+         if ($colspan == 2) {
+            echo '</tr>';
+            echo '<tr class="tab_bg_1">';
+         }
          echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['useragent'].'</td>';
-         echo '</tr>';
+         if ($colspan == 2) {
+            echo '</tr>';
+         }
 
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['tag'].'</td>';
+         if ($colspan == 4) {
+            echo '<td colspan=\'2\'></td>';
+         }
          echo '</tr>';
 
          echo '<tr class="tab_bg_1">';

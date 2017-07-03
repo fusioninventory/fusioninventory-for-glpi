@@ -67,7 +67,6 @@ class PluginFusioninventoryInventoryComputerInventory {
     */
    private $device_id = '';
 
-
    /**
     * import data
     *

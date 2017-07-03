@@ -76,10 +76,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
 
-      if ($this->can("plugin_fusioninventory_selfpackage", READ)) {
-         if ($item->getType() == 'Computer') {
-            return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
-         }
+      if ($this->can("plugin_fusioninventory_selfpackage", READ)
+         && $item->getType() == 'Computer'
+         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
+         return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
       }
       return '';
    }

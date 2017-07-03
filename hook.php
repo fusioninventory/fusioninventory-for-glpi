@@ -2315,6 +2315,43 @@ function plugin_fusioninventory_getDatabaseRelations() {
    return array();
 }
 
+/**
+ * Display a FusionInventory form if no automatic inventory has yet been
+ * performed
+ *
+ * @param array $params Hook parameters
+ *
+ * @return void
+ */
+function postItemForm($params) {
+   $tab = 0;
+
+   if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
+      switch (get_class($params['item'])) {
+         default:
+            break;
+         case 'Computer':
+            $id = $params['item']->getID();
+            $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+            if (!empty($pfInventoryComputerComputer->hasAutomaticInventory($id))) {
+               return true;
+            } else {
+               $pfAgent = new PluginFusioninventoryAgent();
+               if ($pfAgent->getAgentWithComputerid($id)) {
+                  echo '<tr>';
+                  echo '<td colspan=\'4\'></td>';
+                  echo '</tr>';
+
+                  echo '<tr>';
+                  echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+                  echo '</tr>';
+                  $pfAgent->showInfoForComputer($id, 4);
+               }
+               break;
+            }
+      }
+   }
+}
 
 /**
  * post_show_tab hook
@@ -2324,6 +2361,7 @@ function plugin_fusioninventory_getDatabaseRelations() {
  * @return void
  */
 function postShowtab($params) {
+
        switch($params['options']['itemtype']) {
           case 'Computer':
              if ($params['options']['tabnum'] == 1) {

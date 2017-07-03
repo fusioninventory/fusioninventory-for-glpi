@@ -99,15 +99,49 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $array_ret = array();
+
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
              $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
          }
       } else {
+      $continue = true;
+
+      switch ($item->getType()) {
+         case 'PluginFusioninventoryAgent':
+            if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
+                $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
+            }
+            break;
+
+         case 'PluginFusioninventoryUnmanaged':
+            $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
+            $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
+            break;
+
+         case 'Computer':
+            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+            break;
+
+         case 'Printer':
+            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+            break;
+
+         case 'NetworkEquipment':
+            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+            break;
+         default:
+            break;
+
+      }
+      if (!$continue) {
+         return array();
+      } elseif(empty($array_ret)) {
          $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
          $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
       }
       return $array_ret;
+      }
    }
 
 
