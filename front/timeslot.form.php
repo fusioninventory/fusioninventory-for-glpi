@@ -83,7 +83,7 @@ if (isset($_POST["add"])) {
 } else {//print timeslot information
    Html::header(PluginFusioninventoryTimeslot::getTypeName(2),
                 $_SERVER['PHP_SELF'],
-                "plugins",
+                "admin",
                 "pluginfusioninventorymenu",
                 "timeslot");
 

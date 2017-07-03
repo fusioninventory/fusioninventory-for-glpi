@@ -51,7 +51,7 @@ Session::checkRight('plugin_fusioninventory_configsecurity', READ);
 $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
 $config = new PluginFusioninventoryConfig();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
          "pluginfusioninventorymenu", "configsecurity");
 
 PluginFusioninventoryMenu::displayMenu("mini");

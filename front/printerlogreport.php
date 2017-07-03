@@ -51,7 +51,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
-             "plugins",
+             "admin",
              "pluginfusioninventorymenu",
              "printerlogreport");
 

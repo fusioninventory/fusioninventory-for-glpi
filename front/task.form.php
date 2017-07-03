@@ -52,7 +52,7 @@ $pfTask = new PluginFusioninventoryTask();
 $pfTask->submitForm($_POST);
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
-        "plugins", "pluginfusioninventorymenu", "task");
+        "admin", "pluginfusioninventorymenu", "task");
 
 
 

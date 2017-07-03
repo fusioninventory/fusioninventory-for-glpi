@@ -61,7 +61,7 @@ include_once(GLPI_ROOT."/inc/includes.php");
 define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
 define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
-       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/"); 
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/");
 
 /**
  * Check if the script name finish by
@@ -374,7 +374,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnmanaged';
       }
       if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
-         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['plugins'] = 'PluginFusioninventoryMenu';
+         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['admin'] = 'PluginFusioninventoryMenu';
       }
 
       // For end users

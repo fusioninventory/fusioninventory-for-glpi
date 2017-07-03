@@ -50,7 +50,7 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
-             "plugins",
+             "admin",
              "pluginfusioninventorymenu",
              "inventoryrulelocation");
 
