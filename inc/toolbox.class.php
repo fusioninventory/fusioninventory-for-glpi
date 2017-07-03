@@ -744,6 +744,38 @@ class PluginFusioninventoryToolbox {
       // Return function results
       return $result;
    }
-}
 
-?>
+   /**
+   * Check if an item is inventoried by FusionInventory
+   *
+   * @since 9.2
+   * @param CommonDBTM $item the item to check
+   * @return boolean true if handle by FusionInventory
+   */
+   static function isAFusionInventoryDevice($item) {
+      switch ($item->getType()) {
+         case 'Computer':
+            $table = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+            $fk    = 'computers_id';
+            break;
+
+         case 'NetworkEquipment':
+            $table = 'glpi_plugin_fusioninventory_networkequipments';
+            $fk    = 'networkequipments_id';
+            break;
+
+         case 'Printer':
+            $table = 'glpi_plugin_fusioninventory_printers';
+            $fk    = 'printers_id';
+            break;
+
+      }
+      if ($table) {
+         return $item->fields['is_dynamic'] == 1
+            && countElementsInTable($table, "`$fk`='".$item->getID()."'");
+      } else {
+         return 0;
+      }
+   }
+
+}

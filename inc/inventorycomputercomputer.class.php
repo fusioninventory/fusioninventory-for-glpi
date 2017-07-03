@@ -72,14 +72,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return "";
    }
 
-
-   static function isAFusionInventoryDevice($item) {
-      return $item->fields['is_dynamic'] == 1
-         && countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                 "`computers_id`='".$item->getID()."'");
-   }
-
-
    /**
     * Display information about computer (bios, last contact...)
     *
@@ -148,7 +140,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
          echo '</tr>';
       }
-      return TRUE;
+      return true;
    }
 
    /**
@@ -266,7 +258,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
       $pfRemoteManagement->showInformation($item->getID());
       echo '</table>';
-      return TRUE;
+      return true;
    }
 
 
@@ -357,7 +349,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
                                               "`computers_id`='".$computers_id."'",
                                               "", 1));
       if (empty($a_computerextend)) {
-         return FALSE;
+         return false;
       }
       return $a_computerextend['is_entitylocked'];
    }

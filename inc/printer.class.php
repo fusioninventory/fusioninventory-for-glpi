@@ -83,12 +83,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       return 'Printer';
    }
 
-   static function isAFusionInventoryDevice($item) {
-      return $item->fields['is_dynamic'] == 1
-         && countElementsInTable('glpi_plugin_fusioninventory_printers',
-                                 "`printers_id`='".$item->getID()."'");
-   }
-
    /**
     * Get the tab name used for item
     *
@@ -97,7 +91,8 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($this->canView() && self::isAFusionInventoryDevice($item)) {
+      if ($this->canView()
+         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
       return '';

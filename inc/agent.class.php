@@ -224,7 +224,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
       if ( $this->can(0, CREATE)
-         && PluginFusioninventoryInventoryComputerComputer::isAFusionInventoryDevice($item)) {
+         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
          if ($item->getType() == 'Computer') {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
          }
@@ -1174,6 +1174,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * Display agent information for a computer
     *
     * @param integer $computers_id id of the computer
+    * @param integer $colspan the number of columns of the form (2 by default)
     */
    function showInfoForComputer($computers_id, $colspan = 2) {
 

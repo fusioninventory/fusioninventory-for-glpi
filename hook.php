@@ -2325,7 +2325,7 @@ function plugin_fusioninventory_getDatabaseRelations() {
  */
 function postItemForm($params) {
    $tab = 0;
-Toolbox::logDebug($params);
+
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
          default:

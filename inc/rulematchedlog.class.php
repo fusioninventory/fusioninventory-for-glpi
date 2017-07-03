@@ -120,15 +120,15 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             break;
 
          case 'Computer':
-            $continue = PluginFusioninventoryInventoryComputerComputer::isAFusionInventoryDevice($item);
+            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
             break;
 
          case 'Printer':
-            $continue = PluginFusioninventoryPrinter::isAFusionInventoryDevice($item);
+            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
             break;
 
          case 'NetworkEquipment':
-            $continue = PluginFusioninventoryNetworkEquipment::isAFusionInventoryDevice($item);
+            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
             break;
          default:
             break;
