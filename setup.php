@@ -489,16 +489,22 @@ function plugin_init_fusioninventory() {
  * @return array
  */
 function plugin_version_fusioninventory() {
-   return array('name'           => 'FusionInventory',
-                'shortname'      => 'fusioninventory',
-                'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
-                'license'        => 'AGPLv3+',
-                'oldname'        => 'tracker',
-                'author'         =>'<a href="mailto:david@durieux.family">David DURIEUX</a>
-                                    & FusionInventory team',
-                'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '9.2'
-   );
+   return ['name'           => 'FusionInventory',
+           'shortname'      => 'fusioninventory',
+           'version'        => PLUGIN_FUSIONINVENTORY_VERSION,
+           'license'        => 'AGPLv3+',
+           'oldname'        => 'tracker',
+           'author'         => '<a href="mailto:david@durieux.family">David DURIEUX</a>
+                                & FusionInventory team',
+           'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
+           'requirements'   => [
+              'glpi'   => [
+                 'min' => '9.2',
+                  'max' => '9.3',
+                  'dev' => PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE == 0
+               ]
+            ]
+         ];
 }
 
 
@@ -514,19 +520,6 @@ function plugin_fusioninventory_check_prerequisites() {
 
    if (!isset($_SESSION['glpi_plugins'])) {
       $_SESSION['glpi_plugins'] = array();
-   }
-
-   $prever = true;
-   if (defined('GLPI_PREVER') && PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE == 0) {
-      $prever = version_compare(GLPI_PREVER, '9.2', 'lt');
-   }
-   if ($prever && version_compare(GLPI_VERSION, '9.2', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
-      if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.2', '9.3');
-      } else {
-         echo __('Your GLPI version not compatible, require >= 9.2 and < 9.3', 'fusioninventory');
-      }
-      return FALSE;
    }
 
    if (!function_exists('finfo_open')) {
