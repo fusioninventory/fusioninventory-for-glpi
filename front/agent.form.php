@@ -84,7 +84,7 @@ if (isset($_POST['startagent'])) {
 }
 
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "agent");
 
 PluginFusioninventoryMenu::displayMenu("mini");

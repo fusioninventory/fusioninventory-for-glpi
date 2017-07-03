@@ -48,7 +48,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('Collect management', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
-             "plugins",
+             "admin",
              "pluginfusioninventorymenu",
              "collect");
 

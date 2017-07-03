@@ -61,7 +61,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     *
     * @var string
     */
-   public $first_level_menu  = "plugins";
+   public $first_level_menu  = "admin";
 
    /**
     * Define second level menu name

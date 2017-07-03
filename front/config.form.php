@@ -50,7 +50,7 @@ include ("../../../inc/includes.php");
 Session::checkRight('plugin_fusioninventory_configuration', READ);
 
 Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
-             "plugins", "pluginfusioninventorymenu", "config");
+             "admin", "pluginfusioninventorymenu", "config");
 
 
 PluginFusioninventoryMenu::displayMenu("mini");

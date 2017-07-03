@@ -47,7 +47,7 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
-        "plugins", "pluginfusioninventorymenu", "taskjoblog");
+        "admin", "pluginfusioninventorymenu", "taskjoblog");
 
 Session::checkRight('plugin_fusioninventory_task', READ);
 

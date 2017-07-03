@@ -46,7 +46,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "ignoredimportdevice");
 
 //PluginFusioninventoryProfile::checkRight("rules", "r");
