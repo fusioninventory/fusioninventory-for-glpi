@@ -498,10 +498,18 @@ function plugin_version_fusioninventory() {
                                 & FusionInventory team',
            'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
            'requirements'   => [
-              'glpi'   => [
+              'glpi' => [
                  'min' => '9.2',
                   'max' => '9.3',
                   'dev' => PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE == 0
+               ],
+               'php' => [
+                  'exts'   => [
+                     'fileinfo'  => [
+                        'required'  => true,
+                        'class'     => 'finfo'
+                     ]
+                  ]
                ]
             ]
          ];
@@ -520,11 +528,6 @@ function plugin_fusioninventory_check_prerequisites() {
 
    if (!isset($_SESSION['glpi_plugins'])) {
       $_SESSION['glpi_plugins'] = array();
-   }
-
-   if (!function_exists('finfo_open')) {
-      echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
-      return FALSE;
    }
 
    $plugin = new Plugin();
