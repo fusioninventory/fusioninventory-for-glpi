@@ -49,7 +49,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    public function testGetTypes() {
       $types = PluginFusioninventoryDeployCheck::getTypes();
       $this->assertEquals(3, count($types));
-      $this->assertEquals(6, count($types[__('Registry', 'fusioninventory')]));
+      $this->assertEquals(7, count($types[__('Registry', 'fusioninventory')]));
       $this->assertEquals(7, count($types[__('File')]));
       $this->assertEquals(1, count($types[__('Other')]));
 
@@ -280,6 +280,15 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                   ];
       $this->assertEquals($result, $expected);
 
+      //----------- winkeyNotEquals --------------------------//
+      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyNotEquals', false);
+      $expected = ['path_label'   => 'Path to the value',
+                   'value_label'  => 'Value',
+                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+                   'warning_message' => 'Fusioninventory-Agent 2.3.21 or higher mandatory',
+                  ];
+      $this->assertEquals($result, $expected);
+
       //----------- winvalueType --------------------------//
       $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', false);
       $expected = ['path_label'   => 'Path to the value',
@@ -405,10 +414,10 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    */
    public function testGetAllReturnValues() {
       $values = PluginFusioninventoryDeployCheck::getAllReturnValues();
-      $expected = ["error"   => __('abort job', 'fusioninventory'),
-                  "skip"     => __("skip job", 'fusioninventory'),
-                  "info"     => __("report info", 'fusioninventory'),
-                  "warning"  => __("report warning", 'fusioninventory')
+      $expected = ["error"    => __('abort job', 'fusioninventory'),
+                   "skip"     => __("skip job", 'fusioninventory'),
+                   "info"     => __("report info", 'fusioninventory'),
+                   "warning"  => __("report warning", 'fusioninventory')
                ];
       $this->assertEquals($values, $expected);
    }
