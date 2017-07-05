@@ -1519,7 +1519,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       // Filter by entity
       if (isset($filter['by_entities'])
-              && is_bool($filter['by_entities'])) {
+	      && (bool)$filter['by_entities']) {
          $where[] = getEntitiesRestrictRequest("", 'task');
       }
 
