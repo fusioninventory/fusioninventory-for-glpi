@@ -312,6 +312,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[2]['name']      = __('Mirror server address', 'fusioninventory');
       $tab[2]['datatype']  = 'string';
 
+      $tab[3]['table']     = $this->getTable();
+      $tab[3]['field']     = 'is_active';
+      $tab[3]['linkfield'] = 'is_active';
+      $tab[3]['name']      = __('Active');
+      $tab[3]['datatype']  = 'bool';
+
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
       $tab[16]['linkfield'] = 'comment';
