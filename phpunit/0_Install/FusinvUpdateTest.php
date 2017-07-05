@@ -111,7 +111,8 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);
 
       $this->verifyEntityRules($nbrules);
-
+      $this->checkDeployMirrors();
+      
       if ($verify) {
          $this->verifyConfig();
       }
@@ -161,6 +162,16 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $a_config = current($a_configs);
       $this->assertEquals(1, $a_config['value'], "May keep states_id_default to 1");
    }
+
+   private function checkDeployMirrors() {
+      global $DB;
+
+      //check is the field is_active has correctly been added to mirror servers
+      $this->assertTrue($DB->fieldExists('glpi_plugin_fusioninventory_deploymirrors',
+                                    'is_active'));
+
+   }
+
 }
 
 ?>

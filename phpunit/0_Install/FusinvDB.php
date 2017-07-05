@@ -311,7 +311,6 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_fusioninventory_inventorycomputerstats` not empty");
 
-
    }
 }
 
