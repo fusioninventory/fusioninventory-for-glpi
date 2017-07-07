@@ -1403,6 +1403,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                  id='restart_run_".$package_info['taskjobs_id']."'></a>";
                      }
 
+                     // if job has not started, user can cancel it
+                     if ($package_info['last_taskjobstate']['state'] == "agents_prepared") {
+                        echo "<a class='cancel btn'
+                                 href='#'
+                                 title='".__("Cancel job", 'fusioninventory')."'
+                                 id='cancel_run_".$package_info['taskjobs_id']."'></a>";
+                     }
+
                      // log list
                      echo "<table class='runs'>";
                      foreach($package_info['last_taskjobstate']['logs'] as $log) {
@@ -1424,6 +1432,21 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                         event.preventDefault();
                         $('#run_".$package_info['taskjobs_id']."').toggle();
                         $(this).toggleClass('expand');
+                     });
+
+                     $('#cancel_run_".$package_info['taskjobs_id']."').click(function(event){
+                        event.preventDefault();
+                        $.ajax({
+                           url: '".$CFG_GLPI['root_doc'].
+                                   "/plugins/fusioninventory/ajax/cancel_job.php',
+                           data: {
+                              'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
+                              'agent_id':    ".$package_info['agent_id']."
+                           },
+                           complete: function() {
+                              document.location.reload();
+                           }
+                        });
                      });
 
                      $('#restart_run_".$package_info['taskjobs_id']."').click(function(event){
