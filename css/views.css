@@ -250,7 +250,7 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .monitoring-logs .task_block > h3 {
-   cursor: pointer; 
+   cursor: pointer;
    background: url(../../../pics/expand.gif) no-repeat left center;
    padding-left: 20px;
    display: inline-block;
@@ -603,6 +603,14 @@ a.expanded > div.fold {
    float: right;
 }
 
+.agent_block > a.cancel {
+   background: url(../pics/cancel_red.png) no-repeat;
+   display: inline-block;
+   width: 14px;
+   height: 14px;
+   float: right;
+}
+
 .agent_block > a.btn:hover {
    opacity: .7;
 }
@@ -815,7 +823,7 @@ table.runs td.comment {
    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-   box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
+   box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
    border-width: 1px;
    border-style: solid;
    border-color: #d69e31 #e3a037 #d5982d #e3a037
