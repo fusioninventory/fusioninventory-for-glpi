@@ -317,10 +317,10 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
       CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-                               'comment'=>'Clean agents not contacted since xxx days'));
+                               'comment'=> __('Clean agents not contacted since xxx days', 'fusioninventory')));
       CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                               'comment'=>'Wake agents ups'));
+                               'comment'=> __('Wake agents ups', 'fusioninventory')));
       CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
                          ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                           'comment' => __('Clean on demand deployment tasks')]);

@@ -326,7 +326,7 @@ class PluginFusioninventoryProfile extends Profile {
    function getRightsDeploy() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryDeployPackage',
-                'label'     => __('Manage packages'),
+                'label'     => __('Manage packages', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_package'),
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),

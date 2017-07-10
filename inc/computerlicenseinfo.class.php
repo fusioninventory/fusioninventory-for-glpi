@@ -156,7 +156,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td>".__('Name')."&nbsp;:</td>";
             echo "<td>$licence_link".$licenseInfo['name']."$licence_endlink</td>";
-            echo "<td>".__('Serial number', 'fusioninventory')."&nbsp;:</td>";
+            echo "<td>".__('Serial number')."&nbsp;:</td>";
             echo "<td>".$licenseInfo['serial']."</td>";
             echo "</tr>";
 

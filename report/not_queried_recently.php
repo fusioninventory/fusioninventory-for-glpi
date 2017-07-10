@@ -67,7 +67,7 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
-echo __('Number of days since last inventory')." :&nbsp;";
+echo __('Number of days since last inventory', 'fusioninventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
 Dropdown::showNumber("nbdays", array(
@@ -90,7 +90,7 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_2'>";
 echo "<td align='center' colspan='2'>";
-echo "<input type='submit' value='Valider' class='submit' />";
+echo "<input type='submit' value='" . __('Validate') . "' class='submit' />";
 echo "</td>";
 echo "</tr>";
 
@@ -153,7 +153,7 @@ ORDER BY last_fusioninventory_update DESC";
 echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory')."</th>";
+echo "<th>".__('Last inventory', 'fusioninventory')."</th>";
 echo "<th>".__('Item type')."</th>";
 echo "<th>".__('IP')."</th>";
 echo "<th>".__('Serial Number')."</th>";

@@ -226,7 +226,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ( $this->can(0, CREATE)
          && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
          if ($item->getType() == 'Computer') {
-            $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
+            $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent', 'fusioninventory');
          }
       }
 
@@ -847,10 +847,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
          case 'waiting':
             $waiting = 1;
-            echo __(
-               'Available on <a target="_blank" href="'. $agentStatus['url_ok'] . '">' .
-               $agentStatus['url_ok'] .
-               '</a>'
+            echo sprintf(
+               __('Available on %1$s', 'fusioninventory'),
+               '<a target="_blank" href="'. $agentStatus['url_ok'] . '">' . $agentStatus['url_ok'] . '</a>'
             );
             echo Html::hidden('agent_id', array('value' => $agent_id));
             break;
