@@ -118,7 +118,7 @@ function displaySearchForm() {
    echo "</td>";
 
    echo "<td>";
-   echo "<input type='submit' value='Valider' class='submit' />";
+   echo "<input type='submit' value='". __('Validate') . "' class='submit' />";
    echo "</td>";
 
    echo "</tr>";
