@@ -314,7 +314,7 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
       CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-                               'comment'=> __('Clean agents not contacted since xxx days', 'fusioninventory')));
+                               'comment'=> __('Delete agent that have not contacted the server since xxx days".', 'fusioninventory')));
       CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'comment'=> __('Wake agents ups', 'fusioninventory')));
