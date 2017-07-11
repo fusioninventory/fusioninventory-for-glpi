@@ -792,7 +792,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       while ($data=$DB->fetch_array($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
             $devicesList[] = array(
-               'NetworkEquipment' => $data['gID']."$#$".$data['gNAME']
+               'NetworkEquipment' => $data['gID']
             );
          }
      }
@@ -831,7 +831,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       while ($data=$DB->fetch_array($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
             $devicesList[] = array(
-               'Printer' => $data['gID']."$#$".$data['gNAME']
+               'Printer' => $data['gID']
             );
          }
       }
