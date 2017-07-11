@@ -2707,7 +2707,8 @@ function do_biosascomponentmigration() {
  * @param object $migration
  */
 function do_computerstat_migration($migration) {
-
+   global $DB;
+   
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputerstats
     */
