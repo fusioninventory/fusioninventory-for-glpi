@@ -364,12 +364,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_antivirus_migration($migration);
       do_computerbattery_migration($migration);
       do_computerchemistry_migration($migration);
+      do_computerarch_migration($migration);
       do_computercomputer_migration($migration);
       do_computerstat_migration($migration);
       do_computerstorage_migration($migration);
       do_computerlicense_migration($migration);
       do_computerremotemgmt_migration($migration);
-      do_computerarch_migration($migration);
       do_computeroperatingsystem_migration($migration);
       do_dblocks_migration($migration);
       do_rule_migration($migration);
@@ -938,10 +938,19 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
          unset($ant['id']);
          $ant['is_dynamic'] = 1;
-         $ant['is_uptodate'] = $ant['uptodate'];
-         unset($ant['uptodate']);
-         $ant['antivirus_version'] = $ant['version'];
-         unset($ant['version']);
+         if (isset($ant['uptodate'])) {
+            $ant['is_uptodate'] = $ant['uptodate'];
+            unset($ant['uptodate']);
+         } else {
+            $ant['is_uptodate'] = 0;
+         }
+
+         if (isset($ant['version'])) {
+            $ant['antivirus_version'] = $ant['version'];
+            unset($ant['version']);
+         } else {
+            $ant['antivirus_version'] = '';
+         }
          $antivirus->add($ant, array(), false);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses');
@@ -4836,33 +4845,41 @@ function do_computerremotemgmt_migration($migration) {
 function do_computerarch_migration($migration) {
     global $DB;
 
-   if (TableExists('glpi_plugin_fusioninventory_computerarches')) {
-      //Rename field in coputeroperatingsystems table
-      $a_table = [
-         'name'     => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-         'renamefields' => [
-            'plugin_fusioninventory_computerarches_id' => 'operatingsystemarchitectures_id'
-         ]
-      ];
-      migrateTablesFusionInventory($migration, $a_table);
+   if (TableExists('glpi_plugin_fusioninventory_computerarchs')) {
 
-      //Arches migration from FI table to GLPi core table
+      //Arches migration from old table to GLPi core table
+      //before migration to glpi_plugin_fusioninventory_computeroperatingsystems
       $arches = new OperatingSystemArchitecture();
-      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computerarches') as $arch) {
-         //check if arch already exists in core
-         if ($arches->getFromDBByQuery(' WHERE name = "' . $DB->escape($arch['name']) . '"')) {
-            $new_id = $arches->fields['id'];
-         } else {
-            unset($arch['id']);
-            $new_id = $arches->add($arch, array(), false);
-         }
+      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computerarchs') as $arch) {
 
-         $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os SET "
-                     . " pf_os.operatingsystemarchitectures_id='" . $new_id . "',"
-                     . " JOIN operatingsystemarchitectures os_arch WHERE os_arch.name='" . $DB->escape($arch['name']) . "'";
-         $DB->query($sql_u);
+         $archs_id = $arches->importExternal($arch['name']);
+         $query    = "UPDATE `glpi_computers` as c
+                      SET `c`.`operatingsystemarchitectures_id`='$archs_id'
+                      WHERE `c`.`id` IN
+                         (SELECT `icc`.`computers_id`
+                          FROM `glpi_plugin_fusioninventory_inventorycomputercomputers` as icc
+                          WHERE `icc`.`plugin_fusioninventory_computerarchs_id`='".$arch['id']."')";
+         $DB->query($query);
       }
-      $migration->dropTable('glpi_plugin_fusioninventory_computerarches');
+
+      //Drop old table
+      $migration->dropTable('glpi_plugin_fusioninventory_computerarchs');
+
+      $migration->dropField('glpi_plugin_fusioninventory_inventorycomputercomputers',
+                            'plugin_fusioninventory_computerarchs_id');
+
+      //Drop old arch field : not needed anymore as it is managed by GLPI' core
+      $migration->dropKey('glpi_plugin_fusioninventory_computeroperatingsystems',
+                            'operatingsystemarchitectures_id');
+      $migration->dropField('glpi_plugin_fusioninventory_computeroperatingsystems',
+                            'operatingsystemarchitectures_id');
+
+      //Update dictionnary to match the new operating system
+      $query = "UPDATE `glpi_rules`
+                SET `sub_type`='OperatingSystemArchitecture'
+                WHERE `sub_type`='PluginFusioninventoryRuleDictionnaryComputerArchCollection'";
+      $DB->query($query);
+
    }
 }
 

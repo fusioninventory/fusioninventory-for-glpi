@@ -701,7 +701,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystems` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
-  `operatingsystemarchitectures_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_computeroskernelnames_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_computeroskernelversions_id` int(11) NOT NULL DEFAULT '0',
   `operatingsystems_id` int(11) NOT NULL DEFAULT '0',
