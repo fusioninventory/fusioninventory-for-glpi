@@ -94,7 +94,7 @@ if (!$DB->connected) {
 
 /*---------------------------------------------------------------------*/
 
-if (!TableExists("glpi_configs")) {
+if (!$DB->tableExists("glpi_configs")) {
    die("GLPI not installed\n");
 }
 

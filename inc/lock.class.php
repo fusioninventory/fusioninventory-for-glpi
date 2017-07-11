@@ -788,7 +788,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    function importFromOcs() {
       global $DB;
 
-      if (TableExists('glpi_ocslinks')) {
+      if ($DB->tableExists('glpi_ocslinks')) {
          $sql = "SELECT * FROM `glpi_ocslinks`";
          $result=$DB->query($sql);
          while ($data=$DB->fetch_array($result)) {

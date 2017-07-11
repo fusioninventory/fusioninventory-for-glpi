@@ -55,7 +55,7 @@ Html::header_nocache();
 
 // Security
 $table = filter_input(INPUT_POST, "table");
-if (empty($table) || !TableExists($table)) {
+if (empty($table) || !$DB->tableExists($table)) {
    exit();
 }
 
