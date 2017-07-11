@@ -199,12 +199,6 @@ function plugin_init_fusioninventory() {
               ['rulecollections_types'=>true]);
       $Plugin->registerClass('PluginFusioninventoryConstructDevice');
 
-      //Computer arch dictionnary
-      $Plugin->registerClass('PluginFusioninventoryRuleDictionnaryComputerArch');
-      $Plugin->registerClass('PluginFusioninventoryRuleDictionnaryComputerArchCollection',
-              ['rulecollections_types'=>true]);
-      array_push($CFG_GLPI["dictionnary_types"], 'PluginFusioninventoryRuleDictionnaryComputerArchCollection');
-
       // Networkinventory and networkdiscovery
       $Plugin->registerClass('PluginFusioninventorySnmpmodel');
       $Plugin->registerClass('PluginFusioninventoryNetworkEquipment',

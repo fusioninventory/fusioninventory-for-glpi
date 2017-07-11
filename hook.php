@@ -2383,18 +2383,6 @@ function postShowtab($params) {
                    echo '</tr>';
 
                    echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Architecture', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemarchitectures',
-                      $pfComputerOperatingSystem->fields['operatingsystemarchitectures_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
                    echo "<td>".__('Operating system')."</td>";
                    echo "<td>";
 

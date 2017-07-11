@@ -4800,6 +4800,12 @@ function do_computerarch_migration($migration) {
          $DB->query($sql_u);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_computerarches');
+
+      //Update dictionnary to match the new operating system
+      $query = "UPDATE `glpi_rules`
+                  SET `sub_type`='RuleDictionnaryOperatingSystemArchitectureCollection'
+                  WHERE `sub_type`='PluginFusioninventoryRuleDictionnaryComputerArchCollection'";
+      $DB->query($query);
    }
 }
 
