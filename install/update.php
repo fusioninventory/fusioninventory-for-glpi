@@ -936,10 +936,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
          unset($ant['id']);
          $ant['is_dynamic'] = 1;
-         $ant['is_uptodate'] = $ant['uptodate'];
-         unset($ant['uptodate']);
-         $ant['antivirus_version'] = $ant['version'];
-         unset($ant['version']);
+         if (isset($ant['uptodate'])) {
+            $ant['is_uptodate'] = $ant['uptodate'];
+            unset($ant['uptodate']);
+         } else {
+            $ant['is_uptodate'] = 0;
+         }
+         if (isset($ant['version'])) {
+            $ant['antivirus_version'] = $ant['version'];
+            unset($ant['version']);
+         } else {
+            $ant['antivirus_version'] = '';
+         }
          $antivirus->add($ant, array(), false);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses');
