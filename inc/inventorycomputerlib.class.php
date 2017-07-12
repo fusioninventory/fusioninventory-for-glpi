@@ -2312,7 +2312,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       if (empty($data['designation'])) {
          //Placebo designation; sometimes missing from agent
-         $data['designation'] = __('Portable battery', 'fusioninventory');
+         $data['designation'] = __('Internal battery', 'fusioninventory');
       }
 
       $batteries_id = $deviceBattery->import($data);
