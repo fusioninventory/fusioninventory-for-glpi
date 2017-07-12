@@ -916,7 +916,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function loadCache() {
       global $DB, $PF_CONFIG;
 
-      if (TableExists('glpi_plugin_fusioninventory_configs')) {
+      if ($DB->tableExists('glpi_plugin_fusioninventory_configs')) {
          $PF_CONFIG = array();
          foreach ($DB->request('glpi_plugin_fusioninventory_configs') as $data) {
             $PF_CONFIG[$data['type']] = $data['value'];
