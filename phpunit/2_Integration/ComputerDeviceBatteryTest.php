@@ -268,7 +268,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
       $date = $pfDevicebattery->fields['date_creation'];
       $a_ref = [
          'id'                       => '2',
-         'designation'              => 'Portable battery',
+         'designation'              => 'Internal battery',
          'manufacturers_id'         => '2',
          'devicebatterytypes_id'    => '1',
          'comment'                  => null,
