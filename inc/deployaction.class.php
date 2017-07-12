@@ -466,7 +466,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                echo "<tr>";
                echo "<td>";
                Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames(), array(
-                  'value' => $retcheck['type']
+                  'value' => $retcheck['type'],
+                  'width' => '200px'
                ));
                echo "</td>";
                echo "<td>";
@@ -480,17 +481,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                echo "</table>";
             }
          }
-         echo "<table class='table_retchecks template' style='display:none'>";
-         echo "<tr>";
-         echo "<td>";
-         Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames());
-         echo "</td>";
-         echo "<td><input type='text' name='retchecks_value[]' /></td>";
-         echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
-               $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
-         echo "</tr>";
+         echo "<div class='table_retchecks template' style='display:none'>";
+         Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames(), ['width' => '200px']);
+         echo "<input type='text' name='retchecks_value[]' />";
+         echo "<a class='edit' onclick='removeLine(this)'><img src='".
+               $CFG_GLPI["root_doc"]."/pics/delete.png' /></a>";
+         echo "</div>";
 
-         echo "</table>";
          echo "</span>";
          echo "</td>";
          echo "</tr>";

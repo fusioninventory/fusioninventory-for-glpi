@@ -24,9 +24,6 @@ table.package_item input[type=text] {
 table.package_item .table_retchecks {
    border-spacing: 0;
 }
-table.package_item .table_retchecks td {
-   padding: 0;
-}
 table.package_item .table_retchecks input {
    width: 65px;
 }
