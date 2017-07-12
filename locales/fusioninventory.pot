@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 14:35+0200\n"
+"POT-Creation-Date: 2017-07-12 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1309,7 +1309,7 @@ msgid "Error:"
 msgstr ""
 
 #: inc/inventorycomputerlib.class.php:2315
-msgid "Portable battery"
+msgid "Internal battery"
 msgstr ""
 
 #: inc/deployaction.class.php:65
@@ -1360,7 +1360,7 @@ msgstr ""
 msgid "Execution checks"
 msgstr ""
 
-#: inc/deployaction.class.php:501
+#: inc/deployaction.class.php:498
 msgid "Number of output lines to retrieve"
 msgstr ""
 

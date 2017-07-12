@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 14:35+0200\n"
+"POT-Creation-Date: 2017-07-12 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Johan Cwiklinski <trasher@x-tnd.be>, 2017\n"
 "Language-Team: French (France) (https://www.transifex.com/ddurieux/teams/797/fr_FR/)\n"
@@ -242,7 +242,7 @@ msgstr ""
 
 #: install/install.php:323
 msgid "Wake agents ups"
-msgstr ""
+msgstr "Réveiller les agents"
 
 #: hook.php:61 hook.php:184 hook.php:191 hook.php:201 hook.php:221
 #: hook.php:228 hook.php:234 hook.php:244 hook.php:261 hook.php:270
@@ -367,7 +367,7 @@ msgstr "Assigner une authentification SNMP"
 
 #: inc/taskview.class.php:133
 msgid "Include old jobs"
-msgstr ""
+msgstr "Inclure les anciens jobs "
 
 #: inc/taskview.class.php:151
 msgid "refresh interval"
@@ -421,7 +421,7 @@ msgstr "Annulé"
 
 #: inc/taskview.class.php:321
 msgid "Task execution states"
-msgstr ""
+msgstr "État de l’exécution des tâches"
 
 #: inc/taskview.class.php:389 inc/task.class.php:136
 msgid "Re-prepare a target-actor if previous run is successful"
@@ -441,11 +441,11 @@ msgstr "Heure de fin programmée"
 
 #: inc/taskview.class.php:418
 msgid "Preparation timeslot"
-msgstr ""
+msgstr "Créneau horaire de préparation"
 
 #: inc/taskview.class.php:425
 msgid "Execution timeslot"
-msgstr ""
+msgstr "Créneau horaire d'exécution"
 
 #: inc/taskview.class.php:431
 msgid "Agent wakeup interval (in minutes)"
@@ -933,7 +933,7 @@ msgstr "Verrouiller"
 
 #: inc/inventorycomputercomputer.class.php:306
 msgid "Download inventory file"
-msgstr ""
+msgstr "Télécharger le fichier d'inventaire"
 
 #: inc/stateinventory.class.php:115 inc/statediscovery.class.php:171
 #: inc/taskjoblog.class.php:253 inc/taskjobstate.class.php:290
@@ -1314,8 +1314,8 @@ msgid "Error:"
 msgstr "Erreur :"
 
 #: inc/inventorycomputerlib.class.php:2315
-msgid "Portable battery"
-msgstr ""
+msgid "Internal battery"
+msgstr "Batterie interne"
 
 #: inc/deployaction.class.php:65
 msgid "Return code is equal to"
@@ -1343,7 +1343,7 @@ msgstr "retourne le code sauvegardé de cette commande"
 
 #: inc/deployaction.class.php:371 inc/deployaction.class.php:427
 msgid "Action label"
-msgstr ""
+msgstr "Libellé de l'action"
 
 #: inc/deployaction.class.php:383
 msgid "From"
@@ -1365,9 +1365,9 @@ msgstr "Chemin"
 msgid "Execution checks"
 msgstr "Exécution des contrôles"
 
-#: inc/deployaction.class.php:501
+#: inc/deployaction.class.php:498
 msgid "Number of output lines to retrieve"
-msgstr ""
+msgstr "Nombre de lignes à récupérer"
 
 #: inc/inventoryruleentity.class.php:189
 msgid "IP Address"
@@ -1662,7 +1662,7 @@ msgstr "Liste noire de champs"
 
 #: inc/profile.class.php:329
 msgid "Manage packages"
-msgstr ""
+msgstr "Gestion des paquets"
 
 #: inc/profile.class.php:332 inc/menu.class.php:465
 #: inc/deploymirror.class.php:83
@@ -1984,7 +1984,7 @@ msgstr "Fichiers"
 
 #: inc/deploypackage.class.php:660
 msgid "JSON package representation"
-msgstr ""
+msgstr "Représentation du paquet au format JSON"
 
 #: inc/deploypackage.class.php:778
 msgid "Package exported in"
@@ -2010,11 +2010,11 @@ msgstr "Ajouter une cible pour le self-service"
 
 #: inc/deploypackage.class.php:1402
 msgid "Restart job"
-msgstr ""
+msgstr "Redémarrer un job"
 
 #: inc/deploypackage.class.php:1410
 msgid "Cancel job"
-msgstr ""
+msgstr "Annuler un job"
 
 #: inc/deploypackage.class.php:1487
 msgid "Select packages you want install"
@@ -3122,7 +3122,7 @@ msgstr "Règles de lieu"
 
 #: inc/deploycheck.class.php:66
 msgid "Registry value exists"
-msgstr ""
+msgstr "La valeur de la clef existe"
 
 #: inc/deploycheck.class.php:67
 msgid "Registry key missing"
@@ -3130,19 +3130,19 @@ msgstr "La clef de registre n'existe pas"
 
 #: inc/deploycheck.class.php:68
 msgid "Registry value missing"
-msgstr ""
+msgstr "La valeur de la clef n'existe pas"
 
 #: inc/deploycheck.class.php:69
 msgid "Registry value equals to"
-msgstr ""
+msgstr "La valeur de la clef est égale à"
 
 #: inc/deploycheck.class.php:70
 msgid "Registry value not equals to"
-msgstr ""
+msgstr "La valeur de la clef n'est pas égale à"
 
 #: inc/deploycheck.class.php:71
 msgid "Type of registry value equals to"
-msgstr ""
+msgstr "Le type de valeur de la clef est égal à"
 
 #: inc/deploycheck.class.php:74
 msgid "File exists"
@@ -3186,7 +3186,7 @@ msgstr "autrement"
 
 #: inc/deploycheck.class.php:427 inc/deploycheck.class.php:574
 msgid "Audit label"
-msgstr ""
+msgstr "Libellé de l'audit"
 
 #: inc/deploycheck.class.php:468
 msgid "Path to the key"
@@ -3278,7 +3278,7 @@ msgstr "Par ordre de priorité"
 
 #: inc/taskjobstate.class.php:121
 msgid "Job executions"
-msgstr ""
+msgstr "Exécutions des jobs"
 
 #: inc/taskjobstate.class.php:134
 msgid "Server has sent data to the agent"
