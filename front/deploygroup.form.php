@@ -75,7 +75,9 @@ if (isset($_GET['save'])) {
    }
 
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$_GET['id']);
-
+} else if(isset($_FILES['importcsvfile'])) {
+   PluginFusioninventoryDeployGroup_Staticdata::csvImport($_POST, $_FILES);
+   Html::back();
 } elseif (isset($_POST["add"])) {
    $group->check(-1, UPDATE, $_POST);
    $newID = $group->add($_POST);
