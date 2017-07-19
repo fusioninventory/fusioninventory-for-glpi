@@ -254,4 +254,59 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       }
    }
 
+
+   /**
+    * @test
+    */
+   public function ImportCSVStaticGroup() {
+       global $DB;
+
+      // Add some computers, with the ID
+      $computer = new Computer();
+
+      $DB->query("ALTER TABLE glpi_computers AUTO_INCREMENT = 12345;");
+
+      $input = [
+          'entities_id' => 0,
+          'name' => 'computer1'
+      ];
+      $ret = $computer->add($input);
+      $this->assertEquals(12345, $ret);
+
+      $input = [
+          'entities_id' => 0,
+          'name' => 'computer2'
+      ];
+      $ret = $computer->add($input);
+      $this->assertEquals(12346, $ret);
+
+      $pfDeploygroup = new PluginFusioninventoryDeployGroup();
+      $pfDeploygroup_static = new PluginFusioninventoryDeployGroup_Staticdata();
+
+      $input = ['name'    => 'MyGroup',
+                'type'    => PluginFusioninventoryDeployGroup::STATIC_GROUP,
+                'comment' => 'MyComment'
+               ];
+      $groups_id = $pfDeploygroup->add($input);
+      $this->assertGreaterThan(0, $groups_id);
+
+      $input_post = [
+          'groups_id' => $groups_id
+      ];
+      $input_files = [
+          'importcsvfile' => [
+              'tmp_name' => realpath(dirname(__FILE__)).'/computers.csv'
+          ]
+      ];
+      $ret = $pfDeploygroup_static->csvImport($input_post, $input_files);
+      $this->assertTrue($ret);
+
+      $computer_list = $pfDeploygroup_static->find("`plugin_fusioninventory_deploygroups_id`='".$groups_id."'", '`items_id`');
+      $computer_list_db = [];
+      foreach ($computer_list as $comp_data) {
+          $computer_list_db[] = $comp_data['items_id'];
+      }
+      $this->assertEquals(['12345', '12346'], $computer_list_db);
+
+   }
 }
