@@ -112,6 +112,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          } else {
             $tabs[2] = _n('Associated item','Associated items', $count);
          }
+         $tabs[3] = __('CSV import', 'fusioninventory');
          return $tabs;
       }
       return '';
@@ -136,6 +137,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
          case 2:
             self::showResults();
+            return TRUE;
+
+         case 3:
+            self::csvimport_form($item);
             return TRUE;
 
       }
@@ -207,6 +212,69 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          }
       }
       return $result;
+   }
+
+
+   /**
+    * Form to import computers ID in CSV file
+    *
+    */
+   static function csvimport_form(PluginFusioninventoryDeployGroup $item) {
+
+      echo "<form action='' method='post' enctype='multipart/form-data'>";
+
+      echo "<br>";
+      echo "<table class='tab_cadre_fixe' cellpadding='1' width='600'>";
+      echo "<tr>";
+      echo "<th>";
+      echo __('Import computers list from CSV file (first column must contain the computer ID)', 'fusioninventory')." :";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<input type='hidden' name='groups_id' value='".$item->getID()."'/>";
+      echo "<input type='file' name='importcsvfile' value=''/>";
+      echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+
+      Html::closeForm();
+      return TRUE;
+   }
+
+
+   /**
+    * Import into DB the computers ID
+    */
+   static function csv_import($post_data, $files_data) {
+      $pfDeployGroup_static = new self();
+      $computer = new Computer();
+      $input = [
+         'plugin_fusioninventory_deploygroups_id' => $post_data['groups_id'],
+         'itemtype' => 'Computer'
+      ];
+      if (isset($files_data['importcsvfile']['tmp_name'])) {
+         if (($handle = fopen($files_data['importcsvfile']['tmp_name'], "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, $_SESSION["glpicsv_delimiter"])) !== FALSE) {
+               $input['items_id'] = str_replace(' ', '', $data[0]);
+               if ($computer->getFromDB($input['items_id'])) {
+                   $pfDeployGroup_static->add($input);
+               }
+            }
+            Session::addMessageAfterRedirect(__('Computers imported successfully from CSV file', 'fusioninventory'), FALSE, INFO);
+            fclose($handle);
+         } else {
+            Session::addMessageAfterRedirect(__('Impossible to read the CSV file', 'fusioninventory'), FALSE, ERROR);
+            return false;
+         }
+      } else {
+         Session::addMessageAfterRedirect(__('CSV file not found', 'fusioninventory'), FALSE, ERROR);
+         return false;
+      }
+      return true;
    }
 }
 
