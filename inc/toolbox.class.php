@@ -753,6 +753,7 @@ class PluginFusioninventoryToolbox {
    * @return boolean true if handle by FusionInventory
    */
    static function isAFusionInventoryDevice($item) {
+      $table = '';
       switch ($item->getType()) {
          case 'Computer':
             $table = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
@@ -771,7 +772,7 @@ class PluginFusioninventoryToolbox {
 
       }
       if ($table) {
-         return $item->fields['is_dynamic'] == 1
+         return $item->isDynamic()
             && countElementsInTable($table, "`$fk`='".$item->getID()."'");
       } else {
          return 0;
