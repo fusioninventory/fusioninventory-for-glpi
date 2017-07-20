@@ -1445,7 +1445,7 @@ class PluginFusioninventoryFormatconvert {
       //Plugin_values is returned by plugins. We check if it's correct (an array)
       //and if plugin_values['inventory'] is also an array
       //if yes, then replace the inventory array
-      if (is_array($plugin_values) && is_array($plugins_values['inventory'])) {
+      if (is_array($plugin_values) && is_array($plugin_values['inventory'])) {
          $a_inventory = $plugin_values['inventory'];
       }
 
