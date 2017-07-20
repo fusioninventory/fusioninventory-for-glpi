@@ -38,4 +38,50 @@ JSON;
          PluginFusioninventoryToolbox::formatJson(json_encode($this->formatJson_input))
       );
    }
+
+   /**
+    * @test
+    */
+   public function isAFusionInventoryDevice() {
+      $computer = new Computer();
+
+      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+
+      $values = ['name'         => 'comp',
+                 'is_dynamic'   => 1,
+                 'entities_id'  => 0,
+                 'is_recursive' => 0];
+      $computers_id = $computer->add($values);
+      $computer->getFromDB($computers_id);
+
+      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+
+      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $pfComputer->add(['computers_id' => $computers_id]);
+      $this->assertTrue(PluginFusioninventoryToolbox::isAFusionInventoryDevice($computer));
+
+      $printer = new Printer();
+      $values  = ['name'         => 'printer',
+                  'is_dynamic'   => 1,
+                  'entities_id'  => 0,
+                  'is_recursive' => 0];
+      $printers_id = $printer->add($values);
+      $printer->getFromDB($printers_id);
+      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+
+      $pfPrinter = new PluginFusioninventoryPrinter();
+      $pfPrinter->add(['printers_id' => $printers_id]);
+      $this->assertTrue(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+
+      $values  = ['name'         => 'printer2',
+                  'is_dynamic'   => 0,
+                  'entities_id'  => 0,
+                  'is_recursive' => 0];
+      $printers_id_2 = $printer->add($values);
+      $printer->getFromDB($printers_id_2);
+      $pfPrinter->add(['printers_id' => $printers_id_2]);
+      $this->assertFalse(PluginFusioninventoryToolbox::isAFusionInventoryDevice($printer));
+
+   }
+
 }
