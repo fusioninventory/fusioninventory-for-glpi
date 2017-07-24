@@ -1137,36 +1137,21 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       ];
 
       $callable = function($params) {
-         $params['source']['OPERATINGSYSTEM']['FULL_NAME'] =
+         $params['inventory']['OPERATINGSYSTEM']['FULL_NAME'] =
             'Fedora release 23 (Twenty Three)';
          return $params;
       };
       $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['tests'] = $callable;
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $a_return        = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
       unset($PLUGIN_HOOKS['fusioninventory_addinventoryinfos']);
 
-      $a_reference = [
-         'name'                             => 'vbox-winxp',
-         'os_licenseid'                     => '',
-         'os_license_number'                => '',
-         'domains_id'                       => '',
-         'uuid'                             => '',
-         'manufacturers_id'                 => '',
-         'computermodels_id'                => '',
-         'serial'                           => '',
-         'computertypes_id'                 => '',
-         'is_dynamic'                       => '1',
-         'operatingsystemversions_id'       => '0',
-         'operatingsystemservicepacks_id'   => '0',
-         'operatingsystems_id'              => '0'
-      ];
-
-      $this->assertArrayHasKey('OPERATINGSYSTEM', $a_return['source']);
-      $this->assertArrayHasKey('FULL_NAME', $a_return['source']['OPERATINGSYSTEM']);
-      $this->assertEquals('Fedora release 23 (Twenty Three)', $a_return['source']['OPERATINGSYSTEM']['FULL_NAME']);
+      $this->assertTrue(isset($a_return['OPERATINGSYSTEM']));
+      $this->assertTrue(isset($a_return['OPERATINGSYSTEM']['FULL_NAME']));
+      $this->assertEquals('Fedora release 23 (Twenty Three)',
+                          $a_return['OPERATINGSYSTEM']['FULL_NAME']);
    }
 
    /**
