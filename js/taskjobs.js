@@ -612,6 +612,7 @@ taskjobs.create_block = function(selector, parent_selector, content) {
 
 // Load templates
 var templates = {};
+var targets_cpt = 0;
 
 taskjobs.init_templates = function() {
    templates = {
@@ -688,7 +689,8 @@ taskjobs.update_logs = function (data) {
          targets_selector = job_selector + ' .targets_block';
 
          $.each( job_v.targets, function( target_i, target_v) {
-            target_id = target_i;
+            target_id = target_i+ '_' + targets_cpt;
+            targets_cpt++;
             target_name = target_v.name;
             target_link = target_v.item_link;
             target_selector = task_selector + ' #'+target_id;
