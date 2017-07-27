@@ -9,7 +9,7 @@
   <target name="phpunit.unit.custom" depends='plugin-fusioninventory.prepare' description="Run unit tests with PHPUnit">
    <phpunit.run type="custom" configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml'>
      <testfile>
-       <arg path='${tests.directory}/1_Unit/ToolboxTest.php' />
+       <arg path='${tests.directory}/1_Unit/ComputerTransformationTest.php' />
      </testfile>
    </phpunit.run>
    <fail>

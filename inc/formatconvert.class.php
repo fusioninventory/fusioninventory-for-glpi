@@ -1439,13 +1439,14 @@ class PluginFusioninventoryFormatconvert {
          'inventory' => $a_inventory,
          'source'    => $array
       );
-      $plugin_values = Plugin::doHookFunction(
-         "fusioninventory_addinventoryinfos",
-         $plugin_params
-      );
+      $plugin_values = Plugin::doHookFunction("fusioninventory_addinventoryinfos",
+                                              $plugin_params);
 
-      if (is_array($plugin_values) && $plugin_values !== $plugin_params) {
-         $a_inventory = array_merge($a_inventory, $plugin_values);
+      //Plugin_values is returned by plugins. We check if it's correct (an array)
+      //and if plugin_values['inventory'] is also an array
+      //if yes, then replace the inventory array
+      if (is_array($plugin_values) && is_array($plugin_values['inventory'])) {
+         $a_inventory = $plugin_values['inventory'];
       }
 
       return $a_inventory;
