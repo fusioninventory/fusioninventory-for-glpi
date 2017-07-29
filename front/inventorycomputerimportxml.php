@@ -96,6 +96,13 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
       $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
       unset($_SESSION['glpi_fusionionventory_nolock']);
+   } else if (preg_match('/\.json/i', $_FILES['importfile']['name'])) {
+      $json = file_get_contents($_FILES['importfile']['tmp_name']);
+      $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
+      $pfToolbox = new PluginFusioninventoryToolbox();
+      $xml = $pfToolbox->json2xml($json);
+      $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
+      unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {
       Session::addMessageAfterRedirect(
          __('No file to import!', 'fusioninventory'),

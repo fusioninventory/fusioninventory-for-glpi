@@ -190,7 +190,34 @@ class PluginFusioninventoryToolbox {
        return $data;
    }
 
+   public function json2xml($data) {
+      $decodedJson = json_decode($data);
+      if (!isset($decodedJson->REQUEST)) {
+         return null;
+      }
+      $xml_data = new SimpleXMLElement('<?xml version="1.0"?><REQUEST/>');
+      $this->arrayToXml($decodedJson->REQUEST, $xml_data);
+      return $xml_data->asXML();
+   }
 
+   private function arrayToXml($data, &$xml_data) {
+      foreach ($data as $key => $value) {
+         if (is_numeric($key) ){
+            $key = 'item'.$key; //dealing with <0/>..<n/> issues
+         }
+         if (is_object($value)) {
+            $subnode = $xml_data->addChild($key);
+            $this->arrayToXml($value, $subnode);
+         } else if (is_array($value)) {
+            foreach ($value as $item) {
+               $subnode = $xml_data->addChild($key);
+               $this->arrayToXml($item, $subnode);
+            }
+         } else {
+            $xml_data->addChild("$key", htmlspecialchars("$value"));
+         }
+      }
+   }
 
    /**
     * Merge 2 simpleXML objects
