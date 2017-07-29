@@ -320,7 +320,6 @@ function plugin_init_fusioninventory() {
                                         'showInfo']];
 
       $PLUGIN_HOOKS['post_item_form']['fusioninventory'] = 'postItemForm';
-      $PLUGIN_HOOKS['post_item_form']['fusioninventory'] = 'postItemForm';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
