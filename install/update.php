@@ -2706,7 +2706,7 @@ function do_biosascomponentmigration() {
  */
 function do_computerstat_migration($migration) {
    global $DB;
-   
+
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputerstats
     */
@@ -8961,7 +8961,10 @@ function migrateTablesFromFusinvDeploy ($migration) {
       'glpi_plugin_fusinvdeploy_checks',
       'glpi_plugin_fusinvdeploy_fileparts',
       'glpi_plugin_fusinvdeploy_files',
-      'glpi_plugin_fusinvdeploy_files_mirrors'
+      'glpi_plugin_fusinvdeploy_files_mirrors',
+      'glpi_plugin_fusioninventory_inventorycomputerstorages',
+      'glpi_plugin_fusioninventory_inventorycomputerstoragetypes',
+      'glpi_plugin_fusioninventory_inventorycomputerstorages_storages'      
    );
    foreach ($old_deploy_tables as $table) {
       $migration->dropTable($table);
