@@ -364,7 +364,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_antivirus_migration($migration);
       do_computercomputer_migration($migration);
       do_computerstat_migration($migration);
-      do_computerstorage_migration($migration);
       do_computerlicense_migration($migration);
       do_computerremotemgmt_migration($migration);
       do_computerarch_migration($migration);
@@ -2738,192 +2737,6 @@ function do_computerstat_migration($migration) {
 
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerstat.class.php");
       PluginFusioninventoryInventoryComputerStat::init();
-   }
-}
-
-
-
-/**
- * Manage the computer storage part migration
- *
- * @global object $DB
- * @param object $migration
- */
-function do_computerstorage_migration($migration) {
-   global $DB;
-
-   /*
-    * Table glpi_plugin_fusioninventory_inventorycomputerstorages
-    */
-   $newTable = "glpi_plugin_fusioninventory_inventorycomputerstorages";
-   if (!$DB->tableExists($newTable)) {
-      $query = "CREATE TABLE `".$newTable."` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                   PRIMARY KEY (`id`)
-               ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
-   }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "name",
-                              "name",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "uuid",
-                              "uuid",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "totalsize",
-                              "totalsize",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "freesize",
-                              "freesize",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "plugin_fusioninventory_inventorycomputerstoragetypes_id",
-                              "plugin_fusioninventory_inventorycomputerstoragetypes_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "computers_id",
-                              "computers_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-      $migration->addField($newTable,
-                           "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->addField($newTable,
-                           "name",
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable,
-                           "uuid",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable,
-                           "totalsize",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "freesize",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "plugin_fusioninventory_inventorycomputerstoragetypes_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "computers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-      $migration->addKey($newTable,
-                         "uuid");
-      $migration->addKey($newTable,
-                         "computers_id");
-   $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, FALSE);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_inventorycomputerstoragetypes
-    */
-   $newTable = "glpi_plugin_fusioninventory_inventorycomputerstoragetypes";
-   if (!$DB->tableExists($newTable)) {
-      $query = "CREATE TABLE `".$newTable."` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                   PRIMARY KEY (`id`)
-               ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
-   }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "name",
-                              "name",
-                              "varchar(255) DEFAULT NULL");
-      $migration->changeField($newTable,
-                              "level",
-                              "level",
-                              "tinyint(2) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-      $migration->addField($newTable,
-                           "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->addField($newTable,
-                           "name",
-                           "varchar(255) DEFAULT NULL");
-      $migration->addField($newTable,
-                           "level",
-                           "tinyint(2) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-      $migration->addKey($newTable,
-                         "level");
-   $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, FALSE);
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_inventorycomputerstorages_storages
-    */
-   $newTable = "glpi_plugin_fusioninventory_inventorycomputerstorages_storages";
-   if (!$DB->tableExists($newTable)) {
-      $query = "CREATE TABLE `".$newTable."` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                   PRIMARY KEY (`id`)
-               ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
-   }
-      $migration->changeField($newTable,
-                              "id",
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
-                              "plugin_fusioninventory_inventorycomputerstorages_id_1",
-                              "plugin_fusioninventory_inventorycomputerstorages_id_1",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->changeField($newTable,
-                              "plugin_fusioninventory_inventorycomputerstorages_id_2",
-                              "plugin_fusioninventory_inventorycomputerstorages_id_2",
-                              "int(11) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-      $migration->addField($newTable,
-                           "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
-      $migration->addField($newTable,
-                           "plugin_fusioninventory_inventorycomputerstorages_id_1",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "plugin_fusioninventory_inventorycomputerstorages_id_2",
-                           "int(11) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-      $migration->addKey($newTable,
-                         "plugin_fusioninventory_inventorycomputerstorages_id_1");
-      $migration->addKey($newTable,
-                         "plugin_fusioninventory_inventorycomputerstorages_id_2");
-   $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, FALSE);
-
-
-   /*
-    * Add storage type if not present
-    */
-   $a_storage = array();
-   $a_storage['partition']          = 5;
-   $a_storage['volume groups']      = 10;
-   $a_storage['logical volumes']    = 20;
-   $a_storage['hard disk']          = 1;
-   $a_storage['mount']              = 25;
-
-   foreach ($a_storage as $name => $level) {
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-         WHERE `name`='".$name."'";
-      $result = $DB->query($query);
-      if (!$DB->numrows($result)) {
-         $DB->query("INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-            (`name`, `level`) VALUES
-            ('".$name."', '".$level."')");
-      }
    }
 }
 
@@ -8964,7 +8777,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       'glpi_plugin_fusinvdeploy_files_mirrors',
       'glpi_plugin_fusioninventory_inventorycomputerstorages',
       'glpi_plugin_fusioninventory_inventorycomputerstoragetypes',
-      'glpi_plugin_fusioninventory_inventorycomputerstorages_storages'      
+      'glpi_plugin_fusioninventory_inventorycomputerstorages_storages'
    );
    foreach ($old_deploy_tables as $table) {
       $migration->dropTable($table);
