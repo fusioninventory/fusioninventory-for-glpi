@@ -1367,12 +1367,3 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Computer','serial','','serial',13,NULL),
           ('Computer','ifPhysAddress','','mac',15,NULL),
           ('Computer','ifaddr','','ip',407,NULL);
-
-
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-(`id`, `name`, `level`) VALUES
-(1, 'partition', 5),
-(2, 'volume groups', 10),
-(3, 'logical volumes', 20),
-(4, 'hard disk', 1),
-(5, 'mount', 25);
