@@ -2265,7 +2265,7 @@ function plugin_fusioninventory_getDatabaseRelations() {
  */
 
 
-function postItemForm($params) {
+function plugin_fusioninventory_postItemForm($params) {
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
          case 'Computer':
