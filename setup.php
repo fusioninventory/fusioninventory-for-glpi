@@ -321,6 +321,8 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['post_item_form']['fusioninventory']
          = 'plugin_fusioninventory_postItemForm';
+      $PLUGIN_HOOKS['post_show_tab']['fusioninventory']
+         = 'plugin_fusioninventory_postShowTab';
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
