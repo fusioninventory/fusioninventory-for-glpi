@@ -135,10 +135,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $peripheral                   = new Peripheral();
       $pfComputerRemotemgmt         = new PluginFusioninventoryComputerRemoteManagement();
 
-//      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
-//      $pfInventoryComputerStorage_Storage =
-//             new PluginFusioninventoryInventoryComputerStorage_Storage();
-
       $computer->getFromDB($computers_id);
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
