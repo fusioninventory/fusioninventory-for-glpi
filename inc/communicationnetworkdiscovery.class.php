@@ -257,7 +257,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.
                                                                   implode(", ", $a_text);
          $this->addtaskjoblog();
-         
+
          $pfIgnoredimport = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          if (isset($input['name'])) {
