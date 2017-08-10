@@ -133,8 +133,9 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                 LIMIT 1;";
       $result = $DB->query($query);
       if ($result) {
-         $this->fields = $DB->fetch_row($result);
-         if ($this->fields) {
+         $fields = $DB->fetch_row($result);
+         if ($fields) {
+            $this->fields = $fields;
             return $this->fields['0'];
          }
       }
