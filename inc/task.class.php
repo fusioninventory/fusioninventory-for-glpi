@@ -817,12 +817,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       global $DB;
 
 
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTask    = new PluginFusioninventoryTask();
+      $pfTaskjob      = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfTask         = new PluginFusioninventoryTask();
 
       $index = 0;
-      //Delete taskjobs that are too old
-      $date  = "SELECT job.`id` as 'id'
+
+      //Delete taskstates that are too old
+      $date  = "SELECT DISTINCT state.`id` as 'id'
                 FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log
                 LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS state
                   ON (state.`id` = log.`plugin_fusioninventory_taskjobstates_id`)
@@ -835,24 +837,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                                 INTERVAL ".$interval." DAY),
                                 CURDATE()) < '0'
                    AND `state`.`state` IN (3, 4, 5)";
+
       foreach ($DB->request($date) as $data) {
-         $pfTaskjob->fields['id'] = $data['id'];
-         PluginFusioninventoryTaskjob::purgeTaskjob($pfTaskjob);
+         $pfTaskjobstate->delete($data, true);
          $index++;
       }
 
-      //Check if a task has logs. In case not, delete the task
+      //Check if a task has jobstates. In case not, delete the task
       foreach ($DB->request('glpi_plugin_fusioninventory_tasks',
                             ['is_deploy_on_demand' => 1]) as $task) {
 
          $query = "SELECT COUNT(*) as cpt
-                   FROM `glpi_plugin_fusioninventory_taskjoblogs` as log
-                   LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS state
-                      ON (state.`id` = log.`plugin_fusioninventory_taskjobstates_id`)
+                   FROM `glpi_plugin_fusioninventory_taskjobstates` as state
                    LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
                       ON (job.`id` = state.`plugin_fusioninventory_taskjobs_id`)
                    WHERE job.`plugin_fusioninventory_tasks_id`='".$task['id']."'";
          $result = $DB->query($query);
+
          if ($DB->result($result, 0, "cpt") == 0) {
             $index++;
             $pfTask->delete(['id' => $task['id']], true);
