@@ -15,7 +15,7 @@ env:
 #  - GLPI=0.90/bugfixes
 #  - GLPI=0.85/bugfixes
 #  - GLPI=9.1/bugfixes
-  - GLPI=master
+  - GLPI=9.2/bugfixes
 
 cache:
   directories:
