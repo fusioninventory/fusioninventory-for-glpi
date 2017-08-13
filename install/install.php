@@ -65,6 +65,7 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
    require_once(GLPI_ROOT . '/plugins/fusioninventory/inc/commonview.class.php');
    require_once(GLPI_ROOT . '/plugins/fusioninventory/inc/taskjobview.class.php');
    require_once(GLPI_ROOT . '/plugins/fusioninventory/inc/taskview.class.php');
+   require_once(GLPI_ROOT . '/plugins/fusioninventory/inc/deploypackageitem.class.php');
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);
    }

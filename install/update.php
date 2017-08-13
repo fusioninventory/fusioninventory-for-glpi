@@ -428,6 +428,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_deploypackage_migration($migration);
       do_deploymirror_migration($migration);
       do_deploygroup_migration($migration);
+      do_deployuserinteraction_migration($migration);
       migrateTablesFromFusinvDeploy($migration);
 
 
@@ -4853,6 +4854,34 @@ function do_computeroperatingsystem_migration($migration) {
    $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
 }
 
+/**
+ * Manage the deploy user interaction migration process
+ *
+ * @since 9.2
+ * @global object $DB
+ * @param object $migration
+ */
+function do_deployuserinteraction_migration($migration) {
+   global $DB;
+
+   if (!TableExists('glpi_plugin_fusioninventory_deployuserinteractions')) {
+      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
+         `id` int(11) NOT NULL AUTO_INCREMENT,
+         `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+         `entities_id` int(11) NOT NULL DEFAULT '0',
+         `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+         `date_creation` datetime DEFAULT NULL,
+         `date_mod` datetime DEFAULT NULL,
+         `json` longtext DEFAULT NULL,
+         PRIMARY KEY (`id`),
+         KEY `date_mod` (`date_mod`),
+         KEY `date_creation` (`date_creation`),
+         KEY `entities_id` (`entities_id`),
+         KEY `is_recursive` (`is_recursive`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+      $DB->query($query);
+   }
+}
 
 
 /**
@@ -6350,7 +6379,6 @@ function do_rule_migration($migration) {
            ." WHERE `type`='import_printer' ";
 
 }
-
 
 
 /**

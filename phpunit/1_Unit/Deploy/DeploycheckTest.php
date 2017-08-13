@@ -47,7 +47,8 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetTypes() {
-      $types = PluginFusioninventoryDeployCheck::getTypes();
+      $check = new PluginFusioninventoryDeployCheck();
+      $types = $check->getTypes();
       $this->assertEquals(3, count($types));
       $this->assertEquals(7, count($types[__('Registry', 'fusioninventory')]));
       $this->assertEquals(7, count($types[__('File')]));
@@ -59,12 +60,13 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function getGetLabelForAType() {
+      $check = new PluginFusioninventoryDeployCheck();
+
       $this->assertEquals(__("Registry key exists", 'fusioninventory'),
-                          PluginFusioninventoryDeployCheck::getLabelForAType('winkeyExists'));
+                          $check->getLabelForAType('winkeyExists'));
       $this->assertEquals(__("Free space is greater than", 'fusioninventory'),
-                          PluginFusioninventoryDeployCheck::getLabelForAType('freespaceGreater'));
-     $this->assertEquals('',
-                         PluginFusioninventoryDeployCheck::getLabelForAType('foo'));
+                          $check->getLabelForAType('freespaceGreater'));
+      $this->assertEquals('', $check->getLabelForAType('foo'));
 
    }
 
@@ -72,7 +74,8 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetUnitLabel() {
-      $units = PluginFusioninventoryDeployCheck::getUnitLabel();
+      $check = new PluginFusioninventoryDeployCheck();
+      $units = $check->getUnitLabel();
       $this->assertEquals(4, count($units));
       $this->assertEquals($units, [ "B"  => __('o'),
                                     "KB" => __('Kio'),
@@ -86,20 +89,17 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetAuditDescription() {
-      $description
-         = PluginFusioninventoryDeployCheck::getAuditDescription('winkeyEquals', 'skip');
+      $check       = new PluginFusioninventoryDeployCheck();
+      $description = $check->getAuditDescription('winkeyEquals', 'skip');
       $this->assertEquals("Registry value equals to : continue, otherwise : skip job", $description);
 
-      $description
-         = PluginFusioninventoryDeployCheck::getAuditDescription('winkeyEquals', 'passed');
+      $description = $check->getAuditDescription('winkeyEquals', 'passed');
       $this->assertEquals("Registry value equals to : passed, otherwise : ", $description);
 
-      $description
-         = PluginFusioninventoryDeployCheck::getAuditDescription('winkeyEquals', 'info');
+      $description = $check->getAuditDescription('winkeyEquals', 'info');
       $this->assertEquals("Registry value equals to : passed, otherwise : report info", $description);
 
-      $description
-         = PluginFusioninventoryDeployCheck::getAuditDescription('winkeyEquals', 'warning');
+      $description = $check->getAuditDescription('winkeyEquals', 'warning');
       $this->assertEquals("Registry value equals to : passed, otherwise : report warning", $description);
    }
 
@@ -108,17 +108,19 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetUnitSize() {
-      $this->assertEquals(PluginFusioninventoryDeployCheck::getUnitSize('B'), '1');
-      $this->assertEquals(PluginFusioninventoryDeployCheck::getUnitSize('KB'), '1024');
-      $this->assertEquals(PluginFusioninventoryDeployCheck::getUnitSize('MB'), '1048576');
-      $this->assertEquals(PluginFusioninventoryDeployCheck::getUnitSize('GB'), '1073741824');
+      $check = new PluginFusioninventoryDeployCheck();
+      $this->assertEquals($check->getUnitSize('B'), '1');
+      $this->assertEquals($check->getUnitSize('KB'), '1024');
+      $this->assertEquals($check->getUnitSize('MB'), '1048576');
+      $this->assertEquals($check->getUnitSize('GB'), '1073741824');
    }
 
    /**
     * @test
     */
    public function testGetRegistryTypes() {
-      $types = PluginFusioninventoryDeployCheck::getRegistryTypes();
+      $check = new PluginFusioninventoryDeployCheck();
+      $types = $check->getRegistryTypes();
       $this->assertEquals(8, count($types));
       $expected = ['REG_SZ'          => 'REG_SZ',
               'REG_DWORD'            => 'REG_DWORD',
@@ -135,33 +137,25 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function testGetRegistryTypeLabel() {
-      $this->assertEquals('', PluginFusioninventoryDeployCheck::getRegistryTypeLabel('foo'));
-      $this->assertEquals('', PluginFusioninventoryDeployCheck::getRegistryTypeLabel(null));
-      $this->assertEquals('REG_SZ', PluginFusioninventoryDeployCheck::getRegistryTypeLabel('REG_SZ'));
-   }
-
-   /**
-    * @test
-    */
    public function testGetValues() {
+      $check    = new PluginFusioninventoryDeployCheck();
       $values   = ['name'   => 'My check',
                    'path'   => 'HKLM\Softwares\FusionInventory-Agent\debug',
                    'value'  => '',
                    'return' => 'info'
                   ];
-      $result   = PluginFusioninventoryDeployCheck::getValues('winkeyExists', $values, 'edit');
+      $result   = $check->getValues('winkeyExists', $values, 'edit');
       $expected = ['warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended',
-                   'name_value'  => 'My check',
-                   'name_label'  => 'Audit label',
-                   'name_type'   => 'input',
-                   'path_label'  => "Path to the key&nbsp;<span class='red'>*</span>",
-                   'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
-                   'path_comment'=> 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
-                   'value_type'  => 'input',
-                   'value_label' => false,
-                   'value'       => '',
-                   'return'      => 'info'
+                   'name_value'      => 'My check',
+                   'name_label'      => 'Audit label',
+                   'name_type'       => 'input',
+                   'path_label'      => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'path_value'      => 'HKLM\Softwares\FusionInventory-Agent\debug',
+                   'path_comment'    => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+                   'value_type'      => 'input',
+                   'value_label'     => false,
+                   'value'           => '',
+                   'return'          => 'info'
                 ];
       $this->assertEquals($result, $expected);
 
@@ -171,18 +165,19 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                  'value'  => '',
                  'return' => 'skip'
                 ];
-      $result = PluginFusioninventoryDeployCheck::getValues('fileExists', $values, 'edit');
+
+      $result   = $check->getValues('fileExists', $values, 'edit');
       $expected = ['warning_message' => false,
-                   'name_value'  => 'File exists',
-                   'name_label'  => 'Audit label',
-                   'name_type'   => 'input',
-                   'path_label'  => "File&nbsp;<span class='red'>*</span>",
-                   'path_comment'=> '',
-                   'path_value'  => '/etc/passwd',
-                   'value_type'  => 'input',
-                   'value_label' => false,
-                   'value'       => '',
-                   'return'      => 'skip'
+                   'name_value'      => 'File exists',
+                   'name_label'      => 'Audit label',
+                   'name_type'       => 'input',
+                   'path_label'      => "File&nbsp;<span class='red'>*</span>",
+                   'path_comment'    => '',
+                   'path_value'      => '/etc/passwd',
+                   'value_type'      => 'input',
+                   'value_label'     => false,
+                   'value'           => '',
+                   'return'          => 'skip'
                 ];
       $this->assertEquals($result, $expected);
 
@@ -191,18 +186,19 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                  'value'  => '2',
                  'return' => 'error'
                 ];
-      $result = PluginFusioninventoryDeployCheck::getValues('winkeyEquals', $values, 'edit');
+
+      $result   = $check->getValues('winkeyEquals', $values, 'edit');
       $expected = ['warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended',
-                   'name_value'  => 'Value equals',
-                   'name_label'  => 'Audit label',
-                   'name_type'   => 'input',
-                   'path_label'  => "Path to the value&nbsp;<span class='red'>*</span>",
-                   'path_value'  => 'HKLM\Softwares\FusionInventory-Agent\debug',
-                   'path_comment'=> 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
-                   'value_type'  => 'input',
-                   'value_label' => 'Value',
-                   'value'       => '2',
-                   'return'      => 'error'
+                   'name_value'      => 'Value equals',
+                   'name_label'      => 'Audit label',
+                   'name_type'       => 'input',
+                   'path_label'      => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'path_value'      => 'HKLM\Softwares\FusionInventory-Agent\debug',
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+                   'value_type'      => 'input',
+                   'value_label'     => 'Value',
+                   'value'           => '2',
+                   'return'          => 'error'
                 ];
       $this->assertEquals($result, $expected);
    }
@@ -211,77 +207,78 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetLabelsAndTypes() {
+      $check = new PluginFusioninventoryDeployCheck();
 
       //----------- winkeyExists --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyExists', false);
-      $expected = ['path_label'   => 'Path to the key',
-                   'value_label'  => false,
-                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+      $result   = $check->getLabelsAndTypes('winkeyExists', false);
+      $expected = ['path_label'      => 'Path to the key',
+                   'value_label'     => false,
+                   'path_comment'    => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended'
                  ];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyExists', true);
-      $expected = ['path_label'   => "Path to the key&nbsp;<span class='red'>*</span>",
-                   'value_label'  => false,
-                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+      $result   = $check->getLabelsAndTypes('winkeyExists', true);
+      $expected = ['path_label'      => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'value_label'     => false,
+                   'path_comment'    => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended',
                 ];
       $this->assertEquals($result, $expected);
 
       //----------- winkeyMissing --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyMissing', false);
-      $expected = ['path_label'   => 'Path to the key',
-                   'value_label'  => false,
-                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+      $result   = $check->getLabelsAndTypes('winkeyMissing', false);
+      $expected = ['path_label'      => 'Path to the key',
+                   'value_label'     => false,
+                   'path_comment'    => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended'
                 ];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyMissing', true);
-      $expected = ['path_label'   => "Path to the key&nbsp;<span class='red'>*</span>",
-                   'value_label'  => false,
-                   'path_comment' => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
+      $result   = $check->getLabelsAndTypes('winkeyMissing', true);
+      $expected = ['path_label'      => "Path to the key&nbsp;<span class='red'>*</span>",
+                   'value_label'     => false,
+                   'path_comment'    => 'Example of registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended',
                   ];
       $this->assertEquals($result, $expected);
 
       //----------- winvalueExists --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueExists', false);
-      $expected = ['path_label'   => 'Path to the value',
-                   'value_label'  => false,
-                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+      $result   = $check->getLabelsAndTypes('winvalueExists', false);
+      $expected = ['path_label'      => 'Path to the value',
+                   'value_label'     => false,
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher mandatory',
                   ];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueExists', true);
-      $expected = ['path_label'   => "Path to the value&nbsp;<span class='red'>*</span>",
-                   'value_label'  => false,
-                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+      $result   = $check->getLabelsAndTypes('winvalueExists', true);
+      $expected = ['path_label'      => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label'     => false,
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher mandatory',
                   ];
       $this->assertEquals($result, $expected);
 
       //----------- winkeyEquals --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyEquals', false);
-      $expected = ['path_label'   => 'Path to the value',
-                   'value_label'  => 'Value',
-                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+      $result   = $check->getLabelsAndTypes('winkeyEquals', false);
+      $expected = ['path_label'      => 'Path to the value',
+                   'value_label'     => 'Value',
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended',
                   ];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyEquals', true);
-      $expected = ['path_label'   => "Path to the value&nbsp;<span class='red'>*</span>",
-                   'value_label'  => 'Value',
-                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+      $result   = $check->getLabelsAndTypes('winkeyEquals', true);
+      $expected = ['path_label'      => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label'     => 'Value',
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher recommended',
                   ];
       $this->assertEquals($result, $expected);
 
       //----------- winkeyNotEquals --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winkeyNotEquals', false);
+      $result = $check->getLabelsAndTypes('winkeyNotEquals', false);
       $expected = ['path_label'   => 'Path to the value',
                    'value_label'  => 'Value',
                    'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
@@ -290,119 +287,119 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals($result, $expected);
 
       //----------- winvalueType --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', false);
-      $expected = ['path_label'   => 'Path to the value',
-                   'value_label'  => 'Type of value',
-                   'value_type'   => 'registry_type',
-                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+      $result   = $check->getLabelsAndTypes('winvalueType', false);
+      $expected = ['path_label'      => 'Path to the value',
+                   'value_label'     => 'Type of value',
+                   'value_type'      => 'registry_type',
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher mandatory',
                   ];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('winvalueType', true);
-      $expected = ['path_label'   => "Path to the value&nbsp;<span class='red'>*</span>",
-                   'value_label'  => "Type of value&nbsp;<span class='red'>*</span>",
-                   'value_type'   => 'registry_type',
-                   'path_comment' => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
+      $result   = $check->getLabelsAndTypes('winvalueType', true);
+      $expected = ['path_label'      => "Path to the value&nbsp;<span class='red'>*</span>",
+                   'value_label'     => "Type of value&nbsp;<span class='red'>*</span>",
+                   'value_type'      => 'registry_type',
+                   'path_comment'    => 'Example of registry value: HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server',
                    'warning_message' => 'Fusioninventory-Agent 2.3.20 or higher mandatory',
                   ];
       $this->assertEquals($result, $expected);
 
       //----------- fileExists --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileExists', false);
+      $result   = $check->getLabelsAndTypes('fileExists', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => false];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileExists', true);
+      $result   = $check->getLabelsAndTypes('fileExists', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => false];
       $this->assertEquals($result, $expected);
 
       //----------- fileMissing --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileMissing', false);
+      $result   = $check->getLabelsAndTypes('fileMissing', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => false];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileMissing', true);
+      $result   = $check->getLabelsAndTypes('fileMissing', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => false];
       $this->assertEquals($result, $expected);
 
       //----------- fileSizeGreater --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeGreater', false);
+      $result   = $check->getLabelsAndTypes('fileSizeGreater', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => 'Value',
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeGreater', true);
+      $result   = $check->getLabelsAndTypes('fileSizeGreater', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => "Value&nbsp;<span class='red'>*</span>",
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
       //----------- fileSizeLower --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeLower', false);
+      $result   = $check->getLabelsAndTypes('fileSizeLower', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => 'Value',
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeLower', true);
+      $result   = $check->getLabelsAndTypes('fileSizeLower', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => "Value&nbsp;<span class='red'>*</span>",
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
       //----------- fileSizeEquals --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeEquals', false);
+      $result   = $check->getLabelsAndTypes('fileSizeEquals', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => 'Value',
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSizeEquals', true);
+      $result   = $check->getLabelsAndTypes('fileSizeEquals', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => "Value&nbsp;<span class='red'>*</span>",
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
       //----------- fileSHA512 --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512', false);
+      $result   = $check->getLabelsAndTypes('fileSHA512', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => 'Value',
                    'value_type'  => 'textarea'];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512', true);
+      $result   = $check->getLabelsAndTypes('fileSHA512', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => "Value&nbsp;<span class='red'>*</span>",
                    'value_type'  => 'textarea'];
       $this->assertEquals($result, $expected);
 
       //----------- fileSHA512mismatch --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512mismatch', false);
+      $result   = $check->getLabelsAndTypes('fileSHA512mismatch', false);
       $expected = ['path_label'  => 'File',
                    'value_label' => 'Value',
                    'value_type'  => 'textarea'];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('fileSHA512mismatch', true);
+      $result   = $check->getLabelsAndTypes('fileSHA512mismatch', true);
       $expected = ['path_label'  => "File&nbsp;<span class='red'>*</span>",
                    'value_label' => "Value&nbsp;<span class='red'>*</span>",
                    'value_type'  => 'textarea'];
       $this->assertEquals($result, $expected);
 
       //----------- freespaceGreater --------------------------//
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('freespaceGreater', false);
+      $result   = $check->getLabelsAndTypes('freespaceGreater', false);
       $expected = ['path_label'  => 'Disk or directory',
                    'value_label' => 'Value',
                    'value_type'  => 'input+unit'];
       $this->assertEquals($result, $expected);
 
-      $result = PluginFusioninventoryDeployCheck::getLabelsAndTypes('freespaceGreater', true);
+      $result   = $check->getLabelsAndTypes('freespaceGreater', true);
       $expected = ['path_label'  => "Disk or directory&nbsp;<span class='red'>*</span>",
                    'value_label' => "Value&nbsp;<span class='red'>*</span>",
                    'value_type'  => 'input+unit'];
@@ -413,7 +410,8 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    * @test
    */
    public function testGetAllReturnValues() {
-      $values = PluginFusioninventoryDeployCheck::getAllReturnValues();
+      $check  = new PluginFusioninventoryDeployCheck();
+      $values = $check->getAllReturnValues();
       $expected = ["error"    => __('abort job', 'fusioninventory'),
                    "skip"     => __("skip job", 'fusioninventory'),
                    "info"     => __("report info", 'fusioninventory'),
@@ -426,87 +424,90 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    * @test
    */
    public function testGetValueForReturn() {
-      $this->assertEquals('abort job', PluginFusioninventoryDeployCheck::getValueForReturn('error'));
-      $this->assertEquals('skip job', PluginFusioninventoryDeployCheck::getValueForReturn('skip'));
-      $this->assertEquals('report info', PluginFusioninventoryDeployCheck::getValueForReturn('info'));
-      $this->assertEquals('report warning', PluginFusioninventoryDeployCheck::getValueForReturn('warning'));
-      $this->assertEquals('', PluginFusioninventoryDeployCheck::getValueForReturn('foo'));
-      $this->assertEquals('', PluginFusioninventoryDeployCheck::getValueForReturn(null));
+      $check = new PluginFusioninventoryDeployCheck();
+      $this->assertEquals('abort job', $check->getValueForReturn('error'));
+      $this->assertEquals('skip job', $check->getValueForReturn('skip'));
+      $this->assertEquals('report info', $check->getValueForReturn('info'));
+      $this->assertEquals('report warning', $check->getValueForReturn('warning'));
+      $this->assertEquals('', $check->getValueForReturn('foo'));
+      $this->assertEquals('', $check->getValueForReturn(null));
    }
 
    /**
    * @test
    */
    public function testAdd_item() {
+      $check           = new PluginFusioninventoryDeployCheck();
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+
       $input = ['name'        => 'test1',
                 'entities_id' => 0];
       $packages_id = $pfDeployPackage->add($input);
 
       $params = ['id'                 => $packages_id,
                  'name'               => 'Value exists',
-                 'deploy_checktype'   => 'winvalueExists',
+                 'checkstype'         => 'winvalueExists',
                  'path'               => 'HKLM\Software\FusionInventory-Agent\debug',
                  'value'              => false,
                  'return'             => 'skip'
               ];
-      PluginFusioninventoryDeployCheck::add_item($params);
-      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $check->add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       $params = ['id'                 => $packages_id,
                  'name'               => 'More than 500 Mb',
-                 'deploy_checktype'   => 'freespaceGreater',
+                 'checkstype'         => 'freespaceGreater',
                  'path'               => '/tmp',
                  'value'              => '500',
                  'unit'               => 'MB',
                  'return'             => 'info'
               ];
-      PluginFusioninventoryDeployCheck::add_item($params);
-      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $check->add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       $params = ['id'                 => $packages_id,
                  'name'               => 'More than 5.5 Gb',
-                 'deploy_checktype'   => 'freespaceGreater',
+                 'checkstype'         => 'freespaceGreater',
                  'path'               => '/tmp',
                  'value'              => '5.5',
                  'unit'               => 'GB',
                  'return'             => 'info'
               ];
-      PluginFusioninventoryDeployCheck::add_item($params);
-      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $check->add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       //Test that 5,5 is converted in 5.5 before computing the value in byte
       $params = ['id'                 => $packages_id,
                  'name'               => 'More than 5.5 Gb  #2',
-                 'deploy_checktype'   => 'freespaceGreater',
+                 'checkstype'         => 'freespaceGreater',
                  'path'               => '/tmp',
                  'value'              => '5,5',
                  'unit'               => 'GB',
                  'return'             => 'info'
               ];
-      PluginFusioninventoryDeployCheck::add_item($params);
-      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"More than 5.5 Gb  #2","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $check->add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"More than 5.5 Gb  #2","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       //Test that a float value like 9.20 is not converted in 9.2
       $params = ['id'                 => $packages_id,
                  'name'               => 'Test with float',
-                 'deploy_checktype'   => 'winkeyEquals',
+                 'checkstype'         => 'winkeyEquals',
                  'path'               => 'HKEY_LOCAL_MACHINE\SOFTWARE\FusionInventory-Agent\debug',
                  'value'              => '9.20',
                  'unit'               => '',
                  'return'             => 'info'
               ];
-      PluginFusioninventoryDeployCheck::add_item($params);
-      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"More than 5.5 Gb  #2","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"Test with float","type":"winkeyEquals","path":"HKEY_LOCAL_MACHINE\SOFTWARE\FusionInventory-Agent\debug","value":"9.20","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $check->add_item($params);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\Software\FusionInventory-Agent\debug","value":"","return":"skip"},{"name":"More than 500 Mb","type":"freespaceGreater","path":"/tmp","value":"0.00047683715820312","return":"info"},{"name":"More than 5.5 Gb","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"More than 5.5 Gb  #2","type":"freespaceGreater","path":"/tmp","value":"5.2452087402344E-6","return":"info"},{"name":"Test with float","type":"winkeyEquals","path":"HKEY_LOCAL_MACHINE\SOFTWARE\FusionInventory-Agent\debug","value":"9.20","return":"info"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
    }
@@ -517,6 +518,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    public function testSave_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
+      $check           = new PluginFusioninventoryDeployCheck();
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
@@ -526,14 +528,14 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $params = ['id'                 => $packages_id,
                  'index'              => 0,
                  'name'               => 'Value type is REG_SZ',
-                 'deploy_checktype'   => 'winvalueType',
+                 'checkstype'         => 'winvalueType',
                  'path'               => 'HKLM\Software\FusionInventory-Agent\debug',
                  'value'              => 'REG_SZ',
                  'return'             => 'info'
               ];
-      PluginFusioninventoryDeployCheck::save_item($params);
+      $check->save_item($params);
       $expected = '{"jobs":{"checks":[{"name":"Value type is REG_SZ","type":"winvalueType","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":"REG_SZ","return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $json     = Toolbox::stripslashes_deep($check->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
    }
@@ -544,6 +546,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    public function testRemove_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
+      $check           = new PluginFusioninventoryDeployCheck();
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
@@ -551,16 +554,16 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                ];
       $packages_id = $pfDeployPackage->add($input);
 
-      PluginFusioninventoryDeployCheck::remove_item(['packages_id'   => $packages_id,
-                                                     'check_entries' => [1 => 'on']]);
-      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $check->remove_item(['packages_id'   => $packages_id,
+                           'check_entries' => [1 => 'on']]);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = $check->getJson($packages_id);
       $this->assertEquals($expected, $json);
 
-      PluginFusioninventoryDeployCheck::remove_item(['packages_id'   => $packages_id,
-                                                     'check_entries' => [0 => 'on']]);
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $check->remove_item(['packages_id'   => $packages_id,
+                           'check_entries' => [0 => 'on']]);
+      $expected = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json     = $check->getJson($packages_id);
       $this->assertEquals($expected, $json);
    }
 
@@ -570,6 +573,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
    public function testMove_item() {
       $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"},{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
+      $check           = new PluginFusioninventoryDeployCheck();
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $input = ['name'        => 'test1',
                 'entities_id' => 0,
@@ -577,11 +581,11 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                ];
       $packages_id = $pfDeployPackage->add($input);
 
-      PluginFusioninventoryDeployCheck::move_item(['id'        => $packages_id,
-                                                   'old_index' => 0,
-                                                   'new_index' => 1]);
+      $check->move_item(['id'        => $packages_id,
+                         'old_index' => 0,
+                         'new_index' => 1]);
       $expected = '{"jobs":{"checks":[{"name":"More than 500Mb","type":"freespaceGreater","path":"/tmp","value":500,"return":"info"},{"name":"Value exists","type":"winvalueType","path":"debug","value":"REG_SZ","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
-      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $json     = $check->getJson($packages_id);
       $this->assertEquals($expected, $json);
    }
 }

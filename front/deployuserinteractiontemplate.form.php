@@ -30,12 +30,12 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is called by ajax function and display deploy type value.
+ * This file is used to manage the deploy package form.
  *
  * ------------------------------------------------------------------------
  *
  * @package   FusionInventory
- * @author    David Durieux
+ * @author    Walid Nouh
  * @copyright Copyright (c) 2010-2016 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -45,23 +45,38 @@
  */
 
 include ("../../../inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
-Session::checkCentralAccess();
+Session::checkLoginUser();
 
-$rand      = filter_input(INPUT_POST, "rand");
-$mode      = filter_input(INPUT_POST, "mode");
-$type      = filter_input(INPUT_POST, "type");
-$classname = filter_input(INPUT_POST, "class");
-
-if (empty($rand) && (empty($type))) {
-   exit();
+$template = new PluginFusioninventoryDeployUserinteractionTemplate();
+//general form
+if (isset ($_POST["add"])) {
+   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', CREATE);
+   $newID = $template->add($_POST);
+   Html::redirect($template->getFormURLWithID($newID));
+} else if (isset ($_POST["update"])) {
+   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', UPDATE);
+   $template->update($_POST);
+   Html::back();
+} else if (isset ($_POST["purge"])) {
+   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', PURGE);
+   $template->delete($_POST, 1);
+   $template->redirectToList();
 }
 
-$class = new $classname();
-$request_data = [
-    'packages_id' => filter_input(INPUT_POST, "packages_id"),
-    'orders_id'   => filter_input(INPUT_POST, "orders_id"),
-    'value'       => filter_input(INPUT_POST, "value")
-];
-$class->displayAjaxValues(NULL, $request_data, $rand, $mode);
+if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
+   Html::nullHeader(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"]);
+} else {
+   Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
+      "pluginfusioninventorymenu", "deployuserinteractiontemplate");
+   PluginFusioninventoryMenu::displayMenu("mini");
+}
+$id = "";
+if (isset($_GET["id"])) {
+   $id = $_GET["id"];
+}
+$template->display($_GET);
+if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
+   Html::nullFooter();
+} else {
+   Html::footer();
+}

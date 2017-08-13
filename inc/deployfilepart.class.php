@@ -73,7 +73,8 @@ class PluginFusioninventoryDeployFilepart {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
-      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).'/'.$sha512;
+      $pfDeployFile = new PluginFusioninventoryDeployFile();
+      $filePath     = $repoPath.$pfDeployFile->getDirBySha512($sha512).'/'.$sha512;
 
       if (!is_file($filePath)) {
          header("HTTP/1.1 404");

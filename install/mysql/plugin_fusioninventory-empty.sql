@@ -234,7 +234,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
@@ -802,6 +801,24 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+   `date_creation` datetime DEFAULT NULL,
+   `date_mod` datetime DEFAULT NULL,
+   `json` longtext DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `date_mod` (`date_mod`),
+   KEY `date_creation` (`date_creation`),
+   KEY `entities_id` (`entities_id`),
+   KEY `is_recursive` (`is_recursive`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 --
 -- END DEPLOY
 --

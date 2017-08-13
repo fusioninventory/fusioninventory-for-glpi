@@ -53,7 +53,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
           'entities_id' => 0);
       $packages_id = $pfDeployPackage->add($input);
       $pfDeployPackage->getFromDB(1);
-      $json_structure = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
    }
 
@@ -63,25 +63,27 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
     */
    public function AddItem() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $input = array(
-          'name'        => 'test2',
-          'entities_id' => 0);
+      $input = [
+                'name'        => 'test2',
+                'entities_id' => 0
+               ];
       $packages_id = $pfDeployPackage->add($input);
+      $check       = new PluginFusioninventoryDeployCheck();
 
       // Add check
-      $item = array(
+      $item = [
          'id'               => $packages_id,
          'name'             => 'check winkey',
          'itemtype'         => 'PluginFusioninventoryDeployCheck',
-         'deploy_checktype' => 'winkeyExists',
+         'checkstype'       => 'winkeyExists',
          'path'             => 'toto',
          'return'           => 'error',
          'add_item'         => 'Add'
-      );
+      ];
       PluginFusioninventoryDeployPackage::alterJSON('add_item', $item);
 
       $pfDeployPackage->getFromDB($packages_id);
-      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
 
    }
@@ -92,7 +94,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
     */
    public function duplicate() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $packages = $pfDeployPackage->find("`name`='test2'");
+      $packages        = $pfDeployPackage->find("`name`='test2'");
       $this->assertEquals(1, count($packages));
       $package = current($packages);
 
@@ -102,7 +104,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($packages));
       $package = current($packages);
 
-      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $package['json']);
       $this->assertEquals(0, $package['entities_id']);
    }

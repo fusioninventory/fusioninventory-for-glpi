@@ -520,6 +520,22 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = [];
    }
 
+   if (version_compare(GLPI_VERSION, '9.2-dev', '!=')
+      && version_compare(GLPI_VERSION, '9.2', 'lt')
+      || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+      if (method_exists('Plugin', 'messageIncompatible')) {
+         echo Plugin::messageIncompatible('core', '9.2', '9.3');
+      } else {
+         echo __('Your GLPI version not compatible, require >= 9.2 and < 9.3', 'fusioninventory');
+      }
+      return FALSE;
+   }
+
+   if (!function_exists('finfo_open')) {
+      echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
+      return FALSE;
+   }
+
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !$DB->tableExists("glpi_plugin_fusioninventory_configs")) {
