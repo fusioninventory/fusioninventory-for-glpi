@@ -4864,7 +4864,7 @@ function do_computeroperatingsystem_migration($migration) {
 function do_deployuserinteraction_migration($migration) {
    global $DB;
 
-   if (!TableExists('glpi_plugin_fusioninventory_deployuserinteractions')) {
+   if (!$DB->tableExists('glpi_plugin_fusioninventory_deployuserinteractions')) {
       $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
          `id` int(11) NOT NULL AUTO_INCREMENT,
          `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
