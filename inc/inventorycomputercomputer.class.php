@@ -160,6 +160,81 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
 
    /**
+    * Display information about computer that is linked to an agent but
+    * has no inventory
+    *
+    * @since 9.2
+    * @param object $item
+    * @return true
+    */
+   static function showFormForAgentWithNoInventory($item) {
+      $id = $item->getID();
+      $pfComputer  = new self();
+      if (!empty($pfComputer->hasAutomaticInventory($id))) {
+         return true;
+      } else {
+         $pfAgent = new PluginFusioninventoryAgent();
+         if ($pfAgent->getAgentWithComputerid($id)) {
+            echo '<tr>';
+            echo '<td colspan=\'4\'></td>';
+            echo '</tr>';
+
+            echo '<tr>';
+            echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
+            echo '</tr>';
+            $pfAgent->showInfoForComputer($id, 4);
+         }
+         return true;
+      }
+   }
+
+   /**
+    * Display information about a computer operating system
+    * has no inventory
+    *
+    * @since 9.2
+    * @param object $item
+    * @return true
+    */
+   static function showFormOS($item) {
+      $pfComputer = new self();
+      $a_computerextend = current(
+         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'","",1)
+      );
+      if (empty($a_computerextend)) {
+         return;
+      }
+
+      echo '<tr class="tab_bg_1">';
+      echo "<th colspan='4'></th>";
+      echo "</tr>";
+
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'.__('Company', 'fusioninventory').'</td>';
+      echo '<td>'.$a_computerextend['wincompany'].'</td>';
+
+      echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+      echo '<td>'.$a_computerextend['winowner'].'</td>';
+      echo '</tr>';
+
+      echo '<tr class="tab_bg_1">';
+      echo "<td>".__('Comments')."</td>";
+      echo '<td>'.$a_computerextend['oscomment'].'</td>';
+
+      echo "<td>".__("Installation date")."</td>";
+      echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('HostID', 'fusioninventory')."</td>";
+      echo "<td>";
+      echo $a_computerextend['hostid'];
+      echo "</td><colspan='2'></td>";
+      echo "</tr>";
+
+      return true;
+   }
+
+   /**
     * Display information about computer (bios, last contact...)
     *
     * @global array $CFG_GLPI
@@ -181,7 +256,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<table class="tab_glpi" width="100%">';
 
       echo '<tr>';
-      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
+      echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
@@ -191,46 +266,19 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<td>';
       echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
       echo '</td>';
-      echo '</tr>';
 
       if ($a_computerextend['remote_addr'] != '') {
-         echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
-         echo '</tr>';
+      } else {
       }
+      echo "<td colspan='2'></td>";
+
+      echo '</tr>';
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item->getID());
+      $pfAgent->showInfoForComputer($item->getID(), 4);
 
-      if ($a_computerextend['operatingsystem_installationdate'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo "<td>".__('Operating system')." - ".__('Installation')." (".
-                 strtolower(__('Date')).")</td>";
-         echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['winowner'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Owner', 'fusioninventory').'</td>';
-         echo '<td>'.$a_computerextend['winowner'].'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['wincompany'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Company', 'fusioninventory').'</td>';
-         echo '<td>'.$a_computerextend['wincompany'].'</td>';
-         echo '</tr>';
-      }
-
-      if ($a_computerextend['oscomment'] != '') {
-         echo '<tr class="tab_bg_1">';
-         echo "<td>".__('Comments')."</td>";
-         echo '<td>'.$a_computerextend['oscomment'].'</td>';
-         echo '</tr>';
-      }
 
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {

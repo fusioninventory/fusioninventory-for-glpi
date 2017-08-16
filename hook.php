@@ -2270,57 +2270,18 @@ function plugin_fusioninventory_getDatabaseRelations() {
  *
  * @return void
  */
-function postItemForm($params) {
-   $tab = 0;
 
+
+function plugin_fusioninventory_postItemForm($params) {
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
-         default:
-            break;
          case 'Computer':
-            $id = $params['item']->getID();
-            $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-            if (!empty($pfInventoryComputerComputer->hasAutomaticInventory($id))) {
-               return true;
-            } else {
-               $pfAgent = new PluginFusioninventoryAgent();
-               if ($pfAgent->getAgentWithComputerid($id)) {
-                  echo '<tr>';
-                  echo '<td colspan=\'4\'></td>';
-                  echo '</tr>';
-
-                  echo '<tr>';
-                  echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
-                  echo '</tr>';
-                  $pfAgent->showInfoForComputer($id, 4);
-               }
-               break;
+            PluginFusioninventoryInventoryComputerComputer::showFormForAgentWithNoInventory($params['item']);
+            break;
+         case 'Item_OperatingSystem':
+            if ($params['item']->fields['itemtype'] == 'Computer') {
+               PluginFusioninventoryInventoryComputerComputer::showFormOS($params['item']);
             }
-      }
-
-      if ($params['item'] instanceof Item_OperatingSystem) {
-         switch ($params['item']->fields['itemtype']) {
-            case 'Computer':
-               $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-               $a_computerextend = current(
-                  $pfInventoryComputerComputer->find(
-                     "`computers_id`='".$params['item']->fields['items_id']."'",
-                     "",
-                     1
-                  )
-               );
-               if (empty($a_computerextend)) {
-                  return;
-               }
-
-               echo "<tr class='tab_bg_1'>";
-               echo "<td>".__('HostID', 'fusioninventory')."</td>";
-               echo "<td>";
-               echo $a_computerextend['hostid'];
-               echo "</td>";
-               echo "</tr>";
-               break;
-         }
       }
    }
 }

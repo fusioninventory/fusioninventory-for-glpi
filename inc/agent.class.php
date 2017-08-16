@@ -1182,7 +1182,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Agent', 'fusioninventory').'</td>';
          echo '<td>'.$this->getLink(1).'</td>';
-         echo '</tr>';
 
          if ($colspan == 2) {
             echo '</tr>';
@@ -1190,19 +1189,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          }
          echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['useragent'].'</td>';
-         if ($colspan == 2) {
-            echo '</tr>';
-         }
+         echo '</tr>';
 
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['tag'].'</td>';
-         if ($colspan == 4) {
-            echo '<td colspan=\'2\'></td>';
+         if ($colspan == 2) {
+            echo '</tr>';
+            echo '<tr class="tab_bg_1">';
          }
-         echo '</tr>';
 
-         echo '<tr class="tab_bg_1">';
          echo '<td>';
          echo __('Last contact', 'fusioninventory');
          echo '</td>';
