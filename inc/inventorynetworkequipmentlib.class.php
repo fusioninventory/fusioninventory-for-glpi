@@ -95,6 +95,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input = $a_inventory['NetworkEquipment'];
 
       $input['id'] = $items_id;
+
+      //Add defaut status if there's one defined in the configuration
+      //If we're here it's because we've manually injected an snmpinventory xml file
+      $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+
       $networkEquipment->update($input);
 
       $this->internalPorts($a_inventory['internalport'],

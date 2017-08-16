@@ -84,4 +84,28 @@ JSON;
 
    }
 
+   /**
+    * @test
+    */
+   public function addDefaultStateIfNeeded() {
+      $input = [];
+
+      $state = new State();
+      $states_id_computer = $state->importExternal('state_computer');
+      $states_id_snmp = $state->importExternal('state_snmp');
+
+      $config = new PluginFusioninventoryConfig();
+      $config->updateValue('states_id_snmp_default', $states_id_snmp);
+      $config->updateValue('states_id_default', $states_id_computer);
+
+      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
+      $this->assertEquals(['states_id' => $states_id_computer], $result);
+
+      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+      $this->assertEquals(['states_id' => $states_id_snmp], $result);
+
+      $result = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('foo', $input);
+      $this->assertEquals([], $result);
+
+   }
 }
