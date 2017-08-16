@@ -87,17 +87,18 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       if (count($a_remotemanagement)) {
 
          echo '<tr>';
-         echo '<th colspan="2">'.__('Remote management', 'fusioninventory').'</th>';
+         echo '<th colspan="4">'.__('Remote management', 'fusioninventory').'</th>';
          echo '</tr>';
 
          foreach ($a_remotemanagement as $remotemanagement) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>".$remotemanagement['type']."</td>";
             echo "<td>".$remotemanagement['number']."</td>";
+            echo "<td colspan='2'>";
             echo "</tr>";
          }
       }
-      return TRUE;
+      return true;
    }
 
 
@@ -109,11 +110,8 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
     * @param integer $computers_id
     */
    static function cleanComputer($computers_id) {
-      $pfComputerRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
-      $a_remotemgmts = $pfComputerRemoteManagement->find("`computers_id`='".$computers_id."'");
-      foreach ($a_remotemgmts as $data) {
-         $pfComputerRemoteManagement->delete($data);
-      }
+      $pfComputerRemoteManagement = new self();
+      $pfComputerRemoteManagement->deleteByCriteria(['computers_id' => $computers_id]);
    }
 }
 
