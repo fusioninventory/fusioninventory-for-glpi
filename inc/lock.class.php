@@ -135,15 +135,23 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $pflock = new self();
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         echo "<table width='950'>";
+         echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<td valign='top' width='33%'>";
+         echo "<td>";
          $pflock->showFormItemtype('Computer');
          echo "</td>";
-         echo "<td valign='top' width='33%'>";
+         echo "</tr>";
+
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr>";
+         echo "<td>";
          $pflock->showFormItemtype('Printer');
          echo "</td>";
-         echo "<td valign='top' width='33%'>";
+         echo "</tr>";
+
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr>";
+         echo "<td>";
          $pflock->showFormItemtype('NetworkEquipment');
          echo "</td>";
          echo "</tr>";
@@ -210,12 +218,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
-      echo "<tr><th>&nbsp;"._n('Field', 'Fields', 2)."&nbsp;</th>";
+      echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
       if ($p_items_id != '0') {
-         echo "<th>&nbsp;".__('Values GLPI', 'fusioninventory')."&nbsp;</th>";
-         echo "<th>&nbsp;".__('Values of last inventory', 'fusioninventory')."&nbsp;</th>";
+         echo "<th>".__('Values GLPI', 'fusioninventory')."</th>";
+         echo "<th>".__('Values of last inventory', 'fusioninventory')."</th>";
       }
-      echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
+      echo "<th>"._n('Lock', 'Locks', 2, 'fusioninventory')."</th>";
       echo "</tr>";
 
       $checked = false;
@@ -354,7 +362,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     *
     * @param string $itemtype
     */
-   function showFormItemtype($itemtype) {
+   function showFormItemtype($itemtype, $start_form = true, $show_button = true) {
 
       $can = 0;
       $typeright = strtolower($itemtype);
@@ -376,17 +384,19 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $item = new $itemtype;
       $item->getEmpty();
 
-      echo "<form method='post' action='".PluginFusioninventoryLock::getFormURL()."'>";
-      echo "<input type='hidden' name='id' value='0'>";
-      echo "<input type='hidden' name='type' value='$itemtype'>";
-      echo "<table class='tab_cadre'>";
+      if ($start_form) {
+         echo "<form method='post' action='".PluginFusioninventoryLock::getFormURL()."'>";
+         echo "<input type='hidden' name='id' value='0'>";
+         echo "<input type='hidden' name='type' value='$itemtype'>";
+      }
+      echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr>";
       echo "<th colspan='2'>".$item->getTypeName(1)."</th>";
       echo "</tr>";
 
-      echo "<tr><th>&nbsp;"._n('Field', 'Fields', 2)."&nbsp;</th>";
-      echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
+      echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
+      echo "<th>"._n('Lock', 'Locks', 2, 'fusioninventory')."</th>";
       echo "</tr>";
 
       $checked = false;
@@ -432,11 +442,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
 
-      if ($can == '1') {
+      if ($can == '1' && $show_button) {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".($colspan + 1)."'>";
-         echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
-                         value='" . __('Update') . "'>";
+         echo Html::submit(__('Update'), ['name' => 'unlock_field_fusioninventory']);
          echo "</td>";
          echo "</tr>";
       }
