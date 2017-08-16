@@ -84,7 +84,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
           'plugin_fusioninventory_deploygroups_id' => $groups_id,
           'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:8:"computer";}}s:12:"metacriteria";s:0:"";}'
       );
-      $pfDeployGroup_Dynamicdata->add($input);
+      $groups_id = $pfDeployGroup_Dynamicdata->add($input);
 
       // create task
       $input = array(
@@ -101,7 +101,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
           'name'                            => 'deploy',
           'method'                          => 'deployinstall',
           'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
-          'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.$tasks_id.'"}]'
+          'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.$groups_id.'"}]'
       );
       $pfTaskjob->add($input);
 
@@ -155,6 +155,37 @@ class CronTaskTest extends RestoreDatabase_TestCase {
           'computers_id'=> $computers_id
       );
       $pfAgent->add($input);
+
+      // Create package
+      $input = array(
+          'entities_id' => 0,
+          'name'        => 'on demand package',
+          'is_recursive' => 0,
+          'plugin_fusioninventory_deploygroups_id' => $groups_id,
+          'json' => '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}'
+      );
+      $packages_id_2 = $pfDeployPackage->add($input);
+
+      // create task
+      $input = array(
+          'entities_id'             => 0,
+          'name'                    => 'ondemand',
+          'is_active'               => 1,
+          'is_deploy_on_demand'     => 1,
+          'reprepare_if_successful' => 0
+      );
+      $tasks_id_2 = $pfTask->add($input);
+
+      // create takjob
+      $input = array(
+          'plugin_fusioninventory_tasks_id' => $tasks_id_2,
+          'entities_id'                     => 0,
+          'name'                            => 'deploy',
+          'method'                          => 'deployinstall',
+          'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id_2.'"}]',
+          'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.$groups_id.'"}]'
+      );
+      $pfTaskjob->add($input);
 
    }
 
@@ -265,7 +296,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $ref_prepared = array(
           1 => 1,
           3 => 3,
-          4 => 4
+          4 => 7
       );
 
       $this->assertEquals($ref_prepared, $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters']['agents_prepared']);
@@ -399,7 +430,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs(array(1));
       $reference = array(
           'agents_prepared' => array(
-              '3' => 4,
+              '3' => 7,
               '4' => 3
               ),
           'agents_cancelled' => array(),
@@ -427,8 +458,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs(array(1));
       $reference = array(
           'agents_prepared' => array(
-              '1' => 5,
-              '3' => 4,
+              '1' => 9,
+              '3' => 7,
               '4' => 3
               ),
           'agents_cancelled' => array(),
@@ -447,6 +478,116 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $this->assertEquals($reference, $counters);
 
    }
+
+   /**
+    * @test
+    */
+   public function cleanTasksAndJobs() {
+      global $DB;
+
+      $pfTask         = new PluginFusioninventoryTask();
+      $pfTaskJob      = new PluginFusioninventoryTaskJob();
+      $pfTaskJobstate = new PluginFusioninventoryTaskjobstate();
+
+      $DB->connect();
+
+      //We only work on 1 task
+      $pfTask->delete(['id' => 1], true);
+
+      //Clean all taskjoblogs & states
+      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjoblogs`");
+      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
+
+      //Find the on demand task
+      $tasks = $pfTask->find("`name`='ondemand'");
+      $this->assertEquals(1, count($tasks));
+
+      $task     = current($tasks);
+      $tasks_id = $task['id'];
+
+      //Prepare the task
+      PluginFusioninventoryTask::cronTaskscheduler();
+
+      //Set the first job as successfull
+      $query = "SELECT DISTINCT `plugin_fusioninventory_taskjobstates_id`
+                FROM glpi_plugin_fusioninventory_taskjoblogs LIMIT 1";
+      foreach ($DB->request($query) as $data) {
+         $pfTaskJobstate->changeStatusFinish($data['plugin_fusioninventory_taskjobstates_id'], '', 0);
+      }
+
+      //No task & jobtates should be removed because ask for cleaning 5 days from now
+      $index = $pfTask->cleanTasksAndJobs(5);
+
+      $this->assertEquals(0, $index);
+
+      //Set the joblogs date at 2 days ago
+      $datetime = new Datetime($_SESSION['glpi_currenttime']);
+      $datetime->modify('-4 days');
+
+      $query = "UPDATE `glpi_plugin_fusioninventory_taskjoblogs`
+                SET `date`='".$datetime->format('Y-m-d')." 00:00:00'";
+      $DB->query($query);
+
+      //No task & jobs should be removed because ask for cleaning 5 days from now
+      $index = $pfTask->cleanTasksAndJobs(5);
+      $this->assertEquals(0, $index);
+
+      $this->assertEquals(true, $pfTask->getFromDB($tasks_id));
+
+      $computer = new Computer();
+      $pfAgent  = new PluginFusioninventoryAgent();
+
+      //Add a new computer into the dynamic group
+      $input = [
+          'entities_id' => 0,
+          'name'        => 'computer4'
+      ];
+      $computers_id = $computer->add($input);
+
+      $input = [
+          'entities_id'  => 0,
+          'name'         => 'computer4',
+          'version'      => '{"INVENTORY":"v2.3.21"}',
+          'device_id'    => 'computer4',
+          'useragent'    => 'FusionInventory-Agent_v2.3.21',
+          'computers_id' => $computers_id
+      ];
+      $pfAgent->add($input);
+
+      //Reprepare the task
+      PluginFusioninventoryTask::cronTaskscheduler();
+
+      //One taskjob is finished and should be cleaned
+      $index = $pfTask->cleanTasksAndJobs(3);
+
+      $this->assertGreaterThan(0, $index);
+
+      //The task is still in DB because one job is not done
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_tasks',
+                                                  ['id' => $tasks_id]));
+
+      //Set the first job as successfull
+      $query = "SELECT DISTINCT `plugin_fusioninventory_taskjobstates_id`
+                FROM glpi_plugin_fusioninventory_taskjoblogs";
+      foreach ($DB->request($query) as $data) {
+         $pfTaskJobstate->changeStatusFinish($data['plugin_fusioninventory_taskjobstates_id'], '', 0);
+      }
+
+      $query = "UPDATE `glpi_plugin_fusioninventory_taskjoblogs`
+                SET `date`='".$datetime->format('Y-m-d')." 00:00:00'";
+      $DB->query($query);
+
+      //One taskjob is finished and should be cleaned
+      $index = $pfTask->cleanTasksAndJobs(2);
+
+      $this->assertGreaterThan(0, $index);
+
+      //The task is still in DB because one job is not done
+      $this->assertEquals(0, countElementsInTable('glpi_plugin_fusioninventory_tasks',
+                                                  ['id' => $tasks_id]));
+
+   }
+
 }
 
 ?>

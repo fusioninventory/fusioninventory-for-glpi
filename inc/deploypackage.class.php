@@ -1575,16 +1575,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                //are currenlty visible
 
                //The package is recursive, and visible in computer's entity
-               if (!$package['is_recursive']
-                  && $package['entities_id'] != $data['entities_id']) {
-                  continue;
-               } else if($package['is_recursive']
-               && !in_array($package['entities_id'],
-                           getAncestorsOf('glpi_entities', $data['entities_id']))) {
-                  //The package is not recursive, and invisible in the computer's entity
-                  continue;
+               if (Session::isMultiEntitiesMode()) {
+                  if (!$package['is_recursive']
+                     && $package['entities_id'] != $data['entities_id']) {
+                     continue;
+                  } else if($package['is_recursive']
+                  && !in_array($package['entities_id'],
+                              getAncestorsOf('glpi_entities', $data['entities_id']))) {
+                     //The package is not recursive, and invisible in the computer's entity
+                     continue;
+                  }
                }
-
                //If the agent associated with the computer has not the
                //deploy feature enabled, do not propose to deploy packages on
                if ($pfAgent->getAgentWithComputerid($mycomputers_id) &&
