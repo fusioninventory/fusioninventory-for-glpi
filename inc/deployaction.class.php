@@ -239,7 +239,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
                $getReturnActionNames = $this->getReturnActionNames();
-               echo $getReturnActionNames[$retCheck['type']]." ".array_shift($retCheck['values']);
+               echo $getReturnActionNames[$retCheck['type']]." ".array_shift($retCheck['value']);
                echo "</li>";
             }
             echo "</ul>";
@@ -402,10 +402,11 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
                echo "<table class='table_retchecks'>";
                echo "<tr>";
                echo "<td>";
-               Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames(), array(
-                  'value' => $retcheck['type'],
-                  'width' => '200px'
-               ));
+               Dropdown::showFromArray('retchecks_type[]', self::getReturnActionNames(),
+                                       [ 'value' => $retcheck['type'],
+                                         'width' => '200px'
+                                       ]
+               );
                echo "</td>";
                echo "<td>";
                echo "<input type='text' name='retchecks_value[]' value='".
@@ -432,6 +433,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          echo "</span>";
          echo "</td>";
          echo "</tr>";
+         echo "</table>";
       }
 
       if ($type == 'cmd') {

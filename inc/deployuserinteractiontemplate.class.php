@@ -431,20 +431,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Retry job after', 'fusioninventory')."</td>";
       echo "<td>";
-      // Minutes
-      for ($i=5; $i<60; $i+=5) {
-         $values[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
-      }
-
-      for ($i = 1; $i < 24; $i++) {
-         $values[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
-      }
-
-      for ($i = 1; $i < 3; $i++) {
-         $values[$i*DAY_TIMESTAMP] = sprintf(_n('%d day', '%d days', $i), $i);
-      }
-      Dropdown::showFromArray('retry_after', $values,
-                              ['value' => $json_data['retry_after']]);
+      $this->dropdownRetry($json_data['retry_after']);
       echo "</td>";
 
       echo "<td>".__('Maximum number of retry allowed', 'fusioninventory')."</td>";
@@ -461,22 +448,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Alert display timeout', 'fusioninventory')."</td>";
       echo "<td>";
-      $values    = [];
-      $values[0] = __('Never');
-      for ($i = 30; $i < 60; $i+=10) {
-         $values[$i] = sprintf(_n('%d second', '%d seconds', $i), $i);
-      }
-      // Minutes
-      for ($i=5; $i<60; $i+=5) {
-         $values[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
-      }
-
-      for ($i = 1; $i < 5; $i++) {
-         $values[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
-      }
-
-      Dropdown::showFromArray('timeout', $values,
-                              ['value' => $json_data['timeout']]);
+      $this->dropdownTimeout('timeout', $json_data['timeout']);
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
@@ -485,6 +457,67 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
       return true;
 
+   }
+
+   /**
+    * Dropdown for frequency (interval between 2 actions)
+    *
+    * @param $name   select name
+    * @param $value  default value (default 0)
+   **/
+   function dropdownRetry($value = 0) {
+
+      $tab[0] = __('Never');
+
+      $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
+      $tab[2*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
+      $tab[3*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
+      $tab[4*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 4), 4);
+
+      // Minutes
+      for ($i=5; $i<60; $i+=5) {
+         $tab[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
+      }
+
+      // Heures
+      for ($i=1; $i<24; $i++) {
+         $tab[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
+      }
+
+      // Jours
+      $tab[DAY_TIMESTAMP] = __('Each day');
+      for ($i=2; $i<7; $i++) {
+         $tab[$i*DAY_TIMESTAMP] = sprintf(_n('%d day', '%d days', $i), $i);
+      }
+
+      $tab[WEEK_TIMESTAMP]  = __('Each week');
+      $tab[MONTH_TIMESTAMP] = __('Each month');
+
+      Dropdown::showFromArray('retry_after', $tab, ['value' => $value]);
+   }
+
+   /**
+    * Dropdown for frequency (interval between 2 actions)
+    *
+    * @param $name   select name
+    * @param $value  default value (default 0)
+   **/
+   function dropdownTimeout($value = 0) {
+
+      $tab[0] = __('Never');
+
+      $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
+      $tab[2*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
+      $tab[3*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
+      $tab[4*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 4), 4);
+
+      // Minutes
+      for ($i=5; $i<60; $i+=5) {
+         $tab[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
+      }
+      $tab[HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', 1), 1);
+
+      Dropdown::showFromArray('timeout', $tab, ['value' => $value]);
    }
 
    /**

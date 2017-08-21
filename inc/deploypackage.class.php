@@ -1916,7 +1916,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       //before going to stripslashes_deep
       if (isset($params['text'])) {
          $params['text']
-            = str_replace("\r\n",
+            = str_replace('\r\n',
                           PluginFusioninventoryDeployUserinteraction::RN_TRANSFORMATION,
                           $params['text']);
       }
