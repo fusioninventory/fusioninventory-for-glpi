@@ -803,14 +803,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       $pfTask = new self();
-      $index  = 0;
-      $tasks  = $pfTask->getOnDemandTasksToClean($interval);
-
-      foreach ($tasks as $task_id) {
-         if ($pfTask->delete(['id' => $task_id], true)) {
-            $index++;
-         }
-      }
+      $index  = $pfTask->cleanTasksAndJobs($interval);
       $task->addVolume($index);
       return true;
    }
@@ -820,23 +813,54 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    * @param $interval number of days to look for successful tasks
    * @return an array of tasks ID to clean
    */
-   function getOnDemandTasksToClean($interval) {
+   function cleanTasksAndJobs($interval) {
       global $DB;
 
-      $tasks  = [];
-      if ($interval > 0) {
-         $date   = "SELECT `id` FROM `glpi_plugin_fusioninventory_tasks`
-                    WHERE `datetime_end` IS NOT NULL
-                       AND DATEDIFF(ADDDATE(`datetime_end`,
-                         INTERVAL $interval DAY),
-                         CURDATE()) < '0'
-                       AND `is_deploy_on_demand`='1'";
-         foreach ($DB->request($date) as $tsk) {
-            $tasks[] = $tsk['id'];
+
+      $pfTaskjob      = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfTask         = new PluginFusioninventoryTask();
+
+      $index = 0;
+
+      //Delete taskstates that are too old
+      $date  = "SELECT DISTINCT state.`id` as 'id'
+                FROM `glpi_plugin_fusioninventory_taskjoblogs` AS log
+                LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS state
+                  ON (state.`id` = log.`plugin_fusioninventory_taskjobstates_id`)
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
+                 ON (job.`id` = state.`plugin_fusioninventory_taskjobs_id`)
+                LEFT JOIN `glpi_plugin_fusioninventory_tasks` AS task
+                  ON (task.`id` = job.`plugin_fusioninventory_tasks_id`)
+                WHERE task.`is_deploy_on_demand`='1'
+                   AND DATEDIFF(ADDDATE(log.`date`,
+                                INTERVAL ".$interval." DAY),
+                                CURDATE()) < '0'
+                   AND `state`.`state` IN (3, 4, 5)";
+
+      foreach ($DB->request($date) as $data) {
+         $pfTaskjobstate->delete($data, true);
+         $index++;
+      }
+
+      //Check if a task has jobstates. In case not, delete the task
+      foreach ($DB->request('glpi_plugin_fusioninventory_tasks',
+                            ['is_deploy_on_demand' => 1]) as $task) {
+
+         $query = "SELECT COUNT(*) as cpt
+                   FROM `glpi_plugin_fusioninventory_taskjobstates` as state
+                   LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
+                      ON (job.`id` = state.`plugin_fusioninventory_taskjobs_id`)
+                   WHERE job.`plugin_fusioninventory_tasks_id`='".$task['id']."'";
+         $result = $DB->query($query);
+
+         if ($DB->result($result, 0, "cpt") == 0) {
+            $index++;
+            $pfTask->delete(['id' => $task['id']], true);
          }
       }
 
-      return $tasks;
+      return $index;
    }
 
    /**
@@ -867,10 +891,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     */
    static function formatChrono($chrono) {
       $interval = abs($chrono['end'] - $chrono['start']);
-      $micro = intval($interval * 100);
-      $seconds = intval($interval % 60);
-      $minutes = intval($interval / 60);
-      $hours = intval($interval / 60 / 60);
+      $micro    = intval($interval * 100);
+      $seconds  = intval($interval % 60);
+      $minutes  = intval($interval / 60);
+      $hours    = intval($interval / 60 / 60);
       return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
    }
 

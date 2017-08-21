@@ -1597,7 +1597,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      continue;
                   }
                }
-
                //If the agent associated with the computer has not the
                //deploy feature enabled, do not propose to deploy packages on
                if ($pfAgent->getAgentWithComputerid($mycomputers_id) &&
