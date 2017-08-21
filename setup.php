@@ -111,16 +111,8 @@ function plugin_init_fusioninventory() {
       );
       $Plugin->registerClass('PluginFusioninventoryAgentmodule');
       $Plugin->registerClass('PluginFusioninventoryConfig');
-      $Plugin->registerClass('PluginFusioninventoryTask',
-         [
-            'addtabon' => [
-               'Computer',
-               'Printer',
-               'NetworkEquipment',
-               'PluginFusioninventoryCredentialIp',
-            ]
-         ]
-      );
+      $Plugin->registerClass('PluginFusioninventoryTask');
+
       $Plugin->registerClass('PluginFusioninventoryTaskjob',
          [
             'addtabon' => [
@@ -221,6 +213,8 @@ function plugin_init_fusioninventory() {
               ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
       $Plugin->registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
               ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
+      $Plugin->registerClass('PluginFusioninventoryDeployPackage',
+              ['addtabon' => ['Computer']]);
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
