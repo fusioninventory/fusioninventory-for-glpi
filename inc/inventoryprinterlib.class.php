@@ -90,9 +90,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $a_inventory['Printer'] = $a_ret[0];
       $input                  = $a_inventory['Printer'];
       $input['id']            = $printers_id;
-      //Add defaut status if there's one defined in the configuration
-      //If we're here it's because we've manually injected an snmpinventory xml file
-      $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
       $printer->update($input);
 
       // * Printer fusion (ext)
