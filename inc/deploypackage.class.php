@@ -1885,6 +1885,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      = $template->addJsonFieldsToArray($job['job']['userinteractions'][$key]);
                   unset ($job['job']['userinteractions'][$key]['template']);
 
+                  $job['job']['userinteractions'][$key]['text']
+                     = str_replace(PluginFusioninventoryDeployUserinteraction::RN_TRANSFORMATION, "\r\n",
+                                   $job['job']['userinteractions'][$key]['text']);
+
                   //TODO make it configurable in the UI
                   $job['job']['userinteractions'][$key]['on_ok']    = 'continue:continue';
                   $job['job']['userinteractions'][$key]['on_yes']   = 'continue:continue';
