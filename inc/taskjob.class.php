@@ -153,7 +153,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
-    * get task of this tasl job
+    * get task of this task job
     *
     * @return object PluginFusioninventoryTask instance
     */
@@ -264,7 +264,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_type = array();
-      $a_type[''] = '------';
+      $a_type[''] = Dropdown::EMPTY_VALUE;
       if ($myname == 'action') {
          $a_type['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
       }
@@ -747,7 +747,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo "<td align='center'>";
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_parseMethods = array();
-      $a_parseMethods[''] = "------";
+      $a_parseMethods[''] = Dropdown::EMPTY_VALUE;
       foreach ($a_methods as $data) {
          $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
 
@@ -1327,7 +1327,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $run['specificity'] = "NULL";
       }
 
-      // add this new state and first log 
+      // add this new state and first log
       if($run_id = $jobstate->add($run)) {
          $log = array(
             'date'    => date("Y-m-d H:i:s"),

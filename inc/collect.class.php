@@ -81,6 +81,16 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      if ($item->getID() > 0) {
+         $index = self::getNumberOfCollectsForAComputer($item->getID());
+         $nb    = 0;
+         if ($index > 0) {
+            if ($_SESSION['glpishow_count_on_tabs']) {
+               $nb = $index;
+            }
+            return self::createTabEntry(self::getTypeName(Session::getPluralNumber()), $nb);
+         }
+      }
       return '';
    }
 
@@ -95,10 +105,38 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      return FALSE;
+      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $id = $item->getID();
+      if ($item->getType() == 'Computer'
+         && $pfComputer->hasAutomaticInventory($id)) {
+         foreach (['PluginFusioninventoryCollect_File_Content',
+                   'PluginFusioninventoryCollect_Wmi_Content',
+                   'PluginFusioninventoryCollect_Registry_Content'] as $itemtype) {
+            $collect_item = new $itemtype();
+            $collect_item->showForComputer($id);
+         }
+      }
+      return false;
    }
 
-
+   /**
+   * Get the number of collects for a computer
+   * @since 9.2
+   *
+   * @param integer $computers_id the computer ID
+   * @return the number of collects for this computer
+   */
+   static function getNumberOfCollectsForAComputer($computers_id) {
+      $tables = ['glpi_plugin_fusioninventory_collects_registries_contents',
+                 'glpi_plugin_fusioninventory_collects_wmis_contents',
+                 'glpi_plugin_fusioninventory_collects_files_contents',
+                ];
+      $total = 0;
+      foreach ($tables as $table) {
+         $total+= countElementsInTable($table, "`computers_id`='$computers_id'");
+      }
+      return $total;
+   }
 
    /**
     * Get all collect types
@@ -249,7 +287,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -394,7 +432,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       foreach ($computers as $computer_id) {
          //get agent if for this computer
          $agents_id = $agent->getAgentWithComputerid($computer_id);
-         if ($agents_id === FALSE) {
+         if ($agents_id === false) {
             $jobstates_id = $jobstate->add($c_input);
             $jobstate->changeStatusFinish($jobstates_id,
                                           0,

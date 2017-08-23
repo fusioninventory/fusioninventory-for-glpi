@@ -2080,7 +2080,7 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['networkport'] = array();
       if (isset($array['PORTS'])) {
          foreach ($array['PORTS']['PORT'] as $a_port) {
-            if (!isset($a_port['IFNUMBER'])) {
+            if (isset($a_port['IFNUMBER'])) {
                $array_tmp = $thisc->addValues($a_port,
                                               array(
                                                  'IFNAME'   => 'name',
