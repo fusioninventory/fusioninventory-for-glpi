@@ -133,7 +133,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       } else if (get_class($item) == 'Computer') {
          $pfCollect_File->showForComputer($item->getID());
       }
-      return TRUE;
+      return true;
    }
 
 
