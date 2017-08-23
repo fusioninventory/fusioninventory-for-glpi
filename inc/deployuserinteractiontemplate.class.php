@@ -448,7 +448,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Alert display timeout', 'fusioninventory')."</td>";
       echo "<td>";
-      $this->dropdownTimeout('timeout', $json_data['timeout']);
+      $this->dropdownTimeout($json_data['timeout']);
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
@@ -506,6 +506,11 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
       $tab[0] = __('Never');
 
+      // Minutes
+      for ($i=30; $i<60; $i+=5) {
+         $tab[$i] = sprintf(_n('%d second', '%d seconds', $i), $i);
+      }
+
       $tab[MINUTE_TIMESTAMP]   = sprintf(_n('%d minute', '%d minutes', 1), 1);
       $tab[2*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 2), 2);
       $tab[3*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', 3), 3);
@@ -515,7 +520,11 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       for ($i=5; $i<60; $i+=5) {
          $tab[$i*MINUTE_TIMESTAMP] = sprintf(_n('%d minute', '%d minutes', $i), $i);
       }
-      $tab[HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', 1), 1);
+
+      // Hours
+      for ($i=1; $i<13; $i++) {
+         $tab[$i*HOUR_TIMESTAMP] = sprintf(_n('%d hour', '%d hours', $i), $i);
+      }
 
       Dropdown::showFromArray('timeout', $tab, ['value' => $value]);
    }
