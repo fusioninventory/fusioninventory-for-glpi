@@ -64,63 +64,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       ));
    }
 
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      $tab_names = array();
-
-      if ($this->can("plugin_fusioninventory_selfpackage", READ)
-         && $item->getType() == 'Computer'
-         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
-         return __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
-      }
-      return '';
-   }
-
-
-
-   /**
-    * Define tabs to display on form page
-    *
-    * @param array $options
-    * @return array containing the tabs name
-    */
-   function defineTabs($options=array()) {
-      $ong = array();
-
-      $this->addDefaultFormTab($ong);
-
-      return $ong;
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getType() == 'Computer') {
-         $package = new PluginFusioninventoryDeployPackage();
-         $package->showPackageForMe($_SESSION['glpiID'], $item);
-         return TRUE;
-      }
-      return FALSE;
-   }
-
-
-
    /**
     * Show job logs
     */

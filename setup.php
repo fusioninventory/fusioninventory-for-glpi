@@ -111,16 +111,8 @@ function plugin_init_fusioninventory() {
       );
       $Plugin->registerClass('PluginFusioninventoryAgentmodule');
       $Plugin->registerClass('PluginFusioninventoryConfig');
-      $Plugin->registerClass('PluginFusioninventoryTask',
-         [
-            'addtabon' => [
-               'Computer',
-               'Printer',
-               'NetworkEquipment',
-               'PluginFusioninventoryCredentialIp',
-            ]
-         ]
-      );
+      $Plugin->registerClass('PluginFusioninventoryTask');
+
       $Plugin->registerClass('PluginFusioninventoryTaskjob',
          [
             'addtabon' => [
@@ -159,22 +151,21 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               ['addtabon' => ['Computer']]);
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
-      $Plugin->registerClass('PluginFusioninventoryCollect');
+      $Plugin->registerClass('PluginFusioninventoryCollect',
+                              ['addtabon' => ['PluginFusioninventoryCollect',
+                                             'Computer']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
               ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_Registry_Content',
-              ['addtabon' => ['PluginFusioninventoryCollect',
-                                        'Computer']]);
+              ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_Wmi',
               ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_Wmi_Content',
-              ['addtabon' => ['PluginFusioninventoryCollect',
-                                        'Computer']]);
+              ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_File',
               ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_File_Content',
-              ['addtabon' => ['PluginFusioninventoryCollect',
-                                        'Computer']]);
+              ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryComputerLicenseInfo',
               ['addtabon' => ['Computer']]);
       $Plugin->registerClass('PluginFusioninventoryComputerRemoteManagement');
@@ -221,6 +212,8 @@ function plugin_init_fusioninventory() {
               ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
       $Plugin->registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
               ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
+      $Plugin->registerClass('PluginFusioninventoryDeployPackage',
+              ['addtabon' => ['Computer']]);
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
