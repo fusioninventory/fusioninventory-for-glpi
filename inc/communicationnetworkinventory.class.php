@@ -475,6 +475,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
          }
          $_SESSION["plugin_fusioninventory_entity"] = $input['entities_id'];
+
+         //Add defaut status if there's one defined in the configuration
+         $input    = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
          $items_id = $class->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
