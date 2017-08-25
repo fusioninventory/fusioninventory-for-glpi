@@ -65,7 +65,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    function updatePrinter($a_inventory, $printers_id) {
       global $DB;
 
-      $printer = new Printer();
+      $printer   = new Printer();
       $pfPrinter = new PluginFusioninventoryPrinter();
 
       $printer->getFromDB($printers_id);
@@ -82,16 +82,14 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
 
       // * Printer
       $db_printer =  $printer->fields;
-
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $printers_id);
+      $a_ret      = PluginFusioninventoryToolbox::checkLock($a_inventory['Printer'],
+                                                            $db_printer,
+                                                            $a_lockable);
 
-      $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['Printer'],
-                                                       $db_printer, $a_lockable);
       $a_inventory['Printer'] = $a_ret[0];
-
-      $input = $a_inventory['Printer'];
-
-      $input['id'] = $printers_id;
+      $input                  = $a_inventory['Printer'];
+      $input['id']            = $printers_id;
       $printer->update($input);
 
       // * Printer fusion (ext)
@@ -105,6 +103,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
             $db_printer[$key] = Toolbox::addslashes_deep($value);
          }
       }
+
       if (count($db_printer) == '0') { // Add
          $a_inventory['PluginFusioninventoryPrinter']['printers_id'] =
             $printers_id;
