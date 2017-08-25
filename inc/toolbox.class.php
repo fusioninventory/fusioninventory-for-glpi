@@ -779,4 +779,29 @@ class PluginFusioninventoryToolbox {
       }
    }
 
+   /**
+    * Get default value for state of devices (monitor, printer...)
+    *
+    * @param string type the type of inventory performed (values : computer, snmp)
+    * @param array $input
+    * @return array the fields with the states_id filled, is necessary
+    */
+   static function addDefaultStateIfNeeded($type = 'computer', $input) {
+      $config = new PluginFusioninventoryConfig();
+      switch ($type) {
+         case 'computer':
+            $input['states_id'] = $config->getValue("states_id_default");
+            break;
+
+         case 'snmp':
+            $input['states_id'] = $config->getValue("states_id_snmp_default");
+            break;
+
+         default:
+            $state = false;
+            break;
+      }
+      return $input;
+   }
+
 }

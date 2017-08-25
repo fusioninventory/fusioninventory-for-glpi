@@ -123,6 +123,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_control']      = 1;
       $input['component_removablemedia'] = 0;
       $input['states_id_default']      = 0;
+      $input['states_id_snmp_default'] = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
       $input['create_vm']              = 0;
@@ -734,6 +735,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo __('Network options', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Default status', 'fusioninventory')."</td>";
+      echo "<td>";
+      Dropdown::show('State',
+                     array('name'   => 'states_id_snmp_default',
+                           'value'  => $pfConfig->getValue('states_id_snmp_default')));
+      echo "</td><td colspan='2'></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
