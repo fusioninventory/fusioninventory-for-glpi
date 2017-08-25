@@ -419,4 +419,13 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       echo "</tr>";
 
    }
+
+   public function getItemValues($packages_id) {
+      $data = json_decode($this->getJson($packages_id), true);
+      if ($data) {
+         return $data['jobs'][$this->json_name];
+      } else {
+         return [];
+      }
+   }   
 }

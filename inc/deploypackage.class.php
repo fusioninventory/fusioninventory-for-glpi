@@ -1230,7 +1230,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
               'agents_success'   => __('Successful', 'fusioninventory'),
               'agents_running'   => __('Running', 'fusioninventory'),
               'agents_prepared'  => __('Prepared' , 'fusioninventory'),
-              'agents_cancelled' => __('Cancelled', 'fusioninventory')
+              'agents_cancelled' => __('Cancelled', 'fusioninventory'),
+              'agents_postponed' => __('Postponed', 'fusioninventory')
              ];
    }
 
@@ -1337,7 +1338,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                 style='display:none;'>";
 
                      // if job is in error, suggest restart
-                     if ($package_info['last_taskjobstate']['state'] == "agents_error") {
+                     if ($package_info['last_taskjobstate']['state'] == "agents_error"
+                        || $package_info['last_taskjobstate']['state'] == "agents_success") {
                         echo "<a class='restart btn'
                                  href='#'
                                  title='".__("Restart job", 'fusioninventory')."'
@@ -1345,7 +1347,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      }
 
                      // if job has not started, user can cancel it
-                     if ($package_info['last_taskjobstate']['state'] == "agents_prepared") {
+                     if ($package_info['last_taskjobstate']['state'] == "agents_prepared"
+                        || $package_info['last_taskjobstate']['state'] == "agents_postponed") {
                         echo "<a class='cancel btn'
                                  href='#'
                                  title='".__("Cancel job", 'fusioninventory')."'
@@ -1756,6 +1759,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             case PluginFusioninventoryTaskjobstate::PREPARED :
                $state = 'agents_prepared';
+               break;
+
+            case PluginFusioninventoryTaskjobstate::POSTPONED :
+               $state = 'agents_postponed';
                break;
 
             case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :

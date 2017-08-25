@@ -264,11 +264,12 @@ switch (filter_input(INPUT_GET, "action")) {
 
          //If needed : cancel or postpone the job
          if ($cancel || $postpone) {
+            $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
             if ($cancel) {
-               $taskstate->cancel();
+               $pfTaskjobstate->cancel();
             } else {
-               $taskstate->postpone($type,
-                                    __('Job postponed', 'fusioninventory'));
+               $pfTaskjobstate->postpone($type,
+                                         __('Job postponed', 'fusioninventory'));
             }
          }
    }

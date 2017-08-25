@@ -575,12 +575,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   "    `itemtype` = '" . $item_type . "'",
                   "AND `items_id` = ".$item_id,
                   "AND `plugin_fusioninventory_taskjobs_id` = ". $job_id,
-                  "AND `state` not in ('" . implode( "','" , array(
+                  "AND `state` not in ('" . implode( "','" , [
                      PluginFusioninventoryTaskjobstate::FINISHED,
                      PluginFusioninventoryTaskjobstate::IN_ERROR,
-                     PluginFusioninventoryTaskjobstate::RESCHEDULED,
+                     PluginFusioninventoryTaskjobstate::POSTPONED,
                      PluginFusioninventoryTaskjobstate::CANCELLED
-                  )) . "')",
+                  ]) . "')",
                   "AND `plugin_fusioninventory_agents_id` IN (",
                   "'" . implode("','", array_keys($agent_ids)) . "'",
                   ")"

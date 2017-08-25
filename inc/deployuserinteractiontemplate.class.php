@@ -629,6 +629,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
          case 'on_retry':
          case 'on_ignore':
+         case 'on_tryagain':
             $behavior = self::BEHAVIOR_POSTPONE_DEPLOY;
             break;
 
