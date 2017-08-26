@@ -114,12 +114,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          // Get all tasks runnning
          $this->running_tasks =
                PluginFusioninventoryTask::getItemsFromDB(
-                  array(
+                  [
                       'is_active'   => true,
                       'is_running'  => true,
-                      'targets'     => array(__CLASS__ => $this->fields['id']),
+                      'targets'     => [__CLASS__ => $this->fields['id']],
                       'by_entities' => false,
-                  )
+                  ]
                );
       }
 
@@ -171,7 +171,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return array list of actions to deny
     */
    function getForbiddenStandardMassiveAction() {
-      $forbidden   = parent::getForbiddenStandardMassiveAction();
+      $forbidden = parent::getForbiddenStandardMassiveAction();
       if (strstr($_SERVER["HTTP_REFERER"], 'deploypackage.import.php')) {
          $forbidden[] = 'update';
          $forbidden[] = 'add';
@@ -194,11 +194,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          case 'transfert':
             Dropdown::show('Entity');
             echo "<br><br>".Html::submit(__('Post'),
-                                         array('name' => 'massiveaction'));
+                                         ['name' => 'massiveaction']);
             return true;
 
          case 'duplicate':
-            echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+            echo Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
             return true;
       }
       return parent::showMassiveActionsSubForm($ma);
@@ -230,8 +230,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $pfDeployPackage = new PluginFusioninventoryDeployPackage();
             foreach ($ids as $key) {
                if ($pfDeployPackage->getFromDB($key)) {
-                  $input = [];
-                  $input['id'] = $key;
+                  $input                = [];
+                  $input['id']          = $key;
                   $input['entities_id'] = $ma->POST['entities_id'];
                   $pfDeployPackage->update($input);
                }
@@ -927,6 +927,74 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    /**
+    * Get the json
+    *
+    * @param integer $packages_id id of the order
+    * @return boolean|string the string is in json format
+    */
+   static function getJson($packages_id) {
+      $pfDeployPackage = new self;
+      $pfDeployPackage->getFromDB($packages_id);
+      if (!empty($pfDeployPackage->fields['json'])) {
+         return $pfDeployPackage->fields['json'];
+      } else {
+         return false;
+      }
+   }
+
+
+
+   /**
+    * Update the order json
+    *
+    * @param integer $packages_id
+    * @param array $datas
+    * @return integer error number
+    */
+   static function updateOrderJson($packages_id, $datas) {
+      $pfDeployPackage = new self;
+      $options = JSON_UNESCAPED_SLASHES;
+
+      $json = json_encode($datas, $options);
+
+      $json_error_consts = array(
+         JSON_ERROR_NONE           => "JSON_ERROR_NONE",
+         JSON_ERROR_DEPTH          => "JSON_ERROR_DEPTH",
+         JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
+         JSON_ERROR_CTRL_CHAR      => "JSON_ERROR_CTRL_CHAR",
+         JSON_ERROR_SYNTAX         => "JSON_ERROR_SYNTAX",
+         JSON_ERROR_UTF8           => "JSON_ERROR_UTF8"
+      );
+
+      $error_json = json_last_error();
+
+      if (version_compare(PHP_VERSION, '5.5.0',"ge")) {
+         $error_json_message = json_last_error_msg();
+      } else {
+         $error_json_message = "";
+      }
+      $error = 0;
+      if ($error_json != JSON_ERROR_NONE) {
+         $error_msg = $json_error_consts[$error_json];
+         Session::addMessageAfterRedirect(
+            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            $error_msg . "<br/>". $error_json_message, false, ERROR, false
+         );
+         $error = 1;
+      } else {
+         $error = $pfDeployPackage->update(
+            array(
+               'id'   => $packages_id,
+               'json' => Toolbox::addslashes_deep($json)
+            )
+         );
+      }
+      return $error;
+   }
+
+
+
+   /**
     * Get the tab name used for item
     *
     * @param object $item the item object
@@ -955,7 +1023,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             case 'Computer':
                if (Session::haveRight("plugin_fusioninventory_selfpackage", READ)
-                  && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
+                  && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)
+                     && self::isDeployEnabled($item->getID())) {
                   return __('Package deploy', 'fusioninventory');
                }
          }
@@ -1466,7 +1535,27 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       Html::closeForm();
    }
 
-
+   /**
+    * Check if an agent have deploy feature enabled
+    * @since 9.2
+    *
+    * @param integer $computers_id the ID of the computer to check
+    * @return boolean true if deploy is enabled for the agent
+    */
+   static function isDeployEnabled($computers_id) {
+      $pfAgent = new PluginFusioninventoryAgent();
+      //If the agent associated with the computer has not the
+      //deploy feature enabled, do not propose to deploy packages on
+      if (!$pfAgent->getAgentWithComputerid($computers_id)) {
+         return false;
+      }
+      $pfAgentModule = new PluginFusioninventoryAgentmodule();
+      if ($pfAgentModule->isAgentCanDo('deploy', $pfAgent->getID())) {
+         return true;
+      } else {
+         return false;
+      }
+   }
 
    /**
     * Get deploy packages available to install on user computer(s) and for
@@ -1514,7 +1603,20 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_fusioninventory_deploygroups_id']);
 
             //Browse all computers that are target by a a package installation
+
             foreach ($mycomputers as $comp_id => $data) {
+
+               //If we only want packages for one computer
+               //check if it's the computer we look for
+               if ($computers_id && $comp_id != $computers_id) {
+                  continue;
+               }
+
+               //If the agent associated with the computer has not the
+               //deploy feature enabled, do not propose to deploy packages on it
+               if (!self::isDeployEnabled($comp_id)) {
+                  continue;
+               }
 
                //Get computers that can be targeted for this package installation
                //Check if the package belong to one of the entity that
@@ -1531,17 +1633,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      //The package is not recursive, and invisible in the computer's entity
                      continue;
                   }
-               }
-               //If the agent associated with the computer has not the
-               //deploy feature enabled, do not propose to deploy packages on
-               if ($pfAgent->getAgentWithComputerid($mycomputers_id) &&
-                  !$pfAgentmodule->isAgentCanDo('deploy', $pfAgent->getID())) {
-                     continue;
-               }
-               //If we only want packages for one computer
-               //check if it's the computer we look for
-               if ($computers_id && $comp_id != $computers_id) {
-                  continue;
                }
 
                //Does the computer belongs to the group
