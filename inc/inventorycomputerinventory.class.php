@@ -473,7 +473,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $computer->getFromDB($items_id);
             $a_computerinventory['Computer']['states_id'] = $computer->fields['states_id'];
             $input = array();
-            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+            $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
             if (isset($input['states_id'])) {
                 $a_computerinventory['Computer']['states_id'] = $input['states_id'];
             }
@@ -526,7 +526,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $entities_id;
-            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+            $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
             if (isset($input['states_id'])) {
                 $a_computerinventory['Computer']['states_id'] = $input['states_id'];
             } else {
@@ -674,30 +674,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          $class->update($input);
       }
    }
-
-
-
-   /**
-    * Get default value for state of devices (monitor, printer...)
-    *
-    * @param array $input
-    * @param boolean $check_management
-    * @param integer $management_value
-    * @return array
-    */
-   static function addDefaultStateIfNeeded(&$input, $check_management = FALSE,
-                                           $management_value = 0) {
-      $config = new PluginFusioninventoryConfig();
-      $state = $config->getValue("states_id_default");
-      if ($state) {
-         if (!$check_management || ($check_management && !$management_value)) {
-            $input['states_id'] = $state;
-         }
-      }
-      return $input;
-   }
-
-
 
    /**
     * Return method name of this class/plugin
