@@ -161,9 +161,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'PluginFusioninventoryTask') {
          $item->showJobLogs();
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -181,40 +181,42 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    **/
    function stateTaskjob ($taskjobs_id, $width=930, $return='html', $style='') {
-      $state = [];
-      $state[0] = 0;
-      $state[1] = 0;
-      $state[2] = 0;
-      $state[3] = 0;
-      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".
-                                        $taskjobs_id."' AND `state`!='".self::FINISHED."'");
+      global $DB;
+
+      $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
       $total = 0;
-      if (count($a_taskjobstates) > 0) {
-         foreach ($a_taskjobstates as $data) {
+      $iterator = $DB->request(['FROM'  => 'glpi_plugin_fusioninventory_taskjobstates',
+                                'WHERE' => ['plugin_fusioninventory_taskjobs_id' => $taskjobs_id,
+                                            'state' => ['NOT', self::FINISHED]]
+                               ]);
+      if ($iterator->numrows() > 0) {
+         foreach ($iterator as $data) {
             $total++;
             $state[$data['state']]++;
          }
          if ($total == '0') {
             $globalState = 0;
          } else {
-            $first = 25;
-            $second = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
-            $third = ((($state[2]+$state[3]) * 100) / $total) / 4;
-            $fourth = (($state[3] * 100) / $total) / 4;
+            $first       = 25;
+            $second      = ((($state[1]+$state[2]+$state[3]) * 100) / $total) / 4;
+            $third       = ((($state[2]+$state[3]) * 100) / $total) / 4;
+            $fourth      = (($state[3] * 100) / $total) / 4;
             $globalState = $first + $second + $third + $fourth;
          }
          if ($return == 'html') {
             if ($style == 'simple') {
-               Html::displayProgressBar($width, ceil($globalState), array('simple' => 1));
+               Html::displayProgressBar($width, ceil($globalState), ['simple' => 1]);
             } else {
                Html::displayProgressBar($width, ceil($globalState));
             }
          } else if ($return == 'htmlvar') {
             if ($style == 'simple') {
-               return PluginFusioninventoryDisplay::getProgressBar($width, ceil($globalState),
-                                                                   array('simple' => 1));
+               return PluginFusioninventoryDisplay::getProgressBar($width,
+                                                                   ceil($globalState),
+                                                                   ['simple' => 1]);
             } else {
-               return PluginFusioninventoryDisplay::getProgressBar($width, ceil($globalState));
+               return PluginFusioninventoryDisplay::getProgressBar($width,
+                                                                   ceil($globalState));
             }
          } else {
             return ceil($globalState);
@@ -238,50 +240,49 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       global $DB, $CFG_GLPI;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $icon = "";
-      $title = "";
+      $icon         = "";
+      $title        = "";
+      $fields       = false;
 
       $pfTaskjoblog->javascriptHistory();
 
       switch ($state) {
 
          case 'running':
-            $search = " AND `state`!='".self::FINISHED."'";
+            $fields['state'] = ['NOT', $self::FINISHED];
             $title = __('Running tasks', 'fusioninventory');
-            $icon = "<img src='".$CFG_GLPI['root_doc'].
-                    "/plugins/fusioninventory/pics/task_running.png'/>";
+            $icon  = "<img src='".$CFG_GLPI['root_doc'].
+                     "/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
-            $search = " AND `state`='".self::FINISHED."'";
+            $fields['state'] = $self::FINISHED;
             $title = __('Finished tasks', 'fusioninventory');
-            $icon = "<img src='".$CFG_GLPI['root_doc'].
-                        "/plugins/fusioninventory/pics/task_finished.png'/>";
+            $icon  = "<img src='".$CFG_GLPI['root_doc'].
+                      "/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
          case 'all':
-            $search = "";
-            $title = _n('Task', 'Tasks', 2);
-            $icon = "";
+            $fields = [];
+            $title  = _n('Task', 'Tasks', 2);
+            $icon   = "";
             break;
 
       }
-      if (!isset($search)) {
+      if (!$fields) {
          return;
       }
 
-      $a_taskjobs = [];
-      if (isset($search)) {
-         $query = "SELECT * FROM `".$this->getTable()."`
-                   WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
-                   ORDER BY `".$this->getTable()."`.`id` DESC";
-         $a_taskjobs = [];
-         $result = $DB->query($query);
-         if ($result) {
-            while ($data=$DB->fetch_array($result)) {
-               $a_taskjobs[] = $data;
-            }
-         }
+      $a_taskjobs         = [];
+      $fields['items_id'] = $items_id;
+      $fields['itemtype'] = $itemtype;
+
+      $params = ['FROM'  => $this->getTable(),
+                 'WHERE' => $fields,
+                 'ORDER' => 'id DESC'
+                ];
+      foreach ($DB->request($params) as $data) {
+         $a_taskjobs[] = $data;
       }
 
       echo "<div align='center'>";
@@ -339,10 +340,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param integer $state state to set
     */
    function changeStatus($id, $state) {
-      $input          = [];
-      $input['id']    = $id;
-      $input['state'] = $state;
-      $this->update($input);
+      $this->update(['id' => $id, 'state' => $state]);
    }
 
 
@@ -353,19 +351,23 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param integer $agent_id id of the agent
     */
    function getTaskjobsAgent($agent_id) {
+      global $DB;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $moduleRun = [];
-      $a_taskjobstates = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id.
-                                     "' AND `state`='".self::PREPARED."'",
-                                     "`id`");
-      foreach ($a_taskjobstates as $data) {
+      $params = ['FROM'   => 'glpi_plugin_fusioninventory_taskjobstates',
+                 'FIELDS' => 'plugin_fusioninventory_taskjobs_id',
+                 'WHERE'  => ['plugin_fusioninventory_agents_id' => $agent_id,
+                              'state' => self::PREPARED],
+                  'ORDER' => 'id'
+                ];
+      foreach ($DB->request($params) as $data) {
          // Get job and data to send to agent
          if ($pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id'])) {
 
-            $pluginName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
-            if ($pluginName) {
-               $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);
+            $moduleName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
+            if ($moduleName) {
+               $className = "Plugin".ucfirst($moduleName).ucfirst($pfTaskjob->fields['method']);
                $moduleRun[$className][] = $data;
             }
          }
@@ -393,7 +395,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          $last_date = $params['last_date'];
       }
 
-      if (!is_null($id) and !is_null($last_date)) {
+      if (!is_null($id) && !is_null($last_date)) {
          echo json_encode($this->getLogs($id, $last_date));
       }
    }
@@ -411,13 +413,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    function getLogs($id, $last_date) {
       global $DB;
 
-      $fields = [
-         'log.id'      => 0,
-         'log.date'    => 1,
-         'log.comment' => 2,
-         'log.state'   => 3,
-         'run.id'      => 4,
-      ];
       $query = "SELECT log.`id` AS 'log.id',
                   log.`date` AS 'log.date',
                   log.`comment` AS 'log.comment',
@@ -430,16 +425,15 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                   AND log.`date` <= '$last_date'
                ORDER BY log.`id` DESC";
 
-      $res = $DB->query($query);
       $logs = [];
-      while ($result = $res->fetch_row()) {
-         $run_id         = $result[$fields['run.id']];
+      foreach ($DB->request($query) as $result) {
+         $run_id         = $result['run.id'];
          $logs['run']    = $run_id;
          $logs['logs'][] = [
-            'log.id'      => $result[$fields['log.id']],
-            'log.comment' => PluginFusioninventoryTaskjoblog::convertComment($result[$fields['log.comment']]),
-            'log.date'    => $result[$fields['log.date']],
-            'log.state'   => $result[$fields['log.state']]
+            'log.id'      => $result['log.id'],
+            'log.comment' => PluginFusioninventoryTaskjoblog::convertComment($result['log.comment']),
+            'log.date'    => $result['log.date'],
+            'log.state'   => $result['log.state']
          ];
       }
       return $logs;
@@ -479,7 +473,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $log_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
       $log_input['items_id'] = $items_id;
       $log_input['itemtype'] = $itemtype;
-      $log_input['date']     = date("Y-m-d H:i:s");
+      $log_input['date']     = $_SESSION['glpi_currenttime'];
       $log_input['comment']  = $message;
       $log_input             = Toolbox::addslashes_deep($log_input);
       $pfTaskjoblog->add($log_input);
@@ -495,21 +489,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $reason
     */
    function fail($reason='') {
-      $log = new PluginFusioninventoryTaskjoblog();
-
-      $log_input = [
-         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
-         'items_id' => $this->fields['items_id'],
-         'itemtype' => $this->fields['itemtype'],
-         'date'     => date("Y-m-d H:i:s"),
-         'state'    => PluginFusioninventoryTaskjoblog::TASK_ERROR,
-         'comment'  => Toolbox::addslashes_deep($reason)
-      ];
-      $log->add($log_input);
-      $this->update([
-         'id'    => $this->fields['id'],
-         'state' => self::IN_ERROR
-      ]);
+      $this->updateState(PluginFusioninventoryTaskjoblog::TASK_ERROR,
+                         self::IN_ERROR,
+                         $reason);
    }
 
    /*
@@ -518,8 +500,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $reason the text to be displayed
     */
    function postpone($type, $reason='') {
-      $this->changeStatus(PluginFusioninventoryTaskjoblog::TASK_INFO,
-                          self::POSTPONED, $reason);
+      $this->updateState(PluginFusioninventoryTaskjoblog::TASK_INFO,
+                         self::POSTPONED,
+                         $reason);
       //$this->updateJobStateFromTemplate($type);
    }
 
@@ -529,56 +512,45 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $reason
     */
    function cancel($reason='') {
-
-      $log = new PluginFusioninventoryTaskjoblog();
-      $log_input = [
-         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
-         'items_id' => $this->fields['items_id'],
-         'itemtype' => $this->fields['itemtype'],
-         'date'     => date("Y-m-d H:i:s"),
-         'state'    => PluginFusioninventoryTaskjoblog::TASK_INFO,
-         'comment'  => Toolbox::addslashes_deep($reason)
-      ];
-
-      $log->add($log_input);
-      $this->update([
-         'id'    => $this->fields['id'],
-         'state' => self::CANCELLED
-      ]);
+      $this->updateState(PluginFusioninventoryTaskjoblog::TASK_INFO,
+                         self::CANCELLED,
+                         $reason);
    }
 
    /**
-    * Cancel a taskjob
+    * Update the state of a jobstate
+    * @since 9.2
     *
+    * @param string $joblog_state the state of the joblog to set
+    * @param string $jobstate_state the state of the jobstate to set
     * @param string $reason
     */
-   function changeState($log_state, $state, $reason='') {
+   function updateState($joblog_state, $jobstate_state, $reason='') {
 
       $log = new PluginFusioninventoryTaskjoblog();
       $log_input = [
          'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
          'items_id' => $this->fields['items_id'],
          'itemtype' => $this->fields['itemtype'],
-         'date'     => date("Y-m-d H:i:s"),
-         'state'    => PluginFusioninventoryTaskjoblog::TASK_INFO,
+         'date'     => $_SESSION['glpi_currenttime'],
+         'state'    => $joblog_state,
          'comment'  => Toolbox::addslashes_deep($reason)
       ];
 
       $log->add($log_input);
       $this->update([
          'id'    => $this->fields['id'],
-         'state' => self::CANCELLED
+         'state' => $jobstate_state
       ]);
    }
 
    private function updateJobStateFromTemplate($type) {
       $pfDeployUserInteraction = new PluginFusioninventoryDeployUserinteraction();
-      Toolbox::logDebug($type, $this->fields['items_id']);
       //Let's browse all user interactions
       foreach ($pfDeployUserInteraction->getItemValues($this->fields['items_id']) as $interaction) {
          //Look for the user interaction that matches our event
          if ($interaction['type'] == $type && $interaction['template']) {
-            $params = [];
+            $params    = [];
             //Found, let's load the template
             $template  = new PluginFusioninventoryDeployUserinteractionTemplate();
             $template->getFromDB($interaction['template']);

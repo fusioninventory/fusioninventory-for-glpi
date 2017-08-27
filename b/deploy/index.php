@@ -165,7 +165,8 @@ switch (filter_input(INPUT_GET, "action")) {
          $params['code'] = 'ko';
          $fi_currentStep = filter_input(INPUT_GET, "currentStep");
          if (!empty($fi_currentStep)) {
-            $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")] . ":" . filter_input(INPUT_GET, "msg");
+            $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
+               . ":" . filter_input(INPUT_GET, "msg");
          } else {
             $params['msg'] = filter_input(INPUT_GET, "msg");
          }
@@ -183,7 +184,8 @@ switch (filter_input(INPUT_GET, "action")) {
             $params['code'] = 'running';
             $fi_currentStep = filter_input(INPUT_GET, "currentStep");
             if (!empty($fi_currentStep)) {
-               $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")] . ":" . filter_input(INPUT_GET, "msg");
+               $params['msg'] = $partjob_mapping[filter_input(INPUT_GET, "currentStep")]
+                  . ":" . filter_input(INPUT_GET, "msg");
             } else {
                $params['msg'] = filter_input(INPUT_GET, "msg");
             }
@@ -268,11 +270,10 @@ switch (filter_input(INPUT_GET, "action")) {
             if ($cancel) {
                $pfTaskjobstate->cancel();
             } else {
-               $pfTaskjobstate->postpone($type,
-                                         __('Job postponed', 'fusioninventory'));
+               $pfTaskjobstate->postpone($type);
             }
          }
-   }
+      }
 }
 
 if ($response !== false) {
