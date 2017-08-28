@@ -565,7 +565,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $params['max_retry'] = $template_values['nb_max_retry'];
             $params['nb_retry']  = $this->fields['nb_retry'] + 1;
             $params['id']        = $this->getID();
-            Toolbox::logDebug($params);
             $this->update($params);
          }
       }

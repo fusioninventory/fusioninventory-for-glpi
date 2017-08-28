@@ -59,9 +59,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     */
    function __construct() {
       parent::__construct();
-      $this->base_urls = array_merge( $this->base_urls, array(
+      $this->base_urls = array_merge( $this->base_urls, [
          'fi.job.logs' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_logs.php",
-      ));
+      ]);
    }
 
    /**
@@ -186,7 +186,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                'agents_prepared',
                'agents_running',
                'agents_cancelled',
-               'agents_rescheduled'
+               'agents_postponed'
             ],
             last_finish_states: [
                'agents_notdone',
@@ -202,7 +202,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'agents_running':   '". __('Running', 'fusioninventory')."',
             'agents_prepared':  '". __('Prepared' , 'fusioninventory')."',
             'agents_cancelled': '". __('Cancelled', 'fusioninventory')."',
-            'agents_rescheduled': '". __('Rescheduled', 'fusioninventory')."'
+            'agents_postponed': '". __('Postponed', 'fusioninventory')."'
          };
 
          taskjobs.logstatuses_names = ".
@@ -267,17 +267,17 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
            "</label>";
       echo "<div class='state_checkboxes'>";
        // set options checked by default
-      $agent_state_types = array(
+      $agent_state_types = [
          'agents_prepared'  => false,
          'agents_running'   => true,
          'agents_cancelled' => false,
          'agents_success'   => true,
          'agents_error'     => true,
-         'agents_rescheduled' => true
-      );
+         'agents_postponed' => true
+      ];
       foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
          $agent_state_type = str_replace("agents_", "", $agent_state_type);
-         $locale = __(ucfirst($agent_state_type), 'fusioninventory');
+         $locale  = __(ucfirst($agent_state_type), 'fusioninventory');
          $checked = "";
          if ($agent_state_checked) {
             $checked = "checked='checked'";
@@ -307,10 +307,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     * @return boolean TRUE if form is ok
     *
     **/
-   function showForm($id, $options=array()) {
+   function showForm($id, $options=[]) {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-      $taskjobs = array();
+      $taskjobs = [];
       $new_item = false;
 
       if ($id > 0) {
@@ -344,47 +344,45 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          echo "<div class='fusinv_form'>";
          $this->showCheckboxField( __('Active'), "is_active" );
 
-         $datetime_field_options = array(
-            'timestep' => 1,
+         $datetime_field_options = [
+            'timestep'   => 1,
             'maybeempty' => true,
-         );
-         $this->showDateTimeField(
-            __('Schedule start', 'fusioninventory'),
-            "datetime_start",
-            $datetime_field_options
+         ];
+         $this->showDateTimeField(__('Schedule start', 'fusioninventory'),
+                                  "datetime_start", $datetime_field_options
          );
 
-         $this->showDateTimeField(
-            __('Schedule end', 'fusioninventory'),
-            "datetime_end",
-            $datetime_field_options
+         $this->showDateTimeField(__('Schedule end', 'fusioninventory'),
+                                  "datetime_end", $datetime_field_options
          );
 
-         $this->showDropdownForItemtype(
-            __('Preparation timeslot','fusioninventory'),
-            "PluginFusioninventoryTimeslot",
-            array('name'  => 'plugin_fusioninventory_timeslots_prep_id',
-                  'value' => $this->fields['plugin_fusioninventory_timeslots_prep_id'])
+         $this->showDropdownForItemtype(__('Preparation timeslot','fusioninventory'),
+                                        "PluginFusioninventoryTimeslot",
+                                       ['name'  => 'plugin_fusioninventory_timeslots_prep_id',
+                                        'value' => $this->fields['plugin_fusioninventory_timeslots_prep_id']
+                                       ]
             );
 
          $this->showDropdownForItemtype(
             __('Execution timeslot','fusioninventory'),
             "PluginFusioninventoryTimeslot",
-            array('name'  => 'plugin_fusioninventory_timeslots_exec_id',
-                  'value' => $this->fields['plugin_fusioninventory_timeslots_exec_id'])
+            ['name'  => 'plugin_fusioninventory_timeslots_exec_id',
+                  'value' => $this->fields['plugin_fusioninventory_timeslots_exec_id']]
             );
 
          $this->showIntegerField( __('Agent wakeup interval (in minutes)', 'fusioninventory'), "wakeup_agent_time",
-                                 array('value' => $this->fields['wakeup_agent_time'],
-                                       'toadd' => array('0' => __('Never')),
-                                       'min'   => 1,
-                                       'step'  => 1) );
+                                 ['value' => $this->fields['wakeup_agent_time'],
+                                  'toadd' => ['0' => __('Never')],
+                                  'min'   => 1,
+                                  'step'  => 1
+                                 ] );
 
          $this->showIntegerField( __('Number of agents to wake up', 'fusioninventory'), "wakeup_agent_counter",
-                                 array('value' => $this->fields['wakeup_agent_counter'],
-                                       'toadd' => array('0' => __('None')),
-                                       'min'   => 0,
-                                       'step'  => 1) );
+                                 ['value' => $this->fields['wakeup_agent_counter'],
+                                  'toadd' => ['0' => __('None')],
+                                  'min'   => 0,
+                                  'step'  => 1
+                                 ] );
 
          echo "</div>";
       }
@@ -397,7 +395,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       return true;
    }
 
-   function showFormButtons($options = array()) {
+   function showFormButtons($options = []) {
       if (isset($this->fields['id'])) {
          $ID = $this->fields['id'];
       }
@@ -405,10 +403,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<tr>";
       echo "<td colspan='2'>";
       if ($this->isNewID($ID)) {
-         echo Html::submit(_x('button','Add'), array('name' => 'add'));
+         echo Html::submit(_x('button','Add'), ['name' => 'add']);
       } else {
-         echo Html::hidden('id', array('value' => $ID));
-         echo Html::submit(_x('button','Save'), array('name' => 'update'));
+         echo Html::hidden('id', ['value' => $ID]);
+         echo Html::submit(_x('button','Save'), ['name' => 'update']);
       }
       echo "</td>";
 
@@ -422,8 +420,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<td>";
       if ($this->can($ID, PURGE)) {
          echo Html::submit(_x('button','Delete permanently'),
-                           array('name'    => 'purge',
-                                 'confirm' => __('Confirm the final deletion?')));
+                           ['name'    => 'purge',
+                            'confirm' => __('Confirm the final deletion?')
+                           ]);
       }
       echo "</td>";
       echo "</tr>";
@@ -466,10 +465,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
          $this->getFromDB($postvars['id']);
          //Ensure empty value are set to NULL for datetime fields
-         if (isset($postvars['datetime_start']) and $postvars['datetime_start'] === '') {
+         if (isset($postvars['datetime_start']) && $postvars['datetime_start'] === '') {
             $postvars['datetime_start'] = 'NULL';
          }
-         if (isset($postvars['datetime_end']) and $postvars['datetime_end'] === '') {
+         if (isset($postvars['datetime_end']) && $postvars['datetime_end'] === '') {
             $postvars['datetime_end'] = 'NULL';
          }
          $this->update($postvars);
