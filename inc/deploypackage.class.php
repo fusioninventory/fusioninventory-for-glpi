@@ -1980,19 +1980,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      = str_replace(PluginFusioninventoryDeployUserinteraction::RN_TRANSFORMATION, "\r\n",
                                    $job['job']['userinteractions'][$key]['text']);
 
-                  //TODO make it configurable in the UI
-                  $job['job']['userinteractions'][$key]['on_ok']    = 'continue:continue';
-                  $job['job']['userinteractions'][$key]['on_yes']   = 'continue:continue';
-                  $job['job']['userinteractions'][$key]['on_async'] = 'continue:continue';
-
-                  $job['job']['userinteractions'][$key]['on_no']     = 'stop:stop';
-                  $job['job']['userinteractions'][$key]['on_cancel'] = 'stop:stop';
-
-                  $job['job']['userinteractions'][$key]['on_abort'] = 'stop:stop';
-                  $job['job']['userinteractions'][$key]['on_retry'] = 'stop:postpone';
-
-                  $job['job']['userinteractions'][$key]['on_ignore'] = 'continue:continue';
-
                }
             }
          }
