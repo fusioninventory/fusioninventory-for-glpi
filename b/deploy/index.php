@@ -267,6 +267,7 @@ switch (filter_input(INPUT_GET, "action")) {
          //If needed : cancel or postpone the job
          if ($cancel || $postpone) {
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+            $pfTaskjobstate->getFromDBByUniqID($params['uuid']);
             if ($cancel) {
                $pfTaskjobstate->cancel();
             } else {
