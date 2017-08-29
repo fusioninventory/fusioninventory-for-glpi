@@ -309,62 +309,31 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
-
-
-   /**
-    * Display a serialized inventory
-    *
-    * @global array $CFG_GLPI
-    * @param integer $computers_id
-    */
-   function displaySerializedInventory($computers_id) {
+   static function showDownloadInventoryFile($computers_id) {
       global $CFG_GLPI;
-
-      $a_computerextend = current($this->find("`computers_id`='".$computers_id."'",
-                                               "", 1));
-
-      $this->getFromDB($a_computerextend['id']);
 
       $folder = substr($computers_id, 0, -1);
       if (empty($folder)) {
          $folder = '0';
       }
 
-      if (empty($this->fields['serialized_inventory'])
-              && !file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
-         return;
-      }
-
-      $data = array();
-      if (!empty($this->fields['serialized_inventory'])) {
-         $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
-      }
-      echo "<br/>";
-
       if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
-
          echo "<a href='".$CFG_GLPI['root_doc'].
            "/plugins/fusioninventory/front/send_inventory.php".
            "?itemtype=PluginFusioninventoryInventoryComputerComputer".
            "&function=sendXML&items_id=computer/".$folder."/".$computers_id.
            "&filename=Computer-".$computers_id.".xml'".
-           "target='_blank'>".__('Download inventory file', 'fusioninventory')."</a>";
-
-        echo "</th></tr></table>";
-      }
-
-
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-         echo "<table class='tab_cadre_fixe'>";
-         PluginFusioninventoryToolbox::displaySerializedValues($data);
-         echo "</table>";
+           "target='_blank'>";
+         $message = __('Download inventory file', 'fusioninventory');
+         echo "<img src=\"".$CFG_GLPI["root_doc"].
+                 "/pics/icones/csv-dist.png\" alt='$message' title='$message'>";
+         echo "&nbsp;$message</a>";
+         echo "</th></tr></table>";
       }
    }
-
-
 
    /**
     * Delete extended information of computer
