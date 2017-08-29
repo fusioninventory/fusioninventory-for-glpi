@@ -2506,50 +2506,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
-   /**
-    * Link software version with the computer
-    *
-    * @param array $a_software
-    * @param integer $computers_id
-    * @param boolean $no_history
-    * @param array $options
-    */
-   function addSoftwareVersionComputer($a_software, $computers_id, $no_history, $options) {
-
-      $options['disable_unicity_check'] = TRUE;
-
-      $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-      $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
-
-      $this->softwareVersion->getFromDB($softwareversions_id);
-      $a_software['computers_id']         = $computers_id;
-      $a_software['softwareversions_id']  = $softwareversions_id;
-      $a_software['is_dynamic']           = 1;
-      $a_software['is_template_computer'] = FALSE;
-      $a_software['is_deleted_computer']  = FALSE;
-      $a_software['_no_history']          = TRUE;
-      $a_software['entities_id']          = $computers_id['entities_id'];
-
-      if ($this->computerSoftwareVersion->add($a_software, $options, FALSE)) {
-         if (!$no_history) {
-            $changes[0] = '0';
-            $changes[1] = "";
-            $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
-            $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
-                         Log::HISTORY_INSTALL_SOFTWARE);
-
-            $changes[0] = '0';
-            $changes[1] = "";
-            $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem2($this->computer, 'add'));
-            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
-                         Log::HISTORY_INSTALL_SOFTWARE);
-         }
-      }
-   }
-
-
-
    /**
     * Arraydiff function to have real diff between 2 arrays
     *
