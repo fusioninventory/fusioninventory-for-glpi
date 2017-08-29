@@ -876,7 +876,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (!isset($this->softList[$a_software['name']."$$$$".
                            $a_software['manufacturers_id']])) {
                      $this->addSoftware($a_software,
-                                        $options);
+                                        $options,
+                                        $no_history);
                   }
                }
                $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
@@ -898,7 +899,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach ($a_computerinventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                   if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
-                     $this->addSoftwareVersion($a_software, $softwares_id);
+                     $this->addSoftwareVersion($a_software, $softwares_id, $no_history);
                   }
                }
                $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
@@ -1001,7 +1002,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         if (!isset($this->softList[$a_software['name']."$$$$".
                                  $a_software['manufacturers_id']])) {
                            $this->addSoftware($a_software,
-                                              $options);
+                                              $options,
+                                              $no_history);
                         }
                      }
                      $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
@@ -1024,7 +1026,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                         if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
-                           $this->addSoftwareVersion($a_software, $softwares_id);
+                           $this->addSoftwareVersion($a_software, $softwares_id, $no_history);
                         }
                      }
                      $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
@@ -2440,12 +2442,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a new software
     *
-    * @param array $a_software
-    * @param array $options
+    * @param array   $a_software
+    * @param array   $options
+    * @param boolean $no_history set true if not want history
     */
-   function addSoftware($a_software, $options) {
+   function addSoftware($a_software, $options, $no_history) {
       $a_softwares_id = $this->software->add($a_software, $options, FALSE);
-      $this->addPrepareLog($a_softwares_id, 'Software');
+      if ($no_history === false) {
+         $this->addPrepareLog($a_softwares_id, 'Software');
+      }
 
       $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']] = $a_softwares_id;
    }
@@ -2455,10 +2460,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    /**
     * Add a software version
     *
-    * @param array $a_software
+    * @param array   $a_software
     * @param integer $softwares_id
+    * @param boolean $no_history set true if not want history
     */
-   function addSoftwareVersion($a_software, $softwares_id) {
+   function addSoftwareVersion($a_software, $softwares_id, $no_history) {
 
       $options = array();
       $options['disable_unicity_check'] = TRUE;
@@ -2467,7 +2473,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['softwares_id'] = $softwares_id;
       $a_software['_no_history']  = TRUE;
       $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
-      $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
+      if ($no_history === false) {
+         $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
+      }
       $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']] = $softwareversions_id;
    }
 
