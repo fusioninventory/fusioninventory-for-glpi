@@ -4747,7 +4747,8 @@ function do_computeroperatingsystem_migration($migration) {
             'operatingsystemversions_id'        => $row['operatingsystemversions_id'],
             'operatingsystemservicepacks_id'    => $row['operatingsystemservicepacks_id'],
             'operatingsystemkernelversions_id'  => $kversions_mapping[$row['id']],
-            'operatingsystemeditions_id'        => $row['plugin_fusioninventory_computeroperatingsystemeditions_id']
+            'operatingsystemeditions_id'        => $row['plugin_fusioninventory_computeroperatingsystemeditions_id'],
+            'is_dynamic'                        => 1
          ];
          if (!$ios->getFromDBByCrit($search)) {
             $ios->add($input);

@@ -158,7 +158,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                'operatingsystemservicepacks_id'    => $pfos['operatingsystemservicepacks_id'],
                'operatingsystemeditions_id'        => $pfos['operatingsystemeditions_id'],
                'license_id'                        => $pfos['licenseid'],
-               'license_number'                    => $pfos['license_number']
+               'license_number'                    => $pfos['license_number'],
+               'is_dynamic'                        => 1,
+               'entities_id'                       => $computer->fields['entities_id']
             );
 
             if ($operatingsystem !== false) {
