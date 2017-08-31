@@ -4729,7 +4729,7 @@ function do_computeroperatingsystem_migration($migration) {
 
    if ($DB->tableExists("glpi_plugin_fusioninventory_computeroperatingsystems")) {
       $ios = new Item_OperatingSystem();
-      $query = "SELECT DISTINCT(fi_computer.id) AS cid, fi_cos.*
+      $query = "SELECT DISTINCT(fi_computer.id) AS cid, fi_computer.computers_id, fi_cos.*
          FROM glpi_plugin_fusioninventory_inventorycomputercomputers AS fi_computer
          INNER JOIN glpi_plugin_fusioninventory_computeroperatingsystems AS fi_cos
             ON fi_computer.plugin_fusioninventory_computeroperatingsystems_id = fi_cos.id
@@ -4743,12 +4743,19 @@ function do_computeroperatingsystem_migration($migration) {
             'operatingsystems_id'               => $row['operatingsystems_id'],
             'operatingsystemarchitectures_id'   => $row['operatingsystemarchitectures_id']
          ];
+
+         $computer = new Computer();
+         $computer->getFromDB($row['computers_id']);
+
          $input = $search + [
             'operatingsystemversions_id'        => $row['operatingsystemversions_id'],
             'operatingsystemservicepacks_id'    => $row['operatingsystemservicepacks_id'],
             'operatingsystemkernelversions_id'  => $kversions_mapping[$row['id']],
-            'operatingsystemeditions_id'        => $row['plugin_fusioninventory_computeroperatingsystemeditions_id']
+            'operatingsystemeditions_id'        => $row['plugin_fusioninventory_computeroperatingsystemeditions_id'],
+            'is_dynamic'                        => 1,
+            'entities_id'                       => $computer->fields['entities_id']
          ];
+
          if (!$ios->getFromDBByCrit($search)) {
             $ios->add($input);
          } else {
