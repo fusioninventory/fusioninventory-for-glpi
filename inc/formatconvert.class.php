@@ -1307,6 +1307,7 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp = $thisc->addValues($a_virtualmachines,
                                               array(
                                                  'NAME'        => 'name',
+                                                 'COMMENT'     => 'comment',
                                                  'VCPU'        => 'vcpu',
                                                  'MEMORY'      => 'ram',
                                                  'VMTYPE'      => 'virtualmachinetypes_id',
@@ -1341,6 +1342,7 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp = $thisc->addValues($a_virtualmachines,
                                               array(
                                                  'NAME'            => 'name',
+                                                 'COMMENT'         => 'comment',
                                                  'VCPU'            => 'vcpu',
                                                  'MEMORY'          => 'ram',
                                                  'VMTYPE'          => 'computertypes_id',

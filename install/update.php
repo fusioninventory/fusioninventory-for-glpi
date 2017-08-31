@@ -4650,9 +4650,11 @@ function do_operatingsystemedition_migration($migration) {
             $new_id = $ose->add($edition, array(), false);
          }
 
-         $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os SET "
-                     . " pf_os.plugin_fusioninventory_computeroperatingsystemeditions_id='" . $new_id . "',"
-                     . " JOIN operatingsystemeditions os_edition WHERE os_edition.name='" . $DB->escape($edition['name']) . "'";
+         $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os"
+                     . " JOIN glpi_plugin_fusioninventory_computeroperatingsystemeditions os_edition "
+                     . " ON pf_os.plugin_fusioninventory_computeroperatingsystemeditions_id = os_edition.id "
+                     . " SET pf_os.plugin_fusioninventory_computeroperatingsystemeditions_id='$new_id'"
+                     . " WHERE os_edition.name='" . $DB->escape($edition['name']) . "'";
          $DB->query($sql_u);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions');
