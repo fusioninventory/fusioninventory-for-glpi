@@ -794,8 +794,7 @@ taskjobs.update_logs = function (data) {
             taskjobs.charts[chart_id].new_data = [
                target_v.counters_computed.agents_success.length,
                target_v.counters_computed.agents_error.length,
-               target_v.counters_computed.agents_notdone.length,
-               target_v.counters_computed.agents_postponed.length
+               target_v.counters_computed.agents_notdone.length
             ];
 
             if ( ! d3.sum(taskjobs.charts[chart_id].new_data) > 0) {
@@ -858,7 +857,6 @@ taskjobs.compute_data = function() {
                     agents_cancelled:   Object.keys(target_v.counters.agents_cancelled),
                     agents_notdone:     Object.keys(target_v.counters.agents_notdone),
                     agents_error:       Object.keys(target_v.counters.agents_error),
-                    agents_postponed:   Object.keys(target_v.counters.agents_postponed),
                     agents_success:     Object.keys(target_v.counters.agents_success)
                 };
 

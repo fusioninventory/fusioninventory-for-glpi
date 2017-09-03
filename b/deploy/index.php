@@ -269,9 +269,9 @@ switch (filter_input(INPUT_GET, "action")) {
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
             $pfTaskjobstate->getFromDBByUniqID($params['uuid']);
             if ($cancel) {
-               $pfTaskjobstate->cancel();
+               $pfTaskjobstate->cancel(__('User canceled the job', 'fusioninventory'));
             } else {
-               $pfTaskjobstate->postpone($type);
+               $pfTaskjobstate->postpone($type, __('User postponed the job', 'fusioninventory'));
             }
          }
       }
@@ -280,5 +280,5 @@ switch (filter_input(INPUT_GET, "action")) {
 if ($response !== false) {
    echo $response;
 } else {
-   echo json_encode((object)array());
+   echo json_encode((object)[]);
 }

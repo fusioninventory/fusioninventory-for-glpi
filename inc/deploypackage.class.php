@@ -1299,9 +1299,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
               'agents_success'   => __('Successful', 'fusioninventory'),
               'agents_running'   => __('Running', 'fusioninventory'),
               'agents_prepared'  => __('Prepared' , 'fusioninventory'),
-              'agents_cancelled' => __('Cancelled', 'fusioninventory'),
-              'agents_postponed' => __('Postponed', 'fusioninventory')
-             ];
+              'agents_cancelled' => __('Cancelled', 'fusioninventory')             ];
    }
 
    /**
@@ -1416,8 +1414,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      }
 
                      // if job has not started, user can cancel it
-                     if ($package_info['last_taskjobstate']['state'] == "agents_prepared"
-                        || $package_info['last_taskjobstate']['state'] == "agents_postponed") {
+                     if ($package_info['last_taskjobstate']['state'] == "agents_prepared") {
                         echo "<a class='cancel btn'
                                  href='#'
                                  title='".__("Cancel job", 'fusioninventory')."'
@@ -1605,7 +1602,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             //Browse all computers that are target by a a package installation
 
             foreach ($mycomputers as $comp_id => $data) {
-
                //If we only want packages for one computer
                //check if it's the computer we look for
                if ($computers_id && $comp_id != $computers_id) {
@@ -1623,7 +1619,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                //are currenlty visible
 
                //The package is recursive, and visible in computer's entity
-               if (Session::isMultiEntitiesMode()) {
+               if (Session::isMultiEntitiesMode()
+                  && $package['entities_id'] != $data['entities_id'] ) {
+
                   if (!$package['is_recursive']
                      && $package['entities_id'] != $data['entities_id']) {
                      continue;
@@ -1850,10 +1848,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             case PluginFusioninventoryTaskjobstate::PREPARED :
                $state = 'agents_prepared';
-               break;
-
-            case PluginFusioninventoryTaskjobstate::POSTPONED :
-               $state = 'agents_postponed';
                break;
 
             case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :

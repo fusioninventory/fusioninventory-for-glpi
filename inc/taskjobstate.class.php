@@ -503,7 +503,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $this->updateState(PluginFusioninventoryTaskjoblog::TASK_INFO,
                          self::POSTPONED,
                          $reason);
-      //$this->updateJobStateFromTemplate($type);
+      $this->processPostonedJob($type);
    }
 
    /**
@@ -544,13 +544,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       ]);
    }
 
-   private function updateJobStateFromTemplate($type) {
+   private function processPostonedJob($type) {
+
       $pfDeployUserInteraction = new PluginFusioninventoryDeployUserinteraction();
       //Let's browse all user interactions
       foreach ($pfDeployUserInteraction->getItemValues($this->fields['items_id']) as $interaction) {
          //Look for the user interaction that matches our event
          if ($interaction['type'] == $type && $interaction['template']) {
-            $params    = [];
+            $params    = $this->fields;
+            unset($params['id']);
+
             //Found, let's load the template
             $template  = new PluginFusioninventoryDeployUserinteractionTemplate();
             $template->getFromDB($interaction['template']);
@@ -558,17 +561,19 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $template_values = $template->getValues();
             //Compute the next run date for the job. Retry_after value is in seconds
             $date = new \DateTime('+'.$template_values['retry_after'].' seconds');
-            $params['date_rescheduled'] = $date->format('Y-m-d H:i');
+            $params['date_start'] = $date->format('Y-m-d H:i');
             //Set the max number or retry
             //(we set it each time a job is postponed because the value
             //can change in the template)
             $params['max_retry'] = $template_values['nb_max_retry'];
             $params['nb_retry']  = $this->fields['nb_retry'] + 1;
-            $params['id']        = $this->getID();
-            $this->update($params);
+            $params['state']     = PluginFusioninventoryTaskjobstate::PREPARED;
+            Toolbox::logDebug($params);
+            $this->add($params);
          }
       }
    }
+
    /**
     * Cron task: clean taskjob (retention time)
     *

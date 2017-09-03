@@ -695,4 +695,12 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       return $this->prepareInputForAdd($input);
    }
 
+   /**
+   * Get temlate values as an array
+   * @since 9.2
+   * @return array the template values as an array
+   */
+   public function getValues() {
+      return json_decode($this->fields['json'], true);
+   }
 }
