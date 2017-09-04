@@ -1624,9 +1624,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   if (!$package['is_recursive']
                      && $package['entities_id'] != $data['entities_id']) {
                      continue;
-                  } else if($package['is_recursive']
-                  && !in_array($package['entities_id'],
-                              getAncestorsOf('glpi_entities', $data['entities_id']))) {
+                  } else if ($package['is_recursive']
+                             && $package['entities_id'] != $data['entities_id']
+                             && !in_array($package['entities_id'],
+                                          getAncestorsOf('glpi_entities', $data['entities_id']))) {
                      //The package is not recursive, and invisible in the computer's entity
                      continue;
                   }
