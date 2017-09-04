@@ -95,7 +95,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          echo '<table class="tab_cadre_fixe">';
          echo '<tr>';
          echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory')
-            .' - '.__('License').'</th>';
+            .' - '.self::getTypeName($iterator->numrows()).'</th>';
          echo '</tr>';
 
          foreach ($iterator as $licenseInfo) {
@@ -119,9 +119,13 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                $license_options = __('Option', 'fusioninventory')
                   ."&nbsp;(".implode(', ', $options).")";
             }
-
-            echo "<td>".$licenseInfo['fullname'].$license_options."</td>";
-
+            echo "<td>";
+            if (!isset($licenseInfo['fullname'])) {
+               echo $licenseInfo['fullname'];
+            } else {
+               echo $licenseInfo['name'];
+            }
+            echo $license_options."</td>";
             echo "<td>".__('Serial number', 'fusioninventory')."</td>";
             echo "<td>".$licenseInfo['serial']."</td>";
             echo "</tr>";

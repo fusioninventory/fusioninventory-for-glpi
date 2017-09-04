@@ -2278,13 +2278,12 @@ function plugin_fusioninventory_getDatabaseRelations() {
 /**
  * Display a FusionInventory form if no automatic inventory has yet been
  * performed
+ * @since 9.2
  *
  * @param array $params Hook parameters
  *
  * @return void
  */
-
-
 function plugin_fusioninventory_postItemForm($params) {
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
@@ -2299,6 +2298,14 @@ function plugin_fusioninventory_postItemForm($params) {
    }
 }
 
+/**
+ * FusinInventory infos after showing a tab
+ * @since 9.2
+ *
+ * @param array $params Hook parameters
+ *
+ * @return void
+ */
 function plugin_fusioninventory_postshowtab($params) {
    if (isset($params['item']) && is_object($params['item'])) {
       $item = $params['item'];
@@ -2306,10 +2313,6 @@ function plugin_fusioninventory_postshowtab($params) {
       switch ($item->getType()) {
          case 'Computer':
             switch (Session::getActiveTab('Computer')) {
-               case 'Computer_SoftwareVersion$1':
-                  $license = new PluginFusioninventoryComputerLicenseInfo();
-                  $license->showForm($item->getID());
-                  break;
                case 'Lock$1':
                   PluginFusioninventoryLock::showLocksForAnItem($item);
                   break;
@@ -2336,3 +2339,27 @@ function plugin_fusioninventory_postshowtab($params) {
       }
     }
  }
+
+ /**
+  * FusinInventory infos after before a tab
+  * @since 9.2
+  *
+  * @param array $params Hook parameters
+  *
+  * @return void
+  */
+ function plugin_fusioninventory_preshowtab($params) {
+    if (isset($params['item']) && is_object($params['item'])) {
+       $item = $params['item'];
+       switch ($item->getType()) {
+          case 'Computer':
+             switch (Session::getActiveTab('Computer')) {
+                case 'Computer_SoftwareVersion$1':
+                   $license = new PluginFusioninventoryComputerLicenseInfo();
+                   $license->showForm($item->getID());
+                   break;
+             }
+             break;
+       }
+     }
+  }
