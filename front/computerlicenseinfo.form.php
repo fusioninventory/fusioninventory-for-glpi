@@ -47,12 +47,14 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight('config', UPDATE);
+Session::checkRight('license', UPDATE);
 
-if (isset($_POST['associate'])) {
+if (isset($_POST['associate']) && is_array($_POST['associate'])) {
    $pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
    $pflicenseinfo->associate($_POST);
-   Html::back();
+} else if (isset($_POST['dissociate']) && is_array($_POST['dissociate'])) {
+   $pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
+   $pflicenseinfo->dissociate($_POST);
 }
 
-?>
+Html::back();

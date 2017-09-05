@@ -1416,12 +1416,23 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['licenseinfo'] = array();
       if (isset($array['LICENSEINFOS'])) {
          foreach ($array['LICENSEINFOS'] as $a_licenseinfo) {
-            $array_tmp = $thisc->addValues($a_licenseinfo,
-                                           array(
-                                              'NAME'     => 'name',
-                                              'FULLNAME' => 'fullname',
-                                              'KEY'      => 'serial'));
-            $a_inventory['licenseinfo'][] = $array_tmp;
+            $insert = true;
+            //Try to avoid duplicate license,
+            //as FI agent may send several entries for the same license
+            foreach ($a_inventory['licenseinfo'] as $lic) {
+               if ($lic['fullname'] == $a_licenseinfo['FULLNAME']
+                  && $lic['serial'] == $a_licenseinfo['KEY']) {
+                  $insert = false;
+               }
+            }
+            if ($insert) {
+               $array_tmp = $thisc->addValues($a_licenseinfo,
+                                              array(
+                                                 'NAME'     => 'name',
+                                                 'FULLNAME' => 'fullname',
+                                                 'KEY'      => 'serial'));
+               $a_inventory['licenseinfo'][] = $array_tmp;
+            }
          }
       }
 

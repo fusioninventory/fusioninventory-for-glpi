@@ -174,6 +174,26 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5178]['name']      = __('HostID', 'fusioninventory');
          $sopt[5178]['joinparams']  = array('jointype' => 'child');
          $sopt[5178]['massiveaction'] = FALSE;
+
+         $sopt[5179]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+         $sopt[5179]['field']     = 'serial';
+         $sopt[5179]['name']      = __('License serial number', 'fusioninventory');
+         $sopt[5179]['joinparams']  = array('jointype' => 'child');
+         $sopt[5179]['massiveaction'] = FALSE;
+
+         $sopt[5180]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+         $sopt[5180]['field']     = 'fullname';
+         $sopt[5180]['name']      = __('License full name', 'fusioninventory');
+         $sopt[5180]['joinparams']  = array('jointype' => 'child');
+         $sopt[5180]['massiveaction'] = FALSE;
+
+
+         $sopt[5181]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+         $sopt[5181]['field']     = 'name';
+         $sopt[5181]['name']      = __('License', 'fusioninventory');
+         $sopt[5181]['joinparams']  = array('jointype' => 'child');
+         $sopt[5181]['massiveaction'] = FALSE;
+
    }
 
    if ($itemtype == 'Computer') {
@@ -2258,13 +2278,12 @@ function plugin_fusioninventory_getDatabaseRelations() {
 /**
  * Display a FusionInventory form if no automatic inventory has yet been
  * performed
+ * @since 9.2
  *
  * @param array $params Hook parameters
  *
  * @return void
  */
-
-
 function plugin_fusioninventory_postItemForm($params) {
    if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
       switch (get_class($params['item'])) {
@@ -2278,3 +2297,69 @@ function plugin_fusioninventory_postItemForm($params) {
       }
    }
 }
+
+/**
+ * FusinInventory infos after showing a tab
+ * @since 9.2
+ *
+ * @param array $params Hook parameters
+ *
+ * @return void
+ */
+function plugin_fusioninventory_postshowtab($params) {
+   if (isset($params['item']) && is_object($params['item'])) {
+      $item = $params['item'];
+
+      switch ($item->getType()) {
+         case 'Computer':
+            switch (Session::getActiveTab('Computer')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+
+            break;
+
+         case 'NetworkEquipment':
+            switch (Session::getActiveTab('NetworkEquipment')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+            break;
+
+         case 'Printer':
+            switch (Session::getActiveTab('Printer')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+
+            break;
+      }
+    }
+ }
+
+ /**
+  * FusinInventory infos after before a tab
+  * @since 9.2
+  *
+  * @param array $params Hook parameters
+  *
+  * @return void
+  */
+ function plugin_fusioninventory_preshowtab($params) {
+    if (isset($params['item']) && is_object($params['item'])) {
+       $item = $params['item'];
+       switch ($item->getType()) {
+          case 'Computer':
+             switch (Session::getActiveTab('Computer')) {
+                case 'Computer_SoftwareVersion$1':
+                   $license = new PluginFusioninventoryComputerLicenseInfo();
+                   $license->showForm($item->getID());
+                   break;
+             }
+             break;
+       }
+     }
+  }
