@@ -69,7 +69,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return string name of this type
     */
    static function getTypeName($nb=0) {
-      return _n('Lock', 'Locks', $nb)." (".strtolower(_n('Field', 'Fields', 2)).")";
+      return _n('Lock', 'Locks', $nb);
    }
 
 
@@ -101,22 +101,27 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if ($item->getType()=='PluginFusioninventoryConfig') {
-         return PluginFusioninventoryLock::getTypeName(2);
-      }
-
       $items_id = $item->getID();
       $itemtype = $item->getType();
-      if ($item->getType() == 'NetworkEquipment') {
-         $itemtype = 'networking';
-      }
 
-      if (Session::haveRight(strtolower($itemtype), UPDATE)) {
-         if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
-                                        self::countForLock($item));
+      switch ($itemtype) {
+         case 'PluginFusioninventoryConfig':
+            return PluginFusioninventoryLock::getTypeName(2);
+
+         case 'Computer':
+            return '';
+
+         case 'NetworkEquipment':
+            $itemtype = 'networking';
+
+         default:
+         if (Session::haveRight(strtolower($itemtype), UPDATE)) {
+            if ($_SESSION['glpishow_count_on_tabs']) {
+               return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
+                                           self::countForLock($item));
+            }
+            return PluginFusioninventoryLock::getTypeName(2);
          }
-         return PluginFusioninventoryLock::getTypeName(2);
       }
       return '';
    }
@@ -979,6 +984,21 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    static function isFieldLocked($a_lockable, $field) {
       return in_array($field, $a_lockable);
+   }
+
+   static function showLocksForAnItem(CommonDBTM $item) {
+      $pflock = new self();
+      $itemtype = $item->getType();
+      if ($itemtype::canUpdate()) {
+         if ($item->getID() < 1) {
+            $pflock->showForm(Toolbox::getItemTypeFormURL(__CLASS__),
+                              $item->getType());
+         } else {
+            $pflock->showForm(Toolbox::getItemTypeFormURL(__CLASS__).'?id='.
+                              $item->getID(), $item->getType(), $item->getID());
+         }
+      }
+      return true;
    }
 }
 
