@@ -353,7 +353,7 @@ function agents_chart(chart_id) {
                 // if agent in error, add a control to relanch it
                 if (d[1][0].state == 'error') {
                     var restarts =  d3.select(this).selectAll('a.restart').data([d]);
-                    names.enter().append('a')
+                    names.enter().insert('a', '.check_restart')
                         .attr('class', 'restart btn')
                         .attr('title', 'restart')
                         .on('click', function(d) {
@@ -367,7 +367,9 @@ function agents_chart(chart_id) {
                                  taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
                                }
                             });
-                        });
+                        })
+                        .append('i')
+                           .attr('class', 'fa fa-bolt');
                     names.exit().remove();
                     names.attr('href', 'javascript:void(0)');
                 }
