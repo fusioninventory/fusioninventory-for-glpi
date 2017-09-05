@@ -1409,7 +1409,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      echo "<div class='buttons'>";
 
                      // if job is in error, suggest restart
-                     if ($package_info['last_taskjobstate']['state'] == "agents_error") {
+                     if (in_array($package_info['last_taskjobstate']['state'],
+                                  ["agents_error", "agents_success"])) {
                         echo "<a class='restart btn'
                                  href='#'
                                  title='".__("Restart job", 'fusioninventory')."'
