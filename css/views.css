@@ -469,6 +469,9 @@ a.expanded > div.fold {
    text-align: center;
    float: left;
 }
+#onetimedeploy_form .target_stats {
+   width: 100%;
+}
 
 .target_block div.progressbar {
    height: 100px;
@@ -560,7 +563,7 @@ a.expanded > div.fold {
 
 .agent_block.pinned > a.name{
    padding-left: 20px;
-   margin-left: 42px;
+   margin-left: 68px;
    background: url('../../../pics/menu_show.png');
    background: url('../pics/pinned.png');
    background-repeat: no-repeat;
@@ -595,20 +598,15 @@ a.expanded > div.fold {
 }
 
 
-.agent_block > a.restart {
-   background: url(../pics/red_bolt.png) no-repeat;
+.agent_block > a.btn {
    display: inline-block;
    width: 14px;
    height: 14px;
-   float: right;
+   float: left;
 }
-
-.agent_block > a.cancel {
-   background: url(../pics/cancel_red.png) no-repeat;
-   display: inline-block;
-   width: 14px;
-   height: 14px;
-   float: right;
+.agent_block > a.restart > i,
+.agent_block > a.cancel > i {
+   color: red;
 }
 
 .agent_block > a.btn:hover {
