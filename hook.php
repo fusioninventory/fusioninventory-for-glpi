@@ -190,7 +190,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
          $sopt[5181]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
          $sopt[5181]['field']     = 'name';
-         $sopt[5181]['name']      = __('License', 'fusioninventory');
+         $sopt[5181]['name']      = _n('License', 'Licenses', 2);
          $sopt[5181]['joinparams']  = array('jointype' => 'child');
          $sopt[5181]['massiveaction'] = FALSE;
 
