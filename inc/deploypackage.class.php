@@ -1372,18 +1372,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             echo '<div class="target_stats">';
             foreach ($data as $packages_id => $package_info) {
                if (isset($package_info['taskjobs_id'])) {
-                  echo '<div class="counter_block '
-                     .$package_info['last_taskjobstate']['state'].'">';
+                  $taskjob_id = $package_info['taskjobs_id'];
+                  echo "<div class='counter_block ".$package_info['last_taskjobstate']['state']."'
+                             id='block_$taskjob_id'>";
                   // display deploy informations
                   echo "<table>";
                   echo "<tr>";
-                  echo "<td style='width: 600px'>";
+                  echo "<td style='min-width: 600px'>";
 
                   // add a toggle control
                   if ($is_tech) {
                      echo "<a class='toggle_run'
                               href='#'
-                              id='toggle_run_".$package_info['taskjobs_id']."'>";
+                              id='toggle_run_$taskjob_id'>";
                      echo $package_info['name'];
                      echo "</a>";
                   } else {
@@ -1402,15 +1403,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   if ($is_tech) {
                      // display also last log (folded)
                      echo "<div class='agent_block'
-                                id='run_".$package_info['taskjobs_id']."'
+                                id='run_$taskjob_id'
                                 style='display:none;'>";
 
+                     echo "<div class='buttons'>";
+
                      // if job is in error, suggest restart
-                     if ($package_info['last_taskjobstate']['state'] == "agents_error") {
+                     if (in_array($package_info['last_taskjobstate']['state'],
+                                  ["agents_error", "agents_success"])) {
                         echo "<a class='restart btn'
                                  href='#'
                                  title='".__("Restart job", 'fusioninventory')."'
-                                 id='restart_run_".$package_info['taskjobs_id']."'></a>";
+                                 id='restart_run_$taskjob_id'>
+                              <i class='fa fa-bolt'></i></a>";
                      }
 
                      // if job has not started, user can cancel it
@@ -1418,14 +1423,24 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                         echo "<a class='cancel btn'
                                  href='#'
                                  title='".__("Cancel job", 'fusioninventory')."'
-                                 id='cancel_run_".$package_info['taskjobs_id']."'></a>";
+                                 id='cancel_run_$taskjob_id'>
+                              <i class='fa fa-stop'></i></a>";
                      }
 
+                     // permits to "soft" refresh
+                     echo "<a href='#'
+                              title='".__("refresh job", 'fusioninventory')."'
+                              class='btn'
+                              id='refresh_run_$taskjob_id'>
+                              <i class='fa fa-refresh fa-fx'></i></a>";
+
+                     echo "</div>"; // .buttons
+
                      // log list
-                     echo "<table class='runs'>";
+                     echo "<table class='runs' id='runs_$taskjob_id'>";
                      foreach($package_info['last_taskjobstate']['logs'] as $log) {
                         echo "<tr class='run log'>";
-                        echo "<td>".Html::convDateTime($log['log.date'])."</td>";
+                        echo "<td>".$log['log.f_date']."</td>";
                         echo "<td>".$joblogs_labels[$log['log.state']]."</td>";
                         echo "<td>".$log['log.comment']."</td>";
                         echo "</tr>";
@@ -1438,13 +1453,18 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
                   // js controls (toggle, restart)
                   echo Html::scriptBlock("$(function() {
-                     $('#toggle_run_".$package_info['taskjobs_id']."').click(function(event){
+                     var logstatuses_names = ".json_encode($joblogs_labels).";
+
+                     $('#toggle_run_$taskjob_id').click(function(event){
                         event.preventDefault();
-                        $('#run_".$package_info['taskjobs_id']."').toggle();
-                        $(this).toggleClass('expand');
+                        $('#run_$taskjob_id').toggle();
+                        $(this).toggleClass('expand')
+                               .parent('td')
+                               .nextAll('td').toggle();
+
                      });
 
-                     $('#cancel_run_".$package_info['taskjobs_id']."').click(function(event){
+                     $('#cancel_run_$taskjob_id').click(function(event){
                         event.preventDefault();
                         $.ajax({
                            url: '".$CFG_GLPI['root_doc'].
@@ -1459,7 +1479,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                         });
                      });
 
-                     $('#restart_run_".$package_info['taskjobs_id']."').click(function(event){
+                     $('#restart_run_$taskjob_id').click(function(event){
                         event.preventDefault();
                         $.ajax({
                            url: '".$CFG_GLPI['root_doc'].
@@ -1473,6 +1493,66 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                            }
                         });
                      });
+
+                     $('#refresh_run_$taskjob_id i').click(function() {
+                        var fa = $(this);
+                        fa.addClass('fa-spin fa-spinner')
+                          .removeClass('fa-refresh');
+                        $.ajax({
+                           url: '".$CFG_GLPI['root_doc'].
+                                   "/plugins/fusioninventory/ajax/jobstates_logs.php',
+                           data: {
+                              'id': ".$package_info['last_taskjobstate']['id'].",
+                              'last_date': '2999-01-01 00:00:00' // force a future date
+                           },
+                           success: function(data){
+                              // no data -> reload tab
+                              if (typeof data.logs == 'undefined') {
+                                 reloadTab();
+                                 return;
+                              }
+
+                              if (data.logs.length) {
+                                 // remove old data
+                                 $('#runs_$taskjob_id').empty();
+
+                                 $.each(data.logs, function( index, log ) {
+                                    $('#runs_$taskjob_id').append(
+                                       '<tr>'+
+                                       '<td>'+log['log.f_date']+'</td>'+
+                                       '<td>'+logstatuses_names[log['log.state']]+'</td>'+
+                                       '<td>'+log['log.comment']+'</td>'+
+                                       '<tr>'
+                                    )
+                                 });
+
+                                 var class_to_apply = '';
+                                 switch (data.logs[0]['log.state']) {
+                                    case '".PluginFusioninventoryTaskjoblog::TASK_RUNNING."':
+                                       class_to_apply = 'agents_running';
+                                       break;
+                                    case '".PluginFusioninventoryTaskjoblog::TASK_ERROR."':
+                                    case '".PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED."':
+                                       class_to_apply = 'agents_error';
+                                       break;
+                                    case '".PluginFusioninventoryTaskjoblog::TASK_OK."':
+                                       class_to_apply = 'agents_success';
+                                       break;
+                                 }
+                                 if (class_to_apply.length) {
+                                    $('#block_$taskjob_id')
+                                       .attr('class', 'counter_block '+class_to_apply);
+                                 }
+                              }
+                           },
+                           complete: function() {
+                              setTimeout(function() {
+                                 fa.removeClass('fa-spin fa-spinner')
+                                   .addClass('fa-refresh');
+                              }, 300);
+                           }
+                        });
+                     })
                   });");
                } else {
                   $package_to_install[$packages_id] = $package_info['name'];
@@ -1624,9 +1704,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   if (!$package['is_recursive']
                      && $package['entities_id'] != $data['entities_id']) {
                      continue;
-                  } else if($package['is_recursive']
-                  && !in_array($package['entities_id'],
-                              getAncestorsOf('glpi_entities', $data['entities_id']))) {
+                  } else if ($package['is_recursive']
+                             && $package['entities_id'] != $data['entities_id']
+                             && !in_array($package['entities_id'],
+                                          getAncestorsOf('glpi_entities', $data['entities_id']))) {
                      //The package is not recursive, and invisible in the computer's entity
                      continue;
                   }
