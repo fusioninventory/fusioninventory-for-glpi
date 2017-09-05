@@ -68,13 +68,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_OK = 2;
 
    /**
-    * Define state task in error or replanned
-    *
-    * @var integer
-    */
-   const TASK_ERROR_OR_REPLANNED = 3;
-
-   /**
     * Define state task in error
     *
     * @var integer
@@ -117,7 +110,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          self::TASK_STARTED            => __('Started', 'fusioninventory'),
          self::TASK_RUNNING            => __('Running'),
          self::TASK_OK                 => __('Ok', 'fusioninventory'),
-         self::TASK_ERROR_OR_REPLANNED => __('Error / rescheduled', 'fusioninventory'),
          self::TASK_ERROR              => __('Error'),
          self::TASK_INFO               => __('Info', 'fusioninventory'),
       );
@@ -158,7 +150,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          self::TASK_STARTED            => "log_started",
          self::TASK_RUNNING            => "log_running",
          self::TASK_OK                 => "log_ok",
-         self::TASK_ERROR_OR_REPLANNED => "log_error_replanned",
          self::TASK_ERROR              => "log_error",
          self::TASK_INFO               => "log_info",
       ];
@@ -592,14 +583,6 @@ function appear_array(id) {
                  " 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
             $text .= "<strong>".__('Ok', 'fusioninventory')."</strong>";
-            $finish++;
-            break;
-
-         case self::TASK_ERROR_OR_REPLANNED :
-            $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: ".
-                 "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
-                 "align='center'>";
-            $text .= "<strong>".__('Error / rescheduled', 'fusioninventory')."</strong>";
             $finish++;
             break;
 

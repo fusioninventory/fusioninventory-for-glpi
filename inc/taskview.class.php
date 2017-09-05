@@ -200,6 +200,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'agents_success':   '". __('Successful', 'fusioninventory')."',
             'agents_running':   '". __('Running', 'fusioninventory')."',
             'agents_prepared':  '". __('Prepared' , 'fusioninventory')."',
+            'agents_postponed':  '". __('Postponed' , 'fusioninventory')."',
             'agents_cancelled': '". __('Cancelled', 'fusioninventory')."',
          };
 
@@ -271,6 +272,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          'agents_cancelled' => false,
          'agents_success'   => true,
          'agents_error'     => true,
+         'agents_postponed' => false,
       ];
       foreach ($agent_state_types as $agent_state_type => $agent_state_checked) {
          $agent_state_type = str_replace("agents_", "", $agent_state_type);

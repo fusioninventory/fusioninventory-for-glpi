@@ -569,7 +569,20 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $params['nb_retry']  = $this->fields['nb_retry'] + 1;
             $params['state']     = PluginFusioninventoryTaskjobstate::PREPARED;
             Toolbox::logDebug($params);
-            $this->add($params);
+            $states_id = $this->add($params);
+
+            $reason = __('Previous job postponed. Next execution at %d',
+                         Html::convDateTime($params['date_start'], 'fusioninventory'));
+            $log = new PluginFusioninventoryTaskjoblog();
+            $log_input = [
+               'plugin_fusioninventory_taskjobstates_id' => $states_id,
+               'items_id' => $this->fields['items_id'],
+               'itemtype' => $this->fields['itemtype'],
+               'date'     => $_SESSION['glpi_currenttime'],
+               'state'    => $joblog_state,
+               'comment'  => Toolbox::addslashes_deep($reason)
+            ];
+
          }
       }
    }
