@@ -410,9 +410,15 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $last_date
     * @return array
     */
-   function getLogs($id, $last_date) {
+    function getLogs($id, $last_date) {
       global $DB;
-
+      $fields = [
+         'log.id'      => 0,
+         'log.date'    => 1,
+         'log.comment' => 2,
+         'log.state'   => 3,
+         'run.id'      => 4,
+      ];
       $query = "SELECT log.`id` AS 'log.id',
                   log.`date` AS 'log.date',
                   log.`comment` AS 'log.comment',
@@ -424,10 +430,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                 WHERE run.`id` = $id
                   AND log.`date` <= '$last_date'
                ORDER BY log.`id` DESC";
-
+      $res = $DB->query($query);
       $logs = [];
-      foreach ($DB->request($query) as $result) {
-         $run_id         = $result['run.id'];
+      while ($result = $res->fetch_row()) {
+         $run_id = $result[$fields['run.id']];
          $logs['run']    = $run_id;
          $logs['logs'][] = [
             'log.id'      => $result[$fields['log.id']],
@@ -437,7 +443,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             'log.state'   => $result[$fields['log.state']]
          ];
       }
-
       return $logs;
    }
 

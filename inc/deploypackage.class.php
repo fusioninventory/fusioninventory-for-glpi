@@ -1531,7 +1531,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                        class_to_apply = 'agents_running';
                                        break;
                                     case '".PluginFusioninventoryTaskjoblog::TASK_ERROR."':
-                                    case '".PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED."':
                                        class_to_apply = 'agents_error';
                                        break;
                                     case '".PluginFusioninventoryTaskjoblog::TASK_OK."':
