@@ -59,7 +59,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    public $shortname = 'userinteractions';
    public $json_name = 'userinteractions';
 
-   //Events
+   //--------------- Events ---------------------------------------//
 
    //Audits are all been executed successfully, just before download
    const EVENT_BEFORE_DOWNLOAD    = 'before';
@@ -71,6 +71,8 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    const EVENT_DOWNLOAD_FAILURE = 'after_download_failure';
    //At least one action has failed
    const EVENT_ACTION_FAILURE   = 'after_failure';
+
+   //--------------- Responses ---------------------------------------//
 
    //The agent notice that the job must continue
    const RESPONSE_CONTINUE        = 'continue';

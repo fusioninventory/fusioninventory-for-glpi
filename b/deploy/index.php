@@ -87,7 +87,9 @@ switch (filter_input(INPUT_GET, "action")) {
                }
                $response = "{}";
             } else {
-               $package = new PluginFusioninventoryDeployPackage();
+               $package      = new PluginFusioninventoryDeployPackage();
+               $deploycommon = new PluginFusioninventoryDeployCommon();
+
                //sort taskjobs by key id
                /**
                 * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
@@ -104,9 +106,12 @@ switch (filter_input(INPUT_GET, "action")) {
                   // TODO: The run() method should be renamed as getData() and moved to the Package
                   // class since we want package configuration (Order class may be useless ... needs
                   // some thinking)
-                  $deploycommon = new PluginFusioninventoryDeployCommon();
+
                   // Get taskjob json order
                   $jobstate_order = $deploycommon->run($taskjobstate);
+                  if (!$jobstate_order) {
+                     continue;
+                  }
 
                   //Build the json to be sent
                   //check response depending on the

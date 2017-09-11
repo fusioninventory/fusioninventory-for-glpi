@@ -2047,7 +2047,25 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             }
          }
       }
-      if (isset($job['job']['userinteractions'])) {
+
+      $do_interaction = true;
+      $jobstate       = new PluginFusioninventoryTaskjobstate();
+
+      //Job has reached the maximum number of retries, do not interact with the user
+      //and execute the job
+      $jobstate->getFromDBByUniqID($job['job']['uuid']);
+      if (isset($jobstate->fields['nb_retry'])
+         && $jobstate->fields['max_retry'] > 0) {
+         if ($jobstate->fields['nb_retry'] >= $jobstate->fields['max_retry']) {
+            $do_interaction = false;
+         }
+      }
+
+      //If the number of retries has been met,
+      //remove all userinteractions directives
+      if (!$do_interaction) {
+         unset($job['job']['userinteractions']);
+      } else if (isset($job['job']['userinteractions'])) {
          $template = new PluginFusioninventoryDeployUserinteractionTemplate();
          foreach ($job['job']['userinteractions'] as $key => $value) {
             if (isset($value['template']) && $value['template']) {

@@ -534,7 +534,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     */
    function updateState($joblog_state, $jobstate_state, $reason='') {
 
-      $log = new PluginFusioninventoryTaskjoblog();
+      $log       = new PluginFusioninventoryTaskjoblog();
       $log_input = [
          'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
          'items_id' => $this->fields['items_id'],
@@ -558,38 +558,46 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       foreach ($pfDeployUserInteraction->getItemValues($this->fields['items_id']) as $interaction) {
          //Look for the user interaction that matches our event
          if ($interaction['type'] == $type && $interaction['template']) {
-            $params    = $this->fields;
+            $params = $this->fields;
             unset($params['id']);
+            unset($params['uniqid']);
 
             //Found, let's load the template
             $template  = new PluginFusioninventoryDeployUserinteractionTemplate();
-            $template->getFromDB($interaction['template']);
-            //Get the template values
-            $template_values = $template->getValues();
-            //Compute the next run date for the job. Retry_after value is in seconds
-            $date = new \DateTime('+'.$template_values['retry_after'].' seconds');
-            $params['date_start'] = $date->format('Y-m-d H:i');
-            //Set the max number or retry
-            //(we set it each time a job is postponed because the value
-            //can change in the template)
-            $params['max_retry'] = $template_values['nb_max_retry'];
-            $params['nb_retry']  = $this->fields['nb_retry'] + 1;
-            $params['state']     = PluginFusioninventoryTaskjobstate::PREPARED;
-            Toolbox::logDebug($params);
-            $states_id = $this->add($params);
+            if ($template->getFromDB($interaction['template'])) {
+               //Get the template values
+               $template_values = $template->getValues();
+               //Compute the next run date for the job. Retry_after value is in seconds
+               $date = new \DateTime('+'.$template_values['retry_after'].' seconds');
+               $params['date_start'] = $date->format('Y-m-d H:i');
+               //Set the max number or retry
+               //(we set it each time a job is postponed because the value
+               //can change in the template)
+               $params['max_retry'] = $template_values['nb_max_retry'];
+               $params['nb_retry']  = $params['nb_retry'] + 1;
+               $params['state']     = self::PREPARED;
+               $params['uniqid']    = uniqid();
+               $states_id = $this->add($params);
 
-            $reason = __('Previous job postponed. Next execution at %d',
-                         Html::convDateTime($params['date_start'], 'fusioninventory'));
-            $log = new PluginFusioninventoryTaskjoblog();
-            $log_input = [
-               'plugin_fusioninventory_taskjobstates_id' => $states_id,
-               'items_id' => $this->fields['items_id'],
-               'itemtype' => $this->fields['itemtype'],
-               'date'     => $_SESSION['glpi_currenttime'],
-               'state'    => $joblog_state,
-               'comment'  => Toolbox::addslashes_deep($reason)
-            ];
+               $reason = sprintf(__('Previous job postponed. Next execution at %s'),
+                            Html::convDateTime($params['date_start'], 'fusioninventory'));
+               if ($params['nb_retry'] < $params['max_retry']) {
+                  $reason.= ' '.sprintf(__('Retry #%d'), $params['nb_retry']);
+               } else {
+                  $reason.= ' '.sprintf(__('Maximum number of retry reached'));
+               }
 
+               $log = new PluginFusioninventoryTaskjoblog();
+               $log_input = [
+                  'plugin_fusioninventory_taskjobstates_id' => $states_id,
+                  'items_id' => $this->fields['items_id'],
+                  'itemtype' => $this->fields['itemtype'],
+                  'date'     => $_SESSION['glpi_currenttime'],
+                  'state'    => PluginFusioninventoryTaskjoblog::TASK_STARTED,
+                  'comment'  => Toolbox::addslashes_deep($reason)
+               ];
+               $log->add($log_input);
+            }
          }
       }
    }

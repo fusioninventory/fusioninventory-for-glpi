@@ -63,7 +63,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
     * @return boolean
     */
    static function canCreate() {
-      return TRUE;
+      return true;
    }
 
 
@@ -74,7 +74,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
     * @return boolean
     */
    static function canView() {
-      return TRUE;
+      return true;
    }
 
 
@@ -97,8 +97,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                AND method = 'deployinstall'";
 
       $res  = $DB->query($sql);
-      $json  = array();
-      $temp_tasks = array();
+      $json  = [];
+      $temp_tasks = [];
       while ($row = $DB->fetch_assoc($res)) {
          $row['packages'] = importArrayFromDB($row['definition']);
          $row['actions'] = importArrayFromDB($row['action']);
@@ -111,20 +111,18 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          foreach ($task['actions'] as $action) {
             foreach ($task['packages'] as $package) {
 
-               $tmp = array_keys($action);
+               $tmp         = array_keys($action);
                $action_type = $tmp[0];
 
-               $json['tasks'][$i]['package_id'] = $package['PluginFusioninventoryDeployPackage'];
-
-               $json['tasks'][$i]['method'] = $task['method'];
-               $json['tasks'][$i]['comment'] = $task['comment'];
-               $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
-               $json['tasks'][$i]['retry_time'] = $task['retry_time'];
-
-               $json['tasks'][$i]['action_type'] = $action_type;
+               $json['tasks'][$i]['package_id']       = $package['PluginFusioninventoryDeployPackage'];
+               $json['tasks'][$i]['method']           = $task['method'];
+               $json['tasks'][$i]['comment']          = $task['comment'];
+               $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
+               $json['tasks'][$i]['retry_time']       = $task['retry_time'];
+               $json['tasks'][$i]['action_type']      = $action_type;
                $json['tasks'][$i]['action_selection'] = $action[$action_type];
 
-               $obj_action = new $action_type;
+               $obj_action = new $action_type();
                $obj_action->getFromDB($action[$action_type]);
                $json['tasks'][$i]['action_name'] = $obj_action->getField('name');
 
@@ -150,17 +148,15 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $tasks = json_decode($params['tasks']);
 
       //remove old jobs from task
-      $query = "DELETE FROM ".$this->getTable()."
-      WHERE plugin_fusioninventory_deploytasks_id = '".$tasks_id."'";
-      $DB->query($query);
+      $this->deleteByCriteria(['plugin_fusioninventory_deploytasks_id' => $tasks_id], true);
 
       //get plugin id
-      $plug = new Plugin;
+      $plug = new Plugin();
       $plug->getFromDBbyDir('fusinvdeploy');
       $plugins_id = $plug->getField('id');
 
       //insert new rows
-      $sql_tasks = array();
+      $sql_tasks = [];
       $i = 0;
 
       foreach ($tasks as $task) {
@@ -292,5 +288,3 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       return $res;
    }
 }
-
-?>

@@ -99,10 +99,10 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
 
          case 'PluginFusioninventoryDeployPackage':
             $item->displayOrderTypeForm();
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
    }
 }
 
