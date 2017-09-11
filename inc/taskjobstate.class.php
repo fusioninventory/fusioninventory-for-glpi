@@ -559,8 +559,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          //Look for the user interaction that matches our event
          if ($interaction['type'] == $type && $interaction['template']) {
             $params = $this->fields;
-            unset($params['id']);
-            unset($params['uniqid']);
 
             //Found, let's load the template
             $template  = new PluginFusioninventoryDeployUserinteractionTemplate();
@@ -576,18 +574,24 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                $params['max_retry'] = $template_values['nb_max_retry'];
                $params['nb_retry']  = $params['nb_retry'] + 1;
                $params['state']     = self::PREPARED;
-               $params['uniqid']    = uniqid();
-               $states_id = $this->add($params);
+               $states_id           = $params['id'];
+               $this->update($params);
 
-               $reason = sprintf(__('Previous job postponed. Next execution at %s'),
+               $reason    = '-----------------------------------------------------';
+               $log       = new PluginFusioninventoryTaskjoblog();
+               $log_input = [
+                  'plugin_fusioninventory_taskjobstates_id' => $states_id,
+                  'items_id' => $this->fields['items_id'],
+                  'itemtype' => $this->fields['itemtype'],
+                  'date'     => $_SESSION['glpi_currenttime'],
+                  'state'    => PluginFusioninventoryTaskjoblog::TASK_INFO,
+                  'comment'  => Toolbox::addslashes_deep($reason)
+               ];
+               $log->add($log_input);
+
+               $reason = sprintf(__('Job available for next execution at %s', 'fusioninventory'),
                             Html::convDateTime($params['date_start'], 'fusioninventory'));
-               if ($params['nb_retry'] < $params['max_retry']) {
-                  $reason.= ' '.sprintf(__('Retry #%d'), $params['nb_retry']);
-               } else {
-                  $reason.= ' '.sprintf(__('Maximum number of retry reached'));
-               }
 
-               $log = new PluginFusioninventoryTaskjoblog();
                $log_input = [
                   'plugin_fusioninventory_taskjobstates_id' => $states_id,
                   'items_id' => $this->fields['items_id'],
@@ -597,6 +601,22 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                   'comment'  => Toolbox::addslashes_deep($reason)
                ];
                $log->add($log_input);
+
+               if ($params['nb_retry'] < $params['max_retry']) {
+                  $reason= ' '.sprintf(__('Retry #%d', 'fusioninventory'), $params['nb_retry']);
+               } else {
+                  $reason= ' '.sprintf(__('Maximum number of retry reached: force deployment', 'fusioninventory'));
+               }
+               $log_input = [
+                  'plugin_fusioninventory_taskjobstates_id' => $states_id,
+                  'items_id' => $this->fields['items_id'],
+                  'itemtype' => $this->fields['itemtype'],
+                  'date'     => $_SESSION['glpi_currenttime'],
+                  'state'    => PluginFusioninventoryTaskjoblog::TASK_INFO,
+                  'comment'  => Toolbox::addslashes_deep($reason)
+               ];
+               $log->add($log_input);
+
             }
          }
       }

@@ -1943,7 +1943,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                break;
 
          }
-         $logs = $pfTaskJobState->getLogs($taskjobstates['id'], date("Y-m-d H:i:s"));
+         $logs = $pfTaskJobState->getLogs($taskjobstates['id'],
+                                          $_SESSION['glpi_currenttime']);
          $last_job_state['id']    = $taskjobstates['id'];
          $last_job_state['state'] = $state;
          $last_job_state['date']  = $logs['logs'][0]['log.date'];
