@@ -488,10 +488,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $computers_params = array();
 
-      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       //Check criteria from DB
       if (!$check_post_values) {
          if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
+            unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
             $query = "SELECT `fields_array`
                      FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
                      WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
@@ -502,7 +502,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         $computers_params = $_GET;
+         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP AND isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])) {
+            $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
+         } else {
+             unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+             $computers_params = $_GET;
+         }
       }
       if ($getAll) {
          $computers_params['export_all'] = true;

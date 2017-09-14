@@ -50,6 +50,10 @@ Session::checkLoginUser();
 
 $group = new PluginFusioninventoryDeployGroup();
 
+if (isset($_GET['plugin_fusioninventory_deploygroups_id'])) {
+    $_SESSION['glpisearch']['PluginFusioninventoryComputer'] = $_GET;
+}
+
 if (isset($_GET['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(),
