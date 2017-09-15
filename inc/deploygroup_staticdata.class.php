@@ -159,15 +159,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
 
       //Add extra parameters for massive action display : only the Add action should be displayed
-      $search_params['massiveactionparams']['extraparams']['id'] = $item->getID();
-      $search_params['massiveactionparams']['extraparams']['custom_action'] = 'add_to_group';
-      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
+      $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
+      $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
+      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
       Search::constructDatas($data);
-      $data['search']['target'] = str_replace('fusioninventory/front/computer.php', 'fusioninventory/front/deploygroup.form.php', $data['search']['target']);
-      $data['search']['target'] .= "?id=2&_glpi_tab=PluginFusioninventoryDeployGroup_Staticdata$1&plugin_fusioninventory_deploygroups_id=2";
+      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
       Search::displayDatas($data);
    }
 
@@ -178,7 +177,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     */
    static function showResults() {
       if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-              and isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
+              && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
          $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
       }
       $computers_params['metacriteria'] = array();
@@ -195,8 +194,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
       Search::constructDatas($data);
-      $data['search']['target'] = str_replace('fusioninventory/front/computer.php', 'fusioninventory/front/deploygroup.form.php', $data['search']['target']);
-      $data['search']['target'] .= "?id=2&show_results=1&_glpi_tab=PluginFusioninventoryDeployGroup_Staticdata$2&plugin_fusioninventory_deploygroups_id=2";
+      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
       Search::displayDatas($data);
    }
 

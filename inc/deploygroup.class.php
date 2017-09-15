@@ -412,7 +412,24 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
 
-
+   /**
+   * Get the URL to pass to the search engine
+   * @since 9.2
+   *
+   * @param integer $deploygroup_id the ID of the group
+   * @param boolean $is_dynamic is the group dynamic or static
+   * @return string the target
+   */
+   static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false) {
+      $target = PluginFusioninventoryDeployGroup::getFormURLWithID($deploygroup_id);
+      if ($is_dynamic) {
+         $target .= "&_glpi_tab=PluginFusioninventoryDeployGroup_Dynamicdata$1";
+      } else {
+         $target.= "&_glpi_tab=PluginFusioninventoryDeployGroup_Staticdata$1";
+      }
+      $target.= "&plugin_fusioninventory_deploygroups_id=".$deploygroup_id;
+      return $target;
+   }
 
    /**
     * Show criteria to search computers
@@ -426,13 +443,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $itemtype   = "PluginFusioninventoryComputer";
       $can_update = $item->canEdit($item->getID());
 
-      $p['target'] = '';
+      $p['target'] = self::getSearchEngineTargetURL($item->getID(), $is_dynamic);
       if ($can_update) {
-         $p['addhidden'] = array(
+         $p['addhidden'] = [
              'plugin_fusioninventory_deploygroups_id' => $item->getID(),
-             'id'    => $item->getID(),
-             'start' => 0
-         );
+             'id'                                     => $item->getID(),
+             'start'                                  => 0
+         ];
       }
       if ($is_dynamic) {
          $p['actionname']   = 'save';
@@ -441,7 +458,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $p['actionname']   = 'preview';
          $p['actionvalue']  = __('Preview');
       }
-      $p['showbookmark'] = False;
+      $p['showbookmark'] = false;
       Search::showGenericSearch($itemtype, $p);
    }
 
@@ -503,8 +520,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          }
       } else {
          if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP
-                 AND isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-                 AND !isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
+                 && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
+                 && !isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
             $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
          } else {
              unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
