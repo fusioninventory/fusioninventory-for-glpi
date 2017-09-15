@@ -502,7 +502,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP AND isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])) {
+         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP
+                 AND isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
+                 AND !isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
             $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
          } else {
              unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
