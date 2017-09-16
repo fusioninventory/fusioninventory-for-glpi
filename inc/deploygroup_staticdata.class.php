@@ -132,14 +132,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
          case 1:
             self::showCriteriaAndSearch($item);
-            return TRUE;
+            return true;
 
          case 2:
             self::showResults();
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -220,5 +220,3 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       return $result;
    }
 }
-
-?>
