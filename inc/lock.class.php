@@ -84,7 +84,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $pfLock = new self();
       $a_data = current($pfLock->find("`tablename`='".$item->getTable()."'
          AND `items_id`='".$item->getID()."'", "", 1));
-      if (count($a_data) == 0) {
+      if (!is_array($a_data) || count($a_data) == 0) {
          return 0;
       }
       return count(importArrayFromDB($a_data['tablefields']));
