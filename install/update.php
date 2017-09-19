@@ -892,12 +892,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'hourmin' =>22, 'hourmax'=>6,
-                               'comment'=>'Clean agents not contacted since xxx days'));
+                               'comment'=>Toolbox::addslashes_deep(__('Delete agent that have not contacted the server since xxx days".', 'fusioninventory'))));
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand')) {
       CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
                          ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                          'comment' => __('Clean on demand deployment tasks')]);
+                          'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
    }
 
    /*
@@ -907,7 +907,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!$crontask->getFromDBbyName('PluginFusioninventoryAgentWakeup', 'wakeupAgents')) {
       CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                               'comment'=>'Wake agents ups'));
+                               'comment'=>Toolbox::addslashes_deep(__('Wake agents ups'))));
    }
 
 
