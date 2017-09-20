@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $networkEquipment->getFromDB($items_id);
 
       if (!isset($_SESSION['glpiactiveentities_string'])) {
-         $_SESSION['glpiactiveentities_string'] = $networkEquipment->fields['entities_id'];
+         $_SESSION['glpiactiveentities_string'] = "'" . $networkEquipment->fields['entities_id'] . "'";
       }
       if (!isset($_SESSION['glpiactiveentities'])) {
          $_SESSION['glpiactiveentities'] = array($networkEquipment->fields['entities_id']);
@@ -766,7 +766,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          //Check if firmware exists
          $firmware->getFromDBByCrit($input);
          if ($firmware->isNewItem()) {
-            $input['entities_id'] = $_SESSION['glpiactiveentities_string'];
+            $input['entities_id'] = $_SESSION['glpiactive_entity'];
             //firmware does not exists yet, create it
             $fid = $firmware->add($input);
          } else {
@@ -784,7 +784,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          if ($relation->isNewItem()) {
             $input = $input + [
                'is_dynamic'   => 1,
-               'entities_id'  => $_SESSION['glpiactiveentities_string']
+               'entities_id'  => $_SESSION['glpiactive_entity']
             ];
             $relation->add($input);
          }
