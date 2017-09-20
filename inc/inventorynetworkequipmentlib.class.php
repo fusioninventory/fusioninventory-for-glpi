@@ -746,7 +746,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
     * @retrun void
     */
    function importFirmwares($a_inventory, $items_id) {
-      if (!count($a_inventory['firmwares'])) {
+      if (!isset($a_inventory['firmwares']) || !count($a_inventory['firmwares'])) {
          return;
       }
 
