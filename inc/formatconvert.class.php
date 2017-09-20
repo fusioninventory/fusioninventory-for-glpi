@@ -1936,7 +1936,7 @@ class PluginFusioninventoryFormatconvert {
             'DESCRIPTION'  => 'description',
             'MANUFACTURER' => 'manufacturers_id',
             'NAME'         => 'name',
-            'TYPE'         => 'type',
+            'TYPE'         => 'devicefirmwaretypes_id',
             'VERSION'      => 'version'
          ];
          if (isset($array['FIRMWARES'])) {
@@ -1951,8 +1951,8 @@ class PluginFusioninventoryFormatconvert {
             }
          } else {
             $a_firmwares[] = $thisc->addValues(
-               ['FIRMWARES' => [
-                  'VERSION' => self::cleanFwVersion($array['INFO']['FIRMWARE'])],
+               [
+                  'VERSION' => self::cleanFwVersion($array['INFO']['FIRMWARE']),
                   'NAME'    => $array['INFO']['FIRMWARE']
                ],
                $mapping

@@ -752,14 +752,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $types = new DeviceFirmwareType();
       $types->getFromDBByCrit(['name' => 'Firmware']);
-      $types_id = $types->getId();
+      $default_type = $types->getId();
 
       foreach ($a_inventory['firmwares'] as $a_firmware) {
          $firmware = new DeviceFirmware();
          $input = [
             'designation'              => $a_firmware['name'],
             'version'                  => $a_firmware['version'],
-            'devicefirmwaretypes_id'   => $types_id,
+            'devicefirmwaretypes_id'   => isset($a_firmware['devicefirmwaretypes_id']) ? $a_firmware['devicefirmwaretypes_id'] : $default_type,
             'manufacturers_id'         => $a_firmware['manufacturers_id']
          ];
 
