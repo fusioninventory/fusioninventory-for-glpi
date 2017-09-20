@@ -109,38 +109,40 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
       // * NetworkEquipment fusion (ext)
-         $db_networkequipment = array();
-         $query = "SELECT *
-            FROM `".  getTableForItemType("PluginFusioninventoryNetworkEquipment")."`
-            WHERE `networkequipments_id` = '$items_id'";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_assoc($result)) {
-            foreach ($data as $key=>$value) {
-               $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
-            }
+      $db_networkequipment = array();
+      $query = "SELECT *
+         FROM `".  getTableForItemType("PluginFusioninventoryNetworkEquipment")."`
+         WHERE `networkequipments_id` = '$items_id'";
+      $result = $DB->query($query);
+      while ($data = $DB->fetch_assoc($result)) {
+         foreach ($data as $key=>$value) {
+            $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
          }
-         if (count($db_networkequipment) == '0') { // Add
-            $a_inventory['PluginFusioninventoryNetworkEquipment']['networkequipments_id'] =
-               $items_id;
-            $pfNetworkEquipment->add($a_inventory['PluginFusioninventoryNetworkEquipment']);
-         } else { // Update
-            $idtmp = $db_networkequipment['id'];
-            unset($db_networkequipment['id']);
-            unset($db_networkequipment['networkequipments_id']);
-            unset($db_networkequipment['plugin_fusioninventory_configsecurities_id']);
+      }
+      if (count($db_networkequipment) == '0') { // Add
+         $a_inventory['PluginFusioninventoryNetworkEquipment']['networkequipments_id'] =
+            $items_id;
+         $pfNetworkEquipment->add($a_inventory['PluginFusioninventoryNetworkEquipment']);
+      } else { // Update
+         $idtmp = $db_networkequipment['id'];
+         unset($db_networkequipment['id']);
+         unset($db_networkequipment['networkequipments_id']);
+         unset($db_networkequipment['plugin_fusioninventory_configsecurities_id']);
 
-            $a_ret = PluginFusioninventoryToolbox::checkLock(
-                        $a_inventory['PluginFusioninventoryNetworkEquipment'],
-                        $db_networkequipment);
-            $a_inventory['PluginFusioninventoryNetworkEquipment'] = $a_ret[0];
-            $input = $a_inventory['PluginFusioninventoryNetworkEquipment'];
-            $input['id'] = $idtmp;
-            $pfNetworkEquipment->update($input);
-         }
+         $a_ret = PluginFusioninventoryToolbox::checkLock(
+                     $a_inventory['PluginFusioninventoryNetworkEquipment'],
+                     $db_networkequipment);
+         $a_inventory['PluginFusioninventoryNetworkEquipment'] = $a_ret[0];
+         $input = $a_inventory['PluginFusioninventoryNetworkEquipment'];
+         $input['id'] = $idtmp;
+         $pfNetworkEquipment->update($input);
+      }
 
       // * Ports
-         $this->importPorts($a_inventory, $items_id);
+      $this->importPorts($a_inventory, $items_id);
 
+      //firmwares
+      $this->importFirmwares($a_inventory, $items_id);
    }
 
 
@@ -734,6 +736,60 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input['networkports_id_list'] = $a_ports_db_tmp;
       $networkPortAggregate->update($input);
    }
-}
 
-?>
+   /**
+    * Import firmwares
+    *
+    * @param array   $a_inventory Inventory data
+    * @param integer $items_id    Network equipment id
+    *
+    * @retrun void
+    */
+   function importFirmwares($a_inventory, $items_id) {
+      if (!count($a_inventory['firmwares'])) {
+         return;
+      }
+
+      $types = new DeviceFirmwareType();
+      $types->getFromDBByCrit(['name' => 'Firmware']);
+      $types_id = $types->getId();
+
+      foreach ($a_inventory['firmwares'] as $a_firmware) {
+         $firmware = new DeviceFirmware();
+         $input = [
+            'designation'              => $a_firmware['name'],
+            'version'                  => $a_firmware['version'],
+            'devicefirmwaretypes_id'   => $types_id,
+            'manufacturers_id'         => $a_firmware['manufacturers_id']
+         ];
+
+         //Check if firmware exists
+         $firmware->getFromDBByCrit($input);
+         if ($firmware->isNewItem()) {
+            $input['entities_id'] = $_SESSION['glpiactiveentities_string'];
+            //firmware does not exists yet, create it
+            $fid = $firmware->add($input);
+         } else {
+            $fid = $firmware->getID();
+         }
+
+         $relation = new Item_DeviceFirmware();
+         $input = [
+            'itemtype'           => 'NetworkEquipment',
+            'items_id'           => $items_id,
+            'devicefirmwares_id' => $fid
+         ];
+         //Check if firmware relation with equipment
+         $relation->getFromDBByCrit($input);
+         if ($relation->isNewItem()) {
+            $input = $input + [
+               'is_dynamic'   => 1,
+               'entities_id'  => $_SESSION['glpiactiveentities_string']
+            ];
+            $relation->add($input);
+         }
+      }
+
+   }
+
+}

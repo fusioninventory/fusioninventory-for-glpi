@@ -319,49 +319,49 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors = '';
 
       // Manual blacklist
-       if ($a_inventory[$a_inventory['itemtype']]['serial'] == 'null') {
-          $a_inventory[$a_inventory['itemtype']]['serial'] = '';
-       }
-       // End manual blacklist
+      if ($a_inventory[$a_inventory['itemtype']]['serial'] == 'null') {
+         $a_inventory[$a_inventory['itemtype']]['serial'] = '';
+      }
+      // End manual blacklist
 
-       $_SESSION['SOURCE_XMLDEVICE'] = $a_inventory;
-       $input = array();
+      $_SESSION['SOURCE_XMLDEVICE'] = $a_inventory;
+      $input = array();
 
       // Global criterias
 
-         if (!empty($a_inventory[$a_inventory['itemtype']]['serial'])) {
-            $input['serial'] = $a_inventory[$a_inventory['itemtype']]['serial'];
+      if (!empty($a_inventory[$a_inventory['itemtype']]['serial'])) {
+         $input['serial'] = $a_inventory[$a_inventory['itemtype']]['serial'];
+      }
+      if ($a_inventory['itemtype'] == 'NetworkEquipment') {
+         if (!empty($a_inventory[$a_inventory['itemtype']]['mac'])) {
+            $input['mac'][] = $a_inventory[$a_inventory['itemtype']]['mac'];
          }
-         if ($a_inventory['itemtype'] == 'NetworkEquipment') {
-            if (!empty($a_inventory[$a_inventory['itemtype']]['mac'])) {
-               $input['mac'][] = $a_inventory[$a_inventory['itemtype']]['mac'];
+         $input['itemtype'] = "NetworkEquipment";
+      } else if ($a_inventory['itemtype'] == 'Printer') {
+         $input['itemtype'] = "Printer";
+         if (isset($a_inventory['networkport'])) {
+            $a_ports = array();
+            if (is_int(key($a_inventory['networkport']))) {
+               $a_ports = $a_inventory['networkport'];
+            } else {
+               $a_ports[] = $a_inventory['networkport'];
             }
-            $input['itemtype'] = "NetworkEquipment";
-         } else if ($a_inventory['itemtype'] == 'Printer') {
-            $input['itemtype'] = "Printer";
-            if (isset($a_inventory['networkport'])) {
-               $a_ports = array();
-               if (is_int(key($a_inventory['networkport']))) {
-                  $a_ports = $a_inventory['networkport'];
-               } else {
-                  $a_ports[] = $a_inventory['networkport'];
+            foreach ($a_ports as $port) {
+               if (!empty($port['mac'])) {
+                  $input['mac'][] = $port['mac'];
                }
-               foreach ($a_ports as $port) {
-                  if (!empty($port['mac'])) {
-                     $input['mac'][] = $port['mac'];
-                  }
-                  if (!empty($port['ip'])) {
-                     $input['ip'][] = $port['ip'];
-                  }
+               if (!empty($port['ip'])) {
+                  $input['ip'][] = $port['ip'];
                }
             }
          }
-         if (!empty($a_inventory[$a_inventory['itemtype']]['networkequipmentmodels_id'])) {
-            $input['model'] = $a_inventory[$a_inventory['itemtype']]['networkequipmentmodels_id'];
-         }
-         if (!empty($a_inventory[$a_inventory['itemtype']]['name'])) {
-            $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
-         }
+      }
+      if (!empty($a_inventory[$a_inventory['itemtype']]['networkequipmentmodels_id'])) {
+         $input['model'] = $a_inventory[$a_inventory['itemtype']]['networkequipmentmodels_id'];
+      }
+      if (!empty($a_inventory[$a_inventory['itemtype']]['name'])) {
+         $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
+      }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
