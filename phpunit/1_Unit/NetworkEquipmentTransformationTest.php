@@ -416,7 +416,6 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
           );
       $a_reference['NetworkEquipment'] = array(
                'name'                           => 'sw1.siprossii.com',
-               'networkequipmentfirmwares_id'   => '12.2(55)SE',
                'id'                             => '55',
                'locations_id'                   => 'Room 100',
                'mac'                            => '00:1b:2b:20:40:80',
@@ -427,7 +426,93 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                'manufacturers_id'               => 'Cisco',
                'is_dynamic'                     => 1
 
-      );
+            );
+      $a_reference['firmwares'] = [
+         [
+            'name'                     => '12.2(55)SE',
+            'version'                  => '12.2(55)SE',
+            'description'              => '',
+            'manufacturers_id'         => '',
+            'devicefirmwaretypes_id'   => ''
+         ]
+      ];
+      $this->assertEquals($a_reference, $a_return);
+
+      //For FI agents > 2.3.21
+      $a_inventory = [];
+      $a_inventory['INFO'] = [
+                'COMMENTS'       => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
+                'CPU'            => 6,
+                'FIRMWARE'       => '12.2(55)SE',
+                'ID'             => '55',
+                'IPS'            => ['IP' => ['172.27.0.40', '172.27.1.40']],
+                'LOCATION'       => 'Room 100',
+                'MAC'            => '00:1b:2b:20:40:80',
+                'MEMORY'         => 33,
+                'MODEL'          => 'WS-C3750G-24T-S',
+                'NAME'           => 'sw1.siprossii.com',
+                'RAM'            => 128,
+                'SERIAL'         => 'CAT1109RGVK',
+                'TYPE'           => 'NETWORKING',
+                'UPTIME'         => '41 days, 06:53:36.46',
+                'MANUFACTURER'   => 'Cisco'
+             ];
+      $a_inventory['FIRMWARES'][] = [
+         'DESCRIPTION'  => 'The firmware',
+         'MANUFACTURER' => 'Cisco',
+         'NAME'         => 'Firmware name',
+         'TYPE'         => 'device',
+         'VERSION'      => '12.2(55)SE',
+      ];
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
+      $date = date('Y-m-d H:i:s');
+      if (isset($a_return['PluginFusioninventoryNetworkEquipment'])
+              && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
+         $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
+      }
+      $a_reference = array(
+          'PluginFusioninventoryNetworkEquipment' => [
+                  'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
+                  'last_fusioninventory_update' => $date,
+                  'cpu'                         => 6,
+                  'memory'                      => 33,
+                  'uptime'                      => '41 days, 06:53:36.46'
+               ],
+          'networkport'    => [],
+          'internalport'   => ['172.27.0.40', '172.27.1.40'],
+          'itemtype'       => 'NetworkEquipment'
+          );
+      $a_reference['NetworkEquipment'] = [
+               'name'                           => 'sw1.siprossii.com',
+               'id'                             => '55',
+               'locations_id'                   => 'Room 100',
+               'mac'                            => '00:1b:2b:20:40:80',
+               'memory'                         => 33,
+               'networkequipmentmodels_id'      => 'WS-C3750G-24T-S',
+               'ram'                            => 128,
+               'serial'                         => 'CAT1109RGVK',
+               'manufacturers_id'               => 'Cisco',
+               'is_dynamic'                     => 1
+
+            ];
+      $a_reference['firmwares'] = [
+         [
+            'name'                     => 'Firmware name',
+            'version'                  => '12.2(55)SE',
+            'description'              => 'The firmware',
+            'manufacturers_id'         => 'Cisco',
+            'devicefirmwaretypes_id'   => 'device'
+         ]
+      ];
       $this->assertEquals($a_reference, $a_return);
 
       $GLPIlog = new GLPIlogs();
