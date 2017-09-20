@@ -226,12 +226,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $task_id = null;
       }
-      $json_task_id = json_encode($task_id);
       $pfAgent      = new PluginFusioninventoryAgent();
       $Computer     = new Computer();
 
       echo Html::scriptBlock("$(document).ready(function() {
-         taskjobs.task_id        = '".$json_task_id."';
+         taskjobs.task_id        = '".$task_id."';
          taskjobs.ajax_url       = '".$this->getBaseUrlFor('fi.job.logs')."';
          taskjobs.agents_url     = '".$pfAgent->getFormUrl()."';
          taskjobs.includeoldjobs = '".$_SESSION['glpi_plugin_fusioninventory']['includeoldjobs']."';
@@ -240,17 +239,17 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$json_task_id.",
+            ".$task_id.",
             'dropdown_".$refresh_randid."'
          );
          taskjobs.init_include_old_jobs_buttons(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$json_task_id.",
+            ".$task_id.",
             'dropdown_".$include_oldjobs_id."'
          );
          taskjobs.update_logs_timeout(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$json_task_id.",
+            ".$task_id.",
             'dropdown_".$refresh_randid."'
          );
       });");

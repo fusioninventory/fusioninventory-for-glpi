@@ -1904,18 +1904,10 @@ class PluginFusioninventoryFormatconvert {
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
                                         'MANUFACTURER' => 'manufacturers_id',
-                                        'FIRMWARE'     => 'networkequipmentfirmwares_id',
                                         'RAM'          => 'ram',
                                         'MEMORY'       => 'memory',
                                         'MAC'          => 'mac'));
 
-      if (strstr($array_tmp['networkequipmentfirmwares_id'], "CW_VERSION")
-              OR strstr($array_tmp['networkequipmentfirmwares_id'], "CW_INTERIM_VERSION")) {
-         $explode = explode("$", $array_tmp['networkequipmentfirmwares_id']);
-         if (isset($explode[1])) {
-            $array_tmp['networkequipmentfirmwares_id'] = $explode[1];
-         }
-      }
       $array_tmp['is_dynamic'] = 1;
       $a_inventory['NetworkEquipment'] = $array_tmp;
       $a_inventory['itemtype'] = 'NetworkEquipment';
@@ -1934,6 +1926,39 @@ class PluginFusioninventoryFormatconvert {
 
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
       $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
+
+      //manage firmwares
+      //['INFO']['FIRMWARE'] is the only available value until FI agent 2.3.21
+      //['FIRWARES'] (multivalued) will be available in next releases
+      if (isset($array['INFO']['FIRMWARE']) || isset($array['FIRMWARES'])) {
+         $a_firmwares = [];
+         $mapping = [
+            'DESCRIPTION'  => 'description',
+            'MANUFACTURER' => 'manufacturers_id',
+            'NAME'         => 'name',
+            'TYPE'         => 'devicefirmwaretypes_id',
+            'VERSION'      => 'version'
+         ];
+         if (!isset($array['FIRMWARES'])) {
+            $array['FIRMWARES'] = [[
+               'VERSION' => self::cleanFwVersion($array['INFO']['FIRMWARE']),
+               'NAME'    => $array['INFO']['FIRMWARE']
+            ]];
+         }
+         foreach ($array['FIRMWARES'] as $firmware) {
+            if (isset($firmware['VERSION'])) {
+               $firmware['VERSION'] = self::cleanFwVersion($firmware['VERSION']);
+            }
+            $a_firmwares[] = $thisc->addValues(
+               $firmware,
+               $mapping
+            );
+         }
+
+         if (count($a_firmwares)) {
+            $a_inventory['firmwares'] = $a_firmwares;
+         }
+      }
 
       // * Internal ports
       $a_inventory['internalport'] = array();
@@ -2043,7 +2068,22 @@ class PluginFusioninventoryFormatconvert {
       return $a_inventory;
    }
 
-
+   /**
+    * Clean firmware version
+    *
+    * @param string $version Firmware version
+    *
+    * @return string
+    */
+   private static function cleanFwVersion($version) {
+      if (strstr($version, "CW_VERSION") || strstr($version, "CW_INTERIM_VERSION")) {
+         $explode = explode("$", $version);
+         if (isset($explode[1])) {
+            $version = $explode[1];
+         }
+      }
+      return $version;
+   }
 
    /**
     * Convert printer in GLPI prepared data

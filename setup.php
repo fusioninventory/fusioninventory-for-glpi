@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.0-RC1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
@@ -512,6 +512,12 @@ function plugin_version_fusioninventory() {
  */
 function plugin_fusioninventory_check_prerequisites() {
    global $DB;
+
+   $version = rtrim(GLPI_VERSION, '-dev');
+   if (version_compare($version, '9.2', 'lt')) {
+      echo "This plugin requires GLPI 9.2";
+      return false;
+   }
 
    if (!isset($_SESSION['glpi_plugins'])) {
       $_SESSION['glpi_plugins'] = [];
