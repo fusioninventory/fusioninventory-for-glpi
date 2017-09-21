@@ -143,7 +143,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
             $ios = new Item_OperatingSystem();
             $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
-            $operatingsystem = $ios->getFromDBByCrit([
+            $ios->getFromDBByCrit([
                'itemtype'  => 'Computer',
                'items_id'  => $computers_id
             ]);
@@ -163,7 +163,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                'entities_id'                       => $computer->fields['entities_id']
             );
 
-            if ($operatingsystem !== false) {
+            if (!$ios->isNewItem()) {
                //OS exists, check for updates
                $same = true;
                foreach ($input_os as $key => $value) {
