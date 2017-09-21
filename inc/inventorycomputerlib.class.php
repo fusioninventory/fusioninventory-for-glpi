@@ -144,8 +144,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $ios = new Item_OperatingSystem();
             $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
             $ios->getFromDBByCrit([
-               'itemtype'  => 'Computer',
-               'items_id'  => $computers_id
+               'itemtype'                          => 'Computer',
+               'items_id'                          => $computers_id,
+               'operatingsystems_id'               => $pfos['operatingsystems_id'],
+               'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id']
             ]);
 
             $input_os = array(
