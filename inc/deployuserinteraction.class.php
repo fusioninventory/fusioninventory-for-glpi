@@ -166,7 +166,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".PluginFusioninventoryDeployUserinteractionTemplate::getTypeName(1)."</th>";
+      echo "<th>{$values['name_label']}</th>";
       echo "<td><input type='text' name='name' id='userinteraction_name{$rand}' value=\"{$values['name_value']}\" /></td>";
       echo "</tr>";
 
