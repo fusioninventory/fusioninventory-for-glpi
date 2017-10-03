@@ -8792,7 +8792,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    $packages = $DB->request('glpi_plugin_fusioninventory_deploypackages');
    foreach ($packages as $order_config) {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $json_order = json_decode($order_config['json']);
       //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
@@ -8824,7 +8823,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
          //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
       //   json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
       //);
-      $pfDeployPackage::updateOrderJson($order_config['id'], $json_order);
+      $pfDeployPackageItem = new PluginFusioninventoryDeployPackageItem();
+      $pfDeployPackageItem->updateOrderJson($order_config['id'], $json_order);
    }
 
    /**
