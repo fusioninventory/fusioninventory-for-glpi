@@ -258,7 +258,8 @@ function plugin_init_fusioninventory() {
        */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = [];
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = [];
-      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false) {
+      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false
+          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
