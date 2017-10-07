@@ -1,0 +1,6 @@
+Nom	Entité	Méthode	Acteur	Plages IP
+Job 1	Racine > Sous entité 2	Découverte réseau	glpi-VirtualBox	IP range 1	IP range 2	IP range 3
+Job 2	Racine > Sous entité 1	Découverte réseau	glpi-VirtualBox	IP range 1	IP range 2
+Job 3	Racine	Découverte réseau	PC1	IP range 1
+Job 4	Racine	Découverte réseau	glpi-VirtualBox	IP range 1	IP range 2
+Job 5	Racine	Découverte réseau	glpi-VirtualBox

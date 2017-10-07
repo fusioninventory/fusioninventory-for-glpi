@@ -1,0 +1,37 @@
+ Le script import_jobs.php permet d'importer et/ou de mettre à jour des jobs utilisables pour les tâches du
+plugin FusionInventory.
+
+
+ Ce script lit le contenu d'un fichier au format CSV pour réaliser l'importation. Ce fichier doit être formatté de
+la façon suivante:
+
+	Nom	Entité	Méthode	Acteur	Plages IP
+	Job 1	Racine > Sous entité 2	Découverte réseau	glpi-VirtualBox	IP range 1	IP range 2	IP range 3
+	Job 2	Racine > Sous entité 1	Découverte réseau	glpi-VirtualBox	IP range 1	IP range 2
+	Job 3	Racine	Découverte réseau	PC1	IP range 1
+	Job 4	Racine	Découverte réseau	glpi-VirtualBox	IP range 1	IP range 2
+
+    - chaque ligne doit contenir au moins 4 champs qui sont séparés par le caractère TAB (tabulation)
+    - le contenu d'un champ peut être entoure de " (double quotes) s'il contient un TAB
+    - une ligne qui ne contient pas au moins 4 champs sera ignorée
+    - une ligne d'entête peut exister, elle sera ignoré par le script et ne sera pas importée. Cette ligne d'entête
+    est détectée par le fait que le premier champ sur la ligne lu contient "Nom"
+
+    - chaque ligne contient:
+        - le nom du job
+        - le nom complet de l'entité de rattachement. Il s'agit du chemin de l'entité depuis l'entité racine incluse, donc
+        Racine > Sous entité > Sous sous entité. Chaque élement est séparé par " > "
+        - la méthode du plugin FusionInventory à utiliser (e.g. Découverte réseua)
+        - l'acteur concerné par le job. Il s'agit d'un Ordinateur lié à un agent
+        - les plages d'adresse IP (optionnelles)
+
+    - tous les champs sont obligatoires
+
+    - le script vérifie les points suivants :
+        - tous les éléments référencés existent dans la base de données (entité, ordinateur, plages d'adresse)
+        - l'ordinateur est associé à un agent Fusion
+    - si une des vérifications échoue, la ligne concernée n'est pas importée.
+
+    - l'import d'une ligne va créer un nouveau job dans la base de données ou mettre à jour un job existant si un
+    élément de même nom est trouvé dans la base de données. De ce fait, le script permet la création de nouveaux jobs
+    et il peut être rejoué plusieurs fois pour réaliser la mise à jour des jobs déjà existants.
