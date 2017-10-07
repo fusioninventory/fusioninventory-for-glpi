@@ -1,0 +1,39 @@
+ Le script import_timeslots.php permet d'importer et/ou de mettre à jour les créneaux horaires du
+plugin FusionInventory.
+
+
+ Ce script lit le contenu d'un fichier au format CSV pour réaliser l'importation. Ce fichier doit être formatté de
+la façon suivante:
+
+        Nom	Entité	Jour	Début   Fin
+        Créneau 1	Racine > Sous entité 2	Lundi	08:00	12:00
+        Créneau 2	Racine > Sous entité 1	Mercredi	18:00	00:00
+        Créneau 3	Racine	Samedi	00:00	23:59
+        Créneau 3	Racine	Dimanche	00:00	24:00
+
+    - chaque ligne doit contenir au moins 5 champs qui sont séparés par le caractère TAB (tabulation)
+    - le contenu d'un champ peut être entoure de " (double quotes) s'il contient un TAB
+    - une ligne qui ne contient pas au moins 5 champs sera ignorée
+    - une ligne d'entête peut exister, elle sera ignoré par le script et ne sera pas importée. Cette ligne d'entête
+    est détectée par le fait que le premier champ sur la ligne lu contient "Nom"
+
+    - chaque ligne contient:
+        - le nom du créneau horaire
+        - le nom complet l'entité de rattachement. Il s'agit du chemin de l'entité depuis l'entité racine incluse, donc
+        Racine > Sous entité > Sous sous entité. Chaque élement est séparé par " > "
+        - le jour concerné (Lundi, Mardi, ...)
+        - l'heure de début
+        - l'heure de fin (indiquer 24:00 pour minuit!)
+
+    - tous les champs sont obligatoires
+
+    - le script vérifie les points suivants :
+        - l'entité existe dans la base de données
+        - le jour est un jour valide (lundi, mardi, ...)
+        - les heures sont également valides (00:00 -> 24:00)
+        - les heures de début et fin sont cohérentes (pas de début 18:00 pour une fin à 16:00)
+    - si une des vérifications échoue, la ligne concernée n'est pas importée.
+
+    - l'import d'une ligne va créer un créneau horaire dans la base de données ou mettre à jour un créneau horaire
+    existant si un élément de même nom est trouvé dans la base de données. De ce fait, le script permet la création
+    de nouveaux créneaux et il peut être rejoué plusieurs fois pour réaliser la mise à jour des créneaux déjà importés
