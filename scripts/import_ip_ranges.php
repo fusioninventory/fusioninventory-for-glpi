@@ -54,7 +54,10 @@ $db_entity = new Entity();
 $file = './import_ip_ranges.csv';
 
 // CVS default file format
-$DELIMITER = "\t";
+$DELIMITER = ",";
+if (isset($_SESSION["glpicsv_delimiter"])) {
+    $DELIMITER = $_SESSION["glpicsv_delimiter"];
+}
 $ENCLOSURE = '"';
 
 /**
@@ -142,42 +145,42 @@ if (($handle = fopen($file, "r")) !== FALSE) {
 
             $i++;
         }
-/* If some more SNMP authentication are needed...
-        // Clean and check SNMP authentication field #2
-        $snmp_auth = trim($data[4]);
-        if ($snmp_auth != '') {
-            $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
-            if (count($snmp_auths) > 0) {
-                $snmp = current($snmp_auths);
-                $snmp_auth = $snmp["id"];
-                echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
-            } else {
-                echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
-                continue;
-            }
-        }
-        if ($snmp_auth == '') {
-            $snmp_auth = 0;
-        }
-        $snmp_auth2 = $snmp_auth;
-        // Clean and check SNMP authentication field #3
-        $snmp_auth = trim($data[5]);
-        if ($snmp_auth != '') {
-            $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
-            if (count($snmp_auths) > 0) {
-                $snmp = current($snmp_auths);
-                $snmp_auth = $snmp["id"];
-                echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
-            } else {
-                echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
-                continue;
-            }
-        }
-        if ($snmp_auth == '') {
-            $snmp_auth = 0;
-        }
-        $snmp_auth3 = $snmp_auth;
-*/
+        /* If some more SNMP authentication are needed...
+                // Clean and check SNMP authentication field #2
+                $snmp_auth = trim($data[4]);
+                if ($snmp_auth != '') {
+                    $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
+                    if (count($snmp_auths) > 0) {
+                        $snmp = current($snmp_auths);
+                        $snmp_auth = $snmp["id"];
+                        echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
+                    } else {
+                        echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
+                        continue;
+                    }
+                }
+                if ($snmp_auth == '') {
+                    $snmp_auth = 0;
+                }
+                $snmp_auth2 = $snmp_auth;
+                // Clean and check SNMP authentication field #3
+                $snmp_auth = trim($data[5]);
+                if ($snmp_auth != '') {
+                    $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
+                    if (count($snmp_auths) > 0) {
+                        $snmp = current($snmp_auths);
+                        $snmp_auth = $snmp["id"];
+                        echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
+                    } else {
+                        echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
+                        continue;
+                    }
+                }
+                if ($snmp_auth == '') {
+                    $snmp_auth = 0;
+                }
+                $snmp_auth3 = $snmp_auth;
+        */
 
         /*
          * Now we have all the fields to create a new IP range

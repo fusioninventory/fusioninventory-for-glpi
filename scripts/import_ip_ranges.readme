@@ -6,28 +6,11 @@ plugin FusionInventory ainsi que les relations entre les plages d'adresse IP et 
 la façon suivante:
 
     Nom;Entité;Début de la plage IP;Fin de la plage IP;Authentification SNMP
-    AdmConsoles_NT 240/24;Racine > Réseau ESU;10.107.240.1;10.107.240.200;WAN
-    AdmConsoles_NT 242/24;Racine > Réseau ESU;10.107.240.2;10.107.240.201;Passerelle
-    AdmDMZ11_NT;Racine > Réseau ESU;10.107.240.3;10.107.240.202;Passerelle
-    host-BRU_A-WanX;Racine > Etranger > Crasic Bruxelles	;10.107.240.4	;10.107.240.203	;Passerelle
-    host-BRU_D-WanX;Racine > Etranger > Crasic Bruxelles	;10.107.240.5	;10.107.240.204	;Passerelle
-    host-BRU_RO-WanX;Racine > Etranger > Crasic Bruxelles	;10.107.240.6	;10.107.240.205	;Passerelle
-    host-WAS_A-WanX;Racine > Etranger > Crasic Washington	;10.107.240.7	;10.107.240.206	;Passerelle
-    host-WAS_R-WanX;Racine > Etranger > Crasic Washington	;10.107.240.8	;10.107.240.207	;Passerelle
-    net-BRU_A-Vlan1400;Racine > Etranger > Crasic Bruxelles	;10.107.240.9	;10.107.240.208	;Passerelle
-    net-BRU_A-Vlan50;Racine > Etranger > Crasic Bruxelles	;10.107.240.10	;10.107.240.209	;Passerelle
-    net-BRU_D-Vlan1400;Racine > Etranger > Crasic Bruxelles	;10.107.240.11	;10.107.240.210	;WAN
-    net-BRU_D-Vlan50-1;Racine > Etranger > Crasic Bruxelles	;10.107.240.12	;10.107.240.211	;WAN
-    net-BRU_D-Vlan50-2;Racine > Etranger > Crasic Bruxelles	;10.107.240.13	;10.107.240.212	;WAN
-    net-BRU_RO-Vlan1400;Racine > Etranger > Crasic Bruxelles	;10.107.240.14	;10.107.240.213	;WAN
-    net-BRU_RO-Vlan50;Racine > Etranger > Crasic Bruxelles	;10.107.240.15	;10.107.240.214	;WAN
-    net-WAS_A-Vlan1400;Racine > Etranger > Crasic Washington	;10.107.240.16	;10.107.240.215	;WAN
-    net-WAS_A-Vlan50-1;Racine > Etranger > Crasic Washington	;10.107.240.17	;10.107.240.216	;WAN
-    net-WAS_A-Vlan50-2;Racine > Etranger > Crasic Washington	;10.107.240.18	;10.107.240.217	;WAN
-    net-WAS_A-Vlan50-3;Racine > Etranger > Crasic Washington	;10.107.240.19	;10.107.240.218	;WAN
-    net-WAS_A-Vlan50-4;	Racine > Etranger > Crasic Washington	;10.107.240.20	;10.107.240.219	;WAN
-    net-WAS_R-Vlan1400;	Racine > Etranger > Crasic Washington	;10.107.240.21	;10.107.240.220	;WAN
-    net-WAS_R-Vlan50;	Racine > Etranger > Crasic Washington	;10.107.240.22	;10.107.240.221	;WAN
+    IP range 1;Racine;192.168.1.1;192.168.1.24;Public community v1
+    IP range 1;Racine > Sous entité 1;192.168.1.1;192.168.1.24;Public community v1
+    IP range 1;Racine > Sous entité 2;192.168.0.1;192.168.0.254;Public community v2c
+    IP range 2;Racine > Sous entité 1 > Sous entité 1.1;192.168.1.1;192.168.1.128;Public community v1
+    IP range 3;Racine > Sous entité 1 > Sous entité 1.2;10.6.50.1;10.6.50.254;Public community v1;Public community v2c
 
     - chaque ligne doit contenir au moins 4 champs qui sont séparés par le caractère ; (point-virgule)
     - le contenu d'un champ peut être entoure de " (double quotes) s'il contient un ;
