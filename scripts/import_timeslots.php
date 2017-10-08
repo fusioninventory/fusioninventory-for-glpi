@@ -30,7 +30,7 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the agents
+ * This file is used to import timeslots from a CSV file.
  *
  * ------------------------------------------------------------------------
  *
@@ -51,7 +51,9 @@ $db_ts_entries = new PluginFusioninventoryTimeslotEntry();
 $db_agent = new PluginFusioninventoryAgent();
 $db_entity = new Entity();
 
-$file = './import_timeslots.csv';
+if (!isset($file)) {
+    $file = './import_timeslots.csv';
+}
 
 // CVS default file format
 $DELIMITER = ",";
@@ -71,13 +73,13 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $data[0] = trim($data[0]);
         if (strtolower($data[0]) == 'nom') {
             // File header
-            echo "File header: " . serialize($data) . "\n";
+            echo nl2br("File header: " . serialize($data) . PHP_EOL);
             continue;
         }
         // Check fields count
         if (count($data) < 5) {
             // Skip empty line...
-            echo "***** skipping empty line!\n";
+            echo nl2br("***** skipping empty line!" . PHP_EOL);
             continue;
         }
 
@@ -85,12 +87,11 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $name = trim($data[0]);
         if ($name == '') {
             // Skip empty name...
-            echo "***** skipping empty name!\n";
+            echo nl2br("***** skipping empty name!" . PHP_EOL);
             continue;
         }
 
-//        echo "Data: " . serialize($data) . "\n";
-        echo "\n-----\nNew TS entry: $name:\n";
+        echo nl2br("\n-----\nNew TS entry: $name:" . PHP_EOL);
 
         // Clean and check Entity field
         $entity = trim($data[1]);
@@ -101,13 +102,13 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             if (count($db_entities) > 0) {
                 $found_entity = current($db_entities);
                 $entity_id = $found_entity["id"];
-                echo "-> found " . count($db_entities) . " matching entity: " . $found_entity["completename"] . "\n";
+                echo nl2br("-> found " . count($db_entities) . " matching entity: " . $found_entity["completename"] . PHP_EOL);
             } else {
-                echo "***** skipping not found entity: '$name / $entity'!\n";
+                echo nl2br("***** skipping not found entity: '$name / $entity'!" . PHP_EOL);
                 continue;
             }
         } else {
-            echo "-> no entity specified, using GLPI Root entity (recursive for the timeslot)\n";
+            echo nl2br("-> no entity specified, using GLPI Root entity (recursive for the timeslot)" . PHP_EOL);
             $entity_id = 0;
             $is_recursive = '1';
         }
@@ -117,26 +118,26 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $day_index = check_valid_day($day);
         if ($day == '' OR ($day_index <= 0)) {
             // Skip invalid data...
-            echo "***** skipping empty or invalid day: '$name / $day'!\n";
+            echo nl2br("***** skipping empty or invalid day: '$name / $day'!" . PHP_EOL);
             continue;
         }
-        echo "-> TS entry day: $day ($day_index)";
+        echo nl2br("-> TS entry day: $day ($day_index)");
 
         // Clean and check TS entry start
         $ts_entry_start = trim($data[3]);
         if ($ts_entry_start == '' OR (! check_valid_hour($ts_entry_start))) {
             // Skip invalid data...
-            echo "***** skipping empty or invalid TS entry start: '$name / $ts_entry_start'!\n";
+            echo nl2br("***** skipping empty or invalid TS entry start: '$name / $ts_entry_start'!" . PHP_EOL);
             continue;
         }
         // Clean and check TS entry stop
         $ts_entry_stop = trim($data[4]);
         if ($ts_entry_stop == '' OR (! check_valid_hour($ts_entry_stop))) {
             // Skip invalid data...
-            echo "***** skipping empty or invalid TS entry stop: '$name / $ts_entry_stop'!\n";
+            echo nl2br("***** skipping empty or invalid TS entry stop: '$name / $ts_entry_stop'!" . PHP_EOL);
             continue;
         }
-        echo "-> timeslot from: $ts_entry_start to $ts_entry_stop\n";
+        echo nl2br("-> timeslot from: $ts_entry_start to $ts_entry_stop" . PHP_EOL);
 
         /*
          * Now we have all the fields to create a new TS entry
@@ -154,18 +155,18 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             $ts = current($tss);
             $ts_id = $ts["id"];
             $input_ts['id'] = $ts_id;
-            echo "-> updating an existing timeslot: '$name'...";
+            echo nl2br("-> updating an existing timeslot: '$name'...");
             $db_tss->update($input_ts);
-            echo " updated.\n";
+            echo nl2br(" updated." . PHP_EOL);
         } else {
             // Create a new timeslot
-            echo "-> creating a new timeslot: '$name'...";
+            echo nl2br("-> creating a new timeslot: '$name'...");
             $ts_id = $db_tss->add($input_ts);
             if (! $ts_id) {
-                echo " ***** error when adding a timeslot!\n";
+                echo nl2br(" ***** error when adding a timeslot!" . PHP_EOL);
                 print_r($input_ts);
             } else {
-                echo " created.\n";
+                echo nl2br(" created." . PHP_EOL);
             }
         }
 
@@ -178,9 +179,9 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             'lasthours'     => hour_to_seconds($ts_entry_stop)
         );
 
+        echo nl2br("-> updating an existing timeslot entry: '$name / $day / $ts_entry_start-$ts_entry_stop'...");
         $ts_entries = $db_ts_entries->addEntry($input_ts_entry);
-        echo "-> updating an existing timeslot entry: '$name / $day / $ts_entry_start-$ts_entry_stop'...";
-        echo " updated.\n";
+        echo nl2br(" updated." . PHP_EOL);
     }
     fclose($handle);
 }

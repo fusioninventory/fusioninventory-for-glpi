@@ -30,7 +30,7 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the agents
+ * This file is used to import jobs and tasks from a CSV file.
  *
  * ------------------------------------------------------------------------
  *
@@ -53,7 +53,9 @@ $db_ip_range = new PluginFusioninventoryIPRange();
 $db_job = new PluginFusioninventoryTaskjob();
 $db_task = new PluginFusioninventoryTask();
 
-$file = './import_jobs.csv';
+if (!isset($file)) {
+    $file = './import_jobs.csv';
+}
 
 // CVS default file format
 $DELIMITER = ",";
@@ -73,13 +75,13 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $data[0] = trim($data[0]);
         if (strtolower($data[0]) == 'nom') {
             // File header
-            echo "File header: " . serialize($data) . "\n";
+            echo nl2br("File header: " . serialize($data) . PHP_EOL);
             continue;
         }
         // Check fields count
         if (count($data) < 4) {
             // Skip empty line...
-            echo "***** skipping empty line!\n";
+            echo nl2br("***** skipping empty line!" . PHP_EOL);
             continue;
         }
 
@@ -87,12 +89,11 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $name = trim($data[0]);
         if ($name == '') {
             // Skip empty name...
-            echo "***** skipping empty name!\n";
+            echo nl2br("***** skipping empty name!" . PHP_EOL);
             continue;
         }
 
-//        echo "Data: " . serialize($data) . "\n";
-        echo "\n-----\nNew job entry: $name:\n";
+        echo nl2br("\n-----\nNew job entry: $name:" . PHP_EOL);
 
         // Clean and check Entity field
         $entity = trim($data[1]);
@@ -102,9 +103,9 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             if (count($db_entities) > 0) {
                 $found_entity = current($db_entities);
                 $entity_id = $found_entity["id"];
-                echo "-> found " . count($db_entities) . " matching entity: " . $found_entity["completename"] . "\n";
+                echo nl2br("-> found " . count($db_entities) . " matching entity: " . $found_entity["completename"] . PHP_EOL);
             } else {
-                echo "***** skipping not found entity: '$name / $entity'!\n";
+                echo nl2br("***** skipping not found entity: '$name / $entity'!" . PHP_EOL);
                 continue;
             }
         }
@@ -123,10 +124,10 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         }
         if ($module == '') {
             // Skip invalid data...
-            echo "***** skipping empty or invalid method: '$name / $method'!\n";
+            echo nl2br("***** skipping empty or invalid method: '$name / $method'!" . PHP_EOL);
             continue;
         }
-        echo "-> found job method: $method\n";
+        echo nl2br("-> found job method: $method" . PHP_EOL);
 
         // Clean and check computer
         $computer = trim($data[3]);
@@ -136,9 +137,9 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             if (count($db_computers) > 0) {
                 $found_computer = current($db_computers);
                 $computer_id = $found_computer["id"];
-                echo "-> found " . count($db_computers) . " matching computer: " . $found_computer["name"] . "\n";
+                echo nl2br("-> found " . count($db_computers) . " matching computer: " . $found_computer["name"] . PHP_EOL);
             } else {
-                echo "***** skipping not found computer: '$name / $computer'!\n";
+                echo nl2br("***** skipping not found computer: '$name / $computer'!" . PHP_EOL);
                 continue;
             }
         }
@@ -147,10 +148,10 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         if (count($db_agents) > 0) {
             $found_agent = current($db_agents);
             $agent_id = $found_agent["id"];
-            echo "-> found " . count($db_agents) . " matching agent: " . $found_agent["name"] . "\n";
+            echo nl2br("-> found " . count($db_agents) . " matching agent: " . $found_agent["name"] . PHP_EOL);
             array_push($ar_agents, array("PluginFusioninventoryAgent" => $found_agent["id"]));
         } else {
-            echo "***** skipping because computer do not have an agent: '$name / $computer'!\n";
+            echo nl2br("***** skipping because computer do not have an agent: '$name / $computer'!" . PHP_EOL);
             continue;
         }
         // Check if the agent can act in our entity
@@ -166,7 +167,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             $agent_entities = array($found_agent['entities_id']);
         }
         if (! in_array($entity_id, $agent_entities)) {
-            echo "***** skipping because our agent cannot act in the required entity!\n";
+            echo nl2br("***** skipping because our agent cannot act in the required entity!" . PHP_EOL);
             continue;
         }
 
@@ -181,9 +182,9 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             if (count($db_timeslots) > 0) {
                 $found_timeslot = current($db_timeslots);
                 $timeslot_id = $found_timeslot["id"];
-                echo "-> found " . count($db_timeslots) . " matching timeslot: " . $found_timeslot["name"] . " in entity " . $found_timeslot['entities_id'] . "\n";
+                echo nl2br("-> found " . count($db_timeslots) . " matching timeslot: " . $found_timeslot["name"] . " in entity " . $found_timeslot['entities_id'] . PHP_EOL);
             } else {
-                echo "-> no timeslot, the job task will be enabled all the time.\n";
+                echo nl2br("-> no timeslot, the job task will be enabled all the time." . PHP_EOL);
                 $timeslot_id = 0;
             }
         }
@@ -196,10 +197,10 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         $active_index = check_valid_active($active);
         if ($active_index < 0) {
             // Skip invalid data...
-            echo "***** skipping empty or invalid active: '$name / $active'!\n";
+            echo nl2br("***** skipping empty or invalid active: '$name / $active'!" . PHP_EOL);
             continue;
         }
-        echo "-> the job task is active: $active ($active_index)\n";
+        echo nl2br("-> the job task is active: $active ($active_index)" . PHP_EOL);
 
         // Clean and check IP ranges
         $i = 6;
@@ -213,16 +214,16 @@ if (($handle = fopen($file, "r")) !== FALSE) {
 //                $ip_ranges = $db_ip_range->find("`name`='$ip_range' AND `entities_id`='$entity_id'", '', 1);
                 if (count($ip_ranges) > 0) {
                     $found_ip_range = current($ip_ranges);
-                    echo "-> found " . count($ip_ranges) . " matching IP range: " . $found_ip_range["name"] . "\n";
+                    echo nl2br("-> found " . count($ip_ranges) . " matching IP range: " . $found_ip_range["name"] . PHP_EOL);
                     array_push($ar_ip_ranges, array("PluginFusioninventoryIPRange" => $found_ip_range["id"]));
                 } else {
-                    echo "***** skipping not found IP range: '$name / $ip_range'!\n";
+                    echo nl2br("***** skipping not found IP range: '$name / $ip_range'!" . PHP_EOL);
                     $i++;
                     continue;
                 }
             } else {
                 // No IP range
-                echo "-> empty IP range: '$name'!\n";
+                echo nl2br("-> empty IP range: '$name'!" . PHP_EOL);
             }
 
             $i++;
@@ -246,27 +247,27 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             $task_id = $task["id"];
             $input['id'] = $task_id;
             if (count($ar_ip_ranges) <= 0) {
-                echo "-> no IP ranges, deleting an existing task...";
+                echo nl2br("-> no IP ranges, deleting an existing task...");
                 $db_task->deleteFromDB();
-                echo " deleted.\n";
+                echo nl2br(" deleted." . PHP_EOL);
             } else {
-                echo "-> updating an existing task: '$name'...";
+                echo nl2br("-> updating an existing task: '$name'...");
                 $db_task->update($input);
-                echo " updated.\n";
+                echo nl2br(" updated." . PHP_EOL);
             }
         } else {
             if (count($ar_ip_ranges) <= 0) {
-                echo "-> do not create the task: '$name' because no IP ranges exist!\n";
+                echo nl2br("-> do not create the task: '$name' because no IP ranges exist!" . PHP_EOL);
             } else {
                 // Create a new task
-                echo "-> creating a new task: '$name'...";
+                echo nl2br("-> creating a new task: '$name'...");
                 $task_id = $db_task->add($input);
                 if (! $task_id) {
-                    echo " ***** error when adding a task!\n";
+                    echo nl2br(" ***** error when adding a task!" . PHP_EOL);
                     print_r($input);
                     continue;
                 } else {
-                    echo " created.\n";
+                    echo nl2br(" created." . PHP_EOL);
                 }
             }
         }
@@ -291,26 +292,26 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             $job_id = $job["id"];
             $input['id'] = $job_id;
             if (count($ar_ip_ranges) <= 0) {
-                echo "-> no IP ranges, deleting an existing job...";
+                echo nl2br("-> no IP ranges, deleting an existing job...");
                 $db_job->deleteFromDB();
-                echo " deleted.\n";
+                echo nl2br(" deleted." . PHP_EOL);
             } else {
-                echo "-> updating an existing job: '$name'...";
+                echo nl2br("-> updating an existing job: '$name'...");
                 $db_job->update($input);
-                echo " updated.\n";
+                echo nl2br(" updated." . PHP_EOL);
             }
         } else {
             if (count($ar_ip_ranges) <= 0) {
-                echo "-> do not create the job: '$name' because no IP ranges exist!\n";
+                echo nl2br("-> do not create the job: '$name' because no IP ranges exist!" . PHP_EOL);
             } else {
                 // Create a new job
-                echo "-> creating a new job: '$name'...";
+                echo nl2br("-> creating a new job: '$name'...");
                 $job_id = $db_job->add($input);
                 if (! $job_id) {
-                    echo " ***** error when adding a job!\n";
+                    echo nl2br(" ***** error when adding a job!" . PHP_EOL);
                     print_r($input);
                 } else {
-                    echo " created.\n";
+                    echo nl2br(" created." . PHP_EOL);
                 }
             }
         }
