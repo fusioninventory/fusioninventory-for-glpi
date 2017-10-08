@@ -1,0 +1,7 @@
+Nom;Entité;Jour;Début   Fin
+Créneau 1;Racine > Sous entité 2;Lundi;08:00;12:00
+Créneau 2;Racine > Sous entité 1;Mercredi;18:00;00:00
+Créneau 3;Racine;Samedi;00:00;23:59
+Créneau 3;Racine;Dimanche;00:00;24:00
+Créneau 0;;Mercredi;00:00;23:59
+Créneau 0;;Jeudi;00:00;12:00

@@ -1,0 +1,60 @@
+ Le script import_jobs.php permet d'importer et/ou de mettre à jour des jobs et tâches utilisables pour le
+ plugin FusionInventory.
+
+
+ Ce script lit le contenu d'un fichier au format CSV pour réaliser l'importation. Ce fichier doit être formatté de
+la façon suivante:
+
+    Nom;Entité;Méthode;Acteur;Créneau;Actif;Plages IP
+    Job 1;Racine;Découverte réseau;glpi-VirtualBox;Créneau 1;Oui;IP range 1;IP range 2;IP range 3
+    Job 2;Racine;Découverte réseau;glpi-VirtualBox;Créneau 1;Non;IP range 1;IP range 2
+    Job 1;Racine > Sous entité 1;Découverte réseau;glpi-VirtualBox;;;IP range 1;IP range 2;IP range 3
+    Job 2;Racine > Sous entité 1;Découverte réseau;glpi-VirtualBox;;;IP range 1;IP range 2
+    Job 1;Racine > Sous entité 2;Découverte réseau;glpi-VirtualBox;;;IP range 1;IP range 2;IP range 3
+    Job 2;Racine > Sous entité 2;Découverte réseau;glpi-VirtualBox;;;IP range 1;IP range 2
+    Job 3;Racine;Découverte réseau;PC1;;Oui;IP range 1
+    Job 4;Racine;Découverte réseau;glpi-VirtualBox;;oui;IP range 1;IP range 2
+    Job 5;Racine;Découverte réseau;glpi-VirtualBox;;;
+    Job 6;Racine;Découverte réseau;glpi-VirtualBox
+
+    - chaque ligne doit contenir au moins 4 champs qui sont séparés par le caractère ; (point-virgule)
+    - le contenu d'un champ peut être entoure de " (double quotes) s'il contient un point-virgule
+    - le script utilise le délimiteur CSV défini dans Glpi (point-virgule par défaut)
+    - une ligne qui ne contient pas au moins 4 champs sera ignorée
+    - une ligne d'entête peut exister, elle sera ignoré par le script et ne sera pas importée. Cette ligne d'entête
+    est détectée par le fait que le premier champ sur la ligne lu contient "Nom"
+
+    - chaque ligne contient:
+        - le nom du job
+        - le nom complet de l'entité de rattachement. Il s'agit du chemin de l'entité depuis l'entité racine incluse, donc
+        Racine > Sous entité > Sous sous entité. Chaque élement est séparé par " > "
+        - la méthode du plugin FusionInventory à utiliser (e.g. Découverte réseua)
+        - l'acteur concerné par le job. Il s'agit d'un Ordinateur lié à un agent
+        - le créneau horaire de la tâche associée au job
+        - l'état acif ou non de la tâche associée au job
+        - les plages d'adresse IP (optionnelles)
+
+    - les quatre premiers champs sont obligatoires
+
+    - si aucun créneau horaire n'est défini, la tâche associée au job sera planifiée tout le temps si elle est active
+    - si aucun état actif de la tâche n'est défini (champ vide), la tâche sera inactive
+
+    - le script vérifie les points suivants :
+        - tous les éléments référencés existent dans la base de données (entité, ordinateur, plages d'adresse)
+        - l'ordinateur est associé à un agent Fusion
+        - l'agent fusion peut agir dans l'entité demandée
+        - le créneau horaire existe dans une des entités prise en compte par l'agent Fusion
+        - si plusieurs créneaux horaires existent dans les entités de l'agent Fusion, celui de l'entité
+        de plus bas niveau sera affecté au job
+        - les plages d'adresse IP existent dans une des entités prise en compte par l'agent Fusion
+        - si au moins une plage d'adresse existe le job et la tâche associée sont créés (ou modifiés)
+        - si aucune plage d'adresses n'est trouvée, le job et la tâche associée ne sont pas créés ou sont supprimés
+        s'ils existent
+    - si une des vérifications échoue, la ligne concernée n'est pas importée.
+
+    - à noter: le même nom de job/tâche peut être utilisé dans plusieurs entités!
+
+    - l'import d'une ligne va créer un nouveau job dans la base de données ou mettre à jour un job existant si un
+    élément de même nom est trouvé dans la base de données. De ce fait, le script permet la création de nouveaux
+    jobs et il peut être rejoué plusieurs fois pour réaliser la mise à jour des jobs déjà existants.
+    - idem pour les tâches associées qui portent donc le même nom que les jobs

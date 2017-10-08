@@ -235,7 +235,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
    function addEntry($data) {
-
       if ($data['lastday'] < $data['beginday']) {
          return;
       } else if ($data['lastday'] == $data['beginday']
@@ -324,6 +323,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                $input = array_pop($periods);
                $input['id'] = $dbentry['id'];
                $input['day'] = $day;
+               if (isset($data['entities_id'])) {
+                  $input['entities_id'] = $data['entities_id'];
+               }
+               if (isset($data['is_recursive'])) {
+                  $input['is_recursive'] = $data['is_recursive'];
+               }
                $this->update($input);
             } else {
                $this->delete($dbentry);
@@ -334,6 +339,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                $input = $period;
                if (isset($input['id'])) {
                   unset($input['id']);
+               }
+               if (isset($data['entities_id'])) {
+                  $input['entities_id'] = $data['entities_id'];
+               }
+               if (isset($data['is_recursive'])) {
+                  $input['is_recursive'] = $data['is_recursive'];
                }
                $this->add($input);
             }

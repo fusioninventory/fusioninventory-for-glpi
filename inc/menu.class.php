@@ -244,7 +244,22 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                  "/plugins/fusioninventory/front/config.form.php";
       }
 
-      if (!empty($a_menu)) {
+       if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
+           $a_menu[4]['name'] = __('Data importation - IP ranges', 'fusioninventory');
+           $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+           $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/front/iprange.import.php";
+           $a_menu[5]['name'] = __('Data importation - timeslots', 'fusioninventory');
+           $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+           $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/front/timeslot.import.php";
+           $a_menu[6]['name'] = __('Data importation - tasks', 'fusioninventory');
+           $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+           $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/front/task.import.php";
+       }
+
+       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'),
                                                              $a_menu,
                                                              $type,
