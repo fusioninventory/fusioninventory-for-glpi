@@ -48,13 +48,18 @@ include ("../../../inc/includes.php");
 $db_agent = new PluginFusioninventoryAgent();
 $db_entity = new Entity();
 $db_computer = new Computer();
+$db_timeslot = new PluginFusioninventoryTimeslot();
 $db_ip_range = new PluginFusioninventoryIPRange();
 $db_job = new PluginFusioninventoryTaskjob();
+$db_task = new PluginFusioninventoryTask();
 
 $file = './import_jobs.csv';
 
 // CVS default file format
-$DELIMITER = "\t";
+$DELIMITER = ",";
+if (isset($_SESSION["glpicsv_delimiter"])) {
+    $DELIMITER = $_SESSION["glpicsv_delimiter"];
+}
 $ENCLOSURE = '"';
 
 /**
@@ -165,13 +170,47 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             continue;
         }
 
+        // Clean and check Timeslot
+        $timeslot = trim($data[4]);
+        $timeslot_id = -1;
+        if ($timeslot != '') {
+            // Search in the agent entities from deepest to highest
+            $db_timeslots = $db_timeslot->find("`name`='$timeslot' AND `entities_id` IN ('".implode("', '", $agent_entities)."')", "`entities_id` DESC", 1);
+            // Only for the required entity
+//            $db_timeslots = $db_timeslot->find("`name`='$timeslot' AND `entities_id`='$entity_id'", '', 1);
+            if (count($db_timeslots) > 0) {
+                $found_timeslot = current($db_timeslots);
+                $timeslot_id = $found_timeslot["id"];
+                echo "-> found " . count($db_timeslots) . " matching timeslot: " . $found_timeslot["name"] . " in entity " . $found_timeslot['entities_id'] . "\n";
+            } else {
+                echo "-> no timeslot, the job task will be enabled all the time.\n";
+                $timeslot_id = 0;
+            }
+        }
+
+        // Clean and check entry active
+        $active = trim($data[5]);
+        if (empty($active)) {
+            $active = "non";
+        }
+        $active_index = check_valid_active($active);
+        if ($active_index < 0) {
+            // Skip invalid data...
+            echo "***** skipping empty or invalid active: '$name / $active'!\n";
+            continue;
+        }
+        echo "-> the job task is active: $active ($active_index)\n";
+
         // Clean and check IP ranges
-        $i = 4;
+        $i = 6;
         $ar_ip_ranges = array();
         while ($i < count($data)) {
             $ip_range = trim($data[$i]);
             if ($ip_range != '') {
-                $ip_ranges = $db_ip_range->find("`name`='$ip_range' AND `entities_id`='$entity_id'", '', 1);
+                // Search in the agent entities from deepest to highest
+                $ip_ranges = $db_ip_range->find("`name`='$timeslot' AND `entities_id` IN ('".implode("', '", $agent_entities)."')", "`entities_id` DESC", 1);
+                // Only for the required entity
+//                $ip_ranges = $db_ip_range->find("`name`='$ip_range' AND `entities_id`='$entity_id'", '', 1);
                 if (count($ip_ranges) > 0) {
                     $found_ip_range = current($ip_ranges);
                     echo "-> found " . count($ip_ranges) . " matching IP range: " . $found_ip_range["name"] . "\n";
@@ -190,25 +229,69 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         }
 
         /*
+         * Now we have all the fields to create a new task
+         */
+        $input = array(
+            'name'                                  => $name,
+            'entities_id'                           => $entity_id,
+            'is_active'                             => $active_index,
+            'plugin_fusioninventory_timeslots_id'   => $timeslot_id
+        );
+
+        $task_id = -1;
+        $tasks = $db_task->find("`name`='$name' AND `entities_id`='$entity_id'", '', 1);
+        if (count($tasks) > 0) {
+            // Update an existing task
+            $task = current($tasks);
+            $task_id = $task["id"];
+            $input['id'] = $task_id;
+            if (count($ar_ip_ranges) <= 0) {
+                echo "-> no IP ranges, deleting an existing task...";
+                $db_task->deleteFromDB();
+                echo " deleted.\n";
+            } else {
+                echo "-> updating an existing task: '$name'...";
+                $db_task->update($input);
+                echo " updated.\n";
+            }
+        } else {
+            if (count($ar_ip_ranges) <= 0) {
+                echo "-> do not create the task: '$name' because no IP ranges exist!\n";
+            } else {
+                // Create a new task
+                echo "-> creating a new task: '$name'...";
+                $task_id = $db_task->add($input);
+                if (! $task_id) {
+                    echo " ***** error when adding a task!\n";
+                    print_r($input);
+                    continue;
+                } else {
+                    echo " created.\n";
+                }
+            }
+        }
+
+        /*
          * Now we have all the fields to create a new Job
          */
         $input = array(
-            'name'          => $name,
-            'entities_id'   => $entity_id,
-            'method'        => $method,
-            'targets'       => exportArrayToDB($ar_ip_ranges),
-            'actors'        => exportArrayToDB($ar_agents)
+            'name'                              => $name,
+            'entities_id'                       => $entity_id,
+            'plugin_fusioninventory_tasks_id'   => $task_id,
+            'method'                            => $method,
+            'targets'                           => exportArrayToDB($ar_ip_ranges),
+            'actors'                            => exportArrayToDB($ar_agents)
         );
 
         $job_id = -1;
-        $jobs = $db_job->find("`name`='$name' AND `entities_id`='$entity_id'", '', 1);
+        $jobs = $db_job->find("`name`='$name' AND `plugin_fusioninventory_tasks_id`='$task_id'", '', 1);
         if (count($jobs) > 0) {
             // Update an existing job
             $job = current($jobs);
             $job_id = $job["id"];
             $input['id'] = $job_id;
             if (count($ar_ip_ranges) <= 0) {
-                echo "-> deleting an existing job...";
+                echo "-> no IP ranges, deleting an existing job...";
                 $db_job->deleteFromDB();
                 echo " deleted.\n";
             } else {
@@ -233,5 +316,16 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         }
     }
     fclose($handle);
+}
+
+function check_valid_active($active) {
+    $active = strtolower($active);
+    $actives = array("non", "oui");
+
+    if (! in_array($active, $actives)) {
+        return -1;
+    }
+
+    return array_search($active, $actives);
 }
 ?>
