@@ -132,6 +132,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
                     array_push($ar_snmp_auth, $snmp["id"]);
                 } else {
                     echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
+                    $i++;
                     continue;
                 }
             } else {
@@ -189,7 +190,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         );
 
         $ipranges_id = -1;
-        $ipranges = $db_ip_range->find("`name`='".$name."'", '', 1);
+        $ipranges = $db_ip_range->find("`name`='$name' AND `entities_id`='$entity_id'", '', 1);
         if (count($ipranges) > 0) {
             // Update an existing IP range
             $range = current($ipranges);
@@ -203,7 +204,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             echo "-> creating a new IP addresses range: '$name'...";
             $ipranges_id = $db_ip_range->add($input);
             if (! $ipranges_id) {
-                echo " error when adding an IP range!\n";
+                echo " ***** error when adding an IP range!\n";
                 print_r($input);
             } else {
                 echo " created.\n";
@@ -240,7 +241,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
                         echo "-> creating a new IP addresses range / SNMP authentication relation...";
                         $ipranges_snmp_id = $db_ip_range_snmp->add($input);
                         if (! $ipranges_snmp_id) {
-                            echo " error when adding an IP range / SNMP relation!\n";
+                            echo " ***** error when adding an IP range / SNMP relation!\n";
                             print_r($input);
                         } else {
                             echo " created.\n";
