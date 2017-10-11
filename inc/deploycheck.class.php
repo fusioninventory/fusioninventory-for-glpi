@@ -79,6 +79,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                   'fileSHA512'         => __("SHA-512 hash value matches", 'fusioninventory'),
                   'fileSHA512mismatch' => __("SHA-512 hash value mismatch", 'fusioninventory'),
                ],
+               __('Directory') => [
+                  'directoryExists'    => __("Directory exists", 'fusioninventory'),
+                  'directoryMissing'   => __("Directory is missing", 'fusioninventory'),
+               ],
              __('Other') => [
             'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
             ]
@@ -501,6 +505,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          case "fileExists":
          case "fileMissing":
             $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
+            $values['value_label'] = FALSE;
+            break;
+
+         case "directoryExists":
+         case "directoryMissing":
+            $values['path_label']  = __("Directory", 'fusioninventory').$mandatory_mark;
             $values['value_label'] = FALSE;
             break;
 
