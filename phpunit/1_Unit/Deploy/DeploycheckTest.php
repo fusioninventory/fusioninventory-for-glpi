@@ -52,6 +52,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals(4, count($types));
       $this->assertEquals(7, count($types[__('Registry', 'fusioninventory')]));
       $this->assertEquals(7, count($types[__('File')]));
+      $this->assertEquals(2, count($types[__('Directory')]));
       $this->assertEquals(1, count($types[__('Other')]));
 
    }
