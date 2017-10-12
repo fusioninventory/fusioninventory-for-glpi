@@ -705,7 +705,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
    /**
-    * Update SNMP information of a device (sysdescr, SNMP authentication...)
+    * Update SNMP information of a device (sysdescr, SNMP credentials...)
     *
     * @param array $arrayinventory
     * @param array $input

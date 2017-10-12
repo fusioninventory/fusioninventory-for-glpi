@@ -58,9 +58,9 @@ $DELIMITER = "\t";
 $ENCLOSURE = '"';
 
 /**
- * Script for importing SNMP authentications into the GLPI Fusion Inventory
+ * Script for importing SNMP credentials into the GLPI Fusion Inventory
  * - search and open a CSV file
- * - import found IP ranges and relations with SNMP authentications
+ * - import found IP ranges and relations with SNMP credentials
  */
 $row = 1;
 if (($handle = fopen($file, "r")) !== FALSE) {
@@ -119,7 +119,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         }
         echo "-> IP range from: $range_start to $range_stop\n";
 
-        // Clean and check SNMP authentication fields
+        // Clean and check SNMP credentials fields
         $i = 4;
         $ar_snmp_auth = array();
         while ($i < count($data)) {
@@ -128,30 +128,30 @@ if (($handle = fopen($file, "r")) !== FALSE) {
                 $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
                 if (count($snmp_auths) > 0) {
                     $snmp = current($snmp_auths);
-                    echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
+                    echo "-> found " . count($snmp_auths) . " matching SNMP credentials: " . $snmp["name"] . "\n";
                     array_push($ar_snmp_auth, $snmp["id"]);
                 } else {
-                    echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
+                    echo "-> skipping missing SNMP credentials: '$name / $snmp_auth'!\n";
                     continue;
                 }
             } else {
-                // No SNMP authentication for this IP range
-                echo "-> empty SNMP authentication: '$name'!\n";
+                // No SNMP credentials for this IP range
+                echo "-> empty SNMP credentials: '$name'!\n";
             }
 
             $i++;
         }
-/* If some more SNMP authentication are needed...
-        // Clean and check SNMP authentication field #2
+/* If some more SNMP credentials are needed...
+        // Clean and check SNMP credentials field #2
         $snmp_auth = trim($data[4]);
         if ($snmp_auth != '') {
             $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
             if (count($snmp_auths) > 0) {
                 $snmp = current($snmp_auths);
                 $snmp_auth = $snmp["id"];
-                echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
+                echo "-> found " . count($snmp_auths) . " matching SNMP credentials: " . $snmp["name"] . "\n";
             } else {
-                echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
+                echo "-> skipping missing SNMP credentials: '$name / $snmp_auth'!\n";
                 continue;
             }
         }
@@ -159,16 +159,16 @@ if (($handle = fopen($file, "r")) !== FALSE) {
             $snmp_auth = 0;
         }
         $snmp_auth2 = $snmp_auth;
-        // Clean and check SNMP authentication field #3
+        // Clean and check SNMP credentials field #3
         $snmp_auth = trim($data[5]);
         if ($snmp_auth != '') {
             $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
             if (count($snmp_auths) > 0) {
                 $snmp = current($snmp_auths);
                 $snmp_auth = $snmp["id"];
-                echo "-> found " . count($snmp_auths) . " matching SNMP authentication: " . $snmp["name"] . "\n";
+                echo "-> found " . count($snmp_auths) . " matching SNMP credentials: " . $snmp["name"] . "\n";
             } else {
-                echo "-> skipping not found SNMP authentication: '$name / $snmp_auth'!\n";
+                echo "-> skipping missing SNMP credentials: '$name / $snmp_auth'!\n";
                 continue;
             }
         }
@@ -211,7 +211,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         }
 
         foreach($ar_snmp_auth as $snmp_auth_id) {
-            // Relation between IP range and SNMP authentication (if it exists...)
+            // Relation between IP range and SNMP credentials (if it exists...)
             $input = array(
                 'plugin_fusioninventory_ipranges_id'            => $ipranges_id,
                 'plugin_fusioninventory_configsecurities_id'    => $snmp_auth_id
@@ -220,7 +220,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
                 $ipranges_snmp = $db_ip_range_snmp->find("`plugin_fusioninventory_ipranges_id`='".$ipranges_id."'");
                 if (count($ipranges_snmp) > 0) {
                     if ($snmp_auth_id == -1) {
-                        echo "-> deleting an existing IP addresses range / SNMP authentication relation...";
+                        echo "-> deleting an existing IP addresses range / SNMP credentials relation...";
                         $range_snmp = current($ipranges_snmp);
                         $db_ip_range_snmp->getFromDB($range_snmp['id']);
                         $db_ip_range_snmp->deleteFromDB();
@@ -230,14 +230,14 @@ if (($handle = fopen($file, "r")) !== FALSE) {
                         // Update an existing IP range / SNMP relation
                         $range_snmp = current($ipranges_snmp);
                         $input['id'] = $range_snmp["id"];
-                        echo "-> updating an existing IP addresses range / SNMP authentication relation...";
+                        echo "-> updating an existing IP addresses range / SNMP credentials relation...";
                         $db_ip_range_snmp->update($input);
                         echo " updated.\n";
                     }
                 } else {
                     if ($snmp_auth_id != -1) {
                         // Create a new IP range / SNMP relation
-                        echo "-> creating a new IP addresses range / SNMP authentication relation...";
+                        echo "-> creating a new IP addresses range / SNMP credentials relation...";
                         $ipranges_snmp_id = $db_ip_range_snmp->add($input);
                         if (! $ipranges_snmp_id) {
                             echo " error when adding an IP range / SNMP relation!\n";
