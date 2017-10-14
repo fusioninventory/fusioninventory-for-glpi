@@ -43,7 +43,7 @@
    />
   <exec failonerror="true" dir="${basedir}" executable="./glpi/plugins/fusioninventory/phpunit/tools/get_composer.sh">
   </exec>
-  <exec failonerror="true" dir="${basedir}" executable="composer">
+  <exec failonerror="true" dir="${basedir}" executable="./composer">
    <arg value="update" />
    <arg value="--prefer-source" />
   </exec>

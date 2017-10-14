@@ -138,6 +138,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -224,6 +225,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -328,6 +330,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -1042,6 +1045,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -1364,6 +1368,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           'bios'           => array(
               'date'             => '2006-05-30',
               'version'          => 'A05',
@@ -1479,6 +1484,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           'bios'           => array(
               'date'             => '2006-05-30',
               'version'          => 'A05',
@@ -1956,6 +1962,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'powersupply'    => array(),
           'bios'           => array(
               'date'             => '2006-05-30',
               'version'          => 'A05',
@@ -1980,5 +1987,66 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'otherserial'                      => 'LAPTOP0034'
           );
       $this->assertEquals($a_reference, $a_return);
+   }
+
+   /**
+    * @test
+    */
+   public function ComputerPowerSupply() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+         'NAME'           => 'vbox-winxp',
+         'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+         'CHASSIS_TYPE'   => '',
+         'DESCRIPTION'    => '',
+         'OSCOMMENTS'     => 'Service Pack 3 BAD',
+         'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+         'OSVERSION'      => '5.1.2600 BAD',
+         'VMSYSTEM'       => 'VirtualBox',
+         'WINCOMPANY'     => 'siprossii',
+         'WINLANG'        => '1036',
+         'WINOWNER'       => 'test',
+         'WINPRODID'      => '76413-OEM-0054453-04701',
+         'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+         'WORKGROUP'      => 'WORKGROUP'
+      );
+      $a_computer['PSUS'] = array(
+         array(
+            'SERIAL'  => '5ANLE0CLL0UBKE',
+            'PARTNUM' => '503296-B21',
+            'POWER'   => '460 W',
+            'VENDOR'  => 'HP'
+         ),
+         array(
+            'SERIAL'  => 'CN716154CH13E7',
+            'PARTNUM' => '0HTRH4A01',
+            'VENDOR'  => 'DELL'
+         )
+      );
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+
+      $a_reference[0] = array(
+         'serial'           => '5ANLE0CLL0UBKE',
+         'designation'      => '503296-B21',
+         'power'            => '460 W',
+         'manufacturers_id' => 'HP'
+      );
+      $a_reference[1] = array(
+         'serial'           => 'CN716154CH13E7',
+         'designation'      => '0HTRH4A01',
+         'power'            => '',
+         'manufacturers_id' => 'DELL'
+      );
+
+      $this->assertEquals($a_reference, $a_return['powersupply']);
    }
 }
