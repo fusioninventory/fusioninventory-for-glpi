@@ -371,8 +371,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_powersupplies = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicepowersupplies`.`id`, `designation`,
-                     `power`, `serial`, `manufacturers_id`,
-                     `devicepowersupplies_id`
+                     `power`, `serial`, `devicepowersupplies_id`
                   FROM `glpi_items_devicepowersupplies`
                   LEFT JOIN `glpi_devicepowersupplies`
                      ON `devicepowersupplies_id`=`glpi_devicepowersupplies`.`id`
@@ -391,28 +390,17 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $this->addPowerSupply($a_powersupply, $computers_id, $no_history);
                }
             } else {
-               // Check all fields from source: 'designation', 'serial', 'manufacturers_id', 'power'
-               // update NULL fields
+               // Check all fields from source: 'designation', 'serial', 'power', 'serial'
                foreach ($a_computerinventory['powersupply'] as $key => $arrays) {
                   foreach ($db_powersupplies as $keydb => $arraydb) {
-                     if (isset($arrays['designation'])
-                        && isset($arraydb['designation'])
-                        && $arrays['designation'] == $arraydb['designation']
-                     ) {
-                        if ($arraydb['power'] === null && isset($arrays['power'])) {
-                           $devicePowerSupply->update(array(
-                              'id'    => $arraydb['devicepowersupplies_id'],
-                              'power' => $arrays['power']
-                           ));
-                        }
-
+                     unset($arraydb['devicepowersupplies_id']);
+                     if ($arraydb == $keydb) {
                         unset($a_computerinventory['powersupply'][$key]);
-                        unset($db_powersupply[$keydb]);
+                        unset($db_powersupplies[$keydb]);
                         break;
                      }
                   }
                }
-
                if (count($a_computerinventory['powersupply']) == 0
                   AND count($db_powersupplies) == 0) {
                   // Nothing to do

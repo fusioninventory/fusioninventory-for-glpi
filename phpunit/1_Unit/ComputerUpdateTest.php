@@ -278,13 +278,15 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                'designation'      => '0HTRH4A01',
                'power'            => '750 W',
                'serial'           => 'CN716154CH13E7',
-               'manufacturers_id' => 'DELL'
+               'manufacturers_id' => 'DELL',
+               'is_atx'           => ''
             ),
             Array(
                'designation'      => '0HTRH4A01',
-               'power'            => '',
-               'serial'           => 'CN716154CH13E7',
-               'manufacturers_id' => 'DELL'
+               'power'            => '750 W',
+               'serial'           => 'CN716154CH1475',
+               'manufacturers_id' => 'DELL',
+               'is_atx'           => ''
             )
          );
 
@@ -1259,6 +1261,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'batteries'      => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
+          'powersupply'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(

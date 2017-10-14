@@ -2019,15 +2019,17 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       );
       $a_computer['PSUS'] = array(
          array(
-            'SERIAL'  => '5ANLE0CLL0UBKE',
-            'PARTNUM' => '503296-B21',
-            'POWER'   => '460 W',
-            'VENDOR'  => 'HP'
+            'SERIAL'  => 'CN716154CH13E7',
+            'PARTNUM' => '0HTRH4A01',
+            'VENDOR'  => 'DELL',
+            'IS_ATX'  => 0
          ),
          array(
             'SERIAL'  => 'CN716154CH13E7',
             'PARTNUM' => '0HTRH4A01',
-            'VENDOR'  => 'DELL'
+            'POWER'   => '700 W',
+            'VENDOR'  => 'DELL',
+            'IS_ATX'  => 0
          )
       );
 
@@ -2035,16 +2037,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
       $a_reference[0] = array(
-         'serial'           => '5ANLE0CLL0UBKE',
-         'designation'      => '503296-B21',
-         'power'            => '460 W',
-         'manufacturers_id' => 'HP'
-      );
-      $a_reference[1] = array(
          'serial'           => 'CN716154CH13E7',
          'designation'      => '0HTRH4A01',
-         'power'            => '',
-         'manufacturers_id' => 'DELL'
+         'power'            => '700 W',
+         'manufacturers_id' => 'DELL',
+         'is_atx'           => ''
       );
 
       $this->assertEquals($a_reference, $a_return['powersupply']);
