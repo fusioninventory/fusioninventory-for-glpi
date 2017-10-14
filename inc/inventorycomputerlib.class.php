@@ -367,7 +367,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
 
       // * Power Supplies
-// TODO        if ($pfConfig->getValue("component_powersupply") != 0) {
+         if ($pfConfig->getValue("component_powersupply") != 0) {
             $db_powersupplies = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicepowersupplies`.`id`, `designation`,
@@ -418,7 +418,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
             }
-// TODO        }
+         }
 
       // * Memories
          if ($pfConfig->getValue("component_memory") != 0) {
