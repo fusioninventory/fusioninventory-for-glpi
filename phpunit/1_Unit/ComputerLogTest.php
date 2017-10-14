@@ -88,6 +88,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
           'batteries'      => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
+          'powersupply'    => array(),
           'itemtype'       => 'Computer'
           );
       $this->a_inventory['Computer'] = array(

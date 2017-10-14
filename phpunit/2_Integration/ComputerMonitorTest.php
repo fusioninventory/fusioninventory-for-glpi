@@ -86,6 +86,7 @@ class ComputerMonitor extends Common_TestCase {
           'batteries'      => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
+          'powersupply'    => array(),
           'itemtype'       => 'Computer'
       );
 
@@ -146,6 +147,7 @@ class ComputerMonitor extends Common_TestCase {
           'batteries'      => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
+          'powersupply'    => array(),
           'itemtype'       => 'Computer'
       );
    }
