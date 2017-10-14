@@ -2017,7 +2017,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
          'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
          'WORKGROUP'      => 'WORKGROUP'
       );
-      $a_computer['PSUS'] = array(
+      $a_computer['POWERSUPPLIES'] = array(
          array(
             'SERIAL'  => 'CN716154CH13E7',
             'PARTNUM' => '0HTRH4A01',

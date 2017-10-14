@@ -97,7 +97,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT','PSUS');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT','POWERSUPPLIES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -1451,10 +1451,10 @@ class PluginFusioninventoryFormatconvert {
 
       // * POWER SUPPLIES
       $a_inventory['powersupply'] = array();
-      if (isset($array['PSUS'])) {
+      if (isset($array['POWERSUPPLIES'])) {
          // merging partial information
          $a_tmp = array();
-         foreach ($array['PSUS'] as $a_psu) {
+         foreach ($array['POWERSUPPLIES'] as $a_psu) {
             if (!isset($a_psu['SERIAL']))
                continue;
 
