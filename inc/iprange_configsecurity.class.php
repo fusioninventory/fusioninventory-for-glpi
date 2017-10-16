@@ -30,7 +30,7 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the SNMP authentications on IP ranges.
+ * This file is used to manage SNMP credentials associated with IP ranges.
  *
  * ------------------------------------------------------------------------
  *
@@ -49,7 +49,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the SNMP authentications on IP ranges.
+ * Manage SNMP credentials associated with IP ranges.
  */
 class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
@@ -107,7 +107,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
-         return __('Associated SNMP authentications', 'fusioninventory');
+         return __('Associated SNMP credentials', 'fusioninventory');
       }
       return '';
    }
@@ -177,7 +177,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_2'>";
-      echo "<th colspan='2'>".__('Add a SNMP authentication')."</th>";
+      echo "<th colspan='2'>".__('Add SNMP credentials')."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_2'>";
       echo "<td>";
@@ -207,7 +207,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "<tr class='tab_bg_2'>";
       echo "<th width='10'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>";
       echo "<th>";
-      echo __('SNMP Authentication', 'fusioninventory');
+      echo __('SNMP credentials', 'fusioninventory');
       echo "</th>";
       echo "<th>";
       echo __('Version', 'fusioninventory');

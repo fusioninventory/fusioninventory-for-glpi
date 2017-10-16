@@ -344,7 +344,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    /**
-    * After purge item, delete SNMP authentication linked to this ip range
+    * After purge item, delete SNMP credentials linked to this ip range
     */
    function post_purgeItem() {
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
