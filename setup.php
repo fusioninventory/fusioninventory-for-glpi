@@ -484,7 +484,7 @@ function plugin_version_fusioninventory() {
            'oldname'        => 'tracker',
            'author'         => '<a href="mailto:david@durieux.family">David DURIEUX</a>
                                 & FusionInventory team',
-           'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
+           'homepage'       => 'https://github.com/fusioninventory/fusioninventory-for-glpi',
            'requirements'   => [
               'glpi' => [
                  'min' => '9.2',
