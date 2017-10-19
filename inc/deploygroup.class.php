@@ -110,10 +110,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb=0) {
-      if ($nb>1) {
-         return __('Task');
-      }
-      return __('Groups of computers', 'fusioninventory');
+      return __('FusionInventory group', 'fusioninventory');
    }
 
 
