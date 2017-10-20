@@ -189,9 +189,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       $dbentries = getAllDatasFromTable(
                      'glpi_plugin_fusioninventory_timeslotentries',
-                     "`plugin_fusioninventory_timeslots_id`='".$timeslots_id."'",
+                     ['plugin_fusioninventory_timeslots_id' => $timeslots_id],
                      '',
-                     '`day`, `begin` ASC');
+                     ['day', 'begin ASC']);
 
       $options = array();
       $this->initForm(key($dbentries), $options);
