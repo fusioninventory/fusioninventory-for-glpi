@@ -458,6 +458,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
                   $arrayslower = array_map('strtolower', $arrays);
+
+                  // if disk has no serial, don't add and unset it
+                  if (!isset($arrayslower['serial'])) {
+                     unset($a_computerinventory['harddrive'][$key]);
+                     break;
+                  }
+
                   foreach ($db_harddrives as $keydb => $arraydb) {
                      if ($arrayslower['serial'] == $arraydb['serial']) {
                         if ($arraydb['capacity'] == 0
@@ -1507,7 +1514,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Monitor";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1591,7 +1600,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Printer";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1670,7 +1681,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Peripheral";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
