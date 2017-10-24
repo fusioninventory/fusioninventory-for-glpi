@@ -6064,15 +6064,18 @@ function do_rule_migration($migration) {
            ." SET `ranking` = `ranking`+3"
            ." WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport' ";
    $ranking = 0;
-     // Create rule for : Peripheral + serial
+
+      // Create rule for : Peripheral + serial
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
       $input = array();
-      $input['is_active']=1;
       $input['name']='Peripheral serial';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
+      if (!$ruleimport->getFromDBByCrit($input)) {
+         $input['is_active']=1;
+         $input['ranking'] = $ranking;
+         $rule_id = $rulecollection->add($input);
 
          // Add criteria
          $rule = $rulecollection->getRuleClass();
@@ -6106,17 +6109,21 @@ function do_rule_migration($migration) {
          $input['field'] = '_fusion';
          $input['value'] = '1';
          $ruleaction->add($input);
+         $ranking++;
+      }
 
-      $ranking++;
+
       // Create rule for : Peripheral import
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
       $input = array();
-      $input['is_active']=1;
       $input['name']='Peripheral import';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
+      if (!$ruleimport->getFromDBByCrit($input)) {
+         $input['is_active']=1;
+         $input['ranking'] = $ranking;
+         $rule_id = $rulecollection->add($input);
 
          // Add criteria
          $rule = $rulecollection->getRuleClass();
@@ -6143,36 +6150,40 @@ function do_rule_migration($migration) {
          $input['field'] = '_fusion';
          $input['value'] = '1';
          $ruleaction->add($input);
+         $ranking++;
+      }
 
-      $ranking++;
       // Create rule for : Peripheral ignore import
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
       $input = array();
-      $input['is_active']=1;
       $input['name']='Peripheral ignore import';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
+      if (!$ruleimport->getFromDBByCrit($input)) {
+         $input['is_active']=1;
+         $input['ranking'] = $ranking;
+         $rule_id = $rulecollection->add($input);
 
-      // Add criteria
-      $rule = $rulecollection->getRuleClass();
-      $rulecriteria = new RuleCriteria(get_class($rule));
-      $input = array();
-      $input['rules_id'] = $rule_id;
-      $input['criteria'] = "itemtype";
-      $input['pattern']= 'Peripheral';
-      $input['condition']=0;
-      $rulecriteria->add($input);
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Peripheral';
+         $input['condition']=0;
+         $rulecriteria->add($input);
 
-      // Add action
-      $ruleaction = new RuleAction(get_class($rule));
-      $input = array();
-      $input['rules_id'] = $rule_id;
-      $input['action_type'] = 'assign';
-      $input['field'] = '_ignore_import';
-      $input['value'] = '1';
-      $ruleaction->add($input);
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_ignore_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+      }
 
       // Add monitor rules (in first in rule list) when use it since 0.85
       $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
@@ -6246,13 +6257,17 @@ function do_rule_migration($migration) {
       $DB->query($query);
 
       // Update fusinvinventory _config values to this plugin
+
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
       $input = array();
-      $input['is_active']=1;
       $input['name']='Monitor serial';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
+      if (!$ruleimport->getFromDBByCrit($input)) {
+         $input['is_active']=1;
+         $input['ranking'] = $ranking;
+         $rule_id = $rulecollection->add($input);
 
          // Add criteria
          $rule = $rulecollection->getRuleClass();
@@ -6287,16 +6302,20 @@ function do_rule_migration($migration) {
          $input['value'] = '1';
          $ruleaction->add($input);
 
-      $ranking++;
+         $ranking++;
+      }
+
       // Create rule for : Monitor import
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
       $input = array();
-      $input['is_active']=1;
       $input['name']='Monitor import';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
+      if (!$ruleimport->getFromDBByCrit($input)) {
+         $input['is_active']=1;
+         $input['ranking'] = $ranking;
+         $rule_id = $rulecollection->add($input);
 
          // Add criteria
          $rule = $rulecollection->getRuleClass();
@@ -6324,16 +6343,20 @@ function do_rule_migration($migration) {
          $input['value'] = '1';
          $ruleaction->add($input);
 
-      $ranking++;
+         $ranking++;
+      }
+
       // Create rule for : Monitor ignore import
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
       $input = array();
-      $input['is_active']=1;
       $input['name']='Monitor ignore import';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $input['ranking'] = $ranking;
-      $rule_id = $rulecollection->add($input);
+      if (!$ruleimport->getFromDBByCrit($input)) {
+         $input['is_active']=1;
+         $input['ranking'] = $ranking;
+         $rule_id = $rulecollection->add($input);
 
          // Add criteria
          $rule = $rulecollection->getRuleClass();
@@ -6353,6 +6376,7 @@ function do_rule_migration($migration) {
          $input['field'] = '_ignore_import';
          $input['value'] = '1';
          $ruleaction->add($input);
+      }
 
    // Add printer rules (in first in rule list) when use it since 0.85
    $query = "DELETE FROM `glpi_plugin_fusioninventory_configs`"
