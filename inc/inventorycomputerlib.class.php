@@ -143,9 +143,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
             $ios = new Item_OperatingSystem();
             $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
-            $operatingsystem = $ios->getFromDBByCrit([
-               'itemtype'  => 'Computer',
-               'items_id'  => $computers_id
+            $ios->getFromDBByCrit([
+               'itemtype'                          => 'Computer',
+               'items_id'                          => $computers_id,
+               'operatingsystems_id'               => $pfos['operatingsystems_id'],
+               'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id']
             ]);
 
             $input_os = array(
@@ -163,7 +165,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                'entities_id'                       => $computer->fields['entities_id']
             );
 
-            if ($operatingsystem !== false) {
+            if (!$ios->isNewItem()) {
                //OS exists, check for updates
                $same = true;
                foreach ($input_os as $key => $value) {
@@ -456,6 +458,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
                   $arrayslower = array_map('strtolower', $arrays);
+
+                  // if disk has no serial, don't add and unset it
+                  if (!isset($arrayslower['serial'])) {
+                     unset($a_computerinventory['harddrive'][$key]);
+                     break;
+                  }
+
                   foreach ($db_harddrives as $keydb => $arraydb) {
                      if ($arrayslower['serial'] == $arraydb['serial']) {
                         if ($arraydb['capacity'] == 0
@@ -1505,7 +1514,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Monitor";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1589,7 +1600,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Printer";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1668,7 +1681,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Peripheral";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
