@@ -315,7 +315,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    function getBehaviorsFields() {
       return  ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
-               'on_ignore', 'on_continue'];
+               'on_ignore', 'on_continue', 'on_async'];
 
    }
 
@@ -328,7 +328,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    function initializeJsonFields($json_fields) {
       foreach ($this->getJsonFields() as $field) {
          if (!isset($json_fields[$field])) {
-            $json_fields[$field] = '';
+            $json_fields[$field] = 'continue:continue';
          }
       }
       return $json_fields;
