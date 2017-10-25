@@ -239,7 +239,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
                $getReturnActionNames = $this->getReturnActionNames();
-               echo $getReturnActionNames[$retCheck['type']]." ".array_shift($retCheck['value']);
+               echo $getReturnActionNames[$retCheck['type']]." ".array_shift($retCheck['values']);
                echo "</li>";
             }
             echo "</ul>";
@@ -410,7 +410,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
                echo "</td>";
                echo "<td>";
                echo "<input type='text' name='retchecks_value[]' value='".
-                  $retcheck['value'][0]."' />";
+                  $retcheck['values'][0]."' />";
                echo "</td>";
                echo "<td><a class='edit' onclick='removeLine(this)'><img src='".
                   $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
@@ -487,7 +487,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             if ($type !== '0') {
                $tmp['retChecks'][] = array(
                   'type'  => $type,
-                  'value' => array($params['retchecks_value'][$index])
+                  'values' => array($params['retchecks_value'][$index])
                );
             }
          }
@@ -528,7 +528,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
             if ($type !== '0') {
                $tmp['retChecks'][] = array(
                   'type'  => $type,
-                  'value' => array($params['retchecks_value'][$index])
+                  'values' => array($params['retchecks_value'][$index])
                );
             }
          }
