@@ -1933,7 +1933,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate;
          if ($agent_id = $pfAgent->getAgentWithComputerid($items_id)) {
             // count associated tasks to the agent
-            $states = $pfTaskjobstate->find("`plugin_fusioninventory_agents_id` = $agent_id");
+            $states = $pfTaskjobstate->find("`plugin_fusioninventory_agents_id` = $agent_id", "", 1);
             if (count($states) > 0) {
                // Delete link between computer and agent fusion
                $pfAgent->update([
