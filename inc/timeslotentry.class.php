@@ -194,7 +194,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                      ['day', 'begin ASC']);
 
       $options = array();
-      $this->initForm(key($dbentries), $options);
+      $ID      = key($dbentries);
+      $canedit = $this->getFromDB($ID)
+                 && $this->can($ID, READ);
       $this->showFormHeader($options);
 
       foreach ($dbentries as $dbentry) {
@@ -212,7 +214,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          echo PluginFusioninventoryToolbox::getHourMinute($dbentry['end']);
          echo "</td>";
          echo "<td colspan='2'>";
-         echo "<input type='submit' class='submit' name='purge-".$dbentry['id']."' value='delete' />";
+         if ($canedit) {
+            echo "<input type='submit' class='submit' name='purge-".$dbentry['id']."' value='delete' />";
+         }
          echo "</td>";
          echo "</tr>";
       }
