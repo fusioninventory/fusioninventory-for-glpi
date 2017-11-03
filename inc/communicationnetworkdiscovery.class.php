@@ -246,7 +246,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       if (isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
-         $a_text = '';
+         $a_text = [];
          foreach ($input as $key=>$data) {
             if (is_array($data)) {
                $a_text[] = "[".$key."]:".implode(", ", $data);
@@ -333,6 +333,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
+
          $items_id = $item->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
@@ -704,7 +705,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
    /**
-    * Update SNMP information of a device (sysdescr, SNMP authentication...)
+    * Update SNMP information of a device (sysdescr, SNMP credentials...)
     *
     * @param array $arrayinventory
     * @param array $input

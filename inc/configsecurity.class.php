@@ -30,7 +30,7 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the SNMP authentication: v1, v2c and v3
+ * This file is used to manage SNMP credentials: v1, v2c and v3
  * support.
  *
  * ------------------------------------------------------------------------
@@ -50,7 +50,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the SNMP authentication: v1, v2c and v3 support.
+ * Manage SNMP credentials: v1, v2c and v3 support.
  */
 class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
@@ -91,15 +91,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @return true
     */
    function showForm($id, $options=array()) {
-
       Session::checkRight('plugin_fusioninventory_configsecurity', READ);
-
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
-      $this->showTabs($options);
+      $this->initForm($id, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -217,7 +210,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * Display SNMP authentication encryption (dropdown)
+    * Display SNMP encryption protocols dropdown
     *
     * @param null|string $p_value
     */
@@ -254,7 +247,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * Show dropdown of SNMP encryption protocol
+    * Display SNMP encryption protocols dropdown
     *
     * @param string $p_value
     */
@@ -270,7 +263,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * Get the SNMP encryption
+    * Get SNMP encryption protocol
     *
     * @param integer $id
     * @return string
@@ -300,7 +293,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    /**
-    * Show dropdown of SNMP authentication
+    * Display SNMP credentials dropdown
     *
     * @param string $selected
     */

@@ -240,10 +240,10 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($a_computerinventory['Computer']['os_license_number']))
-                          && (strtolower($a_computerinventory['Computer']['os_license_number'])
+                  if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))
+                          && (strtolower($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'])
                                   == strtolower($blacklist_data['value']))) {
-                     $a_computerinventory['Computer']['os_license_number'] = "";
+                     $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'] = "";
                   }
                }
               break;

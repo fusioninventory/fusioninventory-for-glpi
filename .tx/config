@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[FusionInventory.plugin-fusioninventory-92]
+file_filter = locales/<lang>.po
+source_file = locales/fusioninventory.pot
+source_lang = en
+type = PO
+minimum_perc: 100

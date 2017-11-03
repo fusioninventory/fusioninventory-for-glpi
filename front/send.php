@@ -85,10 +85,6 @@ if (isset($_GET['file'])) {
          echo "Error opening file $filename";
       } else {
          // Pour que les \x00 ne devienne pas \0
-         $mc=Toolbox::get_magic_quotes_runtime();
-         if ($mc) {
-            @ini_set('magic_quotes_runtime', 0);
-         }
          $fsize=filesize($file);
 
          if ($fsize) {
@@ -96,12 +92,6 @@ if (isset($_GET['file'])) {
          } else {
 
          }
-
-         if ($mc) {
-            @ini_set('magic_quotes_runtime', $mc);
-         }
       }
    }
 }
-
-?>

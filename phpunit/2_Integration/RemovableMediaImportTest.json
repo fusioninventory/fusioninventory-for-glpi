@@ -1,0 +1,28 @@
+{ "data" : [
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc1" },
+        "DRIVES" : [
+          {
+            "DESCRIPTION" : "Disque CD-ROM",
+            "LETTER" : "D:",
+            "TYPE" : "Compact Disc"
+          }
+        ],
+        "BIOS" : { "SSN" : "xxyyzz" }
+      },
+      "AGENT" : {
+        "name" : "pc1-2013-02-13",
+        "device_id" : "pc1-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_drives_when_enabled" : 1,
+      "nb_drives_when_disabled" : 0
+    }
+  }]
+
+]}
+

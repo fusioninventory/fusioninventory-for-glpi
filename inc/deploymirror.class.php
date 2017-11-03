@@ -54,13 +54,16 @@ if (!defined('GLPI_ROOT')) {
  * Manage the deploy mirror depend on location of computer.
  */
 class PluginFusioninventoryDeployMirror extends CommonDBTM {
+   const MATCH_LOCATION = 0;
+   const MATCH_ENTITY   = 1;
+   const MATCH_BOTH     = 2;
 
    /**
     * We activate the history.
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
    /**
     * The right name for this class
@@ -107,33 +110,90 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @param integer $agents_id
     * @return array
     */
-   static function getList($agents_id = NULL) {
-      global $PF_CONFIG;
+   static function getList($agents_id) {
+      global $PF_CONFIG, $DB;
 
       if (is_null($agents_id)) {
-         return array();
+         return [];
       }
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $agent = $pfAgent->fields;
-
-      $ancestors = getAncestorsOf('glpi_entities', $agent['entities_id']);
-
-      $results = getAllDatasFromTable(
-              'glpi_plugin_fusioninventory_deploymirrors',
-              "(`entities_id` IN ('".implode("', '", $ancestors)."') AND `is_recursive`='1')"
-              . " OR `entities_id`='".$agent['entities_id']."'");
       if (!isset($agent) || !isset($agent['computers_id'])) {
-         return array();
+         return [];
       }
+
       $computer = new Computer();
       $computer->getFromDB($agent['computers_id']);
 
-      $mirrors = array();
-      foreach ($results as $result) {
-         if ($computer->fields['locations_id'] == $result['locations_id']) {
+
+      //If no configuration has been done in the plugin's configuration
+      //then use location for mirrors as default
+      //!!this should not happen!!
+      if (!isset($PF_CONFIG['mirror_match'])) {
+         $mirror_match = self::MATCH_LOCATION;
+      } else {
+         //Get mirror matching from plugin's general configuration
+         $mirror_match = $PF_CONFIG['mirror_match'];
+      }
+
+      //Get all mirrors for the agent's entity, or for entities above
+      //sorted by entity level in a descending way (going to the closest,
+      //deepest entity, to the highest)
+      $query     = "SELECT `mirror`.*, `glpi_entities`.`level`
+                    FROM `glpi_plugin_fusioninventory_deploymirrors` AS mirror
+                    LEFT JOIN `glpi_entities`
+                     ON (`mirror`.`entities_id`=`glpi_entities`.`id`)
+                    WHERE `mirror`.`is_active`='1'";
+      $query    .= getEntitiesRestrictRequest(' AND ',
+                                              'mirror',
+                                              'entities_id',
+                                              $agent['entities_id'],
+                                              true);
+      $query   .= " ORDER BY `glpi_entities`.`level` DESC";
+
+      //The list of mirrors to return
+      $mirrors  = [];
+
+      foreach ($DB->request($query) as $result) {
+
+         //First, check mirror by location
+         if (in_array($mirror_match, [self::MATCH_LOCATION, self::MATCH_BOTH])
+             && $computer->fields['locations_id'] > 0
+               && $computer->fields['locations_id'] == $result['locations_id']) {
             $mirrors[] = $result['url'];
+         }
+
+         //Second, check by entity
+         if (in_array($mirror_match, [self::MATCH_ENTITY, self::MATCH_BOTH])) {
+
+            //Only process a mirror with a location is matching is BOTH
+            if ($result['locations_id'] && $mirror_match == self::MATCH_ENTITY) {
+               continue;
+            }
+            $entities = $result['entities_id'];
+
+            //If the mirror is visible in child entities then get all child entities
+            //and check it the agent's entity is one of it
+            if ($result['is_recursive']) {
+               $entities = getSonsOf('glpi_entities', $result['entities_id']);
+            }
+
+            $add_mirror = false;
+            if(is_array($entities)) {
+               if(in_array($computer->fields['entities_id'], $entities)) {
+                  $add_mirror = true;
+               }
+            } else {
+               if($computer->fields['entities_id'] == $result['entities_id']) {
+                  $add_mirror = true;
+               }
+            }
+
+            if(!in_array($result['url'], $mirrors) && $add_mirror) {
+               $mirrors[] = $result['url'];
+            }
          }
       }
 
@@ -142,12 +202,14 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       if (isset($agent['entities_id'])) {
          $entities_id = $agent['entities_id'];
       }
+
+      //If option is set to yes in general plugin configuration
+      //Add the server's url as the last url in the list
       if (isset($PF_CONFIG['server_as_mirror'])
-              && (bool)$PF_CONFIG['server_as_mirror'] == TRUE) {
+         && $PF_CONFIG['server_as_mirror'] == true) {
          $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY', $entities_id)
             ."?action=getFilePart&file=";
       }
-
       return $mirrors;
    }
 
@@ -165,18 +227,21 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       global $CFG_GLPI;
 
       $this->initForm($id, $options);
-
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Name')."&nbsp;:</td>";
+      echo "<td>".__('Name')."</td>";
       echo "<td align='center'>";
       Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
 
-      echo "<td rowspan='2' class='middle right'>".__('Comments')."&nbsp;: </td>";
+      echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
       echo "<td class='center middle' rowspan='2'><textarea cols='45'
       rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
+
+      echo "<tr class='tab_bg_1'><td>".__('Active')."</td><td align='center'>";
+      Dropdown::showYesNo("is_active", $this->fields["is_active"]);
+      echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
@@ -188,30 +253,34 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<td>".__('Mirror location', 'fusioninventory')." (".__('Location').")"."&nbsp;:</td>";
       echo "<td align='center'>";
 
-      echo "<script type='text/javascript'>\n";
-      echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
-      echo "</script>";
+      //If
+      if ($this->can($id, UPDATE)) {
+         echo "<script type='text/javascript'>\n";
+         echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
+         echo "</script>";
+         $params = ['is_recursive' => '__VALUE__',
+                    'id'           => $id
+                   ];
+         Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
+                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
 
-      $params = array('is_recursive' => '__VALUE__',
-                      'id'           => $id);
-      Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
-              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
+         echo "<div id='displaydropdownlocation'>";
+         // Location option
+         Location::dropdown([ 'value'       => $this->fields["locations_id"],
+                              'entity'      => $this->fields["entities_id"],
+                              'entity_sons' => $this->isRecursive(),
+                              'emptylabel'  => __('None')
+                            ]);
+         echo "</div>";
 
-      echo "<div id='displaydropdownlocation'>";
-      // Location option
-      Location::dropdown(
-         array(
-            'value'  => $this->fields["locations_id"],
-            'entity' => $this->fields["entities_id"],
-            'entity_sons' => $this->isRecursive(),
-         )
-      );
-      echo "</div>";
+      } else {
+         echo Dropdown::getDropdownName('glpi_locations', $this->fields['locations_id']);
+      }
       echo "</td></tr>";
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -242,6 +311,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[2]['linkfield'] = 'url';
       $tab[2]['name']      = __('Mirror server address', 'fusioninventory');
       $tab[2]['datatype']  = 'string';
+
+      $tab[3]['table']     = $this->getTable();
+      $tab[3]['field']     = 'is_active';
+      $tab[3]['linkfield'] = 'is_active';
+      $tab[3]['name']      = __('Active');
+      $tab[3]['datatype']  = 'bool';
 
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
@@ -278,10 +353,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
-
-      $actions = array();
-      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
-      return $actions;
+      return [__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfer'
+               => __('Transfer')];
    }
 
 
@@ -293,12 +366,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @return boolean
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      if ($ma->getAction() == 'transfert') {
+      if ($ma->getAction() == 'transfer') {
          Dropdown::show('Entity');
-         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-         return TRUE;
+         echo Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -316,7 +389,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $pfDeployMirror = new self();
       switch ($ma->getAction()) {
 
-         case "transfert" :
+         case "transfer" :
             foreach ($ids as $key) {
                if ($pfDeployMirror->getFromDB($key)) {
                   $input = array();

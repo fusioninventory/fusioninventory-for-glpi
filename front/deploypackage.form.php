@@ -83,9 +83,9 @@ if (isset ($data["add"])) {
    Session::checkRight('plugin_fusioninventory_package', UPDATE);
    $package->update($data);
    Html::back();
-} else if (isset ($data["delete"])) {
+} else if (isset ($data["purge"])) {
    Session::checkRight('plugin_fusioninventory_package', PURGE);
-   $package->delete($data);
+   $package->delete($data, 1);
    $package->redirectToList();
 } else if (isset($_POST["addvisibility"])) {
    if (isset($_POST["_type"]) && !empty($_POST["_type"])
@@ -125,7 +125,7 @@ if (isset ($data["add"])) {
    Html::back();
 }
 
-Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
    "pluginfusioninventorymenu", "deploypackage");
 PluginFusioninventoryMenu::displayMenu("mini");
 $id = "";

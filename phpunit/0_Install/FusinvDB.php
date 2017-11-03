@@ -230,6 +230,8 @@ class FusinvDB extends PHPUnit_Framework_Assert{
               'Cron cleannetworkportlogs not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryAgentWakeup', 'wakeupAgents'),
               'Cron wakeupAgents not created');
+     $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand'),
+              'Cron cleanondemand not created');
 
 
       /*
@@ -277,7 +279,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
       $data = $DB->fetch_assoc($result);
-      $this->assertEquals($data['value'], '9.1+1.0', "Field 'version' not with right version");
+      $this->assertEquals($data['value'], PLUGIN_FUSIONINVENTORY_VERSION, "Field 'version' not with right version");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='otherserial'";
@@ -289,7 +291,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'agents_status' not added in config");
 
-      // TODO : test glpi_displaypreferences, rules, bookmark...
+      // TODO : test glpi_displaypreferences, rules, SavedSearch...
 
 
       /*
@@ -308,7 +310,6 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputerstats`";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_fusioninventory_inventorycomputerstats` not empty");
-
 
    }
 }

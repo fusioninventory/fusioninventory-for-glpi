@@ -67,7 +67,6 @@ class PluginFusioninventoryInventoryComputerInventory {
     */
    private $device_id = '';
 
-
    /**
     * import data
     *
@@ -232,6 +231,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['Computer']['uuid'];
          }
+         if (isset($this->device_id) && !empty($this->device_id)) {
+            $input['device_id'] = $this->device_id;
+         }
+
          foreach ($a_computerinventory['networkport'] as $network) {
             if (((isset($network['virtualdev']))
                     && ($network['virtualdev'] != 1))
@@ -267,13 +270,13 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
 
-         if ((isset($a_computerinventory['Computer']['os_license_number']))
-               AND (!empty($a_computerinventory['Computer']['os_license_number']))) {
-            $input['mskey'] = $a_computerinventory['Computer']['os_license_number'];
+         if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))
+               AND (!empty($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))) {
+            $input['mskey'] = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number'];
          }
-         if ((isset($a_computerinventory['Computer']['operatingsystems_id']))
-               AND (!empty($a_computerinventory['Computer']['operatingsystems_id']))) {
-            $input['osname'] = $a_computerinventory['Computer']['operatingsystems_id'];
+         if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))
+               AND (!empty($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id']))) {
+            $input['osname'] = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
          }
          if ((isset($a_computerinventory['fusioninventorycomputer']['oscomment']))
                AND (!empty($a_computerinventory['fusioninventorycomputer']['oscomment']))) {
@@ -412,7 +415,19 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $inputdb['rules_id'] = $data['_ruleid'];
          $inputdb['method'] = 'inventory';
-         $pfIgnoredimportdevice->add($inputdb);
+         $inputdb['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+
+         // if existing ignored device, update it
+         if ($found = $pfIgnoredimportdevice->find("`plugin_fusioninventory_agents_id` =
+                                                    '".$inputdb['plugin_fusioninventory_agents_id']."'",
+                                                   "`date` DESC",
+                                                   1)) {
+            $agent         = array_pop($found);
+            $inputdb['id'] = $agent['id'];
+            $pfIgnoredimportdevice->update($inputdb);
+         } else {
+            $pfIgnoredimportdevice->add($inputdb);
+         }
       }
    }
 
@@ -458,7 +473,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $computer->getFromDB($items_id);
             $a_computerinventory['Computer']['states_id'] = $computer->fields['states_id'];
             $input = array();
-            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+            $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
             if (isset($input['states_id'])) {
                 $a_computerinventory['Computer']['states_id'] = $input['states_id'];
             }
@@ -511,7 +526,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $entities_id;
-            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+            $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
             if (isset($input['states_id'])) {
                 $a_computerinventory['Computer']['states_id'] = $input['states_id'];
             } else {
@@ -659,30 +674,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          $class->update($input);
       }
    }
-
-
-
-   /**
-    * Get default value for state of devices (monitor, printer...)
-    *
-    * @param array $input
-    * @param boolean $check_management
-    * @param integer $management_value
-    * @return array
-    */
-   static function addDefaultStateIfNeeded(&$input, $check_management = FALSE,
-                                           $management_value = 0) {
-      $config = new PluginFusioninventoryConfig();
-      $state = $config->getValue("states_id_default");
-      if ($state) {
-         if (!$check_management || ($check_management && !$management_value)) {
-            $input['states_id'] = $state;
-         }
-      }
-      return $input;
-   }
-
-
 
    /**
     * Return method name of this class/plugin

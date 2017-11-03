@@ -231,7 +231,7 @@ class PluginFusioninventoryProfile extends Profile {
 
       $rights = array(
           array('rights'    => array(READ => __('Read')),
-                'label'     => __('Self deploy package', 'fusioninventory'),
+                'label'     => __('Deploy packages on demand', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_selfpackage')
       );
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
@@ -326,11 +326,15 @@ class PluginFusioninventoryProfile extends Profile {
    function getRightsDeploy() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryDeployPackage',
-                'label'     => __('Manage packages'),
+                'label'     => __('Manage packages', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_package'),
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'),
+          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'label'     => __('Deploy packages on demand', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_selfpackage',
+                'rights'    => array(READ => __('Read')))
       );
       return $rights;
    }
@@ -357,7 +361,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('VMware host', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_esx'),
           array('itemtype'  => 'PluginFusioninventoryConfigSecurity',
-                'label'     => __('SNMP authentication', 'fusioninventory'),
+                'label'     => __('SNMP credentials', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configsecurity'),
           array('itemtype'  => 'PluginFusioninventoryNetworkEquipment',
                 'label'     => __('Network equipment SNMP', 'fusioninventory'),

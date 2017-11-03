@@ -1,16 +1,21 @@
 sudo: false
 language: php
+dist: precise
 php:
-  - 5.4
-  - 5.5
   - 5.6
   - 7.0
+  - 7.1
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
 
 env:
 #  - GLPI=0.90/bugfixes
 #  - GLPI=0.85/bugfixes
-  - GLPI=9.1/bugfixes
-#  - GLPI=master
+#  - GLPI=9.1/bugfixes
+  - GLPI=9.2/bugfixes
 
 cache:
   directories:
@@ -24,10 +29,8 @@ addons:
 
 before_install:
  - cd ..
- - git clone git://github.com/glpi-project/glpi.git glpi
- - composer self-update
+ - git clone --depth=10 -b $GLPI git://github.com/glpi-project/glpi.git glpi
  - cd glpi
- - if [[ $GLPI != 'master' ]]; then git checkout -b $GLPI origin/$GLPI; fi
  - composer install --no-dev -o
  - cd ..
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
@@ -37,19 +40,16 @@ before_install:
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
-install:
- - composer require satooshi/php-coveralls
-
 before_script:
   - phpenv version-name | grep ^5.[34] && echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true
   - phpenv version-name | grep ^5.[34] && echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true
   - php -S localhost:8088 -t glpi > /dev/null 2>&1 &
 
-script: ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
+script:
+ - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
  - cp -fr build glpi/plugins/fusioninventory/
  - cd glpi/plugins/fusioninventory/
- - composer require satooshi/php-coveralls
- - php vendor/bin/coveralls -v
-
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require satooshi/php-coveralls; fi
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/coveralls -v; fi

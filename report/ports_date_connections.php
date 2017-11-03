@@ -179,7 +179,9 @@ function displaySearchForm() {
                            array('value'=>(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup")));
    echo "</td>
       <td width='120'>";
-   Html::showDateFormItem("dropdown_calendar", (isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
+   Html::showDateField("dropdown_calendar",
+                       ['value' => (isset($_GET["dropdown_calendar"])
+                                     ?$_GET["dropdown_calendar"]:0)]);
    echo "</td>";
 
    echo "<td>".__('Location')."</td>";
@@ -195,13 +197,13 @@ function displaySearchForm() {
    echo "</td>";
 
    echo "<td>";
-   //Add parameters to uri to be saved as bookmarks
-   $_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"], $_GET);
-   Bookmark::showSaveButton(Bookmark::SEARCH, 'PluginFusioninventoryNetworkport2');
+   //Add parameters to uri to be saved as SavedSearch
+   $_SERVER["REQUEST_URI"] = buildSavedSearchUrl($_SERVER["REQUEST_URI"], $_GET);
+   SavedSearch::showSaveButton(SavedSearch::SEARCH, 'PluginFusioninventoryNetworkport2');
    echo "</td>";
 
    echo "<td>";
-   echo "<input type='submit' value='Valider' class='submit' />";
+   echo "<input type='submit' value='" . __('Validate') . "' class='submit' />";
    echo "</td>";
 
    echo "</tr>";
@@ -238,13 +240,13 @@ function getContainsArray($get) {
 
 
 /**
- * Generate the URL bookmark
+ * Generate the URL SavedSearch
  *
  * @param string $url
  * @param array $get
  * @return string
  */
-function buildBookmarkUrl($url, $get) {
+function buildSavedSearchUrl($url, $get) {
     return $url."?field[0]=3&contains[0]=".getContainsArray($get);
 }
 

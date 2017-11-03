@@ -322,7 +322,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       // display stats
       $stats = $this->stats($printers_id);
       if ($stats) {
-         $this->showTabs($options);
+         $this->initForm($id, $options);
          $this->showFormHeader($options);
 
          echo "<tr class='tab_bg_1'>";
@@ -528,7 +528,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".__('Start date')."&nbsp;:</td>";
       echo "<td class='left'>";
-      Html::showDateFormItem("graph_begin", $begin);
+      Html::showDateField("graph_begin", ['value' => $begin]);
       echo "</td>";
       echo "<td class='left'>".__('Time unit', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
@@ -545,7 +545,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td class='left'>".__('End date')."&nbsp;:</td>";
       echo "<td class='left'>";
-      Html::showDateFormItem("graph_end", $end);
+      Html::showDateField("graph_end", ['value' => $end]);
       echo "</td>";
       echo "<td class='left'>".__('Display', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";

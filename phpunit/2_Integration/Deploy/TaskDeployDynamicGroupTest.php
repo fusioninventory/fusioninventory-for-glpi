@@ -147,7 +147,7 @@ class TaskDeployDynamicGroup extends Common_TestCase {
          WHERE `id`="1"');
 
       // Force task prepation
-      $pfTaskJob->forceRunningTask(1);
+      $pfTask->forceRunning();
 
       $a_jobstates = getAllDatasFromTable("glpi_plugin_fusioninventory_taskjobstates");
       foreach ($a_jobstates as $num=>$data) {

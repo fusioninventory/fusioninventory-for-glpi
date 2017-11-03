@@ -153,7 +153,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
-    * get task of this tasl job
+    * get task of this task job
     *
     * @return object PluginFusioninventoryTask instance
     */
@@ -264,7 +264,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_type = array();
-      $a_type[''] = '------';
+      $a_type[''] = Dropdown::EMPTY_VALUE;
       if ($myname == 'action') {
          $a_type['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
       }
@@ -674,55 +674,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
-    * Force running a task
-    *
-    * @global object $DB
-    * @param integer $tasks_id id of the task
-    * @return string unique id
-    */
-   function forceRunningTask($tasks_id) {
-      global $DB;
-
-      $uniqid = '';
-
-      if ($this->reinitializeTaskjobs($tasks_id, 1)) {
-
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
-
-         $query = "SELECT `".$pfTaskjob->getTable()."`.*,
-               `glpi_plugin_fusioninventory_tasks`.`communication`,
-               UNIX_TIMESTAMP(datetime_start) as date_scheduled_timestamp
-            FROM ".$pfTaskjob->getTable()."
-            LEFT JOIN `glpi_plugin_fusioninventory_tasks`
-               ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `is_active`='1'
-               AND `status` = '0'
-               AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
-               AND `".$pfTaskjob->getTable()."`.`plugins_id` != '0'
-               AND `".$pfTaskjob->getTable()."`.`method` IS NOT NULL
-               AND `".$pfTaskjob->getTable()."`.`method` != ''
-            ORDER BY `id`";
-         $result = $DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            $uniqid = $pfTaskjob->prepareRunTaskjob($data);
-         }
-         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
-            $pfTaskjob->startAgentRemotly($agents_id);
-         }
-         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
-      } else {
-         Session::addMessageAfterRedirect(
-            __('Unable to run task because some jobs is running yet!', 'fusioninventory'),
-            ERROR
-         );
-      }
-      return $uniqid;
-   }
-
-
-
-   /**
     * Get period in secondes by type and count time
     *
     * @param string $periodicity_type type of time (minutes, hours...)
@@ -796,7 +747,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo "<td align='center'>";
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_parseMethods = array();
-      $a_parseMethods[''] = "------";
+      $a_parseMethods[''] = Dropdown::EMPTY_VALUE;
       foreach ($a_methods as $data) {
          $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
 
@@ -1357,6 +1308,48 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $uniqid;
    }
 
+   static function restartJob($params) {
+      $task     = new PluginFusioninventoryTask();
+      $job      = new PluginFusioninventoryTaskjob();
+      $jobstate = new PluginFusioninventoryTaskjobstate();
+      $joblog   = new PluginFusioninventoryTaskjoblog();
+      $agent    = new PluginFusioninventoryAgent();
+
+      // get old state
+      $jobstate->getFromDB($params['jobstate_id']);
+
+      // prepare new state (copy from old)
+      $run = $jobstate->fields;
+      unset($run['id']);
+      $run['state']  = PluginFusioninventoryTaskjobstate::PREPARED;
+      $run['uniqid'] = uniqid();
+      if ($run['specificity'] == "") {
+         $run['specificity'] = "NULL";
+      }
+
+      // add this new state and first log
+      if($run_id = $jobstate->add($run)) {
+         $log = array(
+            'date'    => date("Y-m-d H:i:s"),
+            'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+            'plugin_fusioninventory_taskjobstates_id' => $run_id,
+            'comment' => ''
+         );
+         if ($joblog->add($log)) {
+
+            //wake up agent (only if task support wakeup)
+            $job->getFromDB($jobstate->fields['plugin_fusioninventory_taskjobs_id']);
+            $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
+
+            if ($task->fields['wakeup_agent_counter'] > 0
+                && $task->fields['wakeup_agent_time'] > 0) {
+               $agent->getFromDB($params['agent_id']);
+               $agent->wakeUp();
+            }
+         }
+      }
+   }
+
 
 
    /**
@@ -1589,6 +1582,26 @@ function new_subtype(id) {
             break;
 
       }
+   }
+
+   /**
+   * Duplicate all taskjobs for a task to another one
+   * @param $source_tasks_id the ID of the task to clone
+   * @param $target_task_id the ID of the cloned task
+   * @return void
+   */
+   static function duplicate($source_tasks_id, $target_tasks_id) {
+      $pfTaskJob = new self();
+      $result    = true;
+      $taskjobs  = $pfTaskJob->find("`plugin_fusioninventory_tasks_id`='$source_tasks_id'");
+      foreach ($taskjobs as $taskjob) {
+         $taskjob['plugin_fusioninventory_tasks_id'] = $target_tasks_id;
+         unset($taskjob['id']);
+         if (!$pfTaskJob->add($taskjob)) {
+            $result = false;
+         }
+      }
+      return $result;
    }
 }
 

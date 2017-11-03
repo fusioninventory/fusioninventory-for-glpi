@@ -80,14 +80,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @var type
     */
-   protected $static_group_types = array('Computer');
+   protected $static_group_types = ['Computer'];
 
    /**
     * We activate the history.
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
 
 
@@ -95,10 +95,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * __contruct function used to define the 2 types of groups
     */
    public function __construct() {
-      $this->grouptypes = array(
+      $this->grouptypes = [
             self::STATIC_GROUP  => __('Static group', 'fusioninventory'),
             self::DYNAMIC_GROUP => __('Dynamic group', 'fusioninventory')
-         );
+      ];
    }
 
 
@@ -124,8 +124,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
-      $ong = array();
+   function defineTabs($options=[]) {
+      $ong = [];
       $this->addDefaultFormTab($ong);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
@@ -140,8 +140,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return array list of actions
     */
    function getSpecificMassiveActions($checkitem=NULL) {
-      $actions = array();
-      $actions['PluginFusioninventoryDeployGroup'.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'fusioninventory');
+      $actions = [];
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'targettask'] = __('Target a task', 'fusioninventory');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate']  = _sx('button', 'Duplicate');
       return $actions;
    }
 
@@ -154,11 +155,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @return boolean
     */
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      if ($ma->getAction() == 'add_to_static_group') {
-         Dropdown::show('PluginFusioninventoryDeployGroup',
-                         array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
-         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-         return TRUE;
+      switch ($ma->getAction()) {
+         case 'add_to_static_group':
+            Dropdown::show('PluginFusioninventoryDeployGroup',
+                            ['condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"]);
+            echo Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
+            return true;
+         case 'duplicate':
+            echo Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
+            return true;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
@@ -176,35 +181,69 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                                                        array $ids) {
       switch ($ma->getAction()) {
 
-        case 'add_to_static_group' :
-           if ($item->getType() == 'Computer') {
-              $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
-              foreach ($ids as $id) {
-                 //if ($group_item->can($id, UPDATE)) {
-                    if (!countElementsInTable($group_item->getTable(),
+         case 'add_to_static_group' :
+            if ($item->getType() == 'Computer') {
+               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+               foreach ($ids as $id) {
+                  if (!countElementsInTable($group_item->getTable(),
                                             "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
                                                AND `itemtype`='Computer'
                                                AND `items_id`='$id'")) {
-                       $values = array(
+                     $values = array(
                           'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
                           'itemtype' => 'Computer',
                           'items_id' => $id);
-                       $group_item->add($values);
-                       $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
-                    } else {
-                       $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
-                    }
-              //} else {
-              //   $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_NORIGHT);
-              //   $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
-              //}
-           }
-        }
-        parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+                     $group_item->add($values);
+                     $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                  } else {
+                     $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                  }
+               }
+            }
+            break;
+         case 'duplicate':
+            $pfGroup = new self();
+            foreach ($ids as $key) {
+               if ($pfGroup->getFromDB($key)) {
+                  if ($pfGroup->duplicate($pfGroup->getID())) {
+                     //set action massive ok for this item
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     // KO
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
+               }
+            }
+            break;
+         default:
+            parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+            break;
       }
    }
 
-
+   function duplicate($deploygroups_id) {
+      $result = true;
+      if ($this->getFromDB($deploygroups_id)) {
+         $input = $this->fields;
+         unset($input['id']);
+         $input['name'] = sprintf(__('Copy of %s'), $this->fields['name']);
+         $new_deploygroups_id = $this->add($input);
+         if ($new_deploygroups_id) {
+            if ($this->fields['type'] == self::STATIC_GROUP) {
+               $result
+                  = PluginFusioninventoryDeployGroup_Staticdata::duplicate($deploygroups_id, $new_deploygroups_id);
+            } else {
+               $result
+                  = PluginFusioninventoryDeployGroup_Dynamicdata::duplicate($deploygroups_id, $new_deploygroups_id);
+            }
+         } else {
+            $result = false;
+         }
+      } else {
+         $result = false;
+      }
+      return $result;
+   }
 
    /**
     * Display title of the page
@@ -214,8 +253,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    function title() {
       global $CFG_GLPI;
 
-      $buttons = array();
-      $title = self::getTypeName();
+      $buttons = [];
+      $title   = self::getTypeName();
 
       if ($this->canCreate()) {
          $buttons["group.form.php?new=1"] = __('Add group', 'fusioninventory');
@@ -234,7 +273,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($ID, $options = array()) {
+   function showForm($ID, $options = []) {
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -242,7 +281,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'name', array('size' => 40));
+      Html::autocompletionTextField($this,'name', ['size' => 40]);
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
@@ -259,7 +298,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      return TRUE;
+      return true;
    }
 
 
@@ -271,7 +310,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = self::getTypeName();
 
@@ -324,10 +363,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param array $options
     * @return string
     */
-   static function getSpecificValueToDisplay($field, $values, array $options=array()) {
+   static function getSpecificValueToDisplay($field, $values, array $options=[]) {
       $group = new self();
       if (!is_array($values)) {
-         $values = array($field => $values);
+         $values = [$field => $values];
       }
       if ($field == 'type') {
          return $group->grouptypes[$values[$field]];
@@ -346,7 +385,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    static function dropdownGroupType($name = 'type', $value = 'STATIC') {
       $group = new self();
-      return Dropdown::showFromArray($name, $group->grouptypes, array('value'=>$value));
+      return Dropdown::showFromArray($name, $group->grouptypes,
+                                     ['value'=>$value]);
    }
 
 
@@ -360,10 +400,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param array $options
     * @return string
     */
-   static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
+   static function getSpecificValueToSelect($field, $name='', $values='', array $options=[]) {
 
       if (!is_array($values)) {
-         $values = array($field => $values);
+         $values = [$field => $values];
       }
 
       $options['display'] = false;
@@ -373,7 +413,24 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
 
-
+   /**
+   * Get the URL to pass to the search engine
+   * @since 9.2
+   *
+   * @param integer $deploygroup_id the ID of the group
+   * @param boolean $is_dynamic is the group dynamic or static
+   * @return string the target
+   */
+   static function getSearchEngineTargetURL($deploygroup_id, $is_dynamic = false) {
+      $target = PluginFusioninventoryDeployGroup::getFormURLWithID($deploygroup_id);
+      if ($is_dynamic) {
+         $target .= "&_glpi_tab=PluginFusioninventoryDeployGroup_Dynamicdata$1";
+      } else {
+         $target.= "&_glpi_tab=PluginFusioninventoryDeployGroup_Staticdata$1";
+      }
+      $target.= "&plugin_fusioninventory_deploygroups_id=".$deploygroup_id;
+      return $target;
+   }
 
    /**
     * Show criteria to search computers
@@ -387,13 +444,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $itemtype   = "PluginFusioninventoryComputer";
       $can_update = $item->canEdit($item->getID());
 
-      $p['target'] = '';
+      $p['target'] = self::getSearchEngineTargetURL($item->getID(), $is_dynamic);
       if ($can_update) {
-         $p['addhidden'] = array(
+         $p['addhidden'] = [
              'plugin_fusioninventory_deploygroups_id' => $item->getID(),
-             'id'    => $item->getID(),
-             'start' => 0
-         );
+             'id'                                     => $item->getID(),
+             'start'                                  => 0
+         ];
       }
       if ($is_dynamic) {
          $p['actionname']   = 'save';
@@ -402,7 +459,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $p['actionname']   = 'preview';
          $p['actionvalue']  = __('Preview');
       }
-      $p['showbookmark'] = False;
+      $p['showbookmark'] = false;
       Search::showGenericSearch($itemtype, $p);
    }
 
@@ -412,13 +469,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * Get targets for the group
     *
     * @param integer $groups_id id of the group
+    * @param bool    $use_cache retrieve agents from cache or not (only for dynamic groups)
     * @return array list of computers
     */
-   static function getTargetsForGroup($groups_id) {
+   static function getTargetsForGroup($groups_id, $use_cache = false) {
       $group = new self();
       $group->getFromDB($groups_id);
 
-      $results = array();
+      $results = [];
       if ($group->isStaticGroup()) {
          $staticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
          foreach ($staticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'
@@ -426,7 +484,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $results[$tmpgroup['items_id']] = $tmpgroup['items_id'];
          }
       } else {
-         $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group);
+         $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group,
+                                                                                    $use_cache);
       }
       return $results;
    }
@@ -442,15 +501,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param boolean $getAll
     * @return array
     */
-   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values=FALSE, $getAll=FALSE) {
+   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values=false, $getAll=false) {
       global $DB;
 
-      $computers_params = array();
+      $computers_params = [];
 
-      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       //Check criteria from DB
       if (!$check_post_values) {
          if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
+            unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
             $query = "SELECT `fields_array`
                      FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
                      WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
@@ -461,7 +520,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         $computers_params = $_GET;
+         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP
+                 && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
+                 && !isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
+            $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
+         } else {
+             unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+             $computers_params = $_GET;
+         }
       }
       if ($getAll) {
          $computers_params['export_all'] = true;
@@ -478,9 +544,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();
 
-      $dynamic_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));
-      $static_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));
+      $params = ['plugin_fusioninventory_deploygroups_id' => $this->getID()];
+      $dynamic_group->deleteByCriteria($params);
+      $static_group->deleteByCriteria($params);
    }
 }
-
-?>

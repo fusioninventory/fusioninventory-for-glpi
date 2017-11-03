@@ -46,7 +46,7 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "documentation");
 
 echo "<meta http-equiv='refresh' content='0;URL=http://fusioninventory.org/documentation/'>";

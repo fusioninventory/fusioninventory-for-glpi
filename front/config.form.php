@@ -50,7 +50,7 @@ include ("../../../inc/includes.php");
 Session::checkRight('plugin_fusioninventory_configuration', READ);
 
 Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
-             "plugins", "pluginfusioninventorymenu", "config");
+             "admin", "pluginfusioninventorymenu", "config");
 
 
 PluginFusioninventoryMenu::displayMenu("mini");
@@ -74,9 +74,7 @@ if (isset($_GET['glpi_tab'])) {
    $_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration'] = $_GET['glpi_tab'];
    Html::redirect(Toolbox::getItemTypeFormURL($pfConfig->getType()));
 }
-$pfConfig->showTabs(array());
-$pfConfig->addDivForTabs();
-unset($_SESSION['glpi_tabs']['pluginfusioninventoryconfiguration']);
+$pfConfig->display();
 
 Html::footer();
 

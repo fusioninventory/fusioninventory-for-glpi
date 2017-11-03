@@ -284,5 +284,115 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       );
      $this->assertEquals($a_reference, $a_inventory['connection-mac'], "Must have 2 macs ".print_r($a_inventory['connection-mac'], true));
    }
+
+   /**
+    * @test
+    */
+   function testComputerConvert() {
+      global $DB;
+
+      $DB->connect();
+
+      $sxml = '<?xml version="1.0" encoding="UTF-8" ?>
+<REQUEST>
+  <CONTENT>
+    <HARDWARE>
+      <ARCHNAME>MSWin32-x64-multi-thread</ARCHNAME>
+      <CHASSIS_TYPE>Notebook</CHASSIS_TYPE>
+      <CHECKSUM>127855</CHECKSUM>
+      <ETIME>13</ETIME>
+      <IPADDR>192.168.0.224</IPADDR>
+      <LASTLOGGEDUSER>winuser</LASTLOGGEDUSER>
+      <MEMORY>3887</MEMORY>
+      <NAME>pc-test</NAME>
+      <OSNAME>Microsoft Windows 8.1 Professionnel</OSNAME>
+      <OSVERSION>6.3.9600</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2530</PROCESSORS>
+      <PROCESSORT>Intel(R) Core(TM) i5 CPU M 540 @ 2.53GHz</PROCESSORT>
+      <USERID>winuserid</USERID>
+      <UUID>ABCDE-ABCDE-ABCDE</UUID>
+      <VMSYSTEM>Physical</VMSYSTEM>
+      <WINLANG>1036</WINLANG>
+      <WINOWNER> </WINOWNER>
+      <WINPRODID>0000-0000-0000</WINPRODID>
+      <WINPRODKEY>FGHI-FGHI-FGHI</WINPRODKEY>
+      <WORKGROUP>local.group</WORKGROUP>
+    </HARDWARE>
+  </CONTENT>
+</REQUEST>';
+      $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+      $array = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+
+      $expected = array (
+         'CONTENT' =>
+            array (
+               'HARDWARE' => array (
+                  'ARCHNAME' => 'MSWin32-x64-multi-thread',
+                  'CHASSIS_TYPE' => 'Notebook',
+                  'CHECKSUM' => '127855',
+                  'ETIME' => '13',
+                  'IPADDR' => '192.168.0.224',
+                  'LASTLOGGEDUSER' => 'winuser',
+                  'MEMORY' => '3887',
+                  'NAME' => 'pc-test',
+                  'OSNAME' => 'Microsoft Windows 8.1 Professionnel',
+                  'OSVERSION' => '6.3.9600',
+                  'PROCESSORN' => '1',
+                  'PROCESSORS' => '2530',
+                  'PROCESSORT' => 'Intel(R) Core(TM) i5 CPU M 540 @ 2.53GHz',
+                  'USERID' => 'winuserid',
+                  'UUID' => 'ABCDE-ABCDE-ABCDE',
+                  'VMSYSTEM' => 'Physical',
+                  'WINLANG' => '1036',
+                  'WINOWNER' => '',
+                  'WINPRODID' => '0000-0000-0000',
+                  'WINPRODKEY' => 'FGHI-FGHI-FGHI',
+                  'WORKGROUP' => 'local.group'
+               )
+            )
+      );
+      $this->assertEquals($expected, $array);
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   }
+
+   public function deviceTypeExamplesProvider() {
+      $tests = [
+                  ['', 'DVD Reader', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', 'DVD Rom', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', 'DVD Burning Disc', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', '', 'MATSHITA DVD-R UJ-85J', 'Drive'],
+                  ['', '', 'PLDS DVD+-RW DH-16AES ATA Device', 'Drive'],
+                  ['DVD Rom', '', '', 'Drive'],
+                  ['sdcard', '', '', 'Drive'],
+                  ['sd card', '', '', 'Drive'],
+                  ['sd-card', '', '', 'Drive'],
+                  ['bluray', '', '', 'Drive'],
+                  ['blu ray', '', '', 'Drive'],
+                  ['blu-ray', '', '', 'Drive'],
+                  ['', 'MicroSD/M2', 'sdb', 'Drive'],
+                  ['Generic', 'SDMMC', 'sda', 'Drive'],
+                  ['PIONEER DVD-RW  DVR-K06A',
+                   'PIONEER DVD-RW  DVR-K06A', '', 'Drive'],
+                  ['', '', 'ST3250824AS Q', 'HardDrive'],
+                  ['DISK', 'PM951NVMe SAMSUNG 256GB',
+                   'nvme0n1', 'HardDrive']
+               ];
+      return $tests;
+   }
+
+   /**
+   * Test method getTypeDrive
+   * @dataProvider deviceTypeExamplesProvider
+   * @test
+   */
+   function testGetTypeDrive($type, $model, $name, $return_expected) {
+      $value = ['TYPE' => $type, 'MODEL' => $model, 'NAME' => $name];
+      $result = PluginFusioninventoryFormatconvert::getTypeDrive($value);
+      $this->assertEquals($return_expected, $result);
+   }
 }
-?>

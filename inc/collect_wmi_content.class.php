@@ -98,11 +98,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
                   return __('Windows WMI content', 'fusioninventory');
                }
             }
-         } else if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_collects_wmis_contents',
-                             "`computers_id`='".$item->getID()."'") > 0) {
-               return __('Windows WMI content', 'fusioninventory');
-            }
          }
       }
       return '';
@@ -122,8 +117,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_Wmi->showForCollect($item->getID());
-      } else if (get_class($item) == 'Computer') {
-         $pfCollect_Wmi->showForComputer($item->getID());
       }
       return TRUE;
    }
@@ -152,28 +145,25 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
 
       $db_wmis = array();
       $query = "SELECT `id`, `property`, `value`
-            FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
-         WHERE `computers_id` = '".$computers_id."'
-              AND `plugin_fusioninventory_collects_wmis_id`=
-               '".$collects_wmis_id."'";
+                FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
+                WHERE `computers_id` = '".$computers_id."'
+                  AND `plugin_fusioninventory_collects_wmis_id` =
+                  '".$collects_wmis_id."'";
       $result = $DB->query($query);
       while ($data = $DB->fetch_assoc($result)) {
-         $idtmp = $data['id'];
+         $wmi_id = $data['id'];
          unset($data['id']);
          $data1 = Toolbox::addslashes_deep($data);
-         $db_wmis[$idtmp] = $data1;
+         $db_wmis[$wmi_id] = $data1;
       }
 
-      unset($wmi_data['_cpt']);
       unset($wmi_data['_sid']);
-
       foreach ($wmi_data as $key => $value) {
          foreach ($db_wmis as $keydb => $arraydb) {
             if ($arraydb['property'] == $key) {
-               $input = array();
-               $input['property'] = $arraydb['property'];
-               $input['id'] = $keydb;
-               $input['value'] = $value;
+               $input = array('property' => $arraydb['property'],
+                              'id'       => $keydb,
+                              'value'    => $value);
                $this->update($input);
                unset($wmi_data[$key]);
                unset($db_wmis[$keydb]);
@@ -182,26 +172,17 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
          }
       }
 
-      if (count($wmi_data) == 0
-         AND count($db_wmis) == 0) {
-         // Nothing to do
-      } else {
-         if (count($db_wmis) != 0) {
-            foreach ($db_wmis as $idtmp => $data) {
-               $this->delete(array('id'=>$idtmp), 1);
-            }
-         }
-         if (count($wmi_data) != 0) {
-            foreach ($wmi_data as $key=>$value) {
-               $input = array(
-                   'computers_id' => $computers_id,
-                   'plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id,
-                   'property'     => $key,
-                   'value'        => $value
-               );
-               $this->add($input);
-            }
-         }
+      foreach ($db_wmis as $id => $data) {
+         $this->delete(array('id' => $id), true);
+      }
+      foreach($wmi_data as $key => $value) {
+         $input = array(
+            'computers_id' => $computers_id,
+            'plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id,
+            'property'     => $key,
+            'value'        => $value
+         );
+         $this->add($input);
       }
    }
 

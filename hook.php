@@ -64,21 +64,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
          $sopt[5150]['massiveaction'] = FALSE;
 
-         $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5155]['field']     = 'bios_date';
-         $sopt[5155]['name']      = __('BIOS', 'fusioninventory')."-".__('Date');
-//         $sopt[5155]['forcegroupby'] = true;
-//         $sopt[5155]['usehaving'] = true;
-         $sopt[5155]['datatype']  = 'date';
-         $sopt[5155]['joinparams']  = array('jointype' => 'child');
-         $sopt[5155]['massiveaction'] = FALSE;
-
-         $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5156]['field']     = 'bios_version';
-         $sopt[5156]['name']      = __('BIOS', 'fusioninventory')."-".__('Version');
-         $sopt[5156]['joinparams']  = array('jointype' => 'child');
-         $sopt[5156]['massiveaction'] = FALSE;
-
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
          $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".
@@ -184,65 +169,30 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
                                                    'joinparams' => array('jointype'          => 'itemtype_item',
                                                                            'specific_itemtype' => 'Computer')));
 
-         $sopt[5172]['table']     = 'glpi_operatingsystems';
-         $sopt[5172]['field']     = 'name';
-         $sopt[5172]['name']      = _n('Operating system', 'Operating systems', 1);
-         $sopt[5172]['datatype']  = 'dropdown';
-         $sopt[5172]['massiveaction'] = FALSE;
-         $sopt[5172]['joinparams'] = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
+         $sopt[5178]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+         $sopt[5178]['field']     = 'hostid';
+         $sopt[5178]['name']      = __('HostID', 'fusioninventory');
+         $sopt[5178]['joinparams']  = array('jointype' => 'child');
+         $sopt[5178]['massiveaction'] = FALSE;
 
-         $sopt[5173]['table']     = 'glpi_operatingsystemversions';
-         $sopt[5173]['field']     = 'name';
-         $sopt[5173]['name']      = _n('Version of the operating system', 'Versions of the operating systems', 1);
-         $sopt[5173]['datatype']  = 'dropdown';
-         $sopt[5173]['massiveaction'] = FALSE;
-         $sopt[5173]['joinparams'] = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
+         $sopt[5179]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+         $sopt[5179]['field']     = 'serial';
+         $sopt[5179]['name']      = __('License serial number', 'fusioninventory');
+         $sopt[5179]['joinparams']  = array('jointype' => 'child');
+         $sopt[5179]['massiveaction'] = FALSE;
 
-         $sopt[5174]['table']     = 'glpi_plugin_fusioninventory_computeroskernelnames';
-         $sopt[5174]['field']     = 'name';
-         $sopt[5174]['name']      = __('Kernel name', 'fusioninventory');
-         $sopt[5174]['datatype']  = 'dropdown';
-         $sopt[5174]['massiveaction'] = FALSE;
-         $sopt[5174]['joinparams'] = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
+         $sopt[5180]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+         $sopt[5180]['field']     = 'fullname';
+         $sopt[5180]['name']      = __('License full name', 'fusioninventory');
+         $sopt[5180]['joinparams']  = array('jointype' => 'child');
+         $sopt[5180]['massiveaction'] = FALSE;
 
-         $sopt[5175]['table']     = 'glpi_plugin_fusioninventory_computeroskernelversions';
-         $sopt[5175]['field']     = 'name';
-         $sopt[5175]['name']      = __('Kernel version', 'fusioninventory');
-         $sopt[5175]['datatype']  = 'dropdown';
-         $sopt[5175]['massiveaction'] = FALSE;
-         $sopt[5175]['joinparams'] = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
 
-         $sopt[5176]['table']     = 'glpi_operatingsystemservicepacks';
-         $sopt[5176]['field']     = 'name';
-         $sopt[5176]['name']      = _n('Service pack', 'Service packs', 1);
-         $sopt[5176]['datatype']  = 'dropdown';
-         $sopt[5176]['massiveaction'] = FALSE;
-         $sopt[5176]['joinparams'] = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
-
-         $sopt[5177]['table']     = 'glpi_plugin_fusioninventory_computeroperatingsystemeditions';
-         $sopt[5177]['field']     = 'name';
-         $sopt[5177]['name']      = __('Operating system edition', 'fusioninventory');
-         $sopt[5177]['datatype']  = 'dropdown';
-         $sopt[5177]['massiveaction'] = FALSE;
-         $sopt[5177]['joinparams'] = array('beforejoin'
-                                            => array('table'      => 'glpi_plugin_fusioninventory_computeroperatingsystems',
-                                                     'joinparams' => array('beforejoin' => array('table' => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                                                                                 'joinparams' => array('jointype' => 'child')))));
+         $sopt[5181]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+         $sopt[5181]['field']     = 'name';
+         $sopt[5181]['name']      = _n('License', 'Licenses', 2);
+         $sopt[5181]['joinparams']  = array('jointype' => 'child');
+         $sopt[5181]['massiveaction'] = FALSE;
 
    }
 
@@ -262,6 +212,14 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['forcegroupby']='1';
 
       $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
+
+
+      $sopt[5197]['table']         = 'glpi_plugin_fusioninventory_agents';
+      $sopt[5197]['field']         = 'last_contact';
+      $sopt[5197]['linkfield']     = '';
+      $sopt[5197]['joinparams']    = array('jointype' => 'child');
+      $sopt[5197]['name']          = __('FusInv', 'fusioninventory')." - ".
+                                     __('Last contact', 'fusioninventory');
 
    }
 
@@ -294,7 +252,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
-                             __('SNMP authentication', 'fusioninventory');
+                             __('SNMP credentials', 'fusioninventory');
       $sopt[5191]['datatype'] = 'itemlink';
       $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = FALSE;
@@ -321,7 +279,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
-                             __('SNMP authentication', 'fusioninventory');
+                             __('SNMP credentials', 'fusioninventory');
       $sopt[5191]['datatype'] = 'itemlink';
       $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = FALSE;
@@ -890,14 +848,12 @@ function plugin_fusioninventory_install() {
       AND (
          defined('FORCE_UPGRADE')
          OR (
-            $version_detected != PLUGIN_FUSIONINVENTORY_VERSION
-            AND $version_detected!='0'
+            $version_detected!='0'
          )
       )) {
+      // note: if version detected = version found can have problem, so need
+      //       pass in upgrade to be sure all OK
       pluginFusioninventoryUpdate($version_detected, $migrationname);
-   } else if ((isset($version_detected))
-           && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
-         //Same version : Nothing to do
    } else {
       require_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migrationname);
@@ -956,7 +912,7 @@ function plugin_fusioninventory_MassiveActions($type) {
          }
          if (Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
             $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"]
-               = __('Assign SNMP authentication', 'fusioninventory');
+               = __('Assign SNMP credentials', 'fusioninventory');
          }
 
          break;
@@ -1266,7 +1222,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                      FROM `glpi_plugin_fusioninventory_taskjoblogs`
                    WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
                    ORDER BY id DESC LIMIT 1
-                  )";
+                  ) ";
          }
          break;
 
@@ -1297,13 +1253,13 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                if ($table_networking_ports == "1") {
                   return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
 
                } else {
                   return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (FUSIONINVENTORY_10.items_id = glpi_computers.id AND FUSIONINVENTORY_10.itemtype='Computer') ".
                      " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
                }
                break;
 
@@ -1339,7 +1295,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$module."
                              ON FUSION_".$module.".`modulename`='".$module."'
                           LEFT JOIN `glpi_plugin_fusioninventory_agents` as agent".strtolower($module)."
-                             ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`)";
+                             ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`) ";
             }
          }
          break;
@@ -1446,13 +1402,13 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                if ($table_networking_ports == "1") {
                   return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
 
                } else {
                   return " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_10 ON (FUSIONINVENTORY_10.items_id = glpi_printers.id AND FUSIONINVENTORY_10.itemtype='Printer') ".
                      " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_1 OR FUSIONINVENTORY_10.id = FUSIONINVENTORY_11.networkports_id_2 ".
                      " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = FUSIONINVENTORY_10.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
+                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id ";
                }
                break;
 
@@ -1964,30 +1920,41 @@ function plugin_pre_item_update_fusioninventory($parm) {
 /**
  * Manage pre-item purge an item
  *
- * @global object $DB
  * @param object $parm
  * @return object
  */
 function plugin_pre_item_purge_fusioninventory($parm) {
-   global $DB;
-
    $itemtype = get_class($parm);
+   $items_id = $parm->getID();
+
    switch ($itemtype) {
-
       case 'Computer':
-         // Delete link between computer and agent fusion
-         $query = "UPDATE `glpi_plugin_fusioninventory_agents`
-                     SET `computers_id` = '0'
-                     WHERE `computers_id` = '".$parm->getField('id')."'";
-         $DB->query($query);
+         $pfAgent        = new PluginFusioninventoryAgent;
+         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate;
+         if ($agent_id = $pfAgent->getAgentWithComputerid($items_id)) {
+            // count associated tasks to the agent
+            $states = $pfTaskjobstate->find("`plugin_fusioninventory_agents_id` = $agent_id", "", 1);
+            if (count($states) > 0) {
+               // Delete link between computer and agent fusion
+               $pfAgent->update([
+                  'id'           => $agent_id,
+                  'computers_id' => 0],
+               true);
+            } else {
+               // no task associated, purge also agent
+               $pfAgent->delete(['id' => $agent_id], true);
+            }
+         }
 
-         $clean = array('PluginFusioninventoryInventoryComputerComputer',
-                        'PluginFusioninventoryComputerLicenseInfo',
-                        'PluginFusioninventoryCollect_File_Content',
-                        'PluginFusioninventoryCollect_Registry_Content',
-                        'PluginFusioninventoryCollect_Wmi_Content');
+         $clean = [
+            'PluginFusioninventoryInventoryComputerComputer',
+            'PluginFusioninventoryComputerLicenseInfo',
+            'PluginFusioninventoryCollect_File_Content',
+            'PluginFusioninventoryCollect_Registry_Content',
+            'PluginFusioninventoryCollect_Wmi_Content'
+         ];
          foreach ($clean as $obj) {
-            $obj::cleanComputer($parm->getID());
+            $obj::cleanComputer($items_id);
          }
          break;
 
@@ -2010,9 +1977,9 @@ function plugin_pre_item_purge_fusioninventory($parm) {
    }
 
    $rule = new PluginFusioninventoryRulematchedlog();
-   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $parm->getID()));
+   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $items_id));
 
-   PluginFusioninventoryLock::cleanForAsset($itemtype, $parm->getID());
+   PluginFusioninventoryLock::cleanForAsset($itemtype, $items_id);
    return $parm;
 }
 
@@ -2298,7 +2265,9 @@ function plugin_fusioninventory_getDatabaseRelations() {
    $plugin = new Plugin();
 
    if ($plugin->isActivated("fusioninventory")) {
-      return array("glpi_entities"
+      return array("glpi_locations"
+                        => array('glpi_plugin_fusioninventory_deploymirrors' => 'locations_id'),
+                   "glpi_entities"
                         => array("glpi_plugin_fusioninventory_agents"               => "entities_id",
                                  "glpi_plugin_fusioninventory_collects"             => "entities_id",
                                  "glpi_plugin_fusioninventory_credentialips"        => "entities_id",
@@ -2317,121 +2286,91 @@ function plugin_fusioninventory_getDatabaseRelations() {
    return array();
 }
 
-
 /**
- * post_show_tab hook
+ * Display a FusionInventory form if no automatic inventory has yet been
+ * performed
+ * @since 9.2
  *
  * @param array $params Hook parameters
  *
  * @return void
  */
-function postShowtab($params) {
-       switch($params['options']['itemtype']) {
-          case 'Computer':
-             if ($params['options']['tabnum'] == 1) {
-                $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-                $pfComputerOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
-                $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$params['item']->getID()."'",
-                                              "", 1));
-                if (empty($a_computerextend)) {
-                   return;
-                }
-
-                echo '<table class="tab_cadre_fixe tab_glpi" width="100%">';
-
-                if ($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id'] > 0) {
-                   $pfComputerOperatingSystem->getFromDB($a_computerextend['plugin_fusioninventory_computeroperatingsystems_id']);
-                   echo '<tr>';
-                   echo '<th colspan="2">'.__('FusionInventory operating system', 'fusioninventory').'</th>';
-                   echo '</tr>';
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Architecture', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemarchitectures',
-                      $pfComputerOperatingSystem->fields['operatingsystemarchitectures_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system')."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystems',
-                      $pfComputerOperatingSystem->fields['operatingsystems_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>"._n('Version of the operating system', 'Versions of the operating systems', 1)."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemversions',
-                      $pfComputerOperatingSystem->fields['operatingsystemversions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system kernel name', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroskernelnames',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroskernelnames_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system kernel version', 'fusioninventory')."</td>";
-                   echo "<td >";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroskernelversions',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroskernelversions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>"._n('Service pack', 'Service packs', 1)."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_operatingsystemservicepacks',
-                      $pfComputerOperatingSystem->fields['operatingsystemservicepacks_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-
-                   echo "<tr class='tab_bg_1'>";
-                   echo "<td>".__('Operating system edition', 'fusioninventory')."</td>";
-                   echo "<td>";
-
-                   echo Dropdown::getDropdownName(
-                      'glpi_plugin_fusioninventory_computeroperatingsystemeditions',
-                      $pfComputerOperatingSystem->fields['plugin_fusioninventory_computeroperatingsystemeditions_id']
-                   );
-
-                   echo "</td>";
-                   echo "</tr>";
-                }
-                echo '</table>';
-                break;
-             }
+function plugin_fusioninventory_postItemForm($params) {
+   if (isset($params['item']) && $params['item'] instanceof CommonDBTM) {
+      switch (get_class($params['item'])) {
+         case 'Computer':
+            PluginFusioninventoryInventoryComputerComputer::showFormForAgentWithNoInventory($params['item']);
+            break;
+         case 'Item_OperatingSystem':
+            if ($params['item']->fields['itemtype'] == 'Computer') {
+               PluginFusioninventoryInventoryComputerComputer::showFormOS($params['item']);
+            }
+      }
    }
 }
-?>
+
+/**
+ * FusinInventory infos after showing a tab
+ * @since 9.2
+ *
+ * @param array $params Hook parameters
+ *
+ * @return void
+ */
+function plugin_fusioninventory_postshowtab($params) {
+   if (isset($params['item']) && is_object($params['item'])) {
+      $item = $params['item'];
+
+      switch ($item->getType()) {
+         case 'Computer':
+            switch (Session::getActiveTab('Computer')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+
+            break;
+
+         case 'NetworkEquipment':
+            switch (Session::getActiveTab('NetworkEquipment')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+            break;
+
+         case 'Printer':
+            switch (Session::getActiveTab('Printer')) {
+               case 'Lock$1':
+                  PluginFusioninventoryLock::showLocksForAnItem($item);
+                  break;
+            }
+
+            break;
+      }
+    }
+ }
+
+ /**
+  * FusinInventory infos after before a tab
+  * @since 9.2
+  *
+  * @param array $params Hook parameters
+  *
+  * @return void
+  */
+ function plugin_fusioninventory_preshowtab($params) {
+    if (isset($params['item']) && is_object($params['item'])) {
+       $item = $params['item'];
+       switch ($item->getType()) {
+          case 'Computer':
+             switch (Session::getActiveTab('Computer')) {
+                case 'Computer_SoftwareVersion$1':
+                   $license = new PluginFusioninventoryComputerLicenseInfo();
+                   $license->showForm($item->getID());
+                   break;
+             }
+             break;
+       }
+     }
+  }

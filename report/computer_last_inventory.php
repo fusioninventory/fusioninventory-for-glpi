@@ -94,7 +94,7 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_2'>";
 echo "<td align='center' colspan='2'>";
-echo "<input type='submit' value='Valider' class='submit' />";
+echo "<input type='submit' value='" . __('Validate') . "' class='submit' />";
 echo "</td>";
 echo "</tr>";
 
@@ -127,7 +127,7 @@ echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
-echo "<th>".__('Last inventory')."</th>";
+echo "<th>".__('Last inventory', 'fusioninventory')."</th>";
 echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Status')."</th>";

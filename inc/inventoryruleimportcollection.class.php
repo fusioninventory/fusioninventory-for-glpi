@@ -168,7 +168,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
              && isset($output["found_equipment"])) {
             echo "<tr class='tab_bg_2'>";
             $className = $output["found_equipment"][1];
-            $class = new $className;
+            $class     = new $className();
             if ($class->getFromDB($output["found_equipment"][0])) {
                echo "<td>".__('Link')."</td>";
                echo "<td>".$class->getLink(TRUE)."</td>";

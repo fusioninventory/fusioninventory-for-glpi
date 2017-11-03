@@ -252,7 +252,6 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
           'networks_id'          => '0',
           'networkequipmenttypes_id' => '0',
           'networkequipmentmodels_id' => '3',
-          'networkequipmentfirmwares_id' => '3',
           'manufacturers_id'     => '29',
           'is_deleted'           => '0',
           'is_template'          => '0',
@@ -261,7 +260,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
           'groups_id'            => '0',
           'states_id'            => '0',
           'ticket_tco'           => '0.0000',
-          'is_dynamic'           => '1',
+          'is_dynamic'           => '1'
       );
 
       $this->assertEquals($a_reference, $networkEquipment->fields);

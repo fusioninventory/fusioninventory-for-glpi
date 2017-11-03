@@ -138,7 +138,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       if (isset($state_names[$state])) {
          return $state_names[$state];
       } else {
-         return "N/A";
+         return NOT_AVAILABLE;
       }
    }
 
@@ -206,8 +206,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       }
       return '';
    }
-
-
 
    /**
     * Get search function for the class

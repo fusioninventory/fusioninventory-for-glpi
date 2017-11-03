@@ -74,13 +74,17 @@ if (isset($_POST['startagent'])) {
    Session::checkRight('plugin_fusioninventory_agent', PURGE);
    $agent->delete($_POST, true);
    $agent->redirectToList();
+} else if (isset ($_POST["disconnect"])) {
+   Session::checkRight('plugin_fusioninventory_agent', UPDATE);
+   $agent->disconnect($_POST);
+   Html::back();
 } else if (isset ($_POST["startagent"])) {
 
    Html::back();
 }
 
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "agent");
 
 PluginFusioninventoryMenu::displayMenu("mini");

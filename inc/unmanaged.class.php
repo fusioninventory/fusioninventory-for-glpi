@@ -208,7 +208,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $tab[17]['table']     = 'glpi_plugin_fusioninventory_configsecurities';
       $tab[17]['field']     = 'name';
       $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
-      $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
+      $tab[17]['name']      = __('SNMP credentials', 'fusioninventory');
       $tab[17]['datatype']  = 'dropdown';
 
       $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnmanaged");
@@ -232,7 +232,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          $ong[1]=__('Import');
 
          $pfConfig = new PluginFusioninventoryConfig();
-         if (($pfConfig->isActive('remotehttpagent'))
+         if (($pfConfig->isFieldActive('remotehttpagent'))
                  && (Session::haveRight('plugin_fusioninventory_remotecontrol', UPDATE))) {
             $ong[2]=__('Job', 'fusioninventory');
          }
@@ -297,7 +297,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
       if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
          $actions['PluginFusioninventoryUnmanaged'.MassiveAction::CLASS_ACTION_SEPARATOR.'assign_auth']       =
-                                       __('Assign SNMP authentication', 'fusioninventory');
+                                       __('Assign SNMP credentials', 'fusioninventory');
       }
       return $actions;
    }
@@ -469,7 +469,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP credentials', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::authDropdown(
                $this->fields['plugin_fusioninventory_configsecurities_id']);

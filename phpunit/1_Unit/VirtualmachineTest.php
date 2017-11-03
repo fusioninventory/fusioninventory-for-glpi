@@ -75,6 +75,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           'drive'          => array(),
           'batteries'      => array(),
           'remote_mgmt'    => array(),
+          'bios'           => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(
@@ -103,6 +104,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $a_inventory['virtualmachine'][] = array(
           'ram'                      => '1024',
           'name'                     => 'Windows 7',
+          'comment'                  => 'comment',
           'virtualmachinestates_id'  => 'up',
           'virtualmachinesystems_id' => 'vbox',
           'uuid'                     => '2961ecf6-7e94-488d-ae0d-e427123078b3',
@@ -184,6 +186,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
                      'entities_id'              => '0',
                      'computers_id'             => '1',
                      'name'                     => 'Windows 7',
+                     'comment'                  => 'comment',
                      'virtualmachinestates_id'  => '1',
                      'virtualmachinesystems_id' => '1',
                      'virtualmachinetypes_id'   => '1',
@@ -192,7 +195,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
                      'ram'                      => '1024',
                      'is_deleted'               => '0',
                      'is_dynamic'               => '1',
-                     'comment'                  => null
                  ),
       );
       $this->assertEquals($a_reference, $a_data);
@@ -243,6 +245,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
                      'entities_id'              => '0',
                      'computers_id'             => '1',
                      'name'                     => 'Windows 7',
+                     'comment'                  => 'comment',
                      'virtualmachinestates_id'  => '1',
                      'virtualmachinesystems_id' => '1',
                      'virtualmachinetypes_id'   => '1',
@@ -251,7 +254,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
                      'ram'                      => '2048',
                      'is_deleted'               => '0',
                      'is_dynamic'               => '1',
-                     'comment'                  => null
                  ),
       );
       $this->assertEquals($a_reference, $a_data);

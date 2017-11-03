@@ -50,6 +50,14 @@ ob_start();
 include ("../../../../inc/includes.php");
 ob_end_clean();
 
+//Store deploy task version
+//If task is lower than 2.2, there's no version sent by the agent
+//we set it to 0
+$deploy_task_version = 0;
+if (isset($_GET['version'])) {
+   $deploy_task_version = $_GET['version'];
+}
+
 $response = FALSE;
 //Agent communication using REST protocol
 switch (filter_input(INPUT_GET, "action")) {
@@ -100,8 +108,20 @@ switch (filter_input(INPUT_GET, "action")) {
                   // Get taskjob json order
                   $jobstate_order = $deploycommon->run($taskjobstate);
 
+                  //If task doesn't support checks skip, info, warning,
+                  //send an ignore instead
+                  //tasks version needs to be at least 2.2
+                  if (version_compare($deploy_task_version, '2.2', 'lt')
+                     && isset($jobstate_order['job']['checks'])) {
+                     foreach ($jobstate_order['job']['checks'] as $key => $value) {
+                        if (in_array($value['return'], ['skip', 'info', 'warning'])) {
+                           $jobstate_order['job']['checks'][$key]['return'] = 'ignore';
+                        }
+                     }
+                  }
                   // Append order to the final json
                   $order->jobs[] = $jobstate_order['job'];
+
                   // Update associated files list
                   foreach ($jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
                      if (!array_key_exists($hash, $order->associatedFiles)) {
@@ -160,8 +180,9 @@ switch (filter_input(INPUT_GET, "action")) {
 
 
       if ($error != TRUE) {
-         if (filter_input(INPUT_GET, "msg") === 'job successfully completed') {
-            //Job is ended and status should be ok
+         if (filter_input(INPUT_GET, "msg") === 'job successfully completed'
+            || filter_input(INPUT_GET, "msg") === 'job skipped') {
+            //Job has ended  or has been skipped and status should be ok
             $params['code'] = 'ok';
             $params['msg'] = filter_input(INPUT_GET, "msg");
          } else {

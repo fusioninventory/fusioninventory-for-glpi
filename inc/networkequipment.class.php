@@ -62,7 +62,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
-
    /**
     * Get the tab name used for item
     *
@@ -71,7 +70,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($this->canView()) {
+      if ($this->canView()
+         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
       return '';
@@ -203,14 +203,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          echo "<input type='hidden' name='itemtype' value='".$item->getType()."'>\n";
          echo "<div class='firstbloc'><table class='tab_cadre_fixe'>\n";
          echo "<tr class='tab_bg_2'><td class='center'>\n";
-         _e('Network port type to be added');
+         echo __('Network port type to be added');
          echo "&nbsp;";
          Dropdown::showFromArray('instantiation_type',
                                  NetworkPort::getNetworkPortInstantiationsWithNames(),
                                  array('value' => 'NetworkPortEthernet'));
          echo "</td>\n";
          echo "<td class='tab_bg_2 center' width='50%'>";
-         _e('Add several ports');
+         echo __('Add several ports');
          echo "&nbsp;<input type='checkbox' name='several' value='1'></td>\n";
          echo "<td>\n";
          echo "<input type='submit' name='create' value=\""._sx('button', 'Add')."\" ".
@@ -541,7 +541,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP credentials', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::authDropdown(
                  $this->fields['plugin_fusioninventory_configsecurities_id']

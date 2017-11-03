@@ -102,14 +102,20 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `datetime_start` datetime DEFAULT NULL,
   `datetime_end` datetime DEFAULT NULL,
-  `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_timeslots_prep_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_timeslots_exec_id` int(11) NOT NULL DEFAULT '0',
   `last_agent_wakeup` datetime DEFAULT NULL,
   `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
   `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
   `reprepare_if_successful` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deploy_on_demand` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
+  KEY `plugin_fusioninventory_timeslots_prep_id` (`plugin_fusioninventory_timeslots_prep_id`),
+  KEY `plugin_fusioninventory_timeslots_exec_id` (`plugin_fusioninventory_timeslots_exec_id`),
   KEY `is_active` (`is_active`),
+  KEY `reprepare_if_successful` (`reprepare_if_successful`),
+  KEY `is_deploy_on_demand` (`is_deploy_on_demand`),
   KEY `wakeup_agent_counter` (`wakeup_agent_counter`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -316,6 +322,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -361,52 +368,21 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerbatteries`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerbatteries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
-  `manufacturers_id` int(11) NOT NULL DEFAULT '0',
-  `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `capacity` int(11) NOT NULL DEFAULT '0',
-  `date` datetime DEFAULT NULL,
-  `plugin_fusioninventory_inventorycomputerchemistries_id` int(11) NOT NULL DEFAULT '0',
-  `voltage` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerchemistries`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerchemistries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercomputers`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `bios_date` datetime DEFAULT NULL,
-  `bios_version` varchar(255) DEFAULT NULL,
-  `bios_manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `operatingsystem_installationdate` datetime DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   `remote_addr` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_computeroperatingsystems_id` int(11) NOT NULL DEFAULT '0',
   `serialized_inventory` longblob,
   `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
   `oscomment` text DEFAULT NULL,
+  `hostid` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
@@ -422,48 +398,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstats` (
  `hour` tinyint(2) NOT NULL DEFAULT '0',
  `counter` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstorages`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `totalsize` int(11) NOT NULL DEFAULT '0',
-  `freesize` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_inventorycomputerstoragetypes_id` int(11) NOT NULL DEFAULT '0',
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `uuid` (`uuid`),
-  KEY `computers_id` (`computers_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstoragetypes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `level` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `level` (`level`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstorages_storages`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_inventorycomputerstorages_id_1` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_inventorycomputerstorages_id_2` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_inventorycomputerstorages_id_1` (`plugin_fusioninventory_inventorycomputerstorages_id_1`),
-  KEY `plugin_fusioninventory_inventorycomputerstorages_id_2` (`plugin_fusioninventory_inventorycomputerstorages_id_2`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -691,61 +625,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroperatingsystems`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystems` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `operatingsystemarchitectures_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_computeroskernelnames_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_computeroskernelversions_id` int(11) NOT NULL DEFAULT '0',
-  `operatingsystems_id` int(11) NOT NULL DEFAULT '0',
-  `operatingsystemversions_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_computeroperatingsystemeditions_id` int(11) NOT NULL DEFAULT '0',
-  `operatingsystemservicepacks_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroskernelnames`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_computeroskernelnames` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroskernelversions`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_computeroskernelversions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computeroperatingsystemeditions`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_computeroperatingsystemeditions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerremotemanagements`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
@@ -869,6 +748,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploymirrors`;
 CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -877,6 +757,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   `date_mod` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
+  KEY `is_active` (`is_active`),
+  KEY `is_recursive` (`is_recursive`),
   KEY `date_mod` (`date_mod`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -915,6 +797,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
+  `computers_id_cache` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)
@@ -1484,12 +1367,3 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Computer','serial','','serial',13,NULL),
           ('Computer','ifPhysAddress','','mac',15,NULL),
           ('Computer','ifaddr','','ip',407,NULL);
-
-
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-(`id`, `name`, `level`) VALUES
-(1, 'partition', 5),
-(2, 'volume groups', 10),
-(3, 'logical volumes', 20),
-(4, 'hard disk', 1),
-(5, 'mount', 25);

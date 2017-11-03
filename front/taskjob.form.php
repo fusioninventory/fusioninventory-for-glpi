@@ -48,7 +48,7 @@ include ("../../../inc/includes.php");
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
              "pluginfusioninventorymenu", "taskjob");
 
 Session::checkRight('plugin_fusioninventory_task', READ);

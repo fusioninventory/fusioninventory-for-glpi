@@ -115,6 +115,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $deviceProcessor              = new DeviceProcessor();
       $item_DeviceMemory            = new Item_DeviceMemory();
       $deviceMemory                 = new DeviceMemory();
+      $item_DeviceBattery           = new Item_DeviceBattery();
+      $deviceBattery                = new DeviceBattery();
       $computerVirtualmachine       = new ComputerVirtualMachine();
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
@@ -123,6 +125,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
+      $item_DeviceBios              = new Item_DeviceFirmware();
       $pfInventoryComputerAntivirus = new ComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
@@ -132,51 +135,50 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $peripheral                   = new Peripheral();
       $pfComputerRemotemgmt         = new PluginFusioninventoryComputerRemoteManagement();
 
-//      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
-//      $pfInventoryComputerStorage_Storage =
-//             new PluginFusioninventoryInventoryComputerStorage_Storage();
-
       $computer->getFromDB($computers_id);
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
 
          // Manage operating system
-         if (isset($a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'])) {
-            $pfOperatingSystem = new PluginFusioninventoryComputerOperatingSystem();
-            $pfos = $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'];
-            $operatingsystem = current($pfOperatingSystem->find(""
-                    . "`operatingsystemarchitectures_id`='".$pfos['operatingsystemarchitectures_id']."'"
-                    . " AND `plugin_fusioninventory_computeroskernelnames_id`='".$pfos['plugin_fusioninventory_computeroskernelnames_id']."'"
-                    . " AND `plugin_fusioninventory_computeroskernelversions_id`='".$pfos['plugin_fusioninventory_computeroskernelversions_id']."'"
-                    . " AND `operatingsystems_id`='".$pfos['operatingsystems_id']."'"
-                    . " AND `operatingsystemversions_id`='".$pfos['operatingsystemversions_id']."'"
-                    . " AND `operatingsystemservicepacks_id`='".$pfos['operatingsystemservicepacks_id']."'"
-                    . " AND `plugin_fusioninventory_computeroperatingsystemeditions_id`='".$pfos['plugin_fusioninventory_computeroperatingsystemeditions_id']."'", "", "1"));
-            if (!$operatingsystem) {
-               $input_os = array(
-                   'operatingsystemarchitectures_id' => $pfos['operatingsystemarchitectures_id'],
-                   'plugin_fusioninventory_computeroskernelnames_id' => $pfos['plugin_fusioninventory_computeroskernelnames_id'],
-                   'plugin_fusioninventory_computeroskernelversions_id' => $pfos['plugin_fusioninventory_computeroskernelversions_id'],
-                   'operatingsystems_id' => $pfos['operatingsystems_id'],
-                   'operatingsystemversions_id' => $pfos['operatingsystemversions_id'],
-                   'operatingsystemservicepacks_id' => $pfos['operatingsystemservicepacks_id'],
-                   'plugin_fusioninventory_computeroperatingsystemeditions_id' => $pfos['plugin_fusioninventory_computeroperatingsystemeditions_id']
-               );
-               $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] =
-                       $pfOperatingSystem->add($input_os);
-            } else {
-               $a_computerinventory['fusioninventorycomputer']['plugin_fusioninventory_computeroperatingsystems_id'] = $operatingsystem['id'];
-            }
+         if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
+            $ios = new Item_OperatingSystem();
+            $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
+            $ios->getFromDBByCrit([
+               'itemtype'                          => 'Computer',
+               'items_id'                          => $computers_id,
+               'operatingsystems_id'               => $pfos['operatingsystems_id'],
+               'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id']
+            ]);
 
-            //populate core data
-            $a_computerinventory['Computer']['operatingsystems_id'] = $pfos['operatingsystems_id'];
-            $a_computerinventory['Computer']['operatingsystemversions_id'] = $pfos['operatingsystemversions_id'];
-            $a_computerinventory['Computer']['operatingsystemservicepacks_id'] = $pfos['operatingsystemservicepacks_id'];
-            $a_computerinventory['Computer']['operatingsystemarchitectures_id'] = $pfos['operatingsystemarchitectures_id'];
-            if ($pfos['plugin_fusioninventory_computeroskernelversions_id'] != '') {
-               $pfKernelVersion = new PluginFusioninventoryComputerOSKernelVersion();
-               $pfKernelVersion->getFromDB($pfos['plugin_fusioninventory_computeroskernelversions_id']);
-               $a_computerinventory['Computer']['os_kernel_version'] = $pfKernelVersion->fields['name'];
+            $input_os = array(
+               'itemtype'                          => 'Computer',
+               'items_id'                          => $computer->getID(),
+               'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id'],
+               'operatingsystemkernelversions_id'  => $pfos['operatingsystemkernelversions_id'],
+               'operatingsystems_id'               => $pfos['operatingsystems_id'],
+               'operatingsystemversions_id'        => $pfos['operatingsystemversions_id'],
+               'operatingsystemservicepacks_id'    => $pfos['operatingsystemservicepacks_id'],
+               'operatingsystemeditions_id'        => $pfos['operatingsystemeditions_id'],
+               'license_id'                        => $pfos['licenseid'],
+               'license_number'                    => $pfos['license_number'],
+               'is_dynamic'                        => 1,
+               'entities_id'                       => $computer->fields['entities_id']
+            );
+
+            if (!$ios->isNewItem()) {
+               //OS exists, check for updates
+               $same = true;
+               foreach ($input_os as $key => $value) {
+                  if ($ios->fields[$key] != $value) {
+                     $same = false;
+                     break;
+                  }
+               }
+               if ($same === false) {
+                  $ios->update(['id' => $ios->getID()] + $input_os);
+               }
+            } else {
+               $ios->add($input_os);
             }
          }
 
@@ -195,7 +197,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $history = FALSE;
          }
          $input['_no_history'] = $no_history;
-         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+         $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
          $computer->update($input, !$no_history);
 
       $this->computer = $computer;
@@ -241,6 +243,55 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($setdynamic == 1) {
             $this->setDynamicLinkItems($computers_id);
          }
+
+      // * BIOS
+      $db_bios = array();
+      if ($no_history === FALSE) {
+         $query = "SELECT `glpi_items_devicefirmwares`.`id`, `serial`,
+               `designation`, `version`
+               FROM `glpi_items_devicefirmwares`
+                  LEFT JOIN `glpi_devicefirmwares`
+                     ON `devicefirmwares_id`=`glpi_devicefirmwares`.`id`
+            WHERE `items_id` = '$computers_id'
+               AND `itemtype`='Computer'
+               AND `is_dynamic`='1'";
+         $result = $DB->query($query);
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);
+            $data1 = Toolbox::addslashes_deep($data);
+            $data2 = array_map('strtolower', $data1);
+            $db_bios[$idtmp] = $data2;
+         }
+      }
+
+      if (count($db_bios) == 0) {
+         if (isset($a_computerinventory['bios'])) {
+            $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
+         }
+      } else {
+         if (isset($a_computerinventory['bios'])) {
+            $arrayslower = array_map('strtolower', $a_computerinventory['bios']);
+            foreach ($db_bios as $keydb => $arraydb) {
+               if (isset($arrayslower['version']) && $arrayslower['version'] == $arraydb['version']) {
+                  unset($a_computerinventory['bios']);
+                  unset($db_bios[$keydb]);
+                  break;
+               }
+            }
+         }
+
+         if (count($db_bios) != 0) {
+            // Delete BIOS in DB
+            foreach ($db_bios as $idtmp => $data) {
+               $item_DeviceBios->delete(array('id'=>$idtmp), 1);
+            }
+         }
+
+         if (isset($a_computerinventory['bios'])) {
+            $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
+         }
+      }
 
       // * Processors
          if ($pfConfig->getValue("component_processor") != 0) {
@@ -407,6 +458,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
                   $arrayslower = array_map('strtolower', $arrays);
+
+                  // if disk has no serial, don't add and unset it
+                  if (!isset($arrayslower['serial'])) {
+                     unset($a_computerinventory['harddrive'][$key]);
+                     break;
+                  }
+
                   foreach ($db_harddrives as $keydb => $arraydb) {
                      if ($arrayslower['serial'] == $arraydb['serial']) {
                         if ($arraydb['capacity'] == 0
@@ -1219,6 +1277,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
       // * Antivirus
+      if ($pfConfig->getValue("import_antivirus") != 0) {
          $db_antivirus = array();
          if ($no_history === FALSE) {
             $query = "SELECT `id`, `name`, `antivirus_version`
@@ -1275,6 +1334,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+      }
 
 
 
@@ -1365,12 +1425,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
       // * Batteries
-         /* Standby, see ticket http://forge.fusioninventory.org/issues/1907
+      if ($pfConfig->getValue("component_battery") != 0) {
          $db_batteries = array();
          if ($no_history === FALSE) {
-            $query = "SELECT `id`, `name`, `serial`
-                  FROM `glpi_plugin_fusioninventory_inventorycomputerbatteries`
-               WHERE `computers_id` = '$computers_id'";
+            $query = "SELECT `glpi_items_devicebatteries`.`id`, `serial`, `voltage`, `capacity`
+                        FROM `glpi_items_devicebatteries`
+                           LEFT JOIN `glpi_devicebatteries` ON `devicebatteries_id`=`glpi_devicebatteries`.`id`
+                        WHERE `items_id` = '$computers_id'
+                           AND `itemtype`='Computer'
+                           AND `is_dynamic`='1'";
+
             $result = $DB->query($query);
             while ($data = $DB->fetch_assoc($result)) {
                $idtmp = $data['id'];
@@ -1380,48 +1444,67 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $db_batteries[$idtmp] = $data;
             }
          }
-         $simplebatteries = array();
-         foreach ($a_computerinventory['batteries'] as $key=>$a_batteries) {
-            $a_field = array('name', 'serial');
-            foreach ($a_field as $field) {
-               if (isset($a_batteries[$field])) {
-                  $simplebatteries[$key][$field] = $a_batteries[$field];
-               }
-            }
-         }
-         foreach ($simplebatteries as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_batteries as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  $input = array();
-                  $input = $a_computerinventory['batteries'][$key];
-                  $input['id'] = $keydb;
-                  $pfInventoryComputerBatteries->update($input);
-                  unset($simplebatteries[$key]);
-                  unset($a_computerinventory['batteries'][$key]);
-                  unset($db_batteries[$keydb]);
-                  break;
-               }
-            }
-         }
-         if (count($a_computerinventory['batteries']) == 0
-            AND count($db_batteries) == 0) {
-            // Nothing to do
-         } else {
-            if (count($db_batteries) != 0) {
-               foreach ($db_batteries as $idtmp => $data) {
-                  $pfInventoryComputerBatteries->delete(array('id'=>$idtmp), 1);
-               }
-            }
-            if (count($a_computerinventory['batteries']) != 0) {
-               foreach ($a_computerinventory['batteries'] as $a_batteries) {
-                  $a_batteries['computers_id'] = $computers_id;
-                  $pfInventoryComputerBatteries->add($a_batteries, array(), FALSE);
-               }
-            }
-         }
-*/
 
+         if (count($db_batteries) == 0) {
+            foreach ($a_computerinventory['batteries'] as $a_battery) {
+               $this->addBattery($a_battery, $computers_id, $no_history);
+            }
+         } else {
+            // Check all fields from source: 'designation', 'serial', 'size',
+            // 'devicebatterytypes_id', 'frequence'
+            foreach ($a_computerinventory['batteries'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_batteries as $keydb => $arraydb) {
+                  if (isset($arrayslower['serial'])
+                     && isset($arraydb['serial'])
+                     && $arrayslower['serial'] == $arraydb['serial']
+                  ) {
+                     $update = false;
+                     if ($arraydb['capacity'] == 0
+                              && $arrayslower['capacity'] > 0) {
+                        $input = array(
+                           'id'       => $keydb,
+                           'capacity' => $arrayslower['capacity']
+                        );
+                        $update = true;
+                     }
+
+                     if ($arraydb['voltage'] == 0
+                              && $arrayslower['voltage'] > 0) {
+                        $input = array(
+                           'id'        => $keydb,
+                           'voltage'   => $arrayslower['voltage']
+                        );
+                        $update = true;
+                     }
+
+                     if ($update === true) {
+                        $item_DeviceMemory->update($input);
+                     }
+
+                     unset($a_computerinventory['batteries'][$key]);
+                     unset($db_batteries[$keydb]);
+                     break;
+                  }
+               }
+
+               //delete remaining batteries in database
+               if (count($db_batteries) > 0) {
+                  // Delete battery in DB
+                  foreach ($db_batteries as $idtmp => $data) {
+                     $item_DeviceBattery->delete(array('id' => $idtmp), 1);
+                  }
+               }
+
+               //add new batteries in database
+               if (count($a_computerinventory['batteries']) != 0) {
+                  foreach ($a_computerinventory['batteries'] as $a_battery) {
+                     $this->addBattery($a_battery, $computers_id, $no_history);
+                  }
+               }
+            }
+         }
+      }
 
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
       // * Monitors
@@ -1431,7 +1514,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Monitor";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1515,7 +1600,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Printer";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1594,7 +1681,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = array();
          $input['itemtype'] = "Peripheral";
          $input['name']     = $arrays['name'];
-         $input['serial']   = $arrays['serial'];
+         $input['serial']   = isset($arrays['serial'])
+                               ? $arrays['serial']
+                               : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
@@ -1719,8 +1808,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 //
 //         }
 
-      Plugin::doHook("fusioninventory_inventory", array('inventory_data' => $a_computerinventory,
-                                                        'computers_id'   => $computers_id ));
+      Plugin::doHook("fusioninventory_inventory",
+                     ['inventory_data' => $a_computerinventory,
+                      'computers_id'   => $computers_id,
+                      'no_history'     => $no_history
+                     ]);
 
       $this->addLog();
    }
@@ -1742,7 +1834,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();
       $iPNetwork   = new IPNetwork();
-      $networkPortEthernet = new NetworkPortEthernet();
       $item_DeviceNetworkCard = new Item_DeviceNetworkCard();
 
       foreach ($inventory_networkports as $a_networkport) {
@@ -1835,19 +1926,27 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                // Add / update instantiation_type
                if (isset($inventory_networkports[$key]['instantiation_type'])) {
-                  if ($inventory_networkports[$key]['instantiation_type'] == 'NetworkPortEthernet') {
-                     $portsethernet = $networkPortEthernet->find("`networkports_id`='".$keydb."'", '', 1);
-                     if (count($portsethernet) == 1) {
-                        $portethernet = current($portsethernet);
-                        $input = $portethernet;
-                     } else {
+                  $instantiation_type = $inventory_networkports[$key]['instantiation_type'];
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
+                                                          'NetworkPortFiberchannel'))) {
+
+                     $instance = new $instantiation_type;
+                     $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
+                     if (count($portsinstance) == 1) {
+                        $portinstance = current($portsinstance);
+                        $input = $portinstance;
+                     } else{
                         $input = array(
                            'networkports_id' => $keydb
                         );
                      }
+
                      if (isset($inventory_networkports[$key]['speed'])) {
                         $input['speed'] = $inventory_networkports[$key]['speed'];
                         $input['speed_other_value'] = $inventory_networkports[$key]['speed'];
+                     }
+                     if (isset($inventory_networkports[$key]['wwn'])) {
+                        $input['wwn'] = $inventory_networkports[$key]['wwn'];
                      }
                      if (isset($inventory_networkports[$key]['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
@@ -1863,9 +1962,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      $input['_no_history'] = $no_history;
                      if (isset($input['id'])) {
-                        $networkPortEthernet->update($input);
+                        $instance->update($input);
                      } else {
-                        $networkPortEthernet->add($input);
+                        $instance->add($input);
                      }
                   }
                }
@@ -1974,13 +2073,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $iPAddress->add($input, array(), !$no_history);
                }
                if (isset($a_networkport['instantiation_type'])) {
-                  if ($a_networkport['instantiation_type'] == 'NetworkPortEthernet') {
+                  $instantiation_type = $a_networkport['instantiation_type'];
+                  if (in_array($instantiation_type, array('NetworkPortEthernet',
+                                                          'NetworkPortFiberchannel'))) {
+                     $instance = new $instantiation_type;
                      $input = array(
                         'networkports_id' => $a_networkport['items_id']
                      );
                      if (isset($a_networkport['speed'])) {
                         $input['speed'] = $a_networkport['speed'];
                         $input['speed_other_value'] = $a_networkport['speed'];
+                     }
+                     if (isset($a_networkport['wwn'])) {
+                        $input['wwn'] = $a_networkport['wwn'];
                      }
                      if (isset($a_networkport['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
@@ -1995,7 +2100,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         }
                      }
                      $input['_no_history'] = $no_history;
-                     $networkPortEthernet->add($input);
+                     $instance->add($input);
                   }
                }
             }
@@ -2003,6 +2108,31 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
    }
 
+
+   /**
+    * Add a new bios component
+    *
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
+   function addBios($data, $computers_id, $no_history) {
+      $item_DeviceBios  = new Item_DeviceFirmware();
+      $deviceBios       = new DeviceFirmware();
+
+      $fwTypes = new DeviceFirmwareType();
+      $fwTypes->getFromDBByQuery("WHERE `name` = 'BIOS'");
+      $type_id = $fwTypes->getID();
+      $data['devicefirmwaretypes_id'] = $type_id;
+
+      $bios_id = $deviceBios->import($data);
+      $data['devicefirmwares_id']   = $bios_id;
+      $data['itemtype']             = 'Computer';
+      $data['items_id']             = $computers_id;
+      $data['is_dynamic']           = 1;
+      $data['_no_history']          = $no_history;
+      $item_DeviceBios->add($data, array(), !$no_history);
+   }
 
 
    /**
@@ -2180,6 +2310,36 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
+   /**
+    * Add a new battery component
+    *
+    * @param array   $data
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
+   function addBattery($data, $computers_id, $no_history) {
+      $item_DeviceBattery  = new Item_DeviceBattery();
+      $deviceBattery       = new DeviceBattery();
+
+      if ($data['voltage'] == '') {
+         //a numeric value is expected here
+         $data['voltage'] = 0;
+      }
+
+      if (empty($data['designation'])) {
+         //Placebo designation; sometimes missing from agent
+         $data['designation'] = __('Internal battery', 'fusioninventory');
+      }
+
+      $batteries_id = $deviceBattery->import($data);
+      $data['devicebatteries_id'] = $batteries_id;
+      $data['itemtype']           = 'Computer';
+      $data['items_id']           = $computers_id;
+      $data['is_dynamic']         = 1;
+      $data['_no_history']        = $no_history;
+      $item_DeviceBattery->add($data, array(), !$no_history);
+   }
+
 
    /**
     * Load software from DB are in the incomming inventory
@@ -2301,7 +2461,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * @param array $options
     */
    function addSoftware($a_software, $options) {
-
       $a_softwares_id = $this->software->add($a_software, $options, FALSE);
       $this->addPrepareLog($a_softwares_id, 'Software');
 
@@ -2499,7 +2658,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $input = array(
           'id' => $computers_id
       );
-      PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+      $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       $computer->update($input);
 
       $DB->query("UPDATE `glpi_computerdisks` SET `is_dynamic`='1'

@@ -51,7 +51,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
-             "plugins",
+             "admin",
              "pluginfusioninventorymenu",
              "printerlogreport");
 
@@ -101,16 +101,16 @@ function displaySearchForm() {
    echo __('Starting date', 'fusioninventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",
-                          $_SESSION['glpi_plugin_fusioninventory_date_start']);
+   Html::showDateField("glpi_plugin_fusioninventory_date_start",
+                       ['value' => $_SESSION['glpi_plugin_fusioninventory_date_start']]);
    echo "</td>";
 
    echo "<td>";
    echo __('Ending date', 'fusioninventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",
-                          $_SESSION['glpi_plugin_fusioninventory_date_end']);
+   Html::showDateField("glpi_plugin_fusioninventory_date_end",
+                       ['value' => $_SESSION['glpi_plugin_fusioninventory_date_end']]);
    echo "</td>";
 
    echo "<td>";
@@ -118,7 +118,7 @@ function displaySearchForm() {
    echo "</td>";
 
    echo "<td>";
-   echo "<input type='submit' value='Valider' class='submit' />";
+   echo "<input type='submit' value='". __('Validate') . "' class='submit' />";
    echo "</td>";
 
    echo "</tr>";

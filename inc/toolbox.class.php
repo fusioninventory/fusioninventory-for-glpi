@@ -744,6 +744,64 @@ class PluginFusioninventoryToolbox {
       // Return function results
       return $result;
    }
-}
 
-?>
+   /**
+   * Check if an item is inventoried by FusionInventory
+   *
+   * @since 9.2
+   * @param CommonDBTM $item the item to check
+   * @return boolean true if handle by FusionInventory
+   */
+   static function isAFusionInventoryDevice($item) {
+      $table = '';
+      switch ($item->getType()) {
+         case 'Computer':
+            $table = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+            $fk    = 'computers_id';
+            break;
+
+         case 'NetworkEquipment':
+            $table = 'glpi_plugin_fusioninventory_networkequipments';
+            $fk    = 'networkequipments_id';
+            break;
+
+         case 'Printer':
+            $table = 'glpi_plugin_fusioninventory_printers';
+            $fk    = 'printers_id';
+            break;
+
+      }
+      if ($table) {
+         return $item->isDynamic()
+            && countElementsInTable($table, "`$fk`='".$item->getID()."'");
+      } else {
+         return 0;
+      }
+   }
+
+   /**
+    * Get default value for state of devices (monitor, printer...)
+    *
+    * @param string type the type of inventory performed (values : computer, snmp)
+    * @param array $input
+    * @return array the fields with the states_id filled, is necessary
+    */
+   static function addDefaultStateIfNeeded($type = 'computer', $input) {
+      $config = new PluginFusioninventoryConfig();
+      switch ($type) {
+         case 'computer':
+            $input['states_id'] = $config->getValue("states_id_default");
+            break;
+
+         case 'snmp':
+            $input['states_id'] = $config->getValue("states_id_snmp_default");
+            break;
+
+         default:
+            $state = false;
+            break;
+      }
+      return $input;
+   }
+
+}
