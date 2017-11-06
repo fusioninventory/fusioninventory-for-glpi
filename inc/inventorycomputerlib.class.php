@@ -395,10 +395,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                // Check all fields from source: 'designation', 'serial', 'size',
                // 'devicememorytypes_id', 'frequence'
                foreach ($a_computerinventory['memory'] as $key => $arrays) {
-                  $frequence = $arrays['frequence'];
+                  $frequence = (int) $arrays['frequence'];
                   unset($arrays['frequence']);
                   foreach ($db_memories as $keydb => $arraydb) {
-                     $frequencedb = $arraydb['frequence'];
+                     $frequencedb = (int) $arraydb['frequence'];
                      unset($arraydb['frequence']);
                      if ($arrays == $arraydb) {
                         $a_criteria = $deviceMemory->getImportCriteria();
