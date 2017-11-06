@@ -790,11 +790,15 @@ class PluginFusioninventoryToolbox {
       $config = new PluginFusioninventoryConfig();
       switch ($type) {
          case 'computer':
-            $input['states_id'] = $config->getValue("states_id_default");
+            if ($states_id_default = $config->getValue("states_id_default")) {
+               $input['states_id'] = $states_id_default;
+            }
             break;
 
          case 'snmp':
-            $input['states_id'] = $config->getValue("states_id_snmp_default");
+            if ($states_id_snmp_default = $config->getValue("states_id_snmp_default")) {
+               $input['states_id'] = $states_id_snmp_default;
+            }
             break;
 
          default:
