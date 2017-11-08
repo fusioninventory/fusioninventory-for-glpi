@@ -238,17 +238,17 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          taskjobs.init_templates();
          taskjobs.init_refresh_form(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            '".$task_id."',
             'dropdown_".$refresh_randid."'
          );
          taskjobs.init_include_old_jobs_buttons(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            '".$task_id."',
             'dropdown_".$include_oldjobs_id."'
          );
          taskjobs.update_logs_timeout(
             '".$this->getBaseUrlFor('fi.job.logs')."',
-            ".$task_id.",
+            '".$task_id."',
             'dropdown_".$refresh_randid."'
          );
       });");
