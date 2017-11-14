@@ -178,6 +178,13 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $criterias = array();
 
+      $criterias['itemtype']['name'] = __('Assets', 'fusioninventory').' : '.
+                                          __('Item type');
+
+      $criterias['itemtype']['type']        = 'dropdown_itemtype';
+      $criterias['itemtype']['is_global']       = false;
+      $criterias['itemtype']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
+
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
 
