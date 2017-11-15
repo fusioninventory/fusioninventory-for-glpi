@@ -438,11 +438,10 @@ class CronTaskTest extends RestoreDatabase_TestCase {
           'agents_success' => array(
               '1' => 1
           ),
-          'agents_error' => array(
-              '3' => 2
-          ),
+          'agents_error' => array(),
           'agents_notdone' => array(
-              '4' => 3
+              '4' => 3,
+              '3' => 2
           )
       );
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
