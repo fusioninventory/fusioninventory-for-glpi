@@ -343,7 +343,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_rulelocation', READ)) {
-         $a_menu[4]['name'] = __('Computer location rules', 'fusioninventory');
+         $a_menu[4]['name'] = __('Location rules', 'fusioninventory');
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryrulelocation.php";
