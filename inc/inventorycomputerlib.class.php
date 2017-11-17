@@ -1524,7 +1524,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
 
          //manage rule location
-         $ruleLocation->getCollectionPart();
          $dataLocation = $ruleLocation->processAllRules($input, array());
          if (isset($dataLocation['locations_id'])) {
             $arrays['locations_id'] = $dataLocation['locations_id'];
@@ -1624,7 +1623,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $arrays['entities_id'] = $entities_id;
 
                //manage location
-               $ruleLocation->getCollectionPart();
                $dataLocation = $ruleLocation->processAllRules($input, array());
                if (isset($dataLocation['locations_id'])) {
                   $arrays['locations_id'] = $dataLocation['locations_id'];
@@ -1714,7 +1712,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $arrays['entities_id'] = $entities_id;
 
                //manage location
-               $ruleLocation->getCollectionPart();
                $dataLocation = $ruleLocation->processAllRules($input, array());
                if (isset($dataLocation['locations_id'])) {
                   $arrays['locations_id'] = $dataLocation['locations_id'];
