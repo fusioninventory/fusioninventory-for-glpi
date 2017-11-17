@@ -95,10 +95,18 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input = $a_inventory['NetworkEquipment'];
 
       $input['id'] = $items_id;
+      $input['itemtype']            = 'NetworkEquipment';
 
       //Add defaut status if there's one defined in the configuration
       //If we're here it's because we've manually injected an snmpinventory xml file
       $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+
+      //manage location
+      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $dataLocation = $ruleLocation->processAllRules($input, array());
+      if (isset($dataLocation['locations_id'])) {
+         $input['locations_id'] = $dataLocation['locations_id'];
+      }
 
       $networkEquipment->update($input);
 
