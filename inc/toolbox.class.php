@@ -801,6 +801,24 @@ class PluginFusioninventoryToolbox {
             }
             break;
 
+         case 'printer':
+            if ($states_id_printer_default = $config->getValue("states_id_printer_default")) {
+               $input['states_id'] = $states_id_printer_default;
+            }
+            break;
+
+         case 'monitor':
+            if ($states_id_monitor_default = $config->getValue("states_id_monitor_default")) {
+               $input['states_id'] = $states_id_monitor_default;
+            }
+            break;
+
+         case 'peripheral':
+            if ($states_id_peripheral_default = $config->getValue("states_id_peripheral_default")) {
+               $input['states_id'] = $states_id_peripheral_default;
+            }
+            break;
+
          default:
             $state = false;
             break;

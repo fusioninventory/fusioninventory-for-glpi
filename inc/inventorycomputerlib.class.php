@@ -1522,6 +1522,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($data['found_equipment'][0] == 0) {
                // add monitor
                $arrays['entities_id'] = $entities_id;
+               $arrays = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('monitor', $arrays);
                $a_monitors[] = $monitor->add($arrays);
             } else {
                $a_monitors[] = $data['found_equipment'][0];
@@ -1608,6 +1609,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($data['found_equipment'][0] == 0) {
                // add printer
                $arrays['entities_id'] = $entities_id;
+               $arrays = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('printer', $arrays);
                $a_printers[] = $printer->add($arrays);
             } else {
                $a_printers[] = $data['found_equipment'][0];
@@ -1689,6 +1691,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($data['found_equipment'][0] == 0) {
                // add peripheral
                $arrays['entities_id'] = $entities_id;
+               $arrays = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('peripheral', $arrays);
                $a_peripherals[] = $peripheral->add($arrays);
             } else {
                $a_peripherals[] = $data['found_equipment'][0];
