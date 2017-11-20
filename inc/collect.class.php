@@ -581,10 +581,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                    'uuid'     => $taskjobstate->fields['uniqid'],
                    '_sid'     => $reg['id']
                );
-               //clean old registries results
-               $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_registries_contents`
-                         WHERE `plugin_fusioninventory_collects_registries_id`='".$reg['id']."'";
-               $DB->query($query);
             }
             break;
 
@@ -602,11 +598,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                   $datawmi['moniker'] = $wmi['moniker'];
                }
                $output[] = $datawmi;
-
-               //clean old wmi results
-               $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
-                         WHERE `plugin_fusioninventory_collects_wmis_id`='".$wmi['id']."'";
-               $DB->query($query);
             }
 
             break;
@@ -653,7 +644,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                //clean old files
                $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_files_contents`
-                         WHERE `plugin_fusioninventory_collects_files_id`='".$files['id']."'";
+                         WHERE `plugin_fusioninventory_collects_files_id`='".$files['id']."'
+                           AND `computers_id` = '".$agent['computers_id']."'";
                $DB->query($query);
             }
             break;
