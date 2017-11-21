@@ -159,7 +159,7 @@ echo "<th>".__('IP')."</th>";
 echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Model')."</th>";
-echo "<th>".__('SNMP authentication')."</th>";
+echo "<th>".__('SNMP credentials')."</th>";
 echo "<th>".__('Status')."</th>";
 echo "</tr>";
 

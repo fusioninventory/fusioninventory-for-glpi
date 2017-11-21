@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = [];

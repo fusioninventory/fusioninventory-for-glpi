@@ -364,7 +364,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('VMware host', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_esx'),
           array('itemtype'  => 'PluginFusioninventoryConfigSecurity',
-                'label'     => __('SNMP authentication', 'fusioninventory'),
+                'label'     => __('SNMP credentials', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configsecurity'),
           array('itemtype'  => 'PluginFusioninventoryNetworkEquipment',
                 'label'     => __('Network equipment SNMP', 'fusioninventory'),

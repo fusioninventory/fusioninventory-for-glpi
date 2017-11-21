@@ -245,7 +245,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
-                             __('SNMP authentication', 'fusioninventory');
+                             __('SNMP credentials', 'fusioninventory');
       $sopt[5191]['datatype'] = 'itemlink';
       $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = FALSE;
@@ -272,7 +272,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
-                             __('SNMP authentication', 'fusioninventory');
+                             __('SNMP credentials', 'fusioninventory');
       $sopt[5191]['datatype'] = 'itemlink';
       $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
       $sopt[5191]['massiveaction'] = FALSE;
@@ -905,7 +905,7 @@ function plugin_fusioninventory_MassiveActions($type) {
          }
          if (Session::haveRight('plugin_fusioninventory_configsecurity', UPDATE)) {
             $ma["PluginFusioninventoryConfigSecurity".$sep."assign_auth"]
-               = __('Assign SNMP authentication', 'fusioninventory');
+               = __('Assign SNMP credentials', 'fusioninventory');
          }
 
          break;

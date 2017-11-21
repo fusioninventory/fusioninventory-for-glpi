@@ -397,7 +397,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       if (Session::haveRight('plugin_fusioninventory_configsecurity', READ)) {
          $a_menu[] = array(
-            'name' => __('SNMP authentication', 'fusioninventory'),
+            'name' => __('SNMP credentials', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_authentification.png",
             'link' => $CFG_GLPI['root_doc'].
@@ -648,7 +648,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
               'title'=> TRUE
           ),
           array(
-              'text' => __('Define IP Ranges of your network + related SNMP authentication', 'fusioninventory'),
+              'text' => __('Define IP Ranges of your network + related SNMP credentials', 'fusioninventory'),
               'url'  => $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/iprange.php"
           ),

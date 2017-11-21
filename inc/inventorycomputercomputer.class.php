@@ -170,7 +170,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showFormForAgentWithNoInventory($item) {
       $id = $item->getID();
       $pfComputer  = new self();
-      if (!empty($pfComputer->hasAutomaticInventory($id))) {
+      if ($item->isNewItem()
+          || !empty($pfComputer->hasAutomaticInventory($id))) {
          return true;
       } else {
          $pfAgent = new PluginFusioninventoryAgent();

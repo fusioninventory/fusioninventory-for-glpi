@@ -207,7 +207,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "<td align='center'></td>";
       echo "<td align='center'>";
       echo "</td>";
-      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP credentials', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::authDropdown(
               $this->fields["plugin_fusioninventory_configsecurities_id"]);
