@@ -243,7 +243,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
         );
 
       $a_inventory['software'] = Array(
-            'gentiumbasic$$$$110$$$$1$$$$0$$$$0' => Array(
+            'gentiumbasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
@@ -252,7 +252,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'is_deleted_computer'    => 0,
                     'operatingsystems_id'    => 0
                 ),
-            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => Array(
+            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
@@ -261,7 +261,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'is_deleted_computer'    => 0,
                     'operatingsystems_id'    => 0
                 ),
-            'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => Array(
+            'orbit2$$$$2.14.19$$$$3$$$$0' => Array(
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
@@ -1261,7 +1261,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'contact'                          => 'ddurieux'
       );
       $a_inventory['software'] = Array(
-            'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0$$$$0' => Array(
+            'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0' => Array(
                     'name'                   => 'acrobat_Reader_9.2',
                     'version'                => '1.0.0.0',
                     'manufacturers_id'       => 192,
