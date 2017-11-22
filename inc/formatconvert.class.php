@@ -1600,13 +1600,11 @@ class PluginFusioninventoryFormatconvert {
                   $comp_key = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
-                               "$$$$".$array_tmp['entities_id'].
-                               "$$$$".$array_tmp['operatingsystems_id'];
+                               "$$$$".$array_tmp['entities_id'];
 
                   $comp_key_simple = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['entities_id'].
-                               "$$$$".$array_tmp['operatingsystems_id'];
+                               "$$$$".$array_tmp['entities_id'];
 
                   if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
@@ -1625,8 +1623,7 @@ class PluginFusioninventoryFormatconvert {
             $comp_key = strtolower($array_tmp['name']).
                          "$$$$".strtolower($array_tmp['version']).
                          "$$$$".$array_tmp['manufacturers_id'].
-                         "$$$$".$array_tmp['entities_id'].
-                         "$$$$".$array_tmp['operatingsystems_id'];
+                         "$$$$".$array_tmp['entities_id'];
             if (!isset($a_inventory['software'][$comp_key])) {
                $a_inventory['software'][$comp_key] = $array_tmp;
             }

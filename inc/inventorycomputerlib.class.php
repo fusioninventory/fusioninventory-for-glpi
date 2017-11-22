@@ -843,8 +843,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $comp_key = strtolower($data['name']).
                                "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
-                               "$$$$".$data['entities_id'].
-                               "$$$$".$data['operatingsystems_id'];
+                               "$$$$".$data['entities_id'];
                   $db_software[$comp_key] = $idtmp;
                }
             }
