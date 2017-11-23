@@ -182,7 +182,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       // * Computer
          $db_computer = $computer->fields;
-         $computerName = $computer->fields['name'];
+         $computerName = isset($computer->fields['name'])
+            ? $computer->fields['name']
+            : '';
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                           $db_computer, $a_lockable);
          $a_computerinventory['Computer'] = $a_ret[0];
