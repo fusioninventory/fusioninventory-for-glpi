@@ -47,7 +47,8 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetTypes() {
-      $types = PluginFusioninventoryDeployCheck::getTypes();
+      $check = new PluginFusioninventoryDeployCheck();
+      $types = $check->getTypes();
       $this->assertEquals(4, count($types));
       $this->assertEquals(7, count($types[__('Registry', 'fusioninventory')]));
       $this->assertEquals(7, count($types[__('File')]));

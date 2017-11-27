@@ -270,7 +270,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $template = new PluginFusioninventoryDeployUserinteractionTemplate();
       $expected = ['on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                    'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
-                   'on_ignore', 'on_continue'];
+                   'on_ignore', 'on_continue', 'on_async'];
       $this->assertEquals($expected, $template->getBehaviorsFields());
    }
 
@@ -284,7 +284,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
                    'retry_after', 'nb_max_retry',
                    'on_timeout', 'on_nouser', 'on_multiusers', 'on_ok', 'on_no',
                    'on_yes', 'on_cancel', 'on_abort', 'on_retry', 'on_tryagain',
-                   'on_ignore', 'on_continue'];
+                   'on_ignore', 'on_continue', 'on_async'];
       $this->assertEquals($expected, $template->getJsonFields());
    }
 
