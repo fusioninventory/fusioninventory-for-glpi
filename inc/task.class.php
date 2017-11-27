@@ -1222,92 +1222,51 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $agent_state = '';
                $run_id      = $result[$fieldmap['run.id']];
 
-               // Update counters
-               switch ($result[$fieldmap['run.state']]) {
+               // we drop all status older and add new only when it's newer
+               $new_status = true;
+               foreach ($agent_state_types as $type) {
+                  if (isset($counters[$type][$agent_id])
+                      && $counters[$type][$agent_id] > $run_id) {
+                     $new_status = false;
+                  } else {
+                     unset($counters[$type][$agent_id]);
+                  }
+               }
 
-                  case PluginFusioninventoryTaskjobstate::CANCELLED :
-                     // We put this agent in the cancelled counter
-                     // if it does not have any other job states.
-                     if (!isset($counters['agents_prepared'][$agent_id])
-                         && !isset($counters['agents_running'][$agent_id])) {
+               // Update counters
+               if ($new_status) {
+                  switch ($result[$fieldmap['run.state']]) {
+                     case PluginFusioninventoryTaskjobstate::CANCELLED :
                         $counters['agents_cancelled'][$agent_id] = $run_id;
                         $agent_state = 'cancelled';
-                     }
-                     break;
+                        break;
 
-                  case PluginFusioninventoryTaskjobstate::PREPARED :
-                     // We put this agent in the prepared counter
-                     // if it has not yet completed any job.
-                     $counters['agents_prepared'][$agent_id] = $run_id;
-                     $agent_state = 'prepared';
+                     case PluginFusioninventoryTaskjobstate::PREPARED :
+                        $counters['agents_prepared'][$agent_id] = $run_id;
+                        $agent_state = 'prepared';
+                        break;
+                     case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :
+                     case PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA :
+                        $counters['agents_running'][$agent_id] = $run_id;
+                        $agent_state = 'running';
+                        break;
 
-                     // drop running counter for agent if preparation more recent
-                     if (isset($counters['agents_running'][$agent_id])
-                         && $counters['agents_running'][$agent_id] < $run_id) {
-                        unset($counters['agents_running'][$agent_id]);
-                     }
-
-                     // drop cancelled counter for agent if preparation more recent
-                     if (isset($counters['agents_cancelled'][$agent_id])
-                         && $counters['agents_cancelled'][$agent_id] < $run_id) {
-                        unset($counters['agents_cancelled'][$agent_id]);
-                     }
-                     break;
-
-                  case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :
-                  case PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA :
-                     // This agent is running so it must not be in any other counter
-                     // remove older counters
-                     foreach ($agent_state_types as $type) {
-                        if (isset($counters[$type][$agent_id])
-                            && $counters[$type][$agent_id] < $run_id) {
-                           unset($counters[$type][$agent_id]);
-                        }
-                     }
-                     $agent_state = 'running';
-                     break;
-
-                  case PluginFusioninventoryTaskjobstate::IN_ERROR :
-                     // drop older success
-                     if (isset($counters['agents_success'][$agent_id])
-                         && $counters['agents_success'][$agent_id] < $run_id) {
-                        unset($counters['agents_success'][$agent_id]);
-                     }
-
-                     // if we don't have success run (more recent due to previous test)
-                     // so we are really in error
-                     if (!isset($counters['agents_success'][$agent_id])) {
+                     case PluginFusioninventoryTaskjobstate::IN_ERROR :
                         $counters['agents_error'][$agent_id] = $run_id;
-                        unset($counters['agents_notdone'][$agent_id]);
-                     }
-                     $agent_state = 'error';
-                     break;
+                        $agent_state = 'error';
+                        break;
 
-                  case PluginFusioninventoryTaskjobstate::FINISHED :
-                     // drop older error
-                     if (isset($counters['agents_error'][$agent_id])
-                         && $counters['agents_error'][$agent_id] < $run_id) {
-                        unset($counters['agents_error'][$agent_id]);
-                     }
-
-                     // if we don't have error run (more recent due to previous test)
-                     // so we are really in success
-                     if (!isset($counters['agents_error'][$agent_id])) {
+                     case PluginFusioninventoryTaskjobstate::FINISHED :
                         $counters['agents_success'][$agent_id] = $run_id;
-                        unset($counters['agents_notdone'][$agent_id]);
-                     }
-
-                     $agent_state = 'success';
-                     break;
-
+                        $agent_state = 'success';
+                        break;
+                  }
                }
+
+               // shortcut counters
                if (!isset($counters['agents_error'][$agent_id])
-                       and !isset($counters['agents_success'][$agent_id])) {
+                   && !isset($counters['agents_success'][$agent_id])) {
                   $counters['agents_notdone'][$agent_id] = $run_id;
-               }
-               if (isset($counters['agents_running'][$agent_id])
-                       or isset($counters['agents_prepared'][$agent_id])) {
-                  unset($counters['agents_cancelled'][$agent_id]);
                }
 
                $targets[$target_id]['agents'][$agent_id][] = array(
