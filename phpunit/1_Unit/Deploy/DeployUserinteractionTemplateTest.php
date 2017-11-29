@@ -293,7 +293,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
     */
    public function testInitializeJsonFields() {
       $template = new PluginFusioninventoryDeployUserinteractionTemplate();
-      $this->assertEquals(18, count($template->initializeJsonFields([])));
+      $this->assertEquals(19, count($template->initializeJsonFields([])));
    }
 
    /**
