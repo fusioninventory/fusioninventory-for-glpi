@@ -371,6 +371,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_dblocks_migration($migration);
       do_rule_migration($migration);
       do_task_migration($migration);
+      do_taskjobstate_migration($migration);
 
 
 
@@ -428,6 +429,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       do_deploypackage_migration($migration);
       do_deploymirror_migration($migration);
       do_deploygroup_migration($migration);
+      do_deployuserinteraction_migration($migration);
       migrateTablesFromFusinvDeploy($migration);
 
 
@@ -4862,6 +4864,34 @@ function do_computeroperatingsystem_migration($migration) {
    $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
 }
 
+/**
+ * Manage the deploy user interaction migration process
+ *
+ * @since 9.2
+ * @global object $DB
+ * @param object $migration
+ */
+function do_deployuserinteraction_migration($migration) {
+   global $DB;
+
+   if (!$DB->tableExists('glpi_plugin_fusioninventory_deployuserinteractions')) {
+      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
+         `id` int(11) NOT NULL AUTO_INCREMENT,
+         `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+         `entities_id` int(11) NOT NULL DEFAULT '0',
+         `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+         `date_creation` datetime DEFAULT NULL,
+         `date_mod` datetime DEFAULT NULL,
+         `json` longtext DEFAULT NULL,
+         PRIMARY KEY (`id`),
+         KEY `date_mod` (`date_mod`),
+         KEY `date_creation` (`date_creation`),
+         KEY `entities_id` (`entities_id`),
+         KEY `is_recursive` (`is_recursive`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+      $DB->query($query);
+   }
+}
 
 
 /**
@@ -6385,7 +6415,6 @@ function do_rule_migration($migration) {
 }
 
 
-
 /**
  * Manage the task part migration
  *
@@ -6442,7 +6471,38 @@ function do_task_migration($migration) {
    migrateTablesFusionInventory($migration, $a_table);
 }
 
+function do_taskjobstate_migration($migration) {
+   global $DB;
 
+   $a_table =  [];
+   $a_table['name'] = 'glpi_plugin_fusioninventory_taskjobstates';
+   $a_table['oldname'] = [];
+
+   $a_table['fields']  = [];
+
+   $a_table['fields']['nb_retry']   = ['type'    => 'integer',
+                                       'value'   => NULL];
+
+   $a_table['fields']['max_retry']  = ['type'    => 'integer',
+                                       'value'   => NULL];
+
+   $a_table['fields']['date_start'] = ['type'    => 'datetime',
+                                       'value'   => NULL];
+
+   $a_table['oldfields']  = [];
+
+   $a_table['renamefields'] = [];
+
+   $a_table['keys']   = [];
+   $a_table['keys'][] = ['field' => 'date_start',
+                         'name'  => '',
+                         'type'  => 'INDEX'
+                        ];
+
+   $a_table['oldkeys'] = [];
+
+   migrateTablesFusionInventory($migration, $a_table);
+}
 
 /**
  * Migrate search params from the old system to the new one
@@ -8756,7 +8816,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    $packages = $DB->request('glpi_plugin_fusioninventory_deploypackages');
    foreach ($packages as $order_config) {
-      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $json_order = json_decode($order_config['json']);
       //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
@@ -8788,7 +8847,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
          //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
       //   json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
       //);
-      $pfDeployPackage::updateOrderJson($order_config['id'], $json_order);
+      $pfDeployPackageItem = new PluginFusioninventoryDeployPackageItem();
+      $pfDeployPackageItem->updateOrderJson($order_config['id'], $json_order);
    }
 
    /**
