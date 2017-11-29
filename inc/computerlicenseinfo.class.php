@@ -120,7 +120,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   ."&nbsp;(".implode(', ', $options).")";
             }
             echo "<td>";
-            if (!isset($licenseInfo['fullname'])) {
+            if (!empty($licenseInfo['fullname'])) {
                echo $licenseInfo['fullname'];
             } else {
                echo $licenseInfo['name'];

@@ -740,11 +740,11 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
             case 'glpi_rules.id':
                $rule = new Rule();
-               $rule->getFromDB($data['raw']["ITEM_$num"]);
-               $out = "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleimport.form.php?id=";
-               $out .= $data['raw']["ITEM_$num"]."'>".$rule->fields['name']."</a>";
-               return $out;
-
+               if ($rule->getFromDB($data['raw']["ITEM_$num"])) {
+                  $out = "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleimport.form.php?id=";
+                  $out .= $data['raw']["ITEM_$num"]."'>".$rule->fields['name']."</a>";
+                  return $out;
+               }
          }
          break;
    }
