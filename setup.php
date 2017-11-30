@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.1");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
@@ -522,6 +522,22 @@ function plugin_fusioninventory_check_prerequisites() {
 
    if (!isset($_SESSION['glpi_plugins'])) {
       $_SESSION['glpi_plugins'] = [];
+   }
+
+   if (version_compare(GLPI_VERSION, '9.2-dev', '!=')
+      && version_compare(GLPI_VERSION, '9.2', 'lt')
+      || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+      if (method_exists('Plugin', 'messageIncompatible')) {
+         echo Plugin::messageIncompatible('core', '9.2', '9.3');
+      } else {
+         echo __('Your GLPI version not compatible, require >= 9.2 and < 9.3', 'fusioninventory');
+      }
+      return FALSE;
+   }
+
+   if (!function_exists('finfo_open')) {
+      echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
+      return FALSE;
    }
 
    $plugin = new Plugin();

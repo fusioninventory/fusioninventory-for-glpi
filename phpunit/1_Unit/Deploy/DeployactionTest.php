@@ -47,8 +47,8 @@ class DeployactionTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function testGetReturnActionNames() {
-      $types = PluginFusioninventoryDeployAction::getReturnActionNames();
-      $this->assertEquals(5, count($types));
+      $action = new PluginFusioninventoryDeployAction();
+      $this->assertEquals(5, count($action->getReturnActionNames()));
 
    }
 
@@ -56,26 +56,27 @@ class DeployactionTest extends RestoreDatabase_TestCase {
     * @test
     */
    public function getGetTypes() {
-      $types = PluginFusioninventoryDeployAction::getTypes();
-      $this->assertEquals(5, count($types));
+      $action = new PluginFusioninventoryDeployAction();
+      $this->assertEquals(5, count($action->getTypes()));
    }
 
    /**
     * @test
     */
-   public function testGetTypeDescription() {
+   public function testGetLabelForAType() {
+      $action = new PluginFusioninventoryDeployAction();
       $this->assertEquals(__('Command', 'fusioninventory'),
-                          PluginFusioninventoryDeployAction::getTypeDescription('cmd'));
+                          $action->getLabelForAType('cmd'));
       $this->assertEquals(__('Move', 'fusioninventory'),
-                          PluginFusioninventoryDeployAction::getTypeDescription('move'));
+                          $action->getLabelForAType('move'));
       $this->assertEquals(__('Copy', 'fusioninventory'),
-                          PluginFusioninventoryDeployAction::getTypeDescription('copy'));
+                          $action->getLabelForAType('copy'));
       $this->assertEquals(__('Delete directory', 'fusioninventory'),
-                          PluginFusioninventoryDeployAction::getTypeDescription('delete'));
+                          $action->getLabelForAType('delete'));
       $this->assertEquals(__('Create directory', 'fusioninventory'),
-                          PluginFusioninventoryDeployAction::getTypeDescription('mkdir'));
+                          $action->getLabelForAType('mkdir'));
       $this->assertEquals('foo',
-                          PluginFusioninventoryDeployAction::getTypeDescription('foo'));
+                          $action->getLabelForAType('foo'));
    }
 
    /**
@@ -89,61 +90,62 @@ class DeployactionTest extends RestoreDatabase_TestCase {
                 'entities_id' => 0];
       $packages_id = $pfDeployPackage->add($input);
 
+      $action = new PluginFusioninventoryDeployAction();
       $params = ['id'                => $packages_id,
-                 'deploy_actiontype' => 'cmd',
+                 'actionstype'       => 'cmd',
                  'name'              => 'Command ls',
                  'exec'              => 'ls -lah',
                  'logLineLimit'      => '100',
                  'retChecks'         => ['type' => 'okCode', 'values' => [127]],
                 ];
-      PluginFusioninventoryDeployAction::add_item($params);
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}}]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $action->add_item($params);
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}}],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       $params = ['id'                => $packages_id,
-                 'deploy_actiontype' => 'move',
+                 'actionstype'       => 'move',
                  'name'              => 'Move to /tmp',
                  'from'              => '*',
                  'to'                => '/tmp/'
                 ];
-      PluginFusioninventoryDeployAction::add_item($params);
+      $action->add_item($params);
 
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}}]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}}],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       $params = ['id'                => $packages_id,
-                 'deploy_actiontype' => 'copy',
+                 'actionstype'       => 'copy',
                  'name'              => 'Copy to /tmp',
                  'from'              => '*',
                  'to'                => '/tmp/'
                 ];
-      PluginFusioninventoryDeployAction::add_item($params);
+      $action->add_item($params);
 
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}}]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}}],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
       $params = ['id'                => $packages_id,
-                 'deploy_actiontype' => 'mkdir',
+                 'actionstype'       => 'mkdir',
                  'name'              => 'Create directory /tmp/foo',
                  'to'                => '/tmp/foo'
                 ];
-      PluginFusioninventoryDeployAction::add_item($params);
+      $action->add_item($params);
 
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}}]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}}],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
       $this->assertEquals($expected, $json);
       $params = ['id'                => $packages_id,
-                 'deploy_actiontype' => 'delete',
+                 'actionstype'       => 'delete',
                  'name'              => 'Delete directory /tmp/foo',
                  'to'                => '/tmp/foo'
                 ];
-      PluginFusioninventoryDeployAction::add_item($params);
+      $action->add_item($params);
 
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}],"userinteractions":[]},"associatedFiles":[]}';
+      $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
    }
@@ -160,17 +162,18 @@ class DeployactionTest extends RestoreDatabase_TestCase {
                 'json'        => $json];
       $packages_id = $pfDeployPackage->add($input);
 
+      $action = new PluginFusioninventoryDeployAction();
       $params = ['id'                => $packages_id,
                  'index'             => 0,
-                 'deploy_actiontype' => 'cmd',
+                 'actionstype'       => 'cmd',
                  'name'              => 'Command ls -la \'s',
                  'exec'              => 'ls -la',
                  'logLineLimit'      => '100',
                  'retChecks'         => ['type' => 'okCode', 'values' => [127]],
                 ];
-      PluginFusioninventoryDeployAction::save_item($params);
+      $action->save_item($params);
       $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -la","name":"Command ls -la \'s","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
-      $json     = Toolbox::stripslashes_deep(PluginFusioninventoryDeployPackage::getJson($packages_id));
+      $json     = Toolbox::stripslashes_deep($action->getJson($packages_id));
       $this->assertEquals($expected, $json);
 
    }
@@ -188,16 +191,17 @@ class DeployactionTest extends RestoreDatabase_TestCase {
                ];
       $packages_id = $pfDeployPackage->add($input);
 
-      PluginFusioninventoryDeployAction::remove_item(['packages_id'   => $packages_id,
-                                                     'action_entries' => [0 => 'on']]);
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
-      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $action = new PluginFusioninventoryDeployAction();
+      $action->remove_item(['packages_id'    => $packages_id,
+                            'action_entries' => [0 => 'on']]);
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
+      $json     = $action->getJson($packages_id);
       $this->assertEquals($expected, $json);
 
-      PluginFusioninventoryDeployAction::remove_item(['packages_id'   => $packages_id,
-                                                     'action_entries' => [0 => 'on', 1 => 'on']]);
-      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
-      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $action->remove_item(['packages_id'    => $packages_id,
+                            'action_entries' => [0 => 'on', 1 => 'on']]);
+      $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
+      $json     = $action->getJson($packages_id);
       $this->assertEquals($expected, $json);
 
    }
@@ -214,12 +218,13 @@ class DeployactionTest extends RestoreDatabase_TestCase {
                 'json'        => $json
                ];
       $packages_id = $pfDeployPackage->add($input);
+      $action      = new PluginFusioninventoryDeployAction();
 
-      PluginFusioninventoryDeployAction::move_item(['id'        => $packages_id,
-                                                   'old_index' => 0,
-                                                   'new_index' => 1]);
+      $action->move_item(['id'        => $packages_id,
+                          'old_index' => 0,
+                          'new_index' => 1]);
       $expected = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"move":{"from":"*","to":"/tmp/","name":"Move to /tmp"}},{"cmd":{"exec":"ls -lah","name":"Command ls","logLineLimit":"100"}},{"copy":{"from":"*","to":"/tmp/","name":"Copy to /tmp"}},{"mkdir":{"to":"/tmp/foo","name":"Create directory /tmp/foo"}},{"delete":{"to":"/tmp/foo","name":"Delete directory /tmp/foo"}}]},"associatedFiles":[]}';
-      $json     = PluginFusioninventoryDeployPackage::getJson($packages_id);
+      $json     = $action->getJson($packages_id);
       $this->assertEquals($expected, $json);
    }
 }

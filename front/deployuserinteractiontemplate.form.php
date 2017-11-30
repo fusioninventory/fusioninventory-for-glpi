@@ -30,13 +30,12 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the deploy package installation.
+ * This file is used to manage the deploy package form.
  *
  * ------------------------------------------------------------------------
  *
  * @package   FusionInventory
- * @author    David Durieux
- * @author    Alexandre Delaunay
+ * @author    Walid Nouh
  * @copyright Copyright (c) 2010-2016 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -45,65 +44,39 @@
  *
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+include ("../../../inc/includes.php");
+Session::checkLoginUser();
+
+$template = new PluginFusioninventoryDeployUserinteractionTemplate();
+//general form
+if (isset ($_POST["add"])) {
+   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', CREATE);
+   $newID = $template->add($_POST);
+   Html::redirect($template->getFormURLWithID($newID));
+} else if (isset ($_POST["update"])) {
+   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', UPDATE);
+   $template->update($_POST);
+   Html::back();
+} else if (isset ($_POST["purge"])) {
+   Session::checkRight('plugin_fusioninventory_userinteractiontemplate', PURGE);
+   $template->delete($_POST, 1);
+   $template->redirectToList();
 }
 
-/**
- * Manage the deploy package installation.
- */
-class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployCommon {
-
-
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
-   static function getTypeName($nb=0) {
-      return __('Package actions', 'fusioninventory');
-   }
-
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      switch(get_class($item)) {
-
-         case 'PluginFusioninventoryDeployPackage':
-            return __('Package actions', 'fusioninventory');
-
-      }
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      switch(get_class($item)) {
-
-         case 'PluginFusioninventoryDeployPackage':
-            $item->displayOrderTypeForm();
-            return true;
-
-      }
-      return false;
-   }
+if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
+   Html::nullHeader(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"]);
+} else {
+   Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "admin",
+      "pluginfusioninventorymenu", "deployuserinteractiontemplate");
+   PluginFusioninventoryMenu::displayMenu("mini");
 }
-
-?>
+$id = "";
+if (isset($_GET["id"])) {
+   $id = $_GET["id"];
+}
+$template->display($_GET);
+if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
+   Html::nullFooter();
+} else {
+   Html::footer();
+}

@@ -30,13 +30,12 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the deploy package installation.
+ * This file is used to manage the deploy packages.
  *
  * ------------------------------------------------------------------------
  *
  * @package   FusionInventory
- * @author    David Durieux
- * @author    Alexandre Delaunay
+ * @author    Walid Nouh
  * @copyright Copyright (c) 2010-2016 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -50,60 +49,19 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Manage the deploy package installation.
+ * Template for deploy user interactions
  */
-class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployCommon {
-
+class PluginFusioninventoryUserinteractionModel extends CommonDBTM {
 
    /**
-    * Get name of this type by language of the user connected
+    * Get the name user interaction
     *
     * @param integer $nb number of elements
     * @return string name of this type
     */
    static function getTypeName($nb=0) {
-      return __('Package actions', 'fusioninventory');
+      return _n('User interaction', 'User interactions', 'fusioninventory');
    }
 
 
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      switch(get_class($item)) {
-
-         case 'PluginFusioninventoryDeployPackage':
-            return __('Package actions', 'fusioninventory');
-
-      }
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      switch(get_class($item)) {
-
-         case 'PluginFusioninventoryDeployPackage':
-            $item->displayOrderTypeForm();
-            return true;
-
-      }
-      return false;
-   }
 }
-
-?>

@@ -224,8 +224,10 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $computer        = new Computer();
       $pfAgent         = new PluginFusioninventoryAgent();
+      $pfAgentModule   = new PluginFusioninventoryAgentmodule();
       $pfDeployPackage_Entity = new PluginFusioninventoryDeployPackage_Entity();
 
+      $pfAgentModule->update(['id' => 6, 'is_active' => 1]);
       $computer->add(array('name' => 'pc02', 'entities_id' => 0));
       $pfAgent->add(array('computers_id'=> 2, 'entities_id' => 0));
 
@@ -245,7 +247,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
                      'entities_id' => 1,
                      'plugin_fusioninventory_deploygroups_id' => 1);
       $packages_id_2 = $pfDeployPackage->add($input);
-      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id,
+      $pfDeployPackage_Entity->add(array('plugin_fusioninventory_deploypackages_id' => $packages_id_2,
                                          'entities_id' => 1));
 
       // Create task

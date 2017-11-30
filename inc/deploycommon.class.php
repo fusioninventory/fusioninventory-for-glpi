@@ -58,9 +58,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
    /**
     * Check if definition_type is present in definitions_filter array.
-    * This function returns TRUE if the definition_type is not in
+    * This function returns true if the definition_type is not in
     * definitions_filter array.
-    * If definitions_filter is NULL, this check is inhibited and return FALSE.
+    * If definitions_filter is NULL, this check is inhibited and return false.
     *
     * @param string $definition_type
     * @param null|array $definitions_filter
@@ -71,9 +71,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
               && is_array($definitions_filter)
               && count($definitions_filter) > 0
               && !in_array($definition_type, $definitions_filter)) {
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -96,6 +96,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $agent      = new PluginFusioninventoryAgent();
       $agentmodule= new PluginFusioninventoryAgentmodule();
 
+
       $job->getFromDB($taskjob_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
 
@@ -103,9 +104,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
       $actions     = importArrayFromDB($job->fields['action']);
       $definitions = importArrayFromDB($job->fields['definition']);
-      $taskvalid = 0;
+      $taskvalid   = 0;
 
-      $computers = array();
+      $computers = [];
       foreach ($actions as $action) {
          $itemtype = key($action);
          $items_id = current($action);
@@ -130,8 +131,8 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $group         = new Group();
                $group->getFromDB($items_id);
 
-               $computers_a_1 = array();
-               $computers_a_2 = array();
+               $computers_a_1 = [];
+               $computers_a_2 = [];
 
                //array_keys($group_users->find("groups_id = '$items_id'"));
                $members = $group_users->getGroupUsers($items_id);
@@ -216,9 +217,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
                      $pfSearch = new PluginFusioninventorySearch();
                      Search::manageParams('Computer');
-                     $glpilist_limit = $_SESSION['glpilist_limit'];
+                     $glpilist_limit             = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
-                     $result = $pfSearch->constructSQL('Computer', $_GET);
+                     $result                     = $pfSearch->constructSQL('Computer', $_GET);
                      $_SESSION['glpilist_limit'] = $glpilist_limit;
                      while ($data=$DB->fetch_array($result)) {
                         $computers[] = $data['id'];
@@ -237,7 +238,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //Remove duplicatas from array
       //We are using isset for faster processing than array_unique because we might have many
       //entries in this list.
-      $tmp_computers = array();
+      $tmp_computers = [];
       foreach ($computers as $computer) {
          if (!isset($tmp_computers[$computer])) {
             $tmp_computers[$computer] = 1;
@@ -245,7 +246,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       }
       $computers = array_keys($tmp_computers);
 
-      $c_input= array();
+      $c_input= [];
       $c_input['plugin_fusioninventory_taskjobs_id'] = $job->fields['id'];
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
@@ -257,18 +258,18 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          //Unique Id match taskjobstatuses for an agent(computer)
 
          foreach ($definitions as $definition) {
-            $uniqid= uniqid();
+            $uniqid = uniqid();
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
 
-            $c_input['state'] = 0;
+            $c_input['state']    = 0;
             $c_input['itemtype'] = 'PluginFusioninventoryDeployPackage';
             $c_input['items_id'] = $package->fields['id'];
-            $c_input['date'] = date("Y-m-d H:i:s");
-            $c_input['uniqid'] = $uniqid;
+            $c_input['date']     = date("Y-m-d H:i:s");
+            $c_input['uniqid']   = $uniqid;
 
             //get agent for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);
-            if ($agents_id === FALSE) {
+            if ($agents_id === false) {
                $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
                                              0,
@@ -327,11 +328,20 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * @return array
     */
    function run($taskjobstate) {
+
+      //Check if the job has been postponed
+      if (!is_null($taskjobstate->fields['date_start'])
+         && $taskjobstate->fields['date_start'] > $_SESSION['glpi_currenttime']) {
+         //If the job is postponed and the execution date is in the future,
+         //skip the job for now
+         return false;
+      }
+
       //get order by type and package id
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
       $pfDeployPackage->getFromDB($taskjobstate->fields['items_id']);
       //decode order data
-      $order_data = json_decode($pfDeployPackage->fields['json'], TRUE);
+      $order_data = json_decode($pfDeployPackage->fields['json'], true);
 
       /* TODO:
        * This has to be done properly in each corresponding classes.
@@ -345,7 +355,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
        * Orders should only contain job data and associatedFiles should be retrieved from the
        * list inside Orders data like the following :
        *
-       * $order_files = array()
+       * $order_files = []
        * foreach ($order_job["associatedFiles"] as $hash) {
        *    if (!isset($order_files[$hash]) {
        *       $order_files[$hash] = PluginFusioninventoryDeployFile::getByHash($hash);
@@ -362,11 +372,11 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       foreach ($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
          $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
-         $order_files[$hash]['multiparts'] = array();
+         $order_files[$hash]['multiparts'] = [];
          if (file_exists($manifest)) {
             $handle = fopen($manifest, "r");
             if ($handle) {
-               while (($buffer = fgets($handle)) !== FALSE) {
+               while (($buffer = fgets($handle)) !== false) {
                   $order_files[$hash]['multiparts'][] = trim($buffer);
                }
                fclose($handle);
@@ -375,15 +385,13 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       }
       //Send an empty json dict instead of empty json list
       if (count($order_files) == 0) {
-         $order_files = (object)array();
+         $order_files = (object)[];
       }
 
-      $order = array(
-         "job" => $order_job,
+      $order = [
+         "job"             => $order_job,
          "associatedFiles" => $order_files
-      );
+      ];
       return $order;
    }
 }
-
-?>

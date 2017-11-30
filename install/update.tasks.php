@@ -355,6 +355,18 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
       'state' => array(
          'type' => 'integer',
          'value' => NULL
+      ),
+      'date_start' => array(
+         'type' => 'datetime',
+         'value' => NULL
+      ),
+      'nb_retry' => array(
+         'type' => 'integer',
+         'value' => NULL
+      ),
+      'max_retry' => array(
+         'type' => 'integer',
+         'value' => NULL
       )
    );
 
@@ -388,7 +400,8 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
          ),
          'name' => 'plugin_fusioninventory_agents_items_states',
          'type' => 'INDEX'
-      ),
+      )
+
    );
    $table['oldkeys'] = array();
    migrateTablesFusionInventory($migration, $table);
