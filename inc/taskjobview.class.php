@@ -78,7 +78,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       $tab_names = array();
-      if ($item->getID() > 0 and $this->can('task', 'r')) {
+      if ($item->getID() > 0 and $this->can('task', READ)) {
          return __('Jobs configuration', 'fusioninventory');
       }
       return '';
@@ -263,14 +263,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       //Activate massive deletion if there are some.
       $deletion_activated = (count($taskjobs)>0);
 
-      /**
-       * TODO: use sortable jqueryUI widget for drag and drop
-       */
-      //echo implde(array("\n", array(
-      //   "<script type='text/javascript'>",
-      //   "$('#taskjobs_list ')",
-      //   "</script>"
-      //));
       echo "<form id='taskjobs_form' method='post' action='".$this->getFormURL()."'>";
       echo "<table class='tab_cadrehov package_item_list' id='taskjobs_list'>\n";
       $this->showListHeader($task_id, $deletion_activated);
@@ -372,7 +364,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
        * get Itemtype choices dropdown
        */
       $module_types = array_merge(
-         array('' => '------'),
+         ['' => Dropdown::EMPTY_VALUE],
          $this->getTypesForModule($options['method'], $options['moduletype'])
       );
       $module_types_dropdown = $this->showDropdownFromArray(
@@ -950,4 +942,3 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       }
    }
 }
-
