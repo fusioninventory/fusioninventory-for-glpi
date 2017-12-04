@@ -213,58 +213,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      $tab_names = array();
-      if ( $this->can(0, CREATE)
-         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
-         if ($item->getType() == 'Computer') {
-            $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent', 'fusioninventory');
-         }
-      }
-
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
-      if ($item->getType() == 'Computer') {
-
-         // Possibility to remote agent
-         if (PluginFusioninventoryToolbox::isAllowurlfopen(1)) {
-            $pfAgent = new PluginFusioninventoryAgent();
-            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
-               $pfAgent->showRemoteStatus($item);
-               return TRUE;
-            }
-         }
-      }
-      return FALSE;
-   }
-
-
-
    /**
     * Get comments of the object
     *
@@ -804,25 +752,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 
       $agent_id = $this->fields['id'];
+      $fi_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory";
 
-      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
-         "/plugins/fusioninventory/front/agent.form.php\">";
-      echo "<table class='tab_cadre' width='500'>";
-
-      echo "<tr>";
-      echo "<th colspan='2'>";
-      echo __('Agent state', 'fusioninventory');
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Agent', 'fusioninventory')."&nbsp:";
-      echo "</td>";
-      echo "<td>";
-      echo $this->getLink(1);
-      echo "</td>";
-      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
@@ -830,55 +761,79 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>";
 
-      $waiting = 0;
+      $load_anim   = '<i class="fa fa-spinner fa-spin fa-fw"></i>';
 
-      $agentStatus = $this->getStatus();
+      echo Html::scriptBlock("$(function() {
+         var waiting = false;
 
-      switch($agentStatus['message']) {
+         var refresh_status = function(display_refresh = true) {
+            $('#agent_status').html('$load_anim');
+            $('#refresh_status').hide();
+            $('#force_inventory_button').hide();
 
-         case 'executing scheduled tasks':
-         case 'running':
-            echo __('Running');
-            break;
+            $.get('$fi_path/ajax/remote_status.php', {
+               id: $agent_id,
+               action: 'get_status'
+            }, function(answer) {
+               if (typeof answer.waiting != 'undefined'
+                   && answer.waiting == true) {
+                  $('#force_inventory_button').show();
+                  waiting = true;
+               }
 
-         case 'noanswer':
-            echo __('Impossible to communicate with agent!', 'fusioninventory');
-            break;
+               $('#agent_status').html(answer.message);
+               if (display_refresh) {
+                  $('#refresh_status').show();
+               }
+            });
+         };
 
-         case 'waiting':
-            $waiting = 1;
-            echo sprintf(
-               __('Available on %1$s', 'fusioninventory'),
-               '<a target="_blank" href="'. $agentStatus['url_ok'] . '">' . $agentStatus['url_ok'] . '</a>'
-            );
-            echo Html::hidden('agent_id', array('value' => $agent_id));
-            break;
+         var force_inventory = function() {
+            $('#agent_status').html('$load_anim');
+            $('#refresh_status').hide();
+            waiting = false;
+            $('#force_inventory_button').hide();
+            $.get('$fi_path/ajax/remote_status.php', {
+               id: $agent_id,
+               action: 'start_agent'
+            }, function(answer) {
+               refresh_status(false);
+               displayAjaxMessageAfterRedirect();
 
-         default:
-            if (strstr($agentStatus['message'], 'running')) {
-               echo $agentStatus['message'];
-            } else {
-               echo "SELinux problem, do 'setsebool -P httpd_can_network_connect on'";
-            }
-            break;
+               // add a loop for checking status (set a max iterations to avoid infinite looping)
+               var loop_index = 0;
+               var myloop = setInterval(function() {
+                  if (loop_index > 30 || waiting) {
+                     clearInterval(myloop);
+                     $('#refresh_status').show();
+                     return;
+                  }
+                  refresh_status(false);
+                  loop_index++;
+               }, 2000);
+            });
+         };
 
-      }
+         $(document)
+            .on('click', '#refresh_status', function() {
+               refresh_status();
+            })
+            .on('click', '#force_inventory_button', function() {
+               force_inventory();
+            });
+      });");
+      echo "<span id='agent_status'>".
+           __("not yet requested, refresh?", 'fusioninventory').
+           "</span>";
+      echo "<span id='refresh_status'><i class='fa fa-refresh'></i></span>";
+      echo "</td>";
 
+      echo "<td colspan='2'>";
+      echo "<span id='force_inventory_button'>".
+           __('Force inventory', 'fusioninventory').
+           "</span>";
       echo "</td>";
       echo "</tr>";
-
-      if ($waiting == '1') {
-         echo "<tr>";
-         echo "<th colspan='2'>";
-         echo "<input name='startagent' value=\"".__('Force inventory', 'fusioninventory').
-            "\" class='submit' type='submit'>";
-         echo "</th>";
-         echo "</tr>";
-      }
-
-      echo "</table>";
-      Html::closeForm();
-      echo "<br/>";
    }
 
 
@@ -1172,12 +1127,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
     * Display agent information for a computer
     *
-    * @param integer $computers_id id of the computer
+    * @param Computer the computer
     * @param integer $colspan the number of columns of the form (2 by default)
     */
-   function showInfoForComputer($computers_id, $colspan = 2) {
+   function showInfoForComputer(Computer $computer, $colspan = 2) {
 
-      if ($this->getAgentWithComputerid($computers_id)) {
+      if ($this->getAgentWithComputerid($computer->getID())) {
 
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Agent', 'fusioninventory').'</td>';
@@ -1190,6 +1145,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['useragent'].'</td>';
          echo '</tr>';
+
+         $this->showRemoteStatus($computer);
 
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';

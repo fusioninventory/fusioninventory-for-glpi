@@ -918,3 +918,34 @@ table.runs td.comment {
 .toggle_run.expand {
    background-image: url("../../../pics/collapse.png");
 }
+
+#refresh_status {
+   cursor: pointer;
+}
+
+#force_inventory_button {
+   position: relative;
+   padding: 2px 5px 2px 15px;
+   border: 1px solid #B8B8B8;
+   border-radius: 2px;
+   display: none;
+   cursor: pointer;
+}
+
+#force_inventory_button:hover {
+   border: 1px solid #CC7D7D;
+}
+
+#force_inventory_button:before {
+   position: absolute;
+   content: '\f0e7';
+   color: #B8B8B8;
+   font-family: FontAwesome;
+   left: 5px;
+   top: 4px;
+}
+
+#force_inventory_button:hover:before {
+   color: #CC7D7D;
+}
+
