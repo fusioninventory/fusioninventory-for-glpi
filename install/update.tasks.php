@@ -362,11 +362,11 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
       ),
       'nb_retry' => array(
          'type' => 'integer',
-         'value' => NULL
+         'value' => 0
       ),
       'max_retry' => array(
          'type' => 'integer',
-         'value' => NULL
+         'value' => 1
       )
    );
 
