@@ -232,7 +232,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
       //on_nouser, on_ok, on_cancel, on_abort, on_retry, on_ignore,
       //on_yes, on_no, on_tryagain, on_continue, on_timeout, on_async,
-      //on_mutilusers
+      //on_mutliusers
       $event   = filter_input(INPUT_GET, "event");
 
       //The user who did the interaction
