@@ -658,7 +658,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @param uniqid taskjobstate's uniqid
    */
    function getFromDBByUniqID($uniqid) {
-      $result = $this->find("`uniqid`='$uniqid'");
+      $result = $this->find("`uniqid`='$uniqid'", '', 1);
       if (!empty($result)) {
          $this->fields = array_pop($result);
       }
