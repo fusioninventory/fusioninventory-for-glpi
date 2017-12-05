@@ -218,11 +218,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       if (!strstr($p_target, "ajax/dropdownMassiveAction.php")) {
+         echo "<br>";
          echo "<form method='post' action='".$p_target."'>";
       }
+
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
-      echo "<table class='tab_cadre'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr><th colspan='4'>".__('FusionInventory', 'fusioninventory')."</th></tr>";
+
+
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
       if ($p_items_id != '0') {
          echo "<th>".__('Values GLPI', 'fusioninventory')."</th>";
