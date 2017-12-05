@@ -512,6 +512,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
     * @param array $params list of fields with value of the action
     */
    function save_item($params) {
+      $tmp    = [];
       $fields = ['list', 'from', 'to', 'exec', 'name', 'logLineLimit'];
       foreach ($fields as $field) {
          if (isset($params[$field])) {

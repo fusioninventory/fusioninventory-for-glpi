@@ -382,8 +382,8 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
          foreach ($json['jobs'][$this->json_name] as $interaction) {
             if (!isset($used_interactions[$interaction['type']])) {
                $used_interactions[$interaction['type']] = $interaction['type'];
-               }
             }
+         }
       }
       return $used_interactions;
    }

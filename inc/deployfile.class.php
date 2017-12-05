@@ -756,7 +756,8 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    * @since 9.2
    */
    public function getItemConfig(PluginFusioninventoryDeployPackage $package, $request_data) {
-      $element = $package->getSubElement('associatedFiles', $request_data['index']);
+      $element = $package->getSubElement($this->json_name, $request_data['index']);
+      $config  = [];
       if ($element) {
          $config = [
             'hash' => $element,

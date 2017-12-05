@@ -265,9 +265,9 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     * @return array
     */
    static function getBehaviors() {
-      return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction'),
+      return [self::BEHAVIOR_CONTINUE_DEPLOY => __('Continue job with no user interaction', 'fusioninventory'),
               self::BEHAVIOR_POSTPONE_DEPLOY => __('Retry job later', 'fusioninventory'),
-              self::BEHAVIOR_STOP_DEPLOY     => __('Cancel job')
+              self::BEHAVIOR_STOP_DEPLOY     => __('Cancel job', 'fusioninventory')
              ];
    }
 

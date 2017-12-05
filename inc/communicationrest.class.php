@@ -96,7 +96,7 @@ class PluginFusioninventoryCommunicationRest {
     * @return array
     */
    static function getConfigByAgent($params = []) {
-      $schedule      = [];
+      $schedule = [];
 
       if (isset($params['task'])) {
          $pfAgentModule = new PluginFusioninventoryAgentmodule();
@@ -235,7 +235,7 @@ class PluginFusioninventoryCommunicationRest {
       $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get task job status : identifier is the uuid given by the agent
-      $params = ['FROM' => 'glpi_plugin_fusioninventory_taskjobstates',
+      $params = ['FROM' => getTableForItemType("PluginFusioninventoryTaskjobstate"),
                  'FIELDS' => 'id',
                  'WHERE' => ['uniqid' => $p['uuid']]
                 ];
