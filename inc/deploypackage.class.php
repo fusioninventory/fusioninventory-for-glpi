@@ -1692,12 +1692,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   continue;
                }
 
-               //If we only want packages for one computer
-               //check if it's the computer we look for
-               if ($computers_id && $comp_id != $computers_id) {
-                  continue;
-               }
-
                //If the agent associated with the computer has not the
                //deploy feature enabled, do not propose to deploy packages on it
                if (!self::isDeployEnabled($comp_id)) {
