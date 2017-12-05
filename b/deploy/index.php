@@ -240,7 +240,8 @@ switch (filter_input(INPUT_GET, "action")) {
 
       //Process response if an agent provides a behavior, a type and an event
       //the user parameter is not mandatory
-      if (isset($behavior) && isset($type) && isset($event)) {
+      if ($behavior !== false && $type !== false
+         && $event !== false && $user !== false) {
          $interaction    = new PluginFusioninventoryDeployUserinteraction();
          $cancel         = false;
          $postpone       = false;
