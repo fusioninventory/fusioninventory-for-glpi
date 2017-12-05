@@ -173,7 +173,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_start` datetime DEFAULT NULL,
   `nb_retry` int(11) NOT NULL DEFAULT '0',
-  `max_retry` int(11) NOT NULL DEFAULT '0',
+  `max_retry` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
