@@ -191,7 +191,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
                                  'glpi_plugin_fusioninventory_taskjobstates' => 'id']]
                      ],
                  'FIELDS' => ['itemtype'],
-                 'WHERE'  => ['id' => $taskjoblogs_id],
+                 'WHERE'  => ['glpi_plugin_fusioninventory_taskjobstates.id' => $taskjoblogs_id],
                  'LIMIT'  => 1
                 ];
       $iterator = $DB->request($params);
@@ -748,14 +748,6 @@ function appear_array(id) {
          $uniqid = $data['uniqid'];
       }
 
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.*
-            FROM `glpi_plugin_fusioninventory_taskjoblogs`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates`
-            ON plugin_fusioninventory_taskjobstates_id = ".
-              "`glpi_plugin_fusioninventory_taskjobstates`.`id`
-         WHERE `uniqid`='".$uniqid."'
-         ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
-         LIMIT 1";
       $state         = 0;
       $date          = '';
       $comment       = '';
