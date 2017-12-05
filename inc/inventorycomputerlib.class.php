@@ -182,7 +182,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       // * Computer
          $db_computer = $computer->fields;
-         $computerName = $computer->fields['name'];
+         $computerName = isset($computer->fields['name'])
+            ? $computer->fields['name']
+            : '';
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                           $db_computer, $a_lockable);
          $a_computerinventory['Computer'] = $a_ret[0];
@@ -1513,7 +1515,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($a_computerinventory['monitor'] as $key => $arrays) {
          $input = array();
          $input['itemtype'] = "Monitor";
-         $input['name']     = $arrays['name'];
+         $input['name']     = isset($arrays['name'])
+                               ? $arrays['name']
+                               : "";
          $input['serial']   = isset($arrays['serial'])
                                ? $arrays['serial']
                                : "";
@@ -1599,7 +1603,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($a_computerinventory['printer'] as $key => $arrays) {
          $input = array();
          $input['itemtype'] = "Printer";
-         $input['name']     = $arrays['name'];
+         $input['name']     = isset($arrays['name'])
+                               ? $arrays['name']
+                               : "";
          $input['serial']   = isset($arrays['serial'])
                                ? $arrays['serial']
                                : "";
