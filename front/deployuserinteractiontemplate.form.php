@@ -70,10 +70,6 @@ if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
       "pluginfusioninventorymenu", "deployuserinteractiontemplate");
    PluginFusioninventoryMenu::displayMenu("mini");
 }
-$id = "";
-if (isset($_GET["id"])) {
-   $id = $_GET["id"];
-}
 $template->display($_GET);
 if (isset($_GET['_in_modal']) && $_GET['_in_modal']) {
    Html::nullFooter();
