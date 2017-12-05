@@ -2044,13 +2044,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       //If task doesn't support checks skip, info, warning,
       //send an ignore instead
       //tasks version needs to be at least 2.2
-      if (version_compare($agent_task_version, '2.2', 'lt')
-         && isset($job['job']['checks'])) {
+      $is_old_agent = version_compare($agent_task_version, '2.2', 'lt');
+      if ($is_old_agent && isset($job['job']['checks'])) {
          foreach ($job['job']['checks'] as $key => $value) {
             if (in_array($value['return'], ['skip', 'info', 'warning'])) {
                $job['job']['checks'][$key]['return'] = 'ignore';
             }
          }
+      }
+
+      //No need to perform further test if the agent doesn't support
+      //user interactions
+      if ($is_old_agent) {
+         return $job;
       }
 
       $do_interaction = true;
