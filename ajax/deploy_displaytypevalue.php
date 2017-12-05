@@ -57,8 +57,10 @@ $classname = filter_input(INPUT_POST, "class");
 if (empty($rand) && (empty($type))) {
    exit();
 }
-
-$class = new $classname();
+if (!class_exists($classname)) {
+   exist();
+}
+$class        = new $classname();
 $request_data = [
     'packages_id' => filter_input(INPUT_POST, "packages_id"),
     'orders_id'   => filter_input(INPUT_POST, "orders_id"),
