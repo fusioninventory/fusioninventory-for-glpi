@@ -1515,7 +1515,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($a_computerinventory['monitor'] as $key => $arrays) {
          $input = array();
          $input['itemtype'] = "Monitor";
-         $input['name']   = isset($arrays['name'])
+         $input['name']     = isset($arrays['name'])
                                ? $arrays['name']
                                : "";
          $input['serial']   = isset($arrays['serial'])
@@ -1603,7 +1603,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($a_computerinventory['printer'] as $key => $arrays) {
          $input = array();
          $input['itemtype'] = "Printer";
-         $input['name']   = isset($arrays['name'])
+         $input['name']     = isset($arrays['name'])
                                ? $arrays['name']
                                : "";
          $input['serial']   = isset($arrays['serial'])
