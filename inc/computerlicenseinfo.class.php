@@ -94,8 +94,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
          echo '<table class="tab_cadre_fixe">';
          echo '<tr>';
-         echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory')
-            .' - '.self::getTypeName($iterator->numrows()).'</th>';
+         echo '<th colspan="4">'.self::getTypeName($iterator->numrows()).'</th>';
          echo '</tr>';
 
          foreach ($iterator as $licenseInfo) {
@@ -120,7 +119,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   ."&nbsp;(".implode(', ', $options).")";
             }
             echo "<td>";
-            if (!isset($licenseInfo['fullname'])) {
+            if (!empty($licenseInfo['fullname'])) {
                echo $licenseInfo['fullname'];
             } else {
                echo $licenseInfo['name'];

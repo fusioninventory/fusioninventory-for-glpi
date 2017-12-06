@@ -747,11 +747,11 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
             case 'glpi_rules.id':
                $rule = new Rule();
-               $rule->getFromDB($data['raw']["ITEM_$num"]);
-               $out = "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleimport.form.php?id=";
-               $out .= $data['raw']["ITEM_$num"]."'>".$rule->fields['name']."</a>";
-               return $out;
-
+               if ($rule->getFromDB($data['raw']["ITEM_$num"])) {
+                  $out = "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleimport.form.php?id=";
+                  $out .= $data['raw']["ITEM_$num"]."'>".$rule->fields['name']."</a>";
+                  return $out;
+               }
          }
          break;
    }
@@ -1920,30 +1920,41 @@ function plugin_pre_item_update_fusioninventory($parm) {
 /**
  * Manage pre-item purge an item
  *
- * @global object $DB
  * @param object $parm
  * @return object
  */
 function plugin_pre_item_purge_fusioninventory($parm) {
-   global $DB;
-
    $itemtype = get_class($parm);
+   $items_id = $parm->getID();
+
    switch ($itemtype) {
-
       case 'Computer':
-         // Delete link between computer and agent fusion
-         $query = "UPDATE `glpi_plugin_fusioninventory_agents`
-                     SET `computers_id` = '0'
-                     WHERE `computers_id` = '".$parm->getField('id')."'";
-         $DB->query($query);
+         $pfAgent        = new PluginFusioninventoryAgent;
+         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate;
+         if ($agent_id = $pfAgent->getAgentWithComputerid($items_id)) {
+            // count associated tasks to the agent
+            $states = $pfTaskjobstate->find("`plugin_fusioninventory_agents_id` = $agent_id", "", 1);
+            if (count($states) > 0) {
+               // Delete link between computer and agent fusion
+               $pfAgent->update([
+                  'id'           => $agent_id,
+                  'computers_id' => 0],
+               true);
+            } else {
+               // no task associated, purge also agent
+               $pfAgent->delete(['id' => $agent_id], true);
+            }
+         }
 
-         $clean = array('PluginFusioninventoryInventoryComputerComputer',
-                        'PluginFusioninventoryComputerLicenseInfo',
-                        'PluginFusioninventoryCollect_File_Content',
-                        'PluginFusioninventoryCollect_Registry_Content',
-                        'PluginFusioninventoryCollect_Wmi_Content');
+         $clean = [
+            'PluginFusioninventoryInventoryComputerComputer',
+            'PluginFusioninventoryComputerLicenseInfo',
+            'PluginFusioninventoryCollect_File_Content',
+            'PluginFusioninventoryCollect_Registry_Content',
+            'PluginFusioninventoryCollect_Wmi_Content'
+         ];
          foreach ($clean as $obj) {
-            $obj::cleanComputer($parm->getID());
+            $obj::cleanComputer($items_id);
          }
          break;
 
@@ -1966,9 +1977,9 @@ function plugin_pre_item_purge_fusioninventory($parm) {
    }
 
    $rule = new PluginFusioninventoryRulematchedlog();
-   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $parm->getID()));
+   $rule->deleteByCriteria(array('itemtype' => $itemtype, 'items_id' => $items_id));
 
-   PluginFusioninventoryLock::cleanForAsset($itemtype, $parm->getID());
+   PluginFusioninventoryLock::cleanForAsset($itemtype, $items_id);
    return $parm;
 }
 

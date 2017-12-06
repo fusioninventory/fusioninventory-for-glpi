@@ -93,7 +93,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<table class="tab_glpi" width="100%">';
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item->getID());
+      $pfAgent->showInfoForComputer($item);
 
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
@@ -170,7 +170,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showFormForAgentWithNoInventory($item) {
       $id = $item->getID();
       $pfComputer  = new self();
-      if (!empty($pfComputer->hasAutomaticInventory($id))) {
+      if ($item->isNewItem()
+          || !empty($pfComputer->hasAutomaticInventory($id))) {
          return true;
       } else {
          $pfAgent = new PluginFusioninventoryAgent();
@@ -182,7 +183,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
             echo '<tr>';
             echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
             echo '</tr>';
-            $pfAgent->showInfoForComputer($id, 4);
+            $pfAgent->showInfoForComputer($item, 4);
          }
          return true;
       }
@@ -277,8 +278,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '</tr>';
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item->getID(), 4);
-
+      $pfAgent->showInfoForComputer($item, 4);
 
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {

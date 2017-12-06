@@ -102,7 +102,6 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryAgent',
          [
             'addtabon' => [
-               'Computer',
                'Printer',
                'NetworkEquipment',
                'PluginFusioninventoryCredentialIp'
@@ -259,7 +258,8 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = [];
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = [];
       if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false
-          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false) {
+          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false
+          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
@@ -484,7 +484,7 @@ function plugin_version_fusioninventory() {
            'oldname'        => 'tracker',
            'author'         => '<a href="mailto:david@durieux.family">David DURIEUX</a>
                                 & FusionInventory team',
-           'homepage'       => 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
+           'homepage'       => 'https://github.com/fusioninventory/fusioninventory-for-glpi',
            'requirements'   => [
               'glpi' => [
                  'min' => '9.2',

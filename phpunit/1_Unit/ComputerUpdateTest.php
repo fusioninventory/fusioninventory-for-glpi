@@ -362,7 +362,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          'operatingsystemeditions_id'        => '0',
          'is_deleted'                        => '0',
          'is_dynamic'                        => '1',
-         'entities_id'                       => '0'
+         'entities_id'                       => '0',
+         'is_recursive'                      => '0'
       ];
 
       unset($ios->fields['date_mod']);
