@@ -156,13 +156,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       Search::constructSQL($data);
       $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
               "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      Search::constructDatas($data);
+      Search::constructData($data);
       if (Session::isMultiEntitiesMode()) {
          $data['data']['cols'] = array_slice($data['data']['cols'], 0, 2);
       } else {
          $data['data']['cols'] = array_slice($data['data']['cols'], 0, 1);
       }
-      Search::displayDatas($data);
+      Search::displayData($data);
    }
 
 
@@ -178,7 +178,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function getDatas($itemtype, $params, array $forcedisplay=array()) {
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+      Search::constructData($data);
 
       return $data;
    }
@@ -217,7 +217,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          Search::constructSQL($results);
          $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
               "`mainitemtype` = 'Computer'", $results['sql']['search']);
-         Search::constructDatas($results);
+         Search::constructData($results);
 
          foreach ($results['data']['rows'] as $id => $row) {
             $ids[$row['id']] = $row['id'];
