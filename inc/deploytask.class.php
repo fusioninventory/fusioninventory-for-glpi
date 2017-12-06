@@ -67,7 +67,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     */
    static function getTypeName($nb=0) {
       if ($nb > 1) {
-         return __('Group of computers', 'fusioninventory');
+         return PluginFusioninventoryDeployGroup::getTypeName();
       }
       return __('Task', 'fusioninventory');
    }
