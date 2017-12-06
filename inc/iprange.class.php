@@ -147,6 +147,24 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $tab[4]['linkfield'] = 'ip_end';
       $tab[4]['name'] = __('End of IP range', 'fusioninventory');
 
+      $tab[5] = [
+         'table'              => 'glpi_plugin_fusioninventory_configsecurities',
+         'field'              => 'name',
+         'datatype'           => 'dropdown',
+         'right'              => 'all',
+         'name'               => __('SNMP credentials', 'fusioninventory'),
+         'forcegroupby'       => true,
+         'massiveaction'      => false,
+         'joinparams'         => [
+            'beforejoin'         => [
+               'table'              => "glpi_plugin_fusioninventory_ipranges_configsecurities",
+               'joinparams'         => [
+                  'jointype'           => 'child',
+               ]
+            ]
+         ]
+      ];
+
       return $tab;
    }
 
