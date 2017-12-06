@@ -379,6 +379,9 @@ class PluginFusioninventoryCommunication {
       } else if ($content_type == "application/xml") {
             $xml = $rawdata;
             $compressmode = 'none';
+      } else if ($content_type == "application/json") {
+         $xml = $pfToolbox->json2xml($rawdata);
+         $compressmode = 'none';
       } else {
          # try each algorithm successively
          if (($xml = gzuncompress($rawdata))) {
@@ -394,6 +397,8 @@ class PluginFusioninventoryCommunication {
             } else {
                $compressmode = "deflate";
             }
+         } else if (($xml = $pfToolbox->json2xml($rawdata))) {
+            $compressmode = "none";
          } else {
             $xml = $rawdata;
             $compressmode = 'none';

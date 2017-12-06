@@ -75,9 +75,18 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
          );
       } else {
          error_log("Zip ok");
+         $pfToolbox = new PluginFusioninventoryToolbox();
          while ($zip_entry = zip_read($zip)) {
             if (zip_entry_open($zip, $zip_entry, "r")) {
-               $xml= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+               $inventoryData = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+               if (json_decode($inventoryData) === null) {
+                  // Not JSON, assume XML
+                  $xml = $inventoryData;
+               } else {
+                  // convert JSON to XML
+                  $xml = $pfToolbox->json2xml($inventoryData);
+               }
+               unset($inventoryData);
                error_log("toto");
                error_log($xml);
                if (!empty($xml)) {
@@ -94,6 +103,13 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 
       $xml = file_get_contents($_FILES['importfile']['tmp_name']);
       $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
+      $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
+      unset($_SESSION['glpi_fusionionventory_nolock']);
+   } else if (preg_match('/\.json/i', $_FILES['importfile']['name'])) {
+      $json = file_get_contents($_FILES['importfile']['tmp_name']);
+      $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
+      $pfToolbox = new PluginFusioninventoryToolbox();
+      $xml = $pfToolbox->json2xml($json);
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
       unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {
