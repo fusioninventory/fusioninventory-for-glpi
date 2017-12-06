@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.2+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.3+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
@@ -55,7 +55,7 @@ $PF_ESXINVENTORY = false;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.2+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.3+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
@@ -102,7 +102,6 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryAgent',
          [
             'addtabon' => [
-               'Computer',
                'Printer',
                'NetworkEquipment',
                'PluginFusioninventoryCredentialIp'
@@ -259,7 +258,8 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = [];
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = [];
       if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false
-          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false) {
+          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false
+          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
@@ -487,8 +487,8 @@ function plugin_version_fusioninventory() {
            'homepage'       => 'https://github.com/fusioninventory/fusioninventory-for-glpi',
            'requirements'   => [
               'glpi' => [
-                 'min' => '9.2',
-                  'max' => '9.3',
+                 'min' => '9.3',
+                  'max' => '9.4',
                   'dev' => PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE == 0
                ],
                'php' => [
@@ -516,7 +516,7 @@ function plugin_fusioninventory_check_prerequisites() {
 
    $version = rtrim(GLPI_VERSION, '-dev');
    if (version_compare($version, '9.2', 'lt')) {
-      echo "This plugin requires GLPI 9.2";
+      echo "This plugin requires GLPI 9.3";
       return false;
    }
 
