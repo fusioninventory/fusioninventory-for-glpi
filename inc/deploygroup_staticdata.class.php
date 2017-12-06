@@ -165,9 +165,9 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+      Search::constructData($data);
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      Search::displayDatas($data);
+      Search::displayData($data);
    }
 
 
@@ -193,9 +193,9 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+      Search::constructData($data);
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-      Search::displayDatas($data);
+      Search::displayData($data);
    }
 
    /**
