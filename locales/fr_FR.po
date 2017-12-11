@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 11:54+0100\n"
+"POT-Creation-Date: 2017-12-11 12:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Johan Cwiklinski <trasher@x-tnd.be>, 2017\n"
 "Language-Team: French (France) (https://www.transifex.com/ddurieux/teams/797/fr_FR/)\n"
@@ -258,27 +258,27 @@ msgstr "Supprimer un répertoire"
 msgid "Create directory"
 msgstr "Créer un répertoire"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:65 inc/deploycheck.class.php:68
+#: phpunit/1_Unit/Deploy/DeploycheckTest.php:66 inc/deploycheck.class.php:68
 msgid "Registry key exists"
 msgstr "La clef de registre existe"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:67 inc/deploycheck.class.php:86
+#: phpunit/1_Unit/Deploy/DeploycheckTest.php:68 inc/deploycheck.class.php:90
 msgid "Free space is greater than"
 msgstr "Taille de l'espace libre est supérieure à"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:415 inc/deploycheck.class.php:545
+#: phpunit/1_Unit/Deploy/DeploycheckTest.php:416 inc/deploycheck.class.php:555
 msgid "abort job"
 msgstr "arrêter le job"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:416 inc/deploycheck.class.php:546
+#: phpunit/1_Unit/Deploy/DeploycheckTest.php:417 inc/deploycheck.class.php:556
 msgid "skip job"
 msgstr "sauter le job"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:417 inc/deploycheck.class.php:547
+#: phpunit/1_Unit/Deploy/DeploycheckTest.php:418 inc/deploycheck.class.php:557
 msgid "report info"
 msgstr "rapporter un message d'information"
 
-#: phpunit/1_Unit/Deploy/DeploycheckTest.php:418 inc/deploycheck.class.php:548
+#: phpunit/1_Unit/Deploy/DeploycheckTest.php:419 inc/deploycheck.class.php:558
 msgid "report warning"
 msgstr "rapport un message d'avertissement"
 
@@ -376,8 +376,8 @@ msgid "Type"
 msgstr "Type"
 
 #: inc/collect_file.class.php:163 inc/collect_file.class.php:291
-#: inc/deployfile.class.php:296 inc/deploycheck.class.php:364
-#: inc/deploycheck.class.php:371 inc/deploycheck.class.php:378
+#: inc/deployfile.class.php:296 inc/deploycheck.class.php:368
+#: inc/deploycheck.class.php:381 inc/deploycheck.class.php:388
 msgid "File"
 msgstr "Fichier"
 
@@ -749,7 +749,7 @@ msgstr "Ne rien Examiner"
 #: inc/printerlog.class.php:396 inc/printerlog.class.php:599
 #: inc/networkequipment.class.php:1144 inc/networkequipment.class.php:1145
 #: inc/deployaction.class.php:263 inc/deployfile.class.php:248
-#: inc/deploycheck.class.php:274 inc/taskjob.class.php:206
+#: inc/deploycheck.class.php:278 inc/taskjob.class.php:206
 #: inc/taskjob.class.php:1531 inc/networkportlog.class.php:203
 #: inc/taskjobview.class.php:283 inc/networkporttype.class.php:409
 #: inc/deployuserinteraction.class.php:292
@@ -1110,7 +1110,7 @@ msgid "return codes saved for this command"
 msgstr "retourne le code sauvegardé de cette commande"
 
 #: inc/deployaction.class.php:248 inc/deployfile.class.php:234
-#: inc/deploycheck.class.php:259 inc/taskjob.class.php:1519
+#: inc/deploycheck.class.php:263 inc/taskjob.class.php:1519
 #: inc/deployuserinteraction.class.php:277
 msgid "drag"
 msgstr "prendre"
@@ -1546,9 +1546,9 @@ msgid "Windows registry content"
 msgstr "Contenu de la base de registre Windows"
 
 #: inc/collect_registry_content.class.php:234
-#: inc/collect_registry_content.class.php:281 inc/deploycheck.class.php:346
-#: inc/deploycheck.class.php:372 inc/deploycheck.class.php:379
-#: inc/deploycheck.class.php:385 inc/collect_wmi_content.class.php:221
+#: inc/collect_registry_content.class.php:281 inc/deploycheck.class.php:350
+#: inc/deploycheck.class.php:382 inc/deploycheck.class.php:389
+#: inc/deploycheck.class.php:395 inc/collect_wmi_content.class.php:221
 #: inc/collect_wmi_content.class.php:271
 msgid "Value"
 msgstr "Valeur"
@@ -2204,44 +2204,56 @@ msgstr "La valeur du hash SHA-512 correspond à"
 msgid "SHA-512 hash value mismatch"
 msgstr "La valeur du hash SHA-512 ne correspond à"
 
-#: inc/deploycheck.class.php:129
+#: inc/deploycheck.class.php:86
+msgid "Directory exists"
+msgstr "Le répertoire existe"
+
+#: inc/deploycheck.class.php:87
+msgid "Directory is missing"
+msgstr "Le répertoire n'existe pas"
+
+#: inc/deploycheck.class.php:133
 msgid "continue"
 msgstr "continuer"
 
-#: inc/deploycheck.class.php:131
+#: inc/deploycheck.class.php:135
 msgid "passed"
 msgstr "test vérifié"
 
-#: inc/deploycheck.class.php:133
+#: inc/deploycheck.class.php:137
 msgid "otherwise"
 msgstr "autrement"
 
-#: inc/deploycheck.class.php:291 inc/deploycheck.class.php:435
+#: inc/deploycheck.class.php:295 inc/deploycheck.class.php:445
 msgid "Audit label"
 msgstr "Libellé de l'audit"
 
-#: inc/deploycheck.class.php:329
+#: inc/deploycheck.class.php:333
 msgid "Path to the key"
 msgstr "Chemin vers la clé"
 
-#: inc/deploycheck.class.php:337 inc/deploycheck.class.php:345
-#: inc/deploycheck.class.php:356
+#: inc/deploycheck.class.php:341 inc/deploycheck.class.php:349
+#: inc/deploycheck.class.php:360
 msgid "Path to the value"
 msgstr "Chemin vers la valeur"
 
-#: inc/deploycheck.class.php:357
+#: inc/deploycheck.class.php:361
 msgid "Type of value"
 msgstr "Type de valeur"
 
-#: inc/deploycheck.class.php:384
+#: inc/deploycheck.class.php:374
+msgid "Directory"
+msgstr "Répertoire"
+
+#: inc/deploycheck.class.php:394
 msgid "Disk or directory"
 msgstr "Disque ou emplacement"
 
-#: inc/deploycheck.class.php:495
+#: inc/deploycheck.class.php:505
 msgid "Unit"
 msgstr "Unité"
 
-#: inc/deploycheck.class.php:519
+#: inc/deploycheck.class.php:529
 msgid "If not successfull"
 msgstr "En cas d'échec"
 
