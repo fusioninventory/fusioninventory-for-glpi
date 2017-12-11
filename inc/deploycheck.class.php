@@ -52,14 +52,17 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the checks before deploy a package.
  */
-class PluginFusioninventoryDeployCheck extends CommonDBTM {
+class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackageItem {
+
+   public $shortname = 'checks';
+   public $json_name = 'checks';
 
    /**
     * Get types of checks with name => description
     *
     * @return array
     */
-   static function getTypes() {
+   function getTypes() {
       return [
          __('Registry', 'fusioninventory') => [
                   'winkeyExists'       => __("Registry key exists", 'fusioninventory'),
@@ -91,9 +94,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param the type value
     * @return the type label
     */
-   static function getLabelForAType($type) {
+   function getLabelForAType($type) {
       $alltypes = [];
-      foreach (self::getTypes() as $label => $types) {
+      foreach ($this->getTypes() as $label => $types) {
          $alltypes+= $types;
       }
       if (isset($alltypes[$type])) {
@@ -108,7 +111,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     *
     * @return array
     */
-   static function getUnitLabel() {
+   function getUnitLabel() {
       return [
                "B"  => __('o'),
                "KB" => __('Kio'),
@@ -118,8 +121,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
 
-   static function getAuditDescription($type, $return) {
-      $return_string = self::getLabelForAType($type);
+   function getAuditDescription($type, $return) {
+      $return_string = $this->getLabelForAType($type);
       //The skip case is a litte bit different. So we notice to the user
       //that if audit is successfull, the the audit check process continue
       if ($return == 'skip') {
@@ -128,7 +131,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $return_string.=' : '.__('passed', 'fusioninventory');
       }
       $return_string.= ', '.__('otherwise', 'fusioninventory').' : ';
-      $return_string.= self::getValueForReturn($return);
+      $return_string.= $this->getValueForReturn($return);
 
       return $return_string;
    }
@@ -139,13 +142,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param string $unit the unit of number
     * @return integer the number to multiply
     */
-   static function getUnitSize($unit) {
-      $units = array(
-         "B"  => 1,
-         "KB" => 1024,
-         "MB" => 1024 * 1024,
-         "GB" => 1024 * 1024 * 1024
-      );
+   function getUnitSize($unit) {
+      $units = [ "B"  => 1,
+                 "KB" => 1024,
+                 "MB" => 1024 * 1024,
+                 "GB" => 1024 * 1024 * 1024
+               ];
       if (array_key_exists($unit,$units)) {
          return $units[$unit];
       } else {
@@ -154,7 +156,13 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
 
-   static function getRegistryTypes() {
+   /**
+   * Get all registry value types handled by the agent
+   *
+   * @since 9.2
+   * @return an array of registry values types
+   */
+   function getRegistryTypes() {
       return ['REG_SZ'                  => 'REG_SZ',
               'REG_DWORD'               => 'REG_DWORD',
               'REG_BINARY'              => 'REG_BINARY',
@@ -166,124 +174,48 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
              ];
    }
 
-   static function dropdownRegistryTypes($value = 'REG_SZ') {
-      return Dropdown::showFromArray('value', self::getRegistryTypes(),
+   function dropdownRegistryTypes($value = 'REG_SZ') {
+      return Dropdown::showFromArray('value', $this->getRegistryTypes(),
                                      ['value' => $value]);
    }
-
-   static function getRegistryTypeLabel($type) {
-      $types = self::getRegistryTypes();
-      if (isset($types[$type])) {
-         return $types[$type];
-      } else {
-         return '';
-      }
-   }
-
-   /**
-    * Display form
-    *
-    * @param object $package PluginFusioninventoryDeployPackage instance
-    * @param array $request_data
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode possible values: init|edit|create
-    */
-   static function displayForm(PluginFusioninventoryDeployPackage $package, $request_data, $rand, $mode) {
-      /*
-       * Get element config in 'edit' mode
-       */
-      $config = NULL;
-      if ($mode === 'edit' && isset($request_data['index'])) {
-         /*
-          * Add an hidden input about element's index to be updated
-          */
-         echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
-
-         $c = $package->getSubElement('checks', $request_data['index']);
-
-         if (is_array($c) && count($c)) {
-
-            $config = array(
-               'type' => $c['type'],
-               'data' => $c
-            );
-         }
-      }
-
-      /*
-       * Display start of div form
-       */
-      if (in_array($mode, array('init'), TRUE)) {
-         echo "<div id='checks_block$rand' style='display:none'>";
-      }
-
-      /*
-       * Display element's dropdownType in 'create' or 'edit' mode
-       */
-      if (in_array($mode, array('create', 'edit'), TRUE)) {
-         self::displayDropdownType($config, $rand, $mode);
-      }
-
-      /*
-       * Display element's values in 'edit' mode only.
-       * In 'create' mode, those values are refreshed with dropdownType 'change'
-       * javascript event.
-       */
-      if (in_array($mode, array('create', 'edit'), TRUE)) {
-         echo "<span id='show_check_value{$rand}'>";
-         if ($mode === 'edit') {
-            self::displayAjaxValues($config, $request_data, $rand, $mode);
-         }
-         echo "</span>";
-      }
-
-      /*
-       * Close form div
-       */
-      if (in_array($mode, array('init'), TRUE)) {
-         echo "</div>";
-      }
-   }
-
-
 
    /**
     * Display list of checks
     *
     * @global array $CFG_GLPI
     * @param object $package PluginFusioninventoryDeployPackage instance
-    * @param array $datas array converted of 'json' field in DB where stored checks
+    * @param array $data array converted of 'json' field in DB where stored checks
     * @param string $rand unique element id used to identify/update an element
     */
-   static function displayList(PluginFusioninventoryDeployPackage $package, $datas, $rand) {
+   function displayList(PluginFusioninventoryDeployPackage $package, $data, $rand) {
       global $CFG_GLPI;
 
-      $checks_types = self::getTypes();
+      $checks_types = $this->getTypes();
       $package_id   = $package->getID();
       $canedit      = $package->canUpdateContent();
-      echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_checks_$rand'>";
       $i = 0;
-      foreach ($datas['jobs']['checks'] as $check) {
+      foreach ($data['jobs']['checks'] as $check) {
          switch ($check['type']) {
             case 'freespaceGreater':
                $check['value'] = $check['value'] * 1024 * 1024;
             case 'fileSizeLower':
             case 'fileSizeGreater':
             case 'fileSizeEquals':
-               $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
+               $check['value'] = $this->processFilesize($check['value']);
                break;
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($canedit) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'check_entries['.$i.']'));
+            Html::showCheckbox(['name' => 'checks_entries['.$i.']']);
             echo "</td>";
          }
 
          //Get the audit full description (with type and return value)
          //to be displayed in the UI
-         $text = self::getAuditDescription($check['type'], $check['return']);
+         $text = $this->getAuditDescription($check['type'], $check['return']);
          if (isset($check['name']) && !empty($check['name'])) {
             $check_label = $check['name'].' ('.$text.')';
          } else {
@@ -299,8 +231,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             echo "</a>";
          }
          echo "<br />";
-         $type_values = self::getLabelsAndTypes($check['type'], false);
-         echo $type_values['path_label'].': '.$check['path'];
+         $type_values = $this->getLabelsAndTypes($check['type'], false);
+         if (isset($type_values['path_label'])) {
+            echo $type_values['path_label'].': '.$check['path'];
+         }
 
          if (!empty($check['value']) && $check['value'] != NOT_AVAILABLE) {
             echo "&nbsp;&nbsp;&nbsp;<b>";
@@ -341,76 +275,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
    }
 
-
-
-   /**
-    * Display the dropdown to select type of element
-    *
-    * @global array $CFG_GLPI
-    * @param array $config order item configuration
-    * @param string $rand unique element id used to identify/update an element
-    * @param string $mode mode in use (create, edit...)
-    */
-   static function displayDropdownType($config, $rand, $mode) {
-      global $CFG_GLPI;
-
-      /*
-       * Build dropdown options
-       */
-      $dropdown_options['rand'] = $rand;
-      if ($mode === 'edit') {
-         $dropdown_options['value'] = $config['type'];
-         $dropdown_options['readonly'] = true;
-      }
-
-      /*
-       * Build actions types list
-       */
-      if ($mode === 'create') {
-         $checks_types = self::getTypes();
-      } else {
-         $checks_types = [];
-         foreach (self::getTypes() as $label => $data) {
-            $checks_types+= $data;
-         }
-      }
-      array_unshift($checks_types, "---");
-
-      /*
-       * Display dropdown html
-       */
-      echo "<table class='package_item'>";
-      echo "<tr>";
-      echo "<th>".__("Type", 'fusioninventory')."</th>";
-      echo "<td>";
-      Dropdown::showFromArray("deploy_checktype", $checks_types, $dropdown_options);
-      echo "</td>";
-      echo "</tr></table>";
-
-      //ajax update of check value span
-      if ($mode === 'create') {
-         $params = array(
-            'value'  => '__VALUE__',
-            'rand'   => $rand,
-            'myname' => 'method',
-            'type'   => "check",
-            'mode'   => $mode
-         );
-
-         Ajax::updateItemOnEvent(
-            "dropdown_deploy_checktype$rand",
-            "show_check_value$rand",
-            $CFG_GLPI["root_doc"].
-            "/plugins/fusioninventory".
-            "/ajax/deploy_displaytypevalue.php",
-            $params,
-            array("change", "load")
-         );
-      }
-   }
-
-
-
    /**
     * Get fields for the check type requested
     *
@@ -420,8 +284,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     *
     * @return string|false
     */
-   static function getValues($type, $data, $mode) {
-      $values = array(
+   function getValues($type, $data, $mode) {
+      $values = [
          'warning_message' => false,
          'name_value'  => "",
          'name_label'  => __('Audit label', 'fusioninventory'),
@@ -433,40 +297,37 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'value_label' => "",
          'value'       => "",
          'return'      => "error"
-      );
+      ];
 
-      if ($mode === 'edit') {
+      if ($mode === self::EDIT) {
          $values['name_value'] = isset($data['name'])?$data['name']:"";
          $values['path_value'] = isset($data['path'])?$data['path']:"";
          $values['value']      = isset($data['value'])?$data['value']:"";
          $values['return']     = isset($data['return'])?$data['return']:"error";
       }
 
-      $type_values = self::getLabelsAndTypes($type, true);
+      $type_values = $this->getLabelsAndTypes($type, true);
       foreach ($type_values as $key => $value) {
          $values[$key] = $value;
       }
       return $values;
    }
 
-   static function getMandatoryMark() {
-      return "&nbsp;<span class='red'>*</span>";
-   }
    /**
    *  Get labels and type for a check
    * @param check_type the type of check
    * @param mandatory indicates if mandatory mark must be added to the label
    * @return the labels and type for a check
    */
-   static function getLabelsAndTypes($check_type, $mandatory = false) {
+   function getLabelsAndTypes($check_type, $mandatory = false) {
       $values = [];
-      $mandatory_mark = ($mandatory?self::getMandatoryMark():'');
+      $mandatory_mark = ($mandatory?$this->getMandatoryMark():'');
 
       switch ($check_type) {
          case "winkeyExists":
          case "winkeyMissing":
             $values['path_label']         = __("Path to the key", 'fusioninventory').$mandatory_mark;
-            $values['value_label']     = FALSE;
+            $values['value_label']     = false;
             $values['path_comment']    = __('Example of registry key').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\\';
             $values['warning_message'] = sprintf(__('Fusioninventory-Agent %1s or higher recommended'), '2.3.20');
             break;
@@ -474,7 +335,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          case "winvalueExists":
          case "winvalueMissing":
             $values['path_label']      = __("Path to the value", 'fusioninventory').$mandatory_mark;
-            $values['value_label']     = FALSE;
+            $values['value_label']     = false;
             $values['path_comment']    = __('Example of registry value').': HKEY_LOCAL_MACHINE\SOFTWARE\Fusioninventory-Agent\server';
             $values['warning_message'] = sprintf(__('Fusioninventory-Agent %1s or higher mandatory'), '2.3.20');
             break;
@@ -501,7 +362,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          case "fileExists":
          case "fileMissing":
             $values['path_label']  = __("File", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = FALSE;
+            $values['value_label'] = false;
             break;
 
          case "fileSizeGreater":
@@ -541,7 +402,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     * @param string $mode mode in use (create, edit...)
     * @return boolean
     */
-   static function displayAjaxValues($config, $request_data, $rand, $mode) {
+   function displayAjaxValues($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
@@ -556,7 +417,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
        * Get type from request params
        */
       $type = NULL;
-      if ($mode === 'create') {
+      if ($mode === self::CREATE) {
          $type = $request_data['value'];
          $config_data = NULL;
       } else {
@@ -564,9 +425,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $config_data = $config['data'];
       }
 
-      $values = self::getValues($type, $config_data, $mode);
-      if ($values === FALSE) {
-         return FALSE;
+      $values = $this->getValues($type, $config_data, $mode);
+      if ($values === false) {
+         return false;
       }
 
       echo "<table class='package_item'>";
@@ -582,7 +443,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      if ($values['value_label'] !== FALSE) {
+      if ($values['value_label'] !== false) {
          echo "<tr>";
          echo "<th>{$values['value_label']}</th>";
 
@@ -600,7 +461,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
             case 'registry_type':
                echo "<td>";
-               self::dropdownRegistryTypes($values['value']);
+               $this->dropdownRegistryTypes($values['value']);
                echo "</td>";
                break;
 
@@ -613,14 +474,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
                $options['value'] = 'KB';
                if ($mode === 'edit') {
-                  if ($value >= self::getUnitSize('GB')) {
-                     $value = $value / (self::getUnitSize('GB'));
+                  if ($value >= $this->getUnitSize('GB')) {
+                     $value = $value / ($this->getUnitSize('GB'));
                      $options['value'] = 'GB';
-                  } elseif ($value >= (self::getUnitSize('MB'))) {
-                     $value = $value/ (self::getUnitSize('MB'));
+                  } elseif ($value >= ($this->getUnitSize('MB'))) {
+                     $value = $value/ ($this->getUnitSize('MB'));
                      $options['value'] = 'MB';
-                  }  elseif ($value >= (self::getUnitSize('KB'))) {
-                     $value = $value/ (self::getUnitSize('KB'));
+                  }  elseif ($value >= ($this->getUnitSize('KB'))) {
+                     $value = $value/ ($this->getUnitSize('KB'));
                      $options['value'] = 'KB';
                   } else {
                      $options['value'] = 'B';
@@ -633,7 +494,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                echo "</tr><tr>";
                echo "<th>".__("Unit", 'fusioninventory')."</th>";
                echo "<td>";
-               $unit_labels = self::getUnitLabel();
+               $unit_labels = $this->getUnitLabel();
 
                /*
                 * The freespaceGreater check does not need to propose KiB or B
@@ -657,7 +518,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<tr>";
       echo "<th>".__("If not successfull", 'fusioninventory')."</th>";
       echo "<td>";
-      Dropdown::showFromArray('return', self::getAllReturnValues(),
+      Dropdown::showFromArray('return', $this->getAllReturnValues(),
                               ['value' => $values['return']]);
       echo "</td>";
       echo "</tr>";
@@ -671,21 +532,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "</tr>";
       }
 
-      echo "<tr>";
-      echo "<td>";
-      echo "</td>";
-      echo "<td>";
-      if ($pfDeployPackage->can($pfDeployPackage->getID(), UPDATE)) {
-         if ($mode === 'edit') {
-            echo "<input type='submit' name='save_item' value=\"".
-               _sx('button', 'Save')."\" class='submit' >";
-         } else {
-            echo "<input type='submit' name='add_item' value=\"".
-               _sx('button', 'Add')."\" class='submit' >";
-         }
-      }
-      echo "</td>";
-      echo "</tr>";
+      $this->addOrSaveButton($pfDeployPackage, $mode);
+
       echo "</table>";
    }
 
@@ -693,7 +541,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    * Get all possible return values for a check
    * @return an array of return values and their labels
    */
-   static function getAllReturnValues() {
+   function getAllReturnValues() {
       return  ["error"   => __('abort job', 'fusioninventory'),
                "skip"    => __("skip job", 'fusioninventory'),
                "info"    => __("report info", 'fusioninventory'),
@@ -706,8 +554,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    * @param the check return value
    * @return the label for the return value
    */
-   static function getValueForReturn($value) {
-      $values = self::getAllReturnValues();
+   function getValueForReturn($value) {
+      $values = $this->getAllReturnValues();
       if (isset($values[$value])) {
          return $values[$value];
       } else {
@@ -733,7 +581,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          if (!empty($params['value']) && is_numeric($params['value'])) {
 
             //Make an exception for freespaceGreater check which is saved as MiB
-            if ($params['deploy_checktype'] == "freespaceGreater") {
+            if ($params['checkstype'] == "freespaceGreater") {
                $params['value'] = $params['value'] / (1024 * 1024);
             } else {
                $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
@@ -746,7 +594,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       //prepare updated check entry to insert in json
       $entry = array(
          'name'   => $params['name'],
-         'type'   => $params['deploy_checktype'],
+         'type'   => $params['checkstype'],
          'path'   => $params['path'],
          'value'  => strval($params['value']),
          'return' => $params['return']
@@ -759,22 +607,20 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     *
     * @param array $params list of fields with value of the check
     */
-   static function add_item($params) {
+   function add_item($params) {
       $entry = self::formatCheckForJson($params);
 
       //get current order json
       $datas = json_decode(
-              PluginFusioninventoryDeployPackage::getJson($params['id']),
+              $this->getJson($params['id']),
               true
       );
 
       //add new entry
       $datas['jobs']['checks'][] = $entry;
 
-      //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson(
-         $params['id'], $datas
-      );
+      //Add to package defintion
+      $this->addToPackage($params['id'], $entry, 'checks');
    }
 
 
@@ -784,10 +630,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     *
     * @param array $params list of fields with value of the check
     */
-   static function save_item($params) {
+   function save_item($params) {
       $entry = self::formatCheckForJson($params);
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
+      $datas = json_decode($this->getJson($params['id']), TRUE);
 
       //unset index
       unset($datas['jobs']['checks'][$params['index']]);
@@ -797,62 +643,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
-   }
-
-   /**
-    * Remove an item
-    *
-    * @param array $params
-    * @return boolean
-    */
-   static function remove_item($params) {
-      if (!isset($params['check_entries'])) {
-         return FALSE;
-      }
-
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['packages_id']), TRUE);
-
-      //remove selected checks
-      foreach ($params['check_entries'] as $index => $checked) {
-         if ($checked >= "1" || $checked == "on") {
-            unset($datas['jobs']['checks'][$index]);
-         }
-      }
-
-      //Ensure checks is an array and not a dictionnary
-      //Note: This happens when removing an array element from the begining
-      $datas['jobs']['checks'] = array_values($datas['jobs']['checks']);
-
-      //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['packages_id'], $datas);
-      return TRUE;
-   }
-
-
-
-   /**
-    * Move an item
-    *
-    * @param array $params
-    */
-   static function move_item($params) {
-      //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployPackage::getJson($params['id']), TRUE);
-
-      //get data on old index
-      $moved_check = $datas['jobs']['checks'][$params['old_index']];
-
-      //remove this old index in json
-      unset($datas['jobs']['checks'][$params['old_index']]);
-
-      //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
-      array_splice($datas['jobs']['checks'], $params['new_index'], 0, array($moved_check));
-
-      //update order
-      PluginFusioninventoryDeployPackage::updateOrderJson($params['id'], $datas);
+      $this->updateOrderJson($params['id'], $datas);
    }
 }
-
-?>

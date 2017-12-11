@@ -134,6 +134,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'deploypackage'              => 'PluginFusioninventoryDeployPackage',
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
+          'deployuserinteractiontemplate' => 'PluginFusioninventoryDeployUserinteractionTemplate',
           'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
       );
       $options = array();
@@ -465,6 +466,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
+      }
+
+      if (Session::haveRight('plugin_fusioninventory_userinteractiontemplate', READ)) {
+         $a_menu[2]['name'] = _n('User interaction template',
+                                 'User interaction templates', 2, 'fusioninventory');
+         $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
+         $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deployuserinteractiontemplate.php";
       }
 
       if (!empty($a_menu)) {

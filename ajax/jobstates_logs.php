@@ -56,12 +56,8 @@ header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 $pfJobstate = new PluginFusioninventoryTaskjobstate();
 
-$params = array(
+$params = [
     "id"        => filter_input(INPUT_GET, "id"),
     "last_date" => filter_input(INPUT_GET, "last_date")
-);
+];
 $pfJobstate->ajaxGetLogs($params);
-
-?>
-
-

@@ -95,13 +95,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5161]['linkfield'] = '';
          $sopt[5161]['name']      = __('FusionInventory tag', 'fusioninventory');
 
-
-//         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
-//         $sopt[5163]['field']     = 'conform';
-//         $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
-//         $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
-//         $sopt[5163]['massiveaction'] = FALSE;
-//         $sopt[5163]['datatype']  = 'bool';
          $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5163]['field']     = 'oscomment';
          $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
@@ -2268,20 +2261,34 @@ function plugin_fusioninventory_getDatabaseRelations() {
       return array("glpi_locations"
                         => array('glpi_plugin_fusioninventory_deploymirrors' => 'locations_id'),
                    "glpi_entities"
-                        => array("glpi_plugin_fusioninventory_agents"               => "entities_id",
-                                 "glpi_plugin_fusioninventory_collects"             => "entities_id",
-                                 "glpi_plugin_fusioninventory_credentialips"        => "entities_id",
-                                 "glpi_plugin_fusioninventory_credentials"          => "entities_id",
-                                 "glpi_plugin_fusioninventory_deployfiles"          => "entities_id",
-                                 "glpi_plugin_fusioninventory_deploymirrors"        => "entities_id",
-                                 "glpi_plugin_fusioninventory_deploypackages"       => "entities_id",
-                                 "glpi_plugin_fusioninventory_ignoredimportdevices" => "entities_id",
-                                 "glpi_plugin_fusioninventory_ipranges"             => "entities_id",
-                                 "glpi_plugin_fusioninventory_tasks"                => "entities_id",
-                                 "glpi_plugin_fusioninventory_timeslotentries"      => "entities_id",
-                                 "glpi_plugin_fusioninventory_timeslots"            => "entities_id",
-                                 "glpi_plugin_fusioninventory_unmanageds"           => "entities_id"));
-
+                        => array("glpi_plugin_fusioninventory_agents"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_collects"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_credentialips"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_credentials"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_deployfiles"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_deploymirrors"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_deploypackages"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_ignoredimportdevices"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_ipranges"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_tasks"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_timeslotentries"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_timeslots"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_deployuserinteractiontemplates"
+                                    => "entities_id",
+                                 "glpi_plugin_fusioninventory_unmanageds"
+                                    => "entities_id"));
    }
    return array();
 }
