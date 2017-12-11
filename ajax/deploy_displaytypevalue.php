@@ -57,8 +57,15 @@ $classname = filter_input(INPUT_POST, "class");
 if (empty($rand) && (empty($type))) {
    exit();
 }
-if (!class_exists($classname)) {
-   exist();
+//Only process class that are related to software deployment
+if (!class_exists($classname)
+   || !in_array($classname,
+               ['PluginFusioninventoryDeployCheck',
+                'PluginFusioninventoryDeployCheck',
+                'PluginFusioninventoryDeployAction',
+                'PluginFusioninventoryDeployUserinteraction'
+               ])) {
+   exit();
 }
 $class        = new $classname();
 $request_data = [
