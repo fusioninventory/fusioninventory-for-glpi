@@ -47,6 +47,10 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
+if (!isset($_GET["id"])) {
+   $_GET["id"] = "";
+}
+
 $template = new PluginFusioninventoryDeployUserinteractionTemplate();
 //general form
 if (isset ($_POST["add"])) {
