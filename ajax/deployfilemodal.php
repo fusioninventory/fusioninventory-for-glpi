@@ -53,5 +53,3 @@ Session::checkCentralAccess();
 
 PluginFusioninventoryDeployFile::showServerFileTree(
         filter_input(INPUT_POST, "rand"));
-
-?>
