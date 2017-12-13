@@ -228,7 +228,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
                 ),
-            'orbit2$$$$2.14.19$$$$3' => Array(
+            'orbit2$$$$2.14.19$$$$3$$$$0' => Array(
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
