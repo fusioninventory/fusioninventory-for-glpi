@@ -287,7 +287,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          foreach ($this->running_tasks as $task) {
             $taskurl =
-               PluginFusioninventoryDeployPackage::getFormURLWithID($task['task']['id'], true);
+               PluginFusioninventoryTask::getFormURLWithID($task['task']['id'], true);
             $error_message .= "<a href='$taskurl'>".$task['task']['name']."</a>, ";
          }
          $error_message .= "</div>";
