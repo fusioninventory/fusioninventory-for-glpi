@@ -259,12 +259,12 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
 
       $arrayinventory['CONTENT']['OPERATINGSYSTEM']['NAME'] = 'Windows XP';
       $pfici->sendCriteria('TESTAAAA', $arrayinventory);
-      $this->assertEquals(count($softversion_ids) + 2, count(array_keys($softwareVersion->find())));
+      $this->assertEquals(count($softversion_ids), count(array_keys($softwareVersion->find())));
 
       $arrayinventory['CONTENT']['HARDWARE']['NAME'] = 'portdavid_3';
       $arrayinventory['CONTENT']['OPERATINGSYSTEM']['NAME'] = 'Windows';
       $pfici->sendCriteria('TESTAAAA', $arrayinventory);
-      $this->assertEquals(count($softversion_ids) + 2, count(array_keys($softwareVersion->find())));
+      $this->assertEquals(count($softversion_ids), count(array_keys($softwareVersion->find())));
 
    }
 
