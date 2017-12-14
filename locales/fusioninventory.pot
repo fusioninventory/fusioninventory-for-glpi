@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 12:38+0100\n"
+"POT-Creation-Date: 2017-12-14 10:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1804,7 +1804,6 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: inc/deployuserinteractiontemplate.class.php:186
-#: inc/deployuserinteraction.class.php:435
 msgid "OK"
 msgstr ""
 
@@ -3485,17 +3484,17 @@ msgstr ""
 
 #: inc/deployuserinteraction.class.php:408
 #, php-format
-msgid "Job cancelled by the user %1s"
+msgid "Job cancelled by the user %1$s"
 msgstr ""
 
 #: inc/deployuserinteraction.class.php:413
 #, php-format
-msgid "User %1s agreed to continue the job"
+msgid "User %1$s agreed to continue the job"
 msgstr ""
 
 #: inc/deployuserinteraction.class.php:418
 #, php-format
-msgid "Job postponed by the user %1s"
+msgid "Job postponed by the user %1$s"
 msgstr ""
 
 #: inc/deployuserinteraction.class.php:423

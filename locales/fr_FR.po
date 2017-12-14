@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 12:38+0100\n"
+"POT-Creation-Date: 2017-12-14 10:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Johan Cwiklinski <trasher@x-tnd.be>, 2017\n"
 "Language-Team: French (France) (https://www.transifex.com/ddurieux/teams/797/fr_FR/)\n"
@@ -125,7 +125,7 @@ msgstr "URL utilisée par l'agent"
 #: inc/menu.class.php:400 inc/unmanaged.class.php:211
 #: inc/unmanaged.class.php:472
 msgid "SNMP authentication"
-msgstr "authentification SNMP"
+msgstr "Authentification SNMP"
 
 #: hook.php:265 hook.php:299 inc/networkequipment.class.php:532
 #: inc/printer.class.php:189 inc/unmanaged.class.php:205
@@ -260,7 +260,7 @@ msgstr "Créer un répertoire"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:66 inc/deploycheck.class.php:68
 msgid "Registry key exists"
-msgstr "La clef de registre existe"
+msgstr "La clé de registre existe"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:68 inc/deploycheck.class.php:90
 msgid "Free space is greater than"
@@ -483,7 +483,7 @@ msgstr[1] "Gabarits d’interactions utilisateurs"
 #: inc/profile.class.php:335 inc/menu.class.php:466
 #: inc/deploymirror.class.php:83
 msgid "Mirror servers"
-msgstr "Serveurs mirroirs"
+msgstr "Serveurs miroirs"
 
 #: inc/profile.class.php:355 inc/iprange.class.php:126
 msgid "IP range configuration"
@@ -891,7 +891,7 @@ msgstr "Légende"
 
 #: inc/networkequipment.class.php:736
 msgid "Connection with a switch or a server in trunk or tagged mode"
-msgstr "Connexion avec un switch or un serveur en mode trunk ou taggé"
+msgstr "Connexion avec un switch ou un serveur en mode trunk ou taggé"
 
 #: inc/networkequipment.class.php:742
 msgid "Other connections (with a computer, a printer...)"
@@ -934,7 +934,7 @@ msgstr "MAC interne"
 
 #: inc/networkequipment.class.php:808 inc/networkport.class.php:151
 msgid "Port not connected since"
-msgstr "Port pas connecté depuis"
+msgstr "Port non connecté depuis"
 
 #: inc/networkequipment.class.php:812 inc/mapping.class.php:579
 #: inc/networkport.class.php:155
@@ -1028,7 +1028,7 @@ msgstr "Préparé"
 
 #: inc/taskview.class.php:203 inc/taskjobstate.class.php:147
 msgid "Postponed"
-msgstr "reporté"
+msgstr "Reporté"
 
 #: inc/taskview.class.php:204 inc/deploypackage.class.php:1302
 #: inc/taskjobstate.class.php:146
@@ -1041,7 +1041,7 @@ msgstr "État de l’exécution des tâches"
 
 #: inc/taskview.class.php:333 inc/task.class.php:136
 msgid "Re-prepare a target-actor if previous run is successful"
-msgstr "Repréparer un job si l'exécution précédent était un succès"
+msgstr "Repréparer un job si l'exécution précédente était un succès"
 
 #: inc/taskview.class.php:337
 msgid "This is an on demand deployment task"
@@ -1218,7 +1218,7 @@ msgstr "égal"
 
 #: inc/inventoryruleimport.class.php:288
 msgid "empty"
-msgstr "Vide"
+msgstr "vide"
 
 #: inc/inventoryruleimport.class.php:1017
 msgid "No itemtype defined"
@@ -1265,7 +1265,7 @@ msgstr "décompresser"
 
 #: inc/deployfile.class.php:303
 msgid "filename"
-msgstr "Nome du fichier"
+msgstr "Nom du fichier"
 
 #: inc/deployfile.class.php:310
 msgid "Choose"
@@ -1289,7 +1289,7 @@ msgstr "Erreur de Transfert : Le fichier est trop gros"
 
 #: inc/deployfile.class.php:624
 msgid "The uploaded file was only partially uploaded"
-msgstr "Le fichier n'est qu'en partie uploadé"
+msgstr "Le fichier n'est qu'en partie téléchargé"
 
 #: inc/deployfile.class.php:628
 msgid "No file was uploaded"
@@ -1297,7 +1297,7 @@ msgstr "Aucun fichier n'a été téléchargé"
 
 #: inc/deployfile.class.php:632
 msgid "Missing a temporary folder"
-msgstr "Manque d'un dossier temporaire"
+msgstr "Dossier temporaire manquant"
 
 #: inc/deployfile.class.php:636
 msgid "Failed to write file to disk"
@@ -1305,11 +1305,11 @@ msgstr "Impossible d'écrire le fichier sur le disque"
 
 #: inc/deployfile.class.php:640
 msgid "PHP extension stopped the file upload"
-msgstr "L'extension PHP à stoppé le fichier uploadé"
+msgstr "L'extension PHP a arrêté le transfert de fichier"
 
 #: inc/deployfile.class.php:669 inc/deployfile.class.php:726
 msgid "File saved!"
-msgstr "Fichier bien enregistré!"
+msgstr "Fichier bien enregistré !"
 
 #: inc/deployfile.class.php:672 inc/deployfile.class.php:729
 msgid "Failed to copy file"
@@ -1378,7 +1378,7 @@ msgstr "SSL seulement pour l'agent"
 
 #: inc/config.class.php:342
 msgid "Inventory frequency (in hours)"
-msgstr "Fréquence des inventaire (en heures)"
+msgstr "Fréquence des inventaires (en heures)"
 
 #: inc/config.class.php:355
 msgid "Delete tasks logs after"
@@ -1403,8 +1403,7 @@ msgstr "Mettre à jour les agents"
 #: inc/config.class.php:398
 msgid "Update agents not have contacted server since (in days)"
 msgstr ""
-"Mettre à jour les agents qui n'ont pas contactés le serveur depuis (en "
-"jours)"
+"Mettre à jour les agents qui n'ont pas contacté le serveur depuis (en jours)"
 
 #: inc/config.class.php:433 inc/config.class.php:464
 msgid "Change the status"
@@ -1473,7 +1472,7 @@ msgstr "Chemin du dossier téléversant des fichiers du serveur"
 
 #: inc/config.class.php:828
 msgid "Use this GLPI server as a mirror server"
-msgstr "Utiliser ce serveur GLPI comme un serveur mirroir"
+msgstr "Utiliser ce serveur GLPI comme un serveur miroir"
 
 #: inc/config.class.php:835
 msgid "Match mirrors to agents"
@@ -1533,7 +1532,7 @@ msgstr "Informations pour la configuration de l'agent"
 
 #: inc/agent.class.php:1092
 msgid "Communication url of the server"
-msgstr "Url de communication du serveur"
+msgstr "URL de communication du serveur"
 
 #: inc/configuration.class.php:77 inc/agentmodule.class.php:73
 #: inc/agentmodule.class.php:75
@@ -1706,7 +1705,7 @@ msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
 msgstr ""
-"Etapes pour configurer le plugin FusionInventory pourl'inventaire SNMP "
+"Étapes pour configurer le plugin FusionInventory pour l'inventaire SNMP "
 "(switch, routeur, imprimante réseau)"
 
 #: inc/menu.class.php:636
@@ -1723,13 +1722,13 @@ msgstr ""
 
 #: inc/menu.class.php:646
 msgid "`Network Discovery`, used to discover the devices on the network"
-msgstr ""
-"'Découverte réseau', utiliser pour décourvir les équipements du réseau"
+msgstr "'Découverte réseau', utilisé pour découvrir les équipements du réseau"
 
 #: inc/menu.class.php:651
 msgid "Define IP Ranges of your network + related SNMP authentication"
 msgstr ""
-"Définissez les plages IP de votre réseau + authentification SNMP liées"
+"Définir des plages d'IP sur votre réseau et les authentifications SNMP "
+"associées"
 
 #: inc/menu.class.php:656
 msgid "Define an agent allowed to discover the network"
@@ -1833,7 +1832,6 @@ msgstr[0] "Comportement"
 msgstr[1] "Comportements"
 
 #: inc/deployuserinteractiontemplate.class.php:186
-#: inc/deployuserinteraction.class.php:435
 msgid "OK"
 msgstr "OK"
 
@@ -1904,7 +1902,7 @@ msgstr "Expiration de l'affichage de la fenêtre d'alerte"
 
 #: inc/deployuserinteractiontemplate.class.php:539
 msgid "Button ok"
-msgstr "Boutton ok"
+msgstr "Bouton ok"
 
 #: inc/deployuserinteractiontemplate.class.php:540
 msgid "Button yes"
@@ -2137,7 +2135,7 @@ msgstr "Il n'y a pas de paquets à installer"
 
 #: inc/deploymirror.class.php:247 inc/deploymirror.class.php:312
 msgid "Mirror server address"
-msgstr "Adresse du serveur mirroir"
+msgstr "Adresse du serveur miroir"
 
 #: inc/deploymirror.class.php:253
 msgid "Mirror location"
@@ -2158,7 +2156,7 @@ msgstr "La valeur de la clef existe"
 
 #: inc/deploycheck.class.php:70
 msgid "Registry key missing"
-msgstr "La clef de registre n'existe pas"
+msgstr "La clé de registre n'existe pas"
 
 #: inc/deploycheck.class.php:71
 msgid "Registry value missing"
@@ -2800,19 +2798,19 @@ msgstr "réseaux > LLDP description du port distant"
 
 #: inc/mapping.class.php:546
 msgid "Number of received bytes"
-msgstr "Nb d'octets recus"
+msgstr "Nombre d'octets reçus"
 
 #: inc/mapping.class.php:549
 msgid "Number of outgoing bytes"
-msgstr "Nb d'octets envoyés"
+msgstr "Nombre d'octets envoyés"
 
 #: inc/mapping.class.php:552
 msgid "Number of input errors"
-msgstr "Nb d'erreurs en entrée"
+msgstr "Nombre d'erreurs en entrée"
 
 #: inc/mapping.class.php:555
 msgid "Number of output errors"
-msgstr "Nb d'erreurs en sortie"
+msgstr "Nombre d'erreurs en sortie"
 
 #: inc/mapping.class.php:558
 msgid "CPU usage"
@@ -3089,14 +3087,14 @@ msgid ""
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
 msgstr ""
-"Vous pouvez utiliser ce manu pour uploader le XML généré par l'agent. Le "
+"Vous pouvez utiliser ce menu pour uploader le XML généré par l'agent. Le "
 "fichier doit avoir une extension en .xml ou .ocs. Il est également possible "
 "d'uploader une archive <b>ZIP</b> avec des fichiers XML. Lire la "
 "documentation de l'agent pour voir comment générer ces fichier XML"
 
 #: inc/commonview.class.php:302
 msgid "Warning:"
-msgstr "Warning :"
+msgstr "Alerte :"
 
 #: inc/commonview.class.php:307
 msgid "Error:"
@@ -3167,7 +3165,7 @@ msgstr "Gestion dynamique des agents (même sous-réseau)"
 
 #: inc/taskjob.class.php:237
 msgid "Selection"
-msgstr "Selectionnez"
+msgstr "Sélectionnez"
 
 #: inc/taskjob.class.php:738
 msgid "Action on this device"
@@ -3296,7 +3294,7 @@ msgstr "Nombre par seconde"
 
 #: inc/stateinventory.class.php:124
 msgid "To inventory"
-msgstr "A inventorier"
+msgstr "À inventorier"
 
 #: inc/stateinventory.class.php:125
 msgid "Error(s)"
@@ -3465,12 +3463,12 @@ msgstr "Tâches en cours"
 #: inc/taskjobstate.class.php:593
 #, php-format
 msgid "Job available for next execution at %s"
-msgstr "Prochaine exécution du script à 1%s"
+msgstr "Prochaine exécution du script à %s"
 
 #: inc/taskjobstate.class.php:607
 #, php-format
 msgid "Retry #%d"
-msgstr "Essai #1%d"
+msgstr "Essai #%d"
 
 #: inc/taskjobstate.class.php:609
 msgid "Maximum number of retry reached: force deployment"
@@ -3482,7 +3480,7 @@ msgstr "Types de ports à importer (pour des équipements réseaux)"
 
 #: inc/iprange_configsecurity.class.php:110
 msgid "Associated SNMP authentications"
-msgstr "Authentification SNMP associée"
+msgstr "Associer une authentification SNMP"
 
 #: inc/iprange_configsecurity.class.php:210
 msgid "SNMP Authentication"
@@ -3532,18 +3530,18 @@ msgstr "Libellé de l'interaction"
 
 #: inc/deployuserinteraction.class.php:408
 #, php-format
-msgid "Job cancelled by the user %1s"
-msgstr "Job annulé par l'utilisateur 1%1s"
+msgid "Job cancelled by the user %1$s"
+msgstr "Job annulé par l'utilisateur %1$s"
 
 #: inc/deployuserinteraction.class.php:413
 #, php-format
-msgid "User %1s agreed to continue the job"
-msgstr "L'utilisateur 1%1s a accepté de continuer le job"
+msgid "User %1$s agreed to continue the job"
+msgstr "L'utilisateur %1$s a accepté de continuer le job"
 
 #: inc/deployuserinteraction.class.php:418
 #, php-format
-msgid "Job postponed by the user %1s"
-msgstr "Le job a été reporté par l'utilisateur 1%1s"
+msgid "Job postponed by the user %1$s"
+msgstr "Le job a été reporté par l'utilisateur %1$s"
 
 #: inc/deployuserinteraction.class.php:423
 msgid "Bad event sent to the agent"
