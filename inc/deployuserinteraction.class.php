@@ -405,17 +405,17 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       $message .= '/';
       switch ($behavior) {
          case self::RESPONSE_STOP:
-            $message .= sprintf(__('Job cancelled by the user %1s',
+            $message .= sprintf(__('Job cancelled by the user %1$s',
                                    'fusioninventory'), $user);
             break;
 
          case self::RESPONSE_CONTINUE:
-            $message .= sprintf(__('User %1s agreed to continue the job',
+            $message .= sprintf(__('User %1$s agreed to continue the job',
                                    'fusioninventory'), $user);
             break;
 
          case self::RESPONSE_POSTPONE:
-            $message .= sprintf(__('Job postponed by the user %1s', 'fusioninventory'),
+            $message .= sprintf(__('Job postponed by the user %1$s', 'fusioninventory'),
                                 $user);
             break;
 
@@ -429,10 +429,10 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
    }
 
    function getEventMessage($event = '') {
-      $message = __('%1s button pressed');
+      $message = __('%1$s button pressed');
       switch ($event) {
          case 'on_ok':
-            return sprintf($message, _('OK'));
+            return sprintf($message, __('OK'));
 
          case 'on_yes':
             return sprintf($message, __('Yes'));
