@@ -114,7 +114,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('Task');
 
@@ -263,7 +263,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      $a_type = array();
+      $a_type = [];
       $a_type[''] = Dropdown::EMPTY_VALUE;
       if ($myname == 'action') {
          $a_type['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
@@ -310,7 +310,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    function getTypesForModule($method, $moduletype) {
 
       $available_methods = PluginFusioninventoryStaticmisc::getmethods();
-      $types = array();
+      $types = [];
       //$a_type[''] = '------';
       if ($moduletype === 'actors') {
          $types['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
@@ -429,7 +429,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      $a_actioninitiontype = array();
+      $a_actioninitiontype = [];
       $a_actioninitiontype[''] = '------';
       $a_actioninitiontype['PluginFusioninventoryAgent']= PluginFusioninventoryAgent::getTypeName();
       foreach ($a_methods as $datas) {
@@ -531,7 +531,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     */
    function getAgents($module) {
 
-      $array = array();
+      $array = [];
       $array[".1"] = " ".__('Auto managenement dynamic of agents', 'fusioninventory');
 
       $array[".2"] = " ".__('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
@@ -553,7 +553,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @global object $DB
     * @param integer $tasks_id id of the task
     * @param integer $disableTimeVerification
-    * @return boolean TRUE if all taskjob are ready (so finished from old runnning job)
+    * @return boolean true if all taskjob are ready (so finished from old runnning job)
     */
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
       global $DB;
@@ -562,31 +562,32 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjob      = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
-      $query = "SELECT *, UNIX_TIMESTAMP(datetime_start) as date_scheduled_timestamp
-            FROM `".$pfTask->getTable()."`
-         WHERE `id`='".$tasks_id."'
-         LIMIT 1";
+      $query  = "SELECT *, UNIX_TIMESTAMP(datetime_start) AS date_scheduled_timestamp
+                 FROM `".$pfTask->getTable()."`
+                 WHERE `id`='".$tasks_id."'
+                 LIMIT 1";
       $result = $DB->query($query);
-      $data = $DB->fetch_assoc($result);
-
+      $data   = $DB->fetch_assoc($result);
       $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'],
                                                    $data['periodicity_count']);
 
       // Calculate next execution from last
-      $queryJob = "SELECT * FROM `".$pfTaskjob->getTable()."`
-         WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
-         ORDER BY `id` DESC";
-      $resultJob = $DB->query($queryJob);
+      $queryJob   = "SELECT *
+                     FROM `".$pfTaskjob->getTable()."`
+                     WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+                     ORDER BY `id` DESC";
+      $resultJob   = $DB->query($queryJob);
       $nb_taskjobs = $DB->numrows($resultJob);
       // get only with execution_id (same +1) as task
-      $queryJob = "SELECT * FROM `".$pfTaskjob->getTable()."`
-         WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
-            AND `execution_id`='".($data['execution_id'] + 1)."'
-         ORDER BY `id` DESC";
-      $finished = 2;
-      $resultJob = $DB->query($queryJob);
+      $queryJob    = "SELECT *
+                      FROM `".$pfTaskjob->getTable()."`
+                      WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
+                         AND `execution_id`='".($data['execution_id'] + 1)."'
+                      ORDER BY `id` DESC";
+      $finished    = 2;
+      $resultJob   = $DB->query($queryJob);
       $nb_finished = 0;
-      while ($dataJob=$DB->fetch_array($resultJob)) {
+      while ($dataJob = $DB->fetch_array($resultJob)) {
          $a_taskjobstateuniqs = $pfTaskjobstate->find(
                            "`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'",
                            'id DESC',
@@ -624,7 +625,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             $resultJob2 = $DB->query($queryJob2);
             if ($DB->numrows($resultJob2) == $nb_taskjobs) {
                $finished = 1;
-               return TRUE;
+               return true;
             } else {
                $finished = 0;
             }
@@ -665,9 +666,9 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $data['execution_id'] = $exe + 1;
          unset($data['comment']);
          $pfTask->update($data);
-         return TRUE;
+         return true;
       } else {
-         return FALSE;
+         return false;
       }
    }
 
@@ -745,8 +746,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo "</td>";
 
       echo "<td align='center'>";
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      $a_parseMethods = array();
+      $a_methods          = PluginFusioninventoryStaticmisc::getmethods();
+      $a_parseMethods     = [];
       $a_parseMethods[''] = Dropdown::EMPTY_VALUE;
       foreach ($a_methods as $data) {
          $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
@@ -860,16 +861,16 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                $has_recent_log_entries = $pfTaskjoblog->find(
                        "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'",
                        "id DESC", "1");
-               $finish = FALSE;
+               $finish = false;
                if (count($has_recent_log_entries) == 1) {
                   $data2 = current($has_recent_log_entries);
                   $date = strtotime($data2['date']);
                   $date += (4 * 3600);
                   if ($date < date('U')) {
-                     $finish = TRUE;
+                     $finish = true;
                   }
                } else {
-                  $finish = TRUE;
+                  $finish = true;
                }
 
                # No news from the agent since 4 hour. The agent is probably crached.
@@ -934,16 +935,16 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                         $a_valid4h = $pfTaskjoblog->find(
                                 "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'",
                                 "id DESC", "1");
-                        $finish = FALSE;
+                        $finish = false;
                         if (count($a_valid4h) == 1) {
                            $datajs = current($a_valid4h);
                            $date = strtotime($datajs['date']);
                            $date += (4 * 3600);
                            if ($date < date('U')) {
-                              $finish = TRUE;
+                              $finish = true;
                            }
                         } else {
-                           $finish = TRUE;
+                           $finish = true;
                         }
 
                         if ($finish) {
@@ -996,7 +997,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    function checkConfiguration() {
 
       $return = true;
-      $input = array();
+      $input = [];
       $input['id'] = $this->fields['id'];
       $targets = importArrayFromDB($this->fields['targets']);
       foreach ($targets as $num=>$data) {
@@ -1012,7 +1013,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       if (count($targets) == '0') {
          $input['targets'] = '';
-         $return = FALSE;
+         $return = false;
       } else {
          $input['targets'] = exportArrayToDB($targets);
       }
@@ -1028,7 +1029,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       if (count($actors) == '0') {
          $input['actors'] = '';
-         $return = FALSE;
+         $return = false;
       } else {
          $input['actors'] = exportArrayToDB($actors);
       }
@@ -1205,7 +1206,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       if ($add == '1') {
          $a_type[] = array($itemtype => $items_id);
-         $input = array();
+         $input = [];
          $input['id'] = $this->fields['id'];
          $input[$type] = exportArrayToDB($a_type);
          $this->update($input);
@@ -1218,7 +1219,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       Ext.get('".$type.$taskjobs_id."').setDisplayed('none');
       </script>";
       // reload item list
-      $params = array();
+      $params = [];
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
@@ -1250,13 +1251,13 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       foreach ($split as $key) {
          unset($a_type[$key]);
       }
-      $input = array();
+      $input = [];
       $input['id'] = $this->fields['id'];
       $input[$type] = exportArrayToDB($a_type);
       $this->update($input);
 
       // reload item list
-      $params = array();
+      $params = [];
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
@@ -1363,7 +1364,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
-            $input = array();
+            $input = [];
             $input['id'] = $taskjobs_id;
             $input['method'] = $method;
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId($datas['module']);
@@ -1461,7 +1462,7 @@ function new_subtype(id) {
       $a_taskjobs = getAllDatasFromTable(
               $this->getTable(),
               "`plugin_fusioninventory_tasks_id`='".$tasks_id."'",
-              FALSE,
+              false,
               '`ranking`');
       echo  "<div id='drag_taskjob_taskjobs'>";
       echo "<table class='tab_cadrehov package_item_list' id='table_taskjob_$rand' style='width: 950px'>";
@@ -1550,7 +1551,7 @@ function new_subtype(id) {
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
-      $actions = array();
+      $actions = [];
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'fusioninventory');
       return $actions;
    }
