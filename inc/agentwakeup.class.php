@@ -182,10 +182,13 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       $wokeup = 0;
       if (!empty($tasks)) {
          //Update last wake up time each task
-         $query_lastrun = "UPDATE `glpi_plugin_fusioninventory_tasks`
-                           SET `last_agent_wakeup`='".$_SESSION['glpi_currenttime']."'
-                           WHERE `id` IN (".implode(",", $tasks).")";
-         $DB->query($query_lastrun);
+         $DB->update(
+            'glpi_plugin_fusioninventory_tasks', [
+               'last_agent_wakeup' => $_SESSION['glpi_currenttime']
+            ], [
+               'id' => [$tasks]
+            ]
+         );
 
          $agent  = new PluginFusioninventoryAgent();
          //Try to wake up agents one by one
@@ -203,4 +206,3 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
 
 }
-

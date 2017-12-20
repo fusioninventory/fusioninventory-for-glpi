@@ -95,9 +95,11 @@ class PluginFusioninventorySetup {
          }
       }
 
-      $query= "DELETE FROM `glpi_displaypreferences`
-               WHERE `itemtype` LIKE 'PluginFusioninventory%';";
-      $DB->query($query) or die($DB->error());
+      $DB->deleteOrDie(
+         'glpi_displaypreferences', [
+            'itemtype' => ['LIKE', 'PluginFusioninventory%']
+         ]
+      );
 
       // Delete rules
       $Rule = new Rule();

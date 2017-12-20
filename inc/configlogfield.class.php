@@ -105,10 +105,18 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                      WHERE `plugin_fusioninventory_mappings_id` = '".$mapfields['id']."'
                      LIMIT 1,1000";
                   $result=$DB->query($query);
+
+                  $delete = $DB->buildDelete(
+                     'glpi_plugin_fusioninventory_configlogfields', [
+                        'id' => new \QueryParam()
+                     ]
+                  );
+                  $stmt = $DB->prepare($delete);
                   while ($data=$DB->fetch_array($result)) {
-                     $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configlogfields`"
-                             ." WHERE `id`='".$data['id']."'");
+                     $stmt->bind_param('s', $data['id']);
+                     $stmt->execute();
                   }
+                  mysqli_stmt_close($stmt);
                }
             }
          }

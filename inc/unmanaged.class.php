@@ -530,10 +530,13 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             $unmanaged_infos["name"] = '';
             $newID=$this->add($unmanaged_infos);
 
-            $query_update = "UPDATE `glpi_networkports`
-                             SET `items_id`='".$newID."'
-                             WHERE `id`='".$data["id"]."';";
-            $DB->query($query_update);
+            $DB->update(
+               'glpi_networkports', [
+                  'items_id' => $newID
+               ], [
+                  'id' => $data['id']
+               ]
+            );
          }
       }
    }

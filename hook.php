@@ -1959,9 +1959,11 @@ function plugin_pre_item_delete_fusioninventory($parm) {
       switch ($parm["_item_type_"]) {
 
          case 'NetworkPort':
-               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkports`
-                  WHERE `networkports_id`='".$parm->getField('id')."';";
-               $DB->query($query_delete);
+            $DB->delete(
+               'glpi_plugin_fusioninventory_networkports', [
+                  'networkports_id' => $param->getField('id')
+               ]
+            );
             break;
 
       }
@@ -2119,9 +2121,11 @@ function plugin_item_purge_fusioninventory($parm) {
 
       case 'NetworkEquipment':
          // Delete all ports
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipments`
-                          WHERE `networkequipments_id`='".$parm->fields["id"]."';";
-         $DB->query($query_delete);
+         $DB->delete(
+            'glpi_plugin_fusioninventory_networkequipments', [
+               'networkequipments_id' => $parm->fields['id']
+            ]
+         );
 
          $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`,
                               `glpi_networkports`.`id` as nid
@@ -2132,32 +2136,43 @@ function plugin_item_purge_fusioninventory($parm) {
                                 AND `itemtype`='NetworkEquipment';";
          $result=$DB->query($query_select);
          while ($data=$DB->fetch_array($result)) {
-            $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkports`
-                             WHERE `id`='".$data["id"]."';";
-            $DB->query($query_delete);
-            $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkportlogs`
-                           WHERE `networkports_id`='".$data['nid']."'";
-            $DB->query($query_delete);
+            $DB->delete(
+               'glpi_plugin_fusioninventory_networkports', [
+                  'id' => $data['id']
+               ]
+            );
+            $DB->delete(
+               'glpi_plugin_fusinvsnmp_networkportlogs', [
+                  'networkports_id' => $data['nid']
+               ]
+            );
          }
          break;
 
       case "Printer":
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers`
-                          WHERE `printers_id`='".$parm->fields["id"]."';";
-         $DB->query($query_delete);
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printercartridges`
-                          WHERE `printers_id`='".$parm->fields["id"]."';";
-         $DB->query($query_delete);
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printerlogs`
-                          WHERE `printers_id`='".$parm->fields["id"]."';";
-         $DB->query($query_delete);
+         $DB->delete(
+            'glpi_plugin_fusioninventory_printers', [
+               'printers_id'=> $parm->fields['id']
+            ]
+         );
+         $DB->delete(
+            'glpi_plugin_fusioninventory_printercartridges', [
+               'printers_id' => $parm->fields['id']
+            ]
+         );
+         $DB->delete(
+            'glpi_plugin_fusioninventory_printerlogs', [
+               'printers_id' => $parm->fields['id']
+            ]
+         );
          break;
 
       case 'PluginFusioninventoryUnmanaged' :
-         $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_unmanageds`
-                          WHERE `plugin_fusioninventory_unmanageds_id`='".
-                             $parm->fields["id"]."';";
-         $DB->query($query_delete);
+         $DB->delete(
+            'glpi_plugin_fusinvsnmp_unmanageds', [
+               'plugin_fusioninventory_unmanageds_id' => $parm->fields['id']
+            ]
+         );
          break;
 
    }

@@ -164,6 +164,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $tasks_id = $param->fields['id'];
 
       //clean jobslogs
+      //DB::delete() does not supports subqueries
       $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
                   WHERE plugin_fusioninventory_taskjobstates_id IN (
                      SELECT states.id
@@ -174,6 +175,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   ) ");
 
       //clean states
+      //DB::delete() does not supports subqueries
       $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobstates
                   WHERE plugin_fusioninventory_taskjobs_id IN (
                      SELECT jobs.id
@@ -182,8 +184,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   )");
 
       //clean jobs
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobs
-                  WHERE plugin_fusioninventory_tasks_id = '$tasks_id'");
+      $DB->delete(
+         'glpi_plugin_fusioninventory_taskjobs', [
+            'plugin_fusioninventory_tasks_id' => $tasks_id
+         ]
+      );
    }
 
 

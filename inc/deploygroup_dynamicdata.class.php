@@ -236,10 +236,14 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function storeCache(PluginFusioninventoryDeployGroup $group, $ids = []) {
       global $DB;
 
-      $query = "UPDATE ".self::getTable()."
-                SET `computers_id_cache` = '".$DB->escape(json_encode($ids))."'
-                WHERE `plugin_fusioninventory_deploygroups_id` = '".$group->getID()."'";
-      return $DB->query($query);
+      $result = $DB->update(
+         self::getTable(), [
+            'computers_id_cache' => $DB->escape(json_encode($ids))
+         ], [
+            'plugin_fusioninventory_deploygroups_id' => $group->getID()
+         ]
+      );
+      return $result;
    }
 
 

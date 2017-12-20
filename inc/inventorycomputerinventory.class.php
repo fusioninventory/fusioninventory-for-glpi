@@ -93,22 +93,27 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       // Clean all DB LOCK if exist more than 10 minutes
       $time = 600;
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventorynames` "
-              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
-      $DB->query($query);
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventories` "
-              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
-      $DB->query($query);
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares` "
-              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
-      $DB->query($query);
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions` "
-              . " WHERE `date` <  CURRENT_TIMESTAMP() - ".$time;
-      $DB->query($query);
+      $del_where = ['date' => ['<', new \QueryExpression("CURRENT_TIMESTAMP() - $time")]];
+      $tables = [
+         'glpi_plugin_fusioninventory_dblockinventorynames',
+         'glpi_plugin_fusioninventory_dblockinventories',
+         'glpi_plugin_fusioninventory_dblocksoftwares',
+         'glpi_plugin_fusioninventory_dblocksoftwareversions'
+      ];
+
+      foreach ($tables as $table) {
+         $DB->delete(
+            $table,
+            $del_where
+         );
+      }
 
       // DB LOCK
-      $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventorynames`
-            SET `value`='".$name."'";
+      $query = $DB->buildInsert(
+         'glpi_plugin_fusioninventory_dblockinventorynames', [
+            'value' => $name
+         ]
+      );
       $CFG_GLPI["use_log_in_files"] = false;
       $start_time = date('U');
       while (!$DB->query($query)) {
@@ -125,9 +130,11 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
       $CFG_GLPI["use_log_in_files"] = true;
       $this->sendCriteria($p_DEVICEID, $arrayinventory);
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventorynames`
-            WHERE `value`='".$name."'";
-      $DB->query($query);
+      $DB->delete(
+         'glpi_plugin_fusioninventory_dblockinventorynames', [
+            'value' => $name
+         ]
+      );
 
       return $errors;
    }
@@ -533,8 +540,11 @@ class PluginFusioninventoryInventoryComputerInventory {
             $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
          }
 
-         $query = "INSERT INTO `glpi_plugin_fusioninventory_dblockinventories`
-            SET `value`='".$items_id."'";
+         $query = $DB->buildInsert(
+            'glpi_plugin_fusioninventory_dblockinventories', [
+               'value' => $items_id
+            ]
+         );
          $CFG_GLPI["use_log_in_files"] = false;
          if (!$DB->query($query)) {
             $communication = new PluginFusioninventoryCommunication();
@@ -558,9 +568,11 @@ class PluginFusioninventoryInventoryComputerInventory {
                  $no_history,
                  $setdynamic);
 
-         $query = "DELETE FROM `glpi_plugin_fusioninventory_dblockinventories`
-               WHERE `value`='".$items_id."'";
-         $DB->query($query);
+         $DB->delete(
+            'glpi_plugin_fusioninventory_dblockinventories', [
+               'value' => $items_id
+            ]
+         );
          if (isset($_SESSION['glpi_fusionionventory_nolock'])) {
             unset($_SESSION['glpi_fusionionventory_nolock']);
          }

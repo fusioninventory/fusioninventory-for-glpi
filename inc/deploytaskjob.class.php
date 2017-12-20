@@ -156,6 +156,25 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $sql_tasks = [];
       $i = 0;
 
+      $qparam = new QueryParam();
+      $query = $DB::buildInsert(
+         $this->getTable(), [
+            'plugin_fusioninventory_deploytasks_id'   => $qparam,
+            'name'                                    => $qparam,
+            'date_creation'                           => $qparam,
+            'entities_id'                             => $qparam,
+            'plugins_id'                              => $qparam,
+            'method'                                  => $qparam,
+            'definition'                              => $qparam,
+            'action'                                  => $qparam,
+            'retry_nb'                                => $qparam,
+            'retry_time'                              => $qparam,
+            'periodicity_type'                        => $qparam,
+            'periodicity_count'                       => $qparam
+         ]
+      );
+      $stmt = $DB->prepare($query);
+
       foreach ($tasks as $task) {
          $task = get_object_vars($task);
 
@@ -166,21 +185,24 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          $definition = exportArrayToDB([[
             'PluginFusioninventoryDeployPackage' => $task['package_id']]]);
 
-         $sql_tasks[] = "INSERT INTO ".$this->getTable()."
-         (
-            plugin_fusioninventory_deploytasks_id, name, date_creation, entities_id,
-            plugins_id, method, definition, action,
-            retry_nb, retry_time, periodicity_type, periodicity_count
-         ) VALUES (
-            '$tasks_id', 'job_".$tasks_id."_$i', NOW(), '0',
-            '$plugins_id', '".$task['method']."', '$definition', '$action',
-            '".$task['retry_nb']."', '".$task['retry_time']."', 'minutes', '0'
-         )";
-         $i++;
+         $stmt->bind_param(
+            'ssssssssssss',
+            $tasks_id,
+            "job_$tasks_id_$i",
+            'NOW()',
+            '0',
+            $plugins_id,
+            $task['method'],
+            $definition,
+            $action,
+            $task['retry_nb'],
+            $task['retry_time'],
+            'minutes',
+            '0'
+         );
+         $stmt->execute();
       }
-      foreach ($sql_tasks as $query) {
-         $DB->query($query);
-      }
+      mysqli_stmt_close($stmt);
    }
 
 

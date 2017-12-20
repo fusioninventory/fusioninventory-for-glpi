@@ -642,10 +642,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(2);
+      $computer_SoftwareVersion->getFromDB(1);
 
       $a_reference = [
-          'id'                   => '2',
+          'id'                   => '1',
           'computers_id'         => '1',
           'softwareversions_id'  => '1',
           'is_deleted_computer'  => '0',
@@ -671,10 +671,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(3);
+      $computer_SoftwareVersion->getFromDB(2);
 
       $a_reference = [
-          'id'                   => '3',
+          'id'                   => '2',
           'computers_id'         => '1',
           'softwareversions_id'  => '2',
           'is_deleted_computer'  => '0',
@@ -700,10 +700,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(1);
+      $computer_SoftwareVersion->getFromDB(3);
 
       $a_reference = [
-          'id'                   => '1',
+          'id'                   => '3',
           'computers_id'         => '1',
           'softwareversions_id'  => '3',
           'is_deleted_computer'  => '0',

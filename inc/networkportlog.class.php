@@ -102,15 +102,15 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $input['networkports_id'] = $array['networkports_id'];
 
       if ($status == "field") {
-
-         $query = "INSERT INTO `glpi_plugin_fusioninventory_networkportlogs` (
-                               `networkports_id`, `plugin_fusioninventory_mappings_id`, `value_old`,
-                               `value_new`, `date_mod`)
-                   VALUES('".$array["networkports_id"]."',
-                          '".$array["plugin_fusioninventory_mappings_id"]."',
-                          '".$array["value_old"]."', '".$array["value_new"]."',
-                          '".date("Y-m-d H:i:s")."');";
-         $DB->query($query);
+         $DB->insert(
+            'glpi_plugin_fusioninventory_networkportlogs', [
+               'networkports_id'                      => $array['networkports_id'],
+               'plugin_fusioninventory_mappings_id'   => $array['plugin_fusioninventory_mappings_id'],
+               'value_old'                            => $array('value_old'),
+               'value_new'                            => $array['value_new'],
+               'date_mod'                             => date("Y-m-d H:i:s")
+            ]
+         );
       }
    }
 
@@ -153,24 +153,37 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       }
 
       // Get list of fields configured for history
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_configlogfields`;";
-      $result=$DB->query($query);
-      if ($result) {
-         while ($data=$DB->fetch_array($result)) {
-            $type = '';
-            $name= '';
-            list($type, $name) = explode("-", $data['field']);
-            if (!isset($listName[$type."-".$name])) {
-               $query_del = "DELETE FROM `glpi_plugin_fusioninventory_configlogfields`
-                  WHERE id='".$data['id']."' ";
-                  $DB->query($query_del);
-            } else {
-               $options[$data['field']]=$listName[$type."-".$name];
-            }
-            unset($listName[$data['field']]);
-         }
+      $iterator = $DB->request([
+         'FROM'   => 'glpi_plugin_fusioninventory_configlogfields'
+      ]);
+
+      $stmt = null;
+      if (count($iterator)) {
+         $delete = $DB->buildDelete(
+            'glpi_plugin_fusioninventory_configlogfields', [
+               'id' => new \QueryParam()
+            ]
+         );
+         $stmt = $DB->prepare($delete);
       }
+
+      while ($data = $iterator->next()) {
+         $type = '';
+         $name= '';
+         list($type, $name) = explode("-", $data['field']);
+         if (!isset($listName[$type."-".$name])) {
+            $stmt->bind_param('s', $data['id']);
+            $stmt->execute();
+         } else {
+            $options[$data['field']]=$listName[$type."-".$name];
+         }
+         unset($listName[$data['field']]);
+      }
+
+      if ($stmt != null) {
+         mysqli_stmt_close($stmt);
+      }
+
       if (!empty($options)) {
          asort($options);
       }
@@ -258,24 +271,27 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $a_list = $pfConfigLogField->find();
       if (count($a_list)) {
          foreach ($a_list as $data) {
-
-            $query_delete = "DELETE FROM `".$pfNetworkPortLog->getTable()."`
-               WHERE `plugin_fusioninventory_mappings_id`='".
-                    $data['plugin_fusioninventory_mappings_id']."' ";
-
             switch ($data['days']) {
-
                case '-1':
-                  $DB->query($query_delete);
+                  $DB->delete(
+                     $pfNetworkPortLog->getTabNameForItem(), [
+                        'plugin_fusioninventory_mappings_id' => $data['plugin_fusioninventory_mappings_id']
+                     ]
+                  );
                   break;
 
                case '0': // never delete
                   break;
 
                default:
-                  $query_delete .= " AND `date_mod` < date_add(now(), interval -".
-                                       $data['days']." day)";
-                  $DB->query($query_delete);
+                  $DB->delete(
+                     $pfNetworkPortLog->getTabNameForItem(), [
+                        'plugin_fusioninventory_mappings_id'   => $data['plugin_fusioninventory_mappings_id'],
+                        'date_mod'                             => new \QueryExpression(
+                           "date_add(now(), interval - {$data['days']} day)"
+                        )
+                     ]
+                  );
                   break;
 
             }

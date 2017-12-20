@@ -301,19 +301,46 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       $input['234'] = 'atmbond';
 
       $install = 1;
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkporttypes`
-         WHERE `import`='1'";
-      $result=$DB->query($query);
-      if ($DB->numrows($result) > 0) {
+      $iterator = $DB->request([
+         'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
+         'WHERE'  => ['import' => 1]
+      ]);
+      if (count($iterator) > 0) {
          $install = 0;
       }
 
+      $it = $it = new DBmysqlIterator($DB);
+      $it->buildQuery([
+         'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
+         'WHERE'  => ['number' => new QueryParam()]
+      ]);
+      $stmt_select = $DB->prepare($it->getSQL());
+
+      $to_import = [];
       foreach ($input as $number=>$name) {
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkporttypes`
-            WHERE `number`='".$number."'";
-         $result=$DB->query($query);
-         if ($DB->numrows($result) == '0') {
+         $stmt_select->bind_param('s', $number);
+         $stmt_select->execute();
+         if ($DB->numrows($stmt_select) == '0') {
+            $to_import[$number] = $name;
+         }
+      }
+      mysqli_stmt_close($stmt_select);
+
+      if (count($to_import)) {
+         $qparam = new \QueryParam();
+         $insert_qry = $DB->buildInsert(
+            'glpi_plugin_fusioninventory_networkporttypes', [
+               'name'      => $qparam,
+               'number'    => $qparam,
+               'othername' => $qparam,
+               'import'    => $qparam
+            ]
+         );
+         $stmt_insert = $DB->prepare($insert_qry);
+
+         foreach ($to_import as $number=>$name) {
             $import = 0;
+            $othername = "$name ($number)";
 
             if ($install == '1') {
                switch ($number) {
@@ -330,11 +357,17 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
                }
             }
-            $queryi = "INSERT INTO `glpi_plugin_fusioninventory_networkporttypes`
-               (`id`, `name`, `number`, `othername`, `import`)
-               VALUES (NULL, '".$name."', '".$number."', '".$name."(".$number.")', '".$import."')";
-            $DB->query($queryi);
+
+            $stmt_insert->bind_param(
+               'ssss',
+               $name,
+               $number,
+               $othername,
+               $import
+            );
+            $stmt_insert->execute();
          }
+         mysqli_stmt_close($stmt_insert);
       }
    }
 
