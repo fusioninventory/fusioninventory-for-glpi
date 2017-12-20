@@ -148,18 +148,18 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          ]);
 
          $input_os = [
-         'itemtype'                          => 'Computer',
-         'items_id'                          => $computer->getID(),
-         'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id'],
-         'operatingsystemkernelversions_id'  => $pfos['operatingsystemkernelversions_id'],
-         'operatingsystems_id'               => $pfos['operatingsystems_id'],
-         'operatingsystemversions_id'        => $pfos['operatingsystemversions_id'],
-         'operatingsystemservicepacks_id'    => $pfos['operatingsystemservicepacks_id'],
-         'operatingsystemeditions_id'        => $pfos['operatingsystemeditions_id'],
-         'license_id'                        => $pfos['licenseid'],
-         'license_number'                    => $pfos['license_number'],
-         'is_dynamic'                        => 1,
-         'entities_id'                       => $computer->fields['entities_id']
+            'itemtype'                          => 'Computer',
+            'items_id'                          => $computer->getID(),
+            'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id'],
+            'operatingsystemkernelversions_id'  => $pfos['operatingsystemkernelversions_id'],
+            'operatingsystems_id'               => $pfos['operatingsystems_id'],
+            'operatingsystemversions_id'        => $pfos['operatingsystemversions_id'],
+            'operatingsystemservicepacks_id'    => $pfos['operatingsystemservicepacks_id'],
+            'operatingsystemeditions_id'        => $pfos['operatingsystemeditions_id'],
+            'license_id'                        => $pfos['licenseid'],
+            'license_number'                    => $pfos['license_number'],
+            'is_dynamic'                        => 1,
+            'entities_id'                       => $computer->fields['entities_id']
          ];
 
          if (!$ios->isNewItem()) {
@@ -179,35 +179,35 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
-         if ($pfConfig->getValue("component_simcard") != 0) {
-            //Import simcards
-            $this->importSimcards('Computer', $a_computerinventory, $computers_id);
-         }
+      if ($pfConfig->getValue("component_simcard") != 0) {
+         //Import simcards
+         $this->importSimcards('Computer', $a_computerinventory, $computers_id);
+      }
 
       // * Computer
-         $db_computer = $computer->fields;
-         $computerName = $computer->fields['name'];
-         $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
-                                                          $db_computer, $a_lockable);
-         $a_computerinventory['Computer'] = $a_ret[0];
+      $db_computer = $computer->fields;
+      $computerName = $computer->fields['name'];
+      $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
+                                                         $db_computer, $a_lockable);
+      $a_computerinventory['Computer'] = $a_ret[0];
 
-         $input = $a_computerinventory['Computer'];
+      $input = $a_computerinventory['Computer'];
 
-         $input['id'] = $computers_id;
-         $history = true;
+      $input['id'] = $computers_id;
+      $history = true;
       if ($no_history) {
          $history = false;
       }
-         $input['_no_history'] = $no_history;
+      $input['_no_history'] = $no_history;
       if (!in_array('states_id', $a_lockable)) {
          $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       }
-         $computer->update($input, !$no_history);
+      $computer->update($input, !$no_history);
 
       $this->computer = $computer;
 
       // * Computer fusion (ext)
-         $db_computer = [];
+      $db_computer = [];
       if ($no_history === false) {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
                 WHERE `computers_id` = '$computers_id'
@@ -852,8 +852,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             }
 
             $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-            $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
-                     SET `value`='1'";
+            $queryDBLOCK = $DB->buildInsert(
+               'glpi_plugin_fusioninventory_dblocksoftwares', [
+                  'value' => 1
+               ]
+            );
             $CFG_GLPI["use_log_in_files"] = false;
             while (!$DB->query($queryDBLOCK)) {
                usleep(100000);
@@ -867,14 +870,19 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                      $options);
                }
             }
-            $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
-                     WHERE `value`='1'";
-            $DB->query($queryDBLOCK);
+            $DB->delete(
+               'glpi_plugin_fusioninventory_dblocksoftwares', [
+                  'value' => 1
+               ]
+            );
             $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                            $a_computerinventory['software'],
                                            $lastSoftwareVid);
-            $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                     SET `value`='1'";
+            $queryDBLOCK = $DB->buildInsert(
+               'glpi_plugin_fusioninventory_dblocksoftwareversions', [
+                  'value' => 1
+               ]
+            );
             $CFG_GLPI["use_log_in_files"] = false;
             while (!$DB->query($queryDBLOCK)) {
                usleep(100000);
@@ -889,24 +897,26 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $this->addSoftwareVersion($a_software, $softwares_id);
                }
             }
-            $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                     WHERE `value`='1'";
-            $DB->query($queryDBLOCK);
+            $DB->delete(
+               'glpi_plugin_fusioninventory_dblocksoftwareversions', [
+                  'value' => 1
+               ]
+            );
             $a_toinsert = [];
             foreach ($a_computerinventory['software'] as $a_software) {
                $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
                $a_tmp = [
-                'computers_id'        => $computers_id,
-                'softwareversions_id' => $softwareversions_id,
-                'is_dynamic'          => 1,
-                'entities_id'         => $computer->fields['entities_id'],
-                'date_install'        => 'NULL'
+                  'computers_id'        => $computers_id,
+                  'softwareversions_id' => $softwareversions_id,
+                  'is_dynamic'          => 1,
+                  'entities_id'         => $computer->fields['entities_id'],
+                  'date_install'        => null
                 ];
                if (isset($a_software['date_install'])) {
                   $a_tmp['date_install'] = $a_software['date_install'];
                }
-               $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+                  $a_toinsert[] = $a_tmp;
             }
             if (count($a_toinsert) > 0) {
                $this->addSoftwareVersionsComputer($a_toinsert);
@@ -962,9 +972,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                      Log::HISTORY_UNINSTALL_SOFTWARE);
                      }
                   }
-                  $query = "DELETE FROM `glpi_computers_softwareversions` "
-                          ."WHERE `id` IN ('".implode("', '", $db_software)."')";
-                  $DB->query($query);
+                  $DB->delete(
+                     'glpi_computers_softwareversions', [
+                        'id' => $db_software
+                     ]
+                  );
                }
                if (count($a_computerinventory['software']) > 0) {
                   $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software",
@@ -974,8 +986,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      $options['disable_unicity_check'] = true;
                   }
                   $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-                  $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
-                           SET `value`='1'";
+                  $queryDBLOCK = $DB->buildInsert(
+                     'glpi_plugin_fusioninventory_dblocksoftwares', [
+                        'value' => 1
+                     ]
+                  );
                   $CFG_GLPI["use_log_in_files"] = false;
                   while (!$DB->query($queryDBLOCK)) {
                      usleep(100000);
@@ -989,15 +1004,20 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                         $options);
                      }
                   }
-                  $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
-                           WHERE `value`='1'";
-                  $DB->query($queryDBLOCK);
+                  $DB->delete(
+                     'glpi_plugin_fusioninventory_dblocksoftwares', [
+                        'value' => 1
+                     ]
+                  );
 
                   $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                                  $a_computerinventory['software'],
                                                  $lastSoftwareVid);
-                  $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                           SET `value`='1'";
+                  $queryDBLOCK = $DB->buildInsert(
+                     'glpi_plugin_fusioninventory_dblocksoftwareversions', [
+                        'value' => 1
+                     ]
+                  );
                   $CFG_GLPI["use_log_in_files"] = false;
                   while (!$DB->query($queryDBLOCK)) {
                      usleep(100000);
@@ -1012,24 +1032,26 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                         $this->addSoftwareVersion($a_software, $softwares_id);
                      }
                   }
-                  $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                           WHERE `value`='1'";
-                  $DB->query($queryDBLOCK);
+                  $DB->delete(
+                     'glpi_plugin_fusioninventory_dblocksoftwareversions', [
+                        'value' => 1
+                     ]
+                  );
                   $a_toinsert = [];
                   foreach ($a_computerinventory['software'] as $a_software) {
                      $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                      $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
                      $a_tmp = [
-                      'computers_id'        => $computers_id,
-                      'softwareversions_id' => $softwareversions_id,
-                      'is_dynamic'          => 1,
-                      'entities_id'         => $computer->fields['entities_id'],
-                      'date_install'        => 'NULL'
+                        'computers_id'        => $computers_id,
+                        'softwareversions_id' => $softwareversions_id,
+                        'is_dynamic'          => 1,
+                        'entities_id'         => $computer->fields['entities_id'],
+                        'date_install'        => null
                       ];
                      if (isset($a_software['date_install'])) {
                         $a_tmp['date_install'] = $a_software['date_install'];
                      }
-                     $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+                        $a_toinsert[] = $a_tmp;
                   }
                   $this->addSoftwareVersionsComputer($a_toinsert);
 
@@ -1061,12 +1083,15 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("import_vm") == 1) {
          $db_computervirtualmachine = [];
          if ($no_history === false) {
-            $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id`
-                     FROM `glpi_computervirtualmachines`
-                  WHERE `computers_id` = '$computers_id'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT' => ['id', 'name', 'uuid', 'virtualmachinesystems_id'],
+               'FROM'   => 'glpi_computervirtualmachines',
+               'WHERE'  => [
+                  'computers_id' => $computers_id,
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1174,12 +1199,15 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("import_volume") != 0) {
          $db_computerdisk = [];
          if ($no_history === false) {
-            $query = "SELECT `id`, `name`, `device`, `mountpoint`
-                   FROM `glpi_computerdisks`
-                   WHERE `computers_id` = '".$computers_id."'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT' => ['id', 'name', 'device', 'mountpoint'],
+               'FROM'   => 'glpi_computerdisks',
+               'WHERE'  => [
+                  'computers_id' => $computers_id,
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -2428,27 +2456,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
    function addSoftwareVersionsComputer($a_input) {
       global $DB;
 
-      // split with and without date_install
-      $input_date = [];
-      $input_nodate = [];
-      foreach ($a_input as $input) {
-         if (substr($input, -7) == "'NULL')") {
-            $input_nodate[] = str_replace(",'NULL')", ")", $input);
-         } else {
-            $input_date[] = $input;
-         }
-      }
-      if (count($input_date) > 0) {
-         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`,`date_install`) ';
-         $query .= ' VALUES '.implode(',', $input_date);
-         $DB->query($query);
-      }
+      $insert_query = $DB->buildInsert(
+         'glpi_computers_softwareversions', [
+            'computers_id'          => new \QueryParam(),
+            'softwareversions_id'   => new \QueryParam(),
+            'is_dynamic'            => new \QueryParam(),
+            'entities_id'           => new \QueryParam(),
+            'date_install'          => new \QueryParam()
+         ]
+      );
+      $stmt = $DB->prepare($insert_query);
 
-      if (count($input_nodate) > 0) {
-         $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`) ';
-         $query .= ' VALUES '.implode(',', $input_nodate);
-         $DB->query($query);
+      foreach ($a_input as $input) {
+         $stmt->bind_param(
+            'sssss',
+            $input['computers_id'],
+            $input['softwareversions_id'],
+            $input['is_dynamic'],
+            $input['entities_id'],
+            $input['date_install']
+         );
+         $stmt->execute();
       }
+      mysqli_stmt_close($stmt);
    }
 
 
@@ -2539,30 +2569,46 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       global $DB;
 
       if (count($this->log_add) > 0) {
+         $qparam = new \QueryParam();
+         $stmt = $DB->prepare(
+            $DB->buildInsert(
+               'glpi_logs', [
+                  'items_id'           => $qparam,
+                  'itemtype'           => $qparam,
+                  'itemtype_link'      => $qparam,
+                  'date_mod'           => $qparam,
+                  'linked_action'      => $qparam,
+                  'id_search_option'   => $qparam,
+                  'old_value'          => $qparam,
+                  'new_value'          => $qparam,
+                  'user_name'          => $qparam
+               ]
+            )
+         );
          $username = addslashes($_SESSION["glpiname"]);
 
-         $dataLog = [];
          foreach ($this->log_add as $data) {
             $changes = $data[4];
             unset($data[4]);
+            $data = array_values($data);
             $id_search_option = $changes[0];
             $old_value = $changes[1];
             $new_value = $changes[2];
 
-            $dataLog[] = "('".implode("', '", $data)."', '".$id_search_option."',
-                           '".$old_value."', '".$new_value."',
-                           '".$username."')";
+            $stmt->bind_param(
+               'sssssssss',
+               $data[0],
+               $data[1],
+               $data[2],
+               $data[3],
+               $data[4],
+               $id_search_option,
+               $old_value,
+               $new_value,
+               $username
+            );
+            $stmt->execute();
          }
-
-         // Build query
-
-         $query = "INSERT INTO `glpi_logs`
-                          (`items_id`, `itemtype`, `itemtype_link`, `date_mod`, `linked_action`,
-                          `id_search_option`, `old_value`, `new_value`,
-                            `user_name`)
-                   VALUES ".implode(", \n", $dataLog);
-
-         $DB->query($query);
 
          $this->log_add = [];
       }
@@ -2579,35 +2625,42 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       global $DB;
 
       $computer = new Computer();
-      $input = [
-          'id' => $computers_id
-      ];
+      $input = ['id' => $computers_id];
       $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('computer', $input);
       $computer->update($input);
 
-      $DB->query("UPDATE `glpi_computerdisks` SET `is_dynamic`='1'
-                     WHERE `computers_id`='".$computers_id."'");
-
-      $DB->query("UPDATE `glpi_computers_items` SET `is_dynamic`='1'
-                     WHERE `computers_id`='".$computers_id."'");
-
-      $DB->query("UPDATE `glpi_computers_softwareversions` SET `is_dynamic`='1'
-                     WHERE `computers_id`='".$computers_id."'");
-
-      $DB->query("UPDATE `glpi_computervirtualmachines` SET `is_dynamic`='1'
-                     WHERE `computers_id`='".$computers_id."'");
+      $a_tables = [
+         'glpi_computerdisks',
+         'glpi_computers_items',
+         'glpi_computers_softwareversions',
+         'glpi_computervirtualmachines'
+      ];
+      foreach ($a_tables as $table) {
+         $DB->update(
+            $table, [
+               'is_dynamic' => 1
+            ], [
+               'computers_id' => $computers_id
+            ]
+         );
+      }
 
       $a_tables = ["glpi_networkports", "glpi_items_devicecases", "glpi_items_devicecontrols",
-                        "glpi_items_devicedrives", "glpi_items_devicegraphiccards",
-                        "glpi_items_deviceharddrives", "glpi_items_devicememories",
-                        "glpi_items_devicemotherboards", "glpi_items_devicenetworkcards",
-                        "glpi_items_devicepcis", "glpi_items_devicepowersupplies",
-                        "glpi_items_deviceprocessors", "glpi_items_devicesoundcards"];
+                   "glpi_items_devicedrives", "glpi_items_devicegraphiccards",
+                   "glpi_items_deviceharddrives", "glpi_items_devicememories",
+                   "glpi_items_devicemotherboards", "glpi_items_devicenetworkcards",
+                   "glpi_items_devicepcis", "glpi_items_devicepowersupplies",
+                   "glpi_items_deviceprocessors", "glpi_items_devicesoundcards"];
 
       foreach ($a_tables as $table) {
-         $DB->query("UPDATE `".$table."` SET `is_dynamic`='1'
-                        WHERE `items_id`='".$computers_id."'
-                           AND `itemtype`='Computer'");
+         $DB->update(
+            $table, [
+               'is_dynamic'   => 1,
+            ], [
+               'itemtype'  => 'Computer',
+               'items_id'  => $computers_id
+            ]
+         );
       }
    }
 

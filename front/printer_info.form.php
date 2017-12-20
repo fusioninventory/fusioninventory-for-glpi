@@ -62,9 +62,11 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $result = $DB->query($query);
 
    if ($DB->numrows($result) == "0") {
-      $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_printers`(`printers_id`)
-                      VALUES('".$_POST['printers_id']."');";
-      $DB->query($queryInsert);
+      $DB->insert(
+         'glpi_plugin_fusioninventory_printers', [
+            'printers_id' => $_POST['printers_id']
+         ]
+      );
       $query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_printers`
                 WHERE `printers_id`='".$_POST['printers_id']."' ";

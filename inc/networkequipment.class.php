@@ -467,21 +467,23 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                 WHERE `networkequipments_id`='".$id."';";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "0") {
-         $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networkequipments`
-                            (`networkequipments_id`) VALUES('".$id."');";
-
-         $DB->query($queryInsert);
+         $DB->insert(
+            'glpi_plugin_fusioninventory_networkequipments', [
+               'networkequipments_id' => $id
+            ]
+         );
       }
       if (empty($configsecurities_id)) {
          $configsecurities_id = 0;
       }
-      $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
-                SET `plugin_fusioninventory_configsecurities_id`=
-                        '".$configsecurities_id."',
-                    `sysdescr`='".$sysdescr."'
-                WHERE `networkequipments_id`='".$id."';";
-
-      $DB->query($query);
+      $DB->update(
+         'glpi_plugin_fusioninventory_networkequipments', [
+            'plugin_fusioninventory_configsecurities_id' => $configsecurities_id,
+            'sysdescr'                                   => $sysdescr
+         ], [
+            'networkequipments_id' => $id
+         ]
+      );
    }
 
 

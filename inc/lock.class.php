@@ -469,11 +469,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
    */
    static function cleanForAsset($itemtype, $items_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_locks`
-                       WHERE `tablename`='".getTableForItemType($itemtype)."'
-                          AND `items_id`='$items_id'";
-      $DB->query($query);
-
+      $DB->delete(
+         'glpi_plugin_fusioninventory_locks', [
+            'tablename' => getTableForItemType($itemtype),
+            'items_id'  => $items_id
+         ]
+      );
    }
 
 

@@ -540,10 +540,13 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          $exe = $data['execution_id'];
          unset($data['execution_id']);
 
-         $queryUpdate = "UPDATE `".$pfTaskjob->getTable()."`
-            SET `status`='0'
-            WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
-         $DB->query($queryUpdate);
+         $DB->update(
+            $pfTaskjob->getTable(), [
+               'status' => 0
+            ], [
+               'plugin_fusioninventory_tasks_id' => $data['id']
+            ]
+         );
 
          if ($period != '0') {
             if (is_null($data['date_scheduled_timestamp'])) {

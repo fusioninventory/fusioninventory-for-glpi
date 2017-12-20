@@ -636,14 +636,20 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
               GROUP BY `plugin_fusioninventory_taskjobstates_id`";
       $result=$DB->query($sql);
       if ($result) {
+         $delete = $DB->buildDelete(
+            'glpi_plugin_fusioninventory_taskjoblogs', [
+               'plugin_fusioninventory_taskjobstates_id' => new \Queryparam()
+            ]
+         );
+         $stmt = $DB->prepare($delete);
          while ($data=$DB->fetch_array($result)) {
             $pfTaskjobstate->getFromDB($data['plugin_fusioninventory_taskjobstates_id']);
             $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
-            $sql_delete = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`
-               WHERE `plugin_fusioninventory_taskjobstates_id` = '".
-                    $data['plugin_fusioninventory_taskjobstates_id']."'";
-            $DB->query($sql_delete);
+
+            $stmt->bind_param('s', $data['plugin_fusioninventory_taskjobstates_id']);
+            $stmt->execute();
          }
+         mysqli_stmt_close($stmt);
       }
    }
 

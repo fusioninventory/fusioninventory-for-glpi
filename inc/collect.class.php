@@ -639,10 +639,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                $output[] = $datafile;
 
                //clean old files
-               $query = "DELETE FROM `glpi_plugin_fusioninventory_collects_files_contents`
-                         WHERE `plugin_fusioninventory_collects_files_id`='".$files['id']."'
-                           AND `computers_id` = '".$agent['computers_id']."'";
-               $DB->query($query);
+               $DB->delete(
+                  'glpi_plugin_fusioninventory_collects_files_contents', [
+                     'plugin_fusioninventory_collects_files_id'   => $files['id'],
+                     'computers_id'                               => $agent['computers_id']
+                  ]
+               );
             }
             break;
 
