@@ -2014,7 +2014,9 @@ class PluginFusioninventoryFormatconvert {
                                                     'SYSDESCR' => 'sysdescr',
                                                     'MODEL'    => 'model',
                                                     'IP'       => 'ip',
-                                                    'SYSMAC'   => 'mac',
+                                                    //'SYSMAC'   => 'mac',
+                                                    'SYSMAC'   => 'sysmac',
+                                                    'MAC'      => 'mac',
                                                     'SYSNAME'  => 'name'));
                   $a_inventory['connection-lldp'][$a_port['IFNUMBER']] = $array_tmp;
                } else {

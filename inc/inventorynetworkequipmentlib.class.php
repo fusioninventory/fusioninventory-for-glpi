@@ -359,11 +359,29 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
     */
    function importConnectionLLDP($a_lldp, $networkports_id) {
 
+      // example of array $a_lldp: 
+      // $a_lldp = Array(
+      //     [ifdescr] => Port 1
+      //     [ip] => 10.38.65.25
+      //     [mac] => Array
+      //         (
+      //             [0] => 00:13:3b:12:bc:99
+      //             [1] => f0:9e:63:6f:e1:e2
+      //         )
+      // 
+      //     [model] => Cisco IP Phone 7821
+      //     [sysdescr] => sip78xx.11-0-1-11.loads
+      //     [name] => SEPF09E636FE1E2
+      //     [logical_number] =>
+      //     [sysmac] =>
+      // )
+       
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-
+      
       if ($a_lldp['ip'] == ''
               && $a_lldp['name'] == ''
-              && $a_lldp['mac'] == '') {
+              && $a_lldp['sysmac'] == ''
+              && !is_array($a_lldp['mac'])) {
          return;
       }
 
@@ -374,16 +392,30 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                                                          $a_lldp['sysdescr'],
                                                          $a_lldp['name'],
                                                          $a_lldp['model']);
-      } else {
-         if ($a_lldp['mac'] != '') {
-            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['mac'],
+      } elseif ($a_lldp['sysmac'] != '') {
+         //if ($a_lldp['mac'] != '') {
+            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['sysmac'],
+                                                                       //$a_lldp['mac'],
                                                                        $a_lldp['logical_number'],
                                                                        $a_lldp);
-         }
+         //
+            
+      } elseif (strstr($a_lldp['model'], "Phone") and is_array($a_lldp['mac'])) {
+          // only for phones if IP and SYSMAC are not detected
+          foreach ($a_lldp['mac'] as $mac) {
+              $network_port = new NetworkPort();
+              $port = current($network_port->find("mac = '" . $mac . "' AND itemtype = 'Phone'"));
+              if (isset($port['id'])) {
+                  $portID = $port['id'];
+                  break;
+              }
+          }
       }
 
       if ($portID
               && $portID > 0) {
+          
+         // connect device port to network equipment port
          $wire = new NetworkPort_NetworkPort();
          $contact_id = $wire->getOppositeContact($networkports_id);
          if (!($contact_id
@@ -393,6 +425,49 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $wire->add(array('networkports_id_1'=> $networkports_id,
                              'networkports_id_2' => $portID));
          }
+         
+        // device connected to a IP Phone (the agent must send the connected mac addresses)
+        if (strstr($a_lldp['model'], "Phone") and isset($a_lldp['mac']) and count($a_lldp['mac']) == 2) {
+
+            $network_port = new NetworkPort();
+            // search port information
+            $port = $network_port->find("id = " . $portID);
+            $port = current($port);
+
+            // get the other ports of the phone that are not the link port
+            $other_phone_ports = $network_port->find("items_id = " . $port['items_id'] . " AND itemtype = 'Phone' AND id != " . $portID);
+            // we take the first one
+            $other_phone_port = current($other_phone_ports);
+
+            // We find the mac connected to the phone (we only have two mac's)
+            $mac = ($a_lldp['mac'][0] != $port['mac']) 
+                ? $a_lldp['mac'][0]
+                : $a_lldp['mac'][1] ;
+
+            // search id of the connected port (to the phone) by mac
+            $port_connected_to_phone = $network_port->find("mac = '" . $mac . "' AND id != " . $portID);
+            // we take the first one
+            $port_connected_to_phone = current($port_connected_to_phone);
+
+            // find if it's connect yet
+            $wire = new NetworkPort_NetworkPort();
+            $contact_id = $wire->getOppositeContact($port_connected_to_phone['id']);
+
+            // connect the other port of the phone with this port find it
+            if (!($contact_id AND $contact_id == $port_connected_to_phone['id'])) {
+                // we disconnect both ports of their possible connections
+                $pfNetworkPort->disconnectDB($other_phone_port['id']);
+                $pfNetworkPort->disconnectDB($port_connected_to_phone['id']);
+
+                // and connect them
+                $wire->add(
+                    array(
+                        'networkports_id_1'=> $other_phone_port['id'],
+                        'networkports_id_2' => $port_connected_to_phone['id']
+                    )
+                );
+            }
+        }
       }
    }
 

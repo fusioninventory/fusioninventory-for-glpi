@@ -131,7 +131,8 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => '',
           'model'          => '',
           'ip'             => '',
-          'mac'            => '00:24:b5:bd:c8:01',
+          'sysmac'         => '00:24:b5:bd:c8:01',  // system mac
+          'mac'            => array('00:24:b5:bd:c8:01', '00:13:3b:12:bc:99',), // connected mac's
           'name'           => ''
       );
 
@@ -211,7 +212,8 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => '',
           'model'          => '',
           'ip'             => '',
-          'mac'            => '00:24:b5:bd:c8:01',
+          'sysmac'         => '00:24:b5:bd:c8:01',  // system mac
+          'mac'            => array('00:24:b5:bd:c8:01', '00:13:3b:12:bc:99',), // connected mac's
           'name'           => ''
       );
 
@@ -290,7 +292,8 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => '',
           'model'          => '',
           'ip'             => '',
-          'mac'            => '00:24:b5:bd:c8:01',
+          'sysmac'         => '00:24:b5:bd:c8:01',  // system mac
+          'mac'            => array('00:24:b5:bd:c8:01', '00:13:3b:12:bc:99',), // connected mac's
           'name'           => ''
       );
 
@@ -356,6 +359,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => '',
           'model'          => '',
           'ip'             => '192.168.200.124',
+          'sysmac'         => '',
           'mac'            => '',
           'name'           => ''
       );
@@ -463,6 +467,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => '',
           'model'          => '',
           'ip'             => '192.168.200.124',
+          'sysmac'         => '',
           'mac'            => '',
           'name'           => ''
       );
@@ -585,6 +590,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => '',
           'model'          => '',
           'ip'             => '192.168.200.124',
+          'sysmac'         => '',
           'mac'            => '',
           'name'           => ''
       );
@@ -649,7 +655,8 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'sysdescr'       => 'Juniper Networks, Inc. ex2200-24t-4g , version 10.1R1.8 Build date: 2010-02-12 16:59:31 UTC ',
           'model'          => '',
           'ip'             => '',
-          'mac'            => '2c:6b:f5:98:f9:70',
+          'sysmac'         => '2c:6b:f5:98:f9:70',
+          'mac'            => array('2c:6b:f5:98:f9:70','00:13:3b:12:bc:99','f0:9e:63:6f:e1:e2'), // detected mac's in the port
           'name'           => 'juniperswitch3'
       );
 
