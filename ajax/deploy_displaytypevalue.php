@@ -61,7 +61,7 @@ if (empty($rand) && (empty($type))) {
 if (!class_exists($classname)
    || !in_array($classname,
                ['PluginFusioninventoryDeployCheck',
-                'PluginFusioninventoryDeployCheck',
+                'PluginFusioninventoryDeployFile',
                 'PluginFusioninventoryDeployAction',
                 'PluginFusioninventoryDeployUserinteraction'
                ])) {
