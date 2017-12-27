@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update of information into printer in GLPI.
  */
-class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
+class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInventoryCommon {
 
 
    /**
@@ -124,7 +124,13 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       }
 
       // * Ports
-      $this->importPorts($a_inventory, $printers_id);
+      $this->importPorts('Printer', $a_inventory, $printers_id);
+
+      //Import firmwares
+      $this->importFirmwares('Printer', $a_inventory, $printers_id);
+
+      //Import simcards
+      $this->importSimcards('Printer', $a_inventory, $printers_id);
 
       // Page counters
       $this->importPageCounters($a_inventory['pagecounters'], $printers_id);
@@ -139,56 +145,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
 
 
 
-   /**
-    * Import ports
-    *
-    * @param array $a_inventory
-    * @param integer $printers_id
-    */
-   function importPorts($a_inventory, $printers_id) {
-
-      $networkPort = new NetworkPort();
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-
-      $networkports_id = 0;
-      foreach ($a_inventory['networkport'] as $a_port) {
-         $a_ports_DB = current($networkPort->find(
-                    "`itemtype`='Printer'
-                       AND `items_id`='".$printers_id."'
-                       AND `instantiation_type`='NetworkPortEthernet'
-                       AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
-         if (!isset($a_ports_DB['id'])) {
-            // Add port
-            $a_port['instantiation_type'] = 'NetworkPortEthernet';
-            $a_port['items_id'] = $printers_id;
-            $a_port['itemtype'] = 'Printer';
-            $networkports_id = $networkPort->add($a_port);
-            unset($a_port['id']);
-            $a_pfnetworkport_DB = current($pfNetworkPort->find(
-                    "`networkports_id`='".$networkports_id."'", '', 1));
-            $a_port['id'] = $a_pfnetworkport_DB['id'];
-            $pfNetworkPort->update($a_port);
-         } else {
-            // Update port
-            $networkports_id = $a_ports_DB['id'];
-            $a_port['id'] = $a_ports_DB['id'];
-            $networkPort->update($a_port);
-            unset($a_port['id']);
-
-            // Check if pfnetworkport exist.
-            $a_pfnetworkport_DB = current($pfNetworkPort->find(
-                    "`networkports_id`='".$networkports_id."'", '', 1));
-            $a_port['networkports_id'] = $networkports_id;
-            if (isset($a_pfnetworkport_DB['id'])) {
-               $a_port['id'] = $a_pfnetworkport_DB['id'];
-               $pfNetworkPort->update($a_port);
-            } else {
-               $a_port['networkports_id'] = $networkports_id;
-               $pfNetworkPort->add($a_port);
-            }
-         }
-      }
-   }
 
 
 
