@@ -92,13 +92,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($item->getType()=='PluginFusioninventoryConfig') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showForm();
-         return TRUE;
+         return true;
       } else if ($item->getType()=='PluginFusioninventoryAgent') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showFormAgentException($item->getID());
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -198,7 +198,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          Html::closeForm();
          echo "<br/>";
       }
-      return TRUE;
+      return true;
    }
 
 
@@ -390,16 +390,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
          if (in_array($agents_id, $a_agentList)) {
-            return TRUE;
+            return true;
          } else {
-            return FALSE;
+            return false;
          }
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
          if (in_array($agents_id, $a_agentList)) {
-            return FALSE;
+            return false;
          } else {
-            return TRUE;
+            return true;
          }
       }
    }
@@ -463,5 +463,3 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       return $a_modules;
    }
 }
-
-?>
