@@ -644,13 +644,14 @@ class PluginFusioninventoryFormatconvert {
 
                // test date_install
                $matches = array();
-               preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_battery['manufacturing_date'], $matches);
-               if (count($matches) == 4) {
-                  $a_battery['manufacturing_date'] = $matches[3]."-".$matches[2]."-".$matches[1];
-               } else {
-                  unset($a_battery['manufacturing_date']);
+               if (isset($a_battery['manufacturing_date'])) {
+                  preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_battery['manufacturing_date'], $matches);
+                  if (count($matches) == 4) {
+                     $a_battery['manufacturing_date'] = $matches[3]."-".$matches[2]."-".$matches[1];
+                  } else {
+                     unset($a_battery['manufacturing_date']);
+                  }
                }
-
                $a_inventory['batteries'][] = $a_battery;
             }
          }
