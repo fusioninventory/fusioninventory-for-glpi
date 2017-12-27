@@ -107,41 +107,24 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
             $errors .= $pfImportExport->import_netdiscovery($a_CONTENT, $p_DEVICEID);
             if (isset($a_CONTENT['AGENT']['END'])) {
-               if ((isset($a_CONTENT['DICO'])) AND ($a_CONTENT['DICO'] == "REQUEST")) {
-                  $pfAgent->getFromDB($pfTaskjobstate->fields["plugin_fusioninventory_agents_id"]);
-                  $input = array();
-                  $input['id'] = $pfAgent->fields['id'];
-                  $input["senddico"] = "1";
-                  $pfAgent->update($input);
-
-                  $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
-                                                      $a_agent['id'],
-                                                      'PluginFusioninventoryAgent',
-                                                      '1',
-                                                      '==diconotuptodate==');
-               } else {
-                  $messages = array(
-                      'Total Found'   => 0,
-                      'Created' => 0,
-                      'Updated' => 0
-                  );
-                  $messages['Updated'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
-                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
-                          . " AND `comment` LIKE '%==updatetheitem==%'");
-                  $messages['Created'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
-                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
-                          . " AND `comment` LIKE '%==addtheitem==%'");
-
-                  $messages['Total Found'] = $messages['Updated'] + $messages['Created'];
-
-                  $message = 'Total Found:'.$messages['Total Found'].' Created:'.$messages['Created'].' Updated:'.$messages['Updated'];
-
-                  $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
-                                                      $a_agent['id'],
-                                                      'PluginFusioninventoryAgent',
-                                                      '0',
-                                                      $message);
-               }
+               $messages = [
+                   'Total Found' => 0,
+                   'Created'     => 0,
+                   'Updated'     => 0
+               ];
+               $messages['Updated'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                    "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                       . " AND `comment` LIKE '%==updatetheitem==%'");
+               $messages['Created'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
+                                    "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
+                       . " AND `comment` LIKE '%==addtheitem==%'");
+               $messages['Total Found'] = $messages['Updated'] + $messages['Created'];
+               $message = 'Total Found:'.$messages['Total Found'].' Created:'.$messages['Created'].' Updated:'.$messages['Updated'];
+               $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
+                                                   $a_agent['id'],
+                                                   'PluginFusioninventoryAgent',
+                                                   '0',
+                                                   $message);
             }
          }
       }

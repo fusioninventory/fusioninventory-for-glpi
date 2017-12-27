@@ -198,8 +198,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       }
 
       $crontask->addVolume($wokeup);
-      return TRUE;
+      return true;
    }
 }
-
-?>

@@ -457,7 +457,6 @@ class PluginFusioninventoryCommunication {
       }
 
       $agent = new PluginFusioninventoryAgent();
-      $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
 
       if (!$communication->import($arrayinventory)) {

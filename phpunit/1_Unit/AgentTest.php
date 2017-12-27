@@ -165,8 +165,6 @@ class AgentTest extends RestoreDatabase_TestCase {
       $log = new Log();
       $nb = count($log->find());
 
-      $pfAgent->importToken($arrayinventory);
-
       $pfAgent->getFromDBByQuery(
          "WHERE `device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27' ".
          "LIMIT 1"

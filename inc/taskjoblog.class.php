@@ -105,14 +105,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     */
    static function dropdownStateValues() {
 
-      $elements = array(
+      $elements = [
          self::TASK_PREPARED           => __('Prepared', 'fusioninventory'),
          self::TASK_STARTED            => __('Started', 'fusioninventory'),
          self::TASK_RUNNING            => __('Running'),
          self::TASK_OK                 => __('Ok', 'fusioninventory'),
          self::TASK_ERROR              => __('Error'),
          self::TASK_INFO               => __('Info', 'fusioninventory'),
-      );
+      ];
 
       return $elements;
    }
@@ -133,46 +133,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          return NOT_AVAILABLE;
       }
    }
-
-
-
-   /**
-    * Get css for state
-    *
-    * @todo move this in the view class
-    *
-    * @param integer $state
-    * @return string
-    */
-   static function getStateCSSName($state=-1) {
-      $cssnames = [
-         self::TASK_PREPARED           => "log_prepared",
-         self::TASK_STARTED            => "log_started",
-         self::TASK_RUNNING            => "log_running",
-         self::TASK_OK                 => "log_ok",
-         self::TASK_ERROR              => "log_error",
-         self::TASK_INFO               => "log_info",
-      ];
-      if (isset($cssnames[$state])) {
-         return $cssnames[$state];
-      } else {
-         return "";
-      }
-   }
-
-
-
-   /**
-    * Return name of state
-    *
-    * @param integer $states_id
-    * @return string name of state number
-    */
-   function getState($states_id) {
-      $elements = $this->dropdownStateValues();
-      return $elements[$states_id];
-   }
-
 
 
    /**
@@ -966,7 +926,6 @@ function appear_array(id) {
          $a_text = array(
             'devicesqueried'  => __('devices queried', 'fusioninventory'),
             'devicesfound'    => __('devices found', 'fusioninventory'),
-            'diconotuptodate' => __("SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.", 'fusioninventory'),
             'addtheitem'      => __('Add the item', 'fusioninventory'),
             'updatetheitem'   => __('Update the item', 'fusioninventory'),
             'inventorystarted' => __('Inventory started', 'fusioninventory'),
@@ -981,95 +940,4 @@ function appear_array(id) {
       }
       return str_replace(",[", "<br/>[", $comment);
    }
-
-
-
-   // ********** Functions for Monitoring / Logs ********** //
-
-   /**
-    * LIst tasks
-    *
-    * @global object $DB
-    */
-   function listTasks() {
-      global $DB;
-
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.`id`,"
-              . "`glpi_plugin_fusioninventory_taskjobs`.`method`,"
-              . "`glpi_plugin_fusioninventory_taskjobs`.`name`"
-              . " FROM `glpi_plugin_fusioninventory_taskjobstates` "
-              . "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON "
-              . "`plugin_fusioninventory_taskjobs_id`=`glpi_plugin_fusioninventory_taskjobs`.`id` "
-              . "GROUP BY `glpi_plugin_fusioninventory_taskjobstates`.`plugin_fusioninventory_taskjobs_id`,"
-              . "`glpi_plugin_fusioninventory_taskjobstates`.`execution_id` "
-              . "ORDER BY `glpi_plugin_fusioninventory_taskjobstates`.`id` DESC ";
-      $result = $DB->query($query);
-      $i = 1;
-      $nb = $DB->numrows($result);
-      while ($data = $DB->fetch_assoc($result)) {
-         $begintable = 0;
-         $endtable   = 0;
-         if ($i == 1) {
-            $begintable = 1;
-         } else if ($i == $nb) {
-            $endtable = 1;
-         }
-         $this->showLine(
-                 $data['method'],
-                 $data['name'],
-                 '80 deployments (ok: 50, ko : 12, unneeded : 3)',
-                 '81',
-                 'RUNNING',
-                 $begintable,
-                 $endtable);
-
-         $i++;
-      }
-   }
-
-
-
-   /**
-    * Show monitoring/log line
-    *
-    * @global array $CFG_GLPI
-    * @param string $module
-    * @param string $name
-    * @param string $text
-    * @param integer $percent
-    * @param integr $state
-    * @param integer $begintable
-    * @param integer $endtable
-    */
-   function showLine ($module, $name, $text, $percent, $state, $begintable=0, $endtable=0) {
-      global $CFG_GLPI;
-
-      if ($begintable) {
-         echo "<table class='tab_cadrehov'>";
-      }
-      echo "<tr class='tab_bg_1'>";
-      echo "<td width='27'>";
-      echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/icon_".$module.".png'/>";
-      echo "</td>";
-      echo "<td width='27'>";
-      echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/icon_plus.png'/>";
-      echo "</td>";
-      echo "<td><strong>";
-      echo $name;
-      echo "</strong></td>";
-      echo "<td>";
-      echo $text;
-      echo "</td>";
-      echo "<td>";
-      echo __('Completion', 'fusioninventory').' : '.$percent.'%';
-      echo "</td>";
-      echo "<td>";
-      // image status
-      echo "</td>";
-      if ($endtable) {
-         echo "</table>";
-      }
-   }
 }
-
-?>

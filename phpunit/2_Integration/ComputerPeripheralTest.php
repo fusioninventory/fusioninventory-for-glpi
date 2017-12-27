@@ -162,7 +162,6 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
 
       $agent = new PluginFusioninventoryAgent();
-      $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
 
       $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
