@@ -252,10 +252,10 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @param string $p_value
     */
    function showDropdownSNMPEncryption($p_value=NULL) {
-      $encryptions = array(0 => '-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
-      $options = array();
+      $encryptions = [0 => Dropdown::EMPTY_VALUE, 'DES', 'AES128', 'Triple-DES'];
+      $options = [];
       if (!is_null($p_value)) {
-         $options = array('value' => $p_value);
+         $options = ['value' => $p_value];
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
@@ -276,12 +276,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
          case '2':
             return 'AES';
-
-         case '3':
-            return 'AES192';
-
-         case '4':
-            return 'AES256';
 
          case '5':
             return '3DES';
