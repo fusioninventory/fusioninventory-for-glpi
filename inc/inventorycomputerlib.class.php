@@ -2321,7 +2321,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceBattery  = new Item_DeviceBattery();
       $deviceBattery       = new DeviceBattery();
 
-      if ($data['voltage'] == '') {
+      if (!isset($data['voltage']) || $data['voltage'] == '') {
          //a numeric value is expected here
          $data['voltage'] = 0;
       }
