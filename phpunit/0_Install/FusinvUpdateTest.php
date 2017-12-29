@@ -53,6 +53,7 @@ include_once('0_Install/FusinvDB.php');
 
 class UpdateTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @dataProvider provider
     * @runInSeparateProcess
@@ -118,6 +119,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
 
    }
 
+
    public function provider() {
       // version, verifyConfig, nb entity rules
       return [
@@ -148,7 +150,6 @@ class UpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    private function verifyConfig() {
       global $DB;
       $DB->connect();
@@ -162,6 +163,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, $a_config['value'], "May keep states_id_default to 1");
    }
 
+
    private function checkDeployMirrors() {
       global $DB;
 
@@ -170,6 +172,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
                                     'is_active'));
 
    }
+
 
 }
 

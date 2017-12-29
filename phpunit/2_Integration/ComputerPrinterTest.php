@@ -46,6 +46,7 @@ class ComputerPrinter extends Common_TestCase {
    public $a_computer2 = [];
    public $a_computer3 = [];
 
+
    function __construct() {
       $this->a_computer1 = [
           "Computer" => [
@@ -208,13 +209,13 @@ class ComputerPrinter extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
    public function PrinterUniqueSerialimport() {
       $this->mark_incomplete();
    }
+
 
    public function testPrinterDicoIgnoreImport() {
       global $DB;
@@ -331,7 +332,6 @@ class ComputerPrinter extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -376,7 +376,6 @@ class ComputerPrinter extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -391,7 +390,6 @@ class ComputerPrinter extends Common_TestCase {
          $printer->fields['manufacturers_id'], 'Printer p3 may have manufacturer with id=1'
       );
    }
-
 
 
    /**
@@ -411,7 +409,6 @@ class ComputerPrinter extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -427,6 +424,7 @@ class ComputerPrinter extends Common_TestCase {
       $printer->getFromDB(1);
       $this->assertEquals('1', $printer->fields['is_global'], 'Printer p3 may be managed global');
    }
+
 
 }
 

@@ -176,6 +176,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -201,7 +202,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -217,7 +217,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($a_pages));
 
    }
-
 
 
    /**
@@ -238,7 +237,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -255,7 +253,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $this->assertEquals(1, count($a_cartridge));
    }
-
 
 
    /**
@@ -276,7 +273,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -295,7 +291,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -310,7 +305,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $this->assertEquals(4, count($a_cartridge));
    }
-
 
 
    /**
@@ -391,7 +385,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -469,4 +462,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $this->assertEquals('192.168.20.102', $a_ipaddress['name'],
          'IP address');
    }
+
+
 }

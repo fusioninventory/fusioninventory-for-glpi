@@ -42,6 +42,7 @@
 
 class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -211,5 +212,6 @@ class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($ref, $data['agents']);
    }
+
 
 }

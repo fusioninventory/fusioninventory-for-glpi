@@ -313,7 +313,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
    }
 
 
-
    /**
     * When agent contact server, this function send job data to agent
     *
@@ -394,5 +393,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       }
       return $this->message;
    }
+
+
 }
 

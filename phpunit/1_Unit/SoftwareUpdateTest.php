@@ -42,6 +42,7 @@
 
 class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -144,7 +145,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -185,7 +185,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
 
    }
-
 
 
    /**
@@ -259,7 +258,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -301,7 +299,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
 
    }
-
 
 
    /**
@@ -414,4 +411,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return);
 
    }
+
+
 }

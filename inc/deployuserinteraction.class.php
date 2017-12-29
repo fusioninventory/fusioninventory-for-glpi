@@ -86,6 +86,8 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
    //String to replace a \r\n, to avoid stripcslashes issue
    const RN_TRANSFORMATION        = "$#r$#n";
+
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -96,6 +98,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
          return _n('User interaction',
                    'User interactions', $nb, 'fusioninventory');
    }
+
 
    /**
     * Get events with name => description
@@ -111,6 +114,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
              ];
    }
 
+
    /**
     * Get an event label by it's identifier
     * @since 9.2
@@ -124,6 +128,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
          return false;
       }
    }
+
 
    /**
     * Display different fields relative the check selected
@@ -192,6 +197,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
 
       echo "</table>";
    }
+
 
    /**
     * Get fields for the check type requested
@@ -293,6 +299,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       }
    }
 
+
    /**
    * Get of a short description of a user interaction
    *
@@ -320,6 +327,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       return $text;
    }
 
+
    /**
     * Add a new item in checks of the package
     *
@@ -345,6 +353,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       //Add to package defintion
       $this->addToPackage($params['id'], $entry, 'userinteractions');
    }
+
 
    /**
     * Save the item in checks
@@ -388,6 +397,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       return $used_interactions;
    }
 
+
    /**
    * Get a log message depending on an agent response
    * @since 9.2
@@ -427,6 +437,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       $message.= ' ('.$this->getEventMessage($event).')';
       return $message;
    }
+
 
    function getEventMessage($event = '') {
       $message = __('%1$s button pressed');
@@ -468,4 +479,6 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
             return __('Multiple users connected', 'fusioninventory');
       }
    }
+
+
 }

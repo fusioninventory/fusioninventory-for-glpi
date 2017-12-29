@@ -102,4 +102,6 @@ class PluginFusioninventoryDeployFilepart {
       readfile($filePath);
       exit;
    }
+
+
 }

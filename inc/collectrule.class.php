@@ -87,7 +87,6 @@ class PluginFusioninventoryCollectRule extends Rule {
    }
 
 
-
    /**
     * Make some changes before process review result
     *
@@ -99,7 +98,6 @@ class PluginFusioninventoryCollectRule extends Rule {
    }
 
 
-
    /**
     * Define maximum number of actions possible in a rule
     *
@@ -108,7 +106,6 @@ class PluginFusioninventoryCollectRule extends Rule {
    function maxActionsCount() {
       return 8;
    }
-
 
 
    /**
@@ -164,7 +161,6 @@ class PluginFusioninventoryCollectRule extends Rule {
    }
 
 
-
    /**
     * Get the criteria available for the rule
     *
@@ -199,7 +195,6 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       return $criterias;
    }
-
 
 
    /**
@@ -255,5 +250,7 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       return $actions;
    }
+
+
 }
 

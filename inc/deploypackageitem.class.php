@@ -65,6 +65,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    //The section name in the JSON representation
    public $json_name = '';
 
+
    /**
     * Get an event label by it's identifier
     * @since 9.2
@@ -79,6 +80,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+
    /**
    * Get the types already in used, so they cannot be selected anymore
    * @since 9.2
@@ -88,6 +90,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    function getTypesAlreadyInUse(PluginFusioninventoryDeployPackage $package) {
       return [];
    }
+
 
    /**
     * Display the dropdown to select type of element
@@ -154,6 +157,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
 
    }
 
+
    /**
    * Create a configuration request data
    *
@@ -168,6 +172,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
       return $config;
    }
+
 
    /**
     * Display form
@@ -227,6 +232,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+
    /**
    * Get an HTML mandatory mark (a red star)
    * @since 9.2
@@ -235,6 +241,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    function getMandatoryMark() {
       return "&nbsp;<span class='red'>*</span>";
    }
+
 
    /**
    * Common method to add an item to the package JSON definition
@@ -254,6 +261,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       $this->updateOrderJson($id, $data);
    }
 
+
    /**
     * Get the json
     *
@@ -270,6 +278,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+
    function prepareDataToSave($params, $entry) {
       //get current order json
       $data = json_decode($this->getJson($params['id']), true);
@@ -284,6 +293,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
 
       return $data;
    }
+
 
    /**
     * Update the order json
@@ -321,6 +331,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       return $error;
    }
 
+
    /**
     * Remove an item
     *
@@ -349,6 +360,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       $this->updateOrderJson($params['packages_id'], $data);
    }
 
+
    /**
     * Move an item
     *
@@ -370,6 +382,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       //update order
       $this->updateOrderJson($params['id'], $data);
    }
+
 
    /**
     * Get the size of file
@@ -393,6 +406,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          return NOT_AVAILABLE;
       }
    }
+
 
    /**
    * Display a add or save button
@@ -420,6 +434,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
 
    }
 
+
    public function getItemValues($packages_id) {
       $data = json_decode($this->getJson($packages_id), true);
       if ($data) {
@@ -428,4 +443,6 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          return [];
       }
    }
+
+
 }

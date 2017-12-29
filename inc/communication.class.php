@@ -63,7 +63,6 @@ class PluginFusioninventoryCommunication {
    protected $message;
 
 
-
    /**
     * __contruct function used to initialize protected message variable
     */
@@ -78,7 +77,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Get readable XML message (add carriage returns)
     *
@@ -87,7 +85,6 @@ class PluginFusioninventoryCommunication {
    function getMessage() {
       return $this->message;
    }
-
 
 
    /**
@@ -102,7 +99,6 @@ class PluginFusioninventoryCommunication {
          LIBXML_NOCDATA
       );
    }
-
 
 
    /**
@@ -150,7 +146,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * If extra-debug is active, write log
     *
@@ -166,7 +161,6 @@ class PluginFusioninventoryCommunication {
          }
       }
    }
-
 
 
    /**
@@ -251,7 +245,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Get all tasks prepared for the agent
     *
@@ -296,7 +289,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Set prolog for agent
     */
@@ -304,7 +296,6 @@ class PluginFusioninventoryCommunication {
       $pfConfig = new PluginFusioninventoryConfig();
       $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
    }
-
 
 
    /**
@@ -321,11 +312,12 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Manage communication with old protocol (XML over POST)
     *
     **/
+
+
    /**
     * Manage communication with old protocol (XML over POST).
     * Used for inventory, network discovery, network inventory and wake on lan
@@ -489,5 +481,7 @@ class PluginFusioninventoryCommunication {
          }
       }
    }
+
+
 }
 

@@ -109,7 +109,6 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -163,6 +162,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
                           'License data');
    }
 
+
    /**
     * @test
     */
@@ -203,6 +203,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $pfComputerLicenseInfo->getFromDB(1);
       $this->assertEquals(0, count($pfComputerLicenseInfo->fields));
    }
+
 
    /**
     * @test
@@ -273,5 +274,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $pfComputerLicenseInfo->getFromDB(1);
       $this->assertEquals(0, count($pfComputerLicenseInfo->fields));
    }
+
+
 }
 

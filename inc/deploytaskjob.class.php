@@ -67,7 +67,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    }
 
 
-
    /**
     * Is this use can view a deploy task job
     *
@@ -76,7 +75,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    static function canView() {
       return true;
    }
-
 
 
    /**
@@ -134,7 +132,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    }
 
 
-
    /**
     * Save data
     *
@@ -187,7 +184,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    }
 
 
-
    /**
     * Get the different type of task job actions
     *
@@ -210,7 +206,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          ]
       ];
    }
-
 
 
    /**
@@ -287,4 +282,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       }
       return $res;
    }
+
+
 }

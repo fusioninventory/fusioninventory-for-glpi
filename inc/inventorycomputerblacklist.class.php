@@ -74,7 +74,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -102,7 +101,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
@@ -122,7 +120,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       }
       return $ong;
    }
-
 
 
    /**
@@ -159,7 +156,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       return true;
    }
-
 
 
    /**
@@ -392,5 +388,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       }
       return $a_computerinventory;
    }
+
+
 }
 

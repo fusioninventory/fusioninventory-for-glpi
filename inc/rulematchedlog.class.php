@@ -73,7 +73,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
 
 
-
    /**
     * Count number of elements
     *
@@ -86,7 +85,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                                   "`itemtype` = '".$item->getType()."'
                                    AND `items_id` ='".$item->getField('id')."'");
    }
-
 
 
    /**
@@ -143,7 +141,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          return $array_ret;
       }
    }
-
 
 
    /**
@@ -210,7 +207,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          $this->delete(['id'=>$data['id']]);
       }
    }
-
 
 
    /**
@@ -315,7 +311,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
 
 
-
    /**
     * Display form for agent
     *
@@ -390,5 +385,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       }
       echo "</table>";
    }
+
+
 }
 

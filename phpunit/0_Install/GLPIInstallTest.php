@@ -7,6 +7,7 @@ include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 class GLPIInstallTest extends PHPUnit_Framework_TestCase {
 
+
    /**
     * @test
     */
@@ -57,6 +58,8 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
       );
 
    }
+
+
 }
 
 

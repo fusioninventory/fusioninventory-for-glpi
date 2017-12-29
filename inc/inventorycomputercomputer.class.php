@@ -72,6 +72,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return "";
    }
 
+
    /**
     * Display information about computer (bios, last contact...)
     *
@@ -143,6 +144,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
+
    /**
    * Get automatic inventory info for a computer
    * @since 9.1+1.2
@@ -158,6 +160,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          return $a_computerextend;
       }
    }
+
 
    /**
     * Display information about computer that is linked to an agent but
@@ -188,6 +191,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          return true;
       }
    }
+
 
    /**
     * Display information about a computer operating system
@@ -234,6 +238,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       return true;
    }
+
 
    /**
     * Display information about computer (bios, last contact...)
@@ -309,6 +314,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
+
    static function showDownloadInventoryFile($computers_id) {
       global $CFG_GLPI;
 
@@ -335,6 +341,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
    }
 
+
    /**
     * Delete extended information of computer
     *
@@ -344,7 +351,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfComputer = new self();
       $pfComputer->deleteByCriteria(['computers_id' => $computers_id], true, false);
    }
-
 
 
    /**
@@ -365,4 +371,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
       return $a_computerextend['is_entitylocked'];
    }
+
+
 }

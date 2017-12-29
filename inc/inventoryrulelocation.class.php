@@ -89,7 +89,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
-
    /**
     * Make some changes before process review result
     *
@@ -101,7 +100,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
-
    /**
     * Define maximum number of actions possible in a rule
     *
@@ -110,7 +108,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    function maxActionsCount() {
       return 2;
    }
-
 
 
    /**
@@ -168,7 +165,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
-
    /**
     * Get the criteria available for the rule
     *
@@ -203,7 +199,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
-
    /**
     * Get the actions available for the rule
     *
@@ -232,7 +227,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       return $actions;
    }
-
 
 
    /**
@@ -272,7 +266,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 
 
-
    /**
     * Add more criteria
     *
@@ -287,7 +280,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       }
       return [];
    }
-
 
 
    /**
@@ -363,5 +355,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       }
       return $res;
    }
+
+
 }
 

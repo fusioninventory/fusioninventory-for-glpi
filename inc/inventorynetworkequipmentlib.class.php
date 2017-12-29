@@ -145,7 +145,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    }
 
 
-
    /**
     * IMport internal ports (so internal IP, management IP)
     *
@@ -243,7 +242,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -349,7 +347,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    }
 
 
-
    /**
     * Import LLDP connexions
     *
@@ -394,7 +391,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -600,7 +596,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    }
 
 
-
    /**
     * Import VLANs
     *
@@ -658,7 +653,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    }
 
 
-
    /**
     * Add VLAN if not exist
     *
@@ -688,7 +682,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input['vlans_id'] = $vlans_id;
       $networkPort_Vlan->add($input);
    }
-
 
 
    /**
@@ -735,6 +728,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input['networkports_id_list'] = $a_ports_db_tmp;
       $networkPortAggregate->update($input);
    }
+
 
    /**
     * Import firmwares
@@ -790,5 +784,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       }
 
    }
+
 
 }

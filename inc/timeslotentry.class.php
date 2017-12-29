@@ -79,7 +79,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -116,7 +115,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       return $tab;
    }
-
 
 
    /**
@@ -176,7 +174,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
-
    /**
     * Display delete form
     *
@@ -224,7 +221,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
-
    /**
     * Display timeslot graph
     *
@@ -268,7 +264,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       }
       echo '<script>timeslot(\''.json_encode($dates).'\')</script>';
    }
-
 
 
    /**
@@ -382,7 +377,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
-
    /**
     * Merge 2 periods when 2 entries have a same time part
     *
@@ -417,5 +411,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       }
       return $periods;
    }
+
+
 }
 

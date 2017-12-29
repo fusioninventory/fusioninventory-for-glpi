@@ -93,7 +93,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Fields added to this class
     *
@@ -113,7 +112,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Display specific fields
     *
@@ -129,7 +127,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
             break;
       }
    }
-
 
 
    /**
@@ -156,7 +153,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Define more tabs to display
     *
@@ -168,7 +164,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Display more tabs
     *
@@ -176,7 +171,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    function displayMoreTabs($tab) {
    }
-
 
 
    /**
@@ -213,7 +207,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Perform checks to be sure that an itemtype and at least a field are
     * selected
@@ -237,7 +230,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Prepare data before add to database
     *
@@ -249,7 +241,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Prepare data before update in database
     *
@@ -259,7 +250,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    function prepareInputForUpdate($input) {
       return $input;
    }
-
 
 
    /**
@@ -275,7 +265,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
       return false;
    }
-
 
 
    /**
@@ -296,7 +285,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Get all credentials itemtypes
     *
@@ -306,7 +294,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       return ['PluginFusioninventoryInventoryComputerESX' =>
                            __('VMware host', 'fusioninventory')];
    }
-
 
 
    /**
@@ -329,7 +316,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
       return $itemtypes;
    }
-
 
 
    /**
@@ -376,7 +362,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Display dropdown of credentials for itemtype
     *
@@ -402,7 +387,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
 
-
    /**
     * Check if there's at least one credential itemetype
     *
@@ -412,7 +396,6 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $types = self::getCredentialsItemTypes();
       return (!empty($types));
    }
-
 
 
    /**
@@ -425,6 +408,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
    }
+
 
 }
 

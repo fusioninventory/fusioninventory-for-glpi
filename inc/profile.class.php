@@ -86,6 +86,7 @@ class PluginFusioninventoryProfile extends Profile {
        *    status
        */
 
+
    /**
     * Get the mapping old rights => new rights. Require it for upgrade from old
     * version of plugin FusionInventory
@@ -121,7 +122,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -132,7 +132,6 @@ class PluginFusioninventoryProfile extends Profile {
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       return self::createTabEntry('FusionInventory');
    }
-
 
 
    /**
@@ -152,7 +151,6 @@ class PluginFusioninventoryProfile extends Profile {
       }
       return true;
    }
-
 
 
    /**
@@ -209,7 +207,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Display profile form for helpdesk interface
     *
@@ -251,7 +248,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Delete profiles
     */
@@ -262,7 +258,6 @@ class PluginFusioninventoryProfile extends Profile {
          ProfileRight::deleteProfileRights([$data['field']]);
       }
    }
-
 
 
    /**
@@ -278,7 +273,6 @@ class PluginFusioninventoryProfile extends Profile {
       $a_rights = array_merge($a_rights, $this->getRightsDeploy());
       return $a_rights;
    }
-
 
 
    /**
@@ -317,7 +311,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Get rights for deploy part
     *
@@ -341,7 +334,6 @@ class PluginFusioninventoryProfile extends Profile {
       ];
       return $rights;
    }
-
 
 
    /**
@@ -392,7 +384,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Get general rights
     *
@@ -431,7 +422,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Add the default profile
     *
@@ -455,7 +445,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Create first access (so default profile)
     *
@@ -469,7 +458,6 @@ class PluginFusioninventoryProfile extends Profile {
                                       [$right['field'] => ALLSTANDARDRIGHT]);
       }
    }
-
 
 
    /**
@@ -497,7 +485,6 @@ class PluginFusioninventoryProfile extends Profile {
          unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged']);
       }
    }
-
 
 
    /**
@@ -542,7 +529,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Init profiles during installation:
     * - add rights in profile table for the current user's profile
@@ -584,5 +570,7 @@ class PluginFusioninventoryProfile extends Profile {
          $profile->update($dataprofile);
       }
    }
+
+
 }
 

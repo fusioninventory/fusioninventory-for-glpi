@@ -75,7 +75,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 }
 
 
-
 function fileUSBtoDB() {
     $usbFile = fopen("usb.ids", "r");
 
@@ -142,8 +141,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
 
    file_put_contents("../../install/mysql/usbid.sql", utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
 }
-
-
 
 
 function fileOUItoDB() {

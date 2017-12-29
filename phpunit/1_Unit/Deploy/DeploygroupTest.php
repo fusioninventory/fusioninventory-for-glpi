@@ -65,6 +65,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     * @depends AddGroup
@@ -111,6 +112,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     * @depends cloneStaticGroup
@@ -148,6 +150,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     * @depends cloneDynamicGroup
@@ -171,6 +174,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($data));
 
    }
+
 
    /**
     * @test
@@ -198,6 +202,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $this->assertEquals(0, count($data));
 
    }
+
 
    /**
     * @test
@@ -227,6 +232,7 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
       $this->assertFalse($pfDynamicgroup->getFromDB($dynamicgroups_id));
    }
 
+
    /**
     * @test
     * @depends cloneStaticGroup
@@ -253,5 +259,6 @@ class DeploygroupTest extends RestoreDatabase_TestCase {
          $this->assertFalse($pfStaticGroup->getFromDB($staticgroup['id']));
       }
    }
+
 
 }

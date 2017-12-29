@@ -117,5 +117,7 @@ class PluginFusioninventoryDeployPackage_Profile extends CommonDBRelation {
       }
       return $prof;
    }
+
+
 }
 

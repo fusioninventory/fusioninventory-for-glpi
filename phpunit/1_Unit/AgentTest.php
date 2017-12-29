@@ -59,6 +59,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       return $pfAgent;
    }
 
+
    /**
     * @test
     * @depends addAgent
@@ -74,6 +75,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       return $pfAgent;
    }
 
+
    /**
     * @test
     */
@@ -86,6 +88,7 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(1, count($a_agents), "Agent not found");
    }
+
 
    /**
     * @test
@@ -107,6 +110,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertEquals($agent_id, $agent_from_asset['id']);
 
    }
+
 
    /**
     * @test
@@ -146,7 +150,6 @@ class AgentTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -175,6 +178,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertEquals($nb, count($log->find()));
    }
 
+
    /**
     * @test
     * @depends addAgent
@@ -199,5 +203,6 @@ class AgentTest extends RestoreDatabase_TestCase {
       $pfAgent->getFromDB($agent_id);
       $this->assertEquals(0, $pfAgent->fields['computers_id']);
    }
+
 
 }

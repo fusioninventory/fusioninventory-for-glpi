@@ -76,7 +76,6 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -161,7 +160,6 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    }
 
 
-
    /**
     * Get search parameters for default search / display list
     *
@@ -171,6 +169,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       return ['sort'  => 3,
                    'order' => 'DESC'];
    }
+
 
 }
 

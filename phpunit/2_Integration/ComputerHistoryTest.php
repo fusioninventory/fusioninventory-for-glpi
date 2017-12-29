@@ -238,7 +238,6 @@ class ComputerHistory extends RestoreDatabase_TestCase {
 </REQUEST>';
 
 
-
    /**
     * Test with network card vmxnet3
     *
@@ -248,6 +247,7 @@ class ComputerHistory extends RestoreDatabase_TestCase {
       $this->checkComputerLogs($this->xml_bsd);
       $this->checkComputerLogs($this->xml_linux);
    }
+
 
    public function checkComputerLogs($xml = "") {
       global $DB;
@@ -271,5 +271,6 @@ class ComputerHistory extends RestoreDatabase_TestCase {
       $this->assertEquals($nb_computer, countElementsInTable('glpi_computers'));
       $this->assertEquals(0, countElementsInTable('glpi_logs'), print_r($log->find(), true));
    }
+
 
 }

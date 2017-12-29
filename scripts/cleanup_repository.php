@@ -48,9 +48,11 @@ define ( 'REPOSITORY_PATH',
 
 class MyRecursiveFilterIterator extends RecursiveFilterIterator {
 
+
    public function accept() {
       return !preg_match('/^\./', $this->current()->getFilename());
    }
+
 
 }
 
@@ -58,6 +60,7 @@ class MyRecursiveFilterIterator extends RecursiveFilterIterator {
 /**
  * Get every files used at least by one package.
  */
+
 
 function getManifestsUsed($logger) {
    global $DB;
@@ -91,6 +94,7 @@ function getManifestsUsed($logger) {
  * Get every files used at least by one package.
  */
 
+
 function getManifestsRegistered($logger) {
    global $DB;
 
@@ -115,6 +119,7 @@ function getManifestsRegistered($logger) {
  * Get the manifest files list in the repository.
  */
 
+
 function getManifests($logger) {
 
    $result = [];
@@ -135,6 +140,7 @@ function getManifests($logger) {
  * Remove invalid manifests from repository.
  * This will remove the fileparts from repository
  */
+
 
 function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_manifests) {
 
@@ -197,6 +203,7 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
    $logger->info( $total . " fileparts have been removed.");
 }
 
+
 /**
  * Unregister the invalid manifests from database.
  */
@@ -221,6 +228,7 @@ function unregisterInvalidManifests($logger, $dryrun, $invalid_manifests) {
    }
 
 }
+
 
 /**
  * Process arguments passed to the script

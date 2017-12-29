@@ -123,7 +123,6 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 Html::footer();
 
 
-
 /**
  * Display special search form
  *
@@ -213,7 +212,6 @@ function displaySearchForm() {
 }
 
 
-
 /**
  * Get array in GET for search
  *
@@ -238,7 +236,6 @@ function getContainsArray($get) {
 }
 
 
-
 /**
  * Generate the URL SavedSearch
  *
@@ -249,7 +246,6 @@ function getContainsArray($get) {
 function buildSavedSearchUrl($url, $get) {
     return $url."?field[0]=3&contains[0]=".getContainsArray($get);
 }
-
 
 
 /**
@@ -283,7 +279,6 @@ function getValues($get, $post) {
    }
    return $get;
 }
-
 
 
 /**

@@ -1,5 +1,6 @@
 <?php
 
+
 function load_mysql_file($dbuser = '', $dbhost = '', $dbdefault = '', $dbpassword = '', $file = null) {
 
    if (!file_exists($file)) {
@@ -30,6 +31,7 @@ function load_mysql_file($dbuser = '', $dbhost = '', $dbdefault = '', $dbpasswor
       'output' => $output
    ];
 }
+
 
 function mysql_dump($dbuser = '', $dbhost = '', $dbpassword = '', $dbdefault = '', $file = null) {
    if (is_null($file) or empty($file)) {
@@ -66,6 +68,7 @@ function mysql_dump($dbuser = '', $dbhost = '', $dbpassword = '', $dbdefault = '
    ];
 }
 
+
 function construct_mysql_options($dbuser = '', $dbhost = '', $dbpassword = '', $cmd_base = 'mysql') {
    $cmd = [];
 
@@ -101,6 +104,7 @@ function construct_mysql_options($dbuser = '', $dbhost = '', $dbpassword = '', $
    return implode(' ', $cmd);
 
 }
+
 
 function drop_database($dbuser = '', $dbhost = '', $dbdefault = '', $dbpassword = '') {
 

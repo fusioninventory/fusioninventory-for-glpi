@@ -80,7 +80,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -119,7 +118,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
@@ -133,7 +131,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       return $ong;
    }
-
 
 
    /**
@@ -190,7 +187,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    }
 
 
-
    /**
     * Get all current active timeslots
     *
@@ -225,7 +221,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    }
 
 
-
    /**
     * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
     *
@@ -243,7 +238,6 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime, true))->getTimestamp();
       return $timeslot_cursor;
    }
-
 
 
    /**
@@ -282,5 +276,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       }
       return true;
    }
+
+
 }
 

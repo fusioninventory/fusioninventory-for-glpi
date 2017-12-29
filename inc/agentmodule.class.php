@@ -60,6 +60,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    static $rightname = "plugin_fusioninventory_agent";
 
+
    /**
     * Get the tab name used for item
     *
@@ -76,7 +77,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       return '';
    }
-
 
 
    /**
@@ -100,7 +100,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -202,7 +201,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
-
    /**
     * Display form to configure activation of modules in agent form (in tab)
     *
@@ -301,7 +299,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
-
    /**
     * Get global activation status of a module
     *
@@ -312,7 +309,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $a_modules = $this->find("`modulename`='".$module_name."'", "", 1);
       return current($a_modules);
    }
-
 
 
    /**
@@ -375,7 +371,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
-
    /**
     * Get if agent has this module enabled
     *
@@ -403,7 +398,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -448,7 +442,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
-
    /**
     * Get list of all modules
     *
@@ -462,5 +455,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       return $a_modules;
    }
+
+
 }
 

@@ -85,7 +85,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    private $portVlans=[];
 
 
-
    /**
     * Get search function for the class
     *
@@ -162,7 +161,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Load an optionnaly existing port
     *
@@ -188,7 +186,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Disconnect a port in DB
     *
@@ -211,7 +208,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Add vlan
     *
@@ -222,7 +218,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    function addVlan($p_number, $p_name) {
       $this->portVlans[$p_number] = $p_name;
    }
-
 
 
    /**
@@ -258,7 +253,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Get a value
     *
@@ -275,7 +269,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Get the network port id
     *
@@ -289,7 +282,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
       return 0;
    }
-
 
 
    /**
@@ -534,7 +526,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Find a port of a device with MAC address and port number (from LLDP
     * information)
@@ -645,7 +636,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 
 
-
    /**
     * Function used to detect if port has multiple mac connected
     *
@@ -672,5 +662,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
       return $is_multiple;
    }
+
+
 }
 

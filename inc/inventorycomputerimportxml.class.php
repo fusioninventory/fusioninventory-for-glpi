@@ -65,7 +65,6 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
    }
 
 
-
    /**
     * Display form for import the XML
     *
@@ -111,5 +110,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       Html::closeForm();
       return true;
    }
+
+
 }
 

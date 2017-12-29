@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusioninventoryToolbox {
 
+
    /**
     * Log if extra debug enabled
     *
@@ -69,7 +70,6 @@ class PluginFusioninventoryToolbox {
          Toolbox::logInFile($file, $message);
       }
    }
-
 
 
    /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
@@ -191,7 +191,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Merge 2 simpleXML objects
     *
@@ -219,7 +218,6 @@ class PluginFusioninventoryToolbox {
       }
       unset($firstLoop);
    }
-
 
 
    /**
@@ -261,7 +259,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Format XML, ie indent it for pretty printing
     *
@@ -301,7 +298,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Write XML in a folder from an inventory by agent
     *
@@ -329,7 +325,6 @@ class PluginFusioninventoryToolbox {
       fwrite($fileopen, $xml);
       fclose($fileopen);
    }
-
 
 
    /**
@@ -376,7 +371,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Add GET oids to XML node 'GET'
     *
@@ -395,7 +389,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Add WALK (multiple oids) oids to XML node 'WALK'
     *
@@ -412,7 +405,6 @@ class PluginFusioninventoryToolbox {
          $sxml_walk->addAttribute('VLAN', $p_vlan);
          $sxml_walk->addAttribute('LINK', $p_link);
    }
-
 
 
    /**
@@ -473,7 +465,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Display data from serialized inventory field
     *
@@ -505,7 +496,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Send serialized inventory to user browser (to download)
     *
@@ -525,7 +515,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Send the XML (last inventory) to user browser (to download)
     *
@@ -541,7 +530,6 @@ class PluginFusioninventoryToolbox {
       }
 
    }
-
 
 
    /**
@@ -599,7 +587,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Format a json in a pretty json
     *
@@ -618,7 +605,6 @@ class PluginFusioninventoryToolbox {
          );
       }
    }
-
 
 
    /**
@@ -656,7 +642,6 @@ class PluginFusioninventoryToolbox {
    }
 
 
-
    /**
     * Get hour:minute from number of seconds
     *
@@ -668,7 +653,6 @@ class PluginFusioninventoryToolbox {
       $minute = (($seconds - ((floor($seconds / 3600)) * 3600)) / 60);
       return sprintf("%02s", $hour).":".sprintf("%02s", $minute);
    }
-
 
 
    /**
@@ -698,7 +682,6 @@ class PluginFusioninventoryToolbox {
       }
       return true;
    }
-
 
 
    /**
@@ -745,6 +728,7 @@ class PluginFusioninventoryToolbox {
       return $result;
    }
 
+
    /**
    * Check if an item is inventoried by FusionInventory
    *
@@ -779,6 +763,7 @@ class PluginFusioninventoryToolbox {
       }
    }
 
+
    /**
     * Get default value for state of devices (monitor, printer...)
     *
@@ -807,5 +792,6 @@ class PluginFusioninventoryToolbox {
       }
       return $input;
    }
+
 
 }

@@ -86,7 +86,6 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
    }
 
 
-
    /**
     * Prepare input data for process the rule
     *
@@ -101,5 +100,7 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
       );
       return $input;
    }
+
+
 }
 

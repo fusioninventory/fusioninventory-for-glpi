@@ -71,6 +71,7 @@ if (!defined('GLPI_ROOT')) {
    // Security of PHP_SELF
    $_SERVER['PHP_SELF']=Html::cleanParametersURL($_SERVER['PHP_SELF']);
 
+
    function glpiautoload($classname) {
       global $DEBUG_AUTOLOAD, $CFG_GLPI;
       static $notfound = [];
@@ -130,6 +131,7 @@ if (!defined('GLPI_ROOT')) {
          }
       }
    }
+
 
    spl_autoload_register('glpiautoload');
 
@@ -191,6 +193,8 @@ require_once '2_Integration/CollectsTest.php';
 require_once 'emulatoragent.php';
 
 class AllTests {
+
+
    public static function suite() {
       $suite = new PHPUnit_Framework_TestSuite('FusionInventory');
       if (file_exists("save.sql")) {
@@ -241,5 +245,7 @@ class AllTests {
 
       return $suite;
    }
+
+
 }
 

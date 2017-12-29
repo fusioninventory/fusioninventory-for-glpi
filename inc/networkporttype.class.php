@@ -339,7 +339,6 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
    }
 
 
-
    /**
     * Check is the type yet in database
     *
@@ -360,7 +359,6 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -427,5 +425,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
       Html::closeForm();
    }
+
+
 }
 

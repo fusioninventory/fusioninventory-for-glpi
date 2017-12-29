@@ -85,7 +85,6 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
    }
 
 
-
    /**
     * Prepare input data for process the rule
     *
@@ -96,5 +95,7 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
    function prepareInputDataForProcess($input, $params) {
       return $input;
    }
+
+
 }
 

@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryStaticmisc {
 
+
    /**
     * Get task methods of this plugin fusioninventory
     *
@@ -120,7 +121,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Display methods availables
     *
@@ -145,7 +145,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get types of datas available to select for taskjob definition for WakeOnLan method
     *
@@ -161,7 +160,6 @@ class PluginFusioninventoryStaticmisc {
                               = PluginFusioninventoryDeployGroup::getTypeName();
       return $a_itemtype;
    }
-
 
 
    /**
@@ -182,7 +180,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all devices of definition type 'PluginFusioninventoryDeployGroup'
     * defined in task_definitiontype_wakeonlan
@@ -197,7 +194,6 @@ class PluginFusioninventoryStaticmisc {
       $options['name']        = 'definitionselectiontoadd';
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
-
 
 
    /**
@@ -222,7 +218,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get name of the staticmisc class for a module
     *
@@ -232,7 +227,6 @@ class PluginFusioninventoryStaticmisc {
    static function getStaticMiscClass($module) {
       return "Plugin".ucfirst($module)."Staticmisc";
    }
-
 
 
    /**
@@ -248,7 +242,6 @@ class PluginFusioninventoryStaticmisc {
                        PluginFusioninventoryCredentialIp::getTypeName();
       return $a_itemtype;
    }
-
 
 
    /**
@@ -282,8 +275,8 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    //------------------------------------------ Actions-------------------------------------//
+
 
    /**
     * Get action types for InventoryComputerESX
@@ -296,7 +289,6 @@ class PluginFusioninventoryStaticmisc {
                    'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory')];
 
    }
-
 
 
    /**
@@ -328,7 +320,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all devices of action type 'PluginFusioninventoryAgent'
     * defined in task_actiontype_InventoryComputerESX
@@ -348,10 +339,10 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    //------------------------------------------ ---------------------------------------------//
    //------------------------------------------ REST PARAMS---------------------------------//
    //------------------------------------------ -------------------------------------------//
+
 
    /**
     * Get ESX task parameters to send to the agent
@@ -367,10 +358,11 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    //------------------------------- Network tools ------------------------------------//
 
    // *** NETWORKDISCOVERY ***
+
+
    /**
     * Definition types for network discovery
     *
@@ -381,7 +373,6 @@ class PluginFusioninventoryStaticmisc {
       $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
       return $a_itemtype;
    }
-
 
 
    /**
@@ -401,8 +392,9 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    // *** NETWORKINVENTORY ***
+
+
    /**
     * Definition types for network inventory
     *
@@ -419,7 +411,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all ip ranges of definition type 'PluginFusioninventoryIPRange'
     * defined in task_definitiontype_networkinventory
@@ -431,7 +422,6 @@ class PluginFusioninventoryStaticmisc {
       $rand = PluginFusioninventoryStaticmisc::task_definitionselection_PluginFusioninventoryIPRange_networkdiscovery($title);
       return $rand;
    }
-
 
 
    /**
@@ -451,7 +441,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all devices of definition type 'Printer'
     * defined in task_definitiontype_networkinventory
@@ -468,7 +457,6 @@ class PluginFusioninventoryStaticmisc {
       $rand = Dropdown::show("Printer", $options);
       return $rand;
    }
-
 
 
    /**
@@ -491,7 +479,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get types of actions for network inventory
     *
@@ -505,7 +492,6 @@ class PluginFusioninventoryStaticmisc {
 
       return $a_itemtype;
    }
-
 
 
    /**
@@ -532,7 +518,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get selection type for network discovery
     *
@@ -552,8 +537,8 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /* Deploy definitions */
+
 
    /**
     * Get definition types for deploy install
@@ -565,7 +550,6 @@ class PluginFusioninventoryStaticmisc {
       return ['' => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployPackage' => __('Package')];
    }
-
 
 
    /**
@@ -581,7 +565,6 @@ class PluginFusioninventoryStaticmisc {
       $options['name']        = 'definitionselectiontoadd';
       return Dropdown::show("PluginFusioninventoryDeployPackage", $options);
    }
-
 
 
    /* Deploy Actions */
@@ -600,7 +583,6 @@ class PluginFusioninventoryStaticmisc {
                    'Group'                            => __('Group')
                   ];
    }
-
 
 
    /**
@@ -634,7 +616,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all computers of action type 'Group'
     * defined in task_actiontype_deployinstall
@@ -648,7 +629,6 @@ class PluginFusioninventoryStaticmisc {
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Group", $options);
    }
-
 
 
    /**
@@ -666,7 +646,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get Deploy paramaters: url for communication with server
     *
@@ -679,7 +658,6 @@ class PluginFusioninventoryStaticmisc {
          "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy', $entities_id)
       ];
    }
-
 
 
    /* Collect */
@@ -697,7 +675,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all collects of definition type 'PluginFusioninventoryCollect'
     * defined in task_definitiontype_collect
@@ -713,7 +690,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get action types for collect
     *
@@ -727,7 +703,6 @@ class PluginFusioninventoryStaticmisc {
                    'Group'                            => __('Group')
                   ];
    }
-
 
 
    /**
@@ -761,7 +736,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all computers of action type 'Group'
     * defined in task_actiontype_collect
@@ -775,7 +749,6 @@ class PluginFusioninventoryStaticmisc {
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Group", $options);
    }
-
 
 
    /**
@@ -793,7 +766,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     *
     * Get collect parameters (URL to dialog with server)
@@ -807,5 +779,7 @@ class PluginFusioninventoryStaticmisc {
          "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Collect', $entities_id)
       ];
    }
+
+
 }
 

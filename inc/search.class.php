@@ -84,7 +84,6 @@ class PluginFusioninventorySearch extends CommonDBTM {
     */
 
 
-
    /**
     * Cloned Core function to display with our require.
     *
@@ -530,7 +529,6 @@ class PluginFusioninventorySearch extends CommonDBTM {
       echo "</div>";
       Html::closeForm();
    }
-
 
 
    /**
@@ -1265,6 +1263,7 @@ class PluginFusioninventorySearch extends CommonDBTM {
          return false;
       }
    }
+
 
 }
 

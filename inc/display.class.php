@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDisplay extends CommonDBTM {
 
+
    /**
     * Display static progress bar (used for SNMP cartridge state)
     *
@@ -130,7 +131,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    }
 
 
-
    /**
     * Disable debug mode to not see php errors
     */
@@ -140,14 +140,12 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    }
 
 
-
    /**
    * Enable debug mode if user is in debug mode
    **/
    static function reenableusemode() {
       Toolbox::setDebugMode();
    }
-
 
 
    /**
@@ -160,7 +158,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
     */
    static function error_handler($errno, $errstr, $errfile, $errline) {
    }
-
 
 
    /**
@@ -204,5 +201,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       $output.="</div>";
       return $output;
    }
+
+
 }
 

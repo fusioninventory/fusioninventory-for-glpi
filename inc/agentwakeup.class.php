@@ -74,7 +74,6 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    }
 
 
-
    /**
     * Check if can wake up an agent
     *
@@ -85,11 +84,12 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    }
 
 
-
    /*
     * @function cronWakeupAgents
     * This function update already running tasks with dynamic groups
     */
+
+
    /**
     * Cron task: wake up agents. Configuration is in each tasks
     *
@@ -200,5 +200,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       $crontask->addVolume($wokeup);
       return true;
    }
+
+
 }
 

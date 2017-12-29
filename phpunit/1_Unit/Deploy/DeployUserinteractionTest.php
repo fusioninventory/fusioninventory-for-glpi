@@ -42,6 +42,7 @@
 
 class DeployUserinteractionTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -54,6 +55,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
                            PluginFusioninventoryDeployUserinteraction::getTypeName(2));
    }
 
+
    /**
     * @test
     */
@@ -62,6 +64,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
       $events      = $interaction->getTypes();
       $this->assertEquals(5, count($events));
    }
+
 
    /**
     * @test
@@ -79,6 +82,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
       $this->assertEquals("On actions failure",
                            $interaction->getLabelForAType('after_failure'));
    }
+
 
    /**
     * @test
@@ -120,6 +124,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -151,6 +156,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $interaction->getInteractionDescription($tmp));
 
    }
+
 
    /**
     * @test
@@ -217,6 +223,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     * @depends testAdd_item
@@ -233,6 +240,7 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $json);
 
    }
+
 
    /**
     * @test
@@ -255,5 +263,6 @@ class DeployUserinteractionTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $json);
 
    }
+
 
 }

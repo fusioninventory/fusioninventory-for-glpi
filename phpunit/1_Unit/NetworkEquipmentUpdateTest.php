@@ -266,7 +266,6 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -356,7 +355,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    }
 
 
-
    /**
     * @test
     */
@@ -388,7 +386,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    }
 
 
-
    /**
     * @test
     */
@@ -412,7 +409,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $this->assertEquals(['2', '4'], $a_ports, 'aggregate ports');
    }
-
 
 
    /**
@@ -441,7 +437,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    }
 
 
-
    /**
     * @test
     */
@@ -456,5 +451,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertEquals(4, count($a_networkports), 'Number of networkport must be 4');
 
    }
+
 
 }

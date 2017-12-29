@@ -73,7 +73,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    }
 
 
-
    /**
     * Get the type
     *
@@ -82,6 +81,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    static function getType() {
       return 'Printer';
    }
+
 
    /**
     * Get the tab name used for item
@@ -97,7 +97,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       }
       return '';
    }
-
 
 
    /**
@@ -133,7 +132,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    }
 
 
-
    /**
     * Update an existing printer with last_fusioninventory_update value
     */
@@ -143,7 +141,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->updateDB();
    }
-
 
 
    /**
@@ -229,7 +226,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    }
 
 
-
    /**
     * Display serialized inventory
     *
@@ -281,7 +277,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    }
 
 
-
    /**
     * Display extended printer information
     *
@@ -325,5 +320,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
       echo "</table>";
    }
+
+
 }
 

@@ -96,7 +96,6 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
    }
 
 
-
     /**
      * Get data from vendorid and productid USB
      *
@@ -136,7 +135,6 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
    }
 
 
-
    /**
     * Get manufaturer linked to 6 first number of MAC address
     *
@@ -162,5 +160,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
       }
       return "";
    }
+
+
 }
 

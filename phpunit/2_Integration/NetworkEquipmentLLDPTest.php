@@ -114,7 +114,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
    */
 
 
-
    /**
     * @test
     */
@@ -191,7 +190,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
                           'Link port');
 
    }
-
 
 
    /**
@@ -271,7 +269,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -333,7 +330,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
                           'Link port');
 
    }
-
 
 
    /**
@@ -438,7 +434,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
                           'Link port');
 
    }
-
 
 
    /*
@@ -559,7 +554,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -620,7 +614,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
                           current($a_portslinks),
                           'Link port');
    }
-
 
 
    /**
@@ -719,7 +712,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -732,5 +724,6 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
       $DB->connect();
 
    }
+
 
 }

@@ -68,6 +68,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_iprange';
 
+
    /**
     * Check if can create an IP range
     *
@@ -76,7 +77,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    static function canCreate() {
       return true;
    }
-
 
 
    /**
@@ -102,7 +102,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Get comments of the object
     *
@@ -112,7 +111,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
       return Html::showToolTip($comment, ['display' => false]);
    }
-
 
 
    /**
@@ -169,7 +167,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
@@ -184,7 +181,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
-
 
 
    /**
@@ -203,7 +199,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -309,7 +304,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Check if IP is valid
     *
@@ -344,7 +338,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Get ip in long format
     *
@@ -358,7 +351,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $int;
    }
-
 
 
    /**
@@ -375,7 +367,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
@@ -390,5 +381,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $actions;
    }
+
+
 }
 

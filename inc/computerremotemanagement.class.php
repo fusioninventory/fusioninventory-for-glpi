@@ -73,6 +73,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       return __('Remote management', 'fusioninventory');
    }
 
+
    /**
     * Display remote management information
     *
@@ -102,7 +103,6 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
    }
 
 
-
    /**
     * Delete all remote management information linked to the computer
     * (most cases when delete a computer)
@@ -113,5 +113,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
       $pfComputerRemoteManagement = new self();
       $pfComputerRemoteManagement->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
+
 }
 

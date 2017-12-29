@@ -28,6 +28,7 @@ class ToolboxTest extends Common_TestCase {
 }
 JSON;
 
+
    /**
     * @test
     */
@@ -38,6 +39,7 @@ JSON;
          PluginFusioninventoryToolbox::formatJson(json_encode($this->formatJson_input))
       );
    }
+
 
    /**
     * @test
@@ -84,6 +86,7 @@ JSON;
 
    }
 
+
    /**
     * @test
     */
@@ -108,4 +111,6 @@ JSON;
       $this->assertEquals([], $result);
 
    }
+
+
 }

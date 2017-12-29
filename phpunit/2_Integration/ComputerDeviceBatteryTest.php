@@ -44,6 +44,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
    public $a_computer1 = [];
    public $a_computer1_beforeformat = [];
 
+
    function __construct() {
       $this->a_computer1 = [
          "Computer" => [
@@ -312,5 +313,6 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
          'Battery data'
       );
    }
+
 
 }

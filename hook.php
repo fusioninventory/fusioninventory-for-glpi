@@ -44,6 +44,7 @@
  *
  */
 
+
 /**
  * Add search options for GLPI objects
  *
@@ -299,7 +300,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
    }
    return $sopt;
 }
-
 
 
 /**
@@ -747,7 +747,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 }
 
 
-
 /**
  * Manage search options values
  *
@@ -780,7 +779,6 @@ function plugin_fusioninventory_searchOptionsValues($item) {
 }
 
 
-
 /**
  * Define Dropdown tables to be manage in GLPI
  *
@@ -789,7 +787,6 @@ function plugin_fusioninventory_searchOptionsValues($item) {
 function plugin_fusioninventory_getDropdown() {
    return [];
 }
-
 
 
 /**
@@ -809,7 +806,6 @@ function cron_plugin_fusioninventory() {
 
    return 1;
 }
-
 
 
 /**
@@ -850,7 +846,6 @@ function plugin_fusioninventory_install() {
 }
 
 
-
 /**
  * Manage the uninstallation of the plugin
  *
@@ -861,7 +856,6 @@ function plugin_fusioninventory_uninstall() {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    return PluginFusioninventorySetup::uninstall();
 }
-
 
 
 /**
@@ -907,7 +901,6 @@ function plugin_fusioninventory_MassiveActions($type) {
    }
    return $ma;
 }
-
 
 
 /**
@@ -973,7 +966,6 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options = []) {
    }
    return false;
 }
-
 
 
 /**
@@ -1103,7 +1095,6 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
 }
 
 
-
 /**
  * Manage group by in search query
  *
@@ -1113,7 +1104,6 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
 function plugin_fusioninventory_forceGroupBy($type) {
     return false;
 }
-
 
 
 /**
@@ -1471,7 +1461,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 }
 
 
-
 /**
  * Manage order in search query
  *
@@ -1484,7 +1473,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 function plugin_fusioninventory_addOrderBy($type, $id, $order, $key = 0) {
    return "";
 }
-
 
 
 /**
@@ -1500,7 +1488,6 @@ function plugin_fusioninventory_addDefaultWhere($type) {
          AND `state`!='3' )";
    }
 }
-
 
 
 /**
@@ -1885,7 +1872,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 }
 
 
-
 /**
  * Manage pre-item update an item
  *
@@ -1901,7 +1887,6 @@ function plugin_pre_item_update_fusioninventory($parm) {
       }
    }
 }
-
 
 
 /**
@@ -1971,7 +1956,6 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 }
 
 
-
 /**
  * Manage pre-item delete an item
  *
@@ -1997,7 +1981,6 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 }
 
 
-
 /**
  * Manage when update an item
  *
@@ -2017,7 +2000,6 @@ function plugin_item_update_fusioninventory($parm) {
       }
    }
 }
-
 
 
 /**
@@ -2055,7 +2037,6 @@ function plugin_item_add_fusioninventory($parm) {
    }
    return $parm;
 }
-
 
 
 /**
@@ -2195,7 +2176,6 @@ function plugin_item_purge_fusioninventory($parm) {
 }
 
 
-
 /**
  * Manage when transfer an item
  *
@@ -2222,7 +2202,6 @@ function plugin_item_transfer_fusioninventory($parm) {
    }
    return false;
 }
-
 
 
 /**
@@ -2287,6 +2266,7 @@ function plugin_fusioninventory_getDatabaseRelations() {
    return [];
 }
 
+
 /**
  * Display a FusionInventory form if no automatic inventory has yet been
  * performed
@@ -2309,6 +2289,7 @@ function plugin_fusioninventory_postItemForm($params) {
       }
    }
 }
+
 
 /**
  * FusinInventory infos after showing a tab
@@ -2351,6 +2332,7 @@ function plugin_fusioninventory_postshowtab($params) {
       }
    }
 }
+
 
  /**
   * FusinInventory infos after before a tab

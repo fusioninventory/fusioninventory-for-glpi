@@ -89,7 +89,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Make some changes before process review result
     *
@@ -101,7 +100,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Define maximum number of actions possible in a rule
     *
@@ -110,7 +108,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    function maxActionsCount() {
       return 2;
    }
-
 
 
    /**
@@ -166,7 +163,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Get the criteria available for the rule
     *
@@ -201,7 +197,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Get the actions available for the rule
     *
@@ -232,7 +227,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
       return $actions;
    }
-
 
 
    /**
@@ -272,7 +266,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Add more criteria
     *
@@ -287,7 +280,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       }
       return [];
    }
-
 
 
    /**
@@ -366,7 +358,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Process the rule
     *
@@ -403,5 +394,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          }
       }
    }
+
+
 }
 

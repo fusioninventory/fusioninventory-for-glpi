@@ -11,6 +11,7 @@
 
 namespace Docopt;
 
+
 /**
  * Return true if all cased characters in the string are uppercase and there is
  * at least one cased character, false otherwise.
@@ -19,6 +20,7 @@ namespace Docopt;
 function is_upper($string) {
     return preg_match('/[A-Z]/', $string) && !preg_match('/[a-z]/', $string);
 }
+
 
 /**
  * Return True if any element of the iterable is true. If the iterable is empty, return False.
@@ -32,6 +34,7 @@ function any($iterable) {
    }
     return false;
 }
+
 
 /**
  * The PHP version of this function doesn't work properly if the values aren't scalar.
@@ -56,6 +59,7 @@ function array_count_values($array) {
     return $counts;
 }
 
+
 /**
  * The PHP version of this doesn't support array iterators
  */
@@ -70,6 +74,7 @@ function array_filter($input, $callback, $reKey = false) {
    }
     return $filtered;
 }
+
 
 /**
  * The PHP version of this doesn't support array iterators
@@ -87,15 +92,18 @@ function array_merge() {
     return call_user_func_array('array_merge', $resolved);
 }
 
+
 function ends_with($str, $test) {
     $len = strlen($test);
     return substr_compare($str, $test, -$len, $len) === 0;
 }
 
+
 function get_class_name($obj) {
     $cls = get_class($obj);
     return substr($cls, strpos($cls, '\\')+1);
 }
+
 
 function dump($val) {
    if (is_array($val) || $val instanceof \Traversable) {
@@ -111,6 +119,7 @@ function dump($val) {
    }
 }
 
+
 function dump_scalar($scalar) {
    if ($scalar === null) {
        return 'None';
@@ -124,6 +133,7 @@ function dump_scalar($scalar) {
       return "'$scalar'";
    }
 }
+
 
 /**
  * Error in construction of usage-message by developer
@@ -142,27 +152,35 @@ class ExitException extends \RuntimeException
 
    public $status;
 
+
    public function __construct($message = null, $status = 1) {
       parent::__construct(trim($message.PHP_EOL.static::$usage));
       $this->status = $status;
    }
+
+
 }
 
 class Pattern
 {
+
+
    public function __toString() {
       return serialize($this);
    }
 
+
    public function hash() {
       return crc32((string)$this);
    }
+
 
    public function fix() {
       $this->fixIdentities();
       $this->fixRepeatingArguments();
       return $this;
    }
+
 
     /**
      * Make pattern-tree tips point to same object if they are equal.
@@ -188,6 +206,7 @@ class Pattern
          }
       }
    }
+
 
     /**
      * Fix elements that should accumulate/increment values.
@@ -220,6 +239,7 @@ class Pattern
 
       return $this;
    }
+
 
     /**
      * Transform pattern into an equivalent, with only top-level Either.
@@ -304,8 +324,10 @@ class Pattern
       return new Either($rs);
    }
 
+
    public function name() {
    }
+
 
    public function __get($name) {
       if ($name == 'name') {
@@ -314,10 +336,14 @@ class Pattern
          throw new \BadMethodCallException("Unknown property $name");
       }
    }
+
+
 }
 
 class ChildPattern extends Pattern
 {
+
+
    public function flat($types = []) {
       $types = is_array($types) ? $types : [$types];
 
@@ -327,6 +353,7 @@ class ChildPattern extends Pattern
          return [];
       }
    }
+
 
    public function match($left, $collected = null) {
       if (!$collected) {
@@ -368,11 +395,14 @@ class ChildPattern extends Pattern
 
       return [true, $left_, array_merge($collected, [$match])];
    }
+
+
 }
 
 class ParentPattern extends Pattern
 {
    public $children = [];
+
 
    public function __construct($children = null) {
       if (!$children) {
@@ -385,6 +415,7 @@ class ParentPattern extends Pattern
          $this->children[] = $c;
       }
    }
+
 
    public function flat($types = []) {
       $types = is_array($types) ? $types : [$types];
@@ -399,6 +430,7 @@ class ParentPattern extends Pattern
       return $flat;
    }
 
+
    public function dump() {
       $out = get_class_name($this).'(';
       $cd = [];
@@ -408,6 +440,8 @@ class ParentPattern extends Pattern
       $out .= implode(', ', $cd).')';
       return $out;
    }
+
+
 }
 
 class Argument extends ChildPattern
@@ -415,10 +449,12 @@ class Argument extends ChildPattern
    public $name;
    public $value;
 
+
    public function __construct($name, $value = null) {
       $this->name = $name;
       $this->value = $value;
    }
+
 
    public function singleMatch($left) {
       foreach ($left as $n=>$p) {
@@ -429,6 +465,7 @@ class Argument extends ChildPattern
 
       return [null, null];
    }
+
 
    public static function parse($source) {
       $name = null;
@@ -444,9 +481,12 @@ class Argument extends ChildPattern
       return new static($name, $value);
    }
 
+
    public function dump() {
       return "Argument('".dump_scalar($this->name)."', ".dump_scalar($this->value)."')";
    }
+
+
 }
 
 class Command extends Argument
@@ -454,10 +494,12 @@ class Command extends Argument
    public $name;
    public $value;
 
+
    public function __construct($name, $value = false) {
       $this->name = $name;
       $this->value = $value;
    }
+
 
    function singleMatch($left) {
       foreach ($left as $n=>$p) {
@@ -471,12 +513,15 @@ class Command extends Argument
       }
       return [null, null];
    }
+
+
 }
 
 class Option extends ChildPattern
 {
    public $short;
    public $long;
+
 
    public function __construct($short = null, $long = null, $argcount = 0, $value = false) {
       if ($argcount != 0 && $argcount != 1) {
@@ -493,6 +538,7 @@ class Option extends ChildPattern
           $this->value = null;
       }
    }
+
 
    public static function parse($optionDescription) {
       $short = null;
@@ -525,6 +571,7 @@ class Option extends ChildPattern
       return new static($short, $long, $argcount, $value);
    }
 
+
    public function singleMatch($left) {
       foreach ($left as $n=>$p) {
          if ($this->name == $p->name) {
@@ -534,17 +581,23 @@ class Option extends ChildPattern
       return [null, null];
    }
 
+
    public function name() {
       return $this->long ?: $this->short;
    }
 
+
    public function dump() {
       return "Option('{$this->short}', ".dump_scalar($this->long).", ".dump_scalar($this->argcount).", ".dump_scalar($this->value).")";
    }
+
+
 }
 
 class Required extends ParentPattern
 {
+
+
    public function match($left, $collected = null) {
       if (!$collected) {
           $collected = [];
@@ -562,10 +615,14 @@ class Required extends ParentPattern
 
       return [true, $l, $c];
    }
+
+
 }
 
 class Optional extends ParentPattern
 {
+
+
    public function match($left, $collected = null) {
       if (!$collected) {
           $collected = [];
@@ -577,6 +634,8 @@ class Optional extends ParentPattern
 
       return [true, $left, $collected];
    }
+
+
 }
 
 /**
@@ -588,6 +647,8 @@ class AnyOptions extends Optional
 
 class OneOrMore extends ParentPattern
 {
+
+
    public function match($left, $collected = null) {
       if (count($this->children) != 1) {
           throw new \UnexpectedValueException();
@@ -622,10 +683,14 @@ class OneOrMore extends ParentPattern
          return [false, $left, $collected];
       }
    }
+
+
 }
 
 class Either extends ParentPattern
 {
+
+
    public function match($left, $collected = null) {
       if (!$collected) {
           $collected = [];
@@ -654,11 +719,14 @@ class Either extends ParentPattern
          return [false, $left, $collected];
       }
    }
+
+
 }
 
 class TokenStream extends \ArrayIterator
 {
    public $error;
+
 
    public function __construct($source, $error) {
       if (!is_array($source)) {
@@ -670,17 +738,22 @@ class TokenStream extends \ArrayIterator
       $this->error = $error;
    }
 
+
    function move() {
       $item = $this->current();
       $this->next();
       return $item;
    }
 
+
    function raiseException($message) {
       $class = __NAMESPACE__.'\\'.$this->error;
       throw new $class($message);
    }
+
+
 }
+
 
 /**
  * long ::= '--' chars [ ( ' ' | '=' ) chars ] ;
@@ -743,6 +816,7 @@ function parse_long($tokens, \ArrayIterator $options) {
     return [$o];
 }
 
+
 /**
  * shorts ::= '-' ( chars )* [ [ ' ' ] chars ] ;
  */
@@ -798,6 +872,7 @@ function parse_shorts($tokens, \ArrayIterator $options) {
     return $parsed;
 }
 
+
 function parse_pattern($source, \ArrayIterator $options) {
     $tokens = new TokenStream(preg_replace('@([\[\]\(\)\|]|\.\.\.)@', ' $1 ', $source), 'LanguageError');
 
@@ -807,6 +882,7 @@ function parse_pattern($source, \ArrayIterator $options) {
    }
     return new Required($result);
 }
+
 
 /**
  * expr ::= seq ( '|' seq )* ;
@@ -841,6 +917,7 @@ function parse_expr($tokens, \ArrayIterator $options) {
    }
 }
 
+
 /**
  * seq ::= ( atom [ '...' ] )* ;
  */
@@ -862,6 +939,7 @@ function parse_seq($tokens, \ArrayIterator $options) {
    }
     return $result;
 }
+
 
 /**
  * atom ::= '(' expr ')' | '[' expr ']' | 'options'
@@ -899,6 +977,7 @@ function parse_atom($tokens, \ArrayIterator $options) {
    }
 }
 
+
 /**
  * Parse command-line argument vector.
  *
@@ -929,6 +1008,7 @@ function parse_argv($tokens, \ArrayIterator $options, $optionsFirst = false) {
     return $parsed;
 }
 
+
 function parse_defaults($doc) {
     $splitTmp = array_slice(preg_split('@\n[ ]*(<\S+?>|-\S+?)@', $doc, null, PREG_SPLIT_DELIM_CAPTURE), 1);
     $split = [];
@@ -944,6 +1024,7 @@ function parse_defaults($doc) {
     return $options;
 }
 
+
 function printable_usage($doc) {
     $usageSplit = preg_split("@([Uu][Ss][Aa][Gg][Ee]:)@", $doc, null, PREG_SPLIT_DELIM_CAPTURE);
 
@@ -957,6 +1038,7 @@ function printable_usage($doc) {
 
     return trim($split[0]);
 }
+
 
 function formal_usage($printableUsage) {
     $pu = array_slice(preg_split('/\s+/', $printableUsage), 1);
@@ -972,6 +1054,7 @@ function formal_usage($printableUsage) {
 
     return '( '.implode(' ', $ret).' )';
 }
+
 
 function extras($help, $version, $options, $doc) {
     $ofound = false;
@@ -994,6 +1077,7 @@ function extras($help, $version, $options, $doc) {
    }
 }
 
+
 /**
  * API compatibility with python docopt
  */
@@ -1007,6 +1091,7 @@ function docopt($doc, $params = []) {
     return $h->handle($doc, $argv);
 }
 
+
 /**
  * Use a class in PHP because we can't autoload functions yet.
  */
@@ -1017,11 +1102,13 @@ class Handler
    public $optionsFirst = false;
    public $version;
 
+
    public function __construct($options = []) {
       foreach ($options as $k=>$v) {
           $this->$k = $v;
       }
    }
+
 
    function handle($doc, $argv = null) {
       try {
@@ -1060,12 +1147,15 @@ class Handler
       }
    }
 
+
    function handleExit(ExitException $ex) {
       if ($this->exit) {
          echo $ex->getMessage().PHP_EOL;
          exit($ex->status);
       }
    }
+
+
 }
 
 class Response implements \ArrayAccess, \IteratorAggregate
@@ -1074,11 +1164,13 @@ class Response implements \ArrayAccess, \IteratorAggregate
    public $output;
    public $args;
 
+
    public function __construct($args, $status = 0, $output = '') {
       $this->args = $args ?: [];
       $this->status = $status;
       $this->output = $output;
    }
+
 
    public function __get($name) {
       if ($name == 'success') {
@@ -1088,23 +1180,30 @@ class Response implements \ArrayAccess, \IteratorAggregate
       }
    }
 
+
    public function offsetExists($offset) {
       return isset($this->args[$offset]);
    }
+
 
    public function offsetGet($offset) {
       return $this->args[$offset];
    }
 
+
    public function offsetSet($offset, $value) {
       $this->args[$offset] = $value;
    }
+
 
    public function offsetUnset($offset) {
       unset($this->args[$offset]);
    }
 
+
    public function getIterator () {
       return new \ArrayIterator($this->args);
    }
+
+
 }

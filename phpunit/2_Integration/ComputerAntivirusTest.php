@@ -44,6 +44,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
    public $a_computer1 = [];
    public $a_computer1_beforeformat = [];
 
+
    function __construct() {
       $this->a_computer1 = [
           "Computer" => [
@@ -103,7 +104,6 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
           ]
       ];
    }
-
 
 
    /**
@@ -201,4 +201,6 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
          'Antivirus updated data'
       );
    }
+
+
 }

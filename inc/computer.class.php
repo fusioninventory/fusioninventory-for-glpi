@@ -87,7 +87,6 @@ class PluginFusioninventoryComputer extends Computer {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
@@ -128,7 +127,6 @@ class PluginFusioninventoryComputer extends Computer {
    }
 
 
-
    /**
     * Define the standard massive actions to hide for this class
     *
@@ -142,7 +140,6 @@ class PluginFusioninventoryComputer extends Computer {
       $forbidden[] = 'delete';
       return $forbidden;
    }
-
 
 
    /**
@@ -198,7 +195,6 @@ class PluginFusioninventoryComputer extends Computer {
    }
 
 
-
    /**
     * Display form related to the massive action selected
     *
@@ -213,6 +209,7 @@ class PluginFusioninventoryComputer extends Computer {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
+
 
 }
 

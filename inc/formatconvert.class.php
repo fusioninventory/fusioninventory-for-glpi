@@ -185,7 +185,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Convert json into php array
     *
@@ -197,7 +196,6 @@ class PluginFusioninventoryFormatconvert {
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       return $datainventory;
    }
-
 
 
    /**
@@ -229,7 +227,6 @@ class PluginFusioninventoryFormatconvert {
       }
       return array_change_key_case($data, CASE_UPPER);
    }
-
 
 
    /**
@@ -1467,7 +1464,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Convert SOFTWARE part of computer inventory because need a special
     * transformation
@@ -1638,7 +1634,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Prepare collect info (file, wmi and registry) to be glpi ready :D
     *
@@ -1751,7 +1746,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Convert data in right format (string, integer) when have empty or not
     * exist in inventory
@@ -1793,7 +1787,6 @@ class PluginFusioninventoryFormatconvert {
       }
       return $a_return;
    }
-
 
 
    /**
@@ -1882,7 +1875,6 @@ class PluginFusioninventoryFormatconvert {
       }
       return $array;
    }
-
 
 
    /**
@@ -2068,6 +2060,7 @@ class PluginFusioninventoryFormatconvert {
       return $a_inventory;
    }
 
+
    /**
     * Clean firmware version
     *
@@ -2084,6 +2077,7 @@ class PluginFusioninventoryFormatconvert {
       }
       return $version;
    }
+
 
    /**
     * Convert printer in GLPI prepared data
@@ -2189,7 +2183,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Get type of the drive
     *
@@ -2215,4 +2208,6 @@ class PluginFusioninventoryFormatconvert {
       }
       return 'HardDrive';
    }
+
+
 }

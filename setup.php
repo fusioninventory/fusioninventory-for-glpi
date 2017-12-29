@@ -63,6 +63,7 @@ define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
 define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/");
 
+
 /**
  * Check if the script name finish by
  *
@@ -73,7 +74,6 @@ function script_endswith($scriptname) {
    $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
    return substr($script_name, -strlen($scriptname))===$scriptname;
 }
-
 
 
 /**
@@ -470,7 +470,6 @@ function plugin_init_fusioninventory() {
 }
 
 
-
 /**
  * Manage the version information of the plugin
  *
@@ -502,7 +501,6 @@ function plugin_version_fusioninventory() {
             ]
          ];
 }
-
 
 
 /**
@@ -558,7 +556,6 @@ function plugin_fusioninventory_check_prerequisites() {
 }
 
 
-
 /**
  * Check if the config is ok
  *
@@ -567,7 +564,6 @@ function plugin_fusioninventory_check_prerequisites() {
 function plugin_fusioninventory_check_config() {
    return true;
 }
-
 
 
 /**
@@ -580,7 +576,6 @@ function plugin_fusioninventory_check_config() {
 function plugin_fusioninventory_haveTypeRight($type, $right) {
    return true;
 }
-
 
 
 /**

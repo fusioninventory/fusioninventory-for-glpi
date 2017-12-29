@@ -116,7 +116,6 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    }
 
 
-
    /**
     * Get the value of a field in configlog
     *
@@ -141,7 +140,6 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -231,7 +229,6 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    }
 
 
-
    /**
     * Update data in database
     *
@@ -247,5 +244,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          }
       }
    }
+
+
 }
 

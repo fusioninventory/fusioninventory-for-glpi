@@ -45,6 +45,7 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
    var $rules_id = 0;
    var $ruleactions_id = 0;
 
+
    /**
     * @test
     */
@@ -221,7 +222,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -246,7 +246,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(1, $res_rule['computermodels_id']);
    }
-
 
 
    /**
@@ -275,7 +274,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -300,7 +298,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(1, $res_rule['computermodels_id']);
    }
-
 
 
    /**
@@ -329,7 +326,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -354,7 +350,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals('3.2.0', $res_rule['softwareversion']);
    }
-
 
 
    /**
@@ -383,7 +378,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -408,5 +402,6 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals('ttuujj', $res_rule['otherserial']);
    }
+
 
 }

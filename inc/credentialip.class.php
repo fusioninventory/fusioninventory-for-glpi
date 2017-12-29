@@ -96,7 +96,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
 
-
    /**
     * Add more fields
     *
@@ -110,7 +109,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
                          'label' => __('IP'),
                          'type'  => 'text']];
    }
-
 
 
    /**
@@ -133,7 +131,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
             break;
       }
    }
-
 
 
    /**
@@ -172,7 +169,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
 
-
    /**
     * Display a specific header
     */
@@ -183,5 +179,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
    }
+
+
 }
 

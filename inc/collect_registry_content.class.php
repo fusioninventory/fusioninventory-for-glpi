@@ -73,7 +73,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -103,7 +102,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -120,6 +118,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       return true;
    }
 
+
    /**
     * Delete all registriies contents linked to the computer (most cases when delete a
     * computer)
@@ -130,6 +129,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       $registry_content = new self();
       $registry_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * Update computer registry values (add and update) related to this
@@ -190,7 +190,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display registries keys related with collect id
     *
@@ -204,7 +203,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
          $this->showForCollectRegistry($data['id']);
       }
    }
-
 
 
    /**
@@ -254,7 +252,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display registry keys / values of collect_registry id
     *
@@ -299,5 +296,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       }
       echo '</table>';
    }
+
+
 }
 

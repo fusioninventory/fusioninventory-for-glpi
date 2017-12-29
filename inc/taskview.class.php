@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
+
    /**
     * __contruct function where initialize base URLs
     */
@@ -63,6 +64,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          'fi.job.logs' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_logs.php",
       ]);
    }
+
 
    /**
     * Show job logs
@@ -390,6 +392,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       return true;
    }
 
+
    function showFormButtons($options = []) {
       if (isset($this->fields['id'])) {
          $ID = $this->fields['id'];
@@ -426,7 +429,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "</table></div>";
       Html::closeForm();
    }
-
 
 
    /**
@@ -475,7 +477,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Define reprepare_if_successful field when get empty item
     */
@@ -483,4 +484,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       parent::getEmpty();
       $this->fields['reprepare_if_successful'] = 1;
    }
+
+
 }

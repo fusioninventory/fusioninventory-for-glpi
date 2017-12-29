@@ -62,6 +62,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_agent';
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -71,7 +72,6 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return "Stat";
    }
-
 
 
    /**
@@ -93,7 +93,6 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
    }
 
 
-
    /**
     * Increment computer states
     *
@@ -108,7 +107,6 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
                  ."   AND `hour`='".date('G')."'";
       $DB->query($query);
    }
-
 
 
    /**
@@ -140,5 +138,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       }
       return $a_counters;
    }
+
+
 }
 

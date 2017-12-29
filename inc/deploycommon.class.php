@@ -56,6 +56,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
 
+
    /**
     * Check if definition_type is present in definitions_filter array.
     * This function returns true if the definition_type is not in
@@ -75,7 +76,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       }
       return false;
    }
-
 
 
    /**
@@ -319,7 +319,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
    }
 
 
-
    /**
     * run function, so return data to send to the agent for deploy
     *
@@ -393,4 +392,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       ];
       return $order;
    }
+
+
 }

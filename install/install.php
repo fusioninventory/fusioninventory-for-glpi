@@ -44,6 +44,7 @@
  *
  */
 
+
 /**
  * This function manage the installation of the plugin.
  *

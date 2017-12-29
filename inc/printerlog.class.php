@@ -212,7 +212,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    }
 
 
-
    /**
     * Count number entries for the printer
     *
@@ -236,7 +235,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
       return $num;
    }
-
 
 
    /**
@@ -270,7 +268,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    }
 
 
-
    /**
     * Get printed pages statistics
     *
@@ -299,7 +296,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -396,7 +392,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</div>";
       return true;
    }
-
 
 
    /**
@@ -762,5 +757,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 </script>';
 
    }
+
+
 }
 

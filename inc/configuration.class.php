@@ -95,7 +95,6 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
    }
 
 
-
    /**
     * Display configuration form
     *
@@ -108,5 +107,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
       return true;
    }
+
+
 }
 

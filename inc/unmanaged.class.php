@@ -67,6 +67,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_unmanaged';
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -76,7 +77,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return __('Unmanaged device', 'fusioninventory');
    }
-
 
 
    /**
@@ -89,7 +89,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Get menu name
     *
@@ -98,7 +97,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    static function getMenuName() {
       return self::getTypeName();
    }
-
 
 
    /**
@@ -115,7 +113,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
       return $menu;
    }
-
 
 
    /**
@@ -216,7 +213,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -238,7 +234,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
       return $ong;
    }
-
 
 
    /**
@@ -263,7 +258,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
@@ -279,7 +273,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
-
 
 
    /**
@@ -302,7 +295,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Display form related to the massive action selected
     *
@@ -317,7 +309,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
-
 
 
    /**
@@ -347,7 +338,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       }
    }
-
 
 
    /**
@@ -489,7 +479,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Form to import devices in GLPI inventory (computer, printer...)
     *
@@ -518,7 +507,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       Html::closeForm();
       echo "</div>";
    }
-
 
 
    /**
@@ -551,8 +539,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    // ************************* Hub Management ************************ //
+
 
    /**
     * Manage a hub (many mac on a port mean you have a hub)
@@ -641,7 +629,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Delete all ports connected in hub and not found in last inventory
     *
@@ -663,7 +650,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -713,7 +699,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Disconnect a port
     *
@@ -736,7 +721,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Search if port yet connected to hub
     *
@@ -751,7 +735,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -822,7 +805,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Remove all connections on a hub
     *
@@ -856,8 +838,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    // *************************** end hub management ****************************** //
+
 
    /**
     * Purge unmanaged devices
@@ -886,7 +868,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          $NetworkPort->delete($a_port, 1);
       }
    }
-
 
 
    /**
@@ -1089,7 +1070,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
    }
 
 
-
    /**
     * Clean linked elements when purge an item
     */
@@ -1097,5 +1077,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $networkPort= new NetworkPort();
       $networkPort->cleanDBonItemDelete($this->getType(), $this->fields['id']);
    }
+
+
 }
 

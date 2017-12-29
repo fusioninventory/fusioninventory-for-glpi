@@ -42,6 +42,7 @@
 
 class CronTaskTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -212,7 +213,6 @@ class CronTaskTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -258,7 +258,6 @@ class CronTaskTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -299,7 +298,6 @@ class CronTaskTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -326,7 +324,6 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($ref_prepared, $data['tasks']);
    }
-
 
 
    /**
@@ -474,6 +471,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -582,6 +580,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
                                                   ['id' => $tasks_id]));
 
    }
+
 
 }
 

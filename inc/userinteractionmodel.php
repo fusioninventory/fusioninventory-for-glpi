@@ -53,6 +53,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryUserinteractionModel extends CommonDBTM {
 
+
    /**
     * Get the name user interaction
     *

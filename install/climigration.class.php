@@ -51,6 +51,7 @@
  */
 class CliMigration extends Migration {
 
+
    /**
     * __contruct function where initialize variables
     *
@@ -60,7 +61,6 @@ class CliMigration extends Migration {
       $this->deb     = time();
       $this->version = $ver;
    }
-
 
 
    /**
@@ -74,7 +74,6 @@ class CliMigration extends Migration {
    }
 
 
-
    /**
     * Display a title
     *
@@ -83,7 +82,6 @@ class CliMigration extends Migration {
    function displayTitle($title) {
       echo "\n".str_pad(" $title ", 100, '=', STR_PAD_BOTH)."\n";
    }
-
 
 
    /**
@@ -98,5 +96,7 @@ class CliMigration extends Migration {
       }
       echo str_pad($msg, 100)."\n";
    }
+
+
 }
 

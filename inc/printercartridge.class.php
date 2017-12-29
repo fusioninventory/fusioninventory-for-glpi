@@ -57,7 +57,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
 
 
-
    /**
     * Display form
     *
@@ -140,5 +139,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       echo "</div>";
       return true;
    }
+
+
 }
 

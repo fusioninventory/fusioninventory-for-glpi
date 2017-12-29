@@ -55,6 +55,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventorySetup {
 
+
    /**
     * Uninstall process when uninstall the plugin FusionInventory
     *
@@ -108,7 +109,6 @@ class PluginFusioninventorySetup {
    }
 
 
-
    /**
     * Remove a directory and sub-directory
     *
@@ -132,7 +132,6 @@ class PluginFusioninventorySetup {
          rmdir($dir);
       }
    }
-
 
 
    /**
@@ -979,7 +978,6 @@ class PluginFusioninventorySetup {
    }
 
 
-
    /**
     * Creation of FusionInventory user
     *
@@ -999,5 +997,7 @@ class PluginFusioninventorySetup {
          return $user['id'];
       }
    }
+
+
 }
 

@@ -130,7 +130,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
-
    /**
     * Get all states name
     *
@@ -149,7 +148,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -165,7 +163,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -224,7 +221,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
       return '';
    }
-
 
 
    /**
@@ -329,7 +325,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
-
    /**
     * Change the state
     *
@@ -342,7 +337,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    function changeStatus($id, $state) {
       $this->update(['id' => $id, 'state' => $state]);
    }
-
 
 
    /**
@@ -376,7 +370,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
-
    /**
     * Process ajax parameters for getLogs() methods
     *
@@ -399,7 +392,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo json_encode($this->getLogs($id, $last_date));
       }
    }
-
 
 
    /**
@@ -448,7 +440,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
-
    /**
     * Change the status to finish
     *
@@ -490,7 +481,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
-
    /**
     * Update taskjob(log) in error
     *
@@ -501,6 +491,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                          self::IN_ERROR,
                          $reason);
    }
+
 
    /*
     * Postpone a job
@@ -514,6 +505,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $this->processPostonedJob($type);
    }
 
+
    /**
     * Cancel a taskjob
     *
@@ -524,6 +516,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                          self::CANCELLED,
                          $reason);
    }
+
 
    /**
     * Update the state of a jobstate
@@ -551,6 +544,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'state' => $jobstate_state
       ]);
    }
+
 
    private function processPostonedJob($type) {
 
@@ -623,6 +617,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
    }
 
+
    /**
     * Cron task: clean taskjob (retention time)
     *
@@ -652,6 +647,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
    }
 
+
    /**
    * Fill a taskjobstate by it's uuid
    * @since 9.2
@@ -663,4 +659,6 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          $this->fields = array_pop($result);
       }
    }
+
+
 }

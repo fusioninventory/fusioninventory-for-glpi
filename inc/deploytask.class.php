@@ -73,7 +73,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
 
-
    /**
     * Is this use can create a deploy task
     *
@@ -84,7 +83,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
 
-
    /**
     * Is this use can view a deploy task
     *
@@ -93,7 +91,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    static function canView() {
       return true;
    }
-
 
 
    /**
@@ -113,7 +110,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -131,7 +127,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       }
       return '';
    }
-
 
 
    /**
@@ -155,7 +150,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
 
-
    /**
     * Show list of deploy tasks
     */
@@ -163,7 +157,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       self::title();
       Search::show('PluginFusioninventoryDeployTask');
    }
-
 
 
    /**
@@ -184,7 +177,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png",
                          $title, $title, $buttons);
    }
-
 
 
    /**
@@ -226,7 +218,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       // Include JS
       require GLPI_ROOT."/plugins/fusinvdeploy/js/task_job.front.php";
    }
-
 
 
    /**
@@ -273,7 +264,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
 
-
    /**
     * Do this after added an item
     */
@@ -284,5 +274,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       ];
       $this->update($options);
    }
+
+
 }
 

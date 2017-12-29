@@ -86,7 +86,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    public $can_sort = true;
 
 
-
    /**
     * Get name of this type by language of the user connected
     *
@@ -97,7 +96,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Define maximum number of actions possible in a rule
     *
@@ -106,7 +104,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function maxActionsCount() {
       return 1;
    }
-
 
 
    /**
@@ -211,7 +208,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Get the actions available for the rule
     *
@@ -230,7 +226,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Get action values
     *
@@ -241,7 +236,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       return [self::RULE_ACTION_LINK   => __('Link', 'fusioninventory'),
                    self::RULE_ACTION_DENIED => __('Import denied (no log)', 'fusioninventory')];
    }
-
 
 
    /**
@@ -258,7 +252,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       return '';
    }
-
 
 
    /**
@@ -281,7 +274,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Add more criteria
     *
@@ -295,7 +287,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                    self::PATTERN_ENTITY_RESTRICT => __('Yes')];
 
    }
-
 
 
    /**
@@ -324,7 +315,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       return false;
    }
-
 
 
    /**
@@ -360,7 +350,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Display more actions
     *
@@ -374,7 +363,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       return true;
    }
-
 
 
    /**
@@ -392,7 +380,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       return $criteria;
    }
-
 
 
    /**
@@ -722,7 +709,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Code execution of actions of the rule
     *
@@ -881,7 +867,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Display the pattern form selection
     *
@@ -983,7 +968,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Get itemtypes have state_type and unmanaged devices
     *
@@ -1007,7 +991,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-
    /**
     * Display type specific criterias during rule's preview
     *
@@ -1026,7 +1009,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          echo "<input type='hidden' name='entities_id' value='".$_SESSION["glpiactive_entity"]."'>";
       }
    }
-
 
 
    /**
@@ -1078,5 +1060,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       return $output;
    }
+
+
 }
 

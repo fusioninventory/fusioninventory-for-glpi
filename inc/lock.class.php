@@ -73,7 +73,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Count number lock elements for item
     *
@@ -89,7 +88,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return count(importArrayFromDB($a_data['tablefields']));
    }
-
 
 
    /**
@@ -125,7 +123,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return '';
    }
-
 
 
    /**
@@ -174,7 +171,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return true;
    }
-
 
 
    /**
@@ -365,7 +361,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Display lock form for an itemtype
     *
@@ -481,6 +476,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    }
 
+
    /**
     * Unlock a field for a record.
     *
@@ -519,7 +515,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Unlock a field for all records.
     *
@@ -543,7 +538,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          PluginFusioninventoryLock::deleteInLockArray($p_table, $data['items_id'], $p_fieldToDel);
       }
    }
-
 
 
    /**
@@ -605,7 +599,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Add lock fields for a record.
     *
@@ -649,7 +642,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Get lock fields for a record.
     *
@@ -670,7 +662,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $result = $DB->query($query);
       return $result;
    }
-
 
 
    /**
@@ -699,7 +690,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * convert an array resulting from many form checks (0=>on 2=>on 5=>on ...)
     * into a classical array(0=>0 1=>2 2=>5 ...)
@@ -716,7 +706,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return $array;
    }
-
 
 
    /**
@@ -739,7 +728,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "ticket_tco";
       return $exclude;
    }
-
 
 
    /**
@@ -797,7 +785,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Import OCS locks
     *
@@ -825,7 +812,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
    }
-
 
 
    /**
@@ -861,7 +847,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Get value for key
     *
@@ -892,7 +877,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Display lock icon in main item form
     *
@@ -909,7 +893,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
    }
-
 
 
    /**
@@ -929,7 +912,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return false;
    }
-
 
 
    /**
@@ -978,7 +960,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Say if the field is locked
     *
@@ -989,6 +970,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function isFieldLocked($a_lockable, $field) {
       return in_array($field, $a_lockable);
    }
+
 
    static function showLocksForAnItem(CommonDBTM $item) {
       $pflock = new self();
@@ -1004,5 +986,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return true;
    }
+
+
 }
 

@@ -255,7 +255,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    }
 
 
-
    /**
     * When agent contact server, this function send datas to agent
     *
@@ -321,7 +320,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       //}
       return $this->message;
    }
-
 
 
    /**
@@ -426,5 +424,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       }
       return $a_agentList;
    }
+
+
 }
 

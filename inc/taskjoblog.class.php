@@ -97,7 +97,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_PREPARED = 7;
 
 
-
    /**
     * return array with state mapping name
     *
@@ -116,7 +115,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       return $elements;
    }
-
 
 
    /**
@@ -161,6 +159,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          return '';
       }
    }
+
 
    /**
     * Get search function for the class
@@ -226,7 +225,6 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    }
 
 
-
    /**
     * Display javascript functions for history
     *
@@ -258,7 +256,6 @@ function appear_array(id) {
       echo "<script type='text/javascript' src='".
               $CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
    }
-
 
 
    /**
@@ -350,7 +347,6 @@ function appear_array(id) {
       echo "</td>";
       echo "</tr>";
    }
-
 
 
    /**
@@ -506,7 +502,6 @@ function appear_array(id) {
    }
 
 
-
    /**
     * Display high detail of each history line
     *
@@ -584,7 +579,6 @@ function appear_array(id) {
    }
 
 
-
    /**
     * Add a new line of log for a taskjob status
     *
@@ -608,7 +602,6 @@ function appear_array(id) {
 
       $this->addToDB();
    }
-
 
 
    /**
@@ -654,7 +647,6 @@ function appear_array(id) {
                         ]);
 
    }
-
 
 
    /**
@@ -722,7 +714,6 @@ function appear_array(id) {
    }
 
 
-
    /**
     * Convert comment by replace formated message by translated message
     *
@@ -760,4 +751,7 @@ function appear_array(id) {
       }
       return str_replace(",[", "<br/>[", $comment);
    }
+
 }
+
+
