@@ -67,6 +67,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_agent';
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -76,7 +77,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return __('Agent', 'fusioninventory');
    }
-
 
 
    /**
@@ -195,7 +195,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
@@ -230,7 +229,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
@@ -251,7 +249,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return $actions;
    }
-
 
 
    /**
@@ -280,7 +277,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
-
 
 
    /**
@@ -346,7 +342,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return;
    }
-
 
 
    /**
@@ -523,6 +518,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
    }
 
+
    /**
     * Get agent information by device_id
     *
@@ -545,7 +541,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return $agent;
    }
-
 
 
    /**
@@ -590,7 +585,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get all IP of the computer linked with this agent
     *
@@ -604,7 +598,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $ip_addresses = PluginFusioninventoryToolbox::getIPforDevice('Computer', $this->fields['computers_id']);
       return $ip_addresses;
    }
-
 
 
    /**
@@ -625,7 +618,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get the agents id of a list of computers id
     *
@@ -641,7 +633,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
               "`computers_id` in ('".implode("','", $computer_ids)."')");
       return $agents;
    }
-
 
 
    /**
@@ -660,7 +651,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $computer->getFromDB($this->fields['computers_id']);
       return $computer;
    }
-
 
 
    /**
@@ -724,7 +714,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -836,7 +825,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get the remotely status of the agent (available, not available, waiting,
     * running...)
@@ -896,7 +884,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Send a request to the remotely agent to run now
     *
@@ -924,7 +911,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Store version of each module of agent
     *
@@ -948,7 +934,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get the version of agent (it's the same number as inventory module)
     *
@@ -963,7 +948,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return '0';
    }
-
 
 
    /**
@@ -981,7 +965,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          return false;
       }
    }
-
 
 
    /**
@@ -1035,7 +1018,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get the URLs used to get the status of the agent
     *
@@ -1051,7 +1033,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Get the URLs used to wake up the agent
     *
@@ -1065,7 +1046,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return $ret;
    }
-
 
 
    /**
@@ -1098,7 +1078,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
    /**
     * Disable data to put in glpi_logs because don't want to write all these
     * very often changes
@@ -1119,7 +1098,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          unset($this->oldvalues['token']);
       }
    }
-
 
 
    /**
@@ -1164,7 +1142,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       }
    }
-
 
 
    /**
@@ -1215,5 +1192,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return $cron_status;
    }
+
+
 }
 

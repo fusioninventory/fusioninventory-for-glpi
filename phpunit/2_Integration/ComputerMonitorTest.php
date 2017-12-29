@@ -151,7 +151,6 @@ class ComputerMonitor extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -253,4 +252,6 @@ class ComputerMonitor extends Common_TestCase {
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'),
                           'First computer (number id of links recreated) (4)');
    }
+
+
 }

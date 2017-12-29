@@ -120,6 +120,8 @@ class FusinvInstallTest extends Common_TestCase {
 
       PluginFusioninventoryConfig::loadCache();
    }
+
+
 }
 
 

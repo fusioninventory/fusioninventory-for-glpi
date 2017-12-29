@@ -155,7 +155,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -239,7 +238,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($a_reference, $a_return);
    }
-
 
 
    /**
@@ -962,7 +960,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -1054,7 +1051,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -1115,6 +1111,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return['processor']);
    }
 
+
    /**
     * @test
     */
@@ -1149,6 +1146,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals('Fedora release 23 (Twenty Three)',
                           $a_return['OPERATINGSYSTEM']['FULL_NAME']);
    }
+
 
    /**
     * @test
@@ -1215,7 +1213,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -1267,7 +1264,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           ];
       $this->assertEquals($a_reference, $a_return['licenseinfo']);
    }
-
 
 
    /**
@@ -1501,7 +1497,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -1558,7 +1553,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           ];
       $this->assertEquals($a_reference, $a_return['drive']);
    }
-
 
 
    /**
@@ -1655,7 +1649,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($a_reference, $a_return['networkport']);
    }
-
 
 
    /**
@@ -1862,7 +1855,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -1977,4 +1969,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           ];
       $this->assertEquals($a_reference, $a_return);
    }
+
+
 }

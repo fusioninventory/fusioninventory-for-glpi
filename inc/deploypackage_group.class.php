@@ -117,5 +117,7 @@ class PluginFusioninventoryDeployPackage_Group extends CommonDBRelation {
       }
       return $groups;
    }
+
+
 }
 

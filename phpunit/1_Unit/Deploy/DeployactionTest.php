@@ -52,6 +52,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -59,6 +60,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
       $action = new PluginFusioninventoryDeployAction();
       $this->assertEquals(5, count($action->getTypes()));
    }
+
 
    /**
     * @test
@@ -78,6 +80,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
       $this->assertEquals('foo',
                           $action->getLabelForAType('foo'));
    }
+
 
    /**
    * @test
@@ -150,6 +153,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
    * @test
    */
@@ -177,6 +181,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $json);
 
    }
+
 
    /**
    * @test
@@ -206,6 +211,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
    * @test
    */
@@ -227,4 +233,6 @@ class DeployactionTest extends RestoreDatabase_TestCase {
       $json     = $action->getJson($packages_id);
       $this->assertEquals($expected, $json);
    }
+
+
 }

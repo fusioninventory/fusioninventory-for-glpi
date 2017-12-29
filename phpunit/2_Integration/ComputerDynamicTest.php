@@ -334,4 +334,6 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after
                            deleted a processor from inventory');
    }
+
+
 }

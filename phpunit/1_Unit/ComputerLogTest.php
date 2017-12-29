@@ -44,6 +44,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
 
    private $a_inventory = [];
 
+
    public function testLog() {
       global $DB;
 
@@ -433,6 +434,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
          and remove a software)");
 
    }
+
+
 }
 
 

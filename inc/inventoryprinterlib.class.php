@@ -138,7 +138,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    }
 
 
-
    /**
     * Import ports
     *
@@ -191,7 +190,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    }
 
 
-
    /**
     * Import page counters
     *
@@ -213,6 +211,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
 
       $pfPrinterLog->add($a_pagecounters);
    }
+
 
    /**
     * Fill the current counter or page of the printer in GLPI
@@ -262,5 +261,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          }
       }
    }
+
+
 }
 

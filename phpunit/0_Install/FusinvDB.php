@@ -42,6 +42,7 @@
 
 class FusinvDB extends PHPUnit_Framework_Assert{
 
+
    public function checkInstall($pluginname = '', $when = '') {
       global $DB;
 
@@ -306,5 +307,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_fusioninventory_inventorycomputerstats` not empty");
 
    }
+
+
 }
 

@@ -142,7 +142,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -230,7 +229,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -297,4 +295,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
          $this->assertEquals(0, $software->fields['is_recursive'], 'Software may have recursive = 0');
 
    }
+
+
 }

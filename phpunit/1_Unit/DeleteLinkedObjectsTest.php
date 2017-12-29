@@ -42,6 +42,7 @@
 
 class DeleteLinkedObjects extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -82,6 +83,8 @@ class DeleteLinkedObjects extends RestoreDatabase_TestCase {
       $list_security = $iprange_ConfigSecurity->find();
       $this->assertEquals(0, count($list_security), "SNMP community not deleted with iprange");
    }
+
+
 }
 
 

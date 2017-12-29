@@ -60,6 +60,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     */
    static $rightname = 'entity';
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -69,7 +70,6 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return __('Entity');
    }
-
 
 
    /**
@@ -90,7 +90,6 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -108,7 +107,6 @@ class PluginFusioninventoryEntity extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -207,7 +205,6 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
-
    /**
     * Get value of config
     *
@@ -245,7 +242,6 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
-
    /**
     * Get the value (of this entity or parent entity or in general config
     *
@@ -276,13 +272,13 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    }
 
 
-
    /**
     * Initialize a field when get empty item (default values)
     */
    function post_getEmpty() {
       $this->fields['transfers_id_auto'] = -1;
    }
+
 
 }
 

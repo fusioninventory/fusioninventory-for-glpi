@@ -69,7 +69,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Get name of this type by language of the user connected
     *
@@ -81,7 +80,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Check if can create an item
     *
@@ -90,7 +88,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    static function canCreate() {
       return true;
    }
-
 
 
    /**
@@ -104,7 +101,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` as taskjob\n".
                "ON taskjob.`plugin_fusioninventory_tasks_id` = task.`id`"];
    }
-
 
 
    /**
@@ -150,7 +146,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * get task of this task job
     *
@@ -161,7 +156,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       return $pfTask;
    }
-
 
 
    /**
@@ -215,7 +209,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Get Itemtypes list for the selected method
     *
@@ -259,7 +252,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       return $types;
    }
-
 
 
    /**
@@ -329,7 +321,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Display actions type (itemtypes)
     *
@@ -377,7 +368,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       return $rand;
    }
-
 
 
    /**
@@ -437,7 +427,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Get all agents allowed to a module (task method)
     *
@@ -458,7 +447,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       asort($allowed_agents);
       return $allowed_agents;
    }
-
 
 
    /**
@@ -585,7 +573,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          return false;
       }
    }
-
 
 
    /**
@@ -775,7 +762,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Check for configuration consistency.
     * Remove items targets or actors that have been deleted.
@@ -826,7 +812,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Purge taskjoblog/state when delete taskjob
     *
@@ -851,7 +836,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Force end task
     */
@@ -873,7 +857,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
-
 
 
    /**
@@ -967,7 +950,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Function used to add item in definition or action of a taskjob
     *    and hide add form
@@ -1019,7 +1001,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Function used to delete item in definition or action of a taskjob
     *    and hide add form
@@ -1057,7 +1038,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Display + button to add definition or action
     *
@@ -1074,7 +1054,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                     class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
       }
    }
-
 
 
    /**
@@ -1096,6 +1075,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       return $uniqid;
    }
+
 
    static function restartJob($params) {
       $task     = new PluginFusioninventoryTask();
@@ -1140,7 +1120,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Update method
     *
@@ -1160,7 +1139,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          }
       }
    }
-
 
 
    /**
@@ -1328,7 +1306,6 @@ function new_subtype(id) {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
@@ -1341,7 +1318,6 @@ function new_subtype(id) {
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'fusioninventory');
       return $actions;
    }
-
 
 
    /**
@@ -1371,6 +1347,7 @@ function new_subtype(id) {
       }
    }
 
+
    /**
    * Duplicate all taskjobs for a task to another one
    * @param $source_tasks_id the ID of the task to clone
@@ -1390,5 +1367,7 @@ function new_subtype(id) {
       }
       return $result;
    }
+
+
 }
 

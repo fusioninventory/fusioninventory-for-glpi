@@ -95,7 +95,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Update computer data
     *
@@ -1808,7 +1807,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Manage network ports
     *
@@ -2145,7 +2143,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Add a new memory component
     *
@@ -2165,7 +2162,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['_no_history']       = $no_history;
       $item_DeviceMemory->add($data, [], !$no_history);
    }
-
 
 
    /**
@@ -2189,7 +2185,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Add a new drive component
     *
@@ -2209,7 +2204,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['_no_history']          = $no_history;
       $item_DeviceDrive->add($data, [], !$no_history);
    }
-
 
 
    /**
@@ -2233,7 +2227,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Add a new network card component
     *
@@ -2255,7 +2248,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Add a new sound card component
     *
@@ -2275,7 +2267,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['_no_history']          = $no_history;
       $item_DeviceSoundCard->add($data, [], !$no_history);
    }
-
 
 
    /**
@@ -2383,7 +2374,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Load software versions from DB are in the incomming inventory
     *
@@ -2441,7 +2431,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Add a new software
     *
@@ -2454,7 +2443,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']] = $a_softwares_id;
    }
-
 
 
    /**
@@ -2475,7 +2463,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
       $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']] = $softwareversions_id;
    }
-
 
 
    /**
@@ -2509,7 +2496,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $DB->query($query);
       }
    }
-
 
 
    /**
@@ -2554,7 +2540,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Arraydiff function to have real diff between 2 arrays
     *
@@ -2577,7 +2562,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-
    /**
     * Prepare add history in database
     *
@@ -2590,7 +2574,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    function addPrepareLog($items_id, $itemtype, $itemtype_link = '', $changes = ['0', '', ''], $linked_action = Log::HISTORY_CREATE_ITEM) {
       $this->log_add[] = [$items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"], $changes, $linked_action];
    }
-
 
 
    /**
@@ -2630,7 +2613,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $this->log_add = [];
       }
    }
-
 
 
    /**
@@ -2674,5 +2656,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            AND `itemtype`='Computer'");
       }
    }
+
+
 }
 

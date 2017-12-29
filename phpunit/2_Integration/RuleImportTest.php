@@ -161,7 +161,6 @@ class RuleImportTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -211,7 +210,6 @@ class RuleImportTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -258,5 +256,6 @@ class RuleImportTest extends Common_TestCase {
               '[name]:UH4DLPT01, [entities_id]:0, [itemtype]:Printer',
               $a_log['comment'], 'Import denied message');
    }
+
 
 }

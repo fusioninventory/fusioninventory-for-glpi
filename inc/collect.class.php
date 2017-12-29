@@ -61,6 +61,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_collect';
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -70,7 +71,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return __('Collect information', 'fusioninventory');
    }
-
 
 
    /**
@@ -93,7 +93,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       }
       return '';
    }
-
 
 
    /**
@@ -119,6 +118,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return false;
    }
 
+
    /**
    * Get the number of collects for a computer
    * @since 9.2
@@ -138,6 +138,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return $total;
    }
 
+
    /**
     * Get all collect types
     *
@@ -151,7 +152,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       return $elements;
    }
-
 
 
    /**
@@ -243,7 +243,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-
    /**
     * Display form
     *
@@ -289,7 +288,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       return true;
    }
-
 
 
    /**
@@ -552,7 +550,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-
    /**
     * run function, so return data to send to the agent for collect information
     *
@@ -652,5 +649,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       }
       return $output;
    }
+
+
 }
 

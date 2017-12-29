@@ -82,6 +82,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     */
    public $base_urls = [];
 
+
    /**
     * __contruct function and the different base URLs
     *
@@ -98,7 +99,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
          'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
       ];
    }
-
 
 
    /**
@@ -119,14 +119,12 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    }
 
 
-
    /**
     * Show Search list for this itemtype
     */
    public function showList() {
       Search::show(get_class($this));
    }
-
 
 
    /**
@@ -143,7 +141,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    }
 
 
-
    /**
     * Display input form element only with numbers
     *
@@ -157,7 +154,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       Dropdown::showNumber($varname, $options);
       echo "</div>";
    }
-
 
 
    /**
@@ -177,7 +173,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       Html::showCheckbox($options);
       echo "</div>";
    }
-
 
 
    /**
@@ -202,7 +197,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
       return $rand;
    }
-
 
 
    /**
@@ -231,7 +225,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
       return $rand;
    }
-
 
 
    /**
@@ -267,7 +260,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    }
 
 
-
    /**
     * Display a text area form element
     *
@@ -285,7 +277,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
       echo Html::scriptBlock("$('.autogrow').autogrow();");
    }
-
 
 
    /**
@@ -334,5 +325,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
                </div>
               </div>";
    }
+
+
 }
 

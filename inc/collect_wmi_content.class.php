@@ -74,7 +74,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -104,7 +103,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -121,6 +119,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       return true;
    }
 
+
    /**
     * Delete all WMI contents linked to the computer (most cases when delete a
     * computer)
@@ -131,6 +130,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       $collect_content = new self();
       $collect_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * update wmi data to compute (add and update) with data sent by the agent
@@ -187,7 +187,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display wmi information in collect form (tab wmi)
     *
@@ -201,7 +200,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
          $this->showForCollectWmi($data['id']);
       }
    }
-
 
 
    /**
@@ -243,7 +241,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
       echo '</table>';
    }
-
 
 
    /**
@@ -289,5 +286,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
       echo '</table>';
    }
+
+
 }
 

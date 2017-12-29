@@ -70,7 +70,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
    }
 
 
-
     /**
      * Define Mapping for unlock fields
      *
@@ -177,7 +176,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
    }
 
 
-
     /**
      * Update model for HP for suppliertag plugin
      *
@@ -199,5 +197,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
    }
+
+
 }
 

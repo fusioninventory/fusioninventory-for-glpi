@@ -21,6 +21,7 @@ class Logging {
 
    public $loglevel;
 
+
    public function __construct($loglevel = null) {
 
       if (is_null($loglevel)) {
@@ -29,6 +30,7 @@ class Logging {
          $this->loglevel = $loglevel;
       }
    }
+
 
    public function formatlog($messages, $loglevel) {
       $msg = [];
@@ -47,6 +49,7 @@ class Logging {
       return $loglevel['name'] . ': '. implode("\n", $msg);
    }
 
+
    function printlog($msg = "", $loglevel) {
 
       if (is_null($loglevel)) {
@@ -64,20 +67,24 @@ class Logging {
       }
    }
 
+
    function info() {
       $msg = func_get_args();
       $this->printlog($msg, self::$LOG_INFO);
    }
+
 
    function error() {
       $msg = func_get_args();
       $this->printlog($msg, self::$LOG_ERROR);
    }
 
+
    function debug() {
       $msg = func_get_args();
       $this->printlog($msg, self::$LOG_DEBUG);
    }
+
 
    function setLevelFromArgs($quiet = false, $debug = false) {
       $this->loglevel = self::$LOG_INFO;
@@ -87,5 +94,7 @@ class Logging {
          $this->loglevel = self::$LOG_DEBUG;
       }
    }
+
+
 }
 

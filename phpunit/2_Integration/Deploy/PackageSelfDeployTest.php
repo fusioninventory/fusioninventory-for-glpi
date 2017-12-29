@@ -74,7 +74,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -89,7 +88,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $packages = $pfDeployPackage->canUserDeploySelf();
       $this->assertFalse($packages, 'May have no packages');
    }
-
 
 
    /**
@@ -112,7 +110,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $reference = [$packages_id => $pfDeployPackage->fields];
       $this->assertEquals($reference, $packages, 'May have 1 package');
    }
-
 
 
    /**
@@ -147,7 +144,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -179,7 +175,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -209,7 +204,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($reference, $packages, 'May have 1 package');
    }
-
 
 
    /**
@@ -274,6 +268,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $this->assertEquals($reference, $packages_deploy);
    }
 
+
    /**
     * @test
     */
@@ -325,6 +320,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -366,5 +362,6 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
       $expected = [];
       $this->assertEquals($names, $expected);
    }
+
 
 }

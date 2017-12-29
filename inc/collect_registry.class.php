@@ -72,7 +72,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -91,7 +90,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -106,7 +104,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       $pfCollect_Registry->showForm($item->getID());
       return true;
    }
-
 
 
    /**
@@ -125,7 +122,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       ];
       return $hives;
    }
-
 
 
    /**
@@ -168,7 +164,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       echo "</table>";
       echo "</div>";
    }
-
 
 
    /**
@@ -219,5 +214,7 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
 
       return true;
    }
+
+
 }
 

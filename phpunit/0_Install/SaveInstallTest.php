@@ -2,9 +2,12 @@
 
 class SaveInstallTest extends PHPUnit_Framework_TestCase {
 
+
    public function should_restore_install() {
       return false;
    }
+
+
    public function testSaveInstallation() {
       if (!defined('GLPI_ROOT')) {
          define('GLPI_ROOT', realpath('../../..'));
@@ -22,4 +25,6 @@ class SaveInstallTest extends PHPUnit_Framework_TestCase {
       $length = $filestats[7];
       $this->assertGreaterThan(0, $length);
    }
+
+
 }

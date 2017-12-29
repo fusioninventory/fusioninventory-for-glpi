@@ -108,7 +108,6 @@ class RuleLocationTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -164,5 +163,6 @@ class RuleLocationTest extends Common_TestCase {
 
          $this->assertEquals($a_references, $loc, 'Location result regexp_result');
    }
+
 
 }

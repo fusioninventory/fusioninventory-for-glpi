@@ -134,7 +134,6 @@ class ComputerEntity extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * Update computer to change entity (transfer allowed)
     *
@@ -178,7 +177,6 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       $this->AgentEntity(1, 1, 'Automatic transfer computer on entity 1');
 
    }
-
 
 
    /**
@@ -234,7 +232,6 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       $this->AgentEntity(1, 2, 'Agent must stay with entity 2');
 
    }
-
 
 
    /**
@@ -323,7 +320,6 @@ class ComputerEntity extends RestoreDatabase_TestCase {
    }
 
 
-
    public function AgentEntity($computers_id = 0, $entities_id = 0, $text = '') {
       global $DB;
 
@@ -339,5 +335,6 @@ class ComputerEntity extends RestoreDatabase_TestCase {
 
       $this->assertEquals($entities_id, $pfAgent->fields['entities_id'], $text);
    }
+
 
 }

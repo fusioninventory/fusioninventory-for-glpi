@@ -42,6 +42,7 @@
 
 class NetworkInventoryTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -247,7 +248,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -269,7 +269,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       );
 
    }
-
 
 
    /**
@@ -411,7 +410,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -507,4 +505,6 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
 
    }
+
+
 }

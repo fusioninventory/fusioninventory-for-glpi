@@ -42,6 +42,7 @@
 
 class TaskDeployDynamicGroup extends Common_TestCase {
 
+
    protected function setUp() {
 
       parent::setUp();
@@ -291,4 +292,6 @@ class TaskDeployDynamicGroup extends Common_TestCase {
       $this->assertEquals($a_reference, $a_jobstates);
 
    }
+
+
 }

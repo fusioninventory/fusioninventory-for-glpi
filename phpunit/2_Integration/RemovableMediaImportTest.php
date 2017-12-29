@@ -43,6 +43,7 @@ http://www.gnu.org/licenses/agpl-3.0-standalone.html
 
 class RemovableMediaImportTest extends RestoreDatabase_TestCase {
 
+
    public function disabledDataProvider() {
 
       $filename = pathinfo(__FILE__);
@@ -61,6 +62,7 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
 
             return $jsondata['data'];
    }
+
 
    /**
     * @test
@@ -96,6 +98,7 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
       $this->countDrivesWhenEnabled($data);
    }
 
+
    /**
     * @test
     * @dataProvider disabledDataProvider
@@ -130,6 +133,7 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
       $this->countDrivesWhenDisabled($data);
    }
 
+
    public function countDrivesWhenDisabled($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
@@ -146,6 +150,7 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
 
    }
 
+
    public function countDrivesWhenEnabled($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
@@ -161,5 +166,6 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
             );
 
    }
+
 
 }

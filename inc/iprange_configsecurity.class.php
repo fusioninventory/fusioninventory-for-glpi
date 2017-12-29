@@ -96,7 +96,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
    static public $take_entity_2 = false;
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -111,7 +110,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       }
       return '';
    }
-
 
 
    /**
@@ -129,7 +127,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
    }
 
 
-
    /**
     * Get standard massive action forbidden (hide in massive action list)
     *
@@ -140,7 +137,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       $forbidden[] = 'update';
       return $forbidden;
    }
-
 
 
    /**
@@ -241,5 +237,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</div>";
       return true;
    }
+
+
 }
 

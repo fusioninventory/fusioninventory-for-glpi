@@ -72,7 +72,6 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -91,7 +90,6 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -106,7 +104,6 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
       $pfCollect_Wmi->showForm($item->getID());
       return true;
    }
-
 
 
    /**
@@ -147,7 +144,6 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
       echo "</table>";
       echo "</div>";
    }
-
 
 
    /**
@@ -197,5 +193,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
       return true;
    }
+
+
 }
 

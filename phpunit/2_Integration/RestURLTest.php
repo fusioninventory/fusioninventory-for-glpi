@@ -43,7 +43,6 @@
 class RestURLTest extends RestoreDatabase_TestCase {
 
 
-
    /**
     * @test
     */
@@ -92,7 +91,6 @@ class RestURLTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -128,7 +126,6 @@ class RestURLTest extends RestoreDatabase_TestCase {
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
-
 
 
    /**
@@ -168,7 +165,6 @@ class RestURLTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -206,7 +202,6 @@ class RestURLTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -241,5 +236,6 @@ class RestURLTest extends RestoreDatabase_TestCase {
                           $response['schedule'][0]['remote'],
                           'Wrong URL');
    }
+
 
 }

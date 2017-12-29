@@ -74,7 +74,6 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    }
 
 
-
    /**
     * Display network inventory state
     *
@@ -230,7 +229,6 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    }
 
 
-
    /**
     * Display diff between 2 dates, so the time elapsed of execution
     *
@@ -257,5 +255,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       echo "<td>".$display_date.$interval['s']."s</td>";
    }
+
+
 }
 

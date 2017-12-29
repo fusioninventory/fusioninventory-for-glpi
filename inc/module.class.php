@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryModule extends CommonDBTM {
 
+
    /**
     * Get all installed modules
     *
@@ -68,7 +69,6 @@ class PluginFusioninventoryModule extends CommonDBTM {
          return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
       }
    }
-
 
 
    /**
@@ -98,7 +98,6 @@ class PluginFusioninventoryModule extends CommonDBTM {
    }
 
 
-
    /**
     * Get module name
     *
@@ -117,5 +116,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
          return false;
       }
    }
+
+
 }
 

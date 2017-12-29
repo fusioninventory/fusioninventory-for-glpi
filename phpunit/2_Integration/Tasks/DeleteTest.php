@@ -47,6 +47,7 @@ class DeleteTest extends RestoreDatabase_TestCase {
    private static $taskjobstates_id = 0;
    private static $taskjoblogs_id = 0;
 
+
    /**
     * @test
     */
@@ -155,4 +156,6 @@ class DeleteTest extends RestoreDatabase_TestCase {
       $logs_found = $pfTaskjoblog->find("id = ".self::$taskjobstates_id);
       $this->assertEquals([], $logs_found);
    }
+
+
 }

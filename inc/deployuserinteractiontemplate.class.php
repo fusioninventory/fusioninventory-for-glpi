@@ -94,6 +94,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    const WTS_ICON_INFO                = 'info';
    const WTS_ICON_ERROR               = 'error';
 
+
    /**
     * @see CommonGLPI::defineTabs()
    **/
@@ -105,6 +106,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
       return $ong;
    }
+
 
    /**
     * @see CommonGLPI::getTabNameForItem()
@@ -138,6 +140,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       return true;
    }
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -148,6 +151,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
          return _n('User interaction template',
                    'User interaction templates', $nb, 'fusioninventory');
    }
+
 
    /**
     * Get list of supported interaction methods
@@ -172,6 +176,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       return Dropdown::showFromArray('platform', self::getTypes(),
                                      ['value' => $type]);
    }
+
 
    /**
     * Get available buttons for alerts, by interaction type
@@ -209,6 +214,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
          }
    }
 
+
    /**
     * Display a dropdown with the list of buttons available
     *
@@ -221,6 +227,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                                      self::getButtons(self::ALERT_WTS),
                                      ['value' => $button]);
    }
+
 
    /**
     * Get available icons for alerts, by interaction type
@@ -245,6 +252,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
          }
    }
 
+
    /**
     * Display a dropdown with the list of buttons available
     *
@@ -258,6 +266,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                                      ['value' => $icon]);
    }
 
+
    /**
     * Get available behaviors in case of user interactions
     *
@@ -270,6 +279,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
               self::BEHAVIOR_STOP_DEPLOY     => __('Cancel job', 'fusioninventory')
              ];
    }
+
 
    /**
     * Display a dropdown with the list of available behaviors
@@ -296,6 +306,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
    }
 
+
    /**
    * Get the fields to be encoded in json
    * @since 9.2
@@ -306,6 +317,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                'retry_after', 'nb_max_retry'];
 
    }
+
 
    /**
    * Get the fields to be encoded in json
@@ -318,6 +330,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                'on_ignore', 'on_continue', 'on_async'];
 
    }
+
 
    /**
    * Initialize json fields
@@ -334,6 +347,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       return $json_fields;
    }
 
+
    /**
    * Save form data as a json encoded array
    * @since 9.2
@@ -349,6 +363,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       }
       return json_encode($result);
    }
+
 
    /**
    * Add the json template fields to package
@@ -374,6 +389,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       }
       return $params;
    }
+
 
    /**
    * Display an interaction template form
@@ -459,6 +475,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
 
    }
 
+
    /**
     * Dropdown for frequency (interval between 2 actions)
     *
@@ -496,6 +513,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       Dropdown::showFromArray('retry_after', $tab, ['value' => $value]);
    }
 
+
    /**
     * Dropdown for frequency (interval between 2 actions)
     *
@@ -529,6 +547,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       Dropdown::showFromArray('timeout', $tab, ['value' => $value]);
    }
 
+
    /**
    * Get all events leading to an action on a task
    *
@@ -551,6 +570,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
              ];
 
    }
+
 
    /**
    * Get the behaviors to define for an agent to correctly handle the interaction
@@ -604,6 +624,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       return $display;
    }
 
+
    /**
    * Get the default behavior for a button
    * @since 9.2
@@ -636,6 +657,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       }
       return $behavior;
    }
+
 
    /**
    * Show behaviors form
@@ -685,15 +707,18 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       return true;
    }
 
+
    public function prepareInputForAdd($input) {
       //Save params as a json array, ready to be saved in db
       $input['json'] = $this->saveToJson($input);
       return $input;
    }
 
+
    public function prepareInputForUpdate($input) {
       return $this->prepareInputForAdd($input);
    }
+
 
    /**
    * Get temlate values as an array
@@ -703,4 +728,6 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    public function getValues() {
       return json_decode($this->fields['json'], true);
    }
+
+
 }

@@ -53,6 +53,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryMenu extends CommonGLPI {
 
+
    /**
     * Get name of this type by language of the user connected
     *
@@ -62,7 +63,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function getTypeName($nb = 0) {
       return 'FusionInventory';
    }
-
 
 
    /**
@@ -84,7 +84,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-
    /**
     * Check if can create an item
     *
@@ -95,7 +94,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-
    /**
     * Get the menu name
     *
@@ -104,7 +102,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function getMenuName() {
       return self::getTypeName();
    }
-
 
 
    /**
@@ -517,7 +514,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-
    /**
     * Menu for computer inventory
     *
@@ -587,7 +583,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
       echo "</table>";
    }
-
 
 
    /**
@@ -710,7 +705,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-
    /**
     * Display menu in html
     *
@@ -777,7 +771,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       return $width_status;
    }
-
 
 
    /**
@@ -997,7 +990,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-
    /**
     * Display chart
     *
@@ -1014,7 +1006,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       });");
       echo "</div>";
    }
-
 
 
    /**
@@ -1034,4 +1025,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       });");
       echo "</div>";
    }
+
+
 }

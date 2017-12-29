@@ -63,6 +63,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       return $jsondata['data'];
    }
 
+
    /**
     * @test
     * @dataProvider dataprovider
@@ -90,6 +91,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $this->CountSoftwares($data);
       $this->CountVersions($data);
    }
+
 
    public function CountSoftwares($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
@@ -198,7 +200,6 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -266,5 +267,6 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $this->assertEquals(count($softversion_ids) + 2, count(array_keys($softwareVersion->find())));
 
    }
+
 
 }

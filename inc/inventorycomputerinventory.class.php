@@ -67,6 +67,7 @@ class PluginFusioninventoryInventoryComputerInventory {
     */
    private $device_id = '';
 
+
    /**
     * import data
     *
@@ -130,7 +131,6 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       return $errors;
    }
-
 
 
    /**
@@ -432,7 +432,6 @@ class PluginFusioninventoryInventoryComputerInventory {
    }
 
 
-
    /**
     * After rule engine passed, update task (log) and create item if required
     *
@@ -675,6 +674,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
    }
 
+
    /**
     * Return method name of this class/plugin
     *
@@ -685,7 +685,6 @@ class PluginFusioninventoryInventoryComputerInventory {
    }
 
 
-
    /**
     * Fill internal variable with the inventory array
     *
@@ -694,5 +693,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    function fillArrayInventory($data) {
       $this->arrayinventory = $data;
    }
+
+
 }
 

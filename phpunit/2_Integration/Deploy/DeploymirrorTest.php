@@ -42,6 +42,7 @@
 
 class DeploymirrorTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -262,5 +263,6 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       $this->assertEquals($result, $mirrors);
 
    }
+
 
 }

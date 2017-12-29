@@ -136,7 +136,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * Prepare data and send them to rule engine
     *
@@ -290,7 +289,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * After rule engine passed, update task (log) and create item if required
     *
@@ -355,7 +353,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $item->getFromDB($items_id);
       $this->importDevice($item);
    }
-
 
 
    /**
@@ -567,7 +564,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * Update networkport information
     *
@@ -665,7 +661,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * Get info from database
     *
@@ -689,7 +684,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * Update SNMP information of a device (sysdescr, SNMP credentials...)
     *
@@ -710,7 +704,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * Used to add log in the taskjob
     */
@@ -726,7 +719,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    }
 
 
-
    /**
     * Get method name linked to this class
     *
@@ -735,6 +727,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    static function getMethod() {
       return 'netdiscovery';
    }
+
 
 }
 

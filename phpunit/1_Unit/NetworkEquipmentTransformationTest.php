@@ -42,6 +42,7 @@
 
 class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -154,7 +155,6 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -265,8 +265,6 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
    }
 
 
-
-
    /**
     * @test
     */
@@ -355,7 +353,6 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $a_return);
    }
-
 
 
    /**
@@ -521,7 +518,6 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
    }
 
 
-
    /**
     * @test
     */
@@ -597,5 +593,6 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
 
 }

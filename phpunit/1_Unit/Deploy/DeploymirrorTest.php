@@ -42,6 +42,7 @@
 
 class DeploymirrorTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -55,6 +56,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       $this->assertGreaterThan(0, $mirrors_id);
       $this->assertTrue($pfDeploymirror->getFromDB($mirrors_id));
    }
+
 
    /**
     * @test
@@ -74,6 +76,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       $this->assertEquals('http://localhost:8088/mirror', $pfDeploymirror->fields['url']);
 
    }
+
 
    /**
     * @test
@@ -101,6 +104,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       $this->assertEquals(0, $pfDeploymirror->fields['locations_id']);
    }
 
+
    /**
     * @test
     * @depends testDeleteLocationFromMirror
@@ -111,4 +115,6 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
       $mirror = current($tmp);
       $this->assertTrue($pfDeploymirror->delete(['id' => $mirror['id']]));
    }
+
+
 }

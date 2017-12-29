@@ -107,6 +107,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return __('Package', 'fusioninventory');
    }
 
+
    function getFromDB($ID) {
       $found = parent::getFromDB($ID);
 
@@ -125,6 +126,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       return $found;
    }
+
 
    /**
     * Have I the right to "update" the object content (package actions)
@@ -164,7 +166,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Define standard massiveaction actions to deny
     *
@@ -180,7 +181,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
       return $forbidden;
    }
-
 
 
    /**
@@ -203,7 +203,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
-
 
 
    /**
@@ -263,7 +262,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Define error message if package used in task. This will prevent edit the
     * package
@@ -296,7 +294,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Prepare data before add to database
     *
@@ -317,7 +314,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       return parent::prepareInputForAdd($input);
    }
-
 
 
    /**
@@ -374,7 +370,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Get all packages in json format
     *
@@ -400,7 +395,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Clean orders after delete the package
     *
@@ -413,7 +407,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $pfDeployFile->removeFileInRepo($sha512);
       }
    }
-
 
 
    /**
@@ -429,14 +422,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Display list of packages
     */
    function showList() {
       Search::show('PluginFusioninventoryDeployPackage');
    }
-
 
 
    /**
@@ -458,6 +449,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $ong['no_all_tab'] = true;
       return $ong;
    }
+
 
    /**
     * Display form
@@ -497,7 +489,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->showFormButtons($options);
       return true;
    }
-
 
 
    /**
@@ -601,7 +592,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Manage + button (audits, files, actions)
     *
@@ -623,7 +613,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                "/pics/add_dropdown.png' /> ";
       }
    }
-
 
 
    /**
@@ -649,7 +638,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * When user is in DEBUG mode, we display the json
     *
@@ -666,6 +654,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</textarea></td></tr>";
       echo "</table>";
    }
+
 
    /**
     * Update the json structure
@@ -708,7 +697,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          Html::displayErrorAndDie ("package subtype not found");
       }
    }
-
 
 
    /**
@@ -781,7 +769,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Import the package
     *
@@ -831,7 +818,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          rename($extract_folder."/files/repository/".$repository, GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/".$repository);
       }
    }
-
 
 
    /**
@@ -895,7 +881,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Get a sub element at index
     *
@@ -907,7 +892,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $data_o = json_decode($this->fields['json'], true);
       return $data_o['jobs'][$subtype][$index];
    }
-
 
 
    /**
@@ -925,6 +909,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return null;
    }
 
+
    /**
     * Get the json
     *
@@ -940,7 +925,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          return false;
       }
    }
-
 
 
    /**
@@ -992,7 +976,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -1032,7 +1015,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -1059,7 +1041,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Count number elements for the visibility
     *
@@ -1071,7 +1052,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
               + count($this->groups)
               + count($this->profiles));
    }
-
 
 
    /**
@@ -1268,7 +1248,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Fill internal variable with visibility elements when load package
     * information from database
@@ -1287,6 +1266,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->profiles = PluginFusioninventoryDeployPackage_Profile::getProfiles($this->fields['id']);
    }
 
+
    /**
    * Get all available states for a package
    * @return an array of states and their labels
@@ -1301,6 +1281,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
               'agents_cancelled' => __('Cancelled', 'fusioninventory')             ];
    }
 
+
    /**
    * Get a label for a state
    * @param state the state
@@ -1314,6 +1295,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          return '';
       }
    }
+
 
    /**
     * Display a form with a list of packages and their state, that a user
@@ -1609,6 +1591,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       Html::closeForm();
    }
 
+
    /**
     * Check if an agent have deploy feature enabled
     * @since 9.2
@@ -1630,6 +1613,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          return false;
       }
    }
+
 
    /**
     * Get deploy packages available to install on user computer(s) and for
@@ -1740,7 +1724,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Add the package in task or use existant task and add the computer in
     * taskjob
@@ -1834,7 +1817,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Get all packages that a user has requested to install
     * on one of it's computer
@@ -1901,7 +1883,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Get the state of the package I have requeted to install
     *
@@ -1957,7 +1938,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
 
-
    /**
     * Check I have rights to deploy packages
     *
@@ -2009,6 +1989,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return false;
    }
 
+
    /**
    * Duplicate a deploy package
    * @param $deploypackages_id the ID of the package to duplicate
@@ -2030,6 +2011,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
       return $result;
    }
+
 
    /**
    * Append needed informations to the json job for an agent
@@ -2095,6 +2077,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return $job;
    }
 
+
    /**
    * Transform \r\n in an userinteraction text
    * @since 9.2
@@ -2112,4 +2095,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
       return $params;
    }
+
+
 }

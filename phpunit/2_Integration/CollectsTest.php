@@ -42,6 +42,7 @@
 
 class CollectsTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -99,6 +100,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $pfCollect_File = new PluginFusioninventoryCollect_File();
       $pfCollect_File->add($input);
    }
+
 
    /**
     * @test
@@ -179,7 +181,6 @@ class CollectsTest extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($expected, $sopts[5203]);
    }
-
 
 
    /**
@@ -348,7 +349,6 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-
 
 
    /**
@@ -522,7 +522,6 @@ class CollectsTest extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($reference, $content);
    }
-
 
 
    /**
@@ -753,6 +752,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $this->assertEquals($reference, $content);
    }
 
+
    /**
     * @test
     */
@@ -811,6 +811,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $this->assertEquals(0, count($pfCollect_File_Contents->fields));
    }
 
+
    /**
     * @test
     */
@@ -867,6 +868,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $this->assertEquals(0, count($pfCollect_Registry_Contents->fields));
    }
 
+
    /**
     * @test
     */
@@ -920,6 +922,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $pfCollect_Wmi_Contents->getFromDB(1);
       $this->assertEquals(0, count($pfCollect_Wmi_Contents->fields));
    }
+
 
    /**
     * @test
@@ -1079,4 +1082,6 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $pfCollect_File_Contents->getFromDB(1);
       $this->assertEquals(0, count($pfCollect_File_Contents->fields));
    }
+
+
 }

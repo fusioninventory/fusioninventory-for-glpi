@@ -9,11 +9,13 @@ include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
 
+
    public function mark_incomplete($description = null) {
       $this->markTestIncomplete(
          is_null($description) ? 'This test is not implemented yet' : $description
       );
    }
+
 
    public static function restore_database() {
 
@@ -21,6 +23,7 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       self::load_mysql_file('./save.sql');
 
    }
+
 
    public static function load_mysql_file($filename) {
 
@@ -41,6 +44,7 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
          implode("\n", $result['output'])
       );
    }
+
 
    public static function drop_database() {
 
@@ -179,4 +183,6 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
+
 }

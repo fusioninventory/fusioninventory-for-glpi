@@ -116,7 +116,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -160,7 +159,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * Create VirtualMachine in computer
     *
@@ -198,7 +196,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($a_reference, $a_data);
    }
-
 
 
    /**
@@ -258,6 +255,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_data);
 
    }
+
 
 }
 

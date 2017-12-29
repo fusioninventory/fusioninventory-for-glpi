@@ -55,6 +55,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryMapping extends CommonDBTM {
 
+
    /**
     * Get mapping
     *
@@ -70,7 +71,6 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -112,7 +112,6 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          $this->update($data);
       }
    }
-
 
 
    /**
@@ -806,5 +805,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
       return $mapping['name'];
    }
+
+
 }
 

@@ -62,6 +62,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_networkequipment';
 
+
    /**
     * Get the tab name used for item
     *
@@ -76,7 +77,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       return '';
    }
-
 
 
    /**
@@ -108,7 +108,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Get the type of the itemtype
     *
@@ -117,7 +116,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    static function getType() {
       return "NetworkEquipment";
    }
-
 
 
    /**
@@ -340,7 +338,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Convert size of octets
     *
@@ -368,7 +365,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       return $size;
    }
-
 
 
    /**
@@ -455,7 +451,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Update the network equipement extended information
     *
@@ -488,7 +483,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       $DB->query($query);
    }
-
 
 
    /**
@@ -595,7 +589,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Display informations about networkequipment (automatic inventory)
     *
@@ -668,7 +661,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       echo '</table>';
    }
-
 
 
    /**
@@ -819,7 +811,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
       return $result;
    }
-
 
 
    /**
@@ -1188,7 +1179,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Display serialized inventory
     *
@@ -1254,7 +1244,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Get the icon related to the itemtype
     *
@@ -1285,5 +1274,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       return $icon;
    }
+
+
 }
 

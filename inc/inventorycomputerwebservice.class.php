@@ -85,7 +85,6 @@ class PluginFusioninventoryInventoryComputerWebservice {
    }
 
 
-
    /**
     * More information on the method
     *
@@ -109,6 +108,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
       }
       return $a_computerextend;
    }
+
 
 }
 

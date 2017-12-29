@@ -43,6 +43,7 @@
 class ComputerPeripheral extends RestoreDatabase_TestCase {
    public $a_computer1_XML = [];
 
+
    function __construct() {
 
       $this->a_computer1_XML =
@@ -136,7 +137,6 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
 </REQUEST>";
 
    }
-
 
 
    /**
@@ -246,4 +246,6 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
       $this->assertEquals([], $data, 'On update peripherals, may not have new lines in glpi_logs');
 
    }
+
+
 }

@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
+
    /**
     * __contruct function where initialize base URLs
     */
@@ -66,7 +67,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          'fi.job.moduleitems' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduleitems.php",
       ]);
    }
-
 
 
    /**
@@ -83,7 +83,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       }
       return '';
    }
-
 
 
    /**
@@ -113,7 +112,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       }
       return false;
    }
-
 
 
    /**
@@ -162,7 +160,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get form in ajax
     *
@@ -172,7 +169,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       $ID = $this->ajaxLoadItem($options);
       $this->showForm($ID, $options);
    }
-
 
 
    /**
@@ -201,7 +197,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get items list
     *
@@ -218,7 +213,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       }
       return implode("\n", $result);
    }
-
 
 
    /**
@@ -246,7 +240,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                </input>
              </div>";
    }
-
 
 
    /**
@@ -287,7 +280,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get task jobs
     *
@@ -303,7 +295,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       );
       return $taskjobs;
    }
-
 
 
    /**
@@ -339,7 +330,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          });");
       }
    }
-
 
 
    /**
@@ -378,7 +368,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          );
       });");
    }
-
 
 
    /**
@@ -474,7 +463,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get html code for itemtype plus button
     *
@@ -492,7 +480,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             <img src='".$this->getBaseUrlFor('glpi.pics')."/add_dropdown.png' />
             </a>";
    }
-
 
 
    /**
@@ -718,7 +705,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Manage actions when submit a form (add, update, purge...)
     *
@@ -940,4 +926,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          }
       }
    }
+
+
 }

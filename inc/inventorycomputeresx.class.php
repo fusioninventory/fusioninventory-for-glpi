@@ -158,7 +158,6 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
    }
 
 
-
    /**
     * Get ESX jobs for this agent
     *
@@ -178,5 +177,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       $order['password'] = $credential->fields['password'];
       return $order;
    }
+
+
 }
 

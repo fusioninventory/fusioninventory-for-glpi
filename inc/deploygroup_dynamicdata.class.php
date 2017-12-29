@@ -94,7 +94,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -142,7 +141,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    }
 
 
-
    /**
     * Display list of computers in the group
     *
@@ -166,7 +164,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    }
 
 
-
    /**
     * Get data, so computer list
     *
@@ -182,7 +179,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       return $data;
    }
-
 
 
    /**
@@ -230,6 +226,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       return $ids;
    }
 
+
    /**
     * Store a set of computers id in db
     * @param  PluginFusioninventoryDeployGroup $group the instance of fi group
@@ -244,6 +241,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                 WHERE `plugin_fusioninventory_deploygroups_id` = '".$group->getID()."'";
       return $DB->query($query);
    }
+
 
    /**
     * Retrieve the id of computer stored in db for a group
@@ -263,6 +261,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       return $ids;
    }
+
 
    /**
    * Duplicate entries from one group to another
@@ -285,6 +284,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       return $result;
    }
+
 
 }
 

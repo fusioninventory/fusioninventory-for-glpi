@@ -71,7 +71,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -85,7 +84,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo $pfNetworkPortLog->showHistory($item->getID());
       return true;
    }
-
 
 
    /**
@@ -115,7 +113,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          $DB->query($query);
       }
    }
-
 
 
     /**
@@ -247,7 +244,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    }
 
 
-
    /**
     * Cron task: clean networkport logs too old
     *
@@ -286,7 +282,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -353,8 +348,9 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    }
 
 
-
    // $status = connection or disconnection
+
+
    /**
     * Add log when connect or disconnect
     *
@@ -388,7 +384,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       $pfNetworkPortConnectionLog->add($input);
    }
-
 
 
    /**
@@ -535,5 +530,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $text .= "</table>";
       return $text;
    }
+
+
 }
 

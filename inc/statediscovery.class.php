@@ -109,7 +109,6 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
    }
 
 
-
    /**
     * End the state process
     *
@@ -125,7 +124,6 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          $this->update($input);
       }
    }
-
 
 
    /**
@@ -292,5 +290,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       }
       echo "</table>";
    }
+
+
 }
 

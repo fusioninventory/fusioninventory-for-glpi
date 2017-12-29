@@ -179,5 +179,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       }
       echo "</table>";
    }
+
+
 }
 

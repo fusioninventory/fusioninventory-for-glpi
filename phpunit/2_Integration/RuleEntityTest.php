@@ -159,4 +159,5 @@ class RuleEntityTest extends Common_TestCase {
 
    }
 
+
 }

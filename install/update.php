@@ -46,6 +46,7 @@
 
 include_once( GLPI_ROOT . "/plugins/fusioninventory/install/update.tasks.php" );
 
+
 /**
  * Get the current version of the plugin
  *
@@ -167,7 +168,6 @@ function pluginFusioninventoryGetCurrentVersion() {
 }
 
 
-
 /**
  * Find files recursively filtered with pattern
  * (grabbed from http://rosettacode.org/wiki/Walk_a_directory/Recursively#PHP)
@@ -197,7 +197,6 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
 }
 
 
-
 /**
  * Flat a multi-dimensional array
  *
@@ -215,7 +214,6 @@ function pluginFusioninventoryFlatArray($array) {
    }
    return $tmp;
 }
-
 
 
 /**
@@ -947,7 +945,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
 }
 
 
-
 /**
  * Manage the agent part migration
  *
@@ -1288,7 +1285,6 @@ function do_agent_migration($migration) {
 }
 
 
-
 /**
  * Manage the configuration part migration
  *
@@ -1392,7 +1388,6 @@ function do_config_migration($migration) {
 }
 
 
-
 /**
  * Manage the entities part migration
  *
@@ -1465,7 +1460,6 @@ function do_entities_migration($migration) {
       }
    }
 }
-
 
 
 /**
@@ -1568,7 +1562,6 @@ function do_iprange_migration($migration) {
 }
 
 
-
 /**
  * Manage the locks part migration
  *
@@ -1607,7 +1600,6 @@ function do_locks_migration($migration) {
 
    migrateTablesFusionInventory($migration, $a_table);
 }
-
 
 
 /**
@@ -1662,7 +1654,6 @@ function do_iprangeconfigsecurity_migration($migration) {
    }
 
 }
-
 
 
 /**
@@ -1746,7 +1737,6 @@ function do_mapping_migration($migration) {
       $DB->query($query);
    }
 }
-
 
 
 /**
@@ -1845,7 +1835,6 @@ function do_profile_migration($migration) {
 }
 
 
-
 /**
  * Manage the timeslot (of task) part migration
  *
@@ -1916,7 +1905,6 @@ function do_timeslot_migration($migration) {
 
    migrateTablesFusionInventory($migration, $a_table);
 }
-
 
 
 /**
@@ -2062,7 +2050,6 @@ function do_unmanaged_migration($migration) {
 }
 
 
-
 /**
  * Manage the ignored import rules part migration
  *
@@ -2117,7 +2104,6 @@ function do_ignoredimport_migration($migration) {
 
    migrateTablesFusionInventory($migration, $a_table);
 }
-
 
 
 /**
@@ -2406,7 +2392,6 @@ function do_blacklist_migration($migration) {
 }
 
 
-
 /**
  * Manage the rules matched log part migration
  *
@@ -2457,7 +2442,6 @@ function do_rulematchedlog_migration($migration) {
 }
 
 
-
 /**
  * Manage the antivirus part migration
  *
@@ -2471,7 +2455,6 @@ function do_antivirus_migration($migration) {
    $newTable = "glpi_plugin_fusioninventory_inventorycomputerantiviruses";
    $migration->renameTable("glpi_plugin_fusinvinventory_antivirus", $newTable);
 }
-
 
 
 /**
@@ -2591,6 +2574,7 @@ function do_computercomputer_migration($migration) {
 
 }
 
+
 /**
  * A firmware component with a BIOS type has been added in GLPI 9.2
  *
@@ -2665,6 +2649,7 @@ function do_biosascomponentmigration() {
    }
 }
 
+
 /**
  * Manage the computer inventory staistics part migration
  *
@@ -2706,7 +2691,6 @@ function do_computerstat_migration($migration) {
       PluginFusioninventoryInventoryComputerStat::init();
    }
 }
-
 
 
 /**
@@ -2793,7 +2777,6 @@ function do_configlogfield_migration($migration) {
    $configLogField = new PluginFusioninventoryConfigLogField();
    $configLogField->initConfig();
 }
-
 
 
 /**
@@ -3405,7 +3388,6 @@ function do_networkport_migration($migration) {
 }
 
 
-
 /**
  * Manage the printer part migration
  *
@@ -3859,7 +3841,6 @@ function do_printer_migration($migration) {
 }
 
 
-
 /**
  * Manage the network equipment part migration
  *
@@ -4186,7 +4167,6 @@ function do_networkequipment_migration($migration) {
 }
 
 
-
 /**
  * Manage the Config security (SNMP anthentication) part migration
  *
@@ -4315,7 +4295,6 @@ function do_configsecurity_migration($migration) {
 }
 
 
-
 /**
  * Manage the discovery state part migration
  *
@@ -4427,7 +4406,6 @@ function do_statediscovery_migration($migration) {
 }
 
 
-
 /**
  * Manage the computer license part migration
  *
@@ -4485,7 +4463,6 @@ function do_computerlicense_migration($migration) {
 }
 
 
-
 /**
  * Manage the computer remote management part migration
  *
@@ -4521,7 +4498,6 @@ function do_computerremotemgmt_migration($migration) {
 
    migrateTablesFusionInventory($migration, $a_table);
 }
-
 
 
 /**
@@ -4654,6 +4630,7 @@ function do_operatingsystemkernel_migration($migration) {
       return $mapping;
    }
 }
+
 
 /**
  * Manage the computer operating system part migration
@@ -4800,6 +4777,7 @@ function do_computeroperatingsystem_migration($migration) {
                         "hostid", "string", ['after' => 'oscomment']);
    $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
 }
+
 
 /**
  * Manage the deploy user interaction migration process
@@ -4958,7 +4936,6 @@ function do_deployfile_migration($migration) {
       }
    }
 }
-
 
 
 /**
@@ -5209,7 +5186,6 @@ function do_deploypackage_migration($migration) {
 }
 
 
-
 /**
  * Manage the deploy mirror part migration
  *
@@ -5319,7 +5295,6 @@ function do_deploymirror_migration($migration) {
       $DB->query($query);
    }
 }
-
 
 
 /**
@@ -5492,7 +5467,6 @@ function do_deploygroup_migration($migration) {
 }
 
 
-
 /**
  * Manage the database locks part migration
  *
@@ -5598,7 +5572,6 @@ function do_dblocks_migration($migration) {
 }
 
 
-
 /**
  * Manage the ESX credentials part migration
  *
@@ -5683,7 +5656,6 @@ function do_credentialESX_migration($migration) {
 
       migrateTablesFusionInventory($migration, $a_table);
 }
-
 
 
 /**
@@ -5929,7 +5901,6 @@ function do_collect_migration($migration) {
 }
 
 
-
 /**
  * Manage the SNMP models part migration
  *
@@ -5948,7 +5919,6 @@ function do_snmpmodel_migration($migration) {
       $DB->query($sql);
    }
 }
-
 
 
 /**
@@ -6379,6 +6349,7 @@ function do_task_migration($migration) {
    migrateTablesFusionInventory($migration, $a_table);
 }
 
+
 /**
  * Migrate search params from the old system to the new one
  * As search engine integration has been improved with GLPI 0.85
@@ -6399,7 +6370,6 @@ function doDynamicDataSearchParamsMigration() {
       $DB->query($query_update);
    }
 }
-
 
 
 /**
@@ -6470,7 +6440,6 @@ function migrationDynamicGroupFields($fields) {
 }
 
 
-
 /**
  * Manage the display preference part migration
  *
@@ -6502,7 +6471,6 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       WHERE `itemtype`='".$olditemtype."' ";
    $DB->query($sql);
 }
-
 
 
 /**
@@ -7674,7 +7642,6 @@ function pluginFusioninventoryUpdatemapping() {
 }
 
 
-
 /**
  * Manage the update from 2.13 to 2.20 version (very old) part migration
  *
@@ -8323,7 +8290,6 @@ function update213to220_ConvertField($migration) {
 }
 
 
-
 /**
  * Manage the migration of MySQL tables / fields
  *
@@ -8403,7 +8369,6 @@ function migrateTablesFusionInventory($migration, $a_table) {
 
    $DB->list_fields($a_table['name'], false);
 }
-
 
 
 /**

@@ -57,6 +57,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    public $shortname = 'checks';
    public $json_name = 'checks';
 
+
    /**
     * Get types of checks with name => description
     *
@@ -110,6 +111,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
    }
 
+
    /**
     * Get Unit name
     *
@@ -139,6 +141,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
 
       return $return_string;
    }
+
 
    /**
     * Get the number to multiply to have in B relative to the unit
@@ -178,10 +181,12 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
              ];
    }
 
+
    function dropdownRegistryTypes($value = 'REG_SZ') {
       return Dropdown::showFromArray('value', $this->getRegistryTypes(),
                                      ['value' => $value]);
    }
+
 
    /**
     * Display list of checks
@@ -279,6 +284,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
    }
 
+
    /**
     * Get fields for the check type requested
     *
@@ -316,6 +322,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
       return $values;
    }
+
 
    /**
    *  Get labels and type for a check
@@ -402,6 +409,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
       return $values;
    }
+
 
    /**
     * Display different fields relative the check selected
@@ -547,6 +555,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       echo "</table>";
    }
 
+
    /**
    * Get all possible return values for a check
    * @return an array of return values and their labels
@@ -558,6 +567,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
                "warning" => __("report warning", 'fusioninventory')
               ];
    }
+
 
    /**
    * Get the label for a return value
@@ -572,6 +582,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
          return '';
       }
    }
+
 
    /**
    * Return an array corresponding to a check, ready to be serialized
@@ -612,6 +623,8 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
 
       return $entry;
    }
+
+
    /**
     * Add a new item in checks of the package
     *
@@ -634,7 +647,6 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    }
 
 
-
    /**
     * Save the item in checks
     *
@@ -655,4 +667,6 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       //update order
       $this->updateOrderJson($params['id'], $datas);
    }
+
+
 }

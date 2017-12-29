@@ -66,7 +66,6 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -83,7 +82,6 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
 
       }
    }
-
 
 
    /**
@@ -104,5 +102,7 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
       }
       return false;
    }
+
+
 }
 

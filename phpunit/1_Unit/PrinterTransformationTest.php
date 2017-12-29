@@ -101,7 +101,6 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -174,7 +173,6 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -217,5 +215,6 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $this->assertEquals($a_reference, $a_return['cartridge']);
 
    }
+
 
 }

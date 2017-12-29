@@ -151,7 +151,6 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -187,7 +186,6 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
       $GLPIlog->testPHPlogs();
 
    }
-
 
 
    /**
@@ -285,6 +283,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       $this->assertEquals($a_reference, $a_inventory['connection-mac'], "Must have 2 macs ".print_r($a_inventory['connection-mac'], true));
    }
 
+
    /**
     * @test
     */
@@ -360,6 +359,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       $GLPIlog->testPHPlogs();
    }
 
+
    public function deviceTypeExamplesProvider() {
       $tests = [
                   ['', 'DVD Reader', 'MATSHITA DVD-R UJ-85J', 'Drive'],
@@ -385,6 +385,7 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       return $tests;
    }
 
+
    /**
    * Test method getTypeDrive
    * @dataProvider deviceTypeExamplesProvider
@@ -395,4 +396,6 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       $result = PluginFusioninventoryFormatconvert::getTypeDrive($value);
       $this->assertEquals($return_expected, $result);
    }
+
+
 }

@@ -74,6 +74,7 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       $this->sha512 = hash_file('sha512', $this->filename);
    }
 
+
    protected function teardown() {
       parent::teardown();
 
@@ -95,6 +96,7 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       // remove file in upload
       unlink($this->filename);
    }
+
 
    /**
     * @test
@@ -173,6 +175,7 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       $this->assertFalse(is_dir($firstdir));
    }
 
+
    /**
     * @test
     */
@@ -203,4 +206,6 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       ], true);
       $this->assertfalse($pfDeployFile->checkPresenceFile($this->sha512));
    }
+
+
 }

@@ -52,6 +52,7 @@ class DeploypackageTest extends RestoreDatabase_TestCase {
       $this->assertEquals('Package', PluginFusioninventoryDeployPackage::getTypeName(3));
    }
 
+
    /**
     * @test
     */
@@ -89,4 +90,6 @@ class DeploypackageTest extends RestoreDatabase_TestCase {
 
       $this->assertFalse($package->isDeployEnabled($computers_id));
    }
+
+
 }

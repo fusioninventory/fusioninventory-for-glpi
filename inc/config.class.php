@@ -160,7 +160,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Get name of this type by language of the user connected
     *
@@ -172,7 +171,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return __('General setup');
 
    }
-
 
 
    /**
@@ -191,7 +189,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -228,7 +225,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -248,7 +244,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       }
       return '';
    }
-
 
 
    /**
@@ -284,7 +279,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Get configuration value with name
     *
@@ -307,7 +301,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Give state of a config field for a fusioninventory plugin
     *
@@ -321,7 +314,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          return true;
       }
    }
-
 
 
    /**
@@ -450,7 +442,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Get the action for agent action
     *
@@ -468,7 +459,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       }
    }
-
 
 
    /**
@@ -714,7 +704,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Display form for tab 'Network inventory'
     *
@@ -802,7 +791,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Display form for tab 'Deploy'
     *
@@ -865,7 +853,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Add name + value in configuration if not exist
     *
@@ -882,7 +869,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                                  'value' => $value]);
       }
    }
-
 
 
    /**
@@ -914,7 +900,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
    /**
     * Check if extradebug mode is activate
     *
@@ -924,7 +909,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $fConfig = new self();
       return $fConfig->getValue('extradebug');
    }
-
 
 
    /**
@@ -941,7 +925,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          Toolbox::logInFile($file, $message);
       }
    }
-
 
 
    /**
@@ -964,5 +947,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          }
       }
    }
+
+
 }
 

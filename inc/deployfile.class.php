@@ -81,7 +81,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Display list of files
     *
@@ -248,6 +247,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
    }
 
+
    /**
     * Display different fields relative the file selected
     *
@@ -357,7 +357,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Show files / directory on server.
     * This is used when get a file on the server
@@ -415,7 +414,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       echo "<div id='tree_projectcategory$rand' ></div>";
       echo "</div>";
    }
-
 
 
    /**
@@ -494,7 +492,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Add a new item in files of the package
     *
@@ -512,7 +509,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       }
    }
-
 
 
    /**
@@ -558,6 +554,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       return true;
    }
 
+
    /**
     * Save the item in files
     *
@@ -587,7 +584,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       //update order
       $this->updateOrderJson($params['id'], $data);
    }
-
 
 
    /**
@@ -677,7 +673,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Upload file from temp folder in server
     *
@@ -734,7 +729,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Get directories based on sha512
     *
@@ -766,6 +760,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       return $config;
    }
 
+
    /**
     * Move uploaded file part in right/final directory
     *
@@ -786,7 +781,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
       return $sha512;
    }
-
 
 
    /**
@@ -891,7 +885,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Remove file from the repository
     *
@@ -943,7 +936,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Check if the manifest relative to the sha512 exist
     *
@@ -956,7 +948,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
       return true;
    }
-
 
 
    /**
@@ -1003,7 +994,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Get the maximum size the php can accept for upload file
     *
@@ -1017,6 +1007,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       return __('Max file size', 'fusioninventory')
          ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'fusioninventory');
    }
+
 
    /**
     * List number of files not used in packages
@@ -1052,7 +1043,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Delete the files not used in packages
     */
@@ -1083,4 +1073,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          }
       }
    }
+
+
 }

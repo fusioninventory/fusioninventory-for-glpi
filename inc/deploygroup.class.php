@@ -90,7 +90,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    public $dohistory = true;
 
 
-
    /**
     * __contruct function used to define the 2 types of groups
     */
@@ -102,7 +101,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Get name of this type by language of the user connected
     *
@@ -112,7 +110,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return __('FusionInventory group', 'fusioninventory');
    }
-
 
 
    /**
@@ -129,7 +126,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
@@ -142,7 +138,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate']  = _sx('button', 'Duplicate');
       return $actions;
    }
-
 
 
    /**
@@ -164,7 +159,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
-
 
 
    /**
@@ -218,6 +212,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
    }
 
+
    function duplicate($deploygroups_id) {
       $result = true;
       if ($this->getFromDB($deploygroups_id)) {
@@ -242,6 +237,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return $result;
    }
 
+
    /**
     * Display title of the page
     *
@@ -260,7 +256,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png",
                          $title, $title, $buttons);
    }
-
 
 
    /**
@@ -299,7 +294,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -329,7 +323,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Check if this group is a dynamic group or not
     *
@@ -340,7 +333,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Check if this group is a static group or not
     *
@@ -349,7 +341,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    function isStaticGroup() {
       return ($this->fields['type'] == self::STATIC_GROUP);
    }
-
 
 
    /**
@@ -372,7 +363,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Display dropdown to select dynamic of static group
     *
@@ -385,7 +375,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return Dropdown::showFromArray($name, $group->grouptypes,
                                      ['value'=>$value]);
    }
-
 
 
    /**
@@ -410,6 +399,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
 
+
    /**
    * Get the URL to pass to the search engine
    * @since 9.2
@@ -428,6 +418,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $target.= "&plugin_fusioninventory_deploygroups_id=".$deploygroup_id;
       return $target;
    }
+
 
    /**
     * Show criteria to search computers
@@ -461,7 +452,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Get targets for the group
     *
@@ -486,7 +476,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
       return $results;
    }
-
 
 
    /**
@@ -533,7 +522,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
-
    /**
     * Clean when purge a deploy group
     */
@@ -545,4 +533,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $dynamic_group->deleteByCriteria($params);
       $static_group->deleteByCriteria($params);
    }
+
+
 }

@@ -63,7 +63,6 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -137,7 +136,6 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -198,7 +196,6 @@ class TimeslotTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-
 
 
    /**
@@ -263,7 +260,6 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -306,7 +302,6 @@ class TimeslotTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-
 
 
    /**
@@ -371,7 +366,6 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -432,6 +426,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
 
 }
 

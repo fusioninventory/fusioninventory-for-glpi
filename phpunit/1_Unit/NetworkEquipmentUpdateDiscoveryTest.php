@@ -92,6 +92,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       'MANUFACTURER' => 'H3C'
    ];
 
+
    /**
     * @test
     */
@@ -117,6 +118,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       $pfCND->importDevice($networkEquipment);
    }
 
+
    /**
     * @test
     */
@@ -135,6 +137,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -146,6 +149,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
                           "IP addresses does not match reference on first update");
 
    }
+
 
    /**
     * @test
@@ -167,6 +171,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       $pfCND->importDevice($networkEquipment);
    }
 
+
    /**
     * @test
     */
@@ -184,6 +189,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
                           "network ports does not match reference on second update");
    }
 
+
    /**
     * @test
     */
@@ -199,5 +205,6 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       );
 
    }
+
 
 }

@@ -74,6 +74,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          .' - '._n('License', 'Licenses', $nb);
    }
 
+
    /**
     * Display form
     *
@@ -175,7 +176,6 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    }
 
 
-
    /**
     * Dropdown of software licenses found with information given
     *
@@ -220,7 +220,6 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    }
 
 
-
    /**
     * Associate a license found on computer and a license managed in GLPI
     *
@@ -249,6 +248,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       }
    }
 
+
    /**
     * Dissociate a license found on computer and a license managed in GLPI
     *
@@ -272,6 +272,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       }
    }
 
+
    /**
     * Delete all licenses linked to the computer (most cases when delete a
     * computer)
@@ -282,6 +283,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       $license = new self();
       $license->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * Delete all licenses linked to the computer (most cases when delete a
@@ -299,5 +301,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          $pfLicenseInfo->update(['id' => $lic['id'], 'softwarelicenses_id' => 0]);
       }
    }
+
+
 }
 

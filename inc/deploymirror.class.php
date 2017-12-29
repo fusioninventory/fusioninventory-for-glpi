@@ -84,7 +84,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
@@ -99,7 +98,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       return $ong;
    }
-
 
 
    /**
@@ -213,7 +211,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Display form
     *
@@ -283,7 +280,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -344,7 +340,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
@@ -355,7 +350,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       return [__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfer'
                => __('Transfer')];
    }
-
 
 
    /**
@@ -372,7 +366,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -407,5 +400,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       }
    }
+
+
 }
 

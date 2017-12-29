@@ -42,6 +42,7 @@
 
 class DevicesLocks extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     *
@@ -130,7 +131,6 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $GLPIlog->testPHPlogs();
 
    }
-
 
 
    /**
@@ -378,4 +378,6 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $this->assertEquals($networkEquipment->fields['locations_id'], 0, "Locations id must be 0");
 
    }
+
+
 }

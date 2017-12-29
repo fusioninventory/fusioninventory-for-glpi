@@ -73,7 +73,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -107,6 +106,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       return '';
    }
 
+
    /**
     * Delete all files contents linked to the computer (most cases when delete a
     * computer)
@@ -117,6 +117,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       $file_content = new self();
       $file_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * Display the content of the tab
@@ -173,7 +174,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display files found on the computer
     *
@@ -216,7 +216,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       }
       echo '</table>';
    }
-
 
 
    /**
@@ -262,6 +261,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       }
       echo '</table>';
    }
+
 
 }
 

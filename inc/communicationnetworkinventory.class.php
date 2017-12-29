@@ -80,7 +80,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-
    /**
     * Import data, so get data from agent to put in GLPI
     *
@@ -144,7 +143,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
           $this->addtaskjoblog();
       }
    }
-
 
 
    /**
@@ -237,7 +235,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-
    /**
     * import process of one device
     *
@@ -301,7 +298,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       }
       return '';
    }
-
 
 
    /**
@@ -431,7 +427,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-
    /**
     * After rules import device
     *
@@ -528,7 +523,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-
    /**
     * Add log in the taskjob
     */
@@ -548,7 +542,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-
    /**
     * Get method name linked to this class
     *
@@ -557,6 +550,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    static function getMethod() {
       return 'snmpinventory';
    }
+
 
 }
 

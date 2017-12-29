@@ -561,7 +561,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
    }
 
 
-
    /**
     * When agent contact server, this function send datas to agent
     *
@@ -644,7 +643,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       return $this->message;
    }
-
 
 
    /**
@@ -731,7 +729,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       return $a_agentList;
    }
-
 
 
    /**
@@ -832,5 +829,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       return $devicesList;
    }
+
+
 }
 

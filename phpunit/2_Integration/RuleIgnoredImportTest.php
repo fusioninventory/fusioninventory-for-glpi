@@ -88,7 +88,6 @@ class RuleIgnoredImport extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     * computer inventory
@@ -196,6 +195,7 @@ class RuleIgnoredImport extends Common_TestCase {
 
    }
 
+
    /**
     * @test
     * network inventory
@@ -203,4 +203,6 @@ class RuleIgnoredImport extends Common_TestCase {
    public function IgnoreNetworkInventoryImport() {
       $this->mark_incomplete();
    }
+
+
 }

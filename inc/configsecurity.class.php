@@ -82,7 +82,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display form
     *
@@ -168,7 +167,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP version (dropdown)
     *
@@ -182,7 +180,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       }
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
-
 
 
    /**
@@ -208,7 +205,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP encryption protocols dropdown
     *
@@ -222,7 +218,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       }
       Dropdown::showFromArray("authentication", $authentications, $options);
    }
-
 
 
    /**
@@ -245,7 +240,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP encryption protocols dropdown
     *
@@ -259,7 +253,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
-
 
 
    /**
@@ -291,7 +284,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP credentials dropdown
     *
@@ -304,7 +296,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                            'value' => $selected,
                            'comment' => false]);
    }
-
 
 
    /**
@@ -321,7 +312,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       }
       return false;
    }
-
 
 
    /**
@@ -384,5 +374,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       }
    }
+
+
 }
 

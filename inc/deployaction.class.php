@@ -57,6 +57,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    public $shortname = 'actions';
    public $json_name = 'actions';
 
+
    /**
     * Get list of return actions available
     *
@@ -71,7 +72,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          'errorPattern' => __("Command output does not contains", 'fusioninventory')
       ];
    }
-
 
 
    /**
@@ -90,7 +90,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    }
 
 
-
    /**
     * Get description of the type name
     *
@@ -104,7 +103,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       }
       return $type;
    }
-
 
 
    /**
@@ -169,7 +167,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          echo "</div>";
       }
    }
-
 
 
    /**
@@ -263,6 +260,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          __('Delete', 'fusioninventory')."\" class='submit'>";
       }
    }
+
 
    /**
     * Display different fields relative the action selected (cmd, move...)
@@ -463,7 +461,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    }
 
 
-
    /**
     * Add a new item in actions of the package
     *
@@ -505,7 +502,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
    }
 
 
-
    /**
     * Save the item in actions
     *
@@ -540,4 +536,6 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       $this->updateOrderJson($params['id'],
                              $this->prepareDataToSave($params, $entry));
    }
+
+
 }

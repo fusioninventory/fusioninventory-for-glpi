@@ -18,6 +18,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
 </foo>
 ';
 
+
    public function testNew() {
       $communication = new PluginFusioninventoryCommunication();
       $this->assertInstanceOf(
@@ -27,6 +28,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       return $communication;
    }
 
+
    public function testGetMessage() {
       $communication = new PluginFusioninventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
@@ -34,6 +36,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $this->assertInstanceOf('SimpleXMLElement', $message);
       $this->assertXMLStringEqualsXMLString('<foo><bar/></foo>', $message->asXML());
    }
+
 
    public function testSendMessage() {
       $communication = new PluginFusioninventoryCommunication();
@@ -45,6 +48,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $this->assertContains('Content-Type: application/xml', $headers);
    }
 
+
    public function testSendMessageNoCompression() {
       $communication = new PluginFusioninventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
@@ -54,6 +58,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $headers = xdebug_get_headers();
       $this->assertContains('Content-Type: application/xml', $headers);
    }
+
 
    public function testSendMessageZlibCompression() {
       $communication = new PluginFusioninventoryCommunication();
@@ -65,6 +70,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $this->assertContains('Content-Type: application/x-compress-zlib', $headers);
    }
 
+
    public function testSendMessageDeflate() {
       $communication = new PluginFusioninventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
@@ -75,6 +81,7 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $this->assertContains('Content-Type: application/x-compress-deflate', $headers);
    }
 
+
    public function testSendMessageGzipCompression() {
       $communication = new PluginFusioninventoryCommunication();
       $communication->setMessage('<foo><bar/></foo>');
@@ -84,5 +91,6 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
       $headers = xdebug_get_headers();
       $this->assertContains('Content-Type: application/x-compress-gzip', $headers);
    }
+
 
 }

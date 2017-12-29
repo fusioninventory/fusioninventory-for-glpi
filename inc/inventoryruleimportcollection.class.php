@@ -86,7 +86,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
-
    /**
     * Prepare input data for process the rule
     *
@@ -97,7 +96,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    function prepareInputDataForProcess($input, $params) {
       return array_merge($input, $params);
    }
-
 
 
    /**
@@ -114,7 +112,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
-
    /**
     * Get an instance of the class to manipulate rule of this collection
     *
@@ -128,7 +125,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
          return null;
       }
    }
-
 
 
    /**
@@ -179,7 +175,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
-
    /**
     * Get collection datas: retrieve descriptions and rules
     *
@@ -217,5 +212,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
          $this->RuleList->load = $need;
       }
    }
+
+
 }
 

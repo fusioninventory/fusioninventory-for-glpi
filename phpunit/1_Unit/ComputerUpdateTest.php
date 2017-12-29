@@ -45,6 +45,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    public $items_id = 0;
    public $datelatupdate = '';
 
+
    /**
     * @test
     */
@@ -372,7 +373,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -406,7 +406,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -420,7 +419,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(3, $nbsoftware);
    }
-
 
 
    /**
@@ -464,7 +462,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -504,7 +501,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $software->fields);
    }
-
 
 
    /**
@@ -548,7 +544,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -576,7 +571,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $softwareVersion->fields);
    }
-
 
 
    /**
@@ -608,7 +602,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -636,7 +629,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $softwareVersion->fields);
    }
-
 
 
    /**
@@ -668,7 +660,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -698,7 +689,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -726,7 +716,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
    }
-
 
 
    /**
@@ -774,7 +763,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($a_reference, $a_data);
    }
-
 
 
    /**
@@ -869,7 +857,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -913,7 +900,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       ];
       $this->assertEquals($a_reference, $a_data);
    }
-
 
 
    /**
@@ -1000,7 +986,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -1054,7 +1039,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $a_dataLink);
    }
-
 
 
    /**
@@ -1124,7 +1108,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -1187,7 +1170,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $printer->fields);
    }
-
 
 
    /**
@@ -1298,4 +1280,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "Second computer added");
    }
+
+
 }

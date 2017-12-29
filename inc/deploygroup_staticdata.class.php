@@ -90,6 +90,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     */
    static public $items_id_2 = 'items_id';
 
+
    /**
     * Get the tab name used for item
     *
@@ -118,7 +119,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -141,7 +141,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
       return false;
    }
-
 
 
    /**
@@ -171,7 +170,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    }
 
 
-
    /**
     * Display result, so list of computers
     */
@@ -198,6 +196,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       Search::displayData($data);
    }
 
+
    /**
    * Duplicate entries from one group to another
    * @param $source_deploygroups_id the source group ID
@@ -219,4 +218,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
       return $result;
    }
+
+
 }
