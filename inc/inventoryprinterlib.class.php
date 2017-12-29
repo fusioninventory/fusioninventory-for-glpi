@@ -90,6 +90,10 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $a_inventory['Printer'] = $a_ret[0];
       $input                  = $a_inventory['Printer'];
       $input['id']            = $printers_id;
+      $input['itemtype']            = 'Printer';
+
+      $input    = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('printer', $input);
+
       $printer->update($input);
 
       // * Printer fusion (ext)
