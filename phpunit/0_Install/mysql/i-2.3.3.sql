@@ -40732,7 +40732,8 @@ INSERT INTO `glpi_plugin_fusioninventory_configs` (`id`, `type`, `value`, `plugi
 (24, 'states_id_default', '0', 28),
 (25, 'version', '2.3.6-1', 28),
 (26, 'storagesnmpauth', 'DB', 29),
-(27, 'version', '2.3.6-1', 29);
+(27, 'version', '2.3.6-1', 29),
+(28, 'component_powersupply', '1', 28);
 
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_locks` (

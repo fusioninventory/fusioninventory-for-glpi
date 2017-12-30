@@ -97,7 +97,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT','POWERSUPPLIES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -267,6 +267,7 @@ class PluginFusioninventoryFormatconvert {
          'printer'                 => array(),
          'peripheral'              => array(),
          'storage'                 => array(),
+         'powersupply'             => array(),
          'remote_mgmt'             => array()
       );
       $thisc = new self();
@@ -1447,6 +1448,36 @@ class PluginFusioninventoryFormatconvert {
                                               'TYPE' => 'type'));
             $a_inventory['remote_mgmt'][] = $array_tmp;
          }
+      }
+
+      // * POWER SUPPLIES
+      $a_inventory['powersupply'] = array();
+      if (isset($array['POWERSUPPLIES'])) {
+         // merging partial information
+         $a_tmp = array();
+         foreach ($array['POWERSUPPLIES'] as $a_psu) {
+            if (!isset($a_psu['SERIAL']))
+               continue;
+
+            $sn = $a_psu['SERIAL'];
+
+            if (isset($a_tmp[$sn])) {
+               $a_tmp[$sn] = array_merge($a_tmp[$sn], $a_psu);
+            } else {
+               $a_tmp[$sn] = $a_psu;
+            }
+         }
+
+         foreach($a_tmp as $k => $v) {
+            $array_tmp = $thisc->addValues($v,
+               array(
+                  'SERIAL'  => 'serial',
+                  'PARTNUM' => 'designation',
+                  'POWER'   => 'power',
+                  'IS_ATX'  => 'is_atx',
+                  'VENDOR'  => 'manufacturers_id'));
+         }
+         $a_inventory['powersupply'][] = $array_tmp;
       }
 
       $plugin_params = array(

@@ -273,6 +273,23 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                 )
           );
 
+      $a_inventory['powersupply'] = Array(
+            Array(
+               'designation'      => '0HTRH4A01',
+               'power'            => '750 W',
+               'serial'           => 'CN716154CH13E7',
+               'manufacturers_id' => 'DELL',
+               'is_atx'           => ''
+            ),
+            Array(
+               'designation'      => '0HTRH4A01',
+               'power'            => '750 W',
+               'serial'           => 'CN716154CH1475',
+               'manufacturers_id' => 'DELL',
+               'is_atx'           => ''
+            )
+         );
+
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
@@ -1245,6 +1262,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'batteries'      => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
+          'powersupply'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(
@@ -1298,5 +1316,25 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "Second computer added");
+   }
+
+   /**
+    * @test
+    * @depends AddComputer
+    */
+   public function ComputerPowerSupply() {
+      global $DB;
+
+      $DB->connect();
+
+      $a_data = getAllDatasFromTable("glpi_devicepowersupplies");
+
+      $this->assertEquals(1, count($a_data), "Must have 1 kind of power supplies created");
+
+      $a_dataLink = getAllDatasFromTable("glpi_items_devicepowersupplies",
+                                         "`itemtype`='Computer'
+                                            AND `items_id`='1'");
+
+      $this->assertEquals(2, count($a_dataLink), "Must have two power supplies attached");
    }
 }
