@@ -1,6 +1,4 @@
-sudo: false
 language: php
-dist: precise
 php:
   - 5.6
   - 7.0
