@@ -72,13 +72,36 @@ class FusinvInstallTest extends Common_TestCase {
                $DB->query("DROP TABLE ".$data[0]);
             }
       }
+      $this->install();
+   }
 
-      $output = array();
+   /**
+    * @depends GLPIInstallTest::installDatabase
+    */
+   public function testForceInstall() {
+      global $DB;
+      $DB->connect();
+      $this->assertTrue($DB->connected, "Problem connecting to the Database");
+
+      $pfComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+
+      //$this->install(false);
+
+      $pfComputerComputer->add(['id' =>1, 'computers_id' => 1]);
+      $this->assertEquals(1, count($pfComputerComputer->find()));
+
+      $this->install(true);
+      $this->assertEquals(0, count($pfComputerComputer->find()));
+   }
+
+   function install($force = false) {
+      $output     = [];
       $returncode = 0;
-      exec(
-         "php -f ".FUSINV_ROOT. "/scripts/cli_install.php -- --as-user 'glpi'",
-         $output, $returncode
-      );
+      $command = "php -f ".FUSINV_ROOT. "/scripts/cli_install.php -- --as-user 'glpi'";
+      if ($force) {
+         $command.= " --force-install";
+      }
+      exec($command, $output, $returncode);
       $this->assertEquals(0,$returncode,
          "Error when installing plugin in CLI mode\n".
          implode("\n",$output)
