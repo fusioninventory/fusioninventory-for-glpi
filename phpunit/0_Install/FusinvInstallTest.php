@@ -85,11 +85,16 @@ class FusinvInstallTest extends Common_TestCase {
 
       $pfComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
 
-      //$this->install(false);
-
+      //Add a data in the FI database
       $pfComputerComputer->add(['id' =>1, 'computers_id' => 1]);
+      //Check that the data is available
       $this->assertEquals(1, count($pfComputerComputer->find()));
 
+      //Launch the script using the default behavior: data is always accessible
+      $this->install(false);
+      $this->assertEquals(1, count($pfComputerComputer->find()));
+
+      //Reinstall using --force-upgrade option : data is not present anymore
       $this->install(true);
       $this->assertEquals(0, count($pfComputerComputer->find()));
    }
