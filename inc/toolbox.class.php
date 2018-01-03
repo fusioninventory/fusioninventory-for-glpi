@@ -67,7 +67,7 @@ class PluginFusioninventoryToolbox {
          if (is_array($message)) {
             $message = print_r($message, true);
          }
-         Toolbox::logInFile($file, $message);
+         Toolbox::logInFile($file, $message . "\n");
       }
    }
 
