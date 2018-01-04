@@ -258,7 +258,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @param integer $items_id
     */
    function importPorts($itemtype, $a_inventory, $items_id) {
-
+      //TODO : try to report this code in PluginFusioninventoryInventoryCommon::importPorts
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
