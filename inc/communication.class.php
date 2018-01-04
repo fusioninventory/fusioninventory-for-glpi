@@ -414,13 +414,19 @@ class PluginFusioninventoryCommunication {
       );
 
       // Check XML integrity
-      if (($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA))) {
+      $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+      if (!$pxml) {
+         $pxml = @simplexml_load_string(
+            utf8_encode($xml),
+            'SimpleXMLElement',
+            LIBXML_NOCDATA
+         );
+         if ($pxml) {
+            $xml = utf8_encode($xml);
+         }
+      }
 
-      } else if (($pxml = @simplexml_load_string(utf8_encode($xml),
-                                                'SimpleXMLElement',
-                                                LIBXML_NOCDATA))) {
-         $xml = utf8_encode($xml);
-      } else {
+      if (!$pxml) {
          $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
          $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 

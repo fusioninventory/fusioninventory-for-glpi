@@ -89,9 +89,7 @@ if (isset($_POST["agent_add"])) {
          $agentModuleBase = 1;
       }
       if ($data['is_active'] == 0) {
-         if (($agentModule == 1) AND ($agentModuleBase == 1)) {
-            // OK
-         } else if (($agentModule == 1) AND ($agentModuleBase == 0)) {
+         if (($agentModule == 1) AND ($agentModuleBase == 0)) {
             $a_agentList[] = $_POST['id'];
          } else if (($agentModule == 0) AND ($agentModuleBase == 1)) {
             foreach ($a_agentList as $key=>$value) {
@@ -99,8 +97,6 @@ if (isset($_POST["agent_add"])) {
                   unset($a_agentList[$key]);
                }
             }
-         } else if (($agentModule == 0) AND ($agentModuleBase == 0)) {
-            // OK
          }
       } else if ($data['is_active'] == 1) {
          if (($agentModule == 1) AND ($agentModuleBase == 1)) {
@@ -109,10 +105,6 @@ if (isset($_POST["agent_add"])) {
                   unset($a_agentList[$key]);
                }
             }
-         } else if (($agentModule == 1) AND ($agentModuleBase == 0)) {
-            // OK
-         } else if (($agentModule == 0) AND ($agentModuleBase == 1)) {
-            //OK
          } else if (($agentModule == 0) AND ($agentModuleBase == 0)) {
             $a_agentList[]  = $_POST['id'];
          }

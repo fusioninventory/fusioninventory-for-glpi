@@ -557,10 +557,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                }
                $data['datetime_start'] = date("Y-m-d H:i:s",
                                               $data['date_scheduled_timestamp'] + $periodtotal);
-            } else if ($data['date_scheduled_timestamp'] > date('U')) {
-               // Don't update date next execution
-
-            } else {
+            } else if ($data['date_scheduled_timestamp'] <= date('U')) {
                $data['datetime_start'] = date("Y-m-d H:i:s",
                                               $data['date_scheduled_timestamp'] + $period);
             }

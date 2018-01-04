@@ -276,7 +276,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if ($a_computerextend['remote_addr'] != '') {
          echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
-      } else {
       }
       echo "<td colspan='2'></td>";
 

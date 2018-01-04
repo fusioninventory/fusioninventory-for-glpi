@@ -1545,9 +1545,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       //TODO: Filter by list of IDs
-      if (isset($filter['by_ids'])
+      /*if (isset($filter['by_ids'])
               AND is_bool($filter['by_entities'])) {
-      }
+      }*/
 
       // Filter by entity
       if (isset($filter['by_entities'])

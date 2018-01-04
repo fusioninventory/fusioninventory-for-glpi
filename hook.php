@@ -436,13 +436,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
          break;
 
-      // * Networking List (front/networking.php)
-      case 'NetworkEquipment':
-         switch ($table.'.'.$field) {
-
-         }
-         break;
-
       case 'Printer':
          if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkequipments.name') {
             if (strstr($data['raw']["ITEM_$num"], "$")) {
@@ -460,9 +453,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Hidden auth passphrase (SNMP v3)
             case "glpi_plugin_fusioninventory_configsecurities.auth_passphrase" :
                $out = "";
-               if (empty($data['raw']["ITEM_$num"])) {
-
-               } else {
+               if (!empty($data['raw']["ITEM_$num"])) {
                   $out = "********";
                }
                return $out;
@@ -470,9 +461,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Hidden priv passphrase (SNMP v3)
             case "glpi_plugin_fusioninventory_configsecurities.priv_passphrase" :
                $out = "";
-               if (empty($data['raw']["ITEM_$num"])) {
-
-               } else {
+               if (!empty($data['raw']["ITEM_$num"])) {
                   $out = "********";
                }
                return $out;

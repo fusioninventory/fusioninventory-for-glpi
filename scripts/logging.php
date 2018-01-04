@@ -50,7 +50,7 @@ class Logging {
    }
 
 
-   function printlog($msg = "", $loglevel) {
+   function printlog($msg = "", $loglevel = null) {
 
       if (is_null($loglevel)) {
          $loglevel = self::$LOG_INFO;

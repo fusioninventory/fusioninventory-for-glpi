@@ -763,9 +763,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                         AND `items_id`='".$this->fields['id']."'
                         AND `itemtype`='".$this->getType()."'");
                      foreach ($a_portLink as $dataLink) {
-                        if ($nn->getOppositeContact($dataLink['id'])) {
-
-                        } else {
+                        if (!$nn->getOppositeContact($dataLink['id'])) {
                            // We have founded a hub orphelin
                            $this->disconnectDB($pfNetworkport->fields['networkports_id']);
                            $this->disconnectDB($dataLink['id']);
@@ -798,9 +796,8 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $port_id = $Netport->add($input);
       $this->disconnectDB($pfNetworkport->fields['networkports_id']);
       $this->disconnectDB($port_id);
-      if ($nn->add(['networkports_id_1'=> $pfNetworkport->fields['networkports_id'],
-                         'networkports_id_2' => $port_id])) {
-      }
+      $nn->add(['networkports_id_1'=> $pfNetworkport->fields['networkports_id'],
+                'networkports_id_2' => $port_id]);
       return $hub_id;
    }
 
