@@ -98,26 +98,28 @@ class RuleIgnoredImport extends Common_TestCase {
 
       $DB->connect();
 
-      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactive_entity']         = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
-      $_SESSION['glpishowallentities'] = 1;
-      $_SESSION['glpiname'] = 'glpi';
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $computer = new Computer();
-      $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-      $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+      $_SESSION['glpishowallentities']       = 1;
+      $_SESSION['glpiname']                  = 'glpi';
 
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $computer        = new Computer();
+      $pfUnmanaged     = new PluginFusioninventoryUnmanaged();
+      $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+      $rule            = new Rule();
+
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['SOFTWARES'][] = array();
+      ];
+      $a_inventory['CONTENT']['SOFTWARES'][] = [];
 
       // ** Add agent
-         $pfAgent = new PluginFusioninventoryAgent();
-         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                            'device_id' => 'pc-2013-02-13'));
-         $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $pfAgent = new PluginFusioninventoryAgent();
+      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
+                                         'device_id' => 'pc-2013-02-13'));
+      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
 
       $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
@@ -130,6 +132,10 @@ class RuleIgnoredImport extends Common_TestCase {
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');
 
+      $rule_values = $rule->find("`name`='Ignore import'");
+      $this->assertEquals(1, count($rule_values), 'Ignore import rule not found');
+      $rule_ignore = array_pop($rule_values);
+
       $a_ignore = current($a_ignored);
       $a_reference = array(
           'id'                               => '1',
@@ -138,7 +144,7 @@ class RuleIgnoredImport extends Common_TestCase {
           'entities_id'                      => '0',
           'ip'                               => NULL,
           'mac'                              => NULL,
-          'rules_id'                         => '49',
+          'rules_id'                         => $rule_ignore['id'],
           'method'                           => 'inventory',
           'serial'                           => '',
           'uuid'                             => '',

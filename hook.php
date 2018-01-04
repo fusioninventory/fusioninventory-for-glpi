@@ -836,11 +836,12 @@ function plugin_fusioninventory_install() {
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion();
 
-   if (
+   if (!defined('FORCE_INSTALL')
+      &&
       isset($version_detected)
-      AND (
+      && (
          defined('FORCE_UPGRADE')
-         OR (
+         || (
             $version_detected!='0'
          )
       )) {
