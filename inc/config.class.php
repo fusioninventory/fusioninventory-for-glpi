@@ -153,6 +153,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['manage_osname']         = 1;
       $input['clean_on_demand_tasks'] = -1;
 
+      $input['reprepare_job']         = 0;
+
       if (!$getOnly) {
          $this->addValues($input);
       }
@@ -375,7 +377,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
       echo "</td>";
-      echo "<td colspan=2></td>";
+
+      echo "<td>".__('Re-prepare successfull jobs', 'fusioninventory')."</td>";
+      echo "<td>";
+      Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
