@@ -253,6 +253,13 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       $taskjobs = $this->getTaskjobs($task_id);
 
+      // Check if cron GLPI running
+      if (count($taskjobs) > 1) {
+         $message = __('Several jobs in the same task is not anymore supported because of unexpected side-effects. 
+         Please consider modifying this task to avoid unexpected results.', 'fusioninventory');
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+      }
+
       //Activate massive deletion if there are some.
       $deletion_enabled = (count($taskjobs)>0);
       $addition_enabled = (count($taskjobs)==0);
