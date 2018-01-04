@@ -112,7 +112,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     */
    function getMatchingItemsCount(CommonGLPI $item) {
 
-      $params_dyn = array();
+      $params_dyn = [];
       foreach (array('sort', 'order', 'start') as $field) {
          if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
             $params_dyn[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
@@ -124,10 +124,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          $params[$key] = $value;
       }
       if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
-         $params['metacriteria'] = array();
+         $params['metacriteria'] = [];
       }
-      $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
-         "?id=".$item->getID();
+      $params['target'] = PluginFusioninventoryDeployGroup::getFormURLWithID($item->getID(), true);
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $params);
       Search::constructSQL($data);
@@ -162,7 +161,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             return TRUE;
 
          case 2:
-            $params_dyn = array();
+            $params_dyn = [];
             foreach (array('sort', 'order', 'start') as $field) {
                if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
                   $params_dyn[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
@@ -176,11 +175,10 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             }
 
             if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
-               $params['metacriteria'] = array();
+               $params['metacriteria'] = [];
             }
 
-            $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup" , true).
-                                "?id=".$item->getID();
+            $params['target'] = PluginFusioninventoryDeployGroup::getFormURLWithID($item->getID(), true);
             self::showList('PluginFusioninventoryComputer', $params, array('1', '2'));
             return TRUE;
 
@@ -226,7 +224,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     * @param array $forcedisplay
     * @return array
     */
-   static function getDatas($itemtype, $params, array $forcedisplay=array()) {
+   static function getDatas($itemtype, $params, array $forcedisplay=[]) {
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
       Search::constructDatas($data);
@@ -246,7 +244,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     * @return an array of computer ids
     */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group, $use_cache = false) {
-      $ids = array();
+      $ids = [];
 
       if (!$use_cache || !$ids = self::retrieveCache($group)) {
          $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, false,true);
