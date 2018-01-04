@@ -1411,6 +1411,9 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      //Simcards
+      $thisc->simcardTransformation($array, $a_inventory);
+
       // * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
 
