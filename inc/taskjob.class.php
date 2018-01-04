@@ -447,13 +447,18 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @return array [id integed agent id] => $name value agent name
     */
    function getAgents($module) {
-      $array         = [];
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      foreach ($pfAgentmodule->getAgentsCanDo(strtoupper($module)) as $id => $data) {
-         $array[$id] = $data['name'];
+      //Array to store agents that are allowed to use this module
+      $allowed_agents = [];
+      $pfAgentmodule  = new PluginFusioninventoryAgentmodule();
+
+      //Get all agents that can run the module
+      $array_agents   = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
+      foreach ($arra_agents as $id => $data) {
+         $allowed_agents[$id] = $data['name'];
       }
-      asort($array);
-      return $array;
+      //Sort the array
+      asort($allowed_agents);
+      return $allowed_agents;
    }
 
 
