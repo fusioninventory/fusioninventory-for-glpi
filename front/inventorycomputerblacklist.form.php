@@ -62,8 +62,6 @@ if (isset ($_POST["add"])) {
    Session::checkRight('plugin_fusioninventory_blacklist', CREATE);
    if (!empty($_POST['value'])) {
       $pfInventoryComputerBlacklist->add($_POST);
-   } else {
-      //TODO message
    }
    Html::back();
 } else if (isset ($_POST["update"])) {

@@ -344,10 +344,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['processor']) == 0
-            AND count($db_processors) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['processor']) || count($db_processors)) {
                if (count($db_processors) != 0) {
                   // Delete processor in DB
                   foreach ($db_processors as $idtmp => $data) {
@@ -411,10 +408,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['memory']) == 0
-            AND count($db_memories) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['memory']) || count($db_memories)) {
                if (count($db_memories) != 0) {
                   // Delete memory in DB
                   foreach ($db_memories as $idtmp => $data) {
@@ -481,10 +475,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['harddrive']) == 0
-            AND count($db_harddrives) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['harddrive']) || count($db_harddrives)) {
                if (count($db_harddrives) != 0) {
                   // Delete hard drive in DB
                   foreach ($db_harddrives as $idtmp => $data) {
@@ -547,10 +538,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['drive']) == 0
-            AND count($db_drives) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['drive']) || count($db_drives)) {
                if (count($db_drives) != 0) {
                   // Delete drive in DB
                   foreach ($db_drives as $idtmp => $data) {
@@ -606,10 +594,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['graphiccard']) == 0
-            AND count($db_graphiccards) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['graphiccard']) || count($db_graphiccards)) {
                if (count($db_graphiccards) != 0) {
                   // Delete graphiccard in DB
                   foreach ($db_graphiccards as $idtmp => $data) {
@@ -666,10 +651,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['networkcard']) == 0
-            AND count($db_networkcards) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['networkcard']) || count($db_networkcards)) {
                if (count($db_networkcards) != 0) {
                   // Delete networkcard in DB
                   foreach ($db_networkcards as $idtmp => $data) {
@@ -723,10 +705,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['soundcard']) == 0
-            AND count($db_soundcards) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['soundcard']) || count($db_soundcards)) {
                if (count($db_soundcards) != 0) {
                   // Delete soundcard in DB
                   foreach ($db_soundcards as $idtmp => $data) {
@@ -779,10 +758,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['controller']) == 0
-            AND count($db_controls) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['controller']) || count($db_controls)) {
                if (count($db_controls) != 0) {
                   // Delete controller in DB
                   foreach ($db_controls as $idtmp => $data) {
@@ -959,10 +935,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
 
-            if (count($a_computerinventory['software']) == 0
-               && count($db_software) == 0) {
-               // Nothing to do
-            } else {
+            if (count($a_computerinventory['software']) || count($db_software)) {
                if (count($db_software) > 0) {
                   // Delete softwares in DB
                   foreach ($db_software as $idtmp) {
@@ -1134,10 +1107,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-         if (count($a_computerinventory['virtualmachine']) == 0
-         && count($db_computervirtualmachine) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_computerinventory['virtualmachine']) || count($db_computervirtualmachine)) {
             if (count($db_computervirtualmachine) != 0) {
                // Delete virtualmachine in DB
                foreach ($db_computervirtualmachine as $idtmp => $data) {
@@ -1243,10 +1213,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-         if (count($a_computerinventory['computerdisk']) == 0
-         AND count($db_computerdisk) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_computerinventory['computerdisk']) || count($db_computerdisk)) {
             if (count($db_computerdisk) != 0) {
                // Delete computerdisk in DB
                foreach ($db_computerdisk as $idtmp => $data) {
@@ -1311,10 +1278,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-         if (count($a_computerinventory['antivirus']) == 0
-            AND count($db_antivirus) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_computerinventory['antivirus']) || count($db_antivirus)) {
             if (count($db_antivirus) != 0) {
                foreach ($db_antivirus as $idtmp => $data) {
                   $pfInventoryComputerAntivirus->delete(['id'=>$idtmp], 1);
@@ -1355,10 +1319,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
       }
-      if (count($a_computerinventory['licenseinfo']) == 0
-            AND count($db_licenseinfo) == 0) {
-         // Nothing to do
-      } else {
+      if (count($a_computerinventory['licenseinfo']) || count($db_licenseinfo)) {
          if (count($db_licenseinfo) != 0) {
             foreach ($db_licenseinfo as $idtmp => $data) {
                $pfComputerLicenseInfo->delete(['id'=>$idtmp], 1);
@@ -1397,10 +1358,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
       }
-      if (count($a_computerinventory['remote_mgmt']) == 0
-            AND count($db_remotemgmt) == 0) {
-         // Nothing to do
-      } else {
+      if (count($a_computerinventory['remote_mgmt']) || count($db_remotemgmt)) {
          if (count($db_remotemgmt) != 0) {
             foreach ($db_remotemgmt as $idtmp => $data) {
                $pfComputerRemotemgmt->delete(['id'=>$idtmp], 1);
@@ -1558,10 +1516,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-         if (count($a_monitors) == 0
-            AND count($db_monitors) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_monitors) || count($db_monitors)) {
             if (count($db_monitors) != 0) {
                // Delete monitors links in DB
                foreach ($db_monitors as $idtmp => $monits_id) {
@@ -1639,10 +1594,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-         if (count($a_printers) == 0
-            AND count($db_printers) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_printers) || count($db_printers)) {
             if (count($db_printers) != 0) {
                // Delete printers links in DB
                foreach ($db_printers as $idtmp => $data) {
@@ -1722,10 +1674,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-         if (count($a_peripherals) == 0
-            AND count($db_peripherals) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_peripherals) || count($db_peripherals)) {
             if (count($db_peripherals) != 0) {
                // Delete peripherals links in DB
                foreach ($db_peripherals as $idtmp => $data) {
@@ -1996,10 +1945,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                }
-               if (count($a_computerinventory_ipaddress) == 0
-                  AND count($db_addresses) == 0) {
-                  // Nothing to do
-               } else {
+               if (count($a_computerinventory_ipaddress) || count($db_addresses)) {
                   if (count($db_addresses) != 0 AND $nb_ip > 0) {
                      // Delete ip address in DB
                      foreach (array_keys($db_addresses) as $idtmp) {
@@ -2029,6 +1975,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if (count($inventory_networkports) == 0
          AND count($db_networkport) == 0) {
          // Nothing to do
+         $coding_std = true;
       } else {
          if (count($db_networkport) != 0) {
             // Delete networkport in DB

@@ -210,10 +210,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
          }
       }
-      if (count($a_ips) == 0
-         AND count($a_ips_DB) == 0) {
-         // Nothing to do
-      } else {
+      if (count($a_ips) || count($a_ips_DB)) {
          if (count($a_ips_DB) != 0 && count($a_ips) != 0) {
             // Delete IPs in DB
             foreach ($a_ips_DB as $idtmp => $ip) {
@@ -534,14 +531,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         $networkPort->getFromDB($direct_id);
                         $ddirect = $networkPort->fields;
                         $networkPort->getFromDB($id);
-                        if ($ddirect['items_id'] == $networkPort->fields['items_id']
-                                AND $ddirect['itemtype'] == $networkPort->fields['itemtype']) {
-                           // 1.The hub where this device is connected is yet connected
-                           // to this switch port
-
-                           // => Do nothing
-                        } else {
-                           // 2. The hub where this device is connected to is not connected
+                        if ($ddirect['items_id'] != $networkPort->fields['items_id']
+                                || $ddirect['itemtype'] != $networkPort->fields['itemtype']) {
+                           // The hub where this device is connected to is not connected
                            // to this switch port
                            if ($ddirect['itemtype'] == 'PluginFusioninventoryUnmanaged') {
                               // b. We have a hub connected to the switch port
@@ -560,9 +552,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         $wire->add(['networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']]);
                      }
-                  } else if ($id) {
-                     // Yet connected
-                  } else {
+                  } else if (!$id) {
                      // Not connected
                      $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
                      $wire->add(['networkports_id_1'=> $networkports_id,
@@ -633,10 +623,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
          }
 
-         if (count($a_vlans) == 0
-            AND count($db_vlans) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_vlans) || count($db_vlans)) {
             if (count($db_vlans) != 0) {
                // Delete vlan in DB
                foreach ($db_vlans as $id) {

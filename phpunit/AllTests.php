@@ -56,8 +56,7 @@ if (!defined('GLPI_ROOT')) {
    $objects = scandir($dir);
    foreach ($objects as $object) {
       if ($object != "." && $object != "..") {
-         if (filetype($dir."/".$object) == "dir") {
-         } else {
+         if (filetype($dir."/".$object) != "dir") {
             unlink($dir."/".$object);
          }
       }

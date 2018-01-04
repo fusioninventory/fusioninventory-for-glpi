@@ -951,7 +951,7 @@ class PluginFusioninventoryFormatconvert {
             if ($pfConfig->getValue("component_drive") == '0'
                 OR ($pfConfig->getValue("component_networkdrive") == '0' AND $isNetworkDriveOrFS)
                 OR ($pfConfig->getValue("component_removablemedia") == '0' AND $isRemovableMedia)) {
-
+               $coding_std = true;
             } else {
                if ($pfConfig->getValue('import_volume') == 1) {
                   $array_tmp = $thisc->addValues($a_drives,
@@ -993,6 +993,7 @@ class PluginFusioninventoryFormatconvert {
                     OR ((isset($a_memories["CAPACITY"]))
                             AND (!preg_match("/^[0-9]+$/i", $a_memories["CAPACITY"])))) {
                   // Nothing
+                  $coding_std = true;
                } else {
                   $array_tmp = $thisc->addValues($a_memories,
                                                  [
@@ -1089,9 +1090,11 @@ class PluginFusioninventoryFormatconvert {
             if (isset($res_rule['_ignore_ocs_import'])
                     && $res_rule['_ignore_ocs_import'] == "1") {
                // Ignrore import printer
+               $coding_std = true;
             } else if (isset($res_rule['_ignore_import'])
                     && $res_rule['_ignore_import'] == "1") {
                // Ignrore import printer
+               $coding_std = true;
             } else {
                if (isset($res_rule['name'])) {
                   $array_tmp['name'] = $res_rule['name'];
@@ -1555,7 +1558,7 @@ class PluginFusioninventoryFormatconvert {
 
                if (isset($res_rule['_ignore_import'])
                        && $res_rule['_ignore_import'] == 1) {
-
+                  $coding_std = true;
                } else {
                   if (isset($res_rule["name"])) {
                      $array_tmp['name'] = $res_rule["name"];
@@ -1811,6 +1814,7 @@ class PluginFusioninventoryFormatconvert {
                      || $key == 'ipaddress'
                      || $key == 'internalport')) {
             // do nothing
+            $coding_std = true;
          } else {
             //if (is_array($value)) {
             if ((array)$value === $value) {
@@ -2141,13 +2145,9 @@ class PluginFusioninventoryFormatconvert {
                if (strstr($value, 'pages')) { // 30pages
                   $value = str_replace('pages', '', $value);
                   $value = 0 - $value;
-               } else if ($value == '') { // no info
-                  // nothing to do
-               } else if (is_numeric($value)) { // percentage
-                  // nothing to do
                } else if ($value == 'OK') { // state type 'OK'
                   $value = 100000;
-               } else {
+               } else if ($value != '' && !is_numeric($value)) { // percentage or no info
                   // special cases
                   $value = '';
                }

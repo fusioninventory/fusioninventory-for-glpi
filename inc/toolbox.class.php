@@ -345,18 +345,14 @@ class PluginFusioninventoryToolbox {
          if ($pfConfigSecurity->fields['snmpversion'] == '3') {
             $sxml_authentication->addAttribute('USERNAME',
                                                $pfConfigSecurity->fields['username']);
-            if ($pfConfigSecurity->fields['authentication'] == '0') {
-               //                  $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
-            } else {
+            if ($pfConfigSecurity->fields['authentication'] != '0') {
                $sxml_authentication->addAttribute('AUTHPROTOCOL',
                       $pfConfigSecurity->getSNMPAuthProtocol(
                               $pfConfigSecurity->fields['authentication']));
             }
             $sxml_authentication->addAttribute('AUTHPASSPHRASE',
                                                $pfConfigSecurity->fields['auth_passphrase']);
-            if ($pfConfigSecurity->fields['encryption'] == '0') {
-               //                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
-            } else {
+            if ($pfConfigSecurity->fields['encryption'] != '0') {
                $sxml_authentication->addAttribute('PRIVPROTOCOL',
                               $pfConfigSecurity->getSNMPEncryption(
                                        $pfConfigSecurity->fields['encryption']));
@@ -771,7 +767,7 @@ class PluginFusioninventoryToolbox {
     * @param array $input
     * @return array the fields with the states_id filled, is necessary
     */
-   static function addDefaultStateIfNeeded($type = 'computer', $input) {
+   static function addDefaultStateIfNeeded($type, $input) {
       $config = new PluginFusioninventoryConfig();
       switch ($type) {
          case 'computer':
