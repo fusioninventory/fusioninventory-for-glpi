@@ -126,7 +126,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
          $params['metacriteria'] = [];
       }
-      $params['target'] = PluginFusioninventoryDeployGroup::getFormURLWithID($item->getID(), true);
+      $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $params);
       Search::constructSQL($data);
@@ -178,7 +178,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                $params['metacriteria'] = [];
             }
 
-            $params['target'] = PluginFusioninventoryDeployGroup::getFormURLWithID($item->getID(), true);
+            $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
             self::showList('PluginFusioninventoryComputer', $params, array('1', '2'));
             return TRUE;
 
