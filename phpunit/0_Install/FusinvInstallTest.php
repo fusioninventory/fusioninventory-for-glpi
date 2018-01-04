@@ -94,7 +94,7 @@ class FusinvInstallTest extends Common_TestCase {
       $this->install(false);
       $this->assertEquals(1, count($pfComputerComputer->find()));
 
-      //Reinstall using --force-upgrade option : data is not present anymore
+      //Reinstall using --force-install option : data is not present anymore
       $this->install(true);
       $this->assertEquals(0, count($pfComputerComputer->find()));
    }
