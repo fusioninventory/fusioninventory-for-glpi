@@ -239,10 +239,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $_GET['_in_modal'] = true;
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
-      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-              "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      Search::constructDatas($data);
-      // Remove some fields from the displayed columns
+
+              // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);// Remove some fields from the displayed columns
       if (Session::isMultiEntitiesMode()) {
          // Remove entity and computer Id
          unset($data['data']['cols'][1]);
@@ -296,17 +295,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          $search_params['sort'] = '';
 
          //Only retrieve computers IDs
-         $results = self::getDatas(
-            'PluginFusioninventoryComputer',
-            $search_params,
-            array('2')
-         );
+         $results = self::getDatas('PluginFusioninventoryComputer', $search_params, array('2'));
 
          $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, array('2'));
          Search::constructSQL($results);
-         $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-              "`mainitemtype` = 'Computer'", $results['sql']['search']);
-         Search::constructDatas($results);
+
+         // Use our specific constructDatas function rather than Glpi function
+         PluginFusioninventorySearch::constructDatas($data);
 
          foreach ($results['data']['rows'] as $id => $row) {
             $ids[$row['id']] = $row['id'];

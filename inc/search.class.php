@@ -84,6 +84,22 @@ class PluginFusioninventorySearch extends CommonDBTM {
     */
 
 
+   /**
+    * Specific constructDatas to manage the specific FusionInventoryComputer
+    * and replace with Computer for the Glpi built SQL queries.
+    *
+    * @return boolean
+    */
+   static function constructDatas(array &$data, $onlycount = false) {
+      // Hack the built SQL query to use Computer rather than FusionInventoryComputer
+      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
+         "`mainitemtype` = 'Computer'", $data['sql']['search']);
+      $data['sql']['search'] = str_replace("`itemtype` = 'PluginFusioninventoryComputer'",
+         "`itemtype` = 'Computer'", $data['sql']['search']);
+
+      Search::constructDatas($data, $onlycount);
+   }
+
 
    /**
     * Clone of Search::showList but only to have SQL query
