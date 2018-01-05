@@ -821,7 +821,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                           `glpi_softwareversions`.`name` AS version,
                           `glpi_softwares`.`manufacturers_id`,
                           `glpi_softwareversions`.`entities_id`,
-                          `glpi_softwareversions`.`operatingsystems_id`,
                           `glpi_computers_softwareversions`.`is_template_computer`,
                           `glpi_computers_softwareversions`.`is_deleted_computer`
                    FROM `glpi_computers_softwareversions`
@@ -845,8 +844,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $comp_key = strtolower($data['name']).
                                "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
-                               "$$$$".$data['entities_id'].
-                               "$$$$".$data['operatingsystems_id'];
+                               "$$$$".$data['entities_id'];
                   $db_software[$comp_key] = $idtmp;
                }
             }
@@ -910,7 +908,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                            $lastSoftwareVid);
                foreach ($a_computerinventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                  if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+                  if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id])) {
                      $this->addSoftwareVersion($a_software, $softwares_id);
                   }
                }
@@ -920,7 +918,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_toinsert = array();
                foreach ($a_computerinventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
                   $a_tmp = array(
                       'computers_id'        => $computers_id,
                       'softwareversions_id' => $softwareversions_id,
@@ -939,7 +937,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (!$no_history) {
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
 
                         $changes[0] = '0';
                         $changes[1] = "";
@@ -1036,7 +1034,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                  $lastSoftwareVid);
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                        if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+                        if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id])) {
                            $this->addSoftwareVersion($a_software, $softwares_id);
                         }
                      }
@@ -1046,7 +1044,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $a_toinsert = array();
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
                         $a_tmp = array(
                             'computers_id'        => $computers_id,
                             'softwareversions_id' => $softwareversions_id,
@@ -1064,7 +1062,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if (!$no_history) {
                         foreach ($a_computerinventory['software'] as $a_software) {
                            $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                           $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+                           $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
 
                            $changes[0] = '0';
                            $changes[1] = "";
@@ -2421,7 +2419,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_versions = array();
       foreach ($a_softVersion as $a_software) {
          $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-         if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+         if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id])) {
             $a_versions[$a_software['version']][] = $softwares_id;
          }
       }
@@ -2429,11 +2427,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $nbVersions = 0;
       foreach ($a_versions as $name=>$a_softwares_id) {
          foreach ($a_softwares_id as $softwares_id) {
-            $arr[] = "'".$name."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']."'";
+            $arr[] = "'".$name."$$$$".$softwares_id."'";
          }
          $nbVersions++;
       }
-      $whereid .= " AND CONCAT_WS('$$$$', `name`, `softwares_id`, `operatingsystems_id`) IN ( ";
+      $whereid .= " AND CONCAT_WS('$$$$', `name`, `softwares_id`) IN ( ";
       $whereid .= implode(',', $arr);
       $whereid .= " ) ";
 
@@ -2448,11 +2446,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          return $lastid;
       }
 
-      $sql = "SELECT `id`, `name`, `softwares_id`, `operatingsystems_id` FROM `glpi_softwareversions`
+      $sql = "SELECT `id`, `name`, `softwares_id` FROM `glpi_softwareversions`
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);
       while ($data = $DB->fetch_assoc($result)) {
-         $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']."$$$$".$data['operatingsystems_id']] = $data['id'];
+         $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']] = $data['id'];
       }
 
       return $lastid;
@@ -2491,7 +2489,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['_no_history']  = TRUE;
       $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
       $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
-      $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']] = $softwareversions_id;
+      $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id] = $softwareversions_id;
    }
 
 
@@ -2543,7 +2541,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $options['disable_unicity_check'] = TRUE;
 
       $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-      $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+      $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
 
       $this->softwareVersion->getFromDB($softwareversions_id);
       $a_software['computers_id']         = $computers_id;

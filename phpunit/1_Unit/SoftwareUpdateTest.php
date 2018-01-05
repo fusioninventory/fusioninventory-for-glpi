@@ -170,7 +170,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0$$$$0"] = array(
+      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0"] = array(
                'name'                  => 'fusioninventory',
                'manufacturers_id'      => 1,
                'version'               => '0.85+1.0',
@@ -243,7 +243,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
@@ -289,7 +289,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
@@ -330,7 +330,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => '2',
                'version'               => '0.85',
@@ -390,7 +390,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0"] = array(
+      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$3$$$$0"] = array(
                'name'                  => 'Audacity 2.0.4',
                'manufacturers_id'      => 3,
                'version'               => '2.0.4',
@@ -402,7 +402,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'date_install'          => '2013-10-16',
                '_system_category'      => 'application'
             );
-      $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = array(
+      $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0"] = array(
                'name'                  => 'AutoIt v3.3.8.1',
                'manufacturers_id'      => 4,
                'version'               => '',
