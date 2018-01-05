@@ -150,6 +150,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param object $item PluginFusioninventoryDeployGroup instance
     */
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
+      // WITH checking post values
       $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
       //If metacriteria array is empty, remove it as it displays the metacriteria form,
       //and it's is not we want !
@@ -163,9 +164,17 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-search",
+         "Deploy group, search parameters: ". serialize($search_params) ."\n"
+      );
+
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
       Search::displayDatas($data);
    }
@@ -193,7 +202,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
       Search::displayDatas($data);
    }
