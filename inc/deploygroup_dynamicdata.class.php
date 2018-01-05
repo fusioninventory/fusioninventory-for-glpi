@@ -106,23 +106,24 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    /**
     * Get the count of items matching the dynamic search criteria
     *
+    * This function saves and restores the pagination parameters to avoid breaking the pagination in the
+    * query results.
+    *
     * @param object $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
    function getMatchingItemsCount(CommonGLPI $item) {
-
-      $params_dyn = [];
+      // Save pagination parameters
+      $pagination_params = [];
       foreach (array('sort', 'order', 'start') as $field) {
          if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
-            $params_dyn[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+            $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
          }
       }
+
       $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
       $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-      foreach ($params_dyn as $key => $value) {
-         $params[$key] = $value;
-      }
       if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
          $params['metacriteria'] = [];
       }
@@ -136,6 +137,10 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       // Only get the request count
       Search::constructDatas($data, $onlycount = true);
 
+      // Restore pagination parameters
+      foreach ($pagination_params as $key => $value) {
+         $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field] = $pagination_params[$field];
+      }
       return $data['data']['totalcount'];
    }
 
@@ -153,37 +158,72 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       switch ($tabnum) {
 
          case 1:
-            $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
-            if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
-               unset($search_params['metacriteria']);
-            }
-            PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
-            return TRUE;
+            self::showCriteriaAndSearch($item);
+            return true;
 
          case 2:
-            $params_dyn = [];
+            // Save pagination parameters
+            $pagination_params = [];
             foreach (array('sort', 'order', 'start') as $field) {
                if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
-                  $params_dyn[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+                  $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
                }
             }
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-
-            foreach ($params_dyn as $key => $value) {
+            // Include pagination parameters in the provided parameters
+            foreach ($pagination_params as $key => $value) {
                $params[$key] = $value;
             }
-
             if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
                $params['metacriteria'] = [];
             }
-
             $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
             self::showList('PluginFusioninventoryComputer', $params, array('1', '2'));
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
+   }
+
+
+
+   /**
+    * Display criteria form + list of computers
+    *
+    * @param object $item PluginFusioninventoryDeployGroup instance
+    */
+   static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
+      // Save pagination parameters
+      $pagination_params = [];
+      foreach (array('sort', 'order', 'start') as $field) {
+         if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
+            $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+         }
+      }
+      // WITHOUT checking post values
+      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+      //If metacriteria array is empty, remove it as it displays the metacriteria form,
+      //and it's is not we want !
+      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+         unset($search_params['metacriteria']);
+      }
+      PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
+
+      // Include pagination parameters in the provided parameters
+      foreach ($pagination_params as $key => $value) {
+         $search_params[$key] = $value;
+      }
+      // Add extra parameters for massive action display : only the Add action should be displayed
+      $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
+      $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
+      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
+
+      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      Search::constructSQL($data);
+      Search::constructDatas($data);
+      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
+      Search::displayDatas($data);
    }
 
 
