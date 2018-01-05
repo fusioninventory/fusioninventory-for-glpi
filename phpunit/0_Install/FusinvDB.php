@@ -117,14 +117,37 @@ class FusinvDB extends PHPUnit_Framework_Assert{
                   if (preg_match("/^`/", trim($line))) {
                      $s_line = explode("`", $line);
                      $s_type = explode("COMMENT", $s_line[2]);
-                     $s_type[0] = trim($s_type[0]);
-                     $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
-                     $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
-                     $s_type[0] = str_replace(",", "", $s_type[0]);
+                     $s_type[0] = str_replace(
+                        [
+                           " COLLATE utf8_unicode_ci",
+                           " CHARACTER SET utf8",
+                           ',',
+                        ], [
+                           '',
+                           '',
+                           '',
+                        ],
+                        trim($s_type[0])
+                     );
+                     //Mariadb 10.2 will return current_timestamp()
+                     //while older retuns CURRENT_TIMESTAMP...
+                     $s_type[0] = preg_replace(
+                        '/ CURRENT_TIMESTAMP$/',
+                        ' CURRENT_TIMESTAMP()',
+                        $s_type[0]
+                     );
+                     //Mariadb 10.2 allow default vlues on longblob
+                     //while older retuns CURRENT_TIMESTAMP...
+                     $s_type[0] = preg_replace(
+                        '/^longblob$/',
+                        'longblob DEFAULT NULL',
+                        $s_type[0]
+                     );
                      if (trim($s_type[0]) == 'text'
                         || trim($s_type[0]) == 'longtext') {
                         $s_type[0] .= ' DEFAULT NULL';
                      }
+                     $s_type[0] = preg_replace("/(DEFAULT) ([-|+]?\d+)/", "$1 '$2'", $s_type[0]);
                      $a_tables_db[$current_table][$s_line[1]] = $s_type[0];
                   }
                }
@@ -152,8 +175,8 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       // See if fields are same
       foreach ($a_tables_db as $table=>$data) {
          if (isset($a_tables_ref[$table])) {
-            $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
-            $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
+            $fields_toremove = array_udiff_assoc($data, $a_tables_ref[$table], 'strcasecmp');
+            $fields_toadd = array_udiff_assoc($a_tables_ref[$table], $data, 'strcasecmp');
             $diff = "======= DB ============== Ref =======> ".$table."\n";
             $diff .= print_r($data, TRUE);
             $diff .= print_r($a_tables_ref[$table], TRUE);

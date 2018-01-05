@@ -1,29 +1,47 @@
 language: php
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - nightly
-
-matrix:
-  allow_failures:
-    - php: nightly
 
 env:
-#  - GLPI=0.90/bugfixes
-#  - GLPI=0.85/bugfixes
-#  - GLPI=9.1/bugfixes
-  - GLPI=9.2/bugfixes
+  global:
+    - GLPI=9.2/bugfixes
+    - DB=mysql
 
 cache:
   directories:
     - $HOME/.composer/cache
 
-addons:
-  apt:
-    packages:
-    - ant
-    - xsltproc
+matrix:
+  include:
+    - php: 5.6
+      addons:
+        apt:
+          packages:
+            - ant
+            - xsltproc
+    - php: 7.0
+      addons:
+        mariadb: 10.2
+        apt:
+          packages:
+            - ant
+            - xsltproc
+    - php: 7.1
+      env: CS=true
+      addons:
+        mariadb: 10.1
+        apt:
+          packages:
+            - ant
+            - xsltproc
+    - php: 7.2
+      addons:
+        apt:
+          packages:
+            - ant
+            - xsltproc
+    - php: nightly
+  allow_failures:
+    - php: nightly
+    - php: 7.2
 
 before_install:
  - cd ..
@@ -44,6 +62,7 @@ before_script:
   - php -S localhost:8088 -t glpi > /dev/null 2>&1 &
 
 script:
+ - mysql -u root -e 'select version();'
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
 
 after_script:
