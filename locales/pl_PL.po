@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 12:38+0100\n"
+"POT-Creation-Date: 2018-01-05 09:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jacek Maciol <jmaciol@rabawyzna.pl>, 2017\n"
 "Language-Team: Polish (Poland) (https://www.transifex.com/ddurieux/teams/797/pl_PL/)\n"
@@ -125,7 +125,7 @@ msgstr "URL bazy agenta"
 #: inc/menu.class.php:400 inc/unmanaged.class.php:211
 #: inc/unmanaged.class.php:472
 msgid "SNMP authentication"
-msgstr "Uwierzytelnienie SNMP"
+msgstr ""
 
 #: hook.php:265 hook.php:299 inc/networkequipment.class.php:532
 #: inc/printer.class.php:189 inc/unmanaged.class.php:205
@@ -137,7 +137,7 @@ msgstr "Uwierzytelnienie SNMP"
 msgid "CPU usage (in %)"
 msgstr "Wykorzystanie CPU (%)"
 
-#: hook.php:888 hook.php:904 inc/profile.class.php:388 inc/lock.class.php:231
+#: hook.php:889 hook.php:905 inc/profile.class.php:388 inc/lock.class.php:231
 #: inc/lock.class.php:404
 msgid "Lock"
 msgid_plural "Locks"
@@ -146,17 +146,17 @@ msgstr[1] "Blokad"
 msgstr[2] "Blokad"
 msgstr[3] "Blokady"
 
-#: hook.php:892 inc/iprange.class.php:389 inc/deploygroup.class.php:141
+#: hook.php:893 inc/iprange.class.php:389 inc/deploygroup.class.php:141
 msgid "Target a task"
 msgstr "Cel zadania"
 
-#: hook.php:896
+#: hook.php:897
 msgid "Add to static group"
 msgstr "Dodaj do statycznej grupy"
 
-#: hook.php:908 inc/unmanaged.class.php:300
+#: hook.php:909 inc/unmanaged.class.php:300
 msgid "Assign SNMP authentication"
-msgstr "Przypisz uwierzytelnienie SNMP"
+msgstr ""
 
 #: b/deploy/index.php:85
 msgid "Deploy module has been disabled for this agent"
@@ -180,11 +180,11 @@ msgstr "Akcje"
 
 #: b/deploy/index.php:278
 msgid "User canceled the job"
-msgstr ""
+msgstr "Użytkownik anulował zadanie"
 
 #: b/deploy/index.php:280
 msgid "User postponed the job"
-msgstr ""
+msgstr "Użytkownik odroczył zadanie"
 
 #: b/collect/index.php:81
 msgid "Collect module has been disabled for this agent"
@@ -227,18 +227,18 @@ msgstr "Rozmiar"
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:85
 #: inc/deployuserinteractiontemplate.class.php:160
 msgid "Windows system alert (WTS)"
-msgstr ""
+msgstr "Ostrzeżenie systemu Windows (WTS)"
 
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:152
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:163
 #: inc/deployuserinteractiontemplate.class.php:238
 msgid "Question"
-msgstr ""
+msgstr "Pytanie"
 
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:174
 #: inc/deployuserinteractiontemplate.class.php:269
 msgid "Retry job later"
-msgstr ""
+msgstr "Wykonaj zadanie później"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:68 inc/deployaction.class.php:84
 msgid "Command"
@@ -320,7 +320,7 @@ msgstr "Uruchom agentów"
 
 #: ajax/remote_status.php:69
 msgid "cannot contact the agent"
-msgstr ""
+msgstr "kontakt za agentem niemożliwy"
 
 #: ajax/remote_status.php:75
 #, php-format
@@ -480,10 +480,10 @@ msgstr "Zarządzanie paczkami"
 #: front/deployuserinteractiontemplate.php:50
 msgid "User interaction template"
 msgid_plural "User interaction templates"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Szablon interakcji użytkownika"
+msgstr[1] "Szablon interakcji użytkownika"
+msgstr[2] "Szablony interakcji użytkownika"
+msgstr[3] "Szablony interakcji użytkownika"
 
 #: inc/profile.class.php:335 inc/menu.class.php:466
 #: inc/deploymirror.class.php:83
@@ -594,7 +594,7 @@ msgstr "Koniec zakresu IP"
 
 #: inc/iprange.class.php:155
 msgid "SNMP credentials"
-msgstr ""
+msgstr "Uwierzytelnienie SNMP"
 
 #: inc/iprange.class.php:334
 msgid "Bad IP"
@@ -640,8 +640,7 @@ msgid "Collect data"
 msgstr "Zbierz dane"
 
 #: inc/staticmisc.class.php:482 inc/staticmisc.class.php:488
-#: inc/taskjob.class.php:219 inc/taskjob.class.php:535
-#: inc/taskjob.class.php:1166
+#: inc/taskjob.class.php:956
 msgid "Auto managenement dynamic of agents"
 msgstr "Automatyczne dynamiczne przydzielanie agentów"
 
@@ -756,10 +755,9 @@ msgstr "Odznacz wszystko"
 #: inc/printerlog.class.php:396 inc/printerlog.class.php:599
 #: inc/networkequipment.class.php:1144 inc/networkequipment.class.php:1145
 #: inc/deployaction.class.php:263 inc/deployfile.class.php:248
-#: inc/deploycheck.class.php:278 inc/taskjob.class.php:206
-#: inc/taskjob.class.php:1531 inc/networkportlog.class.php:203
-#: inc/taskjobview.class.php:283 inc/networkporttype.class.php:409
-#: inc/deployuserinteraction.class.php:292
+#: inc/deploycheck.class.php:278 inc/taskjob.class.php:1321
+#: inc/networkportlog.class.php:203 inc/taskjobview.class.php:283
+#: inc/networkporttype.class.php:409 inc/deployuserinteraction.class.php:292
 msgid "Delete"
 msgstr "Usuń"
 
@@ -871,16 +869,16 @@ msgstr "Dane niedostępne"
 msgid "Uptime"
 msgstr "Uptime"
 
-#: inc/networkequipment.class.php:661 inc/taskjob.class.php:1138
+#: inc/networkequipment.class.php:661 inc/taskjob.class.php:928
 msgid "day(s)"
 msgstr "dzień(dni)"
 
-#: inc/networkequipment.class.php:662 inc/taskjob.class.php:1133
+#: inc/networkequipment.class.php:662 inc/taskjob.class.php:923
 msgid "hour(s)"
 msgstr "godzin(a)"
 
 #: inc/networkequipment.class.php:663 inc/deployfile.class.php:187
-#: inc/deployfile.class.php:349 inc/taskjob.class.php:1128
+#: inc/deployfile.class.php:349 inc/taskjob.class.php:918
 msgid "Minute(s)"
 msgstr "minut(a)"
 
@@ -1028,14 +1026,14 @@ msgstr "Uruchomione"
 
 #: inc/taskview.class.php:202 inc/statediscovery.class.php:247
 #: inc/deploypackage.class.php:1301 inc/stateinventory.class.php:183
-#: inc/taskjoblog.class.php:109 inc/taskjoblog.class.php:571
-#: inc/taskjoblog.class.php:904 inc/taskjobstate.class.php:141
+#: inc/taskjoblog.class.php:109 inc/taskjoblog.class.php:530
+#: inc/taskjoblog.class.php:691 inc/taskjobstate.class.php:141
 msgid "Prepared"
 msgstr "Przygotowane"
 
 #: inc/taskview.class.php:203 inc/taskjobstate.class.php:147
 msgid "Postponed"
-msgstr ""
+msgstr "Odłożone"
 
 #: inc/taskview.class.php:204 inc/deploypackage.class.php:1302
 #: inc/taskjobstate.class.php:146
@@ -1117,7 +1115,7 @@ msgid "return codes saved for this command"
 msgstr "Zapisano kody zwrócone  wyniku tego polecenia"
 
 #: inc/deployaction.class.php:248 inc/deployfile.class.php:234
-#: inc/deploycheck.class.php:263 inc/taskjob.class.php:1519
+#: inc/deploycheck.class.php:263 inc/taskjob.class.php:1309
 #: inc/deployuserinteraction.class.php:277
 msgid "drag"
 msgstr "przeciągnij"
@@ -1159,9 +1157,8 @@ msgid "Values of last inventory"
 msgstr "Wartości z ostatniej inwentaryzacji"
 
 #: inc/lock.class.php:333 inc/unmanaged.class.php:237 inc/taskjob.class.php:80
-#: inc/taskjob.class.php:745 inc/agentwakeup.class.php:73
-#: inc/taskjoblog.class.php:230 inc/task.class.php:1940
-#: inc/taskjobstate.class.php:301
+#: inc/agentwakeup.class.php:73 inc/taskjoblog.class.php:189
+#: inc/task.class.php:1940 inc/taskjobstate.class.php:301
 msgid "Job"
 msgstr "Proces"
 
@@ -1238,7 +1235,7 @@ msgstr "Utworzono urządzenie"
 
 #: inc/inventoryruleimport.class.php:1071
 #: inc/inventoryruleimportcollection.class.php:159
-#: inc/taskjoblog.class.php:976
+#: inc/taskjoblog.class.php:755
 msgid "Import denied"
 msgstr "Import niemożliwy"
 
@@ -1356,7 +1353,7 @@ msgstr "Nazwa reguł"
 #: inc/agent.class.php:91 inc/agent.class.php:1138
 #: inc/statediscovery.class.php:173 inc/ignoredimportdevice.class.php:89
 #: inc/ignoredimportdevice.class.php:155 inc/stateinventory.class.php:117
-#: inc/taskjoblog.class.php:257 inc/taskjoblog.class.php:447
+#: inc/taskjoblog.class.php:216 inc/taskjoblog.class.php:406
 #: inc/taskjobstate.class.php:302
 msgid "Agent"
 msgstr "Agent"
@@ -1528,7 +1525,7 @@ msgstr "Jeśli puste użyj portu zdefiniowanego w głównych opcjach"
 
 #: inc/agent.class.php:826
 msgid "not yet requested, refresh?"
-msgstr ""
+msgstr "jeszcze nie zwrócono, odświeżyć?"
 
 #: inc/agent.class.php:833
 msgid "Force inventory"
@@ -1734,7 +1731,7 @@ msgstr ""
 
 #: inc/menu.class.php:651
 msgid "Define IP Ranges of your network + related SNMP authentication"
-msgstr "Zdefiniuj zakres IP twojej sieci +  uwierzytelnienia SNMP"
+msgstr ""
 
 #: inc/menu.class.php:656
 msgid "Define an agent allowed to discover the network"
@@ -1834,51 +1831,50 @@ msgstr "Zadanie jest aktywne. Kasowanie zabronione."
 #: inc/deployuserinteractiontemplate.class.php:114
 msgid "Behavior"
 msgid_plural "Behaviors"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Zachowanie"
+msgstr[1] "Zachowanie"
+msgstr[2] "Zachowania"
+msgstr[3] "Zachowania"
 
 #: inc/deployuserinteractiontemplate.class.php:186
-#: inc/deployuserinteraction.class.php:435
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: inc/deployuserinteractiontemplate.class.php:188
 msgid "OK (asynchronous)"
-msgstr ""
+msgstr "OK (asynchroniczny)"
 
 #: inc/deployuserinteractiontemplate.class.php:190
 msgid "OK - Cancel"
-msgstr ""
+msgstr "OK - Anuluj"
 
 #: inc/deployuserinteractiontemplate.class.php:192
 msgid "Yes - No"
-msgstr ""
+msgstr "Tak - Nie"
 
 #: inc/deployuserinteractiontemplate.class.php:194
 msgid "OK - Abort - Retry"
-msgstr ""
+msgstr "OK - Przerwij - Ponów"
 
 #: inc/deployuserinteractiontemplate.class.php:196
 msgid "Retry - Cancel"
-msgstr ""
+msgstr "Ponów - Anuluj"
 
 #: inc/deployuserinteractiontemplate.class.php:198
 msgid "Abort - Retry - Ignore"
-msgstr ""
+msgstr "Przerwij - Ponów - Ignoruj"
 
 #: inc/deployuserinteractiontemplate.class.php:200
 msgid "Cancel - Try - Continue"
-msgstr ""
+msgstr "Anuluj - Spróbuj - Kontynuuj"
 
 #: inc/deployuserinteractiontemplate.class.php:202
 msgid "Yes - No - Cancel"
-msgstr ""
+msgstr "Tak - Nie - Anuluj"
 
 #: inc/deployuserinteractiontemplate.class.php:268
 msgid "Continue job with no user interaction"
-msgstr ""
+msgstr "Kontynuuj zadanie bez komunikacji z użytkownikiem"
 
 #: inc/deployuserinteractiontemplate.class.php:270
 #: inc/deploypackage.class.php:1424
@@ -1887,79 +1883,79 @@ msgstr "Anuluj zadanie"
 
 #: inc/deployuserinteractiontemplate.class.php:412
 msgid "Interaction format"
-msgstr ""
+msgstr "Format komunikacji"
 
 #: inc/deployuserinteractiontemplate.class.php:420
 msgid "Interaction type"
-msgstr ""
+msgstr "Typ komunikacji"
 
 #: inc/deployuserinteractiontemplate.class.php:425
 msgid "Alert icon"
-msgstr ""
+msgstr "Symbol ostrzeżenia"
 
 #: inc/deployuserinteractiontemplate.class.php:432
 msgid "Retry job after"
-msgstr ""
+msgstr "Ponów zadanie później"
 
 #: inc/deployuserinteractiontemplate.class.php:437
 msgid "Maximum number of retry allowed"
-msgstr ""
+msgstr "Maksymalna liczba autoryzowanych testów"
 
 #: inc/deployuserinteractiontemplate.class.php:449
 msgid "Alert display timeout"
-msgstr ""
+msgstr "Wygaśnięcie okna ostrzeżenia"
 
 #: inc/deployuserinteractiontemplate.class.php:539
 msgid "Button ok"
-msgstr ""
+msgstr "Przycisk ok"
 
 #: inc/deployuserinteractiontemplate.class.php:540
 msgid "Button yes"
-msgstr ""
+msgstr "Przycisk tak"
 
 #: inc/deployuserinteractiontemplate.class.php:541
 msgid "Button continue"
-msgstr ""
+msgstr "Przycisk kontynuuj"
 
 #: inc/deployuserinteractiontemplate.class.php:542
 msgid "Button retry"
-msgstr ""
+msgstr "Przycisk ponów"
 
 #: inc/deployuserinteractiontemplate.class.php:543
 msgid "Button try"
-msgstr ""
+msgstr "Przycisk próbuj"
 
 #: inc/deployuserinteractiontemplate.class.php:544
 msgid "Button no"
-msgstr ""
+msgstr "Przycisk nie"
 
 #: inc/deployuserinteractiontemplate.class.php:545
 msgid "Button cancel"
-msgstr ""
+msgstr "Przycisk anuluj"
 
 #: inc/deployuserinteractiontemplate.class.php:546
 msgid "Button abort"
-msgstr ""
+msgstr "Przycisk przerwij"
 
 #: inc/deployuserinteractiontemplate.class.php:547
 msgid "Button ignore"
-msgstr ""
+msgstr "Przycisk zignoruj"
 
 #: inc/deployuserinteractiontemplate.class.php:548
 msgid "No active session"
-msgstr ""
+msgstr "Brak aktywnej sesji"
 
 #: inc/deployuserinteractiontemplate.class.php:549
 msgid "Alert timeout exceeded"
-msgstr ""
+msgstr "Przekroczono limit czasu"
 
 #: inc/deployuserinteractiontemplate.class.php:550
 msgid "Several active sessions"
-msgstr ""
+msgstr "Wiele aktywnych sesji"
 
 #: inc/deployuserinteractiontemplate.class.php:655
 msgid "Behaviors"
-msgstr ""
+msgstr "Zachowania"
 
 #: inc/collect_file_content.class.php:72 inc/collect_file_content.class.php:97
 #: inc/collect_file_content.class.php:103
@@ -1971,7 +1967,7 @@ msgid "Path/file"
 msgstr "Ścieżka/plik"
 
 #: inc/statediscovery.class.php:171 inc/stateinventory.class.php:115
-#: inc/taskjoblog.class.php:247 inc/taskjobstate.class.php:300
+#: inc/taskjoblog.class.php:206 inc/taskjobstate.class.php:300
 msgid "Unique id"
 msgstr "Unikalne id"
 
@@ -2006,8 +2002,8 @@ msgid "Devices imported"
 msgstr "Zaimportowano urządzenia"
 
 #: inc/statediscovery.class.php:252 inc/stateinventory.class.php:188
-#: inc/taskjoblog.class.php:110 inc/taskjoblog.class.php:577
-#: inc/taskjoblog.class.php:685 inc/taskjoblog.class.php:908
+#: inc/taskjoblog.class.php:110 inc/taskjoblog.class.php:536
+#: inc/taskjoblog.class.php:644 inc/taskjoblog.class.php:695
 msgid "Started"
 msgstr "Uruchomiony"
 
@@ -2087,7 +2083,7 @@ msgstr "Pliki"
 
 #: inc/deploypackage.class.php:515
 msgid "User interactions"
-msgstr ""
+msgstr "Interakcja użytkownika"
 
 #: inc/deploypackage.class.php:663
 msgid "JSON package representation"
@@ -2153,6 +2149,18 @@ msgstr "Adres serwera lustrzanego"
 msgid "Mirror location"
 msgstr "Lokalizacja serwera lustrzanego"
 
+#: inc/communicationnetworkdiscovery.class.php:123
+msgid "Processed:"
+msgstr ""
+
+#: inc/communicationnetworkdiscovery.class.php:124
+msgid "Created:"
+msgstr ""
+
+#: inc/communicationnetworkdiscovery.class.php:125
+msgid " Updated:"
+msgstr ""
+
 #: inc/entity.class.php:137
 msgid "Model for automatic computers transfer in an other entity"
 msgstr "Model automatycznego transferu komputerów do innej jednostki"
@@ -2215,11 +2223,11 @@ msgstr "Pasuje wartość hash SHA-512"
 
 #: inc/deploycheck.class.php:86
 msgid "Directory exists"
-msgstr ""
+msgstr "Katalog istnieje"
 
 #: inc/deploycheck.class.php:87
 msgid "Directory is missing"
-msgstr ""
+msgstr "Katalog nie istnieje"
 
 #: inc/deploycheck.class.php:133
 msgid "continue"
@@ -2252,7 +2260,7 @@ msgstr "Wartość typu"
 
 #: inc/deploycheck.class.php:374
 msgid "Directory"
-msgstr ""
+msgstr "Katalog"
 
 #: inc/deploycheck.class.php:394
 msgid "Disk or directory"
@@ -3190,39 +3198,28 @@ msgstr "OEM"
 msgid "Option"
 msgstr "Opcje"
 
-#: inc/taskjob.class.php:185 inc/taskjob.class.php:1109
-#: inc/taskjob.class.php:1483 inc/taskjoblog.class.php:469
-msgid "Definition"
-msgstr "Definicje"
-
-#: inc/taskjob.class.php:187 inc/taskjob.class.php:1110
-#: inc/taskjob.class.php:1500
-msgid "Action"
-msgstr "Akcja"
-
-#: inc/taskjob.class.php:221 inc/taskjob.class.php:537
-#: inc/taskjob.class.php:1168
-msgid "Auto managenement dynamic of agents (same subnet)"
-msgstr "Automatyczne dynamiczne przydzielanie agentów (z tej samej podsieci)"
-
-#: inc/taskjob.class.php:237
-msgid "Selection"
-msgstr "Wybrane"
-
-#: inc/taskjob.class.php:738
-msgid "Action on this device"
-msgstr "Akcja na urządzeniu"
-
-#: inc/taskjob.class.php:766 inc/taskjob.class.php:1107
+#: inc/taskjob.class.php:897
 msgid "Scheduled date"
 msgstr "Zaplanowana data"
 
-#: inc/taskjob.class.php:1108
+#: inc/taskjob.class.php:898
 msgid "Periodicity"
 msgstr "Okresowość"
 
-#: inc/taskjob.class.php:1555 inc/taskjoblog.class.php:381
-#: inc/taskjoblog.class.php:810 inc/taskjoblog.class.php:866
+#: inc/taskjob.class.php:899 inc/taskjob.class.php:1273
+#: inc/taskjoblog.class.php:428
+msgid "Definition"
+msgstr "Definicje"
+
+#: inc/taskjob.class.php:900 inc/taskjob.class.php:1290
+msgid "Action"
+msgstr "Akcja"
+
+#: inc/taskjob.class.php:958
+msgid "Auto managenement dynamic of agents (same subnet)"
+msgstr "Automatyczne dynamiczne przydzielanie agentów (z tej samej podsieci)"
+
+#: inc/taskjob.class.php:1345 inc/taskjoblog.class.php:340
 msgid "Force the end"
 msgstr "Zakończ teraz"
 
@@ -3348,84 +3345,64 @@ msgstr "Grupa dynamiczna"
 
 #: inc/deploygroup.class.php:113
 msgid "FusionInventory group"
-msgstr ""
+msgstr "grupa FusionInventory "
 
 #: inc/deploygroup.class.php:257
 msgid "Add group"
 msgstr "Dodaj grupę"
 
-#: inc/taskjoblog.class.php:112 inc/taskjoblog.class.php:585
-#: inc/taskjoblog.class.php:686 inc/taskjoblog.class.php:914
+#: inc/taskjoblog.class.php:112 inc/taskjoblog.class.php:544
+#: inc/taskjoblog.class.php:645
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/taskjoblog.class.php:114 inc/taskjoblog.class.php:601
+#: inc/taskjoblog.class.php:114 inc/taskjoblog.class.php:560
 msgid "Info"
 msgstr "Informacja"
 
-#: inc/taskjoblog.class.php:431
+#: inc/taskjoblog.class.php:390
 msgid "Process number"
 msgstr "Numer procesu"
 
-#: inc/taskjoblog.class.php:687 inc/taskjoblog.class.php:920
+#: inc/taskjoblog.class.php:646
 msgid "Error / rescheduled"
 msgstr "Error/przełożone"
 
-#: inc/taskjoblog.class.php:804 inc/taskjoblog.class.php:853
-msgid "View logs of this execution"
-msgstr "Pokaż logi przetwarzania"
-
-#: inc/taskjoblog.class.php:825 inc/taskjoblog.class.php:878
-msgid "See all executions"
-msgstr "Zobacz wszystkie wykonania"
-
-#: inc/taskjoblog.class.php:933
+#: inc/taskjoblog.class.php:713
 msgid "unknown"
 msgstr "nieznany"
 
-#: inc/taskjoblog.class.php:967
+#: inc/taskjoblog.class.php:747
 msgid "devices queried"
 msgstr "odpytanie urządzeń"
 
-#: inc/taskjoblog.class.php:968
+#: inc/taskjoblog.class.php:748
 msgid "devices found"
 msgstr "znalezione urządzenia"
 
-#: inc/taskjoblog.class.php:969
-msgid ""
-"SNMP equipment definition isn't up to date on agent. For the next run, it "
-"will get new version from server."
-msgstr ""
-"Definicja urządzenia SNMP agenta nie jest aktualna. Przy następnym "
-"uruchomieniu, będzie pobrana nowa wersja z serwera."
-
-#: inc/taskjoblog.class.php:970
+#: inc/taskjoblog.class.php:749
 msgid "Add the item"
 msgstr "Dodaj element"
 
-#: inc/taskjoblog.class.php:971
+#: inc/taskjoblog.class.php:750
 msgid "Update the item"
 msgstr "Aktualizacja pozycji"
 
-#: inc/taskjoblog.class.php:972
+#: inc/taskjoblog.class.php:751
 msgid "Inventory started"
 msgstr "Inwentaryzacja uruchomiona"
 
-#: inc/taskjoblog.class.php:973
+#: inc/taskjoblog.class.php:752
 msgid "Detail"
 msgstr "Szczegóły"
 
-#: inc/taskjoblog.class.php:974
+#: inc/taskjoblog.class.php:753
 msgid "Agent communication error, impossible to start agent"
 msgstr "Błąd komunikacji z agentem, uruchomienie agenta niemożliwe"
 
-#: inc/taskjoblog.class.php:975
+#: inc/taskjoblog.class.php:754
 msgid "Agent stopped/crashed"
 msgstr "Agent zatrzymany/uszkodzony"
-
-#: inc/taskjoblog.class.php:1064
-msgid "Completion"
-msgstr "Ukończone"
 
 #: inc/printercartridge.class.php:98
 msgid "Cartridge(s)"
@@ -3503,16 +3480,16 @@ msgstr "Uruchomione zadania"
 #: inc/taskjobstate.class.php:593
 #, php-format
 msgid "Job available for next execution at %s"
-msgstr ""
+msgstr "Zadanie dostępne do następnego wykonania o %s"
 
 #: inc/taskjobstate.class.php:607
 #, php-format
 msgid "Retry #%d"
-msgstr ""
+msgstr "Ponów # %d"
 
 #: inc/taskjobstate.class.php:609
 msgid "Maximum number of retry reached: force deployment"
-msgstr ""
+msgstr "Osiągnięto maksymalną liczbę ponownych prób: wymuszonego wdrożenia"
 
 #: inc/networkporttype.class.php:380
 msgid "Ports types to import (for network equipments)"
@@ -3520,11 +3497,11 @@ msgstr "Typy portów do importu (dla wyposażenia sieciowego)"
 
 #: inc/iprange_configsecurity.class.php:110
 msgid "Associated SNMP authentications"
-msgstr "Powiązane uwierzytelnienia SNMP"
+msgstr ""
 
 #: inc/iprange_configsecurity.class.php:210
 msgid "SNMP Authentication"
-msgstr "Uwierzytelnianie SNMP"
+msgstr ""
 
 #: inc/iprange_configsecurity.class.php:213
 msgid "Version"
@@ -3541,81 +3518,81 @@ msgstr "Bateria wewnętrzna"
 #: inc/deployuserinteraction.class.php:96
 msgid "User interaction"
 msgid_plural "User interactions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Interakcja użytkownika"
+msgstr[1] "Interakcja użytkownika"
+msgstr[2] "Interakcje użytkownika"
+msgstr[3] "Interakcje użytkownika"
 
 #: inc/deployuserinteraction.class.php:106
 msgid "Before download"
-msgstr ""
+msgstr "Przed pobraniem"
 
 #: inc/deployuserinteraction.class.php:107
 msgid "After download"
-msgstr ""
+msgstr "Po pobraniu"
 
 #: inc/deployuserinteraction.class.php:108
 msgid "After actions"
-msgstr ""
+msgstr "Po czynności"
 
 #: inc/deployuserinteraction.class.php:109
 msgid "On download failure"
-msgstr ""
+msgstr "Niepowodzenie pobierania"
 
 #: inc/deployuserinteraction.class.php:110
 msgid "On actions failure"
-msgstr ""
+msgstr "Niepowodzenie czynności"
 
 #: inc/deployuserinteraction.class.php:208
 msgid "Interaction label"
-msgstr ""
+msgstr "Etykieta interakcji"
 
 #: inc/deployuserinteraction.class.php:408
 #, php-format
-msgid "Job cancelled by the user %1s"
-msgstr ""
+msgid "Job cancelled by the user %1$s"
+msgstr "Zadanie anulowane przez użytkownika %1$s"
 
 #: inc/deployuserinteraction.class.php:413
 #, php-format
-msgid "User %1s agreed to continue the job"
-msgstr ""
+msgid "User %1$s agreed to continue the job"
+msgstr "Użytkownik %1$szgodził się kontynuować zadanie"
 
 #: inc/deployuserinteraction.class.php:418
 #, php-format
-msgid "Job postponed by the user %1s"
-msgstr ""
+msgid "Job postponed by the user %1$s"
+msgstr "Zadanie odroczone przez użytkownika %1$s"
 
 #: inc/deployuserinteraction.class.php:423
 msgid "Bad event sent to the agent"
-msgstr ""
+msgstr "Złe zdarzenie wysłane do agenta"
 
 #: inc/deployuserinteraction.class.php:441
 msgid "Alert displayed, no input required"
-msgstr ""
+msgstr "Wyświetlono ostrzeżenie, nie wprowadzono danych"
 
 #: inc/deployuserinteraction.class.php:447
 msgid "Retry"
-msgstr ""
+msgstr "Ponów"
 
 #: inc/deployuserinteraction.class.php:453
 msgid "Abort"
-msgstr ""
+msgstr "Anuluj"
 
 #: inc/deployuserinteraction.class.php:456
 msgid "Ignore"
-msgstr ""
+msgstr "Ignoruj"
 
 #: inc/deployuserinteraction.class.php:462
 msgid "Alert duration exceeded"
-msgstr ""
+msgstr "Ostrzeżenie przekroczono czas"
 
 #: inc/deployuserinteraction.class.php:465
 msgid "No user connected"
-msgstr ""
+msgstr "Brak połączenia z użytkownikiem"
 
 #: inc/deployuserinteraction.class.php:468
 msgid "Multiple users connected"
-msgstr ""
+msgstr "Połączono wielu użytkowników"
 
 #: report/computer_last_inventory.php:69 setup.php:398
 msgid "Computers not inventoried since xx days"
@@ -3639,11 +3616,11 @@ msgstr "Nieużywane poty przełącznika "
 
 #: setup.php:533
 msgid "Your GLPI version not compatible, require >= 9.2 and < 9.3"
-msgstr ""
+msgstr "Twoja wersja GLPI nie jest kompatybilna, wymagana >= 9.2 i < 9.3"
 
 #: setup.php:539
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "Wymagany jest moduł (PHP):  fileinfo..."
 
 #: setup.php:552
 #, php-format
