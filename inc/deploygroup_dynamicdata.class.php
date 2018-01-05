@@ -131,11 +131,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $params);
       Search::constructSQL($data);
-      // Force search in the Glpi computers
-      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-         "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      // Only get the request count
-      Search::constructDatas($data, $onlycount = true);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
 
       // Restore pagination parameters
       foreach ($pagination_params as $key => $value) {
@@ -239,9 +237,10 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $_GET['_in_modal'] = true;
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
-      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-              "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      Search::constructDatas($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
       // Remove some fields from the displayed columns
       if (Session::isMultiEntitiesMode()) {
          // Remove entity and computer Id
@@ -296,17 +295,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          $search_params['sort'] = '';
 
          //Only retrieve computers IDs
-         $results = self::getDatas(
-            'PluginFusioninventoryComputer',
-            $search_params,
-            array('2')
-         );
+         $results = self::getDatas('PluginFusioninventoryComputer', $search_params, array('2'));
 
          $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, array('2'));
          Search::constructSQL($results);
-         $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-              "`mainitemtype` = 'Computer'", $results['sql']['search']);
-         Search::constructDatas($results);
+
+         // Use our specific constructDatas function rather than Glpi function
+         PluginFusioninventorySearch::constructDatas($results);
 
          foreach ($results['data']['rows'] as $id => $row) {
             $ids[$row['id']] = $row['id'];

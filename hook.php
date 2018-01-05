@@ -150,7 +150,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5170]['datatype']      = 'bool';
          $sopt[5170]['massiveaction'] = FALSE;
 
-         $sopt[5171]['name']          = __('Static group', 'fusioninventory');
+         $sopt[5171]['name']          = __('Group of computers', 'fusioninventory');
          $sopt[5171]['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
          $sopt[5171]['massiveaction'] = FALSE;
          $sopt[5171]['field']         ='name';
