@@ -1938,9 +1938,10 @@ class PluginFusioninventoryFormatconvert {
    */
    function simcardTransformation($array, &$a_inventory) {
       if (isset($array['SIMCARDS'])) {
+         //If there's only one entry
          if (!isset($array['SIMCARDS']['ICCID'])) {
-            $tmp      = $array['SIMCARDS'];
-            $array    = [];
+            $tmp                 = $array['SIMCARDS'];
+            $array               = [];
             $array['SIMCARDS'][] = $tmp;
          }
          $a_simcards = [];

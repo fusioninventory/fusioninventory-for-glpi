@@ -181,7 +181,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
 
          if ($pfConfig->getValue("component_simcard") != 0) {
-            Toolbox::logDebug("import simcards!!");
             //Import simcards
             $this->importSimcards('Computer', $a_computerinventory, $computers_id);
          }

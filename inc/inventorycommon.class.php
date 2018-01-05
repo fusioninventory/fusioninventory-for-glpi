@@ -179,7 +179,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
 
       foreach ($a_inventory['simcards'] as $a_simcard) {
          $input = [
-            'designation'       => 'Simcard',
+            'designation' => 'Simcard',
          ];
 
          //Check if the simcard already exists
