@@ -1939,24 +1939,22 @@ class PluginFusioninventoryFormatconvert {
    function simcardTransformation($array, &$a_inventory) {
       if (isset($array['SIMCARDS'])) {
          //If there's only one entry
-         if (!isset($array['SIMCARDS']['ICCID'])) {
+         if (!isset($array['SIMCARDS'][0])) {
             $tmp                 = $array['SIMCARDS'];
             $array               = [];
             $array['SIMCARDS'][] = $tmp;
          }
-         $a_simcards = [];
          $mapping = [
             'ICCID'         => 'designation',
             'ICCID'         => 'iccid',
             'MANUFACTURER'  => 'manufacturers_id',
             'IMSI'          => 'imsi'
          ];
-         foreach ($array['SIMCARDS'][0] as $id => $simcard) {
-            $a_simcards[] = $this->addValues($simcard, $mapping);
-         }
-
-         if (count($a_simcards)) {
-            $a_inventory['simcards'] = $a_simcards;
+         foreach ($array['SIMCARDS'] as $id => $simcard) {
+            //If there's an ICCID value: process the simcard
+            if (isset($simcard['ICCID'])) {
+               $a_inventory['simcards'][] = $this->addValues($simcard, $mapping);
+            }
          }
       }
    }

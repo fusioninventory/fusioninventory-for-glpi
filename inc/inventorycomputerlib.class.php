@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update / add information of computer inventory into GLPI database.
  */
-class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInventoryCommon {
 
    /**
     * Define the name of the table

@@ -197,18 +197,17 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
             'msin'              => $a_simcard['imsi'],
             'devicesimcards_id' => $simcards_id
          ];
-         //Check if firmware relation with equipment
+         //Check if there's already a connection between the simcard and an asset
          $relation->getFromDBByCrit($input);
+
+         $input['itemtype'] = $itemtype;
+         $input['items_id'] = $items_id;
+         $input['is_dynamic'] = 1;
+         $input['entities_id'] = $_SESSION['glpiactive_entity'];
          if ($relation->isNewItem()) {
-            $input = $input + [
-               'is_dynamic'   => 1,
-               'entities_id'  => $_SESSION['glpiactive_entity']
-            ];
             $relation->add($input);
          } else {
-            $input['itemtype'] = $itemtype;
-            $input['items_id'] = $items_id;
-            $input['id']       = $relation->getID();
+            $input['id'] = $relation->getID();
             $relation->update($input);
          }
       }
