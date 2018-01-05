@@ -182,7 +182,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       /*
        * Get element config in 'edit' mode
        */
-      $config = NULL;
+      $config = null;
       if ($mode === self::EDIT && isset($request_data['index'])) {
 
          /*
@@ -280,7 +280,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       //add new data at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
       array_splice($data['jobs'][$this->json_name],
-                   $params['index'], 0, array($entry));
+                   $params['index'], 0, [$entry]);
 
       return $data;
    }
@@ -311,7 +311,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
             __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
-            $error_msg . "<br/>". $error_json_message, FALSE, ERROR, FALSE
+            $error_msg . "<br/>". $error_json_message, false, ERROR, false
          );
          $error = 1;
       } else {
@@ -365,7 +365,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       unset($data['jobs'][$this->json_name][$params['old_index']]);
 
       //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
-      array_splice($data['jobs'][$this->json_name], $params['new_index'], 0, array($moved_check));
+      array_splice($data['jobs'][$this->json_name], $params['new_index'], 0, [$moved_check]);
 
       //update order
       $this->updateOrderJson($params['id'], $data);
@@ -427,5 +427,5 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       } else {
          return [];
       }
-   }   
+   }
 }

@@ -77,7 +77,7 @@ if (isset($_GET['file'])) {
       //header('Pragma: no-cache');
       header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
       header("Content-disposition: filename=\"$filename\"");
-//      header("Content-type: ".$mime);
+      //      header("Content-type: ".$mime);
 
       $f=fopen($file, "r");
 

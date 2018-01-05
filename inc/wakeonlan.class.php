@@ -80,12 +80,12 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $communication = $pfTask->fields['communication'];
       $a_definitions = importArrayFromDB($pfTaskjob->fields['definition']);
 
-      $a_computers_to_wake = array();
+      $a_computers_to_wake = [];
       foreach ($a_definitions as $definition) {
          $itemtype = key($definition);
          $items_id = current($definition);
 
-         switch($itemtype) {
+         switch ($itemtype) {
 
             case 'Computer':
                $a_computers_to_wake[] = $items_id;
@@ -153,7 +153,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       }
       $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
 
-      $a_agentList = array();
+      $a_agentList = [];
 
       if ((!strstr($pfTaskjob->fields['action'], '".1"'))
             AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
@@ -174,14 +174,12 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                }
             }
          }
-      }
-      /*
+      } /*
        * Case 3 : dynamic agent
        */
       else if (strstr($pfTaskjob->fields['action'], '".1"')) {
          $a_agentList = $this->getAgentsSubnet(count($a_computers_to_wake), $communication);
-      }
-      /*
+      } /*
        * Case 4 : dynamic agent same subnet
        */
       else if (in_array('.2', $a_actions)) {
@@ -204,7 +202,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       }
 
       if (count($a_agentList) == '0') {
-         $a_input = array();
+         $a_input = [];
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
          $a_input['plugin_fusioninventory_agents_id'] = 0;
@@ -226,7 +224,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       } else {
          $nb_computers = ceil(count($a_computers_to_wake) / count($a_agentList));
 
-         $a_input = array();
+         $a_input = [];
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 0;
          $a_input['itemtype'] = 'Computer';
@@ -244,9 +242,9 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                   $a_input['date'] = date("Y-m-d H:i:s");
                   $pfTaskjoblog->add($a_input);
                   unset($a_input['state']);
-                  if ($communication == "push") {
-                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
-                  }
+               if ($communication == "push") {
+                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
+               }
             }
          }
       }
@@ -274,52 +272,52 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $sxml_option->addChild('NAME', 'WAKEONLAN');
 
       $changestate = 0;
-//      foreach ($taskjobstates as $jobstate) {
+      //      foreach ($taskjobstates as $jobstate) {
          $data = $jobstate->fields;
          $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".
                                                 $data['items_id']."' ");
          $computerip = 0;
-         foreach ($a_networkPort as $datanetwork) {
-            //if ($datanetwork['ip'] != "127.0.0.1") {
-               if ($datanetwork['mac'] != '') {
-                  $computerip++;
-                  $sxml_param = $sxml_option->addChild('PARAM');
-                  $sxml_param->addAttribute('MAC', $datanetwork['mac']);
-                  //$sxml_param->addAttribute('IP', $datanetwork['ip']);
+      foreach ($a_networkPort as $datanetwork) {
+         //if ($datanetwork['ip'] != "127.0.0.1") {
+         if ($datanetwork['mac'] != '') {
+            $computerip++;
+            $sxml_param = $sxml_option->addChild('PARAM');
+            $sxml_param->addAttribute('MAC', $datanetwork['mac']);
+            //$sxml_param->addAttribute('IP', $datanetwork['ip']);
 
-                  if ($changestate == '0') {
-                     $pfTaskjobstate->changeStatus($data['id'], 1);
-                     $pfTaskjoblog->addTaskjoblog($data['id'],
-                                             '0',
-                                             'Computer',
-                                             '1',
-                                             '');
-                     $changestate = $pfTaskjobstate->fields['id'];
-                  } else {
-                     $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                         $data['items_id'],
-                                                         $data['itemtype'],
-                                                         0,
-                                                         "Merged with ".$changestate);
-                  }
+            if ($changestate == '0') {
+               $pfTaskjobstate->changeStatus($data['id'], 1);
+               $pfTaskjoblog->addTaskjoblog($data['id'],
+                                       '0',
+                                       'Computer',
+                                       '1',
+                                       '');
+               $changestate = $pfTaskjobstate->fields['id'];
+            } else {
+               $pfTaskjobstate->changeStatusFinish($data['id'],
+                                                   $data['items_id'],
+                                                   $data['itemtype'],
+                                                   0,
+                                                   "Merged with ".$changestate);
+            }
 
-                  // Update taskjobstate (state = 3 : finish); Because we haven't return of agent on this action
-                  $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                      $data['items_id'],
-                                                      $data['itemtype'],
-                                                      0,
-                                                      'WakeOnLan have not return state');
-               }
-            //}
-         }
-         if ($computerip == '0') {
+            // Update taskjobstate (state = 3 : finish); Because we haven't return of agent on this action
             $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                $data['items_id'],
-                                                $data['itemtype'],
-                                                1,
-                                                "No IP found on the computer");
-
+                                             $data['items_id'],
+                                             $data['itemtype'],
+                                             0,
+                                             'WakeOnLan have not return state');
          }
+         //}
+      }
+      if ($computerip == '0') {
+         $pfTaskjobstate->changeStatusFinish($data['id'],
+                                          $data['items_id'],
+                                          $data['itemtype'],
+                                          1,
+                                          "No IP found on the computer");
+
+      }
       //}
       return $this->message;
    }
@@ -335,7 +333,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
     * @param string $subnet
     * @return array
     */
-   function getAgentsSubnet($nb_computers, $communication, $subnet='') {
+   function getAgentsSubnet($nb_computers, $communication, $subnet = '') {
       global $DB;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -367,7 +365,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $osfind = 'AND operatingsystems_id IN '.$osfind;
       }
 
-      $a_agentList = array();
+      $a_agentList = [];
       for ($pass = 0; $pass < $pass_count; $pass++) {
 
          if ($pass == "1") {
@@ -381,7 +379,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             $subnet = " AND subnet='".$subnet."' ";
          }
          $a_agents = $pfAgentmodule->getAgentsCanDo('WAKEONLAN');
-         $a_agentsid = array();
+         $a_agentsid = [];
          foreach ($a_agents as $a_agent) {
             $a_agentsid[] = $a_agent['id'];
          }
@@ -430,4 +428,3 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    }
 }
 
-?>

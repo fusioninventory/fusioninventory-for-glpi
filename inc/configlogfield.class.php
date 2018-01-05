@@ -65,8 +65,8 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       global $DB;
 
       $NOLOG = '-1';
-      $logs = array(
-          'NetworkEquipment' => array(
+      $logs = [
+          'NetworkEquipment' => [
               'ifdescr'          => $NOLOG,
               'ifIndex'          => $NOLOG,
               'ifinerrors'       => $NOLOG,
@@ -82,19 +82,19 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
               'macaddr'          => $NOLOG,
               'portDuplex'       => $NOLOG,
               'trunk'            => $NOLOG
-          ),
-          'Printer' => array(
+          ],
+          'Printer' => [
               'ifIndex' => $NOLOG,
               'ifName'  => $NOLOG
-          )
-      );
+          ]
+      ];
 
       $mapping = new PluginFusioninventoryMapping();
       foreach ($logs as $itemtype=>$fields) {
          foreach ($fields as $name=>$value) {
-            $input = array();
+            $input = [];
             $mapfields = $mapping->get($itemtype, $name);
-            if ($mapfields != FALSE) {
+            if ($mapfields != false) {
                if (!$this->getValue($mapfields['id'])) {
                   $input['plugin_fusioninventory_mappings_id'] = $mapfields['id'];
                   $input['days']  = $value;
@@ -139,7 +139,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
             return $this->fields['0'];
          }
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -151,7 +151,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options=array()) {
+   function showForm($options = []) {
       global $DB;
 
       $mapping = new PluginFusioninventoryMapping();
@@ -178,10 +178,10 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $days = array();
+      $days = [];
       $days[-1] = __('Never');
       $days[0]  = __('Always');
-      for ($i = 1 ; $i < 366 ; $i++) {
+      for ($i = 1; $i < 366; $i++) {
          $days[$i]  = "$i";
       }
 
@@ -200,7 +200,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
             echo "<td align='center'>";
             Dropdown::showFromArray('field-'.$data['id'], $days,
-                                    array('value'=>$data['days']));
+                                    ['value'=>$data['days']]);
             echo "</td>";
             echo "</tr>";
          }
@@ -220,14 +220,14 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<td colspan='1' class='center' height='30'>";
       if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' ".
-                 "value='"._x('button','Clean')."' >";
+                 "value='"._x('button', 'Clean')."' >";
       }
       echo "</td>";
       echo "</tr>";
       echo "</table></div>";
       Html::closeForm();
 
-      return TRUE;
+      return true;
    }
 
 
@@ -240,7 +240,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    function putForm($p_post) {
       foreach ($p_post as $field=>$log) {
          if (substr($field, 0, 6) == 'field-') {
-            $input = array();
+            $input = [];
             $input['id'] = substr($field, 6);
             $input['days'] = $log;
             $this->update($input);
@@ -249,4 +249,3 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
    }
 }
 
-?>

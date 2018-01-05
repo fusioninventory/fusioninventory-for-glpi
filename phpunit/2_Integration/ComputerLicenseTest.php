@@ -41,71 +41,71 @@
  */
 
 class ComputerLicenseTest extends RestoreDatabase_TestCase {
-   public $a_computer1 = array();
-   public $a_computer1_beforeformat = array();
+   public $a_computer1 = [];
+   public $a_computer1_beforeformat = [];
 
    /*
     * Why do you define a constructor here while you can set this 2 variables up ahead ???
     */
    function __construct() {
-      $this->a_computer1 = array(
-          "Computer" => array(
+      $this->a_computer1 = [
+          "Computer" => [
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [
+              [
                   'name'     => 'Microsoft Office 2003',
                   'fullname' => 'Microsoft Office Professional Edition 2003',
                   'serial'   => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx'
-              )
-          ),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $this->a_computer1_beforeformat = array(
-          "CONTENT" => array(
-              "HARDWARE" => array(
+      $this->a_computer1_beforeformat = [
+          "CONTENT" => [
+              "HARDWARE" => [
                   "NAME"   => "pc001"
-              ),
-              "BIOS" => array(
+              ],
+              "BIOS" => [
                   "SSN" => "ggheb7ne7"
-              ),
-              'LICENSEINFOS' => Array(
-                  array(
+              ],
+              'LICENSEINFOS' => [
+                  [
                       'COMPONENTS' => 'Word/Excel/Access/Outlook/PowerPoint/Publisher/InfoPath',
                       'FULLNAME'   => 'Microsoft Office Professional Edition 2003',
                       'KEY'        => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx',
                       'NAME'       => 'Microsoft Office 2003',
                       'PRODUCTID'  => 'xxxxx-640-0000xxx-xxxxx'
-                  )
-              )
-          )
-      );
+                  ]
+              ]
+          ]
+      ];
    }
 
 
@@ -133,7 +133,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $computer->getFromDB(1);
@@ -145,7 +145,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
 
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDB(1);
-      $a_ref = array(
+      $a_ref = [
           'id'                   => 1,
           'computers_id'         => 1,
           'softwarelicenses_id'  => 0,
@@ -155,8 +155,8 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
           'is_trial'             => '0',
           'is_update'            => '0',
           'is_oem'               => '0',
-          'activation_date'      => NULL
-      );
+          'activation_date'      => null
+      ];
 
       $this->assertEquals($a_ref,
                           $pfComputerLicenseInfo->fields,
@@ -166,8 +166,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function testCleanComputer()
-   {
+   public function testCleanComputer() {
       global $DB;
 
       $DB->connect();
@@ -180,7 +179,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDB(1);
 
-      $a_ref = array(
+      $a_ref = [
           'id'                   => 1,
           'computers_id'         => 1,
           'softwarelicenses_id'  => 0,
@@ -190,8 +189,8 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
           'is_trial'             => '0',
           'is_update'            => '0',
           'is_oem'               => '0',
-          'activation_date'      => NULL
-      );
+          'activation_date'      => null
+      ];
 
       $this->assertEquals($a_ref,
                           $pfComputerLicenseInfo->fields,
@@ -230,7 +229,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $computer->getFromDB(1);
@@ -239,7 +238,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDB(1);
 
-      $a_ref = array(
+      $a_ref = [
           'id'                   => 1,
           'computers_id'         => 1,
           'softwarelicenses_id'  => 0,
@@ -249,8 +248,8 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
           'is_trial'             => '0',
           'is_update'            => '0',
           'is_oem'               => '0',
-          'activation_date'      => NULL
-      );
+          'activation_date'      => null
+      ];
 
       $this->assertEquals(
          $a_ref,
@@ -259,7 +258,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       );
 
       //delete computer and check if it has been removed
-      $computer->delete(array('id' => $computers_id));
+      $computer->delete(['id' => $computers_id]);
       $this->assertTrue($computer->getFromDB($computers_id));
 
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
@@ -267,7 +266,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
       $this->assertEquals(10, count($pfComputerLicenseInfo->fields));
 
       //purge computer and check if it has been removed
-      $computer->delete(array('id' => $computers_id), 1);
+      $computer->delete(['id' => $computers_id], 1);
       $this->assertFalse($computer->getFromDB($computers_id));
 
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();

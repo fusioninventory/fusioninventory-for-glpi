@@ -69,7 +69,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('FusionInventory', 'fusioninventory')
          .' - '._n('License', 'Licenses', $nb);
    }
@@ -301,4 +301,3 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    }
 }
 
-?>

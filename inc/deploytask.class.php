@@ -65,7 +65,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       if ($nb > 1) {
          return PluginFusioninventoryDeployGroup::getTypeName();
       }
@@ -80,7 +80,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * @return boolean
     */
    static function canCreate() {
-      return TRUE;
+      return true;
    }
 
 
@@ -91,7 +91,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * @return boolean
     */
    static function canView() {
-      return TRUE;
+      return true;
    }
 
 
@@ -102,9 +102,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
+   function defineTabs($options = []) {
 
-      $ong = array();
+      $ong = [];
 
       if ($this->fields['id'] > 0) {
          $this->addStandardTab(__CLASS__, $ong, $options);
@@ -121,9 +121,9 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      switch(get_class($item)) {
+      switch (get_class($item)) {
 
          case __CLASS__:
             return __('Order list', 'fusioninventory');
@@ -142,16 +142,16 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      switch(get_class($item)) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+      switch (get_class($item)) {
 
          case __CLASS__:
             $obj = new self;
             $obj->showActions($_POST["id"]);
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -174,7 +174,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    function title() {
       global  $CFG_GLPI;
 
-      $buttons = array();
+      $buttons = [];
       $title = __('Task', 'fusioninventory');
 
       if ($this->canCreate()) {
@@ -245,7 +245,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
          Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id=".
             $this->getField('id'));
-         return FALSE;
+         return false;
       }
 
       $task_id = $this->getField('id');
@@ -269,7 +269,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          }
          $job->delete($a_taskjob, 1);
       }
-      return TRUE;
+      return true;
    }
 
 
@@ -278,12 +278,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
     * Do this after added an item
     */
    function post_addItem() {
-      $options = array(
+      $options = [
          'id'              => $this->getField('id'),
          'date_creation'   => date("Y-m-d H:i:s")
-      );
+      ];
       $this->update($options);
    }
 }
 
-?>

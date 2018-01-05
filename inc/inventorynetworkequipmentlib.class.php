@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $_SESSION['glpiactiveentities_string'] = "'" . $networkEquipment->fields['entities_id'] . "'";
       }
       if (!isset($_SESSION['glpiactiveentities'])) {
-         $_SESSION['glpiactiveentities'] = array($networkEquipment->fields['entities_id']);
+         $_SESSION['glpiactiveentities'] = [$networkEquipment->fields['entities_id']];
       }
       if (!isset($_SESSION['glpiactive_entity'])) {
          $_SESSION['glpiactive_entity'] = $networkEquipment->fields['entities_id'];
@@ -107,9 +107,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                            $mac,
                            'Internal');
 
-
       // * NetworkEquipment fusion (ext)
-      $db_networkequipment = array();
+      $db_networkequipment = [];
       $query = "SELECT *
          FROM `".  getTableForItemType("PluginFusioninventoryNetworkEquipment")."`
          WHERE `networkequipments_id` = '$items_id'";
@@ -168,14 +167,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                        AND `items_id`='".$networkequipments_id."'
                        AND `instantiation_type`='NetworkPortAggregate'
                        AND `logical_number` = '0'", '', 1));
-      $a_ips_DB = array();
+      $a_ips_DB = [];
       if (isset($a_networkPortAggregates['id'])) {
          $a_networkPortAggregates['mac'] = $mac;
          $networkPort->update($a_networkPortAggregates);
 
          $networkports_id = $a_networkPortAggregates['id'];
       } else {
-         $input = array();
+         $input = [];
          $input['itemtype'] = 'NetworkEquipment';
          $input['items_id'] = $networkequipments_id;
          $input['instantiation_type'] = 'NetworkPortAggregate';
@@ -191,7 +190,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $a_networknames_find['name'] = $networkname_name;
          $networkName->update($a_networknames_find);
       } else {
-         $input = array();
+         $input = [];
          $input['items_id'] = $networkports_id;
          $input['itemtype'] = 'NetworkPort';
          $input['name']     = $networkname_name;
@@ -219,13 +218,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          if (count($a_ips_DB) != 0 && count($a_ips) != 0) {
             // Delete IPs in DB
             foreach ($a_ips_DB as $idtmp => $ip) {
-               $iPAddress->delete(array('id'=>$idtmp));
+               $iPAddress->delete(['id'=>$idtmp]);
             }
          }
          if (count($a_ips) != 0) {
             foreach ($a_ips as $ip) {
                if ($ip != '127.0.0.1') {
-                  $input = array();
+                  $input = [];
                   $input['entities_id'] = 0;
                   $input['itemtype'] = 'NetworkName';
                   $input['items_id'] = $networknames_id;
@@ -367,7 +366,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          return;
       }
 
-      $portID = FALSE;
+      $portID = false;
       if ($a_lldp['ip'] != '') {
          $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_lldp['ip'],
                                                          $a_lldp['ifdescr'],
@@ -390,8 +389,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                  AND $contact_id == $portID)) {
             $pfNetworkPort->disconnectDB($networkports_id);
             $pfNetworkPort->disconnectDB($portID);
-            $wire->add(array('networkports_id_1'=> $networkports_id,
-                             'networkports_id_2' => $portID));
+            $wire->add(['networkports_id_1'=> $networkports_id,
+                             'networkports_id_2' => $portID]);
          }
       }
    }
@@ -438,8 +437,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                }
             }
             if ($phonecase == '1') {
-               $wire->add(array('networkports_id_1'=> $networkports_id,
-                                'networkports_id_2' => $phonePort_id));
+               $wire->add(['networkports_id_1'=> $networkports_id,
+                                'networkports_id_2' => $phonePort_id]);
                $networkPort->getFromDB($phonePort_id);
                $Phone = new Phone();
                $Phone->getFromDB($networkPort->fields['items_id']);
@@ -452,14 +451,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $portLink_id = $a_portPhone['id'];
                } else {
                   // Create Port Link
-                  $input = array();
+                  $input = [];
                   $input['name'] = 'Link';
                   $input['itemtype'] = 'Phone';
                   $input['items_id'] = $Phone->fields['id'];
                   $input['entities_id'] = $Phone->fields['entities_id'];
                   $portLink_id = $networkPort->add($input);
                }
-               $opposite_id = FALSE;
+               $opposite_id = false;
                if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
                   if ($opposite_id != $macNotPhone_id) {
                      $pfNetworkPort->disconnectDB($portLink_id); // disconnect this port
@@ -468,22 +467,22 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                }
                if (!isset($macNotPhone_id)) {
                   // Create unmanaged ports
-                  $unmanagedn_infos = array();
+                  $unmanagedn_infos = [];
                   $unmanagedn_infos["name"] = '';
                   if (isset($_SESSION["plugin_fusioninventory_entity"])) {
                      $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
                   }
                   $newID = $pfUnmanaged->add($unmanagedn_infos);
                   // Add networking_port
-                  $port_add = array();
+                  $port_add = [];
                   $port_add["items_id"] = $newID;
                   $port_add["itemtype"] = 'PluginFusioninventoryUnmanaged';
                   $port_add['mac'] = $macNotPhone;
                   $port_add['instantiation_type'] = "NetworkPortEthernet";
                   $macNotPhone_id = $networkPort->add($port_add);
                }
-               $wire->add(array('networkports_id_1'=> $portLink_id,
-                                'networkports_id_2' => $macNotPhone_id));
+               $wire->add(['networkports_id_1'=> $portLink_id,
+                                'networkports_id_2' => $macNotPhone_id]);
             } else {
                $pfUnmanaged->hubNetwork($pfNetworkPort, $a_portconnection);
             }
@@ -518,7 +517,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         $networkPort->getFromDB($direct_id);
                         if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
                            // 1. Hub connected to this switch port
-                           $pfUnmanaged->connectPortToHub(array($a_port),
+                           $pfUnmanaged->connectPortToHub([$a_port],
                                                               $networkPort->fields['items_id']);
                         } else {
                            // 2. direct connection
@@ -528,8 +527,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                      if ($directconnect == '1') {
                         $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
                         $pfNetworkPort->disconnectDB($a_port['id']); // disconnect destination port
-                        $wire->add(array('networkports_id_1'=> $networkports_id,
-                                         'networkports_id_2' => $a_port['id']));
+                        $wire->add(['networkports_id_1'=> $networkports_id,
+                                         'networkports_id_2' => $a_port['id']]);
                      }
                   } else if ($id and $hub == '1') {
                      $directconnect = 0;
@@ -550,7 +549,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                            // to this switch port
                            if ($ddirect['itemtype'] == 'PluginFusioninventoryUnmanaged') {
                               // b. We have a hub connected to the switch port
-                              $pfUnmanaged->connectPortToHub(array($a_port),
+                              $pfUnmanaged->connectPortToHub([$a_port],
                                                                  $ddirect['items_id']);
                            } else {
                               // a. We have a direct connexion to another device
@@ -562,21 +561,21 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                      if ($directconnect == '1') {
                         $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
                         $pfNetworkPort->disconnectDB($a_port['id']); // disconnect destination port
-                        $wire->add(array('networkports_id_1'=> $networkports_id,
-                                         'networkports_id_2' => $a_port['id']));
+                        $wire->add(['networkports_id_1'=> $networkports_id,
+                                         'networkports_id_2' => $a_port['id']]);
                      }
                   } else if ($id) {
                      // Yet connected
                   } else {
                      // Not connected
                      $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
-                     $wire->add(array('networkports_id_1'=> $networkports_id,
-                                      'networkports_id_2' => $a_port['id']));
+                     $wire->add(['networkports_id_1'=> $networkports_id,
+                                      'networkports_id_2' => $a_port['id']]);
                   }
                } else {
                   // Create unmanaged device
                   $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-                  $input = array();
+                  $input = [];
                   $manufacturer =
                      PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
                   $manufacturer = Toolbox::addslashes_deep($manufacturer);
@@ -592,8 +591,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input['instantiation_type'] = "NetworkPortEthernet";
                   $newPortID = $networkPort->add($input);
                   $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
-                  $wire->add(array('networkports_id_1'=> $networkports_id,
-                                   'networkports_id_2' => $newPortID));
+                  $wire->add(['networkports_id_1'=> $networkports_id,
+                                   'networkports_id_2' => $newPortID]);
                }
             }
          }
@@ -614,7 +613,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $networkPort_Vlan = new NetworkPort_Vlan();
 
-      $db_vlans = array();
+      $db_vlans = [];
       $query = "SELECT `glpi_networkports_vlans`.`id`, `glpi_vlans`.`name`, `glpi_vlans`.`tag`
                 FROM `glpi_networkports_vlans`
                 LEFT JOIN `glpi_vlans`
@@ -646,7 +645,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             if (count($db_vlans) != 0) {
                // Delete vlan in DB
                foreach ($db_vlans as $id) {
-                  $networkPort_Vlan->delete(array('id'=>$id));
+                  $networkPort_Vlan->delete(['id'=>$id]);
                }
             }
             if (count($a_vlans) != 0) {
@@ -678,13 +677,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $db_vlan = current($db_vlans);
          $vlans_id = $db_vlan['id'];
       } else {
-         $input = array();
+         $input = [];
          $input['tag'] = $a_vlan['tag'];
          $input['name'] = $a_vlan['name'];
          $vlans_id = $vlan->add($input);
       }
 
-      $input = array();
+      $input = [];
       $input['networkports_id'] = $networkports_id;
       $input['vlans_id'] = $vlans_id;
       $networkPort_Vlan->add($input);
@@ -706,15 +705,15 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $a_aggregates = $networkPortAggregate->find("`networkports_id`='".$networkports_id."'", "", 1);
 
-      $input = array();
+      $input = [];
       if (count($a_aggregates) == 1) {
          $input = current($a_aggregates);
       } else {
          $input['networkports_id'] = $networkports_id;
-         $input['networkports_id_list'] = exportArrayToDB(array());
+         $input['networkports_id_list'] = exportArrayToDB([]);
          $input['id'] = $networkPortAggregate->add($input);
       }
-      $a_ports_db_tmp = array();
+      $a_ports_db_tmp = [];
       foreach ($a_ports as $logical_number) {
          $a_networkports_DB = current($networkPort->find(
                     "`itemtype`='NetworkEquipment'

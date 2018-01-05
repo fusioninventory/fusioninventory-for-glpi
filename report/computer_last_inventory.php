@@ -75,10 +75,10 @@ echo "<td>";
 echo __('Number of days (minimum) since last inventory', 'fusioninventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
-Dropdown::showNumber("nbdays", array(
+Dropdown::showNumber("nbdays", [
                 'value' => $nbdays,
                 'min'   => 1,
-                'max'   => 365)
+                'max'   => 365]
 );
 echo "</td>";
 echo "</tr>";
@@ -88,7 +88,7 @@ echo "<td>";
 echo __('Status');
 echo "</td>";
 echo "<td>";
-Dropdown::show("State", array('name'=>'state', 'value'=>$state));
+Dropdown::show("State", ['name'=>'state', 'value'=>$state]);
 echo "</td>";
 echo "</tr>";
 
@@ -152,4 +152,3 @@ echo "</table>";
 
 Html::footer();
 
-?>

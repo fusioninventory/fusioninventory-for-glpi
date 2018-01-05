@@ -69,7 +69,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Remote management', 'fusioninventory');
    }
 
@@ -115,4 +115,3 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
    }
 }
 
-?>

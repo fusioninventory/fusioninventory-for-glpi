@@ -69,4 +69,3 @@ echo "</a></center><br/>";
 
 include (GLPI_ROOT . "/front/rule.common.php");
 
-?>

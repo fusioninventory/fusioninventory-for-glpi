@@ -58,8 +58,8 @@ if (isset($_GET['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(),
                              "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'")) {
-      $criteria  = array('criteria'     => $_GET['criteria'],
-                         'metacriteria' => $_GET['metacriteria']);
+      $criteria  = ['criteria'     => $_GET['criteria'],
+                         'metacriteria' => $_GET['metacriteria']];
       $values['fields_array'] = serialize($criteria);
       $values['plugin_fusioninventory_deploygroups_id'] = $_GET['id'];
       $group_item->add($values);
@@ -68,27 +68,27 @@ if (isset($_GET['save'])) {
                                    "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'");
       $values                 = array_pop($item);
 
-      $criteria = array('criteria'     => $_GET['criteria'],
-                        'metacriteria' => $_GET['metacriteria']);
+      $criteria = ['criteria'     => $_GET['criteria'],
+                        'metacriteria' => $_GET['metacriteria']];
       $values['fields_array'] = serialize($criteria);
       $group_item->update($values);
    }
 
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$_GET['id']);
 
-} elseif (isset($_POST["add"])) {
+} else if (isset($_POST["add"])) {
    $group->check(-1, UPDATE, $_POST);
    $newID = $group->add($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
-//   $group->check($_POST['id'], DELETE);
+   //   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
 
 } else if (isset($_POST["purge"])) {
-//   $group->check($_POST['id'], DELETE);
+   //   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();
@@ -121,4 +121,3 @@ if (isset($_GET['save'])) {
    Html::footer();
 }
 
-?>

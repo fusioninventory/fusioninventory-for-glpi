@@ -63,7 +63,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
    function init() {
       global $DB;
 
-      $input = array();
+      $input = [];
 
       $input['1'] = 'other';
       $input['2'] = 'regular1822';
@@ -356,9 +356,9 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          OR `othername`='".$type."')
          AND `import`='1'");
       if (count($a_ports) > 0) {
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -382,7 +382,6 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
-
 
          echo "<td class='right'>";
 
@@ -430,4 +429,3 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
    }
 }
 
-?>

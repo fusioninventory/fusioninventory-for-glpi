@@ -100,17 +100,17 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
-      $a_reference = array(
-          'CONTENT' => array(
-          'DEVICE' => array(
-              array(
-               'INFO' => array(
+      $a_reference = [
+          'CONTENT' => [
+          'DEVICE' => [
+              [
+               'INFO' => [
                         'COMMENTS' => 'ProCurve J9085A',
                         'FIRMWARE' => 'R.10.06 R.11.60',
                         'ID'       => '123',
-                        'IPS'      => array(
-                                 'IP' => array('192.168.1.56', '192.168.10.56')
-                            ),
+                        'IPS'      => [
+                                 'IP' => ['192.168.1.56', '192.168.10.56']
+                            ],
                         'LOCATION' => 'BAT A - Niv 3',
                         'MAC'      => 'b4:39:d6:3a:7f:00',
                         'MODEL'    => 'J9085A',
@@ -118,15 +118,15 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
                         'SERIAL'   => 'CN536H7J',
                         'TYPE'     => 'NETWORKING',
                         'UPTIME'   => '8 days, 01:48:57.95'
-                   ),
-               'PORTS' => array(
-                       'PORT' => array(
-                           array(
-                                'CONNECTIONS' => array(
-                                         'CONNECTION' => array(
-                                             'MAC' => array('00:40:9d:3b:7f:c4')
-                                             )
-                                    ),
+                   ],
+               'PORTS' => [
+                       'PORT' => [
+                           [
+                                'CONNECTIONS' => [
+                                         'CONNECTION' => [
+                                             'MAC' => ['00:40:9d:3b:7f:c4']
+                                             ]
+                                    ],
 
                                 'IFDESCR'  => '3',
                                 'IFNAME'   => '3',
@@ -134,21 +134,21 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
                                 'IFSTATUS' => '1',
                                 'IFTYPE'   => '6',
                                 'MAC'      => 'b4:39:d6:3b:22:bd',
-                                'VLANS'    => array(
-                                         'VLAN' => array(
-                                             array(
+                                'VLANS'    => [
+                                         'VLAN' => [
+                                             [
                                                   'NAME'   => 'VLAN160',
                                                   'NUMBER' => '160'
-                                             )
-                                         )
-                                    )
-                               )
-                           )
-                   )
-                )
-              )
-              )
-      );
+                                             ]
+                                         ]
+                                    ]
+                               ]
+                           ]
+                   ]
+                ]
+              ]
+              ]
+      ];
 
       $this->assertEquals($a_reference, $a_return);
    }
@@ -214,17 +214,17 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
-      $a_reference = array(
-          'CONTENT' => array(
-          'DEVICE' => array(
-              array(
-               'INFO' => array(
+      $a_reference = [
+          'CONTENT' => [
+          'DEVICE' => [
+              [
+               'INFO' => [
                         'COMMENTS' => 'ProCurve J9085A',
                         'FIRMWARE' => 'R.10.06 R.11.60',
                         'ID'       => '123',
-                        'IPS'      => array(
-                                 'IP' => array('192.168.1.56', '192.168.10.56')
-                            ),
+                        'IPS'      => [
+                                 'IP' => ['192.168.1.56', '192.168.10.56']
+                            ],
                         'LOCATION' => 'BAT A - Niv 3',
                         'MAC'      => 'b4:39:d6:3a:7f:00',
                         'MODEL'    => 'J9085A',
@@ -232,34 +232,34 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
                         'SERIAL'   => 'CN536H7J',
                         'TYPE'     => 'NETWORKING',
                         'UPTIME'   => '8 days, 01:48:57.95'
-                   ),
-               'PORTS' => array(
-                       'PORT' => array(
-                           array(
-                                'AGGREGATE' => array(
-                                    'PORT' => array('10001', '10002')
-                                ),
-                               'IFDESCR' => 'Port-channel10',
-                               'IFNAME' => 'Po10',
-                               'IFNUMBER' => '5010',
-                               'IFSTATUS' => '1',
-                               'IFTYPE' => '53',
-                               'MAC' => 'c4:64:13:8c:7e:b5',
-                               'IFINERRORS' => '0',
-                               'IFINOCTETS' => '1076823325',
-                               'IFINTERNALSTATUS' => '1',
-                               'IFLASTCHANGE' => '15 days, 23:20:53.24',
-                               'IFMTU' => '1500',
-                               'IFOUTERRORS' => '0',
-                               'IFOUTOCTETS' => '2179528910',
-                               'IFSPEED' => '4294967295'
-                           )
-                       )
-                   )
-                )
-              )
-              )
-      );
+                   ],
+               'PORTS' => [
+                       'PORT' => [
+                           [
+                                'AGGREGATE' => [
+                                    'PORT' => ['10001', '10002']
+                                ],
+                                'IFDESCR' => 'Port-channel10',
+                                'IFNAME' => 'Po10',
+                                'IFNUMBER' => '5010',
+                                'IFSTATUS' => '1',
+                                'IFTYPE' => '53',
+                                'MAC' => 'c4:64:13:8c:7e:b5',
+                                'IFINERRORS' => '0',
+                                'IFINOCTETS' => '1076823325',
+                                'IFINTERNALSTATUS' => '1',
+                                'IFLASTCHANGE' => '15 days, 23:20:53.24',
+                                'IFMTU' => '1500',
+                                'IFOUTERRORS' => '0',
+                                'IFOUTOCTETS' => '2179528910',
+                                'IFSPEED' => '4294967295'
+                           ]
+                       ]
+                   ]
+                ]
+              ]
+              ]
+      ];
 
       $this->assertEquals($a_reference, $a_return);
    }
@@ -314,44 +314,44 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
 
-      $a_reference = array(
-          'CONTENT' => array(
-          'DEVICE' => array(
-              array(
-               'INFO' => array(
+      $a_reference = [
+          'CONTENT' => [
+          'DEVICE' => [
+              [
+               'INFO' => [
                         'ID'       => '123',
                         'NAME'     => 'FR-SW01',
                         'SERIAL'   => 'CN536H7J',
                         'TYPE'     => 'NETWORKING'
-                   ),
-               'PORTS' => array(
-                       'PORT' => array(
-                           array(
+                   ],
+               'PORTS' => [
+                       'PORT' => [
+                           [
                                 'IFDESCR'  => '3',
                                 'IFNAME'   => '3',
                                 'IFNUMBER' => '3',
                                 'IFSTATUS' => '1',
                                 'IFTYPE'   => '6',
                                 'MAC'      => 'b4:39:d6:3b:22:bd',
-                                'VLANS'    => array(
-                                         'VLAN' => array(
-                                             array(
+                                'VLANS'    => [
+                                         'VLAN' => [
+                                             [
                                                   'NAME'   => 'VLAN160',
                                                   'NUMBER' => '160'
-                                             ),
-                                             array(
+                                             ],
+                                             [
                                                   'NAME'   => 'VLAN161',
                                                   'NUMBER' => '161'
-                                             )
-                                         )
-                                    )
-                               )
-                           )
-                   )
-                )
-              )
-              )
-      );
+                                             ]
+                                         ]
+                                    ]
+                               ]
+                           ]
+                   ]
+                ]
+              ]
+              ]
+      ];
 
       $this->assertEquals($a_reference, $a_return);
    }
@@ -369,8 +369,8 @@ class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_inventory = array();
-      $a_inventory['INFO'] = array(
+      $a_inventory = [];
+      $a_inventory['INFO'] = [
                 'COMMENTS'       => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
@@ -378,7 +378,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'CPU'            => 6,
                 'FIRMWARE'       => '12.2(55)SE',
                 'ID'             => '55',
-                'IPS'            => array('IP' => array('172.27.0.40', '172.27.1.40')),
+                'IPS'            => ['IP' => ['172.27.0.40', '172.27.1.40']],
                 'LOCATION'       => 'Room 100',
                 'MAC'            => '00:1b:2b:20:40:80',
                 'MEMORY'         => 33,
@@ -389,7 +389,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'TYPE'           => 'NETWORKING',
                 'UPTIME'         => '41 days, 06:53:36.46',
                 'MANUFACTURER'   => 'Cisco'
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
@@ -399,8 +399,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
               && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
          $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
       }
-      $a_reference = array(
-          'PluginFusioninventoryNetworkEquipment' => Array(
+      $a_reference = [
+          'PluginFusioninventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
@@ -409,12 +409,12 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                   'cpu'                         => 6,
                   'memory'                      => 33,
                   'uptime'                      => '41 days, 06:53:36.46'
-                ),
-          'networkport'    => array(),
-          'internalport'   => array('172.27.0.40', '172.27.1.40'),
+                ],
+          'networkport'    => [],
+          'internalport'   => ['172.27.0.40', '172.27.1.40'],
           'itemtype'       => 'NetworkEquipment'
-          );
-      $a_reference['NetworkEquipment'] = array(
+          ];
+      $a_reference['NetworkEquipment'] = [
                'name'                           => 'sw1.siprossii.com',
                'id'                             => '55',
                'locations_id'                   => 'Room 100',
@@ -426,7 +426,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                'manufacturers_id'               => 'Cisco',
                'is_dynamic'                     => 1
 
-            );
+            ];
       $a_reference['firmwares'] = [
          [
             'name'                     => '12.2(55)SE',
@@ -476,7 +476,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
               && isset($a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'])) {
          $date = $a_return['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update'];
       }
-      $a_reference = array(
+      $a_reference = [
           'PluginFusioninventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
@@ -490,7 +490,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
           'networkport'    => [],
           'internalport'   => ['172.27.0.40', '172.27.1.40'],
           'itemtype'       => 'NetworkEquipment'
-          );
+          ];
       $a_reference['NetworkEquipment'] = [
                'name'                           => 'sw1.siprossii.com',
                'id'                             => '55',
@@ -533,8 +533,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_inventory = array();
-      $a_inventory['INFO'] = array(
+      $a_inventory = [];
+      $a_inventory['INFO'] = [
                 'COMMENTS'       => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
@@ -544,54 +544,53 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'NAME'           => 'sw1.siprossii.com',
                 'SERIAL'         => 'CAT1109RGVK',
                 'TYPE'           => 'NETWORKING'
-            );
-      $a_inventory['PORTS']['PORT'][1] = array(
-          'CONNECTIONS' => array(
-               'CONNECTION' => array(
-                     'MAC' => array(
+            ];
+      $a_inventory['PORTS']['PORT'][1] = [
+          'CONNECTIONS' => [
+               'CONNECTION' => [
+                     'MAC' => [
                            '00:0f:fe:0d:30:70'
-                      )
-                )
-           ),
+                      ]
+                ]
+           ],
           'IFNAME'   => 'Fa0/1',
           'IFNUMBER' => 1,
           'IFTYPE'   => 6,
           'MAC'      => 'b4:39:d6:3a:7f:3a'
-      );
-      $a_inventory['PORTS']['PORT'][2] = array(
-          'CONNECTIONS' => array(
-               'CONNECTION' => array(
-                     'MAC' => array(
+      ];
+      $a_inventory['PORTS']['PORT'][2] = [
+          'CONNECTIONS' => [
+               'CONNECTION' => [
+                     'MAC' => [
                            '00:0f:fe:0d:30:76',
                            '00:0f:fe:0d:30:77',
                            '00:0f:fe:0d:30:78'
-                      )
-                )
-           ),
+                      ]
+                ]
+           ],
           'IFNAME'   => 'Fa0/2',
           'IFNUMBER' => 2,
           'IFTYPE'   => 6,
           'MAC'      => 'b4:39:d6:3a:7f:3e'
-      );
+      ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
 
-      $a_reference = array(
+      $a_reference = [
                '00:0f:fe:0d:30:70'
 
-      );
+      ];
       $this->assertEquals($a_reference, $a_return['connection-mac'][1]);
 
-
-      $a_reference = array();
-      $a_reference = array(
+      $a_reference = [];
+      $a_reference = [
                '00:0f:fe:0d:30:76',
                '00:0f:fe:0d:30:77',
                '00:0f:fe:0d:30:78'
 
-      );
+      ];
       $this->assertEquals($a_reference, $a_return['connection-mac'][2]);
 
       $GLPIlog = new GLPIlogs();
@@ -600,4 +599,3 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
    }
 
 }
-?>

@@ -72,4 +72,3 @@ echo "</center>";
 
 Html::footer();
 
-?>

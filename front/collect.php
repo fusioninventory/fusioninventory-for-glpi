@@ -60,4 +60,3 @@ Search::show('PluginFusioninventoryCollect');
 
 Html::footer();
 
-?>

@@ -59,7 +59,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
    /**
     * The right name for this class
@@ -75,7 +75,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Time slot', 'fusioninventory');
    }
 
@@ -88,7 +88,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('Time slot', 'fusioninventory');
 
@@ -126,9 +126,9 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
+   function defineTabs($options = []) {
 
-      $ong = array();
+      $ong = [];
       $this->addDefaultFormTab($ong);
 
       return $ong;
@@ -163,16 +163,16 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *       )
     *    )
     */
-   function getTimeslotEntries($timeslot_ids = array(), $weekdays = null) {
+   function getTimeslotEntries($timeslot_ids = [], $weekdays = null) {
 
-      $condition = array(
-         "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."')",
-      );
+      $condition = [
+         "`plugin_fusioninventory_timeslots_id` in ('".implode("','", $timeslot_ids)."')",
+      ];
       if (!is_null($weekdays)) {
          $condition[] = "and `day` = '".$weekdays."'";
       }
 
-      $results = array();
+      $results = [];
 
       $timeslot_entries = getAllDatasFromTable(
          "glpi_plugin_fusioninventory_timeslotentries",
@@ -202,7 +202,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    function getCurrentActiveTimeslots() {
       global $DB;
 
-      $timeslots   = array();
+      $timeslots   = [];
       $date        = new DateTime('NOW');
       $day_of_week = $date->format("N");
       $timeinsecs  = $date->format('H') * HOUR_TIMESTAMP
@@ -240,7 +240,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
          $datetime = new DateTime();
       }
       $dateday = new DateTime( $datetime->format("Y-m-d 0:0:0") );
-      $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime,true))->getTimestamp();
+      $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime, true))->getTimestamp();
       return $timeslot_cursor;
    }
 
@@ -254,20 +254,20 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     * @return true
     *
     */
-   function showForm($ID, $options=array()) {
+   function showForm($ID, $options = []) {
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
       //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-      echo "<td>".sprintf(__('%1$s%2$s'),__('Name'),
+      echo "<td>".sprintf(__('%1$s%2$s'), __('Name'),
                           (isset($options['withtemplate']) && $options['withtemplate']?"*":"")).
            "</td>";
       echo "<td>";
       $objectName = autoName($this->fields["name"], "name",
                              (isset($options['withtemplate']) && ( $options['withtemplate']== 2)),
                              $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, 'name', array('value' => $objectName));
+      Html::autocompletionTextField($this, 'name', ['value' => $objectName]);
       echo "</td>";
       echo "<td>".__('Comments')."</td>";
       echo "<td class='middle'>";
@@ -280,8 +280,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
          $pf = new PluginFusioninventoryTimeslotEntry();
          $pf->formEntry($ID);
       }
-      return TRUE;
+      return true;
    }
 }
 
-?>

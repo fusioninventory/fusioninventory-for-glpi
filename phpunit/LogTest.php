@@ -75,4 +75,3 @@ class GLPIlogs_AllTests  {
    }
 }
 
-?>

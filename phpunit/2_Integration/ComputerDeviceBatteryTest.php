@@ -129,7 +129,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
       $pfiComputerLib->updateComputer(
          $a_computerinventory,
          $computers_id,
-         FALSE,
+         false,
          1
       );
 
@@ -190,7 +190,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
          'entities_id'        => '0',
          'is_recursive'       => '0',
          'serial'             => '0E52B',
-         'otherserial'        => NULL,
+         'otherserial'        => null,
          'locations_id'       => '0',
          'states_id'          => '0'
       ];
@@ -240,7 +240,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
       $pfiComputerLib->updateComputer(
          $a_computerinventory,
          $computers_id,
-         FALSE,
+         false,
          1
       );
 
@@ -301,7 +301,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
          'entities_id'        => '0',
          'is_recursive'       => '0',
          'serial'             => '00000000',
-         'otherserial'        => NULL,
+         'otherserial'        => null,
          'locations_id'       => '0',
          'states_id'          => '0'
       ];

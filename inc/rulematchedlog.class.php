@@ -68,7 +68,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return '';
    }
 
@@ -96,51 +96,51 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      $array_ret = array();
+      $array_ret = [];
 
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
              $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
          }
       } else {
-      $continue = true;
+         $continue = true;
 
-      switch ($item->getType()) {
-         case 'PluginFusioninventoryAgent':
-            if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-                $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
-            }
-            break;
+         switch ($item->getType()) {
+            case 'PluginFusioninventoryAgent':
+               if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
+                   $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
+               }
+               break;
 
-         case 'PluginFusioninventoryUnmanaged':
+            case 'PluginFusioninventoryUnmanaged':
+               $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
+               $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
+               break;
+
+            case 'Computer':
+               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+               break;
+
+            case 'Printer':
+               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+               break;
+
+            case 'NetworkEquipment':
+               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
+               break;
+            default:
+               break;
+
+         }
+         if (!$continue) {
+            return [];
+         } else if (empty($array_ret)) {
             $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
             $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
-            break;
-
-         case 'Computer':
-            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-            break;
-
-         case 'Printer':
-            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-            break;
-
-         case 'NetworkEquipment':
-            $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-            break;
-         default:
-            break;
-
-      }
-      if (!$continue) {
-         return array();
-      } elseif(empty($array_ret)) {
-         $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
-         $array_ret[1] = self::createTabEntry(__('Import information', 'fusioninventory'), $cnt);
-      }
-      return $array_ret;
+         }
+         return $array_ret;
       }
    }
 
@@ -154,7 +154,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       $pfRulematchedlog = new self();
       if ($tabnum == '0') {
@@ -207,7 +207,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             LIMIT 30, 50000";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         $this->delete(array('id'=>$data['id']));
+         $this->delete(['id'=>$data['id']]);
       }
    }
 
@@ -392,4 +392,3 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
 }
 
-?>

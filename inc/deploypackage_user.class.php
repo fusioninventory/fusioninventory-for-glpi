@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployPackage_User extends CommonDBRelation {
    static function getUsers($deploypackages_id) {
       global $DB;
 
-      $users = array();
+      $users = [];
       $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_users`.*
                 FROM `glpi_plugin_fusioninventory_deploypackages_users`
                 WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
@@ -119,4 +119,3 @@ class PluginFusioninventoryDeployPackage_User extends CommonDBRelation {
    }
 }
 
-?>

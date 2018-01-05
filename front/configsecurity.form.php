@@ -85,4 +85,3 @@ $pfConfigSecurity->showForm($id);
 
 Html::footer();
 
-?>

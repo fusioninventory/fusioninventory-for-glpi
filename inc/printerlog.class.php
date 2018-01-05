@@ -61,10 +61,9 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('History meter printer', 'fusioninventory');
-
 
       $tab[1]['table'] = "glpi_printers";
       $tab[1]['field'] = 'name';
@@ -91,12 +90,12 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab[19]['datatype'] = 'itemlink';
       $tab[19]['itemlink_type'] = 'PrinterType';
 
-//      $tab[2]['table'] = 'glpi_printermodels';
-//      $tab[2]['field'] = 'name';
-//      $tab[2]['linkfield'] = 'printermodels_id';
-//      $tab[2]['name'] = __('Model');
-//      $tab[2]['datatype']='itemptype';
-//
+      //      $tab[2]['table'] = 'glpi_printermodels';
+      //      $tab[2]['field'] = 'name';
+      //      $tab[2]['linkfield'] = 'printermodels_id';
+      //      $tab[2]['name'] = __('Model');
+      //      $tab[2]['datatype']='itemptype';
+      //
       $tab[18]['table'] = 'glpi_states';
       $tab[18]['field'] = 'name';
       $tab[18]['linkfield'] = 'states_id';
@@ -123,34 +122,31 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab[3]['linkfield'] = 'manufacturers_id';
       $tab[3]['name'] = __('Manufacturer');
 
-//      $tab[5]['table'] = 'glpi_ipaddresses';
-//      $tab[5]['field'] = 'name';
-//      $tab[5]['linkfield'] = 'printers_id';
-//      $tab[5]['name'] = __('IP');
-      $joinparams                = array('jointype' => 'itemtype_item',
-                                         'specific_itemtype'  => 'Printer');
-      $networkNameJoin = array('jointype'          => 'itemtype_item',
+      //      $tab[5]['table'] = 'glpi_ipaddresses';
+      //      $tab[5]['field'] = 'name';
+      //      $tab[5]['linkfield'] = 'printers_id';
+      //      $tab[5]['name'] = __('IP');
+      $joinparams                = ['jointype' => 'itemtype_item',
+                                         'specific_itemtype'  => 'Printer'];
+      $networkNameJoin = ['jointype'          => 'itemtype_item',
                                'specific_itemtype' => 'NetworkPort',
-                               'beforejoin'        => array('table'      => 'glpi_networkports',
-                                                            'joinparams' => $joinparams));
+                               'beforejoin'        => ['table'      => 'glpi_networkports',
+                                                            'joinparams' => $joinparams]];
       $tab[5]['table']         = 'glpi_ipaddresses';
       $tab[5]['field']         = 'name';
       $tab[5]['name']          = __('IP');
-      $tab[5]['forcegroupby']  = TRUE;
-      $tab[5]['massiveaction'] = FALSE;
-      $tab[5]['joinparams']    = array('jointype'          => 'itemtype_item',
+      $tab[5]['forcegroupby']  = true;
+      $tab[5]['massiveaction'] = false;
+      $tab[5]['joinparams']    = ['jointype'          => 'itemtype_item',
                                         'specific_itemtype' => 'NetworkName',
-                                        'beforejoin'        => array('table' => 'glpi_networknames',
+                                        'beforejoin'        => ['table' => 'glpi_networknames',
                                                                      'joinparams'
-                                                                             => $networkNameJoin));
+                                                                             => $networkNameJoin]];
 
-
-
-
-//      $tab[4]['table'] = 'glpi_infocoms';
-//      $tab[4]['field'] = 'budget';
-//      $tab[4]['linkfield'] = '';
-//      $tab[4]['name'] = __('Budget');
+      //      $tab[4]['table'] = 'glpi_infocoms';
+      //      $tab[4]['field'] = 'budget';
+      //      $tab[4]['linkfield'] = '';
+      //      $tab[4]['name'] = __('Budget');
 
       $tab[6]['table'] = 'glpi_plugin_fusioninventory_printerlogs';
       $tab[6]['field'] = 'pages_total';
@@ -255,7 +251,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    function getEntries($printers_id, $begin, $limit) {
       global $DB;
 
-      $datas=array();
+      $datas=[];
       $query = "SELECT *
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$printers_id."'
@@ -270,7 +266,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          }
          return $datas;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -293,7 +289,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       if ($result) {
          $fields = $DB->fetch_assoc($result);
          if ($fields) {
-            $output = array();
+            $output = [];
             $output['num_days'] =
                ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
             $output['num_pages'] = $fields['max_pages'] - $fields['min_pages'];
@@ -301,7 +297,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             return $output;
          }
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -313,10 +309,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     * @param array $options
     * @return boolean
     */
-   function showForm($printers_id, $options=array()) {
+   function showForm($printers_id, $options = []) {
 
       if (!Session::haveRight('plugin_fusioninventory_printer', READ)) {
-         return FALSE;
+         return false;
       }
 
       // display stats
@@ -355,7 +351,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       // Get history
       $data = $this->getEntries($printers_id, $_GET['start'], $limit);
       if (!($data)) {
-         return FALSE;
+         return false;
       }
 
       echo "<div align='center'><form method='post' name='printer_history_form'
@@ -369,10 +365,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<th>".__('Date')." :</th>";
       echo "<th>".__('Meter', 'fusioninventory')." :</th></tr>";
 
-      for ($i=0 ; $i<$limit ; $i++) {
+      for ($i=0; $i<$limit; $i++) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         Html::showCheckbox(array('name' => "checked_$i", 'value' => 1));
+         Html::showCheckbox(['name' => "checked_$i", 'value' => 1]);
          echo "</td>";
          echo "<td align='center'>".$data["$i"]['date']."</td>";
          echo "<td align='center'>".$data["$i"]['pages']."</td>";
@@ -381,7 +377,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
 
       if (!Session::haveRight('plugin_fusioninventory_printer', UPDATE)) {
-         return FALSE;
+         return false;
       }
 
       echo "<input type='hidden' name='limit' value='".$limit."'>";
@@ -398,7 +394,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
-      return TRUE;
+      return true;
    }
 
 
@@ -411,7 +407,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     * @param integer $id the id of printer
     * @param array $options
     */
-   function showGraph($id, $options=array()) {
+   function showGraph($id, $options = []) {
       global $DB, $CFG_GLPI;
 
       $printer = new Printer();
@@ -421,7 +417,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $end='';
       $timeUnit='day';
       $graphField='pages_total';
-      $pagecounters = array();$graphType='day';
+      $pagecounters = [];$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin = $_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
@@ -441,7 +437,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $timeUnit = $_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
       }
       if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
-         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=[];
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
          $printerCompAdd = $_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
@@ -453,7 +449,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                      $oPrinter->getField('name');
             }
          }
-      } elseif (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
+      } else if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
          unset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove']]);
       }
       $oPrinter = new Printer();
@@ -532,13 +528,13 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</td>";
       echo "<td class='left'>".__('Time unit', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elementsTime=array('day'  => _n('Day', 'Days', 1),
+      $elementsTime=['day'  => _n('Day', 'Days', 1),
                           'week' => __('Week'),
                           'month'=> _n('Month', 'Months', 1),
-                          'year' => __('Year', 'fusioninventory'));
+                          'year' => __('Year', 'fusioninventory')];
 
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
-                              array('value'=>$timeUnit));
+                              ['value'=>$timeUnit]);
       echo "</td>";
       echo "</tr>";
 
@@ -549,12 +545,12 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</td>";
       echo "<td class='left'>".__('Display', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elements=array('total'=>__('Total counter', 'fusioninventory'),
+      $elements=['total'=>__('Total counter', 'fusioninventory'),
 
-                    'day'=>__('pages per day', 'fusioninventory'));
+                    'day'=>__('pages per day', 'fusioninventory')];
 
       Dropdown::showFromArray('graph_type', $elements,
-                              array('value'=>$graphType));
+                              ['value'=>$graphType]);
       echo "</td>";
       echo "</tr>";
 
@@ -576,14 +572,14 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</td>";
       echo "<td class='left'>".__('Add a printer', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $printersused = array();
+      $printersused = [];
       foreach ($printersView as $printer_id=>$name) {
          $printersused[] = $printer_id;
       }
       $printer->getFromDB($id);
-      Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
+      Dropdown::show('Printer', ['name'    =>'graph_printerCompAdd',
                                       'entity'  => $printer->fields['entities_id'],
-                                      'used'    => $printersused));
+                                      'used'    => $printersused]);
       echo "&nbsp;<input type='submit' value=\"".__('Add')."\" class='submit' ".
               "name='graph_plugin_fusioninventory_printer_add'>";
       echo "</td>";
@@ -608,7 +604,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
 
-      $elementsField=array(
+      $elementsField=[
           'pages_total'       => $pagecounters['pagecountertotalpages'],
           'pages_n_b'         => $pagecounters['pagecounterblackpages'],
           'pages_color'       => $pagecounters['pagecountercolorpages'],
@@ -620,10 +616,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
           'pages_total_copy'  => $pagecounters['pagecountertotalpages_copy'],
           'pages_n_b_copy'    => $pagecounters['pagecounterblackpages_copy'],
           'pages_color_copy'  => $pagecounters['pagecountercolorpages_copy'],
-          'pages_total_fax'   => $pagecounters['pagecountertotalpages_fax']);
+          'pages_total_fax'   => $pagecounters['pagecountertotalpages_fax']];
 
       echo "<br/>";
-      $a_graph = array();
+      $a_graph = [];
       foreach ($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`,
@@ -646,16 +642,16 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
              .$group."
              ORDER BY `year`, `month`, `day`, `printers_id`";
 
-         $input = array();
+         $input = [];
          $result = $DB->query($query);
 
          if ($result) {
             if ($DB->numrows($result) != 0) {
-               $pages = array();
-               $data = array();
+               $pages = [];
+               $data = [];
                $date = '';
                while ($data = $DB->fetch_assoc($result)) {
-                  switch($timeUnit) {
+                  switch ($timeUnit) {
 
                      case 'day':
                         $split = explode(" ", $data['date']);
@@ -689,21 +685,21 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                         if ($y < 0) {
                            $y = 0;
                         }
-                        $input[] = array('x' => $date,
-                                         'y' => $y);
+                        $input[] = ['x' => $date,
+                                         'y' => $y];
                         if ($data[$graphField] > 0) {
                            $pages[$data['printers_id']] = $data[$graphField];
                         }
                      }
                   } else {
-                     $input[] = array('x' => $date,
-                                      'y' => $data[$graphField]);
+                     $input[] = ['x' => $date,
+                                      'y' => $data[$graphField]];
                   }
                }
             } else {
                if ($graphType == 'day') {
-                  $input[] = array('x' => date("Y-m-d"),
-                                   'y' => 0);
+                  $input[] = ['x' => date("Y-m-d"),
+                                   'y' => 0];
                }
             }
          }
@@ -730,10 +726,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          } else {
             if (count($input > 0)) {
                $split = explode(' > ', $name);
-               $a_graph[] = array(
+               $a_graph[] = [
                    'key'    => $split[count($split) - 1],
                    'values' => $input
-               );
+               ];
             }
          }
       }
@@ -758,7 +754,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     }
     ";
 
-   echo '   function exampleData() {
+      echo '   function exampleData() {
       return '.json_encode($a_graph).'
    }
 
@@ -768,4 +764,3 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    }
 }
 
-?>

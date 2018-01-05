@@ -47,7 +47,7 @@
 
 include ("../../../inc/includes.php");
 
-$loggedin = array();
+$loggedin = [];
 $loggedin['result'] = 1;
 if (!isset($_SESSION["glpiname"])) {
    if (!getLoginUserID()) {
@@ -57,4 +57,3 @@ if (!isset($_SESSION["glpiname"])) {
 
 echo json_encode($loggedin);
 
-?>

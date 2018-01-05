@@ -62,7 +62,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          return __('FusionInventory historical', 'fusioninventory');
@@ -80,10 +80,10 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfNetworkPortLog = new self();
       echo $pfNetworkPortLog->showHistory($item->getID());
-      return TRUE;
+      return true;
    }
 
 
@@ -99,7 +99,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    function insertConnection($status, $array) {
       global $DB;
 
-      $input = array();
+      $input = [];
       $input['date'] = date("Y-m-d H:i:s");
       $input['networkports_id'] = $array['networkports_id'];
 
@@ -114,7 +114,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                           '".date("Y-m-d H:i:s")."');";
          $DB->query($query);
       }
-    }
+   }
 
 
 
@@ -126,7 +126,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
      * @param array $options
      * @return true
      */
-   function showForm($id, $options=array()) {
+   function showForm($id, $options = []) {
       global $DB;
 
       $this->initForm($id, $options);
@@ -144,9 +144,9 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       $mapping = new PluginFusioninventoryMapping;
       $maps = $mapping->find();
-      $listName = array();
+      $listName = [];
       foreach ($maps as $mapfields) {
-      # TODO: untested
+         // TODO: untested
          $listName[$mapfields['itemtype']."-".$mapfields['name']]=
             $mapping->getTranslation($mapfields);
       }
@@ -243,7 +243,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-      return TRUE;
+      return true;
    }
 
 
@@ -267,7 +267,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                WHERE `plugin_fusioninventory_mappings_id`='".
                     $data['plugin_fusioninventory_mappings_id']."' ";
 
-            switch($data['days']) {
+            switch ($data['days']) {
 
                case '-1':
                   $DB->query($query_delete);
@@ -342,7 +342,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          $days = $pfConfigLogField->getValue($a_mapping['id']);
 
          if ((isset($days)) AND ($days != '-1')) {
-            $array = array();
+            $array = [];
             $array["networkports_id"] = $port_id;
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $pfNetworkPort->getValue($db_field);
@@ -366,7 +366,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();
 
-      $input = array();
+      $input = [];
 
       // Récupérer le port de la machine associé au port du switch
 
@@ -468,7 +468,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                }
                if ($ID_port == $data["networkports_id_source"]) {
                   if ($np->getFromDB($data["networkports_id_destination"])) {
-                  //if (isset($np->fields["items_id"])) {
+                     //if (isset($np->fields["items_id"])) {
                      $item = new $np->fields["itemtype"];
                      $item->getFromDB($np->fields["items_id"]);
                      $link1 = $item->getLink(1);
@@ -514,11 +514,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             } else {
                // Changes values
                $text .= "<td align='center' colspan='2'></td>";
-//               $text .= "<td align='center'>".
-//                      $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
+               //               $text .= "<td align='center'>".
+               //                      $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
                $mapping = new PluginFusioninventoryMapping();
                $mapfields = $mapping->get('NetworkEquipment', $data["field"]);
-               if ($mapfields != FALSE) {
+               if ($mapfields != false) {
                   $text .= "<td align='center'>".
                      $mapping->getTranslation($mapfields)."</td>";
                } else {
@@ -537,4 +537,3 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
    }
 }
 
-?>

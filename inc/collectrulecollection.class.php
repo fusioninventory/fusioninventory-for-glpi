@@ -65,7 +65,7 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
     *
     * @var boolean
     */
-   public $stop_on_first_match=FALSE;
+   public $stop_on_first_match=false;
 
    /**
     * Set the menu option name
@@ -98,4 +98,3 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
    }
 }
 
-?>

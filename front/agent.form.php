@@ -77,15 +77,15 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_GET["id"])) {
    $agent->display(
-      array(
+      [
          "id" => $_GET["id"]
-      )
+      ]
    );
 } else {
    $agent->display(
-      array(
+      [
          "id" => 0
-      )
+      ]
    );
 }
 

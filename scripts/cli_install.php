@@ -128,7 +128,7 @@ $migration->displayWarning("Version to update: ".PLUGIN_FUSIONINVENTORY_VERSION)
 // To prevent problem of execution time
 ini_set("max_execution_time", "0");
 ini_set("memory_limit", "-1");
-ini_set("session.use_cookies","0");
+ini_set("session.use_cookies", "0");
 $mess = '';
 if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
      AND $current_version!='0') {
@@ -142,16 +142,16 @@ if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
 $migration->displayWarning($mess);
 
 if ($args['--no-models-update']) {
-   define('NO_MODELS_UPDATE', TRUE);
+   define('NO_MODELS_UPDATE', true);
 }
 
 if ($args['--force-install']) {
-   define('FORCE_INSTALL', TRUE);
+   define('FORCE_INSTALL', true);
 }
 
 
 if ($args['--force-upgrade']) {
-   define('FORCE_UPGRADE', TRUE);
+   define('FORCE_UPGRADE', true);
 }
 
 

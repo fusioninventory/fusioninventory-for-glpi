@@ -63,7 +63,7 @@ class UnmanagedImportTest extends Common_TestCase {
       $networkName      = new NetworkName();
       $iPAddress        = new IPAddress();
 
-      $input= array(
+      $input= [
           'name'        => 'switch',
           'entities_id' => 0,
           'item_type'   => 'NetworkEquipment',
@@ -73,11 +73,11 @@ class UnmanagedImportTest extends Common_TestCase {
           'serial'      => 'XXS6BEF3',
           'comment'     => 'this is a comment',
           'plugin_fusioninventory_configsecurities_id' => 1
-      );
+      ];
       $unmanageds_id = $pfUnmanaged->add($input);
 
       // * Add networkport
-      $input = array();
+      $input = [];
       $input['itemtype']            = 'PluginFusioninventoryUnmanaged';
       $input['items_id']            = $unmanageds_id;
       $input['instantiation_type']  = 'NetworkPortEthernet';
@@ -86,21 +86,20 @@ class UnmanagedImportTest extends Common_TestCase {
       $input['is_dynamic']          = 1;
       $networkports_id = $networkPort->add($input);
 
-      $input = array();
+      $input = [];
       $input['items_id']   = $networkports_id;
       $input['itemtype']   = 'NetworkPort';
       $input['name']       = '';
       $input['is_dynamic'] = 1;
       $networknames_id     = $networkName->add($input);
 
-      $input = array();
+      $input = [];
       $input['entities_id']   = 0;
       $input['itemtype']      = 'NetworkName';
       $input['items_id']      = $networknames_id;
       $input['name']          = '192.168.20.1';
       $input['is_dynamic']    = 1;
       $iPAddress->add($input);
-
 
       $pfUnmanaged->import($unmanageds_id);
 
@@ -123,7 +122,7 @@ class UnmanagedImportTest extends Common_TestCase {
       $networkPort->getFromDB(1);
       unset($networkPort->fields['date_mod']);
       unset($networkPort->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'name'                 => 'general',
           'id'                   => '1',
           'items_id'             => '1',
@@ -133,28 +132,28 @@ class UnmanagedImportTest extends Common_TestCase {
           'logical_number'       => '0',
           'instantiation_type'   => 'NetworkPortEthernet',
           'mac'                  => '00:00:00:43:ae:0f',
-          'comment'              => NULL,
+          'comment'              => null,
           'is_deleted'           => '0',
           'is_dynamic'           => '1'
-      );
+      ];
       $this->assertEquals($a_reference, $networkPort->fields, "Networkport");
       $networkName->getFromDB(1);
       unset($networkName->fields['date_mod']);
       unset($networkName->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'          => '1',
           'entities_id' => '0',
           'items_id'    => '1',
           'itemtype'    => 'NetworkPort',
-          'comment'     => NULL,
+          'comment'     => null,
           'fqdns_id'    => '0',
           'is_deleted'  => '0',
           'is_dynamic'  => '1',
           'name'        => ''
-      );
+      ];
       $this->assertEquals($a_reference, $networkName->fields, "Networkname");
       $iPAddress->getFromDB(1);
-      $a_reference = array(
+      $a_reference = [
           'name'        => '192.168.20.1',
           'id'          => '1',
           'entities_id' => '0',
@@ -169,7 +168,7 @@ class UnmanagedImportTest extends Common_TestCase {
           'is_dynamic'  => '1',
           'mainitems_id'  => '1',
           'mainitemtype'  => 'NetworkEquipment'
-      );
+      ];
       $this->assertEquals($a_reference, $iPAddress->fields, "IPAddress");
 
    }
@@ -185,7 +184,6 @@ class UnmanagedImportTest extends Common_TestCase {
 
       $DB->connect();
 
-
    }
 
 
@@ -199,8 +197,6 @@ class UnmanagedImportTest extends Common_TestCase {
 
       $DB->connect();
 
-
    }
 
 }
-?>

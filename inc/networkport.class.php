@@ -61,14 +61,14 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     *
     * @var array
     */
-   private $portDB = array();
+   private $portDB = [];
 
    /**
     * Initialize the port information from inventory
     *
     * @var array
     */
-   private $portModif = array();
+   private $portModif = [];
 
    /**
     * Initialize network port id
@@ -82,7 +82,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     *
     * @var array
     */
-   private $portVlans=array();
+   private $portVlans=[];
 
 
 
@@ -93,14 +93,14 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab                     = array();
+      $tab                     = [];
       $tab['common']           = __('Characteristics');
 
       $tab[1]['table']         = 'glpi_networkports';
       $tab[1]['field']         = 'name';
       $tab[1]['name']          = __('Name');
       $tab[1]['type']          = 'text';
-      $tab[1]['massiveaction'] = FALSE;
+      $tab[1]['massiveaction'] = false;
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'ifmtu';
@@ -235,7 +235,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    static function getUniqueObjectfieldsByportID($id) {
       global $DB;
 
-      $array = array();
+      $array = [];
       $query = "SELECT *
                 FROM `glpi_networkports`
                 WHERE `id`='".$id."';";
@@ -418,7 +418,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $PortID = $data1['id'];
             } else {
                // Add port
-               $input = array();
+               $input = [];
                $input['items_id'] = $data['id'];
                $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
                $input['ip'] = $IP;
@@ -427,7 +427,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $PortID = $NetworkPort->add($input);
             }
             // Update unmanaged device
-            $input = array();
+            $input = [];
             $input['id'] = $data['id'];
             $input['ip'] = $IP;
             if (strstr($model, "Phone")) {
@@ -470,19 +470,19 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $PortID = $data1['id'];
             } else {
                // Add port
-               $input = array();
+               $input = [];
                $input['items_id'] = $data0['items_id'];
                $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
                $input['name'] = $ifDescr;
                $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
 
-               $input = array();
+               $input = [];
                $input['itemtype'] = 'NetworkPort';
                $input['items_id'] = $PortID;
                $networknames_id = $networkName->add($input);
 
-               $input = array();
+               $input = [];
                $input['itemtype'] = 'NetworkName';
                $input['items_id'] = $networknames_id;
                $input['name'] = $IP;
@@ -491,7 +491,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             return $PortID;
          }
          // Add unmanaged device
-         $input = array();
+         $input = [];
          $input['ip'] = $IP;
          if (strstr($model, "Phone")) {
             $input['item_type'] = 'Phone';
@@ -510,19 +510,19 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          }
          $unkonwn_id = $pfUnmanaged->add($input);
          // Add port
-         $input = array();
+         $input = [];
          $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
          $input['name'] = $ifDescr;
          $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
 
-         $input = array();
+         $input = [];
          $input['itemtype'] = 'NetworkPort';
          $input['items_id'] = $PortID;
          $networknames_id = $networkName->add($input);
 
-         $input = array();
+         $input = [];
          $input['itemtype'] = 'NetworkName';
          $input['items_id'] = $networknames_id;
          $input['name'] = $IP;
@@ -545,7 +545,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     * @param array $params
     * @return integer
     */
-   function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber, $params = array()) {
+   function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber, $params = []) {
       global $DB;
 
       $PortID = '';
@@ -616,7 +616,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             return $data['id'];
          }
          // Add unmanaged device because not find device
-         $input = array();
+         $input = [];
          $input['mac'] = $sysmac;
          if (isset($params['sysname'])) {
             $input['name'] = $params['sysname'];
@@ -629,7 +629,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          }
          $unkonwn_id = $PluginFusioninventoryUnmanaged->add($input);
          // Add port
-         $input = array();
+         $input = [];
          $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = 'PluginFusioninventoryUnmanaged';
          $input['mac'] = $sysmac;
@@ -656,7 +656,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $nw = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
 
-      $is_multiple = FALSE;
+      $is_multiple = false;
       $opposite_port = $nw->getOppositeContact($networkports_id);
       if ($opposite_port != ""
               && $opposite_port!= 0) {
@@ -665,7 +665,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $pfUnmanaged = new PluginFusioninventoryUnmanaged();
             if ($pfUnmanaged->getFromDB($networkPort->fields['items_id'])) {
                if ($pfUnmanaged->fields['hub'] == 1) {
-                  $is_multiple = TRUE;
+                  $is_multiple = true;
                }
             }
          }
@@ -674,4 +674,3 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    }
 }
 
-?>

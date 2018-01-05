@@ -68,7 +68,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return "Stat";
    }
 
@@ -118,10 +118,10 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
     * @param integer $nb
     * @return integer
     */
-   static function getLastHours($nb=11) {
+   static function getLastHours($nb = 11) {
       global $DB;
 
-      $a_counters = array();
+      $a_counters = [];
       $a_counters['key'] = 'test';
 
       $timestamp = date('U');
@@ -133,13 +133,12 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
                     ."LIMIT 1";
          $result = $DB->query($query);
          $data = $DB->fetch_assoc($result);
-         $a_counters['values'][] = array(
+         $a_counters['values'][] = [
              'label' => date('G', $timestampSearch)." ".__('hour'),
              'value' => (int)$data['counter']
-         );
+         ];
       }
       return $a_counters;
    }
 }
 
-?>

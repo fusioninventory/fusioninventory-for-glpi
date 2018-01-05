@@ -125,7 +125,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       return __("Job executions", "fusioninventory");
    }
 
@@ -142,7 +142,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
          self::AGENT_HAS_SENT_DATA  => __('Agent replied with data to the server', 'fusioninventory'),
          self::FINISHED             => __('Finished', 'fusioninventory'),
-         self::IN_ERROR             => __('Error' , 'fusioninventory'),
+         self::IN_ERROR             => __('Error', 'fusioninventory'),
          self::CANCELLED            => __('Cancelled', 'fusioninventory'),
          self::POSTPONED            => __('Postponed', 'fusioninventory')
       ];
@@ -158,7 +158,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       if ($item->getType() == 'PluginFusioninventoryTask') {
          $item->showJobLogs();
          return true;
@@ -180,7 +180,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @return string
    *
    **/
-   function stateTaskjob ($taskjobs_id, $width=930, $return='html', $style='') {
+   function stateTaskjob ($taskjobs_id, $width = 930, $return = 'html', $style = '') {
       global $DB;
 
       $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
@@ -236,7 +236,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $itemtype type of the item
     * @param string $state (all or each state : running, finished, nostarted)
     */
-   function stateTaskjobItem($items_id, $itemtype, $state='all') {
+   function stateTaskjobItem($items_id, $itemtype, $state = 'all') {
       global $DB, $CFG_GLPI;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -410,14 +410,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $last_date
     * @return array
     */
-    function getLogs($id, $last_date) {
+   function getLogs($id, $last_date) {
       global $DB;
       $fields = [
-         'log.id'      => 0,
-         'log.date'    => 1,
-         'log.comment' => 2,
-         'log.state'   => 3,
-         'run.id'      => 4,
+       'log.id'      => 0,
+       'log.date'    => 1,
+       'log.comment' => 2,
+       'log.state'   => 3,
+       'run.id'      => 4,
       ];
       $query = "SELECT log.`id` AS 'log.id',
                   log.`date` AS 'log.date',
@@ -458,7 +458,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param integer $error error
     * @param string $message message for the status
     */
-   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='') {
+   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error = 0, $message = '') {
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjob    = new PluginFusioninventoryTaskjob();
@@ -496,7 +496,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     *
     * @param string $reason
     */
-   function fail($reason='') {
+   function fail($reason = '') {
       $this->updateState(PluginFusioninventoryTaskjoblog::TASK_ERROR,
                          self::IN_ERROR,
                          $reason);
@@ -507,7 +507,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $type the type of interaction (before download, etc)
     * @param string $reason the text to be displayed
     */
-   function postpone($type, $reason='') {
+   function postpone($type, $reason = '') {
       $this->updateState(PluginFusioninventoryTaskjoblog::TASK_INFO,
                          self::POSTPONED,
                          $reason);
@@ -519,7 +519,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     *
     * @param string $reason
     */
-   function cancel($reason='') {
+   function cancel($reason = '') {
       $this->updateState(PluginFusioninventoryTaskjoblog::TASK_INFO,
                          self::CANCELLED,
                          $reason);
@@ -533,7 +533,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $jobstate_state the state of the jobstate to set
     * @param string $reason
     */
-   function updateState($joblog_state, $jobstate_state, $reason='') {
+   function updateState($joblog_state, $jobstate_state, $reason = '') {
 
       $log       = new PluginFusioninventoryTaskjoblog();
       $log_input = [

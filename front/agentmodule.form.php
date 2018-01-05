@@ -57,7 +57,7 @@ if (isset($_POST["agent_add"])) {
    $agentmodule->getFromDB($_POST['id']);
    $a_agentList         = importArrayFromDB($agentmodule->fields['exceptions']);
    $a_agentList[]       = $_POST['agent_to_add'][0];
-   $input               = array();
+   $input               = [];
    $input['exceptions'] = exportArrayToDB($a_agentList);
    $input['id']         = $_POST['id'];
    $agentmodule->update($input);
@@ -70,7 +70,7 @@ if (isset($_POST["agent_add"])) {
          unset($a_agentList[$key]);
       }
    }
-   $input = array();
+   $input = [];
    $input['exceptions'] = exportArrayToDB($a_agentList);
    $input['id'] = $_POST['id'];
    $agentmodule->update($input);
@@ -124,7 +124,7 @@ if (isset($_POST["agent_add"])) {
    Html::back();
 } else if (isset ($_POST["update"])) {
    $agentmodule->getFromDB($_POST['id']);
-   $input = array();
+   $input = [];
    if (isset($_POST['activation'])
       && $_POST['activation']) {
       $input['is_active'] = 1;
@@ -132,7 +132,7 @@ if (isset($_POST["agent_add"])) {
       $input['is_active'] = 0;
    }
    if ($agentmodule->fields['is_active'] != $input['is_active']) {
-      $a_agentList         = array();
+      $a_agentList         = [];
       $input['exceptions'] = exportArrayToDB($a_agentList);
    }
    $input['id']  = $_POST['id'];
@@ -143,4 +143,3 @@ if (isset($_POST["agent_add"])) {
 
 Html::footer();
 
-?>

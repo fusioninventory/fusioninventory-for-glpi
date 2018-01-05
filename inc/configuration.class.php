@@ -69,10 +69,10 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
+   function defineTabs($options = []) {
 
-      $tabs = array();
-      $moduleTabs = array();
+      $tabs = [];
+      $moduleTabs = [];
       $tabs[1]=__('General setup');
       $tabs[2]=__('Agents modules', 'fusioninventory');
 
@@ -102,12 +102,11 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options=array()) {
+   function showForm($options = []) {
 
       $this->initForm($options);
 
-      return TRUE;
+      return true;
    }
 }
 
-?>

@@ -59,7 +59,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
     * @preserveGlobalState disabled
     * @test
     */
-   function update($version = '', $verify = FALSE, $nbrules = 0) {
+   function update($version = '', $verify = false, $nbrules = 0) {
       self::restore_database();
       global $DB;
       $DB->connect();
@@ -67,7 +67,6 @@ class UpdateTest extends RestoreDatabase_TestCase {
       if ($version == '') {
          return;
       }
-
 
       $query = "SHOW TABLES";
       $result = $DB->query($query);
@@ -94,14 +93,14 @@ class UpdateTest extends RestoreDatabase_TestCase {
          "Failed to install Fusioninventory ".$sqlfile.":\n".
          implode("\n", $result['output'])
       );
-      $output = array();
+      $output = [];
       $returncode = 0;
       exec(
          "php -f ".FUSINV_ROOT."/scripts/cli_install.php -- --as-user 'glpi'",
          $output,
          $returncode
       );
-      $this->assertEquals(0,$returncode,implode("\n", $output));
+      $this->assertEquals(0, $returncode, implode("\n", $output));
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
@@ -112,7 +111,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
 
       $this->verifyEntityRules($nbrules);
       $this->checkDeployMirrors();
-      
+
       if ($verify) {
          $this->verifyConfig();
       }
@@ -121,15 +120,15 @@ class UpdateTest extends RestoreDatabase_TestCase {
 
    public function provider() {
       // version, verifyConfig, nb entity rules
-      return array(
-         array("2.3.3", FALSE, 0),
+      return [
+         ["2.3.3", false, 0],
          //array("2.1.3", FALSE, 0),
-         array("0.83+2.1", TRUE, 1),
-      );
+         ["0.83+2.1", true, 1],
+      ];
    }
 
 
-   private function verifyEntityRules($nbrules=0) {
+   private function verifyEntityRules($nbrules = 0) {
       global $DB;
 
       $DB->connect();
@@ -174,4 +173,3 @@ class UpdateTest extends RestoreDatabase_TestCase {
 
 }
 
-?>

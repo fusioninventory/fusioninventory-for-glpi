@@ -88,7 +88,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param boolean $getOnly
     * @return array
     */
-   function initConfigModule($getOnly=false) {
+   function initConfigModule($getOnly = false) {
 
       $pfSetup  = new PluginFusioninventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
@@ -141,11 +141,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
               Toolbox::addslashes_deep(
                   implode(
                      DIRECTORY_SEPARATOR,
-                     array(
+                     [
                         GLPI_PLUGIN_DOC_DIR,
                         'fusioninventory',
                         'upload'
-                     )
+                     ]
                   )
                );
       $input['alert_winpath']         = 1;
@@ -167,7 +167,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
 
       return __('General setup');
 
@@ -181,10 +181,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $values configuration values, indexed by name
     * @param boolean $update say if add or update in database
     */
-   function addValues($values, $update=true) {
+   function addValues($values, $update = true) {
 
       foreach ($values as $type=>$value) {
-         if ($this->getValue($type) === NULL) {
+         if ($this->getValue($type) === null) {
             $this->addValue($type, $value);
          } else if ($update == true) {
             $this->updateValue($type, $value);
@@ -200,7 +200,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=[]) {
+   function defineTabs($options = []) {
 
       $plugin = new Plugin();
 
@@ -236,7 +236,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getType()==__CLASS__) {
          return [
@@ -259,7 +259,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       switch ($tabnum) {
 
@@ -303,7 +303,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       if (isset($config['value'])) {
          return $config['value'];
       }
-      return NULL;
+      return null;
    }
 
 
@@ -330,7 +330,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options=[]) {
+   function showForm($options = []) {
 
       $this->showFormHeader($options);
 
@@ -397,19 +397,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __('Update agents not have contacted server since (in days)', 'fusioninventory') . "</td>";
       echo "<td width='20%'>";
-      Dropdown::showNumber("agents_old_days", array(
+      Dropdown::showNumber("agents_old_days", [
          'value' => $this->getValue('agents_old_days'),
          'min'   => 1,
          'max'   => 1000,
-         'toadd' => array('0' => __('Disabled')))
+         'toadd' => ['0' => __('Disabled')]]
       );
       echo "</td>";
       echo "<td>" . __('Action') . "</td>";
       echo "<td width='20%'>";
       //action
       $rand = Dropdown::showFromArray('agents_action',
-                                      array(self::getActions(self::ACTION_CLEAN), self::getActions(self::ACTION_STATUS)),
-                                      array('value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();'));
+                                      [self::getActions(self::ACTION_CLEAN), self::getActions(self::ACTION_STATUS)],
+                                      ['value' => $this->getValue('agents_action'), 'on_change' => 'changestatus();']);
       //if action == action_status => show blocation else hide blocaction
       echo Html::scriptBlock("
          function changestatus() {
@@ -435,9 +435,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td width='20%'>";
       echo "<span id='blocaction2' style='display:none'>";
-      State::dropdown(array('name'   => 'agents_status',
+      State::dropdown(['name'   => 'agents_status',
          'value'  => $this->getValue('agents_status'),
-         'entity' => $_SESSION['glpiactive_entity']));
+         'entity' => $_SESSION['glpiactive_entity']]);
       echo "</span>";
       echo "</td>";
 
@@ -477,7 +477,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   static function showFormInventory($options=[]) {
+   static function showFormInventory($options = []) {
 
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -535,9 +535,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray("location",
-                              array("0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
-                              array('value'=>$pfConfig->getValue('location')));
+                              ["0"=> Dropdown::EMPTY_VALUE,
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')],
+                              ['value'=>$pfConfig->getValue('location')]);
       echo "</td>";
 
       echo "<td>";
@@ -545,9 +545,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray("group",
-                              array("0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
-                              array('value'=>$pfConfig->getValue('group')));
+                              ["0"=> Dropdown::EMPTY_VALUE,
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')],
+                              ['value'=>$pfConfig->getValue('group')]);
       echo "</td>";
       echo "</tr>";
 
@@ -555,8 +555,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Default status', 'fusioninventory')."</td>";
       echo "<td>";
       Dropdown::show('State',
-                     array('name'   => 'states_id_default',
-                           'value'  => $pfConfig->getValue('states_id_default')));
+                     ['name'   => 'states_id_default',
+                           'value'  => $pfConfig->getValue('states_id_default')]);
       echo "</td>";
 
       echo "<td>";
@@ -573,9 +573,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray("otherserial",
-                              array("0"=> Dropdown::EMPTY_VALUE,
-                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
-                              array('value'=>$pfConfig->getValue('otherserial')));
+                              ["0"=> Dropdown::EMPTY_VALUE,
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')],
+                              ['value'=>$pfConfig->getValue('otherserial')]);
       echo "</td>";
 
       echo "<td>";
@@ -721,7 +721,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   static function showFormNetworkInventory($options=[]) {
+   static function showFormNetworkInventory($options = []) {
       global $CFG_GLPI;
 
       $pfConfig     = new PluginFusioninventoryConfig();
@@ -740,28 +740,28 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Default status', 'fusioninventory')."</td>";
       echo "<td>";
       Dropdown::show('State',
-                     array('name'   => 'states_id_snmp_default',
-                           'value'  => $pfConfig->getValue('states_id_snmp_default')));
+                     ['name'   => 'states_id_snmp_default',
+                           'value'  => $pfConfig->getValue('states_id_snmp_default')]);
       echo "</td><td colspan='2'></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")</td>";
       echo "<td align='center'>";
-      Dropdown::showNumber("threads_networkdiscovery", array(
+      Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $pfConfig->getValue('threads_networkdiscovery'),
              'min'   => 1,
-             'max'   => 400)
+             'max'   => 400]
       );
       echo "</td>";
 
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")</td>";
       echo "<td align='center'>";
-      Dropdown::showNumber("threads_networkinventory", array(
+      Dropdown::showNumber("threads_networkinventory", [
              'value' => $pfConfig->getValue('threads_networkinventory'),
              'min'   => 1,
-             'max'   => 400)
+             'max'   => 400]
       );
       echo "</td>";
       echo "</tr>";
@@ -770,19 +770,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")</td>";
       echo "<td align='center'>";
-      Dropdown::showNumber("timeout_networkdiscovery", array(
+      Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $pfConfig->getValue('timeout_networkdiscovery'),
              'min'   => 1,
-             'max'   => 60)
+             'max'   => 60]
       );
       echo "</td>";
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")</td>";
       echo "<td align='center'>";
-      Dropdown::showNumber("timeout_networkinventory", array(
+      Dropdown::showNumber("timeout_networkinventory", [
              'value' => $pfConfig->getValue('timeout_networkinventory'),
              'min'   => 1,
-             'max'   => 60)
+             'max'   => 60]
       );
       echo "</td>";
       echo "</tr>";
@@ -791,8 +791,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfsnmpConfig->showFormButtons($options);
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfConfigLogField->showForm(array(
-          'target'=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configlogfield.form.php")
+      $pfConfigLogField->showForm([
+          'target'=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configlogfield.form.php"]
           );
 
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
@@ -809,7 +809,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   static function showFormDeploy($options=[]) {
+   static function showFormDeploy($options = []) {
 
       $pfConfig = new PluginFusioninventoryConfig();
       $pfConfig->fields['id'] = 1;
@@ -849,11 +849,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Delete successful on demand tasks after (in days)', 'fusioninventory')."</td>";
       echo "<td width='20%'>";
       $toadd = [-1 => __('Never')];
-      Dropdown::showNumber("clean_on_demand_tasks", array(
+      Dropdown::showNumber("clean_on_demand_tasks", [
          'value' => $pfConfig->getValue('clean_on_demand_tasks'),
          'min'   => 1,
          'max'   => 1000,
-         'toadd' => $toadd)
+         'toadd' => $toadd]
       );
       echo "</td>";
       echo "</tr>";
@@ -878,8 +878,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       if (!is_null($existing_value)) {
          return $existing_value;
       } else {
-         return $this->add(array('type'  => $name,
-                                 'value' => $value));
+         return $this->add(['type'  => $name,
+                                 'value' => $value]);
       }
    }
 
@@ -900,9 +900,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       // set in db
       if (isset($config['id'])) {
-         $result = $this->update(array('id'=> $config['id'], 'value'=>$value));
+         $result = $this->update(['id'=> $config['id'], 'value'=>$value]);
       } else {
-         $result = $this->add(array('type' => $name, 'value' => $value));
+         $result = $this->add(['type' => $name, 'value' => $value]);
       }
 
       // set cache
@@ -966,4 +966,3 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 }
 
-?>

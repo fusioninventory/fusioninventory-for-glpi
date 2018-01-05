@@ -72,7 +72,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
       if (count($data) == "0") {
-         $input = array();
+         $input = [];
          $input['plugin_fusioninventory_taskjob_id'] = $p_number;
          $input['plugin_fusioninventory_agents_id'] = $agent_id;
          $id = $this->add($input);
@@ -89,8 +89,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
                     || $field == 'nb_import') {
 
                 $input[$field] = $data[$process_id][$field] + $value;
-             } else {
-                $input[$field] = $value;
+            } else {
+               $input[$field] = $value;
             }
          }
          $this->update($input);
@@ -135,7 +135,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
     * @global array $CFG_GLPI
     * @param array $options
     */
-   function display($options=array()) {
+   function display($options = []) {
       global $DB, $CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -156,7 +156,6 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          WHERE `method` = 'networkdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
-
 
       $resultcount = $DB->query($querycount);
       $number = $DB->numrows($resultcount);
@@ -295,4 +294,3 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
    }
 }
 
-?>

@@ -65,14 +65,14 @@ if (isset($_POST["delete_criteria"])) {
 
    if (count($_POST["item"])) {
       foreach ($_POST["item"] as $key => $val) {
-         $input = array();
+         $input = [];
          $input["id"] = $key;
          $rulecriteria->delete($input);
       }
    }
    // Can't do this in RuleCriteria, so do it here
-   $rule->update(array('id'       => $_POST['rules_id'],
-                       'date_mod' => $_SESSION['glpi_currenttime']));
+   $rule->update(['id'       => $_POST['rules_id'],
+                       'date_mod' => $_SESSION['glpi_currenttime']]);
    Html::back();
 
 } else if (isset($_POST["delete_action"])) {
@@ -80,14 +80,14 @@ if (isset($_POST["delete_criteria"])) {
 
    if (count($_POST["item"])) {
       foreach ($_POST["item"] as $key => $val) {
-         $input = array();
+         $input = [];
          $input["id"] = $key;
          $ruleaction->delete($input);
       }
    }
    // Can't do this in RuleAction, so do it here
-   $rule->update(array('id'       => $_POST['rules_id'],
-                       'date_mod' => $_SESSION['glpi_currenttime']));
+   $rule->update(['id'       => $_POST['rules_id'],
+                       'date_mod' => $_SESSION['glpi_currenttime']]);
    Html::back();
 
 } else if (isset($_POST["add_criteria"])) {
@@ -95,8 +95,8 @@ if (isset($_POST["delete_criteria"])) {
    $rulecriteria->add($_POST);
 
    // Can't do this in RuleCriteria, so do it here
-   $rule->update(array('id'       => $_POST['rules_id'],
-                       'date_mod' => $_SESSION['glpi_currenttime']));
+   $rule->update(['id'       => $_POST['rules_id'],
+                       'date_mod' => $_SESSION['glpi_currenttime']]);
    Html::back();
 
 } else if (isset($_POST["add_action"])) {
@@ -104,8 +104,8 @@ if (isset($_POST["delete_criteria"])) {
    $ruleaction->add($_POST);
 
    // Can't do this in RuleCriteria, so do it here
-   $rule->update(array('id'       => $_POST['rules_id'],
-                       'date_mod' => $_SESSION['glpi_currenttime']));
+   $rule->update(['id'       => $_POST['rules_id'],
+                       'date_mod' => $_SESSION['glpi_currenttime']]);
    Html::back();
 
 } else if (isset($_POST["update"])) {
@@ -141,4 +141,3 @@ $rule->showForm($_GET["id"]);
 
 Html::footer();
 
-?>

@@ -67,41 +67,40 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       $computer = new Computer();
       $pfEntity = new PluginFusioninventoryEntity();
 
-      $pfEntity->update(array(
+      $pfEntity->update([
           'id'                => 1,
           'entities_id'       => 0,
           'transfers_id_auto' => 1
-      ));
+      ]);
 
-
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['BIOS'] = array(
+      ];
+      $a_inventory['CONTENT']['BIOS'] = [
           'SSN' => 'xxyyzz'
-      );
+      ];
 
       // * Add rule ignore
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
          $ruleAction = new RuleAction();
 
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'pc1';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'entities_id';
@@ -110,8 +109,8 @@ class ComputerEntity extends RestoreDatabase_TestCase {
 
       // ** Add agent
       $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                         'device_id' => 'pc-2013-02-13'));
+      $a_agents_id = $pfAgent->add(['name'      => 'pc-2013-02-13',
+                                         'device_id' => 'pc-2013-02-13']);
       $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
 
       // ** Add
@@ -153,7 +152,7 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       // Manual transfer computer to entity 2
 
       $transfer->getFromDB(1);
-      $item_to_transfer = array("Computer" => array(1=>1));
+      $item_to_transfer = ["Computer" => [1=>1]];
       $transfer->moveItems($item_to_transfer, 2, $transfer->fields);
 
       $computer->getFromDB(1);
@@ -163,14 +162,13 @@ class ComputerEntity extends RestoreDatabase_TestCase {
 
       // Update computer and computer may be transfered to entity 1 automatically
 
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['BIOS'] = array(
+      ];
+      $a_inventory['CONTENT']['BIOS'] = [
           'SSN' => 'xxyyzz'
-      );
-
+      ];
 
       $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // Update
 
@@ -201,7 +199,7 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       // Manual transfer computer to entity 2
 
       $transfer->getFromDB(1);
-      $item_to_transfer = array("Computer" => array(1=>1));
+      $item_to_transfer = ["Computer" => [1=>1]];
       $transfer->moveItems($item_to_transfer, 2, $transfer->fields);
 
       $computer->getFromDB(1);
@@ -210,22 +208,21 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       $this->AgentEntity(1, 2, 'Transfer computer on entity 2');
 
       // Define entity 2 not allowed to transfer
-      $ents_id = $pfEntity->add(array(
+      $ents_id = $pfEntity->add([
           'entities_id'       => 2,
           'transfers_id_auto' => 0
-      ));
+      ]);
       $this->assertEquals(2, $ents_id, 'Entity 2 defined with no transfer');
 
       // Update computer and computer must not be transfered (keep in entoty 2)
 
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['BIOS'] = array(
+      ];
+      $a_inventory['CONTENT']['BIOS'] = [
           'SSN' => 'xxyyzz'
-      );
-
+      ];
 
       $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // Update
 
@@ -260,7 +257,7 @@ class ComputerEntity extends RestoreDatabase_TestCase {
 
       // Add rule name + restrict entity search
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
-      $input = array();
+      $input = [];
       $input['is_active']=1;
       $input['name']='Computer name + restrict';
       $input['match']='AND';
@@ -271,28 +268,28 @@ class ComputerEntity extends RestoreDatabase_TestCase {
          // Add criteria
          $rule = $rulecollection->getRuleClass();
          $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "name";
          $input['pattern']= 1;
          $input['condition']=10;
          $rulecriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "name";
          $input['pattern']= 1;
          $input['condition']=8;
          $rulecriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "entityrestrict";
          $input['pattern']= '';
          $input['condition']=202;
          $rulecriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "itemtype";
          $input['pattern']= 'Computer';
@@ -301,21 +298,20 @@ class ComputerEntity extends RestoreDatabase_TestCase {
 
          // Add action
          $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
          $input['value'] = '1';
          $ruleaction->add($input);
 
-
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['BIOS'] = array(
+      ];
+      $a_inventory['CONTENT']['BIOS'] = [
           'SSN' => 'xxyyzz'
-      );
+      ];
 
       $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // Update
 
@@ -328,7 +324,7 @@ class ComputerEntity extends RestoreDatabase_TestCase {
 
 
 
-   public function AgentEntity($computers_id=0, $entities_id=0, $text='') {
+   public function AgentEntity($computers_id = 0, $entities_id = 0, $text = '') {
       global $DB;
 
       $DB->connect();
@@ -345,4 +341,3 @@ class ComputerEntity extends RestoreDatabase_TestCase {
    }
 
 }
-?>

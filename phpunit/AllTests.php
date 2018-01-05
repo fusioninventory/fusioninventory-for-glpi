@@ -54,14 +54,14 @@ if (!defined('GLPI_ROOT')) {
 
    $dir = GLPI_ROOT."/files/_files/_plugins/fusioninventory";
    $objects = scandir($dir);
-     foreach ($objects as $object) {
-       if ($object != "." && $object != "..") {
+   foreach ($objects as $object) {
+      if ($object != "." && $object != "..") {
          if (filetype($dir."/".$object) == "dir") {
          } else {
             unlink($dir."/".$object);
          }
-       }
-     }
+      }
+   }
 
 
    include_once (GLPI_ROOT . "/inc/timer.class.php");
@@ -73,11 +73,11 @@ if (!defined('GLPI_ROOT')) {
 
    function glpiautoload($classname) {
       global $DEBUG_AUTOLOAD, $CFG_GLPI;
-      static $notfound = array();
+      static $notfound = [];
 
       // empty classname or non concerted plugin
       if (empty($classname) || is_numeric($classname)) {
-         return FALSE;
+         return false;
       }
 
       $dir=GLPI_ROOT . "/inc/";
@@ -92,22 +92,22 @@ if (!defined('GLPI_ROOT')) {
             $plugin = new Plugin();
             if (count($plugin->find("directory='$plugname' AND state=".Plugin::ACTIVATED)) == 0) {
                // Plugin does not exists or not activated
-               return FALSE;
+               return false;
             }
          } else {
             // Standard use of GLPI
             if (!in_array($plugname, $_SESSION['glpi_plugins'])) {
                // Plugin not activated
-               return FALSE;
+               return false;
             }
          }
       } else {
          // Is ezComponent class ?
-         $matches = array();
+         $matches = [];
          if (preg_match('/^ezc([A-Z][a-z]+)/', $classname, $matches)) {
             include_once(GLPI_EZC_BASE);
             ezcBase::autoload($classname);
-            return TRUE;
+            return true;
          } else {
             $item=strtolower($classname);
          }
@@ -126,7 +126,7 @@ if (!defined('GLPI_ROOT')) {
             // trigger an error to get a backtrace, but only once (use prefix 'x' to handle empty case)
             //Toolbox::logInFile('debug', "file $dir$item.class.php not founded trying to load class $classname\n");
             trigger_error("GLPI autoload : file $dir$item.class.php not founded trying to load class '$classname'");
-            $notfound["$classname"] = TRUE;
+            $notfound["$classname"] = true;
          }
       }
    }
@@ -143,12 +143,12 @@ if (!defined('GLPI_ROOT')) {
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
-$_SESSION['glpiprofiles'] = array('4' => array('entities' => 0));
+$_SESSION['glpiprofiles'] = ['4' => ['entities' => 0]];
 Session::changeProfile(4);
 
 $_SESSION["glpi_plugin_fusioninventory_profile"]['unmanaged'] = 'w';
 
-$_SESSION['glpiactiveentities'] = array(0, 1);
+$_SESSION['glpiactiveentities'] = [0, 1];
 
 require_once 'GLPIInstall/AllTests.php';
 require_once 'FusinvInstall/AllTests.php';
@@ -236,11 +236,10 @@ class AllTests {
          $suite->addTest(ComputerPeripheral_AllTests::suite());
       }
 
-      # For travis-CI
+      // For travis-CI
       file_put_contents ( "result.stamp", "test ok" );
 
       return $suite;
    }
 }
 
-?>

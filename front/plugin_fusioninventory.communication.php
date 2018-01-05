@@ -49,4 +49,3 @@ include ("../../../inc/includes.php");
 
 include_once(GLPI_ROOT."/plugins/fusioninventory/front/communication.php");
 
-?>

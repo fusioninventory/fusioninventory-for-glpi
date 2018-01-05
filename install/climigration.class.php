@@ -92,7 +92,7 @@ class CliMigration extends Migration {
     * @param string $msg
     * @param boolean $red
     */
-   function displayWarning($msg, $red=FALSE) {
+   function displayWarning($msg, $red = false) {
       if ($red) {
          $msg = "** $msg";
       }

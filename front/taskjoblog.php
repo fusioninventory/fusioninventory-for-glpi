@@ -60,4 +60,3 @@ Search::show('PluginFusioninventoryTaskjoblog');
 
 Html::footer();
 
-?>

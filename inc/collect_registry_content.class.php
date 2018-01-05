@@ -68,7 +68,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Windows registry content', 'fusioninventory');
    }
 
@@ -81,7 +81,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginFusioninventoryCollect') {
@@ -112,7 +112,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_Registry->showForCollect($item->getID());
@@ -128,7 +128,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
     */
    static function cleanComputer($computers_id) {
       $registry_content = new self();
-      $registry_content->deleteByCriteria(array('computers_id' => $computers_id));
+      $registry_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
 
    /**
@@ -143,7 +143,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    function updateComputer($computers_id, $registry_data, $collects_registries_id) {
       global $DB;
 
-      $db_registries = array();
+      $db_registries = [];
       $query = "SELECT `id`, `key`, `value`
                 FROM `glpi_plugin_fusioninventory_collects_registries_contents`
                 WHERE `computers_id` = '".$computers_id."'
@@ -161,9 +161,9 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       foreach ($registry_data as $key => $value) {
          foreach ($db_registries as $keydb => $arraydb) {
             if ($arraydb['key'] == $key) {
-               $input = array('key'   => $arraydb['key'],
+               $input = ['key'   => $arraydb['key'],
                               'id'    => $keydb,
-                              'value' => $value);
+                              'value' => $value];
                $this->update($input);
                unset($registry_data[$key]);
                unset($db_registries[$keydb]);
@@ -172,20 +172,19 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
          }
       }
 
-
       foreach ($db_registries as $id => $data) {
-         $this->delete(array('id' => $id), true);
+         $this->delete(['id' => $id], true);
       }
-      foreach($registry_data as $key => $value) {
+      foreach ($registry_data as $key => $value) {
          if (preg_match("/^0x[0-9a-fA-F]{1,}$/", $value)) {
             $value = hexdec($value);
          }
-         $input = array(
+         $input = [
             'computers_id' => $computers_id,
             'plugin_fusioninventory_collects_registries_id' => $collects_registries_id,
             'key'          => $key,
             'value'        => $value
-         );
+         ];
          $this->add($input);
       }
    }
@@ -302,4 +301,3 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
    }
 }
 
-?>

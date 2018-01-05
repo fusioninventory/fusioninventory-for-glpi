@@ -55,44 +55,43 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
          $ruleCriteria = new RuleCriteria();
          $ruleAction = new RuleAction();
 
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'glpi';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = '_ignore_import';
          $input['value']         = 1;
          $ruleAction->add($input);
 
-
       // * Add rule rename software
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi0.85';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'glpi0.85';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'name';
@@ -100,21 +99,21 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
          $ruleAction->add($input);
 
       // * Add rule rename manufacturer
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'RuleDictionnaryManufacturer';
          $input['name']       = 'indepnet';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'indepnet assoce';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'name';
@@ -122,21 +121,21 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
          $ruleAction->add($input);
 
       // * Add rule Modify version
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi0.85';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'glpi0.85';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'version';
@@ -157,20 +156,20 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
+      $a_software = [];
+      $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'fusioninventory team',
                 'NAME'      => 'fusioninventory',
                 'VERSION'   => '0.85+1.0',
                 'SYSTEM_CATEGORY' => 'devel'
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_reference = array();
-      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0$$$$0"] = array(
+      $a_reference = [];
+      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0$$$$0"] = [
                'name'                  => 'fusioninventory',
                'manufacturers_id'      => 1,
                'version'               => '0.85+1.0',
@@ -181,7 +180,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel'
-            );
+            ];
 
       $this->assertEquals($a_reference, $a_return);
 
@@ -200,19 +199,19 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 1;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
+      $a_software = [];
+      $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi',
                 'VERSION'   => '0.85'
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_reference = array();
-      $a_reference['software'] = array();
+      $a_reference = [];
+      $a_reference['software'] = [];
 
       $this->assertEquals($a_reference, $a_return);
 
@@ -230,20 +229,20 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
+      $a_software = [];
+      $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85',
                 'SYSTEM_CATEGORY' => 'devel'
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
+      $a_reference = [];
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = [
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
@@ -253,7 +252,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel'
-            );
+            ];
 
       $this->assertEquals($a_reference, $a_return);
 
@@ -273,23 +272,22 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       return;
       // TODO: recode this test (and verify all the tests in this file)
 
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
+      $a_software = [];
+      $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet assoce',
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85'
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
+      $a_reference = [];
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = [
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
@@ -298,7 +296,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0
-            );
+            ];
 
       $this->assertEquals($a_reference, $a_return);
 
@@ -317,20 +315,20 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
+      $a_software = [];
+      $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85',
                 'SYSTEM_CATEGORY' => 'devel'
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_reference = array();
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = array(
+      $a_reference = [];
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = [
                'name'                  => 'glpi',
                'manufacturers_id'      => '2',
                'version'               => '0.85',
@@ -340,7 +338,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel'
-            );
+            ];
 
       $this->assertEquals($a_reference, $a_return);
 
@@ -358,8 +356,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
+      $a_software = [];
+      $a_software['SOFTWARES'][] = [
                 'ARCH'             => 'i586',
                 'FROM'             => 'registry',
                 'GUID'             => 'Audacity_is1',
@@ -373,8 +371,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                 'VERSION_MAJOR'    => '2',
                 'VERSION_MINOR'    => '0',
                 'SYSTEM_CATEGORY'  => 'application'
-            );
-      $a_software['SOFTWARES'][] = array(
+            ];
+      $a_software['SOFTWARES'][] = [
                 'ARCH'             => 'i586',
                 'FROM'             => 'registry',
                 'GUID'             => 'AutoItv3',
@@ -383,14 +381,14 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                 'UNINSTALL_STRING' => 'C:\\Program Files\\AutoIt3\\Uninstall.exe',
                 'URL_INFO_ABOUT'   => 'http://www.autoitscript.com/autoit3',
                 'SYSTEM_CATEGORY'  => 'application'
-          );
+          ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_reference = array();
-      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0"] = array(
+      $a_reference = [];
+      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0"] = [
                'name'                  => 'Audacity 2.0.4',
                'manufacturers_id'      => 3,
                'version'               => '2.0.4',
@@ -401,8 +399,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'operatingsystems_id'   => 0,
                'date_install'          => '2013-10-16',
                '_system_category'      => 'application'
-            );
-      $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = array(
+            ];
+      $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = [
                'name'                  => 'AutoIt v3.3.8.1',
                'manufacturers_id'      => 4,
                'version'               => '',
@@ -412,11 +410,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'application'
-      );
+      ];
       $this->assertEquals($a_reference, $a_return);
-
-
 
    }
 }
-?>

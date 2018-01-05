@@ -62,4 +62,3 @@ $rulecollection = new PluginFusioninventoryInventoryRuleLocationCollection();
 
 include (GLPI_ROOT . "/front/rule.common.php");
 
-?>

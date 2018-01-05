@@ -68,7 +68,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return "";
    }
 
@@ -200,7 +200,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showFormOS($item) {
       $pfComputer = new self();
       $a_computerextend = current(
-         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'","",1)
+         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'", "", 1)
       );
       if (empty($a_computerextend)) {
          return;

@@ -64,25 +64,25 @@ class RestURLTest extends RestoreDatabase_TestCase {
 
       $pfAgent = new PluginFusioninventoryAgent();
 
-      $input = array(
+      $input = [
           'name'        => 'toto',
           'entities_id' => $entities_id,
           'device_id'   => 'toto-device'
-      );
+      ];
       $agents_id = $pfAgent->add($input);
 
       $config = new PluginFusioninventoryConfig();
       $config->loadCache();
 
       $pfEntity = new PluginFusioninventoryEntity();
-      $input = array(
+      $input = [
               'id'             => 1,
               'entities_id'    => 0,
-              'agent_base_url' => 'http://127.0.0.1/glpi085');
+              'agent_base_url' => 'http://127.0.0.1/glpi085'];
       $pfEntity->update($input);
-      $input = array(
+      $input = [
               'entities_id'    => $entities_id,
-              'agent_base_url' => 'http://10.0.2.2/glpi085');
+              'agent_base_url' => 'http://10.0.2.2/glpi085'];
       $pfEntity->add($input);
 
       // active all modules
@@ -109,18 +109,18 @@ class RestURLTest extends RestoreDatabase_TestCase {
       $agents_id = 1;
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $input = array(
+      $input = [
          'itemtype'                         => 'PluginFusioninventoryCollect',
          'plugin_fusioninventory_agents_id' => 1
-      );
+      ];
       $pfTaskjobstate->add($input);
 
       // Get answer
-      $input = array(
+      $input = [
           'action'    => 'getConfig',
-          'task'      => array('COLLECT' => '1.0.0'),
+          'task'      => ['COLLECT' => '1.0.0'],
           'machineid' => 'toto-device'
-      );
+      ];
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
@@ -147,18 +147,18 @@ class RestURLTest extends RestoreDatabase_TestCase {
       $agents_id = 1;
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $input = array(
+      $input = [
          'itemtype'                         => 'PluginFusioninventoryDeployPackage',
          'plugin_fusioninventory_agents_id' => 1
-      );
+      ];
       $pfTaskjobstate->add($input);
 
       // Get answer
-      $input = array(
+      $input = [
           'action'    => 'getConfig',
-          'task'      => array('Deploy' => '1.0.0'),
+          'task'      => ['Deploy' => '1.0.0'],
           'machineid' => 'toto-device'
-      );
+      ];
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
@@ -185,18 +185,18 @@ class RestURLTest extends RestoreDatabase_TestCase {
       $agents_id = 1;
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $input = array(
+      $input = [
          'itemtype'                         => 'PluginFusioninventoryCredentialIp',
          'plugin_fusioninventory_agents_id' => 1
-      );
+      ];
       $pfTaskjobstate->add($input);
 
       // Get answer
-      $input = array(
+      $input = [
           'action'    => 'getConfig',
-          'task'      => array('ESX' => '1.0.0'),
+          'task'      => ['ESX' => '1.0.0'],
           'machineid' => 'toto-device'
-      );
+      ];
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
@@ -226,14 +226,14 @@ class RestURLTest extends RestoreDatabase_TestCase {
       $config->loadCache();
 
       $pfEntity = new PluginFusioninventoryEntity();
-      $pfEntity->delete(array('id' => 2));
+      $pfEntity->delete(['id' => 2]);
 
       // Get answer
-      $input = array(
+      $input = [
           'action'    => 'getConfig',
-          'task'      => array('COLLECT' => '1.0.0'),
+          'task'      => ['COLLECT' => '1.0.0'],
           'machineid' => 'toto-device'
-      );
+      ];
 
       $response = PluginFusioninventoryCommunicationRest::communicate($input);
 
@@ -243,4 +243,3 @@ class RestURLTest extends RestoreDatabase_TestCase {
    }
 
 }
-?>

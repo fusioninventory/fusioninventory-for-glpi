@@ -88,7 +88,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
                ],
              __('Other') => [
             'freespaceGreater'   => __("Free space is greater than", 'fusioninventory')
-            ]
+             ]
       ];
    }
 
@@ -152,7 +152,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
                  "MB" => 1024 * 1024,
                  "GB" => 1024 * 1024 * 1024
                ];
-      if (array_key_exists($unit,$units)) {
+      if (array_key_exists($unit, $units)) {
          return $units[$unit];
       } else {
          return 1;
@@ -372,7 +372,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
          case "directoryExists":
          case "directoryMissing":
             $values['path_label']  = __("Directory", 'fusioninventory').$mandatory_mark;
-            $values['value_label'] = FALSE;
+            $values['value_label'] = false;
             break;
 
          case "fileSizeGreater":
@@ -426,10 +426,10 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       /*
        * Get type from request params
        */
-      $type = NULL;
+      $type = null;
       if ($mode === self::CREATE) {
          $type = $request_data['value'];
-         $config_data = NULL;
+         $config_data = null;
       } else {
          $type = $config['type'];
          $config_data = $config['data'];
@@ -487,10 +487,10 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
                   if ($value >= $this->getUnitSize('GB')) {
                      $value = $value / ($this->getUnitSize('GB'));
                      $options['value'] = 'GB';
-                  } elseif ($value >= ($this->getUnitSize('MB'))) {
+                  } else if ($value >= ($this->getUnitSize('MB'))) {
                      $value = $value/ ($this->getUnitSize('MB'));
                      $options['value'] = 'MB';
-                  }  elseif ($value >= ($this->getUnitSize('KB'))) {
+                  } else if ($value >= ($this->getUnitSize('KB'))) {
                      $value = $value/ ($this->getUnitSize('KB'));
                      $options['value'] = 'KB';
                   } else {
@@ -602,13 +602,13 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
 
       //prepare updated check entry to insert in json
-      $entry = array(
+      $entry = [
          'name'   => $params['name'],
          'type'   => $params['checkstype'],
          'path'   => $params['path'],
          'value'  => strval($params['value']),
          'return' => $params['return']
-      );
+      ];
 
       return $entry;
    }
@@ -643,14 +643,14 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    function save_item($params) {
       $entry = self::formatCheckForJson($params);
       //get current order json
-      $datas = json_decode($this->getJson($params['id']), TRUE);
+      $datas = json_decode($this->getJson($params['id']), true);
 
       //unset index
       unset($datas['jobs']['checks'][$params['index']]);
 
       //add new datas at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
-      array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
+      array_splice($datas['jobs']['checks'], $params['index'], 0, [$entry]);
 
       //update order
       $this->updateOrderJson($params['id'], $datas);

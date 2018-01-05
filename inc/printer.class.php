@@ -68,7 +68,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return '';
    }
 
@@ -90,7 +90,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($this->canView()
          && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
@@ -108,28 +108,28 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       global $CFG_GLPI;
 
       if ($item->getID() > 0) {
          $pfPrinter = new PluginFusioninventoryPrinter();
          $pfPrinter->showForm($item,
-                     array('target' => $CFG_GLPI['root_doc'].
-                                          '/plugins/fusioninventory/front/printer_info.form.php'));
+                     ['target' => $CFG_GLPI['root_doc'].
+                                          '/plugins/fusioninventory/front/printer_info.form.php']);
          echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
          $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
          $pfPrinterCartridge->showForm($item,
-                     array('target' => $CFG_GLPI['root_doc'].
-                                          '/plugins/fusioninventory/front/printer_info.form.php'));
+                     ['target' => $CFG_GLPI['root_doc'].
+                                          '/plugins/fusioninventory/front/printer_info.form.php']);
 
          $pfPrinterLog = new PluginFusioninventoryPrinterLog();
          $pfPrinterLog->showGraph($item->getID(),
-                     array('target' => $CFG_GLPI['root_doc'].
-                                          '/plugins/fusioninventory/front/printer_info.form.php'));
-         return TRUE;
+                     ['target' => $CFG_GLPI['root_doc'].
+                                          '/plugins/fusioninventory/front/printer_info.form.php']);
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -153,13 +153,13 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm(Printer $item, $options=array()) {
+   function showForm(Printer $item, $options = []) {
       Session::checkRight('plugin_fusioninventory_printer', READ);
 
       $id = $item->getID();
       if (!$data = $this->find("`printers_id`='".$id."'", '', 1)) {
          // Add in database if not exist
-         $input = array();
+         $input = [];
          $input['printers_id'] = $id;
          $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_printers';
          $ID_tn = $this->add($input);
@@ -225,7 +225,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
-      return TRUE;
+      return true;
    }
 
 
@@ -327,4 +327,3 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    }
 }
 
-?>

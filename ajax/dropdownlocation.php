@@ -62,10 +62,9 @@ if ($id != '') {
 }
 
 Location::dropdown(
-         array(
+         [
             'value'        => $pfDeployMirror->fields["locations_id"],
             'entity'       => $pfDeployMirror->fields["entities_id"],
             'entity_sons'  => filter_input(INPUT_POST, "is_recursive"),
-         )
+         ]
       );
-?>
