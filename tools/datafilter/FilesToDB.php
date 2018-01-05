@@ -35,7 +35,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
 ";
 
-
    $sql_insert_vendor = "INSERT INTO `glpi_plugin_fusioninventory_pcivendors`
       (`id`, `vendorid`, `name`) VALUES ";
    $sql_insert_device = "INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
@@ -46,7 +45,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
    while (!feof($pciFile)) {
       $buffer = fgets($pciFile, 4096);
 
-      $stack = array();
+      $stack = [];
       if (preg_match("/^(\w+)\s*(.+)/i", $buffer, $stack)) {
          $v++;
          $vendorId = $stack[1];
@@ -56,7 +55,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
       }
 
-      $stack = array();
+      $stack = [];
       if (preg_match("/^\t(\w+)\s*(.+)/i", $buffer, $stack)) {
          $d++;
          $deviceId = $stack[1];
@@ -111,13 +110,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
    $sql_insert_device = "INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
       (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES ";
 
-
    $v = 0;
    $d = 0;
    while (!feof($usbFile)) {
       $buffer = fgets($usbFile, 4096);
 
-      $stack = array();
+      $stack = [];
       if (preg_match("/^(\w+)\s*(.+)/i", $buffer, $stack)) {
          $v++;
          $vendorId = $stack[1];
@@ -126,7 +124,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
          $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes(htmlentities($vendorName))."'),";
       }
 
-      $stack = array();
+      $stack = [];
       if (preg_match("/^\t(\w+)\s*(.+)/i", $buffer, $stack)) {
          $d++;
          $deviceId = $stack[1];
@@ -169,7 +167,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
    while (!feof($ouiFile)) {
       $buffer = fgets($ouiFile, 4096);
 
-      $stack = array();
+      $stack = [];
       if (preg_match("/^\s{2}(\S+)\s*\(hex\)\t{2}(.+)/i", $buffer, $stack)) {
          $OUI = $stack[1];
          $OUI = strtr($OUI, "-", ":");
@@ -183,4 +181,3 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
    file_put_contents("../../install/mysql/oui.sql", utf8_encode($sql_creation.$sql_insert_oui));
 
 }
-?>

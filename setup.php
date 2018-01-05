@@ -532,12 +532,12 @@ function plugin_fusioninventory_check_prerequisites() {
       } else {
          echo __('Your GLPI version not compatible, require >= 9.2 and < 9.3', 'fusioninventory');
       }
-      return FALSE;
+      return false;
    }
 
    if (!function_exists('finfo_open')) {
       echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
-      return FALSE;
+      return false;
    }
 
    $plugin = new Plugin();

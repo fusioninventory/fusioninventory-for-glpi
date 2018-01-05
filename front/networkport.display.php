@@ -67,4 +67,3 @@ Session::checkRight('networking', READ);
 Session::checkRight('internet', READ);
 PluginFusioninventoryNetworkPort::showDislayOptions($itemtype);
 Html::ajaxFooter();
-?>

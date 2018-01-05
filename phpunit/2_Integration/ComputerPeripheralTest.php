@@ -41,12 +41,12 @@
  */
 
 class ComputerPeripheral extends RestoreDatabase_TestCase {
-   public $a_computer1_XML = array();
+   public $a_computer1_XML = [];
 
    function __construct() {
 
       $this->a_computer1_XML =
-"<REQUEST>
+      "<REQUEST>
    <CONTENT>
     <HARDWARE>
        <NAME>pc001</NAME>
@@ -173,8 +173,8 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
-      $a_ref = array(
-          1 => array(
+      $a_ref = [
+          1 => [
               'name' => 'Périphérique USB composite',
               'id'                  => '1',
               'serial'              => '10075973',
@@ -185,8 +185,8 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_deleted'          => '0',
               'is_template'         => '0',
               'is_dynamic'          => '1'
-          ),
-          2 => array(
+          ],
+          2 => [
               'name' => 'H5321 gw Mobile Broadband Device',
               'id'                  => '2',
               'serial'              => '187A047919938CM0',
@@ -197,8 +197,8 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_deleted'          => '0',
               'is_template'         => '0',
               'is_dynamic'          => '1'
-          ),
-          3 => array(
+          ],
+          3 => [
               'name' => 'Périphérique d’entrée USB',
               'id'                  => '3',
               'serial'              => 'STM32_EMOTION2',
@@ -209,12 +209,12 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_deleted'          => '0',
               'is_template'         => '0',
               'is_dynamic'          => '1'
-          )
-      );
+          ]
+      ];
 
       $a_db_peripherals = getAllDatasFromTable('glpi_peripherals');
       foreach ($a_db_peripherals as $id=>$data) {
-         $data_temp = array(
+         $data_temp = [
               'name'                => $data['name'],
               'id'                  => $data['id'],
               'serial'              => $data['serial'],
@@ -225,7 +225,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_deleted'          => $data['is_deleted'],
               'is_template'         => $data['is_template'],
               'is_dynamic'          => $data['is_dynamic']
-         );
+         ];
          $a_db_peripherals[$id] = $data_temp;
       }
 
@@ -243,8 +243,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
                                             $arrayinventory);
 
       $data = getAllDatasFromTable('glpi_logs', "`id`>'".$last_id."'");
-      $this->assertEquals(array(), $data, 'On update peripherals, may not have new lines in glpi_logs');
+      $this->assertEquals([], $data, 'On update peripherals, may not have new lines in glpi_logs');
 
    }
 }
-?>

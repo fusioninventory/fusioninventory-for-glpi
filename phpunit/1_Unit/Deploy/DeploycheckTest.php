@@ -160,7 +160,6 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $this->assertEquals($result, $expected);
 
-
       $values = ['name'   => 'File exists',
                  'path'   => '/etc/passwd',
                  'value'  => '',

@@ -105,14 +105,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     */
    static function dropdownStateValues() {
 
-      $elements = array(
+      $elements = [
          self::TASK_PREPARED           => __('Prepared', 'fusioninventory'),
          self::TASK_STARTED            => __('Started', 'fusioninventory'),
          self::TASK_RUNNING            => __('Running'),
          self::TASK_OK                 => __('Ok', 'fusioninventory'),
          self::TASK_ERROR              => __('Error'),
          self::TASK_INFO               => __('Info', 'fusioninventory'),
-      );
+      ];
 
       return $elements;
    }
@@ -125,7 +125,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     * @param integer $state
     * @return string
     */
-   static function getStateName($state=-1) {
+   static function getStateName($state = -1) {
       $state_names = self::dropdownStateValues();
       if (isset($state_names[$state])) {
          return $state_names[$state];
@@ -216,12 +216,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[8]['name']           = __('Agent', 'fusioninventory');
       $sopt[8]['datatype']       = 'itemlink';
       $sopt[8]['forcegroupby']   = true;
-      $sopt[8]['joinparams']     = array(
-         'beforejoin' => array(
+      $sopt[8]['joinparams']     = [
+         'beforejoin' => [
             'table'      => 'glpi_plugin_fusioninventory_taskjobstates',
-            'joinparams' => array('jointype' => 'child')
-         )
-      );
+            'joinparams' => ['jointype' => 'child']
+         ]
+      ];
       return $sopt;
    }
 
@@ -270,8 +270,8 @@ function appear_array(id) {
     * @param integer $displaytaskjob
     * @param integer $nb_td
     */
-   function showHistoryLines($taskjobstates_id, $displayprocess = 1, $displaytaskjob=0,
-                             $nb_td=5) {
+   function showHistoryLines($taskjobstates_id, $displayprocess = 1, $displaytaskjob = 0,
+                             $nb_td = 5) {
       global $CFG_GLPI;
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -318,10 +318,10 @@ function appear_array(id) {
                       'viewfollowup'.$pfTaskjobstate->fields["id"],
                       $CFG_GLPI['root_doc'].
                          "/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
-                      array('agents_id' =>
+                      ['agents_id' =>
                                  $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'],
-                          'uniqid' => $pfTaskjobstate->fields['uniqid']),
-                      array("click"));
+                          'uniqid' => $pfTaskjobstate->fields['uniqid']],
+                      ["click"]);
 
       echo "</td>";
       $a_return = $this->displayHistoryDetail(array_pop($a_history), 0);
@@ -361,7 +361,7 @@ function appear_array(id) {
     * @param integer $width how large in pixel display array
     * @return string
     */
-   function showHistoryInDetail($agents_id, $uniqid, $width=950) {
+   function showHistoryInDetail($agents_id, $uniqid, $width = 950) {
       global $CFG_GLPI, $DB;
 
       $pfAgent          = new PluginFusioninventoryAgent();
@@ -516,7 +516,7 @@ function appear_array(id) {
     *               - boolean 0/1 if this log = finish
     *               - text to display
     */
-   function displayHistoryDetail($datas, $comment=1) {
+   function displayHistoryDetail($datas, $comment = 1) {
 
       $text = "<td align='center'>";
       $text .= Html::convDateTime($datas['date']);
@@ -580,7 +580,7 @@ function appear_array(id) {
          $text .= $datas['comment'];
          $text .= "</td>";
       }
-      return array($finish, $text);
+      return [$finish, $text];
    }
 
 
@@ -680,7 +680,7 @@ function appear_array(id) {
     * @param string $type div / td
     * @return string complete node (openned and closed)
     */
-   function getDivState($state, $type='div') {
+   function getDivState($state, $type = 'div') {
 
       $width = '50';
 
@@ -743,7 +743,7 @@ function appear_array(id) {
       }
       if (strstr($comment, "==")) {
          preg_match_all("/==([\w\d]+)==/", $comment, $matches);
-         $a_text = array(
+         $a_text = [
             'devicesqueried'  => __('devices queried', 'fusioninventory'),
             'devicesfound'    => __('devices found', 'fusioninventory'),
             'addtheitem'      => __('Add the item', 'fusioninventory'),
@@ -753,7 +753,7 @@ function appear_array(id) {
             'badtoken'        => __('Agent communication error, impossible to start agent', 'fusioninventory'),
             'agentcrashed'    => __('Agent stopped/crashed', 'fusioninventory'),
             'importdenied'    => __('Import denied', 'fusioninventory')
-         );
+         ];
          foreach ($matches[0] as $num=>$commentvalue) {
             $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
          }

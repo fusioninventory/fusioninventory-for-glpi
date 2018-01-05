@@ -60,8 +60,8 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
     * @param string $interface
     * @return array
     */
-   function getRights($interface='central') {
-      return array(CREATE  => __('Create'));
+   function getRights($interface = 'central') {
+      return [CREATE  => __('Create')];
    }
 
 
@@ -109,8 +109,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       echo "</table>";
 
       Html::closeForm();
-      return TRUE;
+      return true;
    }
 }
 
-?>

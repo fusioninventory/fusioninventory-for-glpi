@@ -58,15 +58,15 @@ PluginFusioninventoryMenu::displayMenu("mini");
 $mirror = new PluginFusioninventoryDeployMirror();
 
 if (isset ($_POST["add"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $newID = $mirror->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->delete($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployMirror'));
 }
@@ -75,8 +75,7 @@ $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
-$mirror->display(array('id' => $id));
+$mirror->display(['id' => $id]);
 //$mirror->showForm($id);
 Html::footer();
 
-?>

@@ -144,7 +144,7 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
          return _n('User interaction template',
                    'User interaction templates', $nb, 'fusioninventory');
    }
@@ -202,11 +202,11 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                                  => __('Yes - No - Cancel', 'fusioninventory')
                            ]
                        ];
-      if (isset($interactions[$interaction_type])) {
-         return $interactions[$interaction_type];
-      } else {
-         return false;
-      }
+       if (isset($interactions[$interaction_type])) {
+          return $interactions[$interaction_type];
+         } else {
+            return false;
+         }
    }
 
    /**
@@ -238,11 +238,11 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
                              self::WTS_ICON_QUESTION => __('Question', 'fusioninventory')
                            ]
                        ];
-      if (isset($icons[$interaction_type])) {
-         return $icons[$interaction_type];
-      } else {
-         return false;
-      }
+       if (isset($icons[$interaction_type])) {
+          return $icons[$interaction_type];
+         } else {
+            return false;
+         }
    }
 
    /**

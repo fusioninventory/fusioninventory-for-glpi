@@ -61,13 +61,13 @@ $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-$_SESSION['glpi_fusionionventory_nolock'] = TRUE;
+$_SESSION['glpi_fusionionventory_nolock'] = true;
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
-set_error_handler(array('Toolbox', 'userErrorHandlerDebug'));
+set_error_handler(['Toolbox', 'userErrorHandlerDebug']);
 $_SESSION['glpi_use_mode'] = 0;
 $_SESSION['glpiparententities'] = '';
-$_SESSION['glpishowallentities'] = TRUE;
+$_SESSION['glpishowallentities'] = true;
 
 ob_end_clean();
 header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
@@ -95,4 +95,3 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
 
 session_destroy();
 
-?>

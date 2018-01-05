@@ -84,4 +84,3 @@ if (isset($_GET["id"])) {
 
 Html::footer();
 
-?>

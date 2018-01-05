@@ -57,4 +57,3 @@ Search::show('PluginFusioninventoryIPRange');
 
 Html::footer();
 
-?>

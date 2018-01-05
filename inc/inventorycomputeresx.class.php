@@ -80,7 +80,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       //list all agents
       $agent_actions     = importArrayFromDB($job->fields['action']);
       $task_definitions  = importArrayFromDB($job->fields['definition']);
-      $agent_actionslist = array();
+      $agent_actionslist = [];
       foreach ($agent_actions as $targets) {
          foreach ($targets as $itemtype => $items_id) {
             $item = new $itemtype();
@@ -93,7 +93,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
 
       // *** Add jobstate
       if (empty($agent_actionslist)) {
-         $a_input= array();
+         $a_input= [];
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state']                              = 0;
          $a_input['plugin_fusioninventory_agents_id']   = 0;
@@ -129,7 +129,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
 
                foreach ($task_definitions as $task_definition) {
                   foreach ($task_definition as $task_itemtype => $task_items_id) {
-                     $a_input = array();
+                     $a_input = [];
                      $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                      $a_input['state']                              = 0;
                      $a_input['plugin_fusioninventory_agents_id']   = $items_id;
@@ -180,4 +180,3 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
    }
 }
 
-?>

@@ -55,27 +55,26 @@ class GetTaskByFiltersTest extends RestoreDatabase_TestCase {
       $pfTask = new PluginFusioninventoryTask();
 
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'deploy',
           'is_active'   => 1
-      );
+      ];
       $pfTask->add($input);
 
       $running_tasks = $pfTask->getItemsFromDB(
-         array(
-            'is_running'  => TRUE,
-            'is_active'   => TRUE
-         )
+         [
+            'is_running'  => true,
+            'is_active'   => true
+         ]
       );
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
-      $this->assertEquals(array(), $running_tasks, 'Not find task because not have job');
+      $this->assertEquals([], $running_tasks, 'Not find task because not have job');
    }
 
 
 }
-?>

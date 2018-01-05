@@ -58,4 +58,3 @@ $package->showList();
 
 Html::footer();
 
-?>

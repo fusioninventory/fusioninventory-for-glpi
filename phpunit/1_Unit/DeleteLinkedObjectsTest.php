@@ -53,28 +53,28 @@ class DeleteLinkedObjects extends RestoreDatabase_TestCase {
       $iprange = new PluginFusioninventoryIPRange();
       $iprange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
 
-      $input = array(
+      $input = [
           'name'        => 'Office',
           'ip_start'    => '192.168.0.1',
           'ip_end'      => '192.168.0.254',
           'entities_id' => 0
-      );
+      ];
       $ipranges_id = $iprange->add($input);
 
       $list_iprange = $iprange->find();
       $this->assertEquals(1, count($list_iprange), "IP Range not right added");
 
-      $input = array(
+      $input = [
           'plugin_fusioninventory_ipranges_id' => $ipranges_id,
           'plugin_fusioninventory_configsecurities_id' => 1,
           'rank' => 1
-      );
+      ];
       $iprange_ConfigSecurity->add($input);
 
       $list_security = $iprange_ConfigSecurity->find();
       $this->assertEquals(1, count($list_security), "SNMP community not added to iprange");
 
-      $iprange->delete(array('id' => $ipranges_id));
+      $iprange->delete(['id' => $ipranges_id]);
 
       $list_iprange = $iprange->find();
       $this->assertEquals(0, count($list_iprange), "IP Range not right deleted");
@@ -82,9 +82,8 @@ class DeleteLinkedObjects extends RestoreDatabase_TestCase {
       $list_security = $iprange_ConfigSecurity->find();
       $this->assertEquals(0, count($list_security), "SNMP community not deleted with iprange");
    }
- }
+}
 
 
 
 
-?>

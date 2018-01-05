@@ -66,7 +66,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Entity');
    }
 
@@ -79,7 +79,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > -1) {
          if (Session::haveRight("config", READ)) {
@@ -99,14 +99,14 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->getID() > -1) {
          $pmEntity = new PluginFusioninventoryEntity();
          $pmEntity->showForm($item->fields['id']);
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
 
 
@@ -119,7 +119,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($entities_id, $options=array()) {
+   function showForm($entities_id, $options = []) {
       global $CFG_GLPI;
 
       $a_configs = $this->find("`entities_id`='".$entities_id."'", "", 1);
@@ -138,16 +138,16 @@ class PluginFusioninventoryEntity extends CommonDBTM {
               "&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
-      $params = array(
+      $params = [
           'name'       => 'transfers_id_auto',
           'value'      => $this->fields['transfers_id_auto'],
           'emptylabel' => __('No automatic transfer')
-      );
+      ];
       if ($entities_id > 0) {
-         $params['toadd'] = array('-1' => __('Inheritance of the parent entity'));
+         $params['toadd'] = ['-1' => __('Inheritance of the parent entity')];
       }
       Dropdown::show('Transfer', $params);
-      echo Html::hidden('entities_id', array('value' => $entities_id));
+      echo Html::hidden('entities_id', ['value' => $entities_id]);
       echo "</td>";
       echo "</tr>";
 
@@ -162,11 +162,11 @@ class PluginFusioninventoryEntity extends CommonDBTM {
             echo __('Inheritance of the parent entity')."&nbsp;:&nbsp;";
             $val = $this->getValueAncestor('transfers_id_auto', $entities_id);
 
-            if ($val == 0) {
-               echo __('No automatic transfer');
-            } else {
-               echo Dropdown::getDropdownName('glpi_transfers', $val);
-            }
+         if ($val == 0) {
+            echo __('No automatic transfer');
+         } else {
+            echo Dropdown::getDropdownName('glpi_transfers', $val);
+         }
             echo "</td>";
          // } else {
             // echo "<td colspan='4'>";
@@ -174,7 +174,6 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          // }
          echo "</tr>";
       }
-
 
       echo "<tr>";
       echo "<td colspan='2'>";
@@ -202,10 +201,9 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          echo "</tr>";
       }
 
-
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
 
 
@@ -288,4 +286,3 @@ class PluginFusioninventoryEntity extends CommonDBTM {
 
 }
 
-?>

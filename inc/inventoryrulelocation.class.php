@@ -66,14 +66,14 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     *
     * @var boolean
     */
-   public $can_sort=TRUE;
+   public $can_sort=true;
 
    /**
     * Set these rules don't have specific parameters
     *
     * @var boolean
     */
-   public $specific_parameters = FALSE;
+   public $specific_parameters = false;
 
    const PATTERN_CIDR     = 333;
    const PATTERN_NOT_CIDR = 334;
@@ -176,15 +176,13 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     */
    function getCriterias() {
 
-      $criterias = array();
+      $criterias = [];
 
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
 
-
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = __('Domain');
-
 
       $criterias['subnet']['field']     = 'name';
       $criterias['subnet']['name']      = __('Subnet');
@@ -192,10 +190,8 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       $criterias['ip']['field']     = 'name';
       $criterias['ip']['name']      = __('Address')." ".__('IP');
 
-
       $criterias['name']['field']     = 'name';
       $criterias['name']['name']      = __('Computer\'s name');
-
 
       $criterias['serial']['field']     = 'name';
       $criterias['serial']['name']      = __('Serial number');
@@ -215,20 +211,20 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     */
    function getActions() {
 
-      $actions = array();
+      $actions = [];
 
       $actions['locations_id']['name']  = __('Location');
 
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
-      $actions['locations_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['locations_id']['force_actions'] = ['assign', 'regex_result'];
 
-/*
+      /*
       $actions['_affect_entity_by_tag']['name'] = __('Entity from TAG');
 
       $actions['_affect_entity_by_tag']['type'] = 'text';
       $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
-*/
+      */
       $actions['_ignore_import']['name'] =
                      __('Ignore in FusionInventory import', 'fusioninventory');
 
@@ -249,30 +245,30 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     * @param boolean $test
     * @return boolean
     */
-   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
+   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test = false) {
       if ($test) {
-         return FALSE;
+         return false;
       }
 
       switch ($condition) {
          case Rule::PATTERN_FIND:
-            return FALSE;
+            return false;
 
          case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
-            return TRUE;
+            return true;
 
          case Rule::PATTERN_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
-            return TRUE;
+            return true;
 
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
-            return TRUE;
+            return true;
 
       }
 
-      return FALSE;
+      return false;
    }
 
 
@@ -283,13 +279,13 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     * @param string $criterion
     * @return array
     */
-   static function addMoreCriteria($criterion='') {
+   static function addMoreCriteria($criterion = '') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
-         return array(self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
-                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory'));
+         return [self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
+                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory')];
       }
-      return array();
+      return [];
    }
 
 
@@ -305,7 +301,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $res = parent::checkCriteria($criteria, $input);
 
-      if (in_array($criteria->fields["condition"], array(self::PATTERN_CIDR))) {
+      if (in_array($criteria->fields["condition"], [self::PATTERN_CIDR])) {
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -314,14 +310,14 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
          list ($subnet, $bits) = explode('/', $pattern);
          $subnet = ip2long($subnet);
          $mask = -1 << (32 - $bits);
-         $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+         $subnet &= $mask; // nb: in case the supplied subnet wasn't correctly aligned
 
          if (is_array($value)) {
             foreach ($value as $ip) {
                if (isset($ip) && $ip != '') {
                   $ip = ip2long($ip);
                   if (($ip & $mask) == $subnet) {
-                     $res = TRUE;
+                     $res = true;
                      break 1;
                   }
                }
@@ -330,11 +326,11 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             if (isset($value) && $value != '') {
                $ip = ip2long($value);
                if (($ip & $mask) == $subnet) {
-                  $res = TRUE;
+                  $res = true;
                }
             }
          }
-      } else if (in_array($criteria->fields["condition"], array(self::PATTERN_NOT_CIDR))) {
+      } else if (in_array($criteria->fields["condition"], [self::PATTERN_NOT_CIDR])) {
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -343,15 +339,15 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
          list ($subnet, $bits) = explode('/', $pattern);
          $subnet = ip2long($subnet);
          $mask = -1 << (32 - $bits);
-         $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+         $subnet &= $mask; // nb: in case the supplied subnet wasn't correctly aligned
 
          if (is_array($value)) {
-            $resarray = TRUE;
+            $resarray = true;
             foreach ($value as $ip) {
                if (isset($ip) && $ip != '') {
                   $ip = ip2long($ip);
                   if (($ip & $mask) == $subnet) {
-                     $resarray = FALSE;
+                     $resarray = false;
                   }
                }
             }
@@ -360,7 +356,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
             if (isset($value) && $value != '') {
                $ip = ip2long($value);
                if (($ip & $mask) != $subnet) {
-                  $res = TRUE;
+                  $res = true;
                }
             }
          }
@@ -369,4 +365,3 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
    }
 }
 
-?>

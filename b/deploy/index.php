@@ -77,7 +77,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                $agent['id'],
-               array('deployinstall')
+               ['deployinstall']
             );
             if (!$pfAgentModule->isAgentCanDo("DEPLOY", $agent['id'])) {
                foreach ($taskjobstates as $taskjobstate) {
@@ -128,7 +128,7 @@ switch (filter_input(INPUT_GET, "action")) {
                      }
                   }
                   $taskjobstate->changeStatus(
-                     $taskjobstate->fields['id'] ,
+                     $taskjobstate->fields['id'],
                      $taskjobstate::SERVER_HAS_SENT_DATA
                   );
                }
@@ -200,7 +200,7 @@ switch (filter_input(INPUT_GET, "action")) {
          $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
 
          $tmp_msg = implode("\n", $params['msg']);
-         $flags   = NULL;
+         $flags   = null;
          $tmp_msg =
             stripcslashes(
                htmlspecialchars(

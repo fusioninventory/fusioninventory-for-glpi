@@ -49,13 +49,13 @@ class AgentTest extends RestoreDatabase_TestCase {
    public function addAgent() {
       $pfAgent = new PluginFusioninventoryAgent();
       $agent_id = $pfAgent->add(
-         array(
+         [
             'name'           => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
             'device_id'      => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
             'computers_id'   => 100
-         )
+         ]
       );
-      $this->assertNotEquals(FALSE, $agent_id);
+      $this->assertNotEquals(false, $agent_id);
       return $pfAgent;
    }
 
@@ -159,9 +159,9 @@ class AgentTest extends RestoreDatabase_TestCase {
       $pfAgent = new PluginFusioninventoryAgent();
       $query = "UPDATE glpi_plugin_fusioninventory_agents SET `last_contact`='2015-01-01 00:00:01'";
       $DB->query($query);
-      $arrayinventory = array(
+      $arrayinventory = [
           'DEVICEID' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27',
-      );
+      ];
       $log = new Log();
       $nb = count($log->find());
 

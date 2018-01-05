@@ -67,7 +67,6 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       $config = new PluginFusioninventoryConfig;
       $server_upload_path = $config->getValue("server_upload_path");
 
-
       // create a file in fusion upload folder
       $this->filename = $server_upload_path."/file1";
       $file_created = file_put_contents($this->filename, "test repository");

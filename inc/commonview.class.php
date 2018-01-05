@@ -76,11 +76,11 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    const MSG_ERROR = 2;
 
    /**
-    * Define default value for the base URLs 
+    * Define default value for the base URLs
     *
     * @var array
     */
-   public $base_urls = array();
+   public $base_urls = [];
 
    /**
     * __contruct function and the different base URLs
@@ -90,13 +90,13 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    public function __construct() {
       global $CFG_GLPI;
       parent::__construct();
-      $this->base_urls = array(
+      $this->base_urls = [
          'fi.base'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory",
          'fi.ajax'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/ajax",
          'fi.front'  => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front",
          'fi.pics'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/pics",
          'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
-      );
+      ];
    }
 
 
@@ -151,7 +151,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param string $varname
     * @param array $options
     */
-   public function showIntegerField($title, $varname, $options = array()) {
+   public function showIntegerField($title, $varname, $options = []) {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       Dropdown::showNumber($varname, $options);
@@ -167,7 +167,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param string $varname
     * @param array $options
     */
-   public function showCheckboxField($title, $varname, $options = array()) {
+   public function showCheckboxField($title, $varname, $options = []) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       $options['name'] = $varname;
       $options['checked'] = $this->fields[$varname];
@@ -188,14 +188,14 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param array $options
     * @return string the rand number can be used with ajax to update something
     */
-   public function showDropdownForItemtype($title, $itemtype, $options=array()) {
+   public function showDropdownForItemtype($title, $itemtype, $options = []) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       echo "<div class='input_wrap'>";
       $dropdown_options = array_merge(
-         array(
+         [
             'width'=>'90%',
             'display'=>true,
-         ),
+         ],
          $options
       );
       $rand = Dropdown::show($itemtype, $dropdown_options);
@@ -214,7 +214,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param array $options
     * @return string the rand number can be used with ajax to update something
     */
-   public function showDropdownFromArray($title, $varname, $values = array(), $options=array()) {
+   public function showDropdownFromArray($title, $varname, $values = [], $options = []) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       echo "<div class='input_wrap'>";
       if (!isset($options['width'])) {
@@ -241,7 +241,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param string $varname
     * @param array $options
     */
-   public function showDateTimeField($title, $varname, $options = array()) {
+   public function showDateTimeField($title, $varname, $options = []) {
 
       // Get datetime value if the object is defined
       if ($this->fields['id'] > 0) {
@@ -295,7 +295,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
     * @param integer $type
     * @return string
     */
-   public function getMessage($msg,$type=self::MSG_INFO) {
+   public function getMessage($msg, $type = self::MSG_INFO) {
       switch ($type) {
 
          case self::MSG_WARNING:

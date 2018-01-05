@@ -84,8 +84,8 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       //list all iprange
       $a_iprange = importArrayFromDB($pfTaskjob->fields['definition']);
       $count_ip = 0;
-      $a_iprangelist = array();
-      $a_subnet_nbip = array();
+      $a_iprangelist = [];
+      $a_subnet_nbip = [];
       foreach ($a_iprange as $iprange) {
          $iprange_id = current($iprange);
          $a_iprangelist[] = $iprange_id;
@@ -99,7 +99,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       //list all agents
       $a_agent = importArrayFromDB($pfTaskjob->fields['action']);
       $dynagent = 0;
-      $a_agentlist = array();
+      $a_agentlist = [];
       foreach ($a_agent as $agent) {
          $agent_id = current($agent);
          if ($agent_id == '.1') {
@@ -145,7 +145,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          foreach ($a_subnet_nbip as $iprange_id=>$nbips) {
             //$maxagentpossible = $nbips/10;
             $pfIPRange->getFromDB($iprange_id);
-            $a_agentListComplete = array();
+            $a_agentListComplete = [];
             $a_agentList = $pfSnmpinventory->getAgentsSubnet($nbips, "push", "",
                                                       $pfIPRange->fields['ip_start'],
                                                       $pfIPRange->fields['ip_end']);
@@ -154,7 +154,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             }
 
             if (!isset($a_agentListComplete) or empty($a_agentListComplete)) {
-               $a_input = array();
+               $a_input = [];
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                $a_input['plugin_fusioninventory_agents_id'] = 0;
                $a_input['state']        = 1;
@@ -175,7 +175,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                                    'PluginFusioninventoryIPRange',
                                                    1,
                                                    "Unable to find agent to run this job");
-               $input_taskjob = array();
+               $input_taskjob = [];
                $input_taskjob['id'] = $pfTaskjob->fields['id'];
                //$input_taskjob['status'] = 1;
                $pfTaskjob->update($input_taskjob);
@@ -189,7 +189,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
                   $_SESSION['glpi_plugin_fusioninventory']['agents'][$agent_id] = 1;
                   //Add jobstate and put status (waiting on server = 0)
-                  $a_input = array();
+                  $a_input = [];
                   $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                   $a_input['state'] = 0;
                   $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
@@ -215,7 +215,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   if (($iptimes) >= ($e-$s+1)) {
                      break;
                   }
-                  $input_taskjob = array();
+                  $input_taskjob = [];
                   $input_taskjob['id'] = $pfTaskjob->fields['id'];
                   $input_taskjob['status'] = 1;
                   $pfTaskjob->update($input_taskjob);
@@ -225,9 +225,9 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          if ($taskvalid == "0") {
             $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          }
-      // *** Add jobstate
+         // *** Add jobstate
       } else if (count($a_agentlist) == 0) {
-         $a_input = array();
+         $a_input = [];
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
          $a_input['plugin_fusioninventory_agents_id'] = 0;
@@ -248,7 +248,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                              'PluginFusioninventoryIPRange',
                                              1,
                                              "Unable to find agent to run this job");
-         $input_taskjob = array();
+         $input_taskjob = [];
          $input_taskjob['id'] = $pfTaskjob->fields['id'];
          //$input_taskjob['status'] = 1;
          $pfTaskjob->update($input_taskjob);
@@ -262,7 +262,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          foreach ($a_agentlist as $agent_id => $ip) {
 
             //Add jobstate and put status (waiting on server = 0)
-            $a_input = array();
+            $a_input = [];
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 0;
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
@@ -270,7 +270,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             $a_input['uniqid'] = $uniqid;
             $a_input['execution_id'] = $task->fields['execution_id'];
 
-//            $nbIpAgent = $numberIpByAgent;
+            //            $nbIpAgent = $numberIpByAgent;
             $nbIpadded = 0;
             foreach ($a_iprangelist as $iprange_id) {
                if ($ip_id == $iprange_id) {
@@ -303,7 +303,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                      unset($a_input['state']);
                }
             }
-            $input_taskjob = array();
+            $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             $input_taskjob['status'] = 1;
             $pfTaskjob->update($input_taskjob);
@@ -396,4 +396,3 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
    }
 }
 
-?>

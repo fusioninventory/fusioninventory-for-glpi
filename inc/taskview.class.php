@@ -73,7 +73,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // add a list limit for include old jobs
       $include_oldjobs_id = $this->showDropdownFromArray(
-         __("Include old jobs",'fusioninventory'),
+         __("Include old jobs", 'fusioninventory'),
          null,
          [
             1   => __('Last'),
@@ -95,8 +95,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          null,
          [
             "off"  => __('Off', 'fusioninventory'),
-            "1"    => '1 '._n('second','seconds',1),
-            "5"    => '5 '._n('second','seconds',5),
+            "1"    => '1 '._n('second', 'seconds', 1),
+            "5"    => '5 '._n('second', 'seconds', 5),
             "10"   => '10 '._n('second', 'seconds', 10),
             "60"   => '1 '._n('minute', 'minutes', 1),
             "120"  => '2 '._n('minute', 'minutes', 2),
@@ -122,7 +122,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<script id='template_task' type='x-tmpl-mustache'>
                <div id='{{task_id}}' class='task_block {{expanded}}'>
                   <h3>".
-                     __("Task",'fusioninventory')."
+                     __("Task", 'fusioninventory')."
                      <span class='task_name'>{{task_name}}</span>
                   </h3>
                   <a href='".PluginFusioninventoryTask::getFormURL()."?id={{task_id}}'
@@ -199,8 +199,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'agents_error':     '". __('In error', 'fusioninventory') . "',
             'agents_success':   '". __('Successful', 'fusioninventory')."',
             'agents_running':   '". __('Running', 'fusioninventory')."',
-            'agents_prepared':  '". __('Prepared' , 'fusioninventory')."',
-            'agents_postponed':  '". __('Postponed' , 'fusioninventory')."',
+            'agents_prepared':  '". __('Prepared', 'fusioninventory')."',
+            'agents_postponed':  '". __('Postponed', 'fusioninventory')."',
             'agents_cancelled': '". __('Cancelled', 'fusioninventory')."',
          };
 
@@ -216,12 +216,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                </div>
             </script>";
 
-
       // Display empty block for each jobs display
       // which will be rendered later by mustache.js
       echo "<div class='tasks_block'></div>";
 
-      if (isset($this->fields['id']) ) {
+      if (isset($this->fields['id'])) {
          $task_id = $this->fields['id'];
       } else {
          $task_id = null;
@@ -254,14 +253,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          );
       });");
 
-
       // Display Export modal
       echo "<div id='fiTaskExport_modalWindow'>";
       echo "<form method='POST' class='task_export_form center'
                   action='".self::getFormURLWithID($task_id) ."'>";
 
       // states checkboxes
-      echo "<label for='include_old_jobs'>".__("Task execution states",'fusioninventory').
+      echo "<label for='include_old_jobs'>".__("Task execution states", 'fusioninventory').
            "</label>";
       echo "<div class='state_checkboxes'>";
        // set options checked by default
@@ -305,7 +303,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     * @return boolean TRUE if form is ok
     *
     **/
-   function showForm($id, $options=[]) {
+   function showForm($id, $options = []) {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       $taskjobs = [];
@@ -320,9 +318,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
 
       $options['colspan'] = 2;
-      $this->initForm($id,$options);
+      $this->initForm($id, $options);
       $this->showFormHeader($options);
-
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='4'>";
@@ -354,7 +351,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
                                   "datetime_end", $datetime_field_options
          );
 
-         $this->showDropdownForItemtype(__('Preparation timeslot','fusioninventory'),
+         $this->showDropdownForItemtype(__('Preparation timeslot', 'fusioninventory'),
                                         "PluginFusioninventoryTimeslot",
                                        ['name'  => 'plugin_fusioninventory_timeslots_prep_id',
                                         'value' => $this->fields['plugin_fusioninventory_timeslots_prep_id']
@@ -362,7 +359,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             );
 
          $this->showDropdownForItemtype(
-            __('Execution timeslot','fusioninventory'),
+            __('Execution timeslot', 'fusioninventory'),
             "PluginFusioninventoryTimeslot",
             ['name'  => 'plugin_fusioninventory_timeslots_exec_id',
                   'value' => $this->fields['plugin_fusioninventory_timeslots_exec_id']]
@@ -401,10 +398,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "<tr>";
       echo "<td colspan='2'>";
       if ($this->isNewID($ID)) {
-         echo Html::submit(_x('button','Add'), ['name' => 'add']);
+         echo Html::submit(_x('button', 'Add'), ['name' => 'add']);
       } else {
          echo Html::hidden('id', ['value' => $ID]);
-         echo Html::submit(_x('button','Save'), ['name' => 'update']);
+         echo Html::submit(_x('button', 'Save'), ['name' => 'update']);
       }
       echo "</td>";
 
@@ -417,7 +414,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       echo "<td>";
       if ($this->can($ID, PURGE)) {
-         echo Html::submit(_x('button','Delete permanently'),
+         echo Html::submit(_x('button', 'Delete permanently'),
                            ['name'    => 'purge',
                             'confirm' => __('Confirm the final deletion?')
                            ]);

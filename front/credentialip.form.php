@@ -53,4 +53,3 @@ if (empty($_POST['plugin_fusioninventory_credentials_id'])) {
 }
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
-?>

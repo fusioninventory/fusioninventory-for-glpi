@@ -154,7 +154,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
       $_SESSION['SOURCE_XMLDEVICE'] = $arrayinventory;
 
-      $input = array();
+      $input = [];
 
       // Global criterias
 
@@ -182,7 +182,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['name'] = $arrayinventory['NETBIOSNAME'];
       } else if ((isset($arrayinventory['DNSHOSTNAME']))
               && (!empty($arrayinventory['DNSHOSTNAME']))) {
-         if (strpos($arrayinventory['DNSHOSTNAME'],'.') !== false) {
+         if (strpos($arrayinventory['DNSHOSTNAME'], '.') !== false) {
             $splitname = explode('.', $arrayinventory['DNSHOSTNAME']);
             $input['name'] = $splitname[0];
             if (!isset($arrayinventory['WORKGROUP'])) {
@@ -226,7 +226,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                      "PluginFusioninventoryCommunicationNetworkDiscovery";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      $data = $rule->processAllRules($input, array());
+      $data = $rule->processAllRules($input, []);
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
 
@@ -246,7 +246,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $this->addtaskjoblog();
 
          $pfIgnoredimport = new PluginFusioninventoryIgnoredimportdevice();
-         $inputdb = array();
+         $inputdb = [];
          if (isset($input['name'])) {
             $inputdb['name'] = $input['name'];
          }
@@ -298,7 +298,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @param string $itemtype
     * @param integer $entities_id
     */
-   function rulepassed($items_id, $itemtype, $entities_id=0) {
+   function rulepassed($items_id, $itemtype, $entities_id = 0) {
 
       PluginFusioninventoryLogger::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -317,14 +317,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
       $item = new $itemtype();
       if ($items_id == "0") {
-         $input = array();
+         $input = [];
          $input['date_mod'] = date("Y-m-d H:i:s");
          $input['entities_id'] = $entities_id;
 
          $items_id = $item->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-            $inputrulelog = array();
+            $inputrulelog = [];
             $inputrulelog['date'] = date('Y-m-d H:i:s');
             $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
             if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
@@ -371,7 +371,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       );
 
       $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
-      $input = array();
+      $input = [];
       $input['id'] = $item->getID();
 
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()),
@@ -430,8 +430,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $domain = new Domain();
                if (!in_array('domains_id', $a_lockable)) {
                   $input['domains_id'] = $domain->import(
-                            array('name' => $arrayinventory['WORKGROUP'],
-                                  'entities_id' => $item->fields['entities_id'])
+                            ['name' => $arrayinventory['WORKGROUP'],
+                                  'entities_id' => $item->fields['entities_id']]
                           );
                }
             }
@@ -456,7 +456,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                );
             }
 
-
             if (!in_array('contact', $a_lockable)
                     && isset($arrayinventory['USERSESSION'])) {
                $input['contact'] = $arrayinventory['USERSESSION'];
@@ -464,7 +463,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (!in_array('domain', $a_lockable)) {
                if (isset($arrayinventory['WORKGROUP'])
                        && !empty($arrayinventory['WORKGROUP'])) {
-               $input['domain'] = Dropdown::importExternal("Domain",
+                  $input['domain'] = Dropdown::importExternal("Domain",
                                        $arrayinventory['WORKGROUP'], $arrayinventory['ENTITY']);
                }
             }
@@ -590,7 +589,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $port_id = 0;
       if (isset($port['id'])) {
          if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
-            $input = array();
+            $input = [];
             $input['id']  = $port['id'];
             $input['mac'] = $arrayinventory['MAC'];
             $NetworkPort->update($input);
@@ -599,7 +598,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       } else {
          $item = new $itemtype;
          $item->getFromDB($items_id);
-         $input = array();
+         $input = [];
          $input['itemtype']           = $itemtype;
          $input['items_id']           = $items_id;
          $input['instantiation_type'] = $instanciation_type;
@@ -623,7 +622,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       if (isset($name['id'])) {
          $name_id = $name['id'];
       } else {
-         $input = array();
+         $input = [];
          $input['itemtype'] = 'NetworkPort';
          $input['items_id'] = $port_id;
          $name_id = $NetworkName->add($input);
@@ -643,12 +642,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (count($a_ips) > 0) {
                $addresses = $a_ips;
             } else {
-               $addresses = array();
+               $addresses = [];
             }
          }
 
          if (count($addresses) == 0) {
-            $input = array();
+            $input = [];
             $input['itemtype'] = 'NetworkName';
             $input['items_id'] = $name_id;
             $input['name']     = $arrayinventory['IP'];
@@ -656,7 +655,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          } else {
             $address = current($addresses);
             if ($address['name'] != $arrayinventory['IP']) {
-               $input = array();
+               $input = [];
                $input['id']   = $address['id'];
                $input['name'] = $arrayinventory['IP'];
                $IPAddress->update($input);
@@ -677,7 +676,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     */
    function initSpecificInfo($key_field, $id, $item) {
       $instances = $item->find("`$key_field`='$id'");
-      $input = array();
+      $input = [];
       if (count($instances) > 0) {
          $input = Toolbox::addslashes_deep(current($instances));
       } else {
@@ -739,4 +738,3 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 }
 
-?>

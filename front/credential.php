@@ -50,4 +50,3 @@ include ("../../../inc/includes.php");
 $dropdown = new PluginFusioninventoryCredential();
 include (GLPI_ROOT . "/front/dropdown.common.php");
 
-?>

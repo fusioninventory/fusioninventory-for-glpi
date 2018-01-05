@@ -86,7 +86,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * @param integer $taskjob_id id of the taskjob
     * @param null|array $definitions_filter
     */
-   function prepareRun($taskjob_id , $definitions_filter=NULL) {
+   function prepareRun($taskjob_id, $definitions_filter = null) {
       global $DB;
 
       $task       = new PluginFusioninventoryTask();
@@ -95,7 +95,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $jobstate   = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
       $agentmodule= new PluginFusioninventoryAgentmodule();
-
 
       $job->getFromDB($taskjob_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
@@ -111,7 +110,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          $itemtype = key($action);
          $items_id = current($action);
 
-         switch($itemtype) {
+         switch ($itemtype) {
 
             case 'Computer':
                if ($this->definitionFiltered("Computer", $definitions_filter)) {
@@ -182,7 +181,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      }
 
                      //$definitions_filter is NULL = update by crontask !
-                     if ($definitions_filter != NULL) {
+                     if ($definitions_filter != null) {
                         $where = " AND `can_update_group`='1'";
                      } else {
                         $where = "";
@@ -282,17 +281,17 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
                   $jobstates_running = $jobstate->find(
                      implode(" ",
-                        array(
+                        [
                            "    `itemtype` = 'PluginFusioninventoryDeployPackage'",
                            "AND `items_id` = ".$package->fields['id'],
                            "AND `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
                            "AND `plugin_fusioninventory_agents_id` = " . $agents_id
-                        )
+                        ]
                      )
                   );
 
                   if (count($jobstates_running) == 0) {
-                     # Push the agent, in the stack of agent to awake
+                     // Push the agent, in the stack of agent to awake
                      if ($communication == "push") {
                         $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
                      }

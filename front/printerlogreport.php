@@ -128,4 +128,3 @@ function displaySearchForm() {
 
 Html::footer();
 
-?>

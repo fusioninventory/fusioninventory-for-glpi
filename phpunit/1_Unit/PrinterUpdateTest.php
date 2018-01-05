@@ -56,21 +56,21 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $this->update_time = date('Y-m-d H:i:s');
 
-      $a_inventory = array(
-         'PluginFusioninventoryPrinter' => Array(
+      $a_inventory = [
+         'PluginFusioninventoryPrinter' => [
             'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
             'last_fusioninventory_update' => $this->update_time
-         ),
-         'networkport' => array(),
-         'cartridge'   => array(
+         ],
+         'networkport' => [],
+         'cartridge'   => [
             '63' => 60, // toner black
             '71' => 40, // toner cyan
             '79' => 80, //toner yelllow
             '75' => 100 // toner magenta
-         ),
+         ],
          'itemtype'    => 'Printer'
-      );
-      $a_inventory['Printer'] = array(
+      ];
+      $a_inventory['Printer'] = [
          'name'               => 'ARC12-B09-N',
          'id'                 => 54,
          'serial'             => 'VRG5XUT5',
@@ -80,8 +80,8 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'memory_size'        => 64,
          'is_dynamic'         => 1,
          'have_ethernet'      => 1
-      );
-      $a_inventory['pagecounters'] = array(
+      ];
+      $a_inventory['pagecounters'] = [
          'pages_total'        => 15134,
          'pages_n_b'          => 10007,
          'pages_color'        => 5127,
@@ -95,13 +95,13 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'pages_color_copy'   => 0,
          'pages_total_fax'    => 0
 
-      );
+      ];
 
       $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
       $printer = new Printer();
 
-      $this->items_id = $printer->add(array('serial'      => 'VRG5XUT5',
-         'entities_id' => 0));
+      $this->items_id = $printer->add(['serial'      => 'VRG5XUT5',
+         'entities_id' => 0]);
 
       $this->assertGreaterThan(0, $this->items_id);
 
@@ -126,10 +126,10 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $printer->getFromDB(1);
       unset($printer->fields['date_mod']);
       unset($printer->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
          'name'                 => 'ARC12-B09-N',
          'serial'               => 'VRG5XUT5',
-         'otherserial'          => NULL,
+         'otherserial'          => null,
          'id'                   => '1',
          'manufacturers_id'     => '10',
          'locations_id'         => '102',
@@ -137,8 +137,8 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'memory_size'          => '64',
          'entities_id'          => '0',
          'is_recursive'         => '0',
-         'contact'              => NULL,
-         'contact_num'          => NULL,
+         'contact'              => null,
+         'contact_num'          => null,
          'users_id_tech'        => '0',
          'groups_id_tech'       => '0',
          'have_serial'          => '0',
@@ -146,14 +146,14 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'have_usb'             => '0',
          'have_wifi'            => '0',
          'have_ethernet'        => '1',
-         'comment'              => NULL,
+         'comment'              => null,
          'domains_id'           => '0',
          'networks_id'          => '0',
          'printertypes_id'      => '0',
          'is_global'            => '0',
          'is_deleted'           => '0',
          'is_template'          => '0',
-         'template_name'        => NULL,
+         'template_name'        => null,
          'init_pages_counter'   => '0',
          'last_pages_counter'   => 15134,
          'users_id'             => '0',
@@ -161,7 +161,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'states_id'            => '0',
          'ticket_tco'           => '0.0000',
          'is_dynamic'           => '1',
-      );
+      ];
 
       $this->assertEquals($a_reference, $printer->fields);
 
@@ -187,14 +187,14 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $pfPrinter = new PluginFusioninventoryPrinter();
       $a_printer = current($pfPrinter->find("`printers_id`='1'", "", 1));
       unset($a_printer['last_fusioninventory_update']);
-      $a_reference = array(
+      $a_reference = [
          'id'                                           => '1',
          'printers_id'                                  => '1',
          'sysdescr'                                     => 'HP ETHERNET MULTI-ENVIRONMENT',
          'plugin_fusioninventory_configsecurities_id'   => '0',
          'frequence_days'                               => '1',
-         'serialized_inventory'                         => NULL
-      );
+         'serialized_inventory'                         => null
+      ];
 
       $this->assertEquals($a_reference, $a_printer);
 
@@ -326,7 +326,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $networkName = new NetworkName();
       $iPAddress = new IPAddress();
 
-      $_SESSION['SOURCE_XMLDEVICE'] = array(
+      $_SESSION['SOURCE_XMLDEVICE'] = [
          'AUTHSNMP'     => '1',
          'DESCRIPTION'  => 'Photosmart D7200 series',
          'ENTITY'       => '0',
@@ -340,11 +340,11 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'SERIAL'       => 'MY89AQG0V9050N',
          'SNMPHOSTNAME' => 'HP0BBBC4',
          'TYPE'         => 'PRINTER'
-      );
+      ];
 
       $printer = new Printer();
-      $printers_id = $printer->add(array('serial'      => 'MY89AQG0V9050N',
-         'entities_id' => 0));
+      $printers_id = $printer->add(['serial'      => 'MY89AQG0V9050N',
+         'entities_id' => 0]);
       $printer->getFromDB($printers_id);
       $pfCNetworkDiscovery->importDevice($printer);
 
@@ -405,7 +405,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $networkName = new NetworkName();
       $iPAddress = new IPAddress();
 
-      $_SESSION['SOURCE_XMLDEVICE'] = array(
+      $_SESSION['SOURCE_XMLDEVICE'] = [
          'AUTHSNMP'     => '1',
          'DESCRIPTION'  => 'Photosmart D7200 series',
          'ENTITY'       => '0',
@@ -419,7 +419,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'SERIAL'       => 'MY89AQG0V9050N',
          'SNMPHOSTNAME' => 'HP0BBBC4new',
          'TYPE'         => 'PRINTER'
-      );
+      ];
 
       $printer = new Printer();
       $a_printers = $printer->find("`serial`='MY89AQG0V9050N'");
@@ -470,4 +470,3 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'IP address');
    }
 }
-?>

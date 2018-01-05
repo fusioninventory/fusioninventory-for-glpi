@@ -74,15 +74,15 @@ class PluginFusioninventoryComputer extends Computer {
 
       $options['6000']['name']          = __('Static group', 'fusioninventory');
       $options['6000']['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
-      $options['6000']['massiveaction'] = FALSE;
+      $options['6000']['massiveaction'] = false;
       $options['6000']['field']         ='name';
       $options['6000']['forcegroupby']  = true;
       $options['6000']['usehaving']     = true;
       $options['6000']['datatype']      = 'dropdown';
-      $options['6000']['joinparams']    = array('beforejoin'
-                                         => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
-                                                  'joinparams' => array('jointype'          => 'itemtype_item',
-                                                                        'specific_itemtype' => 'Computer')));
+      $options['6000']['joinparams']    = ['beforejoin'
+                                         => ['table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
+                                                  'joinparams' => ['jointype'          => 'itemtype_item',
+                                                                        'specific_itemtype' => 'Computer']]];
       return $options;
    }
 
@@ -94,9 +94,9 @@ class PluginFusioninventoryComputer extends Computer {
     * @param object|null $checkitem
     * @return array list of actions
     */
-   function getSpecificMassiveActions($checkitem=NULL) {
+   function getSpecificMassiveActions($checkitem = null) {
 
-      $actions = array();
+      $actions = [];
       if (isset($_GET['id'])) {
          $id = $_GET['id'];
       } else {
@@ -107,21 +107,21 @@ class PluginFusioninventoryComputer extends Computer {
 
       //There's no massive action associated with a dynamic group !
       if ($group->isDynamicGroup() || !$group->canEdit($group->getID())) {
-         return array();
+         return [];
       }
 
       if (!isset($_POST['custom_action'])) {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
                = _x('button', 'Add');
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
-               = _x('button','Delete permanently');
+               = _x('button', 'Delete permanently');
       } else {
          if ($_POST['custom_action'] == 'add_to_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
                = _x('button', 'Add');
-         } elseif ($_POST['custom_action'] == 'delete_from_group') {
+         } else if ($_POST['custom_action'] == 'delete_from_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
-               = _x('button','Delete permanently');
+               = _x('button', 'Delete permanently');
          }
       }
       return $actions;
@@ -166,11 +166,11 @@ class PluginFusioninventoryComputer extends Computer {
                                                 .$_POST['id']."'
                                               AND `itemtype`='Computer'
                                               AND `items_id`='$key'")) {
-                     $group_item->add(array(
+                     $group_item->add([
                         'plugin_fusioninventory_deploygroups_id'
                            => $_POST['id'],
                         'itemtype' => 'Computer',
-                        'items_id' => $key));
+                        'items_id' => $key]);
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
@@ -184,10 +184,10 @@ class PluginFusioninventoryComputer extends Computer {
 
          case 'deleteitem':
             foreach ($ids as $key) {
-               if ($group_item->deleteByCriteria(array('items_id' => $key,
+               if ($group_item->deleteByCriteria(['items_id' => $key,
                                                        'itemtype' => 'Computer',
                                                        'plugin_fusioninventory_deploygroups_id'
-                                                          => $_POST['id']))) {
+                                                          => $_POST['id']])) {
                   $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                } else {
                   $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
@@ -208,12 +208,11 @@ class PluginFusioninventoryComputer extends Computer {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'add') {
          echo "<br><br>".Html::submit(_x('button', 'Add'),
-                                      array('name' => 'massiveaction'));
-         return TRUE;
+                                      ['name' => 'massiveaction']);
+         return true;
       }
       return parent::showMassiveActionsSubForm($ma);
    }
 
 }
 
-?>

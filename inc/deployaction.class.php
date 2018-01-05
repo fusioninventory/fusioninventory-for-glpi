@@ -86,7 +86,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          'copy'    => __('Copy', 'fusioninventory'),
          'delete'  => __('Delete directory', 'fusioninventory'),
          'mkdir'   => __('Create directory', 'fusioninventory')
-      ];
+       ];
    }
 
 
@@ -120,7 +120,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       /*
        * Get element config in 'edit' mode
        */
-      $config = NULL;
+      $config = null;
       if ($mode === self::EDIT && isset($request_data['index'])) {
          /*
           * Add an hidden input about element's index to be updated
@@ -191,7 +191,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($canedit) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'actions_entries['.$i.']'));
+            Html::showCheckbox(['name' => 'actions_entries['.$i.']']);
             echo "</td>";
          }
          $keys = array_keys($action);
@@ -251,16 +251,16 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          echo "</tr>";
          $i++;
       }
-         if ($canedit) {
+      if ($canedit) {
          echo "<tr><th>";
          Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
-         if ($canedit) {
+      if ($canedit) {
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete' value=\"".
-            __('Delete', 'fusioninventory')."\" class='submit'>";
+         __('Delete', 'fusioninventory')."\" class='submit'>";
       }
    }
 
@@ -287,7 +287,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       /*
        * Get type from request params
        */
-      $type = NULL;
+      $type = null;
 
       if ($mode === self::CREATE) {
          $type = $request_data['value'];
@@ -302,7 +302,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       $value_type_1 = "input";
       $value_1      = "";
       $value_2      = "";
-      $retChecks    = NULL;
+      $retChecks    = null;
       $name_label   = __('Action label', 'fusioninventory');
       $name_value   = (isset($config_data['name']))?$config_data['name']:"";
       $name_type    = "input";
@@ -483,10 +483,10 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
               && !empty($params['retchecks_type'])) {
          foreach ($params['retchecks_type'] as $index => $type) {
             if ($type !== '0') {
-               $tmp['retChecks'][] = array(
+               $tmp['retChecks'][] = [
                   'type'  => $type,
-                  'values' => array($params['retchecks_value'][$index])
-               );
+                  'values' => [$params['retchecks_value'][$index]]
+               ];
             }
          }
       }
@@ -525,10 +525,10 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
          foreach ($params['retchecks_type'] as $index => $type) {
             //if type == '0', this means nothing is selected
             if ($type !== '0') {
-               $tmp['retChecks'][] = array(
+               $tmp['retChecks'][] = [
                   'type'  => $type,
-                  'values' => array($params['retchecks_value'][$index])
-               );
+                  'values' => [$params['retchecks_value'][$index]]
+               ];
             }
          }
       }

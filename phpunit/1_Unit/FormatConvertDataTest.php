@@ -51,7 +51,7 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      $a_inventory['hardware'] = array(
+      $a_inventory['hardware'] = [
           "dns"                  => "10.0.5.105",
           "userid"               => "root/goneri",
           "oscomments"           => "#1 SMP Wed Jan 12 03:40:32 UTC 2011",
@@ -75,13 +75,13 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
           "userdomain"           => "",
           "processorn"           => 1,
           "datelastloggeduser"   => "Wed Mar 30 19:29"
-      );
+      ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->JSONtoArray(json_encode($a_inventory));
 
-      $a_reference['HARDWARE'] = array(
+      $a_reference['HARDWARE'] = [
           'ARCHNAME'             => 'x86_64-linux-gnu-thread-multi',
           'CHECKSUM'             => '262143',
           'DATELASTLOGGEDUSER'   => 'Wed Mar 30 19:29',
@@ -106,7 +106,7 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
           'VMSYSTEM'             => 'Physical',
           'WORKGROUP'            => 'rulezlan.org'
 
-      );
+      ];
       $this->assertEquals($a_reference, $a_return);
 
       $GLPIlog = new GLPIlogs();
@@ -123,25 +123,25 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      $a_inventory['software'] = array();
-      $a_inventory['Computer'] = array(
+      $a_inventory['software'] = [];
+      $a_inventory['Computer'] = [
           'name'                             => 'pc',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE'
-          );
+          ];
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 0);
 
-      $a_reference['software'] = array();
-      $a_reference['Computer'] = array(
+      $a_reference['software'] = [];
+      $a_reference['Computer'] = [
           'name'                             => 'pc',
           'users_id'                         => 0,
           'operatingsystems_id'              => 1,
           'operatingsystemversions_id'       => 1
-          );
+          ];
 
        $this->assertEquals($a_reference, $a_inventory);
 
@@ -276,13 +276,13 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
-      $a_reference = array(
-          10101 => array(
+      $a_reference = [
+          10101 => [
               '64:9e:f3:32:cc:06',
               'fc:99:47:13:d5:10'
-          )
-      );
-     $this->assertEquals($a_reference, $a_inventory['connection-mac'], "Must have 2 macs ".print_r($a_inventory['connection-mac'], true));
+          ]
+      ];
+      $this->assertEquals($a_reference, $a_inventory['connection-mac'], "Must have 2 macs ".print_r($a_inventory['connection-mac'], true));
    }
 
    /**
@@ -325,10 +325,10 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
 
       $array = PluginFusioninventoryFormatconvert::XMLtoArray($xml);
 
-      $expected = array (
+      $expected =  [
          'CONTENT' =>
-            array (
-               'HARDWARE' => array (
+             [
+               'HARDWARE' =>  [
                   'ARCHNAME' => 'MSWin32-x64-multi-thread',
                   'CHASSIS_TYPE' => 'Notebook',
                   'CHECKSUM' => '127855',
@@ -350,9 +350,9 @@ Compiled Wed 11-Feb-15 11:46 by prod_rel_team</COMMENTS>
                   'WINPRODID' => '0000-0000-0000',
                   'WINPRODKEY' => 'FGHI-FGHI-FGHI',
                   'WORKGROUP' => 'local.group'
-               )
-            )
-      );
+               ]
+             ]
+      ];
       $this->assertEquals($expected, $array);
 
       $GLPIlog = new GLPIlogs();

@@ -3,7 +3,7 @@
 class Bootstrap extends BaseTestCase {
 
    public function should_restore_install() {
-      return FALSE;
+      return false;
    }
 
    public function testInitDatabase() {

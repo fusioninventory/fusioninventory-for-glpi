@@ -56,4 +56,3 @@ $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
 
 include (GLPI_ROOT . "/front/rule.common.form.php");
 
-?>

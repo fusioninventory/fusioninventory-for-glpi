@@ -74,127 +74,120 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
          VALUES (3, 'ent1.1', 1, 'Entité racine > ent1 > ent1.1', 3)");
 
       // Create computers + agents
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
       // Create Network Equipments
-      $input = array(
+      $input = [
           'name'        => 'sw0',
           'entities_id' => 0
-      );
+      ];
       $networkEquipment->add($input);
-      $input = array(
+      $input = [
           'entities_id'        => 0,
           'name'               => 'management',
           'items_id'           => 1,
           'itemtype'           => 'NetworkEquipment',
           'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => array('-1' => '10.0.0.10')
-      );
+          'NetworkName__ipaddresses' => ['-1' => '10.0.0.10']
+      ];
       $networkPort->splitInputForElements($input);
       $networkPort->add($input);
       $networkPort->updateDependencies(1);
-      $input = array(
+      $input = [
           'networkequipments_id'                       => 1,
           'plugin_fusioninventory_configsecurities_id' => 2
-      );
+      ];
       $pfNetworkEquipment->add($input);
 
-
-      $input = array(
+      $input = [
           'name'        => 'sw1',
           'entities_id' => 1
-      );
+      ];
       $networkEquipment->add($input);
-      $input = array(
+      $input = [
           'entities_id'        => 1,
           'name'               => 'management',
           'items_id'           => 2,
           'itemtype'           => 'NetworkEquipment',
           'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => array('-1' => '10.0.0.11')
-      );
+          'NetworkName__ipaddresses' => ['-1' => '10.0.0.11']
+      ];
       $networkPort->splitInputForElements($input);
       $networkPort->add($input);
       $networkPort->updateDependencies(1);
-      $input = array(
+      $input = [
           'networkequipments_id'                       => 2,
           'plugin_fusioninventory_configsecurities_id' => 2
-      );
+      ];
       $pfNetworkEquipment->add($input);
 
-
-      $input = array(
+      $input = [
           'name'        => 'sw2',
           'entities_id' => 2
-      );
+      ];
       $networkEquipment->add($input);
-      $input = array(
+      $input = [
           'entities_id'        => 2,
           'name'               => 'management',
           'items_id'           => 3,
           'itemtype'           => 'NetworkEquipment',
           'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => array('-1' => '10.0.0.12')
-      );
+          'NetworkName__ipaddresses' => ['-1' => '10.0.0.12']
+      ];
       $networkPort->splitInputForElements($input);
       $networkPort->add($input);
       $networkPort->updateDependencies(1);
-      $input = array(
+      $input = [
           'networkequipments_id'                       => 3,
           'plugin_fusioninventory_configsecurities_id' => 2
-      );
+      ];
       $pfNetworkEquipment->add($input);
 
-
-      $input = array(
+      $input = [
           'name'        => 'sw3/1.1',
           'entities_id' => 3
-      );
+      ];
       $networkEquipment->add($input);
-      $input = array(
+      $input = [
           'entities_id'        => 3,
           'name'               => 'management',
           'items_id'           => 4,
           'itemtype'           => 'NetworkEquipment',
           'instantiation_type' => 'NetworkPortAggregate',
-          'NetworkName__ipaddresses' => array('-1' => '10.0.0.21')
-      );
+          'NetworkName__ipaddresses' => ['-1' => '10.0.0.21']
+      ];
       $networkPort->splitInputForElements($input);
       $networkPort->add($input);
       $networkPort->updateDependencies(1);
-      $input = array(
+      $input = [
           'networkequipments_id'                       => 4,
           'plugin_fusioninventory_configsecurities_id' => 2
-      );
+      ];
       $pfNetworkEquipment->add($input);
-
 
       // Create Printers
 
-
-
-
       // Add IPRange
-      $input = array(
+      $input = [
           'entities_id' => 1,
           'name'        => 'Office',
           'ip_start'    => '10.0.0.1',
           'ip_end'      => '10.0.0.254'
-      );
+      ];
       $ipranges_id = $pfIPRange->add($input);
 
       // Allow all agents to do network discovery
@@ -204,24 +197,23 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $DB->query($query);
 
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'network inventory',
           'is_active'   => 1
-      );
+      ];
       $tasks_id = $pfTask->add($input);
 
       // create taskjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'inventory',
           'method'                          => 'networkinventory',
           'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]',
           'actors'                          => '[{"PluginFusioninventoryAgent":"1"}]'
-      );
+      ];
       $pfTaskjob->add($input);
-
 
    }
 
@@ -239,11 +231,11 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
-      $ref = array(
+      $ref = [
           1 => 'computer1',
-      );
+      ];
 
       $this->mark_incomplete(
           "This test needs to be simplified since there seems to be too much"
@@ -298,77 +290,76 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $pfAgent       = new PluginFusioninventoryAgent();
       $communication = new PluginFusioninventoryCommunication();
 
-
       // Create computers + agents
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
       // Create printer
-      $input = array(
+      $input = [
          'name'        => 'printer 001',
          'entities_id' => 0
-      );
+      ];
       $printers_id = $printer->add($input);
 
       // Add port
-      $networkports_id = $networkport->add(array(
+      $networkports_id = $networkport->add([
           'itemtype'          => 'Printer',
           'instantiation_type'=> 'NetworkPortEthernet',
           'items_id'          => $printers_id,
           'entities_id'       => 0
-      ));
-      $networknames_id = $networkName->add(array(
+      ]);
+      $networknames_id = $networkName->add([
           'entities_id' => 0,
           'itemtype'    => 'NetworkPort',
           'items_id'    => $networkports_id
-      ));
-      $iPAddress->add(array(
+      ]);
+      $iPAddress->add([
           'entities_id' => 0,
           'itemtype' => 'NetworkName',
           'items_id' => $networknames_id,
           'name' => '192.168.200.124'
-      ));
-      $input = array(
+      ]);
+      $input = [
           'printers_id'                                => 1,
           'plugin_fusioninventory_configsecurities_id' => 2
-      );
+      ];
       $pfPrinter->add($input);
 
       // Add task
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'network inventory',
           'is_active'   => 1
-      );
+      ];
       $tasks_id = $pfTask->add($input);
 
       // create taskjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'inventory',
           'method'                          => 'networkinventory',
           'targets'                         => '[{"Printer":"'.$printers_id.'"}]',
           'actors'                          => '[{"PluginFusioninventoryAgent":"1"}]'
-      );
+      ];
       $pfTaskjob->add($input);
 
       PluginFusioninventoryTask::cronTaskscheduler();
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
       // Task is prepared
       // Agent will get data
@@ -376,44 +367,44 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $communication->getTaskAgent(1);
       $message = $communication->getMessage();
       $json = json_encode($message);
-      $array = json_decode($json,TRUE);
+      $array = json_decode($json, true);
 
-      $ref = array(
-         'OPTION' => array(
+      $ref = [
+         'OPTION' => [
             'NAME' => 'SNMPQUERY',
-            'PARAM' => array(
-               '@attributes' => array(
+            'PARAM' => [
+               '@attributes' => [
                   'THREADS_QUERY' => 1,
                   'TIMEOUT'       => 0,
                   'PID'           => 1
-               )
-            ),
-            'DEVICE' => array(
-               '@attributes' => array(
+               ]
+            ],
+            'DEVICE' => [
+               '@attributes' => [
                   'TYPE'        => 'PRINTER',
                   'ID'          => 1,
                   'IP'          => '192.168.200.124',
                   'AUTHSNMP_ID' => 2
-               )
-            ),
-            'AUTHENTICATION' => array(
-               0 => array(
-                  '@attributes' => array(
+               ]
+            ],
+            'AUTHENTICATION' => [
+               0 => [
+                  '@attributes' => [
                      'ID'        => 1,
                      'VERSION'   => 1,
                      'COMMUNITY' => 'public'
-                  )
-               ),
-               1 => array(
-                  '@attributes' => array(
+                  ]
+               ],
+               1 => [
+                  '@attributes' => [
                      'ID'        => 2,
                      'VERSION'   => '2c',
                      'COMMUNITY' => 'public'
-                  ),
-               )
-            )
-         )
-      );
+                  ],
+               ]
+            ]
+         ]
+      ];
 
       $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
 
@@ -438,71 +429,70 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $pfAgent       = new PluginFusioninventoryAgent();
       $communication = new PluginFusioninventoryCommunication();
 
-
       // Create computers + agents
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
       // Create printer
-      $input = array(
+      $input = [
          'name'        => 'printer 001',
          'entities_id' => 0
-      );
+      ];
       $printers_id = $printer->add($input);
 
       // Add port
-      $networkports_id = $networkport->add(array(
+      $networkports_id = $networkport->add([
           'itemtype'          => 'Printer',
           'instantiation_type'=> 'NetworkPortEthernet',
           'items_id'          => $printers_id,
           'entities_id'       => 0
-      ));
-      $networknames_id = $networkName->add(array(
+      ]);
+      $networknames_id = $networkName->add([
           'entities_id' => 0,
           'itemtype'    => 'NetworkPort',
           'items_id'    => $networkports_id
-      ));
-      $input = array(
+      ]);
+      $input = [
           'printers_id'                                => 1,
           'plugin_fusioninventory_configsecurities_id' => 2
-      );
+      ];
       $pfPrinter->add($input);
 
       // Add task
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'network inventory',
           'is_active'   => 1
-      );
+      ];
       $tasks_id = $pfTask->add($input);
 
       // create taskjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'inventory',
           'method'                          => 'networkinventory',
           'targets'                         => '[{"Printer":"'.$printers_id.'"}]',
           'actors'                          => '[{"PluginFusioninventoryAgent":"1"}]'
-      );
+      ];
       $pfTaskjob->add($input);
 
       PluginFusioninventoryTask::cronTaskscheduler();
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
       // Task is prepared
       // Agent will get data
@@ -510,12 +500,11 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
       $communication->getTaskAgent(1);
       $message = $communication->getMessage();
       $json = json_encode($message);
-      $array = json_decode($json,TRUE);
+      $array = json_decode($json, true);
 
-      $ref = array();
+      $ref = [];
 
       $this->assertEquals($ref, $array, 'XML of SNMP inventory task');
 
    }
 }
-?>

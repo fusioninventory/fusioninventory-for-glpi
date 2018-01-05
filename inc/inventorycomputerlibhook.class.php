@@ -61,10 +61,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
     */
    function __construct() {
       if (!isset($_SESSION["plugin_fusioninventory_history_add"])) {
-         $_SESSION["plugin_fusioninventory_history_add"] = TRUE;
+         $_SESSION["plugin_fusioninventory_history_add"] = true;
       }
       if (!isset($_SESSION["plugin_fusioninventory_no_history_add"])) {
-         $_SESSION["plugin_fusioninventory_no_history_add"] = FALSE;
+         $_SESSION["plugin_fusioninventory_no_history_add"] = false;
       }
       $_SESSION["plugin_fusioninventory_userdefined"] = 0;
    }
@@ -76,107 +76,105 @@ class PluginFusioninventoryInventoryComputerLibhook {
      *
      * @return array of the mapping
      */
-    static function getMapping() {
-       $opt = array();
+   static function getMapping() {
+      $opt = [];
 
-       $i = 0;
+      $i = 0;
 
-       // ** HARDWARE
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'NAME';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'name';
+      // ** HARDWARE
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'NAME';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'name';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'OSNAME';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'operatingsystems_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'OSNAME';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'operatingsystems_id';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'OSVERSION';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'operatingsystemversions_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'OSVERSION';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'operatingsystemversions_id';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'WINPRODID';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'os_licenseid';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'WINPRODID';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'os_licenseid';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'WINPRODKEY';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'os_license_number';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'WINPRODKEY';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'os_license_number';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'WORKGROUP';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'domains_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'WORKGROUP';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'domains_id';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'OSCOMMENTS';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'operatingsystemservicepacks_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'OSCOMMENTS';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'operatingsystemservicepacks_id';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'UUID';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'uuid';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'UUID';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'uuid';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
-       $opt[$i]['xmlSectionChild']  = 'DESCRIPTION';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'comment';
+      $i++;
+      $opt[$i]['xmlSection']       = 'HARDWARE';
+      $opt[$i]['xmlSectionChild']  = 'DESCRIPTION';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'comment';
 
+      // ** USERS
+      $i++;
+      $opt[$i]['xmlSection']       = 'USERS';
+      $opt[$i]['xmlSectionChild']  = 'LOGIN';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'users_id';
 
-       // ** USERS
-       $i++;
-       $opt[$i]['xmlSection']       = 'USERS';
-       $opt[$i]['xmlSectionChild']  = 'LOGIN';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'users_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'USERS';
+      $opt[$i]['xmlSectionChild']  = 'LOGIN';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'contact';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'USERS';
-       $opt[$i]['xmlSectionChild']  = 'LOGIN';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'contact';
+      // ** BIOS
+      $i++;
+      $opt[$i]['xmlSection']       = 'BIOS';
+      $opt[$i]['xmlSectionChild']  = 'SMANUFACTURER';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'manufacturers_id';
 
+      $i++;
+      $opt[$i]['xmlSection']       = 'BIOS';
+      $opt[$i]['xmlSectionChild']  = 'SMODEL';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'computermodels_id';
 
-       // ** BIOS
-       $i++;
-       $opt[$i]['xmlSection']       = 'BIOS';
-       $opt[$i]['xmlSectionChild']  = 'SMANUFACTURER';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'manufacturers_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'BIOS';
+      $opt[$i]['xmlSectionChild']  = 'SSN';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'serial';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'BIOS';
-       $opt[$i]['xmlSectionChild']  = 'SMODEL';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'computermodels_id';
+      $i++;
+      $opt[$i]['xmlSection']       = 'BIOS';
+      $opt[$i]['xmlSectionChild']  = 'TYPE';
+      $opt[$i]['glpiItemtype']     = 'Computer';
+      $opt[$i]['glpiField']        = 'computertypes_id';
 
-       $i++;
-       $opt[$i]['xmlSection']       = 'BIOS';
-       $opt[$i]['xmlSectionChild']  = 'SSN';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'serial';
-
-       $i++;
-       $opt[$i]['xmlSection']       = 'BIOS';
-       $opt[$i]['xmlSectionChild']  = 'TYPE';
-       $opt[$i]['glpiItemtype']     = 'Computer';
-       $opt[$i]['glpiField']        = 'computertypes_id';
-
-       return $opt;
-    }
+      return $opt;
+   }
 
 
 
@@ -186,7 +184,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
      * @param integer $items_id id of the computer
      * @param string $partnumber HP partnumber
      */
-    function Suppliertag($items_id, $partnumber) {
+   function Suppliertag($items_id, $partnumber) {
       if ($partnumber != 'Not Specified') {
          $a_partnumber = explode("#", $partnumber);
          $Plugin = new Plugin();
@@ -194,13 +192,12 @@ class PluginFusioninventoryInventoryComputerLibhook {
             if (class_exists("PluginManufacturersimportsModel")) {
                $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
                $PluginManufacturersimportsModel->addModel(
-                       array('items_id'   => $items_id,
+                       ['items_id'   => $items_id,
                              'itemtype'   => 'Computer',
-                             'model_name' => $a_partnumber[0]));
+                             'model_name' => $a_partnumber[0]]);
             }
          }
       }
    }
 }
 
-?>

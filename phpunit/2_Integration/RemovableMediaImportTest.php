@@ -42,67 +42,67 @@ http://www.gnu.org/licenses/agpl-3.0-standalone.html
 
 
 class RemovableMediaImportTest extends RestoreDatabase_TestCase {
-   
+
    public function disabledDataProvider() {
-   
+
       $filename = pathinfo(__FILE__);
       $json_filename = implode(
             DIRECTORY_SEPARATOR,
-            array(
+            [
                   $filename['dirname'],
                   $filename['filename']
-            )
+            ]
             ).".json";
-   
+
             $jsondata = json_decode(
                   file_get_contents( $json_filename ),
-                  TRUE
+                  true
                   );
-   
+
             return $jsondata['data'];
    }
-   
+
    /**
     * @test
     * @dataProvider disabledDataProvider
     */
    public function importWithRemovableMedia($data) {
       global $PF_CONFIG;
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION['glpiname'] = 'glpi';
-      
+
       unset($PF_CONFIG['component_removablemedia']);
       $pfConfig = new PluginFusioninventoryConfig();
       $pfConfig->updateValue('component_removablemedia', '1');
-      
+
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      
-      $inventory = array();
+
+      $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
-      
+
       // ** Add agent
       $pfAgent = new PluginFusioninventoryAgent();
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
-      
+
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
-      
+
       $this->countDrivesWhenEnabled($data);
    }
-   
+
    /**
     * @test
     * @dataProvider disabledDataProvider
     */
    public function importWithoutRemovableMedia($data) {
       global $PF_CONFIG;
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
@@ -111,26 +111,25 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
       unset($PF_CONFIG['component_removablemedia']);
       $pfConfig = new PluginFusioninventoryConfig();
       $pfConfig->updateValue('component_removablemedia', '0');
-      
-      
+
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-   
-      $inventory = array();
+
+      $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
-   
+
       // ** Add agent
       $pfAgent = new PluginFusioninventoryAgent();
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
       $agents_id = $pfAgent->add($data['inventory']['AGENT']);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
-   
+
       // ** Add
       $pfiComputerInv->import($data['inventory']['AGENT']['device_id'], "", $inventory); // creation
-   
+
       $this->countDrivesWhenDisabled($data);
    }
-   
+
    public function countDrivesWhenDisabled($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
@@ -144,9 +143,9 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
             "The database counts ".$nb_drives_in_database." versions while there should be \n".
             $nb_expected_drives."."
             );
-   
+
    }
-    
+
    public function countDrivesWhenEnabled($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
@@ -160,7 +159,7 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
             "The database counts ".$nb_drives_in_database." versions while there should be \n".
             $nb_expected_drives."."
             );
-       
+
    }
-    
+
 }

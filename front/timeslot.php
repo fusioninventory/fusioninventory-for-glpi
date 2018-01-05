@@ -57,4 +57,3 @@ PluginFusioninventoryMenu::displayMenu("mini");
 Search::show('PluginFusioninventoryTimeslot');
 
 Html::footer();
-?>

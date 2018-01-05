@@ -62,166 +62,160 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $ruleAction = new RuleAction();
 
       // * computer model assign
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'computer model',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/latitude(.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'assign',
           'field'       => 'computermodels_id',
           'value'       => 1
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
 
-
       // * computer model regex
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'computer model 2',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/longitude(.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'regex_result',
           'field'       => 'computermodels_id',
           'value'       => '#0'
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
 
-
       // * user regex
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'user',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/user (.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'regex_result',
           'field'       => 'user',
           'value'       => '#0'
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
 
-
       // * softwareversion regex
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'softwareversion 3.0',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/version (.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'regex_result',
           'field'       => 'softwareversion',
           'value'       => '#0'
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
 
-
       // * otherserial regex
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'otherserial',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/other (.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'regex_result',
           'field'       => 'otherserial',
           'value'       => '#0'
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
 
-
       // * otherserial regex
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'otherserial assign',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/serial (.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'assign',
           'field'       => 'otherserial',
           'value'       => 'ttuujj'
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
-
 
       // * create items
       $computerModel = new ComputerModel();
-      $input = array(
+      $input = [
           'name' => '6430u'
-      );
+      ];
       $computerModel->add($input);
 
    }
@@ -243,11 +237,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'latitude 6430u',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals(1, $res_rule['computermodels_id']);
@@ -270,11 +264,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'longitude 6431u',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals(2, $res_rule['computermodels_id']);
@@ -297,11 +291,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'longitude 6430u',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals(1, $res_rule['computermodels_id']);
@@ -324,11 +318,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'user david',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals('david', $res_rule['user']);
@@ -351,11 +345,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'version 3.2.0',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals('3.2.0', $res_rule['softwareversion']);
@@ -378,11 +372,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'other xxyyzz',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals('xxyyzz', $res_rule['otherserial']);
@@ -405,15 +399,14 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'serial clic',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
 
       $this->assertEquals('ttuujj', $res_rule['otherserial']);
    }
 
 }
-?>

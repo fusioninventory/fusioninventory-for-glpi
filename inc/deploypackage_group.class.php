@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployPackage_Group extends CommonDBRelation {
    static function getGroups($deploypackages_id) {
       global $DB;
 
-      $groups = array();
+      $groups = [];
       $query  = "SELECT `glpi_plugin_fusioninventory_deploypackages_groups`.*
                  FROM `glpi_plugin_fusioninventory_deploypackages_groups`
                  WHERE plugin_fusioninventory_deploypackages_id = '$deploypackages_id'";
@@ -119,4 +119,3 @@ class PluginFusioninventoryDeployPackage_Group extends CommonDBRelation {
    }
 }
 
-?>

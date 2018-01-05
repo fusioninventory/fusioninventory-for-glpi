@@ -67,14 +67,14 @@ class PluginFusioninventoryCollectRule extends Rule {
     *
     * @var boolean
     */
-   public $can_sort=TRUE;
+   public $can_sort=true;
 
    /**
     * Set these rules not have specific parameters
     *
     * @var boolean
     */
-   public $specific_parameters = FALSE;
+   public $specific_parameters = false;
 
 
    /**
@@ -172,7 +172,7 @@ class PluginFusioninventoryCollectRule extends Rule {
     */
    function getCriterias() {
 
-      $criterias = array();
+      $criterias = [];
 
       $criterias['regkey']['field']       = 'name';
       $criterias['regkey']['name']        = __('Registry key', 'fusioninventory');
@@ -209,52 +209,51 @@ class PluginFusioninventoryCollectRule extends Rule {
     */
    function getActions() {
 
-      $actions = array();
+      $actions = [];
 
       $actions['computertypes_id']['name']  = __('Type');
       $actions['computertypes_id']['type']  = 'dropdown';
       $actions['computertypes_id']['table'] = 'glpi_computertypes';
-      $actions['computertypes_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['computertypes_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['computermodels_id']['name']  = __('Model');
       $actions['computermodels_id']['type']  = 'dropdown';
       $actions['computermodels_id']['table'] = 'glpi_computermodels';
-      $actions['computermodels_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['computermodels_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['operatingsystems_id']['name']  = __('Operating system');
       $actions['operatingsystems_id']['type']  = 'dropdown';
       $actions['operatingsystems_id']['table'] = 'glpi_operatingsystems';
-      $actions['operatingsystems_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['operatingsystems_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['operatingsystemversions_id']['name']  = _n('Version of the operating system', 'Versions of the operating system', 1);
       $actions['operatingsystemversions_id']['type']  = 'dropdown';
       $actions['operatingsystemversions_id']['table'] = 'glpi_operatingsystemversions';
-      $actions['operatingsystemversions_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['operatingsystemversions_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['user']['name']  = __('User');
-      $actions['user']['force_actions'] = array('assign', 'regex_result');
+      $actions['user']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['locations_id']['name']  = __('Location');
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
-      $actions['locations_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['locations_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['states_id']['name']  = __('Status');
       $actions['states_id']['type']  = 'dropdown';
       $actions['states_id']['table'] = 'glpi_states';
-      $actions['states_id']['force_actions'] = array('assign', 'regex_result');
+      $actions['states_id']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['software']['name']  = __('Software');
-      $actions['software']['force_actions'] = array('assign', 'regex_result');
+      $actions['software']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['softwareversion']['name']  = __('Software version', 'fusioninventory');
-      $actions['softwareversion']['force_actions'] = array('assign', 'regex_result');
+      $actions['softwareversion']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['otherserial']['name']  = __('Inventory number');
-      $actions['otherserial']['force_actions'] = array('assign', 'regex_result');
+      $actions['otherserial']['force_actions'] = ['assign', 'regex_result'];
 
       return $actions;
    }
 }
 
-?>

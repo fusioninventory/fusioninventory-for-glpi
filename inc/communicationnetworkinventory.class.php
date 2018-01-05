@@ -102,13 +102,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
       if ((!isset($a_CONTENT['AGENT']['START'])) AND (!isset($a_CONTENT['AGENT']['END']))) {
           $nb_devices = 0;
-          if (isset($a_CONTENT['DEVICE'])) {
-              if (is_int(key($a_CONTENT['DEVICE']))) {
-                  $nb_devices = count($a_CONTENT['DEVICE']);
-              } else {
-                  $nb_devices = 1;
-              }
-          }
+         if (isset($a_CONTENT['DEVICE'])) {
+            if (is_int(key($a_CONTENT['DEVICE']))) {
+               $nb_devices = count($a_CONTENT['DEVICE']);
+            } else {
+               $nb_devices = 1;
+            }
+         }
 
           $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
               $a_CONTENT['PROCESSNUMBER'];
@@ -166,7 +166,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          switch ($childname) {
 
             case 'DEVICE' :
-               $a_devices = array();
+               $a_devices = [];
                if (is_int(key($child))) {
                   $a_devices = $child;
                } else {
@@ -175,7 +175,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $xml_num = 0;
                foreach ($a_devices as $dchild) {
                   $_SESSION['plugin_fusioninventory_xmlnum'] = $xml_num;
-                  $a_inventory = array();
+                  $a_inventory = [];
                   if (isset($dchild['INFO'])) {
                      if ($dchild['INFO']['TYPE'] == "NETWORKING") {
                         $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
@@ -264,11 +264,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                  $items_id,
                  $xml,
                  $itemtype);
-       }
+      }
 
       $errors='';
       $this->deviceId=$items_id;
-
 
       $serialized = gzcompress(serialize($a_inventory));
 
@@ -325,7 +324,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       // End manual blacklist
 
       $_SESSION['SOURCE_XMLDEVICE'] = $a_inventory;
-      $input = array();
+      $input = [];
 
       // Global criterias
 
@@ -340,7 +339,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       } else if ($a_inventory['itemtype'] == 'Printer') {
          $input['itemtype'] = "Printer";
          if (isset($a_inventory['networkport'])) {
-            $a_ports = array();
+            $a_ports = [];
             if (is_int(key($a_inventory['networkport']))) {
                $a_ports = $a_inventory['networkport'];
             } else {
@@ -368,8 +367,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                                  "PluginFusioninventoryCommunicationNetworkInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
-                                                   "Input data : ".print_r($input, TRUE));
-      $data = $rule->processAllRules($input, array());
+                                                   "Input data : ".print_r($input, true));
+      $data = $rule->processAllRules($input, []);
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
       if (isset($data['action'])
@@ -388,7 +387,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $this->addtaskjoblog();
 
          $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-         $inputdb = array();
+         $inputdb = [];
          if (isset($input['name'])) {
             $inputdb['name'] = $input['name'];
          }
@@ -464,7 +463,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors = '';
       $class = new $itemtype;
       if ($items_id == "0") {
-         $input = array();
+         $input = [];
          $input['date_mod'] = date("Y-m-d H:i:s");
          if ($class->getFromDB($a_inventory[$a_inventory['itemtype']]['id'])) {
             $input['entities_id'] = $class->fields['entities_id'];
@@ -481,7 +480,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $items_id = $class->add($input);
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-            $inputrulelog = array();
+            $inputrulelog = [];
             $inputrulelog['date'] = date('Y-m-d H:i:s');
             $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
             if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
@@ -498,7 +497,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       }
       if ($itemtype == "PluginFusioninventoryUnmanaged") {
          $class->getFromDB($items_id);
-         $input = array();
+         $input = [];
          $input['id'] = $class->fields['id'];
          if (!empty($a_inventory[$a_inventory['itemtype']]['name'])) {
             $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
@@ -561,4 +560,3 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 }
 
-?>

@@ -69,7 +69,7 @@ if (isset($_POST['update'])) {
             $split = explode("-", $key);
             if (isset($split[1]) AND is_numeric($split[1])) {
                $pfConfigLogField->getFromDB($split[1]);
-               $input = array();
+               $input = [];
                $input['id'] = $pfConfigLogField->fields['id'];
                $input['days'] = $val;
                $pfConfigLogField->update($input);
@@ -90,4 +90,3 @@ if (isset($_POST['update'])) {
 
 Html::footer();
 
-?>

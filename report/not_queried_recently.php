@@ -48,7 +48,7 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-$NEEDED_ITEMS=array("search", "computer", "infocom", "setup", "networking", "printer");
+$NEEDED_ITEMS=["search", "computer", "infocom", "setup", "networking", "printer"];
 
 include ("../../../inc/includes.php");
 
@@ -70,10 +70,10 @@ echo "<td>";
 echo __('Number of days since last inventory', 'fusioninventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
-Dropdown::showNumber("nbdays", array(
+Dropdown::showNumber("nbdays", [
                 'value' => $nbdays,
                 'min'   => 1,
-                'max'   => 365)
+                'max'   => 365]
 );
 echo "</td>";
 echo "</tr>";
@@ -84,7 +84,7 @@ echo __('Status');
 
 echo "</td>";
 echo "<td>";
-Dropdown::show("State", array('name'=>'state', 'value'=>$state));
+Dropdown::show("State", ['name'=>'state', 'value'=>$state]);
 echo "</td>";
 echo "</tr>";
 
@@ -207,4 +207,3 @@ echo "</table>";
 
 Html::footer();
 
-?>

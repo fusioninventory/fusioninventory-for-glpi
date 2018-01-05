@@ -59,4 +59,3 @@ $pfStateInventory->display();
 
 Html::footer();
 
-?>

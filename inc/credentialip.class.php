@@ -91,7 +91,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Remote device inventory', 'fusioninventory');
    }
 
@@ -103,12 +103,12 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     * @return array
     */
    function getAdditionalFields() {
-      return array(array('name'  => 'itemtype',
+      return [['name'  => 'itemtype',
                          'label' => __('Type'),
-                         'type'  => 'credentials'),
-                   array('name'  => 'ip',
+                         'type'  => 'credentials'],
+                   ['name'  => 'ip',
                          'label' => __('IP'),
-                         'type'  => 'text'));
+                         'type'  => 'text']];
    }
 
 
@@ -119,7 +119,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     * @param integer $ID
     * @param array $field
     */
-   function displaySpecificTypeField($ID, $field=array()) {
+   function displaySpecificTypeField($ID, $field = []) {
 
       switch ($field['type']) {
 
@@ -143,7 +143,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
 
@@ -156,7 +156,6 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       $tab[2]['field'] = 'completename';
       $tab[2]['name']  = __('Entity');
       $tab[2]['datatype'] = 'dropdown';
-
 
       $tab[3]['table'] = $this->getTable();
       $tab[3]['field'] = 'name';
@@ -186,4 +185,3 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 }
 
-?>

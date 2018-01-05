@@ -63,4 +63,3 @@ $pfTaskjob->submitForm($_POST);
  */
 Html::back();
 
-?>

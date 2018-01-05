@@ -54,57 +54,57 @@ class RuleLocationTest extends Common_TestCase {
       $rule = new Rule();
       $location = new Location();
 
-      $input = array(
+      $input = [
          'name'        => 'Monsols04',
          'entities_id' => 0
-      );
+      ];
       $location->add($input);
 
-      $input = array(
+      $input = [
          'is_active' => 1,
          'name'      => 'Location regexp',
          'match'     => 'AND',
          'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
          'ranking'   => 1
-      );
+      ];
       $rules_id = $rule->add($input);
 
          // Add criteria
          $rulecriteria = new RuleCriteria();
-         $input = array(
+         $input = [
             'rules_id'  => $rules_id,
             'criteria'  => "name",
             'pattern'   => "/computer (.*)/",
             'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
-         );
+         ];
          $rulecriteria->add($input);
 
          // Add action
          $ruleaction = new RuleAction();
-         $input = array(
+         $input = [
             'rules_id'    => $rules_id,
             'action_type' => 'assign',
             'field'       => 'locations_id',
             'value'       => 1
-         );
+         ];
          $ruleaction->add($input);
 
-      $input = array(
+         $input = [
          'name' => 'computer Monsols04'
-      );
+         ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
-      $ruleLocation->getCollectionPart();
-      $loc = $ruleLocation->processAllRules($input, array());
+         $_SESSION["plugin_fusioninventory_entity"] = 0;
+         $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+         $ruleLocation->getCollectionPart();
+         $loc = $ruleLocation->processAllRules($input, []);
 
-      $a_references = array(
+         $a_references = [
          'locations_id' => 1,
          '_ruleid'      => $rules_id
-      );
+         ];
 
-      $this->assertEquals($a_references, $loc, 'Location result assign_result');
-      $rule->delete(array('id' => $rules_id), True);
+         $this->assertEquals($a_references, $loc, 'Location result assign_result');
+         $rule->delete(['id' => $rules_id], true);
    }
 
 
@@ -119,51 +119,50 @@ class RuleLocationTest extends Common_TestCase {
 
       $rule = new Rule();
 
-      $input = array(
+      $input = [
          'is_active' => 1,
          'name'      => 'Location regexp pc',
          'match'     => 'AND',
          'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
          'ranking'   => 1
-      );
+      ];
       $rules_id = $rule->add($input);
 
          // Add criteria
          $rulecriteria = new RuleCriteria();
-         $input = array(
+         $input = [
             'rules_id'  => $rules_id,
             'criteria'  => "name",
             'pattern'   => "/pc (.*)/",
             'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
-         );
+         ];
          $rulecriteria->add($input);
 
          // Add action
          $ruleaction = new RuleAction();
-         $input = array(
+         $input = [
             'rules_id'    => $rules_id,
             'action_type' => 'regex_result',
             'field'       => 'locations_id',
             'value'       => '#0'
-         );
+         ];
          $ruleaction->add($input);
 
-      $input = array(
+         $input = [
          'name' => 'pc Monsols04'
-      );
+         ];
 
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
-      $ruleLocation->getCollectionPart();
-      $loc = $ruleLocation->processAllRules($input, array());
+         $_SESSION["plugin_fusioninventory_entity"] = 0;
+         $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+         $ruleLocation->getCollectionPart();
+         $loc = $ruleLocation->processAllRules($input, []);
 
-      $a_references = array(
+         $a_references = [
          'locations_id' => 1,
          '_ruleid'      => $rules_id
-      );
+         ];
 
-      $this->assertEquals($a_references, $loc, 'Location result regexp_result');
+         $this->assertEquals($a_references, $loc, 'Location result regexp_result');
    }
 
 }
-?>

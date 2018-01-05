@@ -67,4 +67,3 @@ $package->listPackagesToImport();
 
 Html::footer();
 
-?>

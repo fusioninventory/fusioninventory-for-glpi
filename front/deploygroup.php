@@ -58,4 +58,3 @@ Search::show('PluginFusioninventoryDeployGroup');
 
 Html::footer();
 
-?>

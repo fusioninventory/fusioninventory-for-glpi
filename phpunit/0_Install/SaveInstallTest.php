@@ -3,7 +3,7 @@
 class SaveInstallTest extends PHPUnit_Framework_TestCase {
 
    public function should_restore_install() {
-      return FALSE;
+      return false;
    }
    public function testSaveInstallation() {
       if (!defined('GLPI_ROOT')) {

@@ -60,22 +60,22 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
 
       $this->datelatupdate = date('Y-m-d H:i:s');
 
-      $a_inventory = array(
-          'PluginFusioninventoryNetworkEquipment' => Array(
+      $a_inventory = [
+          'PluginFusioninventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
                   'last_fusioninventory_update' => $this->datelatupdate,
                   'cpu'                         => 5,
                   'memory'                      => 18,
                   'uptime'                      => '157 days, 02:14:44.00'
-                ),
-          'networkport'       => array(),
-          'connection-mac'    => array(),
-          'vlans'             => array(),
-          'connection-lldp'   => array(),
-          'internalport'      => array('192.168.30.67', '192.168.40.67', '192.168.50.67'),
+                ],
+          'networkport'       => [],
+          'connection-mac'    => [],
+          'vlans'             => [],
+          'connection-lldp'   => [],
+          'internalport'      => ['192.168.30.67', '192.168.40.67', '192.168.50.67'],
           'itemtype'          => 'NetworkEquipment'
-          );
-      $a_inventory['NetworkEquipment'] = array(
+          ];
+      $a_inventory['NetworkEquipment'] = [
                'name'               => 'switchr2d2',
                'id'                 => 96,
                'serial'             => 'FOC147UJEU4',
@@ -87,10 +87,10 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
                'ram'                => 64,
                'is_dynamic'         => 1,
                'mac'                => '6c:50:4d:39:59:80'
-      );
+      ];
 
-      $a_inventory['networkport'] = array(
-          '10001' => array(
+      $a_inventory['networkport'] = [
+          '10001' => [
               'ifdescr'          => 'FastEthernet0/1',
               'ifinerrors'       => 869,
               'ifinoctets'       => 1953319640,
@@ -107,8 +107,8 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'mac'              => '6c:50:4d:39:59:81',
               'trunk'            => 0,
               'ifspeed'          => 100000000
-          ),
-          '10002' => array(
+          ],
+          '10002' => [
               'ifdescr'          => 'FastEthernet0/2',
               'ifinerrors'       => 0,
               'ifinoctets'       => 1953319640,
@@ -125,8 +125,8 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'mac'              => '6c:50:4d:39:59:82',
               'trunk'            => 1,
               'ifspeed'          => 10000000
-          ),
-          '5005' => array(
+          ],
+          '5005' => [
               'ifdescr'          => 'Port-channel10',
               'ifinerrors'       => 0,
               'ifinoctets'       => 1076823325,
@@ -143,8 +143,8 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'mac'              => '6c:50:4d:39:59:88',
               'trunk'            => 1,
               'ifspeed'          => 4294967295
-          ),
-          '5006' => array(
+          ],
+          '5006' => [
               'ifdescr'          => 'vlan0',
               'ifinerrors'       => 0,
               'ifinoctets'       => 1076823325,
@@ -161,32 +161,32 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'mac'              => '6c:50:4d:39:59:89',
               'trunk'            => 1,
               'ifspeed'          => 4294967295
-          )
-      );
-      $a_inventory['connection-mac'] = array(
-          '10001' => array('cc:f9:54:a1:03:35'),
-          '10002' => array('cc:f9:54:a1:03:36')
-      );
-      $a_inventory['vlans'] = array(
-          '10001' => array(
-              '281' => array(
+          ]
+      ];
+      $a_inventory['connection-mac'] = [
+          '10001' => ['cc:f9:54:a1:03:35'],
+          '10002' => ['cc:f9:54:a1:03:36']
+      ];
+      $a_inventory['vlans'] = [
+          '10001' => [
+              '281' => [
                   'name' => 'printer',
                   'tag'  => 281
-              )
-          ),
-          '10002' => array(
-              '281' => array(
+              ]
+          ],
+          '10002' => [
+              '281' => [
                   'name' => 'printer',
                   'tag'  => 281
-              ),
-              '280' => array(
+              ],
+              '280' => [
                   'name' => 'admin',
                   'tag'  => 280
-              )
-          )
-      );
-      $a_inventory['connection-lldp'] = array(
-          '10002' => array(
+              ]
+          ]
+      ];
+      $a_inventory['connection-lldp'] = [
+          '10002' => [
               'ifdescr'          => 'GigabitEthernet1/0/2',
               'ip'               => '192.168.100.100',
               'model'            => 'cisco WS-C3750G-24PS',
@@ -194,18 +194,17 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'name'             => 'CENTRALSWITCH',
               'logical_number'   => '',
               'mac'              => ''
-          )
-      );
-      $a_inventory['aggregate'] = array(
-          '5005' => array('10001', '10002')
-      );
-
+          ]
+      ];
+      $a_inventory['aggregate'] = [
+          '5005' => ['10001', '10002']
+      ];
 
       $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
-      $this->items_id = $networkEquipment->add(array('serial'      => 'FOC147UJEU4',
-                                                     'entities_id' => 0));
+      $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJEU4',
+                                                     'entities_id' => 0]);
 
       $this->assertGreaterThan(0, $this->items_id);
 
@@ -234,19 +233,19 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
       $networkEquipment->getFromDB(1);
       unset($networkEquipment->fields['date_mod']);
       unset($networkEquipment->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'name'                 => 'switchr2d2',
           'serial'               => 'FOC147UJEU4',
           'id'                   => '1',
           'entities_id'          => '0',
           'is_recursive'         => '0',
           'ram'                  => '64',
-          'otherserial'          => NULL,
-          'contact'              => NULL,
-          'contact_num'          => NULL,
+          'otherserial'          => null,
+          'contact'              => null,
+          'contact_num'          => null,
           'users_id_tech'        => '0',
           'groups_id_tech'       => '0',
-          'comment'              => NULL,
+          'comment'              => null,
           'locations_id'         => '3',
           'domains_id'           => '0',
           'networks_id'          => '0',
@@ -255,13 +254,13 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
           'manufacturers_id'     => '29',
           'is_deleted'           => '0',
           'is_template'          => '0',
-          'template_name'        => NULL,
+          'template_name'        => null,
           'users_id'             => '0',
           'groups_id'            => '0',
           'states_id'            => '0',
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => '1'
-      );
+      ];
 
       $this->assertEquals($a_reference, $networkEquipment->fields);
    }
@@ -279,7 +278,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
       $a_networkequipment = current($pfNetworkEquipment->find("`networkequipments_id`='1'", "", 1));
       unset($a_networkequipment['last_fusioninventory_update']);
-      $a_reference = array(
+      $a_reference = [
           'id'                                          => '1',
           'networkequipments_id'                        => '1',
           'sysdescr'                                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
@@ -291,8 +290,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
           'cpu'                                         => '5',
           'memory'                                      => '18',
           'last_PID_update'                             => '0',
-          'serialized_inventory'                        => NULL
-      );
+          'serialized_inventory'                        => null
+      ];
 
       $this->assertEquals($a_reference, $a_networkequipment);
 
@@ -326,11 +325,11 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
                                                          AND `itemtype`='NetworkPort'", "", 1));
       $a_ips_fromDB = $iPAddress->find("`itemtype`='NetworkName'
                                      AND `items_id`='".$a_networkname['id']."'", "`name`");
-      $a_ips = array();
+      $a_ips = [];
       foreach ($a_ips_fromDB as $data) {
          $a_ips[] = $data['name'];
       }
-      $this->assertEquals(array('192.168.30.67', '192.168.40.67', '192.168.50.67'), $a_ips);
+      $this->assertEquals(['192.168.30.67', '192.168.40.67', '192.168.50.67'], $a_ips);
 
    }
 
@@ -411,7 +410,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $a_ports = importArrayFromDB($a_aggregate['networkports_id_list']);
 
-      $this->assertEquals(array('2', '4'), $a_ports, 'aggregate ports');
+      $this->assertEquals(['2', '4'], $a_ports, 'aggregate ports');
    }
 
 
@@ -459,4 +458,3 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
    }
 
 }
-?>

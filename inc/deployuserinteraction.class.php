@@ -92,7 +92,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
          return _n('User interaction',
                    'User interactions', $nb, 'fusioninventory');
    }
@@ -148,10 +148,10 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       /*
        * Get type from request params
        */
-      $type = NULL;
+      $type = null;
       if ($mode === self::CREATE) {
          $type = $request_data['value'];
-         $config_data = NULL;
+         $config_data = null;
       } else {
          $type = $config['type'];
          $config_data = $config['data'];

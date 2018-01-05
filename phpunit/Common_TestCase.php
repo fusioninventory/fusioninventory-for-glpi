@@ -9,7 +9,7 @@ include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
 
-   public function mark_incomplete($description=null) {
+   public function mark_incomplete($description = null) {
       $this->markTestIncomplete(
          is_null($description) ? 'This test is not implemented yet' : $description
       );
@@ -65,16 +65,15 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       global $CFG_GLPI,$DB;
       $DB = new DB();
       // Force profile in session to SuperAdmin
-      $_SESSION['glpiprofiles'] = array('4' => array('entities' => 0));
+      $_SESSION['glpiprofiles'] = ['4' => ['entities' => 0]];
 
       $_SESSION['glpi_plugin_fusioninventory_profile']['unmanaged'] = 'w';
 
-      $_SESSION['glpiactiveentities'] = array(0, 1);
+      $_SESSION['glpiactiveentities'] = [0, 1];
 
       $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
 
       require (GLPI_ROOT . "/inc/includes.php");
-
 
       $plugin = new Plugin();
       $DB->connect();
@@ -99,7 +98,6 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       }
 
       include_once (GLPI_ROOT . "/inc/timer.class.php");
-
 
       // Security of PHP_SELF
       $_SERVER['PHP_SELF']=Html::cleanParametersURL($_SERVER['PHP_SELF']);
@@ -166,13 +164,12 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       //
       //      spl_autoload_register('glpiautoload');
 
-//      restore_error_handler();
+      //      restore_error_handler();
 
-//      error_reporting(E_ALL | E_STRICT);
-//      ini_set('display_errors', 'On');
+      //      error_reporting(E_ALL | E_STRICT);
+      //      ini_set('display_errors', 'On');
       ini_set("memory_limit", "-1");
       ini_set("max_execution_time", "0");
-
 
    }
 

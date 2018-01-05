@@ -82,7 +82,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
     * @global array $CFG_GLPI
     * @param array $options
     */
-   function display($options=array()) {
+   function display($options = []) {
       global $DB, $CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
@@ -241,7 +241,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       $timestamp1 = strtotime($date1);
       $timestamp2 = strtotime($date2);
 
-      $interval = array();
+      $interval = [];
       $timestamp = $timestamp2 - $timestamp1;
       $nb_min = floor($timestamp / 60);
       $interval['s'] = $timestamp - ($nb_min * 60);
@@ -259,4 +259,3 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    }
 }
 
-?>

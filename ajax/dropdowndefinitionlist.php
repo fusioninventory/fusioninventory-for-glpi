@@ -58,4 +58,3 @@ Session::checkCentralAccess();
 $pfTaskjob = new PluginFusioninventoryTaskjob;
 $pfTaskjob->showDefinitions(filter_input(INPUT_POST, "taskjobs_id"));
 
-?>

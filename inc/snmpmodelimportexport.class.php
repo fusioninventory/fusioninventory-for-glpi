@@ -72,15 +72,15 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
       if (isset($arrayinventory['AGENT']['START'])) {
          $ptap->updateState($arrayinventory['PROCESSNUMBER'],
-                            array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
+                            ['start_time' => date("Y-m-d H:i:s")], $agent['id']);
       } else if (isset($arrayinventory['AGENT']['END'])) {
          $ptap->updateState($arrayinventory['PROCESSNUMBER'],
-                            array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
+                            ['end_time' => date("Y-m-d H:i:s")], $agent['id']);
       } else if (isset($arrayinventory['AGENT']['EXIT'])) {
          $ptap->endState($arrayinventory['PROCESSNUMBER'], date("Y-m-d H:i:s"), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['NBIP'])) {
          $ptap->updateState($arrayinventory['PROCESSNUMBER'],
-                            array('nb_ip' => $arrayinventory['AGENT']['NBIP']), $agent['id']);
+                            ['nb_ip' => $arrayinventory['AGENT']['NBIP']], $agent['id']);
       }
       if (isset($arrayinventory['AGENT']['AGENTVERSION'])) {
          $agent['last_contact'] = date("Y-m-d H:i:s");
@@ -97,7 +97,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       }
       if ($count_discovery_devices != "0") {
          $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                            array('nb_found' => $count_discovery_devices), $agent['id']);
+                            ['nb_found' => $count_discovery_devices], $agent['id']);
          if (is_int(key($arrayinventory['DEVICE']))) {
             foreach ($arrayinventory['DEVICE'] as $discovery) {
                if (count($discovery) > 0) {
@@ -115,4 +115,3 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
    }
 }
 
-?>

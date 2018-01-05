@@ -86,4 +86,3 @@ class CommunicationTest extends PHPUnit_Framework_TestCase {
    }
 
 }
-?>

@@ -53,10 +53,9 @@ if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdownCredentials.php")) {
 }
 
 Session::checkRight('plugin_fusioninventory_credential', READ);
-$params = array(
+$params = [
     'itemtype' => filter_input(INPUT_POST, "itemtype"),
     'id'       => filter_input(INPUT_POST, "id")
-);
+];
 PluginFusioninventoryCredential::dropdownCredentialsForItemtype($params);
 
-?>

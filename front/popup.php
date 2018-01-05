@@ -80,4 +80,3 @@ if (isset($_SESSION["glpipopup"]["name"])) {
    Html::popFooter();
 }
 
-?>

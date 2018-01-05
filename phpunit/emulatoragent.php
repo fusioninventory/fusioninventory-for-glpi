@@ -1,15 +1,15 @@
 <?php
 
 class emulatorAgent {
-   var $socket=NULL;
-   var $client=NULL;
+   var $socket=null;
+   var $client=null;
    var $server_ip="127.0.0.1";
    var $server_urlpath = "/plugins/fusioninventory/front/plugin_fusioninventory.communication.php";
 
 
-   function Start($adresse,$port, $function_prolog) {
+   function Start($adresse, $port, $function_prolog) {
       echo "Agent running in daemon\n";
-      $this->clients=array();
+      $this->clients=[];
       //Création de la socket
       $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
       //on lie la ressource sur laquelle le serveur va écouter
@@ -18,7 +18,7 @@ class emulatorAgent {
       socket_listen($this->socket);
 
       //Boucle infinie, car le serveur ne doit s'arrêter que si on lui demande
-      while (TRUE) {
+      while (true) {
          //Le code se bloque jusqu'à ce qu'une nouvelle connexion client est établie
          $this->client = socket_accept($this->socket);
 
@@ -30,7 +30,6 @@ class emulatorAgent {
          }
          echo "======== received ==========\n";
          print_r($reception);
-
 
       }
    }
@@ -69,4 +68,3 @@ class emulatorAgent {
 
 }
 
-?>

@@ -93,4 +93,3 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
    }
 }
 
-?>

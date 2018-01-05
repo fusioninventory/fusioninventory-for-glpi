@@ -60,7 +60,7 @@ if (isset($_POST["unlock_field_fusioninventory"])) {
          $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
          PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
       } else {
-         PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], array());
+         PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], []);
       }
    }
    Html::back();
@@ -68,4 +68,3 @@ if (isset($_POST["unlock_field_fusioninventory"])) {
 
 Html::footer();
 
-?>
