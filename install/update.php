@@ -1380,7 +1380,7 @@ function do_config_migration($migration) {
                               'name' => 'unicity',
                               'type' => 'UNIQUE'];
 
-   $a_table['oldkeys'] = [];
+   $a_table['oldkeys'] = ['unicity'];
 
    migrateTablesFusionInventory($migration, $a_table);
 
@@ -2509,7 +2509,7 @@ function do_computercomputer_migration($migration) {
    $a_table['fields']['remote_addr']            = ['type'    => 'string',
                                                         'value'   => null];
    $a_table['fields']['serialized_inventory']   = ['type'    => 'longblob',
-                                                        'value'   => ""];
+                                                        'value'   => null];
    $a_table['fields']['is_entitylocked']        = ['type'    => 'bool',
                                                         'value'   => "0"];
    $a_table['fields']['oscomment']              = ['type'    => 'text',
@@ -4862,7 +4862,7 @@ function do_deployfile_migration($migration) {
                'value'  => null
       ],
       'is_recursive' => [
-               'type'   => 'tinyint(1) NOT NULL DEFAULT 0',
+               'type'   => 'tinyint(1) NOT NULL DEFAULT \'0\'',
                'value'  => 0
       ],
       'date_mod' => [
@@ -4977,7 +4977,7 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'is_recursive' =>  [
-               'type' => 'tinyint(1) NOT NULL DEFAULT 0',
+               'type' => 'tinyint(1) NOT NULL DEFAULT \'0\'',
                'value' => null
       ],
       'date_mod' =>  [
@@ -5224,11 +5224,11 @@ function do_deploymirror_migration($migration) {
          'value' => null
       ],
       'is_active' =>  [
-         'type' => 'tinyint(1) NOT NULL DEFAULT 0',
+         'type' => 'tinyint(1) NOT NULL DEFAULT \'0\'',
          'value' => null
       ],
       'is_recursive' =>  [
-         'type' => 'tinyint(1) NOT NULL DEFAULT 0',
+         'type' => 'tinyint(1) NOT NULL DEFAULT \'0\'',
          'value' => null
       ],
       'name' =>  [
@@ -5484,7 +5484,7 @@ function do_dblocks_migration($migration) {
       $a_table['fields']  = [];
       $a_table['fields']['value']      = ['type'    => "varchar(100) NOT NULL DEFAULT ''",
                                                'value'   => null];
-      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
 
       $a_table['oldfields']  = [];
@@ -5508,7 +5508,7 @@ function do_dblocks_migration($migration) {
       $a_table['fields']  = [];
       $a_table['fields']['value']      = ['type'    => 'integer',
                                                'value'   => null];
-      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
 
       $a_table['oldfields']  = [];
@@ -5532,7 +5532,7 @@ function do_dblocks_migration($migration) {
       $a_table['fields']  = [];
       $a_table['fields']['value']      = ['type'    => 'bool',
                                                'value'   => null];
-      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
 
       $a_table['oldfields']  = [];
@@ -5556,7 +5556,7 @@ function do_dblocks_migration($migration) {
       $a_table['fields']  = [];
       $a_table['fields']['value']      = ['type'    => 'bool',
                                                'value'   => null];
-      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP',
+      $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
 
       $a_table['oldfields']  = [];
@@ -8330,6 +8330,12 @@ function migrateTablesFusionInventory($migration, $a_table) {
                                     'update'=> true]);
    }
 
+   foreach ($a_table['oldkeys'] as $field) {
+      $migration->dropKey($a_table['name'],
+                          $field);
+   }
+   $migration->migrationOneTable($a_table['name']);
+
    foreach ($a_table['oldfields'] as $field) {
       $migration->dropField($a_table['name'],
                             $field);
@@ -8350,12 +8356,6 @@ function migrateTablesFusionInventory($migration, $a_table) {
                            $field,
                            $data['type'],
                            ['value' => $data['value']]);
-   }
-   $migration->migrationOneTable($a_table['name']);
-
-   foreach ($a_table['oldkeys'] as $field) {
-      $migration->dropKey($a_table['name'],
-                          $field);
    }
    $migration->migrationOneTable($a_table['name']);
 
