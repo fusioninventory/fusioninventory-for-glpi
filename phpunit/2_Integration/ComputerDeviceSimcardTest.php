@@ -204,21 +204,8 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function noSimcardsImport() {
-      $this->updateComputer($this->a_computer1);
-
-      $this->assertEquals(
-         1,
-         countElementsInTable('glpi_devicesimcards'),
-         'Simcard may be added in core table'
-      );
-   }
-
-   /**
-    * @test
-    */
    public function ImportSimcards() {
-      $this->updateComputer($this->a_computer1);
+      $computers_id = $this->updateComputer($this->a_computer1);
 
       $this->assertEquals(
          1,
@@ -254,14 +241,11 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
       );
 
       $pfItemDeviceSimcard = new Item_DeviceSimcard();
-      $simcards            = $pfItemDeviceSimcard->find("`serial`='11124406000051565111'");
-      $this->assertEquals(1, count($simcards));
-
-      $simcard = array_pop($simcards);
+      $this->assertGreaterThan(0, $pfItemDeviceSimcard->getFromDBByCrit(['serial' => '11124406000051565111']));
 
       $a_ref = [
          'id'                 => '1',
-         'items_id'           => '1',
+         'items_id'           => $computers_id,
          'itemtype'           => 'Computer',
          'devicesimcards_id'  => '1',
          'is_deleted'         => '0',
@@ -282,18 +266,17 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(
          $a_ref,
-         $simcard,
+         $pfItemDeviceSimcard->fields,
          'Item Simcard data'
       );
 
 
       $simcards            = $pfItemDeviceSimcard->find("`serial`='22344406000051565613'");
-      $this->assertEquals(1, count($simcards));
-      $simcard = array_pop($simcards);
+      $this->assertGreaterThan(0, $pfItemDeviceSimcard->getFromDBByCrit(['serial' => '22344406000051565613']));
 
       $a_ref = [
          'id'                 => '2',
-         'items_id'           => '1',
+         'items_id'           => $computers_id,
          'itemtype'           => 'Computer',
          'devicesimcards_id'  => '1',
          'is_deleted'         => '0',
@@ -314,7 +297,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(
          $a_ref,
-         $simcard,
+         $pfItemDeviceSimcard->fields,
          'Item Simcard data'
       );
    }
@@ -328,14 +311,17 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
       $computers_id = $this->updateComputer($this->a_computer2);
 
       $pfItemDeviceSimcard = new Item_DeviceSimcard();
-      $simcards            = $pfItemDeviceSimcard->find("`serial`='11124406000051565111'");
-      $this->assertEquals(1, count($simcards));
+      $this->assertGreaterThan(0,
+                               $pfItemDeviceSimcard->getFromDBByCrit(['itemtype' => 'Computer',
+                                                                      'items_id' => $computers_id,
+                                                                      'serial'   => '11124406000051565111']));
 
-      $simcard = array_pop($simcards);
-      $this->assertEquals($computers_id, $simcard['items_id']);
-
-      $simcards            = $pfItemDeviceSimcard->find("`itemtype`='Computer' AND `items_id`='1'");
-      $this->assertEquals(1, count($simcards));
+      $computer = new Computer();
+      $this->assertGreaterThan(0, $computer->getFromDBByCrit(['name' => 'computer_simcard']));
+      $this->assertGreaterThan(0,
+                               $pfItemDeviceSimcard->getFromDBByCrit(['itemtype' => 'Computer',
+                                                                      'items_id' => $computer->getID(),
+                                                                      'serial'   => '22344406000051565613']));
    }
 
    /**
