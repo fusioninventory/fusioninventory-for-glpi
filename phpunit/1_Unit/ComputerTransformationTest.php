@@ -138,6 +138,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'simcard'        => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'pc',
@@ -223,6 +224,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'simcard'        => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'pc',
@@ -325,6 +327,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'simcard'        => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
@@ -1036,6 +1039,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'simcard'        => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
@@ -1362,8 +1366,9 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'manufacturers_id' => 'Dell Inc.',
               'serial'           => '',
               'designation'      => 'Dell Inc. BIOS'
-          ]
-          ];
+          ],
+          'simcard'       => []
+      ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
          'uuid'                             => '',
@@ -1477,7 +1482,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'manufacturers_id' => 'Dell Inc.',
               'serial'           => '',
               'designation'      => 'Dell Inc. BIOS'
-          ]
+          ],
+          'simcard'        => []
           ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
@@ -1950,7 +1956,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'manufacturers_id' => 'Dell Inc.',
               'serial'           => '',
               'designation'      => 'Dell Inc. BIOS'
-          ]
+          ],
+          'simcard'        => []
           ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',

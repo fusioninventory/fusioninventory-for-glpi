@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update / add information of computer inventory into GLPI database.
  */
-class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInventoryCommon {
 
    /**
     * Define the name of the table
@@ -178,6 +178,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $ios->add($input_os);
          }
       }
+
+         if ($pfConfig->getValue("component_simcard") != 0) {
+            //Import simcards
+            $this->importSimcards('Computer', $a_computerinventory, $computers_id);
+         }
 
       // * Computer
          $db_computer = $computer->fields;
@@ -2606,4 +2611,3 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 }
-

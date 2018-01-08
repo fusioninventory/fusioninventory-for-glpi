@@ -122,6 +122,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
       $input['component_removablemedia'] = 0;
+      $input['component_simcard']      = 1;
       $input['states_id_default']      = 0;
       $input['states_id_snmp_default'] = 0;
       $input['location']               = 0;
@@ -693,7 +694,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                           $pfConfig->getValue('component_removablemedia'));
       echo "</td>";
 
-      echo "<td colspan='2'></td>";
+      echo "<td>";
+      echo _n('Simcard', 'Simcards', 2);
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_simcard",
+                          $pfConfig->getValue('component_simcard'));
+      echo "</td>";
 
       echo "</tr>";
 
