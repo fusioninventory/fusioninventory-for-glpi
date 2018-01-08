@@ -291,21 +291,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          $input['domains_id'] = $a_computerinventory['Computer']['domains_id'];
       }
 
-         // TODO
-      //         if (isset($arrayinventory['CONTENT']['STORAGES'])) {
-      //            foreach ($arrayinventory['CONTENT']['STORAGES'] as $storage) {
-      //               if ((isset($storage['SERIALNUMBER'])) AND (!empty($storage['SERIALNUMBER']))) {
-      //                  $input['partitionserial'][] = $storage['SERIALNUMBER'];
-      //               }
-      //            }
-      //         }
-      //         if (isset($arrayinventory['CONTENT']['computerdisk'])) {
-      //            foreach ($arrayinventory['CONTENT']['DRIVES'] as $drive) {
-      //               if ((isset($drive['SERIAL'])) AND (!empty($drive['SERIAL']))) {
-      //                  $input['hdserial'][] = $drive['SERIAL'];
-      //               }
-      //            }
-      //         }
          $input['tag'] = $tagAgent;
 
       if ((isset($a_computerinventory['Computer']['name']))
