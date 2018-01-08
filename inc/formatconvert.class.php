@@ -1942,14 +1942,15 @@ class PluginFusioninventoryFormatconvert {
          if (!isset($array['SIMCARDS'][0])) {
             $tmp                 = $array['SIMCARDS'];
             $array               = [];
-            $array['SIMCARDS'][] = $tmp;
+            //We're waiting for an array of simcards
+            $array['SIMCARDS'][0] = $tmp;
          }
          $mapping = [
-            'ICCID'         => 'designation',
-            'ICCID'         => 'iccid',
+            'ICCID'         => 'serial',
             'MANUFACTURER'  => 'manufacturers_id',
-            'IMSI'          => 'imsi'
+            'IMSI'          => 'msin'
          ];
+
          foreach ($array['SIMCARDS'] as $id => $simcard) {
             //If there's an ICCID value: process the simcard
             if (isset($simcard['ICCID'])) {

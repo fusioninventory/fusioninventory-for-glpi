@@ -175,9 +175,10 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
       }
 
       $simcard  = new DeviceSimcard();
-      $relation = new Item_DeviceSimcard();
 
       foreach ($a_inventory['simcards'] as $a_simcard) {
+         $relation = new Item_DeviceSimcard();
+
          $input = [
             'designation' => 'Simcard',
          ];
@@ -192,23 +193,24 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
             $simcards_id = $simcard->getID();
          }
 
+         //Import Item_DeviceSimcard
          $input = [
-            'serial'            => $a_simcard['iccid'],
-            'msin'              => $a_simcard['imsi'],
+            'serial'            => $a_simcard['serial'],
+            'msin'              => $a_simcard['msin'],
             'devicesimcards_id' => $simcards_id
          ];
          //Check if there's already a connection between the simcard and an asset
          $relation->getFromDBByCrit($input);
 
-         $input['itemtype'] = $itemtype;
-         $input['items_id'] = $items_id;
-         $input['is_dynamic'] = 1;
+         $input['itemtype']    = $itemtype;
+         $input['items_id']    = $items_id;
+         $input['is_dynamic']  = 1;
          $input['entities_id'] = $_SESSION['glpiactive_entity'];
          if ($relation->isNewItem()) {
-            $relation->add($input);
+            $relations_id = $relation->add($input);
          } else {
-            $input['id'] = $relation->getID();
-            $relation->update($input);
+            $input['id']  = $relation->getID();
+            $relations_id = $relation->update($input);
          }
       }
    }
