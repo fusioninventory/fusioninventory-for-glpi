@@ -481,11 +481,6 @@ class PluginFusioninventoryToolbox {
     */
    static function displaySerializedValues($array) {
 
-//      TODO: to fix in 0.85
-//      if ($_POST['glpi_tab'] == -1) { // tab all
-//         return;
-//      }
-
       foreach ($array as $key=>$value) {
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
