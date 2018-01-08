@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the update of information into network equipment in GLPI.
  */
-class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
+class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninventoryInventoryCommon {
 
 
    /**
@@ -139,10 +139,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       }
 
       // * Ports
-      $this->importPorts($a_inventory, $items_id);
+      $this->importPorts('NetworkEquipment', $a_inventory, $items_id);
 
-      //firmwares
-      $this->importFirmwares($a_inventory, $items_id);
+      //Import firmwares
+      $this->importFirmwares('NetworkEquipment', $a_inventory, $items_id);
+
+      //Import simcards
+      $this->importSimcards('NetworkEquipment', $a_inventory, $items_id);
+
    }
 
 
@@ -253,8 +257,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
     * @param array $a_inventory
     * @param integer $items_id
     */
-   function importPorts($a_inventory, $items_id) {
-
+   function importPorts($itemtype, $a_inventory, $items_id) {
+      //TODO : try to report this code in PluginFusioninventoryInventoryCommon::importPorts
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
@@ -735,61 +739,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       }
       $input['networkports_id_list'] = $a_ports_db_tmp;
       $networkPortAggregate->update($input);
-   }
-
-   /**
-    * Import firmwares
-    *
-    * @param array   $a_inventory Inventory data
-    * @param integer $items_id    Network equipment id
-    *
-    * @retrun void
-    */
-   function importFirmwares($a_inventory, $items_id) {
-      if (!isset($a_inventory['firmwares']) || !count($a_inventory['firmwares'])) {
-         return;
-      }
-
-      $types = new DeviceFirmwareType();
-      $types->getFromDBByCrit(['name' => 'Firmware']);
-      $default_type = $types->getId();
-
-      foreach ($a_inventory['firmwares'] as $a_firmware) {
-         $firmware = new DeviceFirmware();
-         $input = [
-            'designation'              => $a_firmware['name'],
-            'version'                  => $a_firmware['version'],
-            'devicefirmwaretypes_id'   => isset($a_firmware['devicefirmwaretypes_id']) ? $a_firmware['devicefirmwaretypes_id'] : $default_type,
-            'manufacturers_id'         => $a_firmware['manufacturers_id']
-         ];
-
-         //Check if firmware exists
-         $firmware->getFromDBByCrit($input);
-         if ($firmware->isNewItem()) {
-            $input['entities_id'] = $_SESSION['glpiactive_entity'];
-            //firmware does not exists yet, create it
-            $fid = $firmware->add($input);
-         } else {
-            $fid = $firmware->getID();
-         }
-
-         $relation = new Item_DeviceFirmware();
-         $input = [
-            'itemtype'           => 'NetworkEquipment',
-            'items_id'           => $items_id,
-            'devicefirmwares_id' => $fid
-         ];
-         //Check if firmware relation with equipment
-         $relation->getFromDBByCrit($input);
-         if ($relation->isNewItem()) {
-            $input = $input + [
-               'is_dynamic'   => 1,
-               'entities_id'  => $_SESSION['glpiactive_entity']
-            ];
-            $relation->add($input);
-         }
-      }
-
    }
 
 }

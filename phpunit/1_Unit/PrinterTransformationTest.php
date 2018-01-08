@@ -93,8 +93,8 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                'locations_id'       => 'Room 102',
                'printermodels_id'   => 'HP LaserJet P1505n',
                'memory_size'        => 64,
-               'is_dynamic'         => 1,
-               'have_ethernet'      => 1
+               'have_ethernet'      => 1,
+               'is_dynamic'         => 1
       );
       $this->assertEquals($a_reference, $a_return);
 

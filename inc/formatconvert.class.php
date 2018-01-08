@@ -263,6 +263,7 @@ class PluginFusioninventoryFormatconvert {
          'antivirus'               => array(),
          'licenseinfo'             => array(),
          'batteries'               => array(),
+         'simcard'                 => array(),
          'monitor'                 => array(),
          'printer'                 => array(),
          'peripheral'              => array(),
@@ -1410,6 +1411,9 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      //Simcards
+      $thisc->simcardTransformation($array, $a_inventory);
+
       // * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
 
@@ -1448,6 +1452,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['remote_mgmt'][] = $array_tmp;
          }
       }
+
 
       $plugin_params = array(
          'inventory' => $a_inventory,
@@ -1808,7 +1813,6 @@ class PluginFusioninventoryFormatconvert {
     */
    function replaceids($array, $itemtype, $items_id, $level=0) {
       global $CFG_GLPI;
-
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
                                                              $items_id);
 
@@ -1883,51 +1887,14 @@ class PluginFusioninventoryFormatconvert {
       return $array;
    }
 
-
-
    /**
-    * Convert network equipment in GLPI prepared data
-    *
-    * @param array $array
-    * @return array
-    */
-   static function networkequipmentInventoryTransformation($array) {
-
-      $a_inventory = array();
-      $thisc = new self();
-
-      // * INFO
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'NAME'         => 'name',
-                                        'SERIAL'       => 'serial',
-                                        'ID'           => 'id',
-                                        'LOCATION'     => 'locations_id',
-                                        'MODEL'        => 'networkequipmentmodels_id',
-                                        'MANUFACTURER' => 'manufacturers_id',
-                                        'RAM'          => 'ram',
-                                        'MEMORY'       => 'memory',
-                                        'MAC'          => 'mac'));
-
-      $array_tmp['is_dynamic'] = 1;
-      $a_inventory['NetworkEquipment'] = $array_tmp;
-      $a_inventory['itemtype'] = 'NetworkEquipment';
-
-
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'COMMENTS' => 'sysdescr',
-                                        'UPTIME'   => 'uptime',
-                                        'CPU'      => 'cpu',
-                                        'MEMORY'   => 'memory'));
-      if (!isset($array_tmp['cpu'])
-              || $array_tmp['cpu'] == '') {
-         $array_tmp['cpu'] = 0;
-      }
-
-      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
-      $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
-
+   * Manage translation for firmwares
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function firmwareTransformation($array, &$a_inventory) {
       //manage firmwares
       //['INFO']['FIRMWARE'] is the only available value until FI agent 2.3.21
       //['FIRWARES'] (multivalued) will be available in next releases
@@ -1950,7 +1917,7 @@ class PluginFusioninventoryFormatconvert {
             if (isset($firmware['VERSION'])) {
                $firmware['VERSION'] = self::cleanFwVersion($firmware['VERSION']);
             }
-            $a_firmwares[] = $thisc->addValues(
+            $a_firmwares[] = $this->addValues(
                $firmware,
                $mapping
             );
@@ -1960,6 +1927,145 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['firmwares'] = $a_firmwares;
          }
       }
+   }
+
+   /**
+   * Manage transformation for simcards
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function simcardTransformation($array, &$a_inventory) {
+      if (isset($array['SIMCARDS'])) {
+         //If there's only one entry
+         if (!isset($array['SIMCARDS'][0])) {
+            $tmp                 = $array['SIMCARDS'];
+            $array               = [];
+            //We're waiting for an array of simcards
+            $array['SIMCARDS'][0] = $tmp;
+         }
+         $mapping = [
+            'ICCID'         => 'serial',
+            'MANUFACTURER'  => 'manufacturers_id',
+            'IMSI'          => 'msin'
+         ];
+
+         foreach ($array['SIMCARDS'] as $id => $simcard) {
+            //If there's an ICCID value: process the simcard
+            if (isset($simcard['ICCID'])) {
+               $a_inventory['simcards'][] = $this->addValues($simcard, $mapping);
+            }
+         }
+      }
+   }
+
+   /**
+   * Manage transformation for network ports
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function networkPortTransformation($array, &$a_inventory) {
+      // * PORTS
+      $a_inventory['networkport'] = [];
+      if (isset($array['PORTS'])) {
+         foreach ($array['PORTS']['PORT'] as $a_port) {
+            if (isset($a_port['IFNUMBER'])) {
+               $array_tmp = $this->addValues($a_port,
+                                              array(
+                                                 'IFNAME'   => 'name',
+                                                 'IFNUMBER' => 'logical_number',
+                                                 'MAC'      => 'mac',
+                                                 'IP'       => 'ip',
+                                                 'IFTYPE'   => 'iftype'));
+
+               $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+            }
+         }
+      }
+   }
+
+   /**
+   * Manage transformation for general informations
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function generalInfosTransformation($itemtype, $array, &$a_inventory) {
+      // * INFO
+      $fk    = getForeignKeyFieldForTable(getTableForItemType($itemtype.'Model'));
+      $infos = [
+         'NAME'         => 'name',
+         'SERIAL'       => 'serial',
+         'ID'           => 'id',
+         'LOCATION'     => 'locations_id',
+         'MODEL'        => $fk,
+         'MANUFACTURER' => 'manufacturers_id',
+      ];
+      switch ($itemtype) {
+         case 'Printer':
+            $infos['MEMORY']            = 'memory_size';
+            break;
+         case 'NetworkEquipment':
+            $infos['RAM']    = 'ram';
+            $infos['MEMORY'] = 'memory';
+            $infos['MAC']    = 'mac';
+            break;
+      }
+      $array_tmp               = $this->addValues($array['INFO'], $infos);
+      $array_tmp['is_dynamic'] = 1;
+      if ($itemtype == 'Printer') {
+         $array_tmp['have_ethernet'] = 1;
+      }
+      $a_inventory[$itemtype]  = $array_tmp;
+      $a_inventory['itemtype'] = $itemtype;
+   }
+
+   /**
+   * Manage transformation for additional general informations
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function additionalInfoTransformation($itemtype, $array, &$a_inventory) {
+      $infos             = [];
+      $infos['COMMENTS'] = 'sysdescr';
+      switch ($itemtype) {
+         case 'NetworkEquipment':
+            $infos['UPTIME'] = 'uptime';
+            $infos['CPU']    = 'cpu';
+            $infos['MEMORY'] = 'memory';
+            if (!isset($array_tmp['cpu']) || $array_tmp['cpu'] == '') {
+               $array_tmp['cpu'] = 0;
+            }
+            break;
+      }
+      $array_tmp = $this->addValues($array['INFO'], $infos);
+      $array_tmp['last_fusioninventory_update']       = date('Y-m-d H:i:s');
+      $a_inventory['PluginFusioninventory'.ucfirst($itemtype)] = $array_tmp;
+   }
+
+   /**
+    * Convert network equipment in GLPI prepared data
+    *
+    * @param array $array
+    * @return array
+    */
+   static function networkequipmentInventoryTransformation($array) {
+
+      $a_inventory = [];
+      $thisc       = new self();
+
+      $thisc->generalInfosTransformation('NetworkEquipment', $array,
+                                         $a_inventory);
+      $thisc->additionalInfoTransformation('NetworkEquipment', $array,
+                                           $a_inventory);
+      $thisc->firmwareTransformation($array, $a_inventory);
+      $thisc->simcardTransformation($array, $a_inventory);
 
       // * Internal ports
       $a_inventory['internalport'] = array();
@@ -2094,55 +2200,21 @@ class PluginFusioninventoryFormatconvert {
     */
    static function printerInventoryTransformation($array) {
 
-      $a_inventory = array();
-      $thisc = new self();
+      $a_inventory = [];
+      $thisc       = new self();
 
-      // * INFO
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'NAME'         => 'name',
-                                        'SERIAL'       => 'serial',
-                                        'ID'           => 'id',
-                                        'MANUFACTURER' => 'manufacturers_id',
-                                        'LOCATION'     => 'locations_id',
-                                        'MODEL'        => 'printermodels_id',
-                                        'MEMORY'       => 'memory_size'));
-      $array_tmp['is_dynamic'] = 1;
-      $array_tmp['have_ethernet'] = 1;
-
-      $a_inventory['Printer'] = $array_tmp;
-      $a_inventory['itemtype'] = 'Printer';
-
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'COMMENTS' => 'sysdescr'));
-      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
-      $a_inventory['PluginFusioninventoryPrinter'] = $array_tmp;
-
-      // * PORTS
-      $a_inventory['networkport'] = array();
-      if (isset($array['PORTS'])) {
-         foreach ($array['PORTS']['PORT'] as $a_port) {
-            if (isset($a_port['IFNUMBER'])) {
-               $array_tmp = $thisc->addValues($a_port,
-                                              array(
-                                                 'IFNAME'   => 'name',
-                                                 'IFNUMBER' => 'logical_number',
-                                                 'MAC'      => 'mac',
-                                                 'IP'       => 'ip',
-                                                 'IFTYPE'   => 'iftype'));
-
-               $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
-            }
-         }
-      }
+      $thisc->generalInfosTransformation('Printer', $array, $a_inventory);
+      $thisc->firmwareTransformation($array, $a_inventory);
+      $thisc->simcardTransformation($array, $a_inventory);
+      $thisc->networkPortTransformation($array, $a_inventory);
+      $thisc->additionalInfoTransformation('Printer', $array, $a_inventory);
 
       // CARTRIDGES
       $a_inventory['cartridge'] = array();
       if (isset($array['CARTRIDGES'])) {
          $pfMapping = new PluginFusioninventoryMapping();
 
-         foreach ($array['CARTRIDGES'] as $name=>$value) {
+         foreach ($array['CARTRIDGES'] as $name => $value) {
             $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
             if ($plugin_fusioninventory_mappings) {
                if (strstr($value, 'pages')) { // 30pages
