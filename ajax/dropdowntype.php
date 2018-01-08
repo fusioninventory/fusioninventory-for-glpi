@@ -63,4 +63,3 @@ if (!empty($typename)
    $pfTaskjob->dropdownType($typename, $method,
            filter_input(INPUT_POST, "value"), $taskjobs_id, "");
 }
-?>

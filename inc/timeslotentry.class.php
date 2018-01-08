@@ -58,7 +58,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
    /**
     * The right name for this class
@@ -74,10 +74,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Time slot entry', 'fusioninventory');
    }
-
 
 
    /**
@@ -87,7 +86,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('Time slot', 'fusioninventory');
 
@@ -118,7 +117,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
-
    /**
     * Display form to add a new time entry in timeslot
     *
@@ -126,7 +124,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     */
    function formEntry($timeslots_id) {
       $ID = 0;
-      $options = array();
+      $options = [];
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
@@ -135,7 +133,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       echo __('Start time', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      $days = array(
+      $days = [
           '1' => __('Monday'),
           '2' => __('Tuesday'),
           '3' => __('Wednesday'),
@@ -143,16 +141,16 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
           '5' => __('Friday'),
           '6' => __('Saturday'),
           '7' => __('Sunday')
-      );
+      ];
       echo '<div id="beginday">';
       Dropdown::showFromArray('beginday', $days);
       echo '</div>';
-      $hours = array();
+      $hours = [];
       $dec = 15 * 60;
       for ($timestamp = 0; $timestamp < (24 * 3600); $timestamp += $dec) {
          $hours[$timestamp] = date('H:i', $timestamp);
       }
-      PluginFusioninventoryToolbox::showHours('beginhours', array('step' => 15));
+      PluginFusioninventoryToolbox::showHours('beginhours', ['step' => 15]);
       echo "</td>";
       echo "</tr>";
 
@@ -164,8 +162,8 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       echo '<div id="beginday">';
       Dropdown::showFromArray('lastday', $days);
       echo '</div>';
-      PluginFusioninventoryToolbox::showHours('lasthours', array('step' => 15));
-      echo Html::hidden('timeslots_id', array('value' => $timeslots_id));
+      PluginFusioninventoryToolbox::showHours('lasthours', ['step' => 15]);
+      echo Html::hidden('timeslots_id', ['value' => $timeslots_id]);
       echo "</td>";
       echo "</tr>";
       $this->showFormButtons($options);
@@ -174,7 +172,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       $this->showTimeSlot($timeslots_id);
    }
-
 
 
    /**
@@ -193,7 +190,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                      '',
                      ['day', 'begin ASC']);
 
-      $options = array();
+      $options = [];
       $ID      = key($dbentries);
       $canedit = $this->getFromDB($ID)
                  && $this->can($ID, READ);
@@ -220,9 +217,8 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
-      $this->showFormButtons(array('canedit' => false));
+      $this->showFormButtons(['canedit' => false]);
    }
-
 
 
    /**
@@ -242,17 +238,17 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       $daysofweek = Toolbox::getDaysOfWeekArray();
       $daysofweek[7] = $daysofweek[0];
       unset($daysofweek[0]);
-      $dates = array(
-          $daysofweek[1] => array(),
-          $daysofweek[2] => array(),
-          $daysofweek[3] => array(),
-          $daysofweek[4] => array(),
-          $daysofweek[5] => array(),
-          $daysofweek[6] => array(),
-          $daysofweek[7] => array(),
-      );
+      $dates = [
+          $daysofweek[1] => [],
+          $daysofweek[2] => [],
+          $daysofweek[3] => [],
+          $daysofweek[4] => [],
+          $daysofweek[5] => [],
+          $daysofweek[6] => [],
+          $daysofweek[7] => [],
+      ];
 
-      for ($day=1 ; $day <= 7; $day++) {
+      for ($day=1; $day <= 7; $day++) {
          $dbentries = getAllDatasFromTable(
                         'glpi_plugin_fusioninventory_timeslotentries',
                         "`plugin_fusioninventory_timeslots_id`='".$timeslots_id."'
@@ -260,15 +256,14 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                         '',
                         '`begin` ASC');
          foreach ($dbentries as $entries) {
-            $dates[$daysofweek[$day]][] = array(
+            $dates[$daysofweek[$day]][] = [
                 'start' => $entries['begin'],
                 'end'   => $entries['end']
-            );
+            ];
          }
       }
       echo '<script>timeslot(\''.json_encode($dates).'\')</script>';
    }
-
 
 
    /**
@@ -285,7 +280,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       }
       // else ok, we can update DB
       for ($day=$data['beginday']; $day <= $data['lastday']; $day++) {
-         $range = array();
+         $range = [];
 
          $range['beginhours'] = $data['beginhours'];
          $range['lasthours'] = $data['lasthours'];
@@ -305,7 +300,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                         '`begin` ASC');
 
          $rangeToUpdate = $dbentries;
-         $rangeToAdd = array();
+         $rangeToAdd = [];
 
          foreach ($dbentries as $entries) {
             // the entry if before this db entry
@@ -341,15 +336,15 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
          if (isset($range['beginhours'])
                  && $range['beginhours'] != $range['lasthours']) {
-            $rangeToAdd = array(array(
+            $rangeToAdd = [[
                 'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
                 'day'   => $day,
                 'begin' => $range['beginhours'],
                 'end'   => $range['lasthours']
-            ));
+            ]];
          }
 
-         $periods = array();
+         $periods = [];
          foreach ($rangeToUpdate as $dbToUpdate) {
             $periods[$dbToUpdate['begin']] = $dbToUpdate;
          }
@@ -380,7 +375,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -417,6 +411,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       }
       return $periods;
    }
+
+
 }
 
-?>

@@ -58,7 +58,7 @@ class RuleImportTest extends Common_TestCase {
 
       $rule = new Rule();
       // Add a rule test check model
-      $input = array();
+      $input = [];
       $input['is_active']=1;
       $input['name']='Printer model';
       $input['match']='AND';
@@ -68,7 +68,7 @@ class RuleImportTest extends Common_TestCase {
 
          // Add criteria
          $rulecriteria = new RuleCriteria();
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "model";
          $input['pattern']= '1';
@@ -77,17 +77,16 @@ class RuleImportTest extends Common_TestCase {
 
          // Add action
          $ruleaction = new RuleAction();
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
          $input['value'] = '1';
          $ruleaction->add($input);
 
-
       // Add a rule to ignore import
       // Create rule for import into unknown devices
-      $input = array();
+      $input = [];
       $input['is_active']=1;
       $input['name']='Import pinter';
       $input['match']='AND';
@@ -97,38 +96,37 @@ class RuleImportTest extends Common_TestCase {
 
          // Add criteria
          $rulecriteria = new RuleCriteria();
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "name";
          $input['pattern']= '1';
          $input['condition']=8;
          $rulecriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "serial";
          $input['pattern']= '1';
          $input['condition']=10;
          $rulecriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "serial";
          $input['pattern']= '1';
          $input['condition']=8;
          $rulecriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "itemtype";
          $input['pattern']= 'Printer';
          $input['condition']=0;
          $rulecriteria->add($input);
 
-
          // Add action
          $ruleaction = new RuleAction();
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
@@ -136,7 +134,7 @@ class RuleImportTest extends Common_TestCase {
          $ruleaction->add($input);
 
       // Denied import
-      $input = array();
+      $input = [];
       $input['is_active']=1;
       $input['name']='Import pinter';
       $input['match']='AND';
@@ -145,7 +143,7 @@ class RuleImportTest extends Common_TestCase {
       $rule_id = $rule->add($input);
 
          // Add criteria
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "name";
          $input['pattern']= '1';
@@ -153,7 +151,7 @@ class RuleImportTest extends Common_TestCase {
          $rulecriteria->add($input);
 
          // Add action
-         $input = array();
+         $input = [];
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
@@ -161,7 +159,6 @@ class RuleImportTest extends Common_TestCase {
          $ruleaction->add($input);
 
    }
-
 
 
    /**
@@ -172,7 +169,7 @@ class RuleImportTest extends Common_TestCase {
 
       $DB->connect();
 
-      $a_inventory = array(
+      $a_inventory = [
           'AUTHSNMP'     => '1',
           'DESCRIPTION'  => 'Brother NC-6400h, Firmware Ver.1.11  (06.12.20),MID 84UZ92',
           'ENTITY'       => '0',
@@ -186,15 +183,15 @@ class RuleImportTest extends Common_TestCase {
           'SERIAL'       => 'E8J596100',
           'SNMPHOSTNAME' => 'UH4DLPT01',
           'TYPE'         => 'PRINTER'
-      );
+      ];
 
       $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
 
-      $printer->add(array(
+      $printer->add([
           'entities_id' => '0',
           'serial'      => 'E8J596100'
-      ));
+      ]);
 
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
@@ -213,7 +210,6 @@ class RuleImportTest extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -222,7 +218,7 @@ class RuleImportTest extends Common_TestCase {
 
       $DB->connect();
 
-      $a_inventory = array(
+      $a_inventory = [
           'AUTHSNMP'     => '1',
           'DESCRIPTION'  => 'Brother NC-6400h, Firmware Ver.1.11  (06.12.20),MID 84UZ92',
           'ENTITY'       => '0',
@@ -236,7 +232,7 @@ class RuleImportTest extends Common_TestCase {
           'SERIAL'       => 'E8J596100A',
           'SNMPHOSTNAME' => 'UH4DLPT01',
           'TYPE'         => 'PRINTER'
-      );
+      ];
 
       $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
@@ -261,5 +257,5 @@ class RuleImportTest extends Common_TestCase {
               $a_log['comment'], 'Import denied message');
    }
 
+
 }
-?>

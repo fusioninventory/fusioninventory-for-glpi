@@ -59,4 +59,3 @@ if (filter_input(INPUT_POST, "method") != '') {
             filter_input(INPUT_POST, "taskjobs_id"));
 }
 
-?>

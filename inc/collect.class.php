@@ -61,16 +61,16 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_collect';
 
+
    /**
     * Get name of this type by language of the user connected
     *
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Collect information', 'fusioninventory');
    }
-
 
 
    /**
@@ -80,7 +80,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($item->getID() > 0) {
          $index = self::getNumberOfCollectsForAComputer($item->getID());
          $nb    = 0;
@@ -95,7 +95,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -104,7 +103,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
       $id = $item->getID();
       if ($item->getType() == 'Computer'
@@ -118,6 +117,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       }
       return false;
    }
+
 
    /**
    * Get the number of collects for a computer
@@ -138,13 +138,14 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return $total;
    }
 
+
    /**
     * Get all collect types
     *
     * @return array [name] => description
     */
    static function getTypes() {
-      $elements             = array();
+      $elements             = [];
       $elements['registry'] = __('Registry', 'fusioninventory');
       $elements['wmi']      = __('WMI', 'fusioninventory');
       $elements['file']     = __('Find file', 'fusioninventory');
@@ -153,14 +154,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-
    /**
     * Add search options
     *
     * @return array
     */
-   static function getSearchOptionsToAdd($itemtype = NULL) {
-      $tab = array();
+   static function getSearchOptionsToAdd($itemtype = null) {
+      $tab = [];
 
       $i = 5200;
 
@@ -175,13 +175,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['field']         = 'value';
             $tab[$i]['linkfield']     = '';
             $tab[$i]['name']          = __('Registry', 'fusioninventory')." - ".$registry['name'];
-            $tab[$i]['joinparams']    = array('jointype' => 'child');
+            $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = ".$registry['id'],
-                                          'jointype' => 'child');
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = ".$registry['id'],
+                                          'jointype' => 'child'];
             $i++;
          }
 
@@ -193,13 +193,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['field']         = 'value';
             $tab[$i]['linkfield']     = '';
             $tab[$i]['name']          = __('WMI', 'fusioninventory')." - ".$wmi['name'];
-            $tab[$i]['joinparams']    = array('jointype' => 'child');
+            $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = ".$wmi['id'],
-                                          'jointype' => 'child');
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = ".$wmi['id'],
+                                          'jointype' => 'child'];
             $i++;
          }
 
@@ -214,13 +214,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['name']          = __('Find file', 'fusioninventory').
                                     " - ".$file['name'].
                                     " - ".__('pathfile', 'fusioninventory');
-            $tab[$i]['joinparams']    = array('jointype' => 'child');
+            $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
-                                          'jointype' => 'child');
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
+                                          'jointype' => 'child'];
             $i++;
 
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
@@ -229,19 +229,18 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['name']          = __('Find file', 'fusioninventory').
                                     " - ".$file['name'].
                                     " - ".__('Size', 'fusioninventory');
-            $tab[$i]['joinparams']    = array('jointype' => 'child');
+            $tab[$i]['joinparams']    = ['jointype' => 'child'];
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
             $tab[$i]['nodisplay']     = true;
-            $tab[$i]['joinparams']    = array('condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
-                                          'jointype' => 'child');
+            $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
+                                          'jointype' => 'child'];
             $i++;
          }
       }
       return $tab;
    }
-
 
 
    /**
@@ -251,7 +250,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($ID, $options=array()) {
+   function showForm($ID, $options = []) {
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -261,13 +260,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this,'name');
+      Html::autocompletionTextField($this, 'name');
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
       Dropdown::showFromArray('type',
                               PluginFusioninventoryCollect::getTypes(),
-                              array('value' => $this->fields['type']));
+                              ['value' => $this->fields['type']]);
       echo "</td>";
       echo "</tr>\n";
 
@@ -289,7 +288,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       return true;
    }
-
 
 
    /**
@@ -316,12 +314,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $definitions   = importArrayFromDB($job->fields['definition']);
       $taskvalid     = 0;
 
-      $computers = array();
+      $computers = [];
       foreach ($actions as $action) {
          $itemtype = key($action);
          $items_id = current($action);
 
-         switch($itemtype) {
+         switch ($itemtype) {
 
             case 'Computer':
                $computers[] = $items_id;
@@ -335,8 +333,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                $group         = new Group();
                $group->getFromDB($items_id);
 
-               $computers_a_1 = array();
-               $computers_a_2 = array();
+               $computers_a_1 = [];
+               $computers_a_2 = [];
 
                //array_keys($group_users->find("groups_id = '$items_id'"));
                $members = $group_users->getGroupUsers($items_id);
@@ -421,7 +419,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          }
       }
 
-      $c_input= array();
+      $c_input= [];
       $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
@@ -461,7 +459,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                         $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-                        # Push the agent, in the stack of agent to awake
+                        // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
                            $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
                         }
@@ -492,7 +490,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                         $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-                        # Push the agent, in the stack of agent to awake
+                        // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
                            $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
                         }
@@ -523,7 +521,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
                         $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-                        # Push the agent, in the stack of agent to awake
+                        // Push the agent, in the stack of agent to awake
                         if ($communication == "push") {
                            $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
                         }
@@ -537,7 +535,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         $joblog->add($c_input);
                      }
                      break;
-
 
                }
             }
@@ -553,7 +550,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-
    /**
     * run function, so return data to send to the agent for collect information
     *
@@ -564,7 +560,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    function run($taskjobstate, $agent) {
       global $DB;
 
-      $output = array();
+      $output = [];
 
       $this->getFromDB($taskjobstate->fields['items_id']);
       $sql_where = "plugin_fusioninventory_collects_id =".$this->fields['id'];
@@ -575,12 +571,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
             $reg_db = $pfCollect_Registry->find($sql_where);
             foreach ($reg_db as $reg) {
-               $output[] = array(
+               $output[] = [
                    'function' => 'getFromRegistry',
                    'path'     => $reg['hive'].$reg['path'].$reg['key'],
                    'uuid'     => $taskjobstate->fields['uniqid'],
                    '_sid'     => $reg['id']
-               );
+               ];
             }
             break;
 
@@ -588,12 +584,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
             $wmi_db = $pfCollect_Wmi->find($sql_where);
             foreach ($wmi_db as $wmi) {
-               $datawmi = array(
+               $datawmi = [
                    'function'   => 'getFromWMI',
                    'class'      => $wmi['class'],
-                   'properties' => array($wmi['properties']),
+                   'properties' => [$wmi['properties']],
                    'uuid'       => $taskjobstate->fields['uniqid'],
-                   '_sid'       => $wmi['id']);
+                   '_sid'       => $wmi['id']];
                if ($wmi['moniker'] != '') {
                   $datawmi['moniker'] = $wmi['moniker'];
                }
@@ -606,18 +602,18 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_File = new PluginFusioninventoryCollect_File();
             $files_db = $pfCollect_File->find($sql_where);
             foreach ($files_db as $files) {
-               $datafile = array(
+               $datafile = [
                   'function'  => 'findFile',
                   'dir'       => $files['dir'],
                   'limit'     => $files['limit'],
                   'recursive' => $files['is_recursive'],
-                  'filter'    => array(
+                  'filter'    => [
                      'is_file' => $files['filter_is_file'],
                      'is_dir'  => $files['filter_is_dir']
-                  ),
+                  ],
                   'uuid'      => $taskjobstate->fields['uniqid'],
                   '_sid'       => $files['id']
-               );
+               ];
                if ($files['filter_regex'] != '') {
                   $datafile['filter']['regex'] = $files['filter_regex'];
                }
@@ -653,6 +649,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       }
       return $output;
    }
+
+
 }
 
-?>

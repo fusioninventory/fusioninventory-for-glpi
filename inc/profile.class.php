@@ -86,6 +86,7 @@ class PluginFusioninventoryProfile extends Profile {
        *    status
        */
 
+
    /**
     * Get the mapping old rights => new rights. Require it for upgrade from old
     * version of plugin FusionInventory
@@ -93,7 +94,7 @@ class PluginFusioninventoryProfile extends Profile {
     * @return array
     */
    static function getOldRightsMappings() {
-      $types = array('agent'                  => 'plugin_fusioninventory_agent',
+      $types = ['agent'                  => 'plugin_fusioninventory_agent',
                      'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
                      'configuration'          => 'plugin_fusioninventory_configuration',
                      'wol'                    => 'plugin_fusioninventory_wol',
@@ -101,9 +102,9 @@ class PluginFusioninventoryProfile extends Profile {
                      'task'                   => 'plugin_fusioninventory_task',
                      'credential'             => 'plugin_fusioninventory_credential',
                      'credentialip'           => 'plugin_fusioninventory_credentialip',
-                     'existantrule'           => array('plugin_fusioninventory_ruleimport',
+                     'existantrule'           => ['plugin_fusioninventory_ruleimport',
                                                         'plugin_fusioninventory_ruleentity',
-                                                        'plugin_fusioninventory_rulelocation'),
+                                                        'plugin_fusioninventory_rulelocation'],
                      'importxml'              => 'plugin_fusioninventory_importxml',
                      'blacklist'              => 'plugin_fusioninventory_blacklist',
                      'ESX'                    => 'plugin_fusioninventory_esx',
@@ -114,12 +115,11 @@ class PluginFusioninventoryProfile extends Profile {
                      'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
                      'packages'               => 'plugin_fusioninventory_package',
                      'status'                 => 'plugin_fusioninventory_status',
-                     'collect'                => array('plugin_fusioninventory_collect',
-                                                       'plugin_fusioninventory_rulecollect'));
+                     'collect'                => ['plugin_fusioninventory_collect',
+                                                       'plugin_fusioninventory_rulecollect']];
 
       return $types;
    }
-
 
 
    /**
@@ -129,10 +129,9 @@ class PluginFusioninventoryProfile extends Profile {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       return self::createTabEntry('FusionInventory');
    }
-
 
 
    /**
@@ -143,16 +142,15 @@ class PluginFusioninventoryProfile extends Profile {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfProfile = new self();
       if ($item->fields['interface'] == 'central') {
          $pfProfile->showForm($item->getID());
       } else {
          $pfProfile->showFormSelf($item->getID());
       }
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -163,10 +161,10 @@ class PluginFusioninventoryProfile extends Profile {
     * @param boolean $closeform
     * @return true
     */
-   function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
+   function showForm($profiles_id = 0, $openform = true, $closeform = true) {
 
       echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
           && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='".$profile->getFormURL()."'>";
@@ -176,38 +174,37 @@ class PluginFusioninventoryProfile extends Profile {
       $profile->getFromDB($profiles_id);
 
       $rights = $this->getRightsGeneral();
-      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('General', 'fusioninventory')));
+                                                      'title'         => __('General', 'fusioninventory')]);
 
       $rights = $this->getRightsRules();
-      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => _n('Rule', 'Rules', 2)));
+                                                      'title'         => _n('Rule', 'Rules', 2)]);
 
       $rights = $this->getRightsInventory();
-      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Inventory', 'fusioninventory')));
+                                                      'title'         => __('Inventory', 'fusioninventory')]);
 
       $rights = $this->getRightsDeploy();
-      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Software deployment', 'fusioninventory')));
+                                                      'title'         => __('Software deployment', 'fusioninventory')]);
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo Html::hidden('id', array('value' => $profiles_id));
-         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo Html::hidden('id', ['value' => $profiles_id]);
+         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
          echo "</div>\n";
          Html::closeForm();
       }
       echo "</div>";
 
       $this->showLegend();
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -217,10 +214,10 @@ class PluginFusioninventoryProfile extends Profile {
     * @param boolean $openform
     * @param boolean $closeform
     */
-   function showFormSelf($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
+   function showFormSelf($profiles_id = 0, $openform = true, $closeform = true) {
 
       echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
           && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='".$profile->getFormURL()."'>";
@@ -229,19 +226,19 @@ class PluginFusioninventoryProfile extends Profile {
       $profile = new Profile();
       $profile->getFromDB($profiles_id);
 
-      $rights = array(
-          array('rights'    => array(READ => __('Read')),
+      $rights = [
+          ['rights'    => [READ => __('Read')],
                 'label'     => __('Deploy packages on demand', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_selfpackage')
-      );
-      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+                'field'     => 'plugin_fusioninventory_selfpackage']
+      ];
+      $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Software deployment', 'fusioninventory')));
+                                                      'title'         => __('Software deployment', 'fusioninventory')]);
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo Html::hidden('id', array('value' => $profiles_id));
-         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo Html::hidden('id', ['value' => $profiles_id]);
+         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
          echo "</div>\n";
          Html::closeForm();
       }
@@ -251,7 +248,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Delete profiles
     */
@@ -259,10 +255,9 @@ class PluginFusioninventoryProfile extends Profile {
       $pfProfile = new self();
       $a_rights = $pfProfile->getAllRights();
       foreach ($a_rights as $data) {
-         ProfileRight::deleteProfileRights(array($data['field']));
+         ProfileRight::deleteProfileRights([$data['field']]);
       }
    }
-
 
 
    /**
@@ -271,7 +266,7 @@ class PluginFusioninventoryProfile extends Profile {
     * @return array
     */
    function getAllRights() {
-      $a_rights = array();
+      $a_rights = [];
       $a_rights = array_merge($a_rights, $this->getRightsGeneral());
       $a_rights = array_merge($a_rights, $this->getRightsInventory());
       $a_rights = array_merge($a_rights, $this->getRightsRules());
@@ -280,42 +275,40 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Get rights for rules part
     *
     * @return array
     */
    function getRightsRules() {
-      $rights = array(
-          array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
+      $rights = [
+          ['itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_fusioninventory_ruleimport'
-          ),
-          array('itemtype'  => 'PluginFusioninventoryInventoryRuleEntity',
+          ],
+          ['itemtype'  => 'PluginFusioninventoryInventoryRuleEntity',
                 'label'     => __('Entity rules', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_ruleentity'
-          ),
-          array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
+          ],
+          ['itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
                 'label'     => __('Rules for import and link computers'),
                 'field'     => 'plugin_fusioninventory_rulelocation'
-          ),
-          array('itemtype'  => 'PluginFusioninventoryInventoryComputerBlacklist',
+          ],
+          ['itemtype'  => 'PluginFusioninventoryInventoryComputerBlacklist',
                 'label'     => __('Fields blacklist', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_blacklist'
-          ),
-          array('itemtype'  => 'PluginFusioninventoryCollectRule',
+          ],
+          ['itemtype'  => 'PluginFusioninventoryCollectRule',
                 'label'     => __('Computer information rules', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_rulecollect'
-          ),
-          array('itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
+          ],
+          ['itemtype'  => 'PluginFusioninventoryIgnoredimportdevice',
                 'label'     =>  __('Equipment ignored on import', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_ignoredimportdevice'
-          ),
-      );
+          ],
+      ];
       return $rights;
    }
-
 
 
    /**
@@ -324,24 +317,23 @@ class PluginFusioninventoryProfile extends Profile {
     * @return array
     */
    function getRightsDeploy() {
-      $rights = array(
-          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+      $rights = [
+          ['itemtype'  => 'PluginFusioninventoryDeployPackage',
                 'label'     => __('Manage packages', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_package'),
-          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'field'     => 'plugin_fusioninventory_package'],
+          ['itemtype'  => 'PluginFusioninventoryDeployPackage',
                'label'     => __('User interaction template', 'fusioninventory'),
-               'field'     => 'plugin_fusioninventory_userinteractiontemplate'),
-          array('itemtype'  => 'PluginFusioninventoryDeployMirror',
+               'field'     => 'plugin_fusioninventory_userinteractiontemplate'],
+          ['itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_deploymirror'),
-          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'field'     => 'plugin_fusioninventory_deploymirror'],
+          ['itemtype'  => 'PluginFusioninventoryDeployPackage',
                 'label'     => __('Deploy packages on demand', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_selfpackage',
-                'rights'    => array(READ => __('Read')))
-      );
+                'rights'    => [READ => __('Read')]]
+      ];
       return $rights;
    }
-
 
 
    /**
@@ -350,47 +342,46 @@ class PluginFusioninventoryProfile extends Profile {
     * @return array
     */
    function getRightsInventory() {
-      $rights = array(
-          array('itemtype'  => 'PluginFusioninventoryIprange',
+      $rights = [
+          ['itemtype'  => 'PluginFusioninventoryIprange',
                 'label'     => __('IP range configuration', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_iprange'),
-          array('itemtype'  => 'PluginFusioninventoryCredential',
+                'field'     => 'plugin_fusioninventory_iprange'],
+          ['itemtype'  => 'PluginFusioninventoryCredential',
                 'label'     => __('Authentication for remote devices (VMware)', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_credential'),
-          array('itemtype'  => 'PluginFusioninventoryCredentialip',
+                'field'     => 'plugin_fusioninventory_credential'],
+          ['itemtype'  => 'PluginFusioninventoryCredentialip',
                 'label'     => __('Remote devices to inventory (VMware)', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_credentialip'),
-          array('itemtype'  => 'PluginFusioninventoryCredential',
+                'field'     => 'plugin_fusioninventory_credentialip'],
+          ['itemtype'  => 'PluginFusioninventoryCredential',
                 'label'     => __('VMware host', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_esx'),
-          array('itemtype'  => 'PluginFusioninventoryConfigSecurity',
+                'field'     => 'plugin_fusioninventory_esx'],
+          ['itemtype'  => 'PluginFusioninventoryConfigSecurity',
                 'label'     => __('SNMP credentials', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_configsecurity'),
-          array('itemtype'  => 'PluginFusioninventoryNetworkEquipment',
+                'field'     => 'plugin_fusioninventory_configsecurity'],
+          ['itemtype'  => 'PluginFusioninventoryNetworkEquipment',
                 'label'     => __('Network equipment SNMP', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_networkequipment'),
-          array('itemtype'  => 'PluginFusioninventoryPrinter',
+                'field'     => 'plugin_fusioninventory_networkequipment'],
+          ['itemtype'  => 'PluginFusioninventoryPrinter',
                 'label'     => __('Printer SNMP', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_printer'),
-          array('itemtype'  => 'PluginFusioninventoryUnmanaged',
+                'field'     => 'plugin_fusioninventory_printer'],
+          ['itemtype'  => 'PluginFusioninventoryUnmanaged',
                 'label'     => __('Unmanaged devices', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_unmanaged'),
-          array('itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
+                'field'     => 'plugin_fusioninventory_unmanaged'],
+          ['itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_importxml'),
-          array('rights'    => array(READ => __('Read')),
+                'field'     => 'plugin_fusioninventory_importxml'],
+          ['rights'    => [READ => __('Read')],
                 'label'     => __('Printers report', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_reportprinter'),
-          array('rights'    => array(READ => __('Read')),
+                'field'     => 'plugin_fusioninventory_reportprinter'],
+          ['rights'    => [READ => __('Read')],
                 'label'     => __('Network report'),
-                'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
-          array('itemtype'  => 'PluginFusioninventoryLock',
+                'field'     => 'plugin_fusioninventory_reportnetworkequipment'],
+          ['itemtype'  => 'PluginFusioninventoryLock',
                 'label'     => __('Lock', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_lock')
-      );
+                'field'     => 'plugin_fusioninventory_lock']
+      ];
       return $rights;
    }
-
 
 
    /**
@@ -399,37 +390,36 @@ class PluginFusioninventoryProfile extends Profile {
     * @return array
     */
    function getRightsGeneral() {
-      $rights = array(
-          array('rights'    => array(READ => __('Read')),
+      $rights = [
+          ['rights'    => [READ => __('Read')],
                 'label'     => __('Menu', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_menu'),
-          array('itemtype'  => 'PluginFusioninventoryAgent',
+                'field'     => 'plugin_fusioninventory_menu'],
+          ['itemtype'  => 'PluginFusioninventoryAgent',
                 'label'     => __('Agents', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_agent'),
-          array('rights'    => array(READ => __('Read')),
+                'field'     => 'plugin_fusioninventory_agent'],
+          ['rights'    => [READ => __('Read')],
                 'label'     => __('Agent remote control', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_remotecontrol'),
-          array('rights'    => array(READ => __('Read'), UPDATE => __('Update')),
+                'field'     => 'plugin_fusioninventory_remotecontrol'],
+          ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
                 'itemtype'  => 'PluginFusioninventoryConfig',
                 'label'     => __('Configuration', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_configuration'),
-          array('itemtype'  => 'PluginFusioninventoryTask',
+                'field'     => 'plugin_fusioninventory_configuration'],
+          ['itemtype'  => 'PluginFusioninventoryTask',
                 'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_task'),
-          array('rights'    => array(READ => __('Read')),
+                'field'     => 'plugin_fusioninventory_task'],
+          ['rights'    => [READ => __('Read')],
                 'label'     => __('Wake On LAN', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_wol'),
-          array('itemtype'  => 'PluginFusioninventoryDeployGroup',
+                'field'     => 'plugin_fusioninventory_wol'],
+          ['itemtype'  => 'PluginFusioninventoryDeployGroup',
                 'label'     => __('Groups of computers', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_group'),
-          array('itemtype'  => 'PluginFusioninventoryCollect',
+                'field'     => 'plugin_fusioninventory_group'],
+          ['itemtype'  => 'PluginFusioninventoryCollect',
                 'label'     => __('Computer information', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_collect')
-      );
+                'field'     => 'plugin_fusioninventory_collect']
+      ];
 
       return $rights;
    }
-
 
 
    /**
@@ -455,7 +445,6 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
 
-
    /**
     * Create first access (so default profile)
     *
@@ -466,10 +455,9 @@ class PluginFusioninventoryProfile extends Profile {
       $profile = new self();
       foreach ($profile->getAllRights() as $right) {
          self::addDefaultProfileInfos($profiles_id,
-                                      array($right['field'] => ALLSTANDARDRIGHT));
+                                      [$right['field'] => ALLSTANDARDRIGHT]);
       }
    }
-
 
 
    /**
@@ -482,7 +470,7 @@ class PluginFusioninventoryProfile extends Profile {
             unset($_SESSION['glpiactiveprofile'][$right['field']]);
          }
       }
-      ProfileRight::deleteProfileRights(array($right['field']));
+      ProfileRight::deleteProfileRights([$right['field']]);
 
       if (isset($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu'])) {
          unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu']);
@@ -497,7 +485,6 @@ class PluginFusioninventoryProfile extends Profile {
          unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunmanaged']);
       }
    }
-
 
 
    /**
@@ -529,18 +516,17 @@ class PluginFusioninventoryProfile extends Profile {
             //There's one new right corresponding to the old one
             if (!is_array($oldrights[$profile['type']])) {
                self::addDefaultProfileInfos($profile['profiles_id'],
-                                            array($oldrights[$profile['type']] => $value));
+                                            [$oldrights[$profile['type']] => $value]);
             } else {
                //One old right has been splitted into serveral new ones
                foreach ($oldrights[$profile['type']] as $newtype) {
                   self::addDefaultProfileInfos($profile['profiles_id'],
-                                               array($newtype => $value));
+                                               [$newtype => $value]);
                }
             }
          }
       }
    }
-
 
 
    /**
@@ -555,14 +541,14 @@ class PluginFusioninventoryProfile extends Profile {
 
       foreach ($a_rights as $data) {
          if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
-            ProfileRight::addProfileRights(array($data['field']));
+            ProfileRight::addProfileRights([$data['field']]);
             $_SESSION['glpiactiveprofile'][$data['field']] = 0;
          }
       }
 
       // Add all rights to current profile of the user
       if (isset($_SESSION['glpiactiveprofile'])) {
-         $dataprofile       = array();
+         $dataprofile       = [];
          $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
          $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
          foreach ($a_rights as $info) {
@@ -584,6 +570,7 @@ class PluginFusioninventoryProfile extends Profile {
          $profile->update($dataprofile);
       }
    }
+
+
 }
 
-?>

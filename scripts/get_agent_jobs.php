@@ -40,17 +40,17 @@ $computer = new Computer();
 $task = new PluginFusioninventoryTask();
 $staticmisc_methods = PluginFusioninventoryStaticmisc::getmethods();
 
-$methods = array();
+$methods = [];
 foreach ($staticmisc_methods as $method) {
    $methods[$method['method']] = $method['method'];
 }
 
-$device_ids = array();
+$device_ids = [];
 
 if (count($args['<device_ids>']) == 0) {
    $agents = array_values($agent->find());
-   $randid = rand(0,count($agents));
-   $device_ids = array($agents[$randid]['device_id']);
+   $randid = rand(0, count($agents));
+   $device_ids = [$agents[$randid]['device_id']];
 } else {
    //$agents = $agent->find("device_id in ('".implode("','", $args['<device_ids>'])."')");
    //$device_ids[] = $agent_data['device_id'];
@@ -61,7 +61,7 @@ if (count($args['<device_ids>']) == 0) {
 
 foreach ($device_ids as $device_id) {
    $logger->info("Get prepared jobs for Agent '$device_id'");
-//   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods, array('read_only'=>true));
+   //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods, array('read_only'=>true));
    //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods);
    $time = microtime(true);
    file_get_contents("http://glpi.kroy-laptop.sandbox/glpi/plugins/fusioninventory/b/deploy/?action=getJobs&machineid=".$device_id);

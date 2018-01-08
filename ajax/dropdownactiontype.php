@@ -59,4 +59,3 @@ $pfTaskjob->dropdownActionType(
         filter_input(INPUT_POST, "value"),
         "");
 
-?>

@@ -1,6 +1,7 @@
 <?php
 class TaskTest extends Common_TestCase {
 
+
    /**
     * @test
     */
@@ -30,6 +31,7 @@ class TaskTest extends Common_TestCase {
       $this->assertEquals('[{"PluginFusioninventoryDeployGroup":"1"}]',
                           $pfTaskJob->fields['actors']);
    }
+
 
    /**
     * @test
@@ -63,6 +65,7 @@ class TaskTest extends Common_TestCase {
                           $pfTaskJob->fields['actors']);
    }
 
+
    /**
     * @test
     */
@@ -84,4 +87,6 @@ class TaskTest extends Common_TestCase {
       $this->assertFalse($pfTask->getFromDB($tasks_id));
       $this->assertFalse($pfTaskJob->getFromDB($taskjobs_id));
    }
+
+
 }

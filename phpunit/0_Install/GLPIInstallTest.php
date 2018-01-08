@@ -7,6 +7,7 @@ include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 class GLPIInstallTest extends PHPUnit_Framework_TestCase {
 
+
    /**
     * @test
     */
@@ -40,15 +41,15 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
          GLPI_ROOT ."/install/mysql/$sql_file"
       );
 
-      $output = array();
+      $output = [];
       $returncode = 0;
       exec(
          "php ".GLPI_ROOT. "/tools/cliupdate.php --dev --force",
          $output, $returncode
       );
-      $this->assertEquals(0,$returncode,
+      $this->assertEquals(0, $returncode,
          "Error when update GLPI in CLI mode\n".
-         implode("\n",$output)
+         implode("\n", $output)
       );
 
       $this->assertEquals( 0, $result['returncode'],
@@ -57,6 +58,8 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
       );
 
    }
+
+
 }
 
 

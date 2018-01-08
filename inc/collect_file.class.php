@@ -67,10 +67,9 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Find file', 'fusioninventory');
    }
-
 
 
    /**
@@ -80,7 +79,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'file') {
@@ -91,7 +90,6 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -100,13 +98,12 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfCollect_File = new PluginFusioninventoryCollect_File();
       $pfCollect_File->showFile($item->getID());
       $pfCollect_File->showForm($item->getID());
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -168,7 +165,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
          echo "<td align='center'>
             <form name='form_bundle_item' action='".Toolbox::getItemTypeFormURL(__CLASS__).
                    "' method='post'>";
-            echo Html::hidden('id', array('value' => $data['id']));
+            echo Html::hidden('id', ['value' => $data['id']]);
             echo "<input type='image' name='delete' src='../pics/drop.png'>";
          Html::closeForm();
          echo "</td>";
@@ -179,7 +176,6 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
    }
 
 
-
    /**
     * Display form to add a new file of collect
     *
@@ -187,7 +183,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($collects_id, $options=array()) {
+   function showForm($collects_id, $options = []) {
 
       $ID = 0;
 
@@ -200,16 +196,16 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo Html::hidden('plugin_fusioninventory_collects_id',
-                        array('value' => $collects_id));
+                        ['value' => $collects_id]);
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
       echo "<td>".__('Limit', 'fusioninventory')."</td>";
       echo "<td>";
       Dropdown::showNumber('limit',
-                           array('min'   => 1,
+                           ['min'   => 1,
                                  'max'   => 100,
                                  'value' => 5
-                                 )
+                                 ]
                            );
       echo "</td>";
       echo "</tr>\n";
@@ -246,12 +242,12 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Size', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('sizetype', array(
+      Dropdown::showFromArray('sizetype', [
           'none'    => __('Disabled', 'fusioninventory'),
           'equals'  => '=',
           'greater' => '>',
           'lower'   => '<'
-      ));
+      ]);
       echo "<input type='text' name='size' value='' />";
       echo "</td>";
       echo "</tr>\n";
@@ -276,11 +272,11 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Filename', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('filter_nametype', array(
+      Dropdown::showFromArray('filter_nametype', [
           'none'  => __('Disabled', 'fusioninventory'),
           'name'  => __('Non sentitive case', 'fusioninventory'),
           'iname' => __('Sentitive case', 'fusioninventory')
-      ));
+      ]);
       echo "<input type='text' name='filter_name' value='' />";
       echo "</td>";
       echo "<td>";
@@ -288,17 +284,18 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showFromArray('type',
-         array('file' => __('File', 'fusioninventory'),
+         ['file' => __('File', 'fusioninventory'),
                'dir'  => __('Folder', 'fusioninventory')
-         )
+         ]
       );
       echo "</td>";
       echo "</tr>\n";
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
+
+
 }
 
-?>

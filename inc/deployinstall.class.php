@@ -61,10 +61,9 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Package actions', 'fusioninventory');
    }
-
 
 
    /**
@@ -74,16 +73,15 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      switch(get_class($item)) {
+      switch (get_class($item)) {
 
          case 'PluginFusioninventoryDeployPackage':
             return __('Package actions', 'fusioninventory');
 
       }
    }
-
 
 
    /**
@@ -94,8 +92,8 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      switch(get_class($item)) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+      switch (get_class($item)) {
 
          case 'PluginFusioninventoryDeployPackage':
             $item->displayOrderTypeForm();
@@ -104,6 +102,7 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
       }
       return false;
    }
+
+
 }
 
-?>

@@ -58,7 +58,7 @@ if ((!empty($action)
 
    include_once("front/communication.php");
 
-//Fusioninventory plugin pages
+   //Fusioninventory plugin pages
 } else {
    Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "plugins",
                 "fusioninventory");
@@ -67,4 +67,3 @@ if ((!empty($action)
    Html::footer();
 }
 
-?>

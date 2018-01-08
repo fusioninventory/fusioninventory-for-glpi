@@ -54,19 +54,19 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
+
    /**
     * __contruct function where initialize base URLs
     */
    function __construct() {
       parent::__construct();
-      $this->base_urls = array_merge( $this->base_urls, array(
+      $this->base_urls = array_merge( $this->base_urls, [
          'fi.job.create' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
          'fi.job.edit' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
          'fi.job.moduletypes' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduletypes.php",
          'fi.job.moduleitems' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduleitems.php",
-      ));
+      ]);
    }
-
 
 
    /**
@@ -76,14 +76,13 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      $tab_names = array();
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
+      $tab_names = [];
       if ($item->getID() > 0 and $this->can('task', READ)) {
          return __('Jobs configuration', 'fusioninventory');
       }
       return '';
    }
-
 
 
    /**
@@ -94,7 +93,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       $pfTaskJob = new PluginFusioninventoryTaskjob();
 
@@ -108,12 +107,11 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
             //Just a sortable test (must me removed after testing)
             //echo file_get_contents('http://' . $_SERVER['HTTP_HOST'] . "/test.html");
-            return TRUE;
+            return true;
          }
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -162,7 +160,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get form in ajax
     *
@@ -170,9 +167,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     */
    function ajaxGetForm($options) {
       $ID = $this->ajaxLoadItem($options);
-      $this->showForm($ID,$options);
+      $this->showForm($ID, $options);
    }
-
 
 
    /**
@@ -201,7 +197,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get items list
     *
@@ -210,7 +205,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     */
    public function getItemsList($module_type) {
       $items = importArrayFromDB($this->fields[$module_type]);
-      $result = array();
+      $result = [];
       foreach ($items as $item) {
          $itemtype = key($item);
          $itemid = $item[$itemtype];
@@ -218,7 +213,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       }
       return implode("\n", $result);
    }
-
 
 
    /**
@@ -246,7 +240,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                </input>
              </div>";
    }
-
 
 
    /**
@@ -287,7 +280,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get task jobs
     *
@@ -305,7 +297,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Show task job summary
     *
@@ -318,7 +309,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          $name = "($id)";
       }
       echo "<td class='control'>".
-               Html::getCheckbox(array('name' => 'taskjobs[]', 'value' => $id))."
+               Html::getCheckbox(['name' => 'taskjobs[]', 'value' => $id])."
             </td>
             <td id='taskjob_${id}' class='taskjob_block'>
                <a href='#taskjobs_form'
@@ -339,7 +330,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          });");
       }
    }
-
 
 
    /**
@@ -378,7 +368,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          );
       });");
    }
-
 
 
    /**
@@ -474,7 +463,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Get html code for itemtype plus button
     *
@@ -494,7 +482,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
-
    /**
     * Display form for taskjob
     *
@@ -502,7 +489,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options=array()) {
+   function showForm($id, $options = []) {
       global $CFG_GLPI;
 
       $new_item = false;
@@ -690,7 +677,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                   <div id='cancel_job_changes_button' style='display:none'>
                      <input type='button' class='submit'
                             onclick='taskjobs.edit(\"".$this->getBaseUrlFor('fi.job.edit')."\", $id)'
-                            value='".__('Cancel modifications','fusioninventory')."'/>
+                            value='".__('Cancel modifications', 'fusioninventory')."'/>
                   </div>
                </td>";
 
@@ -712,12 +699,10 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          taskjobs.register_form_changed();
       });");
 
-
       echo "<br/>";
 
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -741,15 +726,15 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                AND $dataDB[$postvars['DefinitionType']] == $postvars['definitionselectiontoadd']) {
                   $add = 0;
                   break;
-               }
+            }
          }
          if ($add == '1') {
             if (isset($postvars['DefinitionType'])
                AND $postvars['DefinitionType'] != '') {
-                  $a_listdef[] = array($postvars['DefinitionType']=>$postvars['definitionselectiontoadd']);
-               }
+                  $a_listdef[] = [$postvars['DefinitionType']=>$postvars['definitionselectiontoadd']];
+            }
          }
-         $input = array();
+         $input = [];
          $input['id'] = $postvars['id'];
          $input['definition'] = exportArrayToDB($a_listdef);
          $mytaskjob->update($input);
@@ -769,10 +754,10 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          if ($add == '1') {
             if (isset($postvars['ActionType'])
                     AND $postvars['ActionType'] != '') {
-               $a_listact[] = array($postvars['ActionType']=>$postvars['actionselectiontoadd']);
+               $a_listact[] = [$postvars['ActionType']=>$postvars['actionselectiontoadd']];
             }
          }
-         $input = array();
+         $input = [];
          $input['id'] = $postvars['id'];
          $input['action'] = exportArrayToDB($a_listact);
          $mytaskjob->update($input);
@@ -790,7 +775,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                }
             }
          }
-         $input = array();
+         $input = [];
          $input['id'] = $postvars['id'];
          $input['definition'] = exportArrayToDB($a_listdef);
          $mytaskjob->update($input);
@@ -808,7 +793,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                }
             }
          }
-         $input = array();
+         $input = [];
          $input['id'] = $postvars['id'];
          $input['action'] = exportArrayToDB($a_listact);
          $mytaskjob->update($input);
@@ -818,7 +803,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
          $pfTask = new PluginFusioninventoryTask();
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $_SESSION["plugin_fusioninventory_forcerun"] = array();
+         $_SESSION["plugin_fusioninventory_forcerun"] = [];
          foreach ($postvars['taskjobstoforcerun'] as $taskjobs_id) {
             $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
             $pfTask->forceRunning();
@@ -843,25 +828,25 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                $postvars['method']  = $postvars['method_id'];
             }
 
-            $targets = array();
+            $targets = [];
             if (array_key_exists('targets', $postvars)
                     and is_array($postvars['targets'])
                     and count($postvars['targets']) > 0) {
                foreach ($postvars['targets'] as $target) {
-                  list($itemtype, $itemid) = explode('-',$target);
-                  $targets[] = array($itemtype => $itemid);
+                  list($itemtype, $itemid) = explode('-', $target);
+                  $targets[] = [$itemtype => $itemid];
                }
             }
 
             $postvars['targets'] = exportArrayToDB($targets);
 
-            $actors = array();
+            $actors = [];
             if (array_key_exists('actors', $postvars)
                     and is_array($postvars['actors'])
                     and count($postvars['actors']) > 0) {
                foreach ($postvars['actors'] as $actor) {
-                  list($itemtype, $itemid) = explode('-',$actor);
-                  $actors[] = array($itemtype => $itemid);
+                  list($itemtype, $itemid) = explode('-', $actor);
+                  $actors[] = [$itemtype => $itemid];
                }
             }
 
@@ -884,26 +869,26 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
          $this->delete($postvars);
 
-      } elseif (isset($postvars['itemaddaction'])) {
+      } else if (isset($postvars['itemaddaction'])) {
          $array                     = explode("||", $postvars['methodaction']);
          $module                    = $array[0];
          $method                    = $array[1];
          // Add task
          $mytask = new PluginFusioninventoryTask();
-         $input                     = array();
+         $input                     = [];
          $input['name']             = $method;
 
          $task_id = $mytask->add($input);
 
          // Add job with this device
-         $input = array();
+         $input = [];
          $input['plugin_fusioninventory_tasks_id'] = $task_id;
          $input['name']                            = $method;
          $input['datetime_start']                  = $postvars['datetime_start'];
 
          $input['plugins_id']                      = PluginFusioninventoryModule::getModuleId($module);
          $input['method']                          = $method;
-         $a_selectionDB                            = array();
+         $a_selectionDB                            = [];
          $a_selectionDB[][$postvars['itemtype']]      = $postvars['items_id'];
          $input['definition']                      = exportArrayToDB($a_selectionDB);
 
@@ -918,7 +903,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          $mytask->update($mytask->fields);
          // force running this job (?)
 
-      } elseif (isset($postvars['forceend'])) {
+      } else if (isset($postvars['forceend'])) {
          $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $mytaskjobstate->getFromDB($postvars['taskjobstates_id']);
@@ -936,9 +921,11 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       } else if (isset($postvars['delete_taskjobs'])) {
          foreach ($postvars['taskjobs'] as $taskjob_id) {
-            $input = array('id'=>$taskjob_id);
+            $input = ['id'=>$taskjob_id];
             $this->delete($input, true);
          }
       }
    }
+
+
 }

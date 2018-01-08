@@ -75,4 +75,3 @@ $pfCollect->display($_GET);
 
 Html::footer();
 
-?>

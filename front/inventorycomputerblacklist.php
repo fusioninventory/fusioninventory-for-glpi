@@ -60,4 +60,3 @@ Search::show('PluginFusioninventoryInventoryComputerBlacklist');
 
 Html::footer();
 
-?>

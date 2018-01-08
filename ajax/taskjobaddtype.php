@@ -59,4 +59,3 @@ $pfTaskjob->additemtodefatc(
         filter_input(INPUT_POST, "items_id"),
         filter_input(INPUT_POST, "taskjobs_id"));
 
-?>

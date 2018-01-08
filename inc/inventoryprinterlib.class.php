@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          $_SESSION['glpiactiveentities_string'] = $printer->fields['entities_id'];
       }
       if (!isset($_SESSION['glpiactiveentities'])) {
-         $_SESSION['glpiactiveentities'] = array($printer->fields['entities_id']);
+         $_SESSION['glpiactiveentities'] = [$printer->fields['entities_id']];
       }
       if (!isset($_SESSION['glpiactive_entity'])) {
          $_SESSION['glpiactive_entity'] = $printer->fields['entities_id'];
@@ -93,7 +93,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $printer->update($input);
 
       // * Printer fusion (ext)
-      $db_printer = array();
+      $db_printer = [];
       $query = "SELECT *
             FROM `".  getTableForItemType("PluginFusioninventoryPrinter")."`
             WHERE `printers_id` = '$printers_id'";
@@ -136,7 +136,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $this->importCartridges($a_inventory['cartridge'], $printers_id);
 
    }
-
 
 
    /**
@@ -191,7 +190,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    }
 
 
-
    /**
     * Import page counters
     *
@@ -213,6 +211,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
 
       $pfPrinterLog->add($a_pagecounters);
    }
+
 
    /**
     * Fill the current counter or page of the printer in GLPI
@@ -244,7 +243,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
       $a_db = $pfPrinterCartridge->find("`printers_id`='".$printers_id."'");
-      $a_dbcartridges = array();
+      $a_dbcartridges = [];
       foreach ($a_db as $data) {
          $a_dbcartridges[$data['plugin_fusioninventory_mappings_id']] = $data;
       }
@@ -254,7 +253,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
             $a_dbcartridges[$mappings_id]['state'] = $value;
             $pfPrinterCartridge->update($a_dbcartridges[$mappings_id]);
          } else {
-            $input = array();
+            $input = [];
             $input['printers_id'] = $printers_id;
             $input['plugin_fusioninventory_mappings_id'] = $mappings_id;
             $input['state'] = $value;
@@ -262,6 +261,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          }
       }
    }
+
+
 }
 
-?>

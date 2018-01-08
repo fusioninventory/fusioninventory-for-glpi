@@ -57,4 +57,3 @@ Search::show('PluginFusioninventoryIgnoredimportdevice');
 
 Html::footer();
 
-?>

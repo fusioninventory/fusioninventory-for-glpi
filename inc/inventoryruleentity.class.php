@@ -59,14 +59,14 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     *
     * @var boolean
     */
-   public $can_sort=TRUE;
+   public $can_sort=true;
 
    /**
     * Set these rules don't have specific parameters
     *
     * @var boolean
     */
-   public $specific_parameters = FALSE;
+   public $specific_parameters = false;
 
    /**
     * The right name for this class
@@ -89,7 +89,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Make some changes before process review result
     *
@@ -101,7 +100,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Define maximum number of actions possible in a rule
     *
@@ -110,7 +108,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    function maxActionsCount() {
       return 2;
    }
-
 
 
    /**
@@ -154,7 +151,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                         if ($target_entity != '') {
                            $output["entities_id"]=$target_entity;
                         } else {
-                           $output['pass_rule'] = True;
+                           $output['pass_rule'] = true;
                         }
                      }
                   }
@@ -166,7 +163,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Get the criteria available for the rule
     *
@@ -174,7 +170,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     */
    function getCriterias() {
 
-      $criterias = array();
+      $criterias = [];
 
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
@@ -201,7 +197,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    }
 
 
-
    /**
     * Get the actions available for the rule
     *
@@ -209,7 +204,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     */
    function getActions() {
 
-      $actions = array();
+      $actions = [];
       $actions['entities_id']['name']  = __('Entity');
 
       $actions['entities_id']['type']  = 'dropdown';
@@ -223,7 +218,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $actions['_affect_entity_by_tag']['name'] = __('Entity from TAG');
 
       $actions['_affect_entity_by_tag']['type'] = 'text';
-      $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
+      $actions['_affect_entity_by_tag']['force_actions'] = ['regex_result'];
 
       $actions['_ignore_import']['name'] =
                      __('Ignore in FusionInventory import', 'fusioninventory');
@@ -232,7 +227,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
       return $actions;
    }
-
 
 
    /**
@@ -245,32 +239,31 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     * @param boolean $test
     * @return boolean
     */
-   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
+   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test = false) {
       if ($test) {
-         return FALSE;
+         return false;
       }
 
       switch ($condition) {
 
          case Rule::PATTERN_FIND:
-            return FALSE;
+            return false;
 
          case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
-            return TRUE;
+            return true;
 
          case Rule::PATTERN_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
-            return TRUE;
+            return true;
 
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
-            return TRUE;
+            return true;
 
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -279,15 +272,14 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     * @param string $criterion
     * @return array
     */
-   static function addMoreCriteria($criterion='') {
+   static function addMoreCriteria($criterion = '') {
       if ($criterion == 'ip'
               || $criterion == 'subnet') {
-         return array(self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
-                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory'));
+         return [self::PATTERN_CIDR => __('is CIDR', 'fusioninventory'),
+                      self::PATTERN_NOT_CIDR => __('is not CIDR', 'fusioninventory')];
       }
-      return array();
+      return [];
    }
-
 
 
    /**
@@ -301,7 +293,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
       $res = parent::checkCriteria($criteria, $input);
 
-      if (in_array($criteria->fields["condition"], array(self::PATTERN_CIDR))) {
+      if (in_array($criteria->fields["condition"], [self::PATTERN_CIDR])) {
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -310,14 +302,14 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          list ($subnet, $bits) = explode('/', $pattern);
          $subnet = ip2long($subnet);
          $mask = -1 << (32 - $bits);
-         $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+         $subnet &= $mask; // nb: in case the supplied subnet wasn't correctly aligned
 
          if (is_array($value)) {
             foreach ($value as $ip) {
                if (isset($ip) && $ip != '') {
                   $ip = ip2long($ip);
                   if (($ip & $mask) == $subnet) {
-                     $res = TRUE;
+                     $res = true;
                      break 1;
                   }
                }
@@ -326,11 +318,11 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
             if (isset($value) && $value != '') {
                $ip = ip2long($value);
                if (($ip & $mask) == $subnet) {
-                  $res = TRUE;
+                  $res = true;
                }
             }
          }
-      } else if (in_array($criteria->fields["condition"], array(self::PATTERN_NOT_CIDR))) {
+      } else if (in_array($criteria->fields["condition"], [self::PATTERN_NOT_CIDR])) {
          $pattern   = $criteria->fields['pattern'];
          $value = $this->getCriteriaValue($criteria->fields["criteria"],
                                           $criteria->fields["condition"],
@@ -339,15 +331,15 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          list ($subnet, $bits) = explode('/', $pattern);
          $subnet = ip2long($subnet);
          $mask = -1 << (32 - $bits);
-         $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+         $subnet &= $mask; // nb: in case the supplied subnet wasn't correctly aligned
 
          if (is_array($value)) {
-            $resarray = TRUE;
+            $resarray = true;
             foreach ($value as $ip) {
                if (isset($ip) && $ip != '') {
                   $ip = ip2long($ip);
                   if (($ip & $mask) == $subnet) {
-                     $resarray = FALSE;
+                     $resarray = false;
                   }
                }
             }
@@ -356,7 +348,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
             if (isset($value) && $value != '') {
                $ip = ip2long($value);
                if (($ip & $mask) != $subnet) {
-                  $res = TRUE;
+                  $res = true;
                }
             }
          }
@@ -364,7 +356,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
       return $res;
    }
-
 
 
    /**
@@ -379,11 +370,11 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
     * @return array the output updated by actions.
     *         If rule matched add field _rule_process to return value
     */
-   function process(&$input, &$output, &$params, &$options=array()) {
+   function process(&$input, &$output, &$params, &$options = []) {
 
       if ($this->validateCriterias($options)) {
-         $this->regex_results     = array();
-         $this->criterias_results = array();
+         $this->regex_results     = [];
+         $this->criterias_results = [];
          $input = $this->prepareInputDataForProcess($input, $params);
 
          if ($this->checkCriterias($input)) {
@@ -403,6 +394,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          }
       }
    }
+
+
 }
 
-?>

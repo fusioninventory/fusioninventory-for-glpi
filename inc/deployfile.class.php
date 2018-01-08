@@ -81,7 +81,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Display list of files
     *
@@ -106,7 +105,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          "shortsha512 IN (".implode(",", $short_shas).")"
       );
       // do a quick mapping between database id and short shas
-      $files_mapping = array();
+      $files_mapping = [];
       foreach ($files as $file) {
          $files_mapping[$file['shortsha512']] = $file['id'];
       }
@@ -137,13 +136,13 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
                $file_mimetype =
                   str_replace('/', '__', $files[$file_id]['mimetype']);
             } else {
-               $file_mimetype = NULL;
+               $file_mimetype = null;
             }
          } else {
             // get file's name from what has been saved in json
             $file_name     = $data['associatedFiles'][$sha512]['name'];
-            $file_size     = NULL;
-            $file_mimetype = NULL;
+            $file_size     = null;
+            $file_mimetype = null;
 
          }
          $file_uncompress = $data['associatedFiles'][$sha512]['uncompress'];
@@ -156,7 +155,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($canedit) {
             echo "<td class='control'>";
-            Html::showCheckbox(array('name' => 'file_entries['.$i.']', 'value' => 0));
+            Html::showCheckbox(['name' => 'file_entries['.$i.']', 'value' => 0]);
             echo "</td>";
          }
          echo "<td class='filename'>";
@@ -221,7 +220,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          echo "</div>";
          echo "</div>";
 
-
          //filesize
          if (!$fileregistry_error) {
             echo "<div class='size'>";
@@ -248,6 +246,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
             __('Delete', 'fusioninventory')."\" class='submit'>";
       }
    }
+
 
    /**
     * Display different fields relative the file selected
@@ -311,10 +310,10 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
                   "' onclick='fileModal$rand.dialog(\"open\");' />";
                Ajax::createModalWindow("fileModal$rand",
                         $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/deployfilemodal.php",
-                        array('title' => __('Select the file on server', 'fusioninventory'),
-                        'extraparams' => array(
+                        ['title' => __('Select the file on server', 'fusioninventory'),
+                        'extraparams' => [
                            'rand' => $rand
-                        )));
+                        ]]);
                break;
 
          }
@@ -331,7 +330,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
          "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/uncompress.png' /></th>";
       echo "<td>";
-      Html::showCheckbox(array('name' => 'uncompress', 'checked' => $uncompress));
+      Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
       echo "</td>";
       echo "</tr>";
 
@@ -340,7 +339,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
               "<img style='float:right' src='".$CFG_GLPI["root_doc"].
               "/plugins/fusioninventory//pics/p2p.png' /></th>";
       echo "<td>";
-      Html::showCheckbox(array('name' => 'p2p', 'checked' => $p2p));
+      Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
       echo "</td>";
       echo "</tr>";
 
@@ -356,7 +355,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       echo "</table>";
    }
-
 
 
    /**
@@ -418,7 +416,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Get files / directories on server
     *
@@ -434,7 +431,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          if (strstr($node, "..")) {
             $security_problem = true;
          }
-         $matches = array();
+         $matches = [];
          preg_match("/^(".str_replace("/", "\/", $dir).")(.*)$/", $node, $matches);
          if (count($matches) != 3) {
             $security_problem = true;
@@ -448,7 +445,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          }
 
          if (($handle = opendir($dir))) {
-            $folders = $files = array();
+            $folders = $files = [];
 
             //list files in dir selected
             //we store folders and files separately to sort them alphabeticaly separatly
@@ -495,7 +492,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Add a new item in files of the package
     *
@@ -513,7 +509,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       }
    }
-
 
 
    /**
@@ -559,6 +554,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       return true;
    }
 
+
    /**
     * Save the item in files
     *
@@ -588,7 +584,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       //update order
       $this->updateOrderJson($params['id'], $data);
    }
-
 
 
    /**
@@ -678,7 +673,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Upload file from temp folder in server
     *
@@ -705,7 +699,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          $filesize = filesize($file_path);
 
          //prepare file data for insertion in repo
-         $data = array(
+         $data = [
             'file_tmp_name' => $file_path,
             'mime_type'     => $mime_type,
             'filesize'      => $filesize,
@@ -719,7 +713,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
                   : 0
             ),
             'id'            => $params['id']
-         );
+         ];
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
@@ -733,7 +727,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
       return false;
    }
-
 
 
    /**
@@ -767,6 +760,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       return $config;
    }
 
+
    /**
     * Move uploaded file part in right/final directory
     *
@@ -774,7 +768,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @param boolean $skip_creation
     * @return string
     */
-   function registerFilepart ($filePath, $skip_creation=false) {
+   function registerFilepart ($filePath, $skip_creation = false) {
       $sha512 = hash_file('sha512', $filePath);
 
       if (!$skip_creation) {
@@ -787,7 +781,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
       return $sha512;
    }
-
 
 
    /**
@@ -812,19 +805,19 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       $file_present_in_db =
          (!empty($this->find("shortsha512 = '$short_sha512'")));
 
-      $new_entry = array(
+      $new_entry = [
          'name'                   => $filename,
          'p2p'                    => $params['p2p'],
          'p2p-retention-duration' => $params['p2p-retention-duration'],
          'uncompress'             => $params['uncompress'],
-      );
+      ];
 
       $fdIn = fopen($file_tmp_name, 'rb');
       if (!$fdIn) {
          return false;
       }
 
-      $fdPart     = NULL;
+      $fdPart     = null;
       $multiparts = [];
       do {
          clearstatcache();
@@ -892,7 +885,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Remove file from the repository
     *
@@ -937,13 +929,11 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          }
       }
 
-
       //remove manifest
       unlink(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
 
       return true;
    }
-
 
 
    /**
@@ -958,7 +948,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
       return true;
    }
-
 
 
    /**
@@ -1005,7 +994,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Get the maximum size the php can accept for upload file
     *
@@ -1019,6 +1007,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       return __('Max file size', 'fusioninventory')
          ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'fusioninventory');
    }
+
 
    /**
     * List number of files not used in packages
@@ -1054,7 +1043,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
    }
 
 
-
    /**
     * Delete the files not used in packages
     */
@@ -1085,4 +1073,6 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          }
       }
    }
+
+
 }

@@ -65,4 +65,3 @@ $pfTask->showList();
 
 Html::footer();
 
-?>

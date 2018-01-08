@@ -73,4 +73,4 @@ $request_data = [
     'orders_id'   => filter_input(INPUT_POST, "orders_id"),
     'value'       => filter_input(INPUT_POST, "value")
 ];
-$class->displayAjaxValues(NULL, $request_data, $rand, $mode);
+$class->displayAjaxValues(null, $request_data, $rand, $mode);

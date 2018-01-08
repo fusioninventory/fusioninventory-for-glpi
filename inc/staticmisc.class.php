@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryStaticmisc {
 
+
    /**
     * Get task methods of this plugin fusioninventory
     *
@@ -63,62 +64,61 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_methods() {
 
-      $a_tasks = array(
-            array(   'module'         => 'fusioninventory',
+      $a_tasks = [
+            [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryWakeonlan',
                      'method'         => 'wakeonlan',
                      'name'           => __('Wake On LAN', 'fusioninventory'),
-                     'use_rest'       => FALSE
-            ),
+                     'use_rest'       => false
+            ],
 
-            array(   'module'         => 'fusioninventory',
+            [   'module'         => 'fusioninventory',
                      'method'         => 'inventory',
                      'selection_type' => 'devices',
                      'hidetask'       => 1,
                      'name'           => __('Computer Inventory', 'fusioninventory'),
-                     'use_rest'       => FALSE
-            ),
+                     'use_rest'       => false
+            ],
 
-            array(   'module'         => 'fusioninventory',
+            [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryInventoryComputerESX',
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
                      'task'           => 'ESX',
-                     'use_rest'       => TRUE
-            ),
+                     'use_rest'       => true
+            ],
 
-            array(   'module'         => 'fusioninventory',
+            [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryNetworkDiscovery',
                      'method'         => 'networkdiscovery',
                      'name'           => __('Network discovery', 'fusioninventory')
-            ),
+            ],
 
-            array(   'module'         => 'fusioninventory',
+            [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryNetworkInventory',
                      'method'         => 'networkinventory',
                      'name'           => __('Network inventory (SNMP)', 'fusioninventory')
-            ),
+            ],
 
-            array(   'module'         => 'fusioninventory',
+            [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryDeployCommon',
                      'method'         => 'deployinstall',
                      'name'           => __('Package deploy', 'fusioninventory'),
                      'task'           => "DEPLOY",
-                     'use_rest'       => TRUE
-            ),
+                     'use_rest'       => true
+            ],
 
-            array(   'module'         => 'fusioninventory',
+            [   'module'         => 'fusioninventory',
                      'classname'      => 'PluginFusioninventoryCollect',
                      'method'         => 'collect',
                      'name'           => __('Collect data', 'fusioninventory'),
                      'task'           => "Collect",
-                     'use_rest'       => TRUE
-            )
-      );
+                     'use_rest'       => true
+            ]
+      ];
       return $a_tasks;
    }
-
 
 
    /**
@@ -130,7 +130,7 @@ class PluginFusioninventoryStaticmisc {
 
       $methods = PluginFusioninventoryStaticmisc::getmethods();
 
-      $modules_methods = array();
+      $modules_methods = [];
       $modules_methods[''] = "------";
       foreach ($methods as $method) {
          if (!((isset($method['hidetask']) AND $method['hidetask'] == '1'))) {
@@ -143,7 +143,6 @@ class PluginFusioninventoryStaticmisc {
       }
       return $modules_methods;
    }
-
 
 
    /**
@@ -163,7 +162,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all devices of definition type 'Computer' defined in
     * task_definitiontype_wakeonlan
@@ -173,14 +171,13 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_definitionselection_Computer_wakeonlan($title) {
 
-      $options = array();
+      $options = [];
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name'] = 'definitionselectiontoadd';
       $rand = Dropdown::show("Computer", $options);
       return $rand;
    }
-
 
 
    /**
@@ -191,13 +188,12 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_definitionselection_PluginFusioninventoryDeployGroup_wakeonlan($title) {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'definitionselectiontoadd';
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
-
 
 
    /**
@@ -209,18 +205,17 @@ class PluginFusioninventoryStaticmisc {
     *
     */
    static function getmethods() {
-      $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
+      $a_methods = call_user_func(['PluginFusioninventoryStaticmisc', 'task_methods']);
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $data) {
          $class = $class= PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
-         if (is_callable(array($class, 'task_methods'))) {
+         if (is_callable([$class, 'task_methods'])) {
             $a_methods = array_merge($a_methods,
-               call_user_func(array($class, 'task_methods')));
+               call_user_func([$class, 'task_methods']));
          }
       }
       return $a_methods;
    }
-
 
 
    /**
@@ -232,7 +227,6 @@ class PluginFusioninventoryStaticmisc {
    static function getStaticMiscClass($module) {
       return "Plugin".ucfirst($module)."Staticmisc";
    }
-
 
 
    /**
@@ -248,7 +242,6 @@ class PluginFusioninventoryStaticmisc {
                        PluginFusioninventoryCredentialIp::getTypeName();
       return $a_itemtype;
    }
-
 
 
    /**
@@ -270,7 +263,7 @@ class PluginFusioninventoryStaticmisc {
       $query.= getEntitiesRestrictRequest(' AND', 'a');
       $results = $DB->query($query);
 
-      $agents = array();
+      $agents = [];
       //$agents['.1'] = __('All');
 
       while ($data = $DB->fetch_array($results)) {
@@ -282,8 +275,8 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    //------------------------------------------ Actions-------------------------------------//
+
 
    /**
     * Get action types for InventoryComputerESX
@@ -292,11 +285,10 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_actiontype_InventoryComputerESX($a_itemtype) {
-      return array('' => Dropdown::EMPTY_VALUE ,
-                   'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory'));
+      return ['' => Dropdown::EMPTY_VALUE ,
+                   'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory')];
 
    }
-
 
 
    /**
@@ -309,7 +301,7 @@ class PluginFusioninventoryStaticmisc {
    static function task_actionselection_PluginFusioninventoryCredentialIp_InventoryComputerESX() {
       global $DB;
 
-      $options = array();
+      $options = [];
       $options['name'] = 'definitionactiontoadd';
 
       $query = "SELECT `a`.`id`, `a`.`name`
@@ -320,13 +312,12 @@ class PluginFusioninventoryStaticmisc {
       $query.= getEntitiesRestrictRequest(' AND', 'glpi_plugin_fusioninventory_credentialips');
 
       $results = $DB->query($query);
-      $credentialips = array();
+      $credentialips = [];
       while ($data = $DB->fetch_array($results)) {
          $credentialips[$data['id']] = $data['name'];
       }
       return Dropdown::showFromArray('actionselectiontoadd', $credentialips);
    }
-
 
 
    /**
@@ -337,7 +328,7 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_actionselection_PluginFusioninventoryAgent_InventoryComputerESX() {
 
-      $array = array();
+      $array = [];
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper("InventoryComputerESX"));
       foreach ($array1 as $id => $data) {
@@ -348,10 +339,10 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    //------------------------------------------ ---------------------------------------------//
    //------------------------------------------ REST PARAMS---------------------------------//
    //------------------------------------------ -------------------------------------------//
+
 
    /**
     * Get ESX task parameters to send to the agent
@@ -361,16 +352,17 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_ESX_getParameters($entities_id) {
-      return array('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
-                    "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('ESX', $entities_id));
+      return ['periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
+                    "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('ESX', $entities_id)];
 
    }
-
 
 
    //------------------------------- Network tools ------------------------------------//
 
    // *** NETWORKDISCOVERY ***
+
+
    /**
     * Definition types for network discovery
     *
@@ -383,7 +375,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all ip ranges of definition type 'PluginFusioninventoryIPRange'
     * defined in task_definitiontype_networkdiscovery
@@ -392,7 +383,7 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_definitionselection_PluginFusioninventoryIPRange_networkdiscovery($title) {
-      $options = array();
+      $options = [];
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name'] = 'definitionselectiontoadd';
@@ -401,8 +392,9 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    // *** NETWORKINVENTORY ***
+
+
    /**
     * Definition types for network inventory
     *
@@ -419,7 +411,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all ip ranges of definition type 'PluginFusioninventoryIPRange'
     * defined in task_definitiontype_networkinventory
@@ -433,7 +424,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get all devices of definition type 'NetworkEquipment'
     * defined in task_definitiontype_networkinventory
@@ -442,14 +432,13 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_definitionselection_NetworkEquipment_networkinventory($title) {
-      $options = array();
+      $options = [];
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name'] = 'definitionselectiontoadd';
       $rand = Dropdown::show("NetworkEquipment", $options);
       return $rand;
    }
-
 
 
    /**
@@ -461,14 +450,13 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_definitionselection_Printer_networkinventory($title) {
 
-      $options = array();
+      $options = [];
       $options['entity'] = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name'] = 'definitionselectiontoadd';
       $rand = Dropdown::show("Printer", $options);
       return $rand;
    }
-
 
 
    /**
@@ -478,7 +466,7 @@ class PluginFusioninventoryStaticmisc {
     */
    static function task_networkdiscovery_agents() {
 
-      $array = array();
+      $array = [];
       $array["-.1"] = __('Auto managenement dynamic of agents', 'fusioninventory');
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -491,21 +479,19 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get types of actions for network inventory
     *
     * @return array
     */
    static function task_action_networkinventory() {
-      $a_itemtype = array();
+      $a_itemtype = [];
       $a_itemtype[] = "Printer";
       $a_itemtype[] = "NetworkEquipment";
       $a_itemtype[] = 'PluginFusioninventoryIPRange';
 
       return $a_itemtype;
    }
-
 
 
    /**
@@ -532,7 +518,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get selection type for network discovery
     *
@@ -552,8 +537,8 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /* Deploy definitions */
+
 
    /**
     * Get definition types for deploy install
@@ -562,10 +547,9 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_definitiontype_deployinstall($a_itemtype) {
-      return array('' => Dropdown::EMPTY_VALUE,
-                   'PluginFusioninventoryDeployPackage' => __('Package'));
+      return ['' => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryDeployPackage' => __('Package')];
    }
-
 
 
    /**
@@ -583,7 +567,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /* Deploy Actions */
 
 
@@ -594,13 +577,12 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_actiontype_deployinstall($a_itemtype) {
-      return array('' => Dropdown::EMPTY_VALUE,
+      return ['' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
                    'PluginFusioninventoryDeployGroup' => PluginFusioninventoryDeployGroup::getTypeName(),
                    'Group'                            => __('Group')
-                  );
+                  ];
    }
-
 
 
    /**
@@ -610,13 +592,13 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_actionselection_Computer_deployinstall() {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       $options['condition']   =
          implode( " ",
-            array(
+            [
                '`id` IN ( ',
                '  SELECT agents.`computers_id`',
                '  FROM `glpi_plugin_fusioninventory_agents` as agents',
@@ -628,11 +610,10 @@ class PluginFusioninventoryStaticmisc {
                '     OR (  module.is_active=0',
                '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
                ')'
-            )
+            ]
          );
       return Dropdown::show("Computer", $options);
    }
-
 
 
    /**
@@ -642,13 +623,12 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_actionselection_Group_deployinstall() {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Group", $options);
    }
-
 
 
    /**
@@ -658,13 +638,12 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_actionselection_PluginFusioninventoryDeployGroup_deployinstall() {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
-
 
 
    /**
@@ -674,12 +653,11 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_deploy_getParameters($entities_id) {
-      return array(
+      return [
          "task" => "Deploy",
          "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy', $entities_id)
-      );
+      ];
    }
-
 
 
    /* Collect */
@@ -692,10 +670,9 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_definitiontype_collect($a_itemtype) {
-      return array('' => Dropdown::EMPTY_VALUE,
-                   'PluginFusioninventoryCollect' => __('Collect information', 'fusioninventory'));
+      return ['' => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryCollect' => __('Collect information', 'fusioninventory')];
    }
-
 
 
    /**
@@ -713,7 +690,6 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-
    /**
     * Get action types for collect
     *
@@ -721,13 +697,12 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_actiontype_collect($a_itemtype) {
-      return array('' => Dropdown::EMPTY_VALUE,
+      return ['' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
                    'PluginFusioninventoryDeployGroup' => PluginFusioninventoryDeployGroup::getTypeName(),
                    'Group'                            => __('Group')
-                  );
+                  ];
    }
-
 
 
    /**
@@ -737,13 +712,13 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_actionselection_Computer_collect() {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       $options['condition']   =
          implode( " ",
-            array(
+            [
                '`id` IN ( ',
                '  SELECT agents.`computers_id`',
                '  FROM `glpi_plugin_fusioninventory_agents` as agents',
@@ -755,11 +730,10 @@ class PluginFusioninventoryStaticmisc {
                '     OR (  module.is_active=0',
                '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
                ')'
-            )
+            ]
          );
       return Dropdown::show("Computer", $options);
    }
-
 
 
    /**
@@ -769,13 +743,12 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_actionselection_Group_collect() {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Group", $options);
    }
-
 
 
    /**
@@ -785,13 +758,12 @@ class PluginFusioninventoryStaticmisc {
     * @return string unique html element id
     */
    static function task_actionselection_PluginFusioninventoryDeployGroup_collect() {
-      $options = array();
+      $options = [];
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
-
 
 
    /**
@@ -802,11 +774,12 @@ class PluginFusioninventoryStaticmisc {
     * @return array
     */
    static function task_collect_getParameters($entities_id) {
-      return array(
+      return [
          "task" => "Collect",
          "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Collect', $entities_id)
-      );
+      ];
    }
+
+
 }
 
-?>

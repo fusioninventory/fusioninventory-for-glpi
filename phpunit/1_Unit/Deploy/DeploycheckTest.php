@@ -57,6 +57,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -70,6 +71,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals('', $check->getLabelForAType('foo'));
 
    }
+
 
    /**
     * @test
@@ -85,6 +87,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                                   ]);
 
    }
+
 
    /**
     * @test
@@ -116,6 +119,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals($check->getUnitSize('GB'), '1073741824');
    }
 
+
    /**
     * @test
     */
@@ -134,6 +138,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
            ];
       $this->assertEquals($expected, $types);
    }
+
 
    /**
     * @test
@@ -159,7 +164,6 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                    'return'          => 'info'
                 ];
       $this->assertEquals($result, $expected);
-
 
       $values = ['name'   => 'File exists',
                  'path'   => '/etc/passwd',
@@ -203,6 +207,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
                 ];
       $this->assertEquals($result, $expected);
    }
+
 
    /**
     * @test
@@ -407,6 +412,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals($result, $expected);
    }
 
+
    /**
    * @test
    */
@@ -421,6 +427,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals($values, $expected);
    }
 
+
    /**
    * @test
    */
@@ -433,6 +440,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals('', $check->getValueForReturn('foo'));
       $this->assertEquals('', $check->getValueForReturn(null));
    }
+
 
    /**
    * @test
@@ -513,6 +521,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
    * @test
    */
@@ -541,6 +550,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
    * @test
    */
@@ -568,6 +578,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $json);
    }
 
+
    /**
    * @test
    */
@@ -589,4 +600,6 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $json     = $check->getJson($packages_id);
       $this->assertEquals($expected, $json);
    }
+
+
 }

@@ -65,6 +65,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    //The section name in the JSON representation
    public $json_name = '';
 
+
    /**
     * Get an event label by it's identifier
     * @since 9.2
@@ -79,6 +80,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+
    /**
    * Get the types already in used, so they cannot be selected anymore
    * @since 9.2
@@ -88,6 +90,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    function getTypesAlreadyInUse(PluginFusioninventoryDeployPackage $package) {
       return [];
    }
+
 
    /**
     * Display the dropdown to select type of element
@@ -154,6 +157,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
 
    }
 
+
    /**
    * Create a configuration request data
    *
@@ -169,6 +173,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       return $config;
    }
 
+
    /**
     * Display form
     *
@@ -182,7 +187,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       /*
        * Get element config in 'edit' mode
        */
-      $config = NULL;
+      $config = null;
       if ($mode === self::EDIT && isset($request_data['index'])) {
 
          /*
@@ -227,6 +232,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+
    /**
    * Get an HTML mandatory mark (a red star)
    * @since 9.2
@@ -235,6 +241,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
    function getMandatoryMark() {
       return "&nbsp;<span class='red'>*</span>";
    }
+
 
    /**
    * Common method to add an item to the package JSON definition
@@ -254,6 +261,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       $this->updateOrderJson($id, $data);
    }
 
+
    /**
     * Get the json
     *
@@ -270,6 +278,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+
    function prepareDataToSave($params, $entry) {
       //get current order json
       $data = json_decode($this->getJson($params['id']), true);
@@ -280,10 +289,11 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       //add new data at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
       array_splice($data['jobs'][$this->json_name],
-                   $params['index'], 0, array($entry));
+                   $params['index'], 0, [$entry]);
 
       return $data;
    }
+
 
    /**
     * Update the order json
@@ -311,7 +321,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          $error_msg = $json_error_consts[$error_json];
          Session::addMessageAfterRedirect(
             __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
-            $error_msg . "<br/>". $error_json_message, FALSE, ERROR, FALSE
+            $error_msg . "<br/>". $error_json_message, false, ERROR, false
          );
          $error = 1;
       } else {
@@ -320,6 +330,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
       return $error;
    }
+
 
    /**
     * Remove an item
@@ -349,6 +360,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       $this->updateOrderJson($params['packages_id'], $data);
    }
 
+
    /**
     * Move an item
     *
@@ -365,11 +377,12 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       unset($data['jobs'][$this->json_name][$params['old_index']]);
 
       //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
-      array_splice($data['jobs'][$this->json_name], $params['new_index'], 0, array($moved_check));
+      array_splice($data['jobs'][$this->json_name], $params['new_index'], 0, [$moved_check]);
 
       //update order
       $this->updateOrderJson($params['id'], $data);
    }
+
 
    /**
     * Get the size of file
@@ -393,6 +406,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          return NOT_AVAILABLE;
       }
    }
+
 
    /**
    * Display a add or save button
@@ -420,6 +434,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
 
    }
 
+
    public function getItemValues($packages_id) {
       $data = json_decode($this->getJson($packages_id), true);
       if ($data) {
@@ -427,5 +442,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       } else {
          return [];
       }
-   }   
+   }
+
+
 }

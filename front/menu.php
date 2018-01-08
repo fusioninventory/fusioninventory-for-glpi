@@ -60,4 +60,3 @@ if (PluginFusioninventoryMenu::canView()) {
 
 Html::footer();
 
-?>

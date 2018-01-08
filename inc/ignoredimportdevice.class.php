@@ -71,10 +71,9 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Equipment ignored on import', 'fusioninventory');
    }
-
 
 
    /**
@@ -84,7 +83,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('Agent', 'fusioninventory');
 
@@ -161,17 +160,16 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    }
 
 
-
    /**
     * Get search parameters for default search / display list
     *
     * @return array
     */
    static function getDefaultSearchRequest() {
-      return array('sort'  => 3,
-                   'order' => 'DESC');
+      return ['sort'  => 3,
+                   'order' => 'DESC'];
    }
+
 
 }
 
-?>

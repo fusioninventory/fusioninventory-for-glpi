@@ -54,8 +54,8 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_printer = array();
-      $a_printer['INFO'] = array(
+      $a_printer = [];
+      $a_printer['INFO'] = [
                 'COMMENTS'       => 'HP ETHERNET MULTI-ENVIRONMENT',
                 'ID'             => '54',
                 'LOCATION'       => 'Room 102',
@@ -65,7 +65,7 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                 'SERIAL'         => 'VRG5XUT4',
                 'TYPE'           => 'PRINTER',
                 'MEMORY'         => 64
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
@@ -75,17 +75,17 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
          $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
       }
-      $a_reference = array(
-          'PluginFusioninventoryPrinter' => Array(
+      $a_reference = [
+          'PluginFusioninventoryPrinter' => [
                   'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
                   'last_fusioninventory_update' => $date
-                ),
-          'networkport'    => array(),
-          'cartridge'      => array(),
-          'pagecounters'   => array(),
+                ],
+          'networkport'    => [],
+          'cartridge'      => [],
+          'pagecounters'   => [],
           'itemtype'       => 'Printer'
-          );
-      $a_reference['Printer'] = array(
+          ];
+      $a_reference['Printer'] = [
                'name'               => 'ARC12-B09-N',
                'serial'             => 'VRG5XUT4',
                'id'                 => 54,
@@ -95,11 +95,10 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                'memory_size'        => 64,
                'is_dynamic'         => 1,
                'have_ethernet'      => 1
-      );
+      ];
       $this->assertEquals($a_reference, $a_return);
 
    }
-
 
 
    /**
@@ -113,19 +112,19 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_printer = array();
-      $a_printer['INFO'] = array(
+      $a_printer = [];
+      $a_printer['INFO'] = [
                 'ID'             => '54',
                 'NAME'           => 'ARC12-B09-N',
                 'TYPE'           => 'PRINTER'
-            );
-      $a_printer['PAGECOUNTERS'] = array(
+            ];
+      $a_printer['PAGECOUNTERS'] = [
                 'BLACK'       => 10007,
                 'COLOR'       => 5127,
                 'RECTOVERSO'  => 0,
                 'TOTAL'       => 15134,
                 'COPYTOTAL'   => ''
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
@@ -135,16 +134,16 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
               && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
          $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
       }
-      $a_reference = array(
-          'PluginFusioninventoryPrinter' => Array(
+      $a_reference = [
+          'PluginFusioninventoryPrinter' => [
                   'sysdescr'                    => '',
                   'last_fusioninventory_update' => $date
-                ),
-          'networkport' => array(),
-          'cartridge'   => array(),
+                ],
+          'networkport' => [],
+          'cartridge'   => [],
           'itemtype'    => 'Printer'
-          );
-      $a_reference['Printer'] = array(
+          ];
+      $a_reference['Printer'] = [
                'name'               => 'ARC12-B09-N',
                'id'                 => 54,
                'serial'             => '',
@@ -154,8 +153,8 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                'memory_size'        => 0,
                'is_dynamic'         => 1,
                'have_ethernet'      => 1
-      );
-      $a_reference['pagecounters'] = array(
+      ];
+      $a_reference['pagecounters'] = [
                'pages_total'        => 15134,
                'pages_n_b'          => 10007,
                'pages_color'        => 5127,
@@ -169,10 +168,9 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
                'pages_color_copy'   => 0,
                'pages_total_fax'    => 0
 
-          );
+          ];
       $this->assertEquals($a_reference, $a_return);
    }
-
 
 
    /**
@@ -186,25 +184,25 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_printer = array();
-      $a_printer['INFO'] = array(
+      $a_printer = [];
+      $a_printer['INFO'] = [
                 'ID'             => '54',
                 'NAME'           => 'ARC12-B09-N',
                 'TYPE'           => 'PRINTER'
-            );
-      $a_printer['CARTRIDGES'] = array(
+            ];
+      $a_printer['CARTRIDGES'] = [
                 'CARTRIDGEBLACK'   => 90,       // percentage
                 'CARTRIDGECYAN'    => '',       // unknown value
                 'CARTRIDGEMAGENTA' => 'OK',     // only known if ok or not
                 'CARTRIDGEYELLOW'  => '30pages' //define number pages remaining
-            );
+            ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $pfMapping       = new PluginFusioninventoryMapping();
 
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
 
-      $a_reference = array();
+      $a_reference = [];
       $a_id = $pfMapping->get("Printer", strtolower('CARTRIDGEBLACK'));
       $a_reference[$a_id['id']] = 90;
 
@@ -218,5 +216,5 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
 
    }
 
+
 }
-?>

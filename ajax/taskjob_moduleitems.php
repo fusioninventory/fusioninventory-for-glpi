@@ -54,13 +54,10 @@ Session::checkCentralAccess();
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-$params = array(
+$params = [
     "moduletype" => filter_input(INPUT_GET, "moduletype"),
     "itemtype"   => filter_input(INPUT_GET, "itemtype"),
     "method"     => filter_input(INPUT_GET, "method"),
-);
+];
 
 $pfTaskjob->ajaxModuleItemsDropdown($params);
-?>
-
-

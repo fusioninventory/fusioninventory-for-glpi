@@ -8,8 +8,8 @@ function statHalfDonut(svgname, jsondata) {
       var chart = nv.models.pieChart()
           .x(function(d) { return d.key })
           .showLabels(false)
-//          .values(function(d) { return d.value })
-//          .color(function(d) {return d.data.color})
+      //          .values(function(d) { return d.value })
+      //          .color(function(d) {return d.data.color})
           .width(width)
           .height(height)
           .donut(true);

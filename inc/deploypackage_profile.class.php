@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployPackage_Profile extends CommonDBRelation {
    static function getProfiles($deploypackages_id) {
       global $DB;
 
-      $prof  = array();
+      $prof  = [];
       $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_profiles`.*
                 FROM `glpi_plugin_fusioninventory_deploypackages_profiles`
                 WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
@@ -117,6 +117,7 @@ class PluginFusioninventoryDeployPackage_Profile extends CommonDBRelation {
       }
       return $prof;
    }
+
+
 }
 
-?>

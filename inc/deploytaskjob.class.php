@@ -67,7 +67,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    }
 
 
-
    /**
     * Is this use can view a deploy task job
     *
@@ -76,7 +75,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    static function canView() {
       return true;
    }
-
 
 
    /**
@@ -134,7 +132,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    }
 
 
-
    /**
     * Save data
     *
@@ -166,8 +163,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          //$action = exportArrayToDB(array(array(
          //    $task['action_type'] => $task['action_selection'])));
          $action = exportArrayToDB($task['action']);
-         $definition = exportArrayToDB(array(array(
-            'PluginFusioninventoryDeployPackage' => $task['package_id'])));
+         $definition = exportArrayToDB([[
+            'PluginFusioninventoryDeployPackage' => $task['package_id']]]);
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."
          (
@@ -187,7 +184,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
    }
 
 
-
    /**
     * Get the different type of task job actions
     *
@@ -195,22 +191,21 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
     */
    static function getActionTypes() {
 
-      return array(
-         array(
+      return [
+         [
             'name' => __('Computers'),
             'value' => 'Computer',
-         ),
-         array(
+         ],
+         [
             'name' => __('Group'),
             'value' => 'Group',
-         ),
-         array(
+         ],
+         [
             'name' => __('Groups of computers', 'fusioninventory'),
             'value' => 'PluginFusioninventoryDeployGroup',
-         )
-      );
+         ]
+      ];
    }
-
 
 
    /**
@@ -227,12 +222,12 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       if (!isset($params['get'])) {
          exit;
       }
-      switch($params['get']) {
+      switch ($params['get']) {
 
          case "type";
-            $res = json_encode(array(
+            $res = json_encode([
                'action_types' =>self::getActionTypes()
-            ));
+            ]);
             break;
          case "selection";
 
@@ -287,4 +282,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       }
       return $res;
    }
+
+
 }

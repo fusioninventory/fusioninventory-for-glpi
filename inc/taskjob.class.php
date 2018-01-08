@@ -69,17 +69,15 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Get name of this type by language of the user connected
     *
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Job', 'fusioninventory');
    }
-
 
 
    /**
@@ -92,19 +90,17 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Get join query in SQL
     *
     * @return array
     */
    static function getJoinQuery() {
-      return array(
+      return [
           'taskjobs' =>
                "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` as taskjob\n".
-               "ON taskjob.`plugin_fusioninventory_tasks_id` = task.`id`");
+               "ON taskjob.`plugin_fusioninventory_tasks_id` = task.`id`"];
    }
-
 
 
    /**
@@ -117,7 +113,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $tab = [];
 
       $tab['common'] = __('Task');
-
 
       $tab[1]['table']          = $this->getTable();
       $tab[1]['field']          = 'name';
@@ -151,7 +146,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * get task of this task job
     *
@@ -162,90 +156,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       return $pfTask;
    }
-
-
-
-   /**
-    * Manage definitions
-    *
-    * @param integer $id id of the taskjob
-    * @param string $type type (definition or action)
-    */
-   function manageDefinitionsActions($id, $type) {
-
-      $this->getFromDB($id);
-
-      echo "<form name='".$type."s_form' id='".$type."s_form' method='post' action='";
-      echo Toolbox::getItemTypeFormURL(__CLASS__)."'>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>";
-      if ($type == 'definition') {
-         echo __('Definition', 'fusioninventory');
-      } else if ($type == 'action') {
-         echo __('Action', 'fusioninventory');
-      }
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td width='45%'>".__('Type')."&nbsp;:</td>";
-      echo "<td align='center' height='10' width='10%'>";
-      echo "<span id='show_".ucfirst($type)."Type_id'>";
-      echo "</span>";
-      echo "</td>";
-      echo "<td class='center' rowspan='2' width='45%'>";
-      echo "<input type='submit' class='submit' name='".$type."_add' value='".
-            __('Add')." >>'>";
-      echo "<br><br>";
-
-      $a_list = importArrayFromDB($this->fields[$type]);
-      if ($a_list) {
-         echo "<input type='submit' class='submit' name='".$type."_delete' value='<< ".
-               __('Delete', 'fusioninventory')."'>";
-      }
-      echo "</td>";
-      echo "<td rowspan='2'>";
-
-      if ($a_list) {
-         echo "<select name='".$type."_to_delete[]' multiple size='5'>";
-         foreach ($a_list as $data) {
-            print_r($data);
-            $item_type = key($data);
-            $item_id = current($data);
-            $class = new $item_type();
-            if ($item_id == '.1') {
-               $name = __('Auto managenement dynamic of agents', 'fusioninventory');
-            } else if ($item_id == '.2') {
-               $name = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
-            } else {
-               $class->getFromDB($item_id);
-               $name = $class->getName();
-            }
-            echo "<option value='".$item_type.'-'.$item_id."'>[".$class->getTypeName()."] ".
-                    $name."</option>";
-         }
-         echo "</select>";
-      } else {
-         echo "&nbsp;";
-      }
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr>";
-      echo "<td>".__('Selection', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td align='center' height='10'>";
-      echo "<span id='show_".ucfirst($type)."List".$id."'>";
-      echo "</span>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
-      echo "<input type='hidden' name='id' value='".$id."' />";
-      Html::closeForm();
-   }
-
 
 
    /**
@@ -259,7 +169,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @param string $entity_restrict
     * @return string unique id of html element
     */
-   function dropdownType($myname, $method, $value=0, $taskjobs_id=0, $entity_restrict='') {
+   function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -272,22 +182,22 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          if ($method == $datas['method']) {
             $module = $datas['module'];
             $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
-            if (is_callable(array($class, "task_".$myname."type_".$method))) {
-               $a_type = call_user_func(array($class, "task_".$myname."type_".$method), $a_type);
+            if (is_callable([$class, "task_".$myname."type_".$method])) {
+               $a_type = call_user_func([$class, "task_".$myname."type_".$method], $a_type);
             }
          }
       }
 
       $rand = Dropdown::showFromArray(ucfirst($myname)."Type", $a_type);
 
-      $params=array(ucfirst($myname).'Type'=>'__VALUE__',
+      $params=[ucfirst($myname).'Type'=>'__VALUE__',
             'entity_restrict' => $entity_restrict,
             'rand'            => $rand,
             'myname'          => ucfirst($myname)."Type",
             'name'            => $myname,
             'method'          => $method,
             $myname.'typeid'  => 'dropdown_'.ucfirst($myname).'Type'.$rand,
-            'taskjobs_id'     => $taskjobs_id);
+            'taskjobs_id'     => $taskjobs_id];
 
       Ajax::updateItemOnEvent(
               'dropdown_'.ucfirst($myname).'Type'.$rand,
@@ -297,7 +207,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       return $rand;
    }
-
 
 
    /**
@@ -311,7 +220,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $available_methods = PluginFusioninventoryStaticmisc::getmethods();
       $types = [];
-      //$a_type[''] = '------';
       if ($moduletype === 'actors') {
          $types['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
       }
@@ -321,7 +229,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
        * ( I don't have time for this yet and this is why i can live with a simple mapping string
        * table)
        */
-      switch($moduletype) {
+      switch ($moduletype) {
 
          case 'actors':
             $moduletype_tmp = 'action';
@@ -336,7 +244,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          if ($method == $available_method['method']) {
             $module = $available_method['module'];
             $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
-            $class_method = array($class, "task_".$moduletype_tmp."type_".$method);
+            $class_method = [$class, "task_".$moduletype_tmp."type_".$method];
             if (is_callable($class_method)) {
                $types = call_user_func($class_method, $types);
             }
@@ -344,7 +252,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       return $types;
    }
-
 
 
    /**
@@ -361,8 +268,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @param integer $title
     * @return string unique id of html element
     */
-   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value=0,
-                          $entity_restrict='', $title = 0) {
+   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value = 0,
+                          $entity_restrict = '', $title = 0) {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -375,11 +282,11 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $rand = '';
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
-      if (is_callable(array($class, "task_".$_POST['name']."selection_".
-            $definitiontype."_".$method))) {
-         $rand = call_user_func(array($class,
+      if (is_callable([$class, "task_".$_POST['name']."selection_".
+            $definitiontype."_".$method])) {
+         $rand = call_user_func([$class,
                                       "task_".$_POST['name']."selection_".$definitiontype."_".
-                                          $method),
+                                          $method],
                                 $title);
 
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
@@ -393,26 +300,25 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' ".
               "name='add_button_".$_POST['name']."' value=\"".__('Add').
               "\" class='submit'></center>";
-      $params = array('items_id'  => '__VALUE0__',
+      $params = ['items_id'  => '__VALUE0__',
                       'add_button_'.$_POST['name'].$taskjobs_id => '__VALUE1__',
                       'itemtype'  => $definitiontype,
                       'rand'      => $rand,
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
-                      'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array($iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id),
+                      'taskjobs_id'=>$taskjobs_id];
+      Ajax::updateItemOnEvent([$iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id],
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
-                              array("click"),
+                              ["click"],
                               "-1",
                               "-1",
-                              array(__('Add')));
+                              [__('Add')]);
 
       echo "<span id='Additem_$rand'></span>";
    }
-
 
 
    /**
@@ -425,20 +331,21 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @param string $entity_restrict restriction of entity if required
     * @return string unique id of html element
     */
-   function dropdownActionType($myname, $method, $value=0, $entity_restrict='') {
+   function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '') {
       global $CFG_GLPI;
 
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      $a_actioninitiontype = [];
-      $a_actioninitiontype[''] = '------';
-      $a_actioninitiontype['PluginFusioninventoryAgent']= PluginFusioninventoryAgent::getTypeName();
+      $a_methods               = PluginFusioninventoryStaticmisc::getmethods();
+      $a_actioninitiontype     = [];
+      $a_actioninitiontype[''] = Dropdopwn::EMPTY_VALUE;
+      $a_actioninitiontype['PluginFusioninventoryAgent']
+         = PluginFusioninventoryAgent::getTypeName();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
             $module = ucfirst($datas['module']);
             $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
 
-            if (is_callable(array($class, "task_actiontype_".$method))) {
-               $a_actioninitiontype = call_user_func(array($class, "task_actiontype_".$method),
+            if (is_callable([$class, "task_actiontype_".$method])) {
+               $a_actioninitiontype = call_user_func([$class, "task_actiontype_".$method],
                                                      $a_actioninitiontype);
             }
          }
@@ -446,13 +353,13 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $rand = Dropdown::showFromArray($myname, $a_actioninitiontype);
 
-      $params=array('ActionType'=>'__VALUE__',
+      $params=['ActionType'=>'__VALUE__',
             'entity_restrict'=>$entity_restrict,
             'rand'=>$rand,
             'myname'=>$myname,
             'method'=>$method,
             'actiontypeid'=>'dropdown_'.$myname.$rand
-            );
+            ];
       Ajax::updateItemOnSelectEvent('dropdown_ActionType'.$rand,
                                     "show_ActionList",
                                     $CFG_GLPI["root_doc"].
@@ -461,7 +368,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       return $rand;
    }
-
 
 
    /**
@@ -476,8 +382,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @param string $entity_restrict restriction of entity if required
     * @return string unique id of html element
     */
-   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value=0,
-                           $entity_restrict='') {
+   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value = 0,
+                           $entity_restrict = '') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -493,8 +399,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
       if ($actiontype == "PluginFusioninventoryAgent") {
          $actionselection_method = "task_actionselection_PluginFusioninventoryAgent_".$method;
-         if (is_callable(array($class, $actionselection_method))) {
-            $rand = call_user_func(array($class, $actionselection_method));
+         if (is_callable([$class, $actionselection_method])) {
+            $rand = call_user_func([$class, $actionselection_method]);
          } else {
             $a_data = $this->getAgents($method);
 
@@ -502,25 +408,23 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          }
       } else {
          $definitionselection_method = "task_definitionselection_".$actiontype."_".$method;
-         if (is_callable(array($class, $definitionselection_method))) {
-            $rand = call_user_func(array($class, $definitionselection_method));
+         if (is_callable([$class, $definitionselection_method])) {
+            $rand = call_user_func([$class, $definitionselection_method]);
          }
       }
 
-      $params=array('selection'        => '__VALUE__',
+      $params=['selection'        => '__VALUE__',
                     'entity_restrict'  => $entity_restrict,
                     'myname'           => $myname,
                     'actionselectadd'  => 'dropdown_actionselectiontoadd'.$rand,
-                    'actiontypeid'     => $actiontypeid);
-
+                    'actiontypeid'     => $actiontypeid];
 
       Ajax::updateItemOnEvent('addAObject', 'show_ActionListEmpty',
                               $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/dropdownactionselection.php",
-                              $params, array("click"));
+                              $params, ["click"]);
 
    }
-
 
 
    /**
@@ -530,21 +434,19 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     * @return array [id integed agent id] => $name value agent name
     */
    function getAgents($module) {
+      //Array to store agents that are allowed to use this module
+      $allowed_agents = [];
+      $pfAgentmodule  = new PluginFusioninventoryAgentmodule();
 
-      $array = [];
-      $array[".1"] = " ".__('Auto managenement dynamic of agents', 'fusioninventory');
-
-      $array[".2"] = " ".__('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
-
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
-      foreach ($array1 as $id => $data) {
-         $array[$id] = $data['name'];
+      //Get all agents that can run the module
+      $array_agents   = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
+      foreach ($array_agents as $id => $data) {
+         $allowed_agents[$id] = $data['name'];
       }
-      asort($array);
-      return $array;
+      //Sort the array
+      asort($allowed_agents);
+      return $allowed_agents;
    }
-
 
 
    /**
@@ -655,10 +557,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                }
                $data['datetime_start'] = date("Y-m-d H:i:s",
                                               $data['date_scheduled_timestamp'] + $periodtotal);
-            } else if ($data['date_scheduled_timestamp'] > date('U')) {
-               // Don't update date next execution
-
-            } else {
+            } else if ($data['date_scheduled_timestamp'] <= date('U')) {
                $data['datetime_start'] = date("Y-m-d H:i:s",
                                               $data['date_scheduled_timestamp'] + $period);
             }
@@ -673,7 +572,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Get period in secondes by type and count time
     *
@@ -683,7 +581,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     */
    function periodicityToTimestamp($periodicity_type, $periodicity_count) {
       $period = 0;
-      switch($periodicity_type) {
+      switch ($periodicity_type) {
 
          case 'minutes':
             $period = $periodicity_count * 60;
@@ -704,132 +602,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       return $period;
    }
-
-
-
-   /**
-    * Display actions possible in device
-    *
-    * @global array $CFG_GLPI
-    * @param integer $items_id
-    * @param string $itemtype
-    */
-   function showActions($items_id, $itemtype) {
-      global $CFG_GLPI;
-
-      // load all plugin and get method possible
-      /*
-       * Example :
-       * * inventory
-       * * snmpquery
-       * * wakeonlan
-       * * deploy => software
-       *
-       */
-
-      echo "<div align='center'>";
-      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
-               "/plugins/fusioninventory/front/taskjob.form.php\">";
-
-      echo "<table  class='tab_cadre_fixe'>";
-
-      echo "<tr>";
-      echo "<th colspan='4'>";
-      echo __('Action on this device', 'fusioninventory');
-
-      echo " : </th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo __('Job', 'fusioninventory')."&nbsp;:";
-      echo "</td>";
-
-      echo "<td align='center'>";
-      $a_methods          = PluginFusioninventoryStaticmisc::getmethods();
-      $a_parseMethods     = [];
-      $a_parseMethods[''] = Dropdown::EMPTY_VALUE;
-      foreach ($a_methods as $data) {
-         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($data['directory']);
-
-         if (is_callable(array($class, 'task_action_'.$data['method']))) {
-            $a_itemtype = call_user_func(array($class, 'task_action_'.$data['method']));
-            if (in_array($itemtype, $a_itemtype)) {
-               $a_parseMethods[$data['module']."||".$data['method']] = $data['method'];
-            }
-         }
-      }
-      Dropdown::showFromArray('methodaction', $a_parseMethods);
-      echo "</td>";
-
-      echo "<td align='center'>";
-      echo __('Scheduled date', 'fusioninventory')."&nbsp;:";
-      echo "</td>";
-      echo "<td align='center'>";
-      Html::showDateTimeFormItem("datetime_start", date("Y-m-d H:i:s"), 1);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='4'>";
-      echo "<input type='hidden' name='items_id' value='".$items_id."'/>";
-      echo "<input type='hidden' name='itemtype' value='".$itemtype."'/>";
-      echo "<input type='submit' name='itemaddaction' value=\"".__('Add')."\" class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
-      Html::closeForm();
-      echo "</div>";
-   }
-
-
-
-   /**
-    * Redirect url to task and right taskjob tab
-    *
-    * @param integer $taskjobs_id id of the taskjob
-    */
-   function redirectTask($taskjobs_id) {
-
-      $this->getFromDB($taskjobs_id);
-
-      $a_taskjob = $this->find(
-         "`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
-            AND `rescheduled_taskjob_id`='0' ", "id");
-      $i = 1;
-      $tab = 0;
-      foreach (array_keys($a_taskjob) as $id) {
-         $i++;
-         if ($id == $taskjobs_id) {
-            $tab = $i;
-         }
-      }
-      Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask').
-                                     "?itemtype=PluginFusioninventoryTask&id=".
-                                     $this->fields['plugin_fusioninventory_tasks_id'].
-                                     "&glpi_tab=".$tab);
-   }
-
-
-
-   /**
-    * Display task informations for an object
-    *
-    * @param string $itemtype itemtype of object
-    * @param integer $items_id id of the object
-    */
-   function manageTasksByObject($itemtype='', $items_id=0) {
-      // See task runing
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjobstate->stateTaskjobItem($items_id, $itemtype, 'running');
-      // see tasks finished
-      $pfTaskjobstate->stateTaskjobItem($items_id, $itemtype, 'nostarted');
-      // see tasks finished
-      $pfTaskjobstate->stateTaskjobItem($items_id, $itemtype, 'finished');
-   }
-
-
 
    /**
     * Cron task: finish task if have some problem or started for so long time
@@ -873,20 +645,20 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                   $finish = true;
                }
 
-               # No news from the agent since 4 hour. The agent is probably crached.
+               // No news from the agent since 4 hour. The agent is probably crached.
                //Let's cancel the task
                if ($finish) {
                      $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
                               AND `plugin_fusioninventory_agents_id`='".
                                  $data['plugin_fusioninventory_agents_id']."'
                               AND (`state`='2' OR `state`='1') ");
-                     foreach ($a_statustmp as $datatmp) {
-                        $pfTaskjobstate->changeStatusFinish($datatmp['id'],
-                                                            0,
-                                                            '',
-                                                            1,
-                                                            "==agentcrashed==");
-                     }
+                  foreach ($a_statustmp as $datatmp) {
+                     $pfTaskjobstate->changeStatusFinish($datatmp['id'],
+                                                      0,
+                                                      '',
+                                                      1,
+                                                      "==agentcrashed==");
+                  }
                }
             } else if ($task['communication'] == 'push') {
                $a_valid = $pfTaskjoblog->find(
@@ -987,7 +759,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Check for configuration consistency.
     * Remove items targets or actors that have been deleted.
@@ -1038,7 +809,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Purge taskjoblog/state when delete taskjob
     *
@@ -1063,7 +833,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Force end task
     */
@@ -1085,7 +854,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
-
 
 
    /**
@@ -1179,7 +947,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Function used to add item in definition or action of a taskjob
     *    and hide add form
@@ -1205,7 +972,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          }
       }
       if ($add == '1') {
-         $a_type[] = array($itemtype => $items_id);
+         $a_type[] = [$itemtype => $items_id];
          $input = [];
          $input['id'] = $this->fields['id'];
          $input[$type] = exportArrayToDB($a_type);
@@ -1229,7 +996,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                                 $params);
       echo "</script>";
    }
-
 
 
    /**
@@ -1269,7 +1035,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
    /**
     * Display + button to add definition or action
     *
@@ -1286,7 +1051,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                     class='pointer'  src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
       }
    }
-
 
 
    /**
@@ -1309,6 +1073,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $uniqid;
    }
 
+
    static function restartJob($params) {
       $task     = new PluginFusioninventoryTask();
       $job      = new PluginFusioninventoryTaskjob();
@@ -1329,13 +1094,13 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       }
 
       // add this new state and first log
-      if($run_id = $jobstate->add($run)) {
-         $log = array(
+      if ($run_id = $jobstate->add($run)) {
+         $log = [
             'date'    => date("Y-m-d H:i:s"),
             'state'   => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
             'plugin_fusioninventory_taskjobstates_id' => $run_id,
             'comment' => ''
-         );
+         ];
          if ($joblog->add($log)) {
 
             //wake up agent (only if task support wakeup)
@@ -1350,7 +1115,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          }
       }
    }
-
 
 
    /**
@@ -1372,7 +1136,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          }
       }
    }
-
 
 
    /**
@@ -1470,8 +1233,8 @@ function new_subtype(id) {
       foreach ($a_taskjobs as $data) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'>";
-         Html::showCheckbox(array('name'    => 'taskjob_entries[]',
-                                  'value'   => $i));
+         Html::showCheckbox(['name'    => 'taskjob_entries[]',
+                                  'value'   => $i]);
          echo "</td>";
          echo "<td>";
          echo "<a class='edit' ".
@@ -1513,7 +1276,6 @@ function new_subtype(id) {
          }
          echo "</ul>";
 
-
          echo "</td>";
          echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
@@ -1530,7 +1292,6 @@ function new_subtype(id) {
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
 
-
       /**
        * Initialize drag and drop on subtype lists
        **/
@@ -1542,20 +1303,18 @@ function new_subtype(id) {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
     * @param object|null $checkitem
     * @return array list of actions
     */
-   function getSpecificMassiveActions($checkitem=NULL) {
+   function getSpecificMassiveActions($checkitem = null) {
 
       $actions = [];
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'task_forceend'] = __('Force the end', 'fusioninventory');
       return $actions;
    }
-
 
 
    /**
@@ -1585,6 +1344,7 @@ function new_subtype(id) {
       }
    }
 
+
    /**
    * Duplicate all taskjobs for a task to another one
    * @param $source_tasks_id the ID of the task to clone
@@ -1604,6 +1364,7 @@ function new_subtype(id) {
       }
       return $result;
    }
+
+
 }
 
-?>

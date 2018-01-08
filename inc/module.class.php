@@ -54,13 +54,14 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryModule extends CommonDBTM {
 
+
    /**
     * Get all installed modules
     *
     * @param boolean $p_inactive Show inactive modules
     * @return array
     */
-   static function getAll($p_inactive=FALSE) {
+   static function getAll($p_inactive = false) {
       $plugin = new Plugin();
       if ($p_inactive) {
          return $plugin->find("(`state` = '1' OR `state` = '4') AND `directory` LIKE 'fusinv%'");
@@ -68,7 +69,6 @@ class PluginFusioninventoryModule extends CommonDBTM {
          return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
       }
    }
-
 
 
    /**
@@ -79,7 +79,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *                       fusioninventory module
     */
    static function getModuleId($p_name) {
-      $index = FALSE;
+      $index = false;
       if (!isset($_SESSION['glpi_plugins'])) {
          return $index;
       }
@@ -98,7 +98,6 @@ class PluginFusioninventoryModule extends CommonDBTM {
    }
 
 
-
    /**
     * Get module name
     *
@@ -111,12 +110,13 @@ class PluginFusioninventoryModule extends CommonDBTM {
               OR ($_SESSION['glpi_plugins'][$p_id] == 'fusioninventory')) {
             return $_SESSION['glpi_plugins'][$p_id];
          } else {
-            return FALSE;
+            return false;
          }
       } else {
-         return FALSE;
+         return false;
       }
    }
+
+
 }
 
-?>

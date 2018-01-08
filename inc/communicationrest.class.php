@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryCommunicationRest {
 
+
    /**
     * Manage communication between agent and server
     *
@@ -86,7 +87,6 @@ class PluginFusioninventoryCommunicationRest {
       }
       return $response;
    }
-
 
 
    /**
@@ -124,8 +124,7 @@ class PluginFusioninventoryCommunicationRest {
                }
                $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($method['module']);
 
-               if (
-                     (isset($method['task']) && strtolower($method['task']) == strtolower($task))
+               if ((isset($method['task']) && strtolower($method['task']) == strtolower($task))
                   && (isset($method['use_rest']) && $method['use_rest'])
                   && method_exists($class, self::getMethodForParameters($task))
                   && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
@@ -149,7 +148,6 @@ class PluginFusioninventoryCommunicationRest {
    }
 
 
-
    /**
     * Get jobs for an agent
     * TODO: This methods must be used inplace of other methods in order to mutualize code and
@@ -160,16 +158,15 @@ class PluginFusioninventoryCommunicationRest {
     * @return false
     */
    static function getJobsByAgent($params = []) {
-//      $jobs = [];
-//      $methods = PluginFusioninventoryStaticmisc::getmethods();
-//      if (isset($params['task'])) {
-//         foreach (array_keys($params['task']) as $task) {
-//
-//         }
-//      }
+      //      $jobs = [];
+      //      $methods = PluginFusioninventoryStaticmisc::getmethods();
+      //      if (isset($params['task'])) {
+      //         foreach (array_keys($params['task']) as $task) {
+      //
+      //         }
+      //      }
       return false;
    }
-
 
 
    /**
@@ -178,7 +175,6 @@ class PluginFusioninventoryCommunicationRest {
    static function sendOk() {
       header("HTTP/1.1 200", true, 200);
    }
-
 
 
    /**
@@ -190,7 +186,6 @@ class PluginFusioninventoryCommunicationRest {
    }
 
 
-
    /**
     * Generate the function name related to the module to get parameters
     *
@@ -200,7 +195,6 @@ class PluginFusioninventoryCommunicationRest {
    static function getMethodForParameters($task) {
       return "task_".strtolower($task)."_getParameters";
    }
-
 
 
    /**
@@ -247,7 +241,7 @@ class PluginFusioninventoryCommunicationRest {
          $taskjoblog->getFromDBByQuery(
             "WHERE `plugin_fusioninventory_taskjobstates_id`=". $jobstate['id']
          );
-         switch($p['code']) {
+         switch ($p['code']) {
 
             case 'running':
                $taskjoblog->addTaskjoblog(
@@ -277,7 +271,6 @@ class PluginFusioninventoryCommunicationRest {
    }
 
 
-
    /**
     * Test a given url
     *
@@ -301,7 +294,6 @@ class PluginFusioninventoryCommunicationRest {
    }
 
 
-
    /**
     * Manage REST parameters
     **/
@@ -313,4 +305,6 @@ class PluginFusioninventoryCommunicationRest {
          PluginFusioninventoryCommunicationRest::sendError();
       }
    }
+
+
 }

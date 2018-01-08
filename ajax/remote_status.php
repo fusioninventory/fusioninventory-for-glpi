@@ -57,7 +57,7 @@ if (isset($_REQUEST['id'])) {
             $agentStatus = $agent->getStatus();
             $agentStatus['waiting'] = false;
 
-            switch($agentStatus['message']) {
+            switch ($agentStatus['message']) {
 
                case 'executing scheduled tasks':
                case 'running':

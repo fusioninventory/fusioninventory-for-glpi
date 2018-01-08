@@ -61,7 +61,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
     * @global array $CFG_GLPI
     * @param array $input
     */
-   function showForm($input=array()) {
+   function showForm($input = []) {
       global $DB, $CFG_GLPI;
 
       $NetworkPort = new NetworkPort();
@@ -179,6 +179,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       }
       echo "</table>";
    }
+
+
 }
 
-?>

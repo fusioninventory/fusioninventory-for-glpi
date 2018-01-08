@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryDisplay extends CommonDBTM {
 
+
    /**
     * Display static progress bar (used for SNMP cartridge state)
     *
@@ -63,7 +64,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
     * @param integer $width
     * @param integer $height
     */
-   static function bar($percentage, $message='', $order='', $width='400', $height='20') {
+   static function bar($percentage, $message = '', $order = '', $width = '400', $height = '20') {
       if ((!empty($percentage)) AND ($percentage < 0)) {
          $percentage = "";
       } else if ((!empty($percentage)) AND ($percentage > 100)) {
@@ -130,15 +131,13 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    }
 
 
-
    /**
     * Disable debug mode to not see php errors
     */
    static function disableDebug() {
       error_reporting(0);
-      set_error_handler(array('PluginFusioninventoryDisplay', 'error_handler'));
+      set_error_handler(['PluginFusioninventoryDisplay', 'error_handler']);
    }
-
 
 
    /**
@@ -147,7 +146,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    static function reenableusemode() {
       Toolbox::setDebugMode();
    }
-
 
 
    /**
@@ -162,7 +160,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    }
 
 
-
    /**
     * Display progress bar
     *
@@ -172,13 +169,13 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
     * @param array $options
     * @return string
     */
-   static function getProgressBar($width, $percent, $options=array()) {
+   static function getProgressBar($width, $percent, $options = []) {
       global $CFG_GLPI;
 
-      $param = array();
+      $param = [];
       $param['title']=__('Progress', 'fusioninventory');
-      $param['simple']=FALSE;
-      $param['forcepadding']=FALSE;
+      $param['simple']=false;
+      $param['forcepadding']=false;
 
       if (is_array($options) && count($options)) {
          foreach ($options as $key => $val) {
@@ -204,6 +201,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       $output.="</div>";
       return $output;
    }
+
+
 }
 
-?>

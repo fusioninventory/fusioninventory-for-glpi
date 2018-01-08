@@ -53,6 +53,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
 
+
    /**
     * __contruct function where initialize some variables
     *
@@ -63,7 +64,6 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
       $this->table = "glpi_plugin_fusioninventory_printers";
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = $this->table;
    }
-
 
 
    /**
@@ -91,6 +91,7 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
 
       return $tab;
    }
+
+
 }
 
-?>

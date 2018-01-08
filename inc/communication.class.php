@@ -63,7 +63,6 @@ class PluginFusioninventoryCommunication {
    protected $message;
 
 
-
    /**
     * __contruct function used to initialize protected message variable
     */
@@ -78,7 +77,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Get readable XML message (add carriage returns)
     *
@@ -87,7 +85,6 @@ class PluginFusioninventoryCommunication {
    function getMessage() {
       return $this->message;
    }
-
 
 
    /**
@@ -104,7 +101,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Send response to agent, using given compression algorithm
     *
@@ -116,14 +112,14 @@ class PluginFusioninventoryCommunication {
          return;
       }
 
-      switch($compressmode) {
+      switch ($compressmode) {
          case 'none':
             header("Content-Type: application/xml");
             echo PluginFusioninventoryToolbox::formatXML($this->message);
             break;
 
          case 'zlib':
-            # rfc 1950
+            // rfc 1950
             header("Content-Type: application/x-compress-zlib");
             echo gzcompress(
                PluginFusioninventoryToolbox::formatXML($this->message)
@@ -131,7 +127,7 @@ class PluginFusioninventoryCommunication {
             break;
 
          case 'deflate':
-            # rfc 1951
+            // rfc 1951
             header("Content-Type: application/x-compress-deflate");
             echo gzdeflate(
                PluginFusioninventoryToolbox::formatXML($this->message)
@@ -139,7 +135,7 @@ class PluginFusioninventoryCommunication {
             break;
 
          case 'gzip':
-            # rfc 1952
+            // rfc 1952
             header("Content-Type: application/x-compress-gzip");
             echo gzencode(
                PluginFusioninventoryToolbox::formatXML($this->message)
@@ -148,7 +144,6 @@ class PluginFusioninventoryCommunication {
 
       }
    }
-
 
 
    /**
@@ -166,7 +161,6 @@ class PluginFusioninventoryCommunication {
          }
       }
    }
-
 
 
    /**
@@ -199,10 +193,10 @@ class PluginFusioninventoryCommunication {
       if (!isset($_SESSION['plugin_fusioninventory_agents_id'])) {
          $agent = $pfAgent->infoByKey($this->message['DEVICEID']);
       } else {
-         $agent = array('id' => $_SESSION['plugin_fusioninventory_agents_id']);
+         $agent = ['id' => $_SESSION['plugin_fusioninventory_agents_id']];
       }
       if ($xmltag == "PROLOG") {
-         return FALSE;
+         return false;
       }
 
       if (isset($this->message['CONTENT']['MODULEVERSION'])) {
@@ -236,20 +230,19 @@ class PluginFusioninventoryCommunication {
       } else {
          $errors.=__('Unattended element in', 'fusioninventory').' QUERY : *'.$xmltag."*\n";
       }
-      $result=TRUE;
+      $result=true;
       // TODO manage this error ( = delete it)
       if ($errors != '') {
          echo $errors;
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
-            $result=TRUE;
+            $result=true;
          } else {
             // It's PROLOG
-            $result=FALSE;
+            $result=false;
          }
       }
       return $result;
    }
-
 
 
    /**
@@ -265,8 +258,8 @@ class PluginFusioninventoryCommunication {
        * TODO: the following must be definitely done differently !
        * (... but i'm kind in a hurry right now ;-) )
        */
-      $methods = array();
-      $classnames = array();
+      $methods = [];
+      $classnames = [];
       foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
          if (isset($method['classname'])) {
             $methods[] = $method['method'];
@@ -274,7 +267,7 @@ class PluginFusioninventoryCommunication {
          }
       }
 
-      $jobstates = $pfTask->getTaskjobstatesForAgent($agent_id,$methods);
+      $jobstates = $pfTask->getTaskjobstatesForAgent($agent_id, $methods);
       foreach ($jobstates as $jobstate) {
          $className = $classnames[$jobstate->method];
          if (class_exists($className)) {
@@ -296,7 +289,6 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Set prolog for agent
     */
@@ -304,7 +296,6 @@ class PluginFusioninventoryCommunication {
       $pfConfig = new PluginFusioninventoryConfig();
       $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
    }
-
 
 
    /**
@@ -321,11 +312,12 @@ class PluginFusioninventoryCommunication {
    }
 
 
-
    /**
     * Manage communication with old protocol (XML over POST)
     *
     **/
+
+
    /**
     * Manage communication with old protocol (XML over POST).
     * Used for inventory, network discovery, network inventory and wake on lan
@@ -334,7 +326,7 @@ class PluginFusioninventoryCommunication {
     * @param string $xml
     * @param string $output
     */
-   function handleOCSCommunication($rawdata, $xml='', $output='ext') {
+   function handleOCSCommunication($rawdata, $xml = '', $output = 'ext') {
 
       // ***** For debug only ***** //
       //$rawdata = gzcompress('');
@@ -349,7 +341,7 @@ class PluginFusioninventoryCommunication {
          $user->getFromDB($users_id);
          Session::changeActiveEntities();
          $_SESSION["glpiname"] = $user->getField('name');
-         $_SESSION['glpiactiveprofile'] = array();
+         $_SESSION['glpiactiveprofile'] = [];
          $_SESSION['glpiactiveprofile']['interface']  = 'central';
          $_SESSION['glpiactiveprofile']['internet']   = 'w';
          $_SESSION['glpiactiveprofile']['computer']   = 'w';
@@ -380,7 +372,7 @@ class PluginFusioninventoryCommunication {
             $xml = $rawdata;
             $compressmode = 'none';
       } else {
-         # try each algorithm successively
+         // try each algorithm successively
          if (($xml = gzuncompress($rawdata))) {
             $compressmode = "zlib";
          } else if (($xml = $pfToolbox->gzdecode($rawdata))) {
@@ -422,13 +414,19 @@ class PluginFusioninventoryCommunication {
       );
 
       // Check XML integrity
-      if (($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA))) {
+      $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+      if (!$pxml) {
+         $pxml = @simplexml_load_string(
+            utf8_encode($xml),
+            'SimpleXMLElement',
+            LIBXML_NOCDATA
+         );
+         if ($pxml) {
+            $xml = utf8_encode($xml);
+         }
+      }
 
-      } else if (($pxml = @simplexml_load_string(utf8_encode($xml),
-                                                'SimpleXMLElement',
-                                                LIBXML_NOCDATA))) {
-         $xml = utf8_encode($xml);
-      } else {
+      if (!$pxml) {
          $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
          $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -489,6 +487,7 @@ class PluginFusioninventoryCommunication {
          }
       }
    }
+
+
 }
 
-?>

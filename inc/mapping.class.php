@@ -55,6 +55,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryMapping extends CommonDBTM {
 
+
    /**
     * Get mapping
     *
@@ -68,9 +69,8 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       if (isset($mapping['id'])) {
          return $mapping;
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -100,7 +100,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
                              '".$parm['tablefield']."', '".$parm['locale']."')";
          }
          $DB->query($query);
-      } elseif ($data['table'] != $parm['table']
+      } else if ($data['table'] != $parm['table']
                 OR $data['tablefield'] != $parm['tablefield']
                 OR $data['locale'] != $parm['locale']) {
          $data['table'] = $parm['table'];
@@ -112,7 +112,6 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          $this->update($data);
       }
    }
-
 
 
    /**
@@ -806,6 +805,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
       return $mapping['name'];
    }
+
+
 }
 
-?>

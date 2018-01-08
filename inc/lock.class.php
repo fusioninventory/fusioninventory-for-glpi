@@ -68,10 +68,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return _n('Lock', 'Locks', $nb);
    }
-
 
 
    /**
@@ -91,7 +90,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Get the tab name used for item
     *
@@ -99,7 +97,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       $items_id = $item->getID();
       $itemtype = $item->getType();
@@ -115,17 +113,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $itemtype = 'networking';
 
          default:
-         if (Session::haveRight(strtolower($itemtype), UPDATE)) {
-            if ($_SESSION['glpishow_count_on_tabs']) {
-               return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
+            if (Session::haveRight(strtolower($itemtype), UPDATE)) {
+               if ($_SESSION['glpishow_count_on_tabs']) {
+                  return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
                                            self::countForLock($item));
+               }
+               return PluginFusioninventoryLock::getTypeName(2);
             }
-            return PluginFusioninventoryLock::getTypeName(2);
-         }
       }
       return '';
    }
-
 
 
    /**
@@ -136,7 +133,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $withtemplate 1 if is a template form
     * @return true
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       $pflock = new self();
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -162,7 +159,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "</tr>";
 
          echo "</table>";
-         return TRUE;
+         return true;
       }
       if ($item->getID() < 1) {
          $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
@@ -172,9 +169,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
                               $item->getID(),
                            $item->getType(), $item->getID());
       }
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -187,7 +183,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $p_items_id Line id.
     * @return true
     */
-   function showForm($p_target, $p_itemtype, $p_items_id=0) {
+   function showForm($p_target, $p_itemtype, $p_items_id = 0) {
 
       $can = 0;
       $typeright = strtolower($p_itemtype);
@@ -195,7 +191,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $typeright = "networking";
       }
       if (Session::haveRight($typeright, UPDATE)) {
-        $can = 1;
+         $can = 1;
       }
 
       $tableName = getTableForItemType($p_itemtype);
@@ -203,7 +199,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
 
       if (!count($locked)) {
-         $locked = array();
+         $locked = [];
       }
       $colspan = '2';
       if ($p_items_id > 0) {
@@ -226,7 +222,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='4'>".__('FusionInventory', 'fusioninventory')."</th></tr>";
-
 
       echo "<tr><th>"._n('Field', 'Fields', 2)."</th>";
       if ($p_items_id != '0') {
@@ -288,8 +283,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
             echo "</td>";
             echo "<td align='center'>";
-            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
-                                     'checked' => $checked));
+            Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+                                     'checked' => $checked]);
             echo "</td>";
             echo "</tr>";
          }
@@ -325,8 +320,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
                }
                echo "<td>".$name."</td>";
                echo "<td align='center'>";
-               Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
-                                        'checked' => $checked));
+               Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+                                        'checked' => $checked]);
                echo "</td>";
                echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
                        $key_source."]' ></td>";
@@ -362,9 +357,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
          Html::closeForm();
       }
       echo "</div>";
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -380,14 +374,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $typeright = "networking";
       }
       if (Session::haveRight($typeright, UPDATE)) {
-        $can = 1;
+         $can = 1;
       }
 
       $tableName = getTableForItemType($itemtype);
       echo "<div width='50%'>";
       $locked = PluginFusioninventoryLock::getLockFields($tableName, 0);
       if (!count($locked)) {
-         $locked = array();
+         $locked = [];
       }
       $colspan = '2';
 
@@ -445,8 +439,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
             echo "<td>".$name."</td>";
             echo "<td align='center'>";
-            Html::showCheckbox(array('name'    => "lockfield_fusioninventory[$key_source]",
-                                     'checked' => $checked));
+            Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
+                                     'checked' => $checked]);
             echo "</td>";
             echo "</tr>";
          }
@@ -482,6 +476,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    }
 
+
    /**
     * Unlock a field for a record.
     *
@@ -506,7 +501,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $a_lines = $pfLock->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
             $a_line = current($a_lines);
             $pfLock->getFromDB($a_line['id']);
-            $input = array();
+            $input = [];
             $input['id'] = $pfLock->fields['id'];
             $input['tablefields'] = exportArrayToDB($fieldsToLock);
             $pfLock->update($input);
@@ -518,7 +513,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
    }
-
 
 
    /**
@@ -546,7 +540,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Set lock fields for a record.
     *
@@ -558,7 +551,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param string $p_fieldsToLock Array of fields to lock.
     * @param string $massiveaction
     */
-   static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock, $massiveaction='') {
+   static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock, $massiveaction = '') {
       global $DB;
 
       $pfl = new PluginFusioninventoryLock();
@@ -596,15 +589,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
                $pfl->delete($pfl->fields);
             }
          }
-      } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
-         $input = array();
+      } else if (count($p_fieldsToLock)) {    // no locks --> new locks
+         $input = [];
          $input['tablename']     = $tableName;
          $input['items_id']      = $p_items_id;
          $input['tablefields']   = exportArrayToDB($p_fieldsToLock);
          $pfl->add($input);
       }
    }
-
 
 
    /**
@@ -639,16 +631,15 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $pfl->fields['tablefields'] = exportArrayToDB($p_fieldsToLock);
             $pfl->update($pfl->fields);
          }
-      } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
+      } else if (count($p_fieldsToLock)) {    // no locks --> new locks
 
-         $input = array();
+         $input = [];
          $input['tablename']     = $tableName;
          $input['items_id']      = $p_items_id;
          $input['tablefields']   = exportArrayToDB($p_fieldsToLock);
          $pfl->add($input);
       }
    }
-
 
 
    /**
@@ -671,7 +662,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $result = $DB->query($query);
       return $result;
    }
-
 
 
    /**
@@ -700,7 +690,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * convert an array resulting from many form checks (0=>on 2=>on 5=>on ...)
     * into a classical array(0=>0 1=>2 2=>5 ...)
@@ -709,7 +698,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return array
     */
    static function exportChecksToArray($p_checksArray) {
-      $array = array();
+      $array = [];
       foreach ($p_checksArray as $key => $value) {
          if ($value > 0 || $value == "on") {
             array_push($array, $key);
@@ -719,14 +708,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Manage list of fields to exclude for lock
     *
     * @return array list of fields to exclude
     */
    function excludeFields() {
-      $exclude = array();
+      $exclude = [];
       $exclude[] = "id";
       $exclude[] = "entities_id";
       $exclude[] = "is_recursive";
@@ -740,7 +728,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "ticket_tco";
       return $exclude;
    }
-
 
 
    /**
@@ -757,14 +744,14 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $itemtype = getItemTypeForTable($item->fields['tablename']);
       $items_id = $item->fields['items_id'];
 
-      $a_fieldList = array();
+      $a_fieldList = [];
       if ($item->fields['tablefields'] == $item->input['tablefields']) {
          $a_fieldList = importArrayFromDB($item->fields['tablefields']);
       } else {
          $a_fieldListTemp = importArrayFromDB($item->fields['tablefields']);
          $a_inputList = importArrayFromDB($item->input['tablefields']);
          $a_diff = array_diff($a_fieldListTemp, $a_inputList);
-         $a_fieldList = array();
+         $a_fieldList = [];
          foreach ($a_diff as $value) {
             if (in_array($value, $a_fieldListTemp)) {
                $a_fieldList[] = $value;
@@ -774,7 +761,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       //delete all lock case (no more lock)
       if (!isset($item->updates)) {
-         $a_fieldList = array();
+         $a_fieldList = [];
       }
 
       $item_device = new $itemtype();
@@ -792,11 +779,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
             unset($item_device->fields[$key]);
          }
       }
-      $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
+      $_SESSION['glpi_fusionionventory_nolock'] = true;
       $item_device->update($item_device->fields);
       unset($_SESSION['glpi_fusionionventory_nolock']);
    }
-
 
 
    /**
@@ -812,7 +798,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $result=$DB->query($sql);
          while ($data=$DB->fetch_array($result)) {
             $a_ocslocks = importArrayFromDB($data['computer_update']);
-            $a_fields = array();
+            $a_fields = [];
             foreach ($a_ocslocks as $field) {
                if (!strstr($field, "_version")
                      AND $field != "date_mod") {
@@ -826,7 +812,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
    }
-
 
 
    /**
@@ -858,9 +843,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
          }
       }
-      return array();
+      return [];
    }
-
 
 
    /**
@@ -893,7 +877,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Display lock icon in main item form
     *
@@ -912,7 +895,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Display form related to the massive action selected
     *
@@ -926,11 +908,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
          $pfil = new self;
          $pfil->showForm($_SERVER["PHP_SELF"], $itemtype);
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -979,7 +960,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-
    /**
     * Say if the field is locked
     *
@@ -990,6 +970,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function isFieldLocked($a_lockable, $field) {
       return in_array($field, $a_lockable);
    }
+
 
    static function showLocksForAnItem(CommonDBTM $item) {
       $pflock = new self();
@@ -1005,6 +986,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return true;
    }
+
+
 }
 
-?>

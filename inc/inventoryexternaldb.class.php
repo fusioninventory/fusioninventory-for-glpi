@@ -61,10 +61,10 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
     * @param string $pciid
     * @return array
     */
-    static function getDataFromPCIID($pciid) {
-       global $DB;
+   static function getDataFromPCIID($pciid) {
+      global $DB;
 
-      $a_return = array();
+      $a_return = [];
 
       if ($pciid == '') {
          return $a_return;
@@ -93,8 +93,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
          $a_return['manufacturer'] = html_entity_decode($data['manufacturer']);
       }
       return $a_return;
-    }
-
+   }
 
 
     /**
@@ -132,9 +131,8 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
             $devices_name = html_entity_decode($data['name']);
          }
       }
-      return array($vendors_name, $devices_name);
+      return [$vendors_name, $devices_name];
    }
-
 
 
    /**
@@ -162,6 +160,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
       }
       return "";
    }
+
+
 }
 
-?>

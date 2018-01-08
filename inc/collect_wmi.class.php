@@ -67,10 +67,9 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Windows WMI', 'fusioninventory');
    }
-
 
 
    /**
@@ -80,7 +79,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'wmi') {
@@ -91,7 +90,6 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -100,13 +98,12 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
       $pfCollect_Wmi->showWmi($item->getID());
       $pfCollect_Wmi->showForm($item->getID());
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -149,7 +146,6 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
    }
 
 
-
    /**
     * Display form to add collect wmi
     *
@@ -157,7 +153,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($collects_id, $options=array()) {
+   function showForm($collects_id, $options = []) {
 
       $ID = 0;
       $this->initForm($ID, $options);
@@ -195,8 +191,9 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
+
+
 }
 
-?>

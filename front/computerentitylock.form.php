@@ -50,11 +50,10 @@ if (isset($_GET['id'])
         && isset($_GET['lock'])) {
 
    $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-   $input = array();
+   $input = [];
    $input['id'] = $_GET['id'];
    $input['is_entitylocked'] = $_GET['lock'];
    $pfInventoryComputerComputer->update($input);
 }
 Html::back();
 
-?>

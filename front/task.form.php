@@ -67,4 +67,3 @@ $pfTask->display($_GET);
 
 Html::footer();
 
-?>

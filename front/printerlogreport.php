@@ -126,6 +126,6 @@ function displaySearchForm() {
    Html::closeForm();
 }
 
+
 Html::footer();
 
-?>

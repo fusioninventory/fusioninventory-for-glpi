@@ -42,6 +42,7 @@
 
 class DevicesLocks extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     *
@@ -60,40 +61,40 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $computer = new Computer();
       $pfLock = new PluginFusioninventoryLock();
 
-      $a_computerinventory = array(
-          "Computer" => array(
+      $a_computerinventory = [
+          "Computer" => [
               "name"   => "pc002",
               "serial" => "ggheb7ne7",
               "computermodels_id" => "model xxx",
               "manufacturers_id"  => "Dell"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'SOFTWARES'      => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'SOFTWARES'      => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
       $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
       $pfInventoryComputerInventory->rulepassed(0, 'Computer');
@@ -103,11 +104,11 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $this->assertEquals($computer->fields['computermodels_id'], 1, "Model not right");
       $this->assertEquals($computer->fields['manufacturers_id'], 1, "Manufacturer not right");
 
-      $input = array(
+      $input = [
           'tablename'   => 'glpi_computers',
           'items_id'    => 1,
-          'tablefields' => exportArrayToDB(array('computermodels_id'))
-      );
+          'tablefields' => exportArrayToDB(['computermodels_id'])
+      ];
 
       $pfLock->add($input);
       $this->assertEquals(countElementsInTable('glpi_plugin_fusioninventory_locks'), 1, 'Lock not right added');
@@ -132,7 +133,6 @@ class DevicesLocks extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     *
@@ -151,46 +151,46 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $computer = new Computer();
       $pfLock = new PluginFusioninventoryLock();
 
-      $a_computerinventory = array(
-          "Computer" => array(
+      $a_computerinventory = [
+          "Computer" => [
               "name"   => "pc002",
               "serial" => "ggheb7ne7",
               "computermodels_id" => "model zzz",
               "manufacturers_id"  => "Dell2 inc."
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'SOFTWARES'      => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'SOFTWARES'      => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $input = array(
+      $input = [
           'tablename'   => 'glpi_computers',
           'items_id'    => 0,
-          'tablefields' => exportArrayToDB(array('manufacturers_id'))
-      );
+          'tablefields' => exportArrayToDB(['manufacturers_id'])
+      ];
       $pfLock->add($input);
 
       $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
@@ -233,56 +233,56 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $pfLock = new PluginFusioninventoryLock();
       $manufacturer = new Manufacturer();
 
-      $a_computerinventory = array(
-          "Computer" => array(
+      $a_computerinventory = [
+          "Computer" => [
               "name"   => "pc003",
               "serial" => "gtrgvdbg",
               "computermodels_id" => "model xxx",
               "manufacturers_id"  => "Dell"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'SOFTWARES'      => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'SOFTWARES'      => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [
               'manufacturers_id' => 'Award',
               'designation'      => 'Award BIOS'
-          ),
+          ],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $input = array(
+      $input = [
           'name'        => 'pc003',
           'serial'      => 'gtrgvdbg',
           'entities_id' => 0
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'tablename'   => 'glpi_computers',
           'items_id'    => $computers_id,
-          'tablefields' => exportArrayToDB(array('manufacturers_id'))
-      );
+          'tablefields' => exportArrayToDB(['manufacturers_id'])
+      ];
       $pfLock->add($input);
 
       $pfInventoryComputerInventory->fillArrayInventory($a_computerinventory);
@@ -328,29 +328,29 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $networkEquipment = new NetworkEquipment();
       $pfCommunicationNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
 
-      $input = array(
+      $input = [
           'tablename'   => 'glpi_networkequipments',
           'items_id'    => 0,
-          'tablefields' => exportArrayToDB(array('locations_id'))
-      );
+          'tablefields' => exportArrayToDB(['locations_id'])
+      ];
       $pfLock->add($input);
 
-      $a_inventory = array(
-          'PluginFusioninventoryNetworkEquipment' => Array(
+      $a_inventory = [
+          'PluginFusioninventoryNetworkEquipment' => [
                   'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
                   'last_fusioninventory_update' => '2016-03-24 09:41:25',
                   'cpu'                         => 5,
                   'memory'                      => 18,
                   'uptime'                      => '157 days, 02:14:44.00'
-                ),
-          'networkport'       => array(),
-          'connection-mac'    => array(),
-          'vlans'             => array(),
-          'connection-lldp'   => array(),
-          'internalport'      => array('192.168.30.67', '192.168.40.67', '192.168.50.67'),
+                ],
+          'networkport'       => [],
+          'connection-mac'    => [],
+          'vlans'             => [],
+          'connection-lldp'   => [],
+          'internalport'      => ['192.168.30.67', '192.168.40.67', '192.168.50.67'],
           'itemtype'          => 'NetworkEquipment'
-          );
-      $a_inventory['NetworkEquipment'] = array(
+          ];
+      $a_inventory['NetworkEquipment'] = [
                'name'               => 'switchr2d2',
                'id'                 => 1,
                'serial'             => 'FOC147UJEU4',
@@ -362,11 +362,11 @@ class DevicesLocks extends RestoreDatabase_TestCase {
                'ram'                => 64,
                'is_dynamic'         => 1,
                'mac'                => '6c:50:4d:39:59:80'
-      );
+      ];
 
-      $input = array(
+      $input = [
           'serial'      => 'FOC147UJEU4',
-          'entities_id' => 0);
+          'entities_id' => 0];
       $networkEquipment->add($input);
 
       $PLUGIN_FUSIONINVENTORY_XML = '';
@@ -378,5 +378,6 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $this->assertEquals($networkEquipment->fields['locations_id'], 0, "Locations id must be 0");
 
    }
+
+
 }
-?>

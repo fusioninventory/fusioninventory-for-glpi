@@ -67,8 +67,8 @@ class PluginFusioninventoryInventoryComputerWebservice {
    static function loadInventory($params, $protocol) {
 
       if (isset ($params['help'])) {
-         return array('base64'  => 'string, mandatory',
-                      'help'    => 'bool, optional');
+         return ['base64'  => 'string, mandatory',
+                      'help'    => 'bool, optional'];
       }
       if (!isset ($_SESSION['glpiID'])) {
          return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
@@ -85,7 +85,6 @@ class PluginFusioninventoryInventoryComputerWebservice {
    }
 
 
-
    /**
     * More information on the method
     *
@@ -94,7 +93,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
     * @return array
     */
    static function methodExtendedInfo($params, $protocol) {
-      $response = array();
+      $response = [];
 
       if (!isset($params['computers_id'])
               || !is_numeric($params['computers_id'])) {
@@ -110,6 +109,6 @@ class PluginFusioninventoryInventoryComputerWebservice {
       return $a_computerextend;
    }
 
+
 }
 
-?>

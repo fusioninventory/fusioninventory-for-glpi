@@ -42,6 +42,7 @@
 
 class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -55,6 +56,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $template->defineTabs());
    }
 
+
    /**
     * @test
     */
@@ -63,6 +65,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $template = new PluginFusioninventoryDeployUserinteractionTemplate();
       $this->assertEquals($expected, $template->getTabNameForItem($template));
    }
+
 
    /**
     * @test
@@ -76,6 +79,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
                            PluginFusioninventoryDeployUserinteractionTemplate::getTypeName(2));
    }
 
+
    /**
     * @test
     */
@@ -84,6 +88,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($types,
                           [PluginFusioninventoryDeployUserinteractionTemplate::ALERT_WTS => __("Windows system alert (WTS)", 'fusioninventory')]);
    }
+
 
    /**
     * @test
@@ -99,6 +104,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $this->assertFalse($buttons);
 
    }
+
 
    /**
     * @test
@@ -139,6 +145,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -165,6 +172,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -176,6 +184,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
                    ];
       $this->assertEquals($expected, $behaviors);
    }
+
 
    /**
     * @test
@@ -228,6 +237,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -253,6 +263,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -262,6 +273,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
                    'retry_after', 'nb_max_retry'];
       $this->assertEquals($expected, $template->getMainFormFields());
    }
+
 
    /**
     * @test
@@ -288,6 +300,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $this->assertEquals($expected, $template->getJsonFields());
    }
 
+
    /**
     * @test
     */
@@ -296,6 +309,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $this->assertEquals(19, count($template->initializeJsonFields([])));
    }
 
+
    /**
     * @test
     */
@@ -303,6 +317,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $template = new PluginFusioninventoryDeployUserinteractionTemplate();
       $this->assertEquals(12, count($template->getEvents()));
    }
+
 
    /**
     * @test
@@ -342,6 +357,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -356,6 +372,7 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $modified = $template->prepareInputForAdd($input);
       $this->assertEquals($expected, $modified['json']);
    }
+
 
    /**
     * @test
@@ -375,4 +392,6 @@ class DeployUserinteractionTemplateTest extends RestoreDatabase_TestCase {
       $this->assertEquals('stop:postpone', $template->getDefaultBehaviorForAButton('on_ignore'));
 
    }
+
+
 }

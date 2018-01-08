@@ -59,57 +59,57 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $computer = new Computer();
       $computerDisk = new ComputerDisk();
 
-      $a_computerinventory = array(
-          "Computer" => array(
+      $a_computerinventory = [
+          "Computer" => [
               "name"   => "pc002",
               "serial" => "ggheb7ne7"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [
+              [
                  "freesize"   => 259327,
                  "totalsize"  => 290143,
                  "device"     => '',
                  "name"       => "C:",
                  "mountpoint" => "C:"
-              )
-          ),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
 
       $computers_id = $computer->add($a_computer);
-      $a_cdisk = array(
+      $a_cdisk = [
           "computers_id" => $computers_id,
           "name"         => "D:",
           "mountpoint"   => "D:",
           "entities_id"  => 0
-      );
+      ];
       $computerDisk->add($a_cdisk);
 
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
@@ -117,7 +117,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
@@ -147,46 +147,46 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $computer = new Computer();
       $computerDisk = new ComputerDisk();
 
-      $a_computerinventory = array(
-          "Computer" => array(
+      $a_computerinventory = [
+          "Computer" => [
               "name"   => "pc002",
               "serial" => "ggheb7ne72"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          "computerdisk" => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk" => [
+              [
                  "freesize"   => 259327,
                  "totalsize"  => 290143,
                  "device"     => '',
                  "name"       => "C:",
                  "mountpoint" => "C:"
-              )
-          ),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
@@ -195,15 +195,15 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       0);
 
-      $a_cdisk = array(
+      $a_cdisk = [
           "computers_id" => $computers_id,
           "name"         => "D:",
           "mountpoint"   => "D:",
           "entities_id"  => 0
-      );
+      ];
       $computerDisk->add($a_cdisk);
 
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
@@ -219,7 +219,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
@@ -247,8 +247,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_inventory = array(
-          'Computer' => array(
+      $a_inventory = [
+          'Computer' => [
              'name'                             => 'pcxxx1',
              'users_id'                         => 0,
              'operatingsystems_id'              => 0,
@@ -261,18 +261,18 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
              'computertypes_id'                 => 0,
              'is_dynamic'                       => 1,
              'contact'                          => 'ddurieux'
-          ),
-          'fusioninventorycomputer' => Array(
+          ],
+          'fusioninventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => date('Y-m-d H:i:s')
-          ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(
-            Array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [
+            [
                     'manufacturers_id'  => 0,
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
@@ -280,8 +280,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                     'frequency'         => 2400,
                     'frequence'         => 2400,
                     'frequency_default' => 2400
-                ),
-            Array(
+                ],
+            [
                     'manufacturers_id'  => 0,
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
@@ -289,37 +289,37 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                     'frequency'         => 2400,
                     'frequence'         => 2400,
                     'frequency_default' => 2400
-                )
-            ),
-          'computerdisk'   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+                ]
+            ],
+          'computerdisk'   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-          );
+          ];
 
       $computer         = new Computer();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $item_DeviceProcessor = new Item_DeviceProcessor();
 
-      $computers_id = $computer->add(array('serial'      => 'XB63J7DH',
-                                           'entities_id' => 0));
+      $computers_id = $computer->add(['serial'      => 'XB63J7DH',
+                                           'entities_id' => 0]);
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
       $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
          AND `itemtype`='Computer'");
@@ -327,12 +327,13 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       // Remove one processor from inventory
       unset($a_inventory['processor'][1]);
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
       $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
          AND `itemtype`='Computer'");
       $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after
                            deleted a processor from inventory');
    }
+
+
 }
-?>

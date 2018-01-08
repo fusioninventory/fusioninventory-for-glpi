@@ -59,7 +59,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     *
     * @var boolean
     */
-   public $stop_on_first_match = TRUE;
+   public $stop_on_first_match = true;
 
    /**
     * Define the name of menu option
@@ -86,7 +86,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
-
    /**
     * Prepare input data for process the rule
     *
@@ -99,20 +98,18 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    }
 
 
-
    /**
     * Get name of this rule class
     *
     * @return string
     */
    function getRuleClassName() {
-      $rule_class = array();
+      $rule_class = [];
       if (preg_match('/(.*)Collection/', get_class($this), $rule_class)) {
          return $rule_class[1];
       }
       return "";
    }
-
 
 
    /**
@@ -124,12 +121,10 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       $name = $this->getRuleClassName();
       if ($name !=  '') {
          return new $name();
-      }
-      else {
-         return NULL;
+      } else {
+         return null;
       }
    }
-
 
 
    /**
@@ -171,14 +166,13 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
             $class     = new $className();
             if ($class->getFromDB($output["found_equipment"][0])) {
                echo "<td>".__('Link')."</td>";
-               echo "<td>".$class->getLink(TRUE)."</td>";
+               echo "<td>".$class->getLink(true)."</td>";
             }
             echo "</tr>";
          }
       }
       return $output;
    }
-
 
 
    /**
@@ -189,10 +183,10 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     * @param integer $retrieve_action
     * @param integer $condition
     */
-   function getCollectionDatas($retrieve_criteria=0, $retrieve_action=0, $condition = 0) {
+   function getCollectionDatas($retrieve_criteria = 0, $retrieve_action = 0, $condition = 0) {
       global $DB;
 
-      if ($this->RuleList === NULL) {
+      if ($this->RuleList === null) {
          $this->RuleList = SingletonRuleList::getInstance($this->getRuleClassName(),
                                                           $this->entity);
       }
@@ -203,7 +197,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
       $result = $DB->query($sql);
       if ($result) {
-         $this->RuleList->list = array();
+         $this->RuleList->list = [];
 
          while ($rule = $DB->fetch_assoc($result)) {
             //For each rule, get a Rule object with all the criterias and actions
@@ -218,6 +212,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
          $this->RuleList->load = $need;
       }
    }
+
+
 }
 
-?>

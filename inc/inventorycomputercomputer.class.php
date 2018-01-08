@@ -68,9 +68,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return "";
    }
+
 
    /**
     * Display information about computer (bios, last contact...)
@@ -143,6 +144,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
+
    /**
    * Get automatic inventory info for a computer
    * @since 9.1+1.2
@@ -158,6 +160,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          return $a_computerextend;
       }
    }
+
 
    /**
     * Display information about computer that is linked to an agent but
@@ -189,6 +192,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
    }
 
+
    /**
     * Display information about a computer operating system
     * has no inventory
@@ -200,7 +204,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showFormOS($item) {
       $pfComputer = new self();
       $a_computerextend = current(
-         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'","",1)
+         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'", "", 1)
       );
       if (empty($a_computerextend)) {
          return;
@@ -234,6 +238,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       return true;
    }
+
 
    /**
     * Display information about computer (bios, last contact...)
@@ -271,7 +276,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if ($a_computerextend['remote_addr'] != '') {
          echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
-      } else {
       }
       echo "<td colspan='2'></td>";
 
@@ -309,6 +313,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
+
    static function showDownloadInventoryFile($computers_id) {
       global $CFG_GLPI;
 
@@ -335,6 +340,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
    }
 
+
    /**
     * Delete extended information of computer
     *
@@ -344,7 +350,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfComputer = new self();
       $pfComputer->deleteByCriteria(['computers_id' => $computers_id], true, false);
    }
-
 
 
    /**
@@ -365,4 +370,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
       return $a_computerextend['is_entitylocked'];
    }
+
+
 }

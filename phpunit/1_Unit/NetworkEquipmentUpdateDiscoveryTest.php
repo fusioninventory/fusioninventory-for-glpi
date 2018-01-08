@@ -46,8 +46,8 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
    public $datelatupdate = '';
 
 
-   public $networkports_reference = array(
-      1 => array(
+   public $networkports_reference = [
+      1 => [
          'id'                  => '1',
          'items_id'            => '1',
          'itemtype'            => 'NetworkEquipment',
@@ -60,11 +60,11 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
          'comment'             => null,
          'is_deleted'          => '0',
          'is_dynamic'          => '0'
-      )
-   );
+      ]
+   ];
 
-   public $ipaddresses_reference = array(
-      1 => array(
+   public $ipaddresses_reference = [
+      1 => [
          'id'            => '1',
          'entities_id'   => '0',
          'items_id'      => '1',
@@ -80,17 +80,18 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
          'mainitems_id'  => '1',
          'mainitemtype'  => 'NetworkEquipment'
 
-      )
-   );
+      ]
+   ];
 
-   public $source_xmldevice = array(
+   public $source_xmldevice = [
       'SNMPHOSTNAME' => 'switch H3C',
       'DESCRIPTION' => 'H3C Comware Platform Software, Software Version 5.20 Release 2208',
       'AUTHSNMP' => '1',
       'IP' => '99.99.10.10',
       'MAC' => '38:22:d6:3c:da:e7',
       'MANUFACTURER' => 'H3C'
-   );
+   ];
+
 
    /**
     * @test
@@ -106,16 +107,17 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
 
-      $input = array(
+      $input = [
           'name'        => 'switch H3C',
           'entities_id' => '0'
-      );
+      ];
       $this->item_id = $networkEquipment->add($input);
       $networkEquipment->getFromDB($this->item_id);
 
       $_SESSION['SOURCE_XMLDEVICE'] = $this->source_xmldevice;
       $pfCND->importDevice($networkEquipment);
    }
+
 
    /**
     * @test
@@ -135,6 +137,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
 
    }
 
+
    /**
     * @test
     */
@@ -146,6 +149,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
                           "IP addresses does not match reference on first update");
 
    }
+
 
    /**
     * @test
@@ -167,6 +171,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       $pfCND->importDevice($networkEquipment);
    }
 
+
    /**
     * @test
     */
@@ -184,6 +189,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
                           "network ports does not match reference on second update");
    }
 
+
    /**
     * @test
     */
@@ -194,11 +200,11 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
          $this->ipaddresses_reference,
          $ipaddresses,
          "IP addresses does not match reference on second update:\n".
-         print_r($this->ipaddresses_reference, TRUE)."\n".
-         print_r($ipaddresses, TRUE)."\n"
+         print_r($this->ipaddresses_reference, true)."\n".
+         print_r($ipaddresses, true)."\n"
       );
 
    }
 
+
 }
-?>

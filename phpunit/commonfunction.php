@@ -1,12 +1,13 @@
 <?php
 
-function load_mysql_file($dbuser='', $dbhost='', $dbdefault='', $dbpassword='', $file = NULL) {
+
+function load_mysql_file($dbuser = '', $dbhost = '', $dbdefault = '', $dbpassword = '', $file = null) {
 
    if (!file_exists($file)) {
-      return array(
+      return [
          'returncode' => 1,
-         'output' => array("ERROR: File '{$file}' does not exist !")
-      );
+         'output' => ["ERROR: File '{$file}' does not exist !"]
+      ];
    }
 
    $result = construct_mysql_options($dbuser, $dbhost, $dbpassword, 'mysql');
@@ -17,34 +18,34 @@ function load_mysql_file($dbuser='', $dbhost='', $dbdefault='', $dbpassword='', 
 
    $cmd = $result . " " . $dbdefault . " < ". $file ." 2>&1";
 
-
    $returncode = 0;
-   $output = array();
+   $output = [];
    exec(
       $cmd,
       $output,
       $returncode
    );
-   array_unshift($output,"Output of '{$cmd}'");
-   return array(
+   array_unshift($output, "Output of '{$cmd}'");
+   return [
       'returncode'=>$returncode,
       'output' => $output
-   );
+   ];
 }
 
-function mysql_dump($dbuser = '', $dbhost = '', $dbpassword = '', $dbdefault = '', $file = NULL) {
+
+function mysql_dump($dbuser = '', $dbhost = '', $dbpassword = '', $dbdefault = '', $file = null) {
    if (is_null($file) or empty($file)) {
-      return array(
+      return [
          'returncode' => 1,
-         'output' => array("ERROR: mysql_dump()'s file argument must neither be null nor empty")
-      );
+         'output' => ["ERROR: mysql_dump()'s file argument must neither be null nor empty"]
+      ];
    }
 
    if (empty($dbdefault)) {
-      return array(
+      return [
          'returncode' => 2,
-         'output' => array("ERROR: mysql_dump() is missing dbdefault argument.")
-      );
+         'output' => ["ERROR: mysql_dump() is missing dbdefault argument."]
+      ];
    }
 
    $result = construct_mysql_options($dbuser, $dbhost, $dbpassword, 'mysqldump');
@@ -54,31 +55,32 @@ function mysql_dump($dbuser = '', $dbhost = '', $dbpassword = '', $dbdefault = '
 
    $cmd = $result . ' --opt '. $dbdefault.' > ' . $file;
    $returncode = 0;
-   $output = array();
+   $output = [];
    exec(
       $cmd,
       $output,
       $returncode
    );
    array_unshift($output, "Output of '{$cmd}'");
-   return array(
+   return [
       'returncode'=>$returncode,
       'output' => $output
-   );
+   ];
 }
 
-function construct_mysql_options($dbuser='', $dbhost='', $dbpassword='', $cmd_base='mysql') {
-   $cmd = array();
+
+function construct_mysql_options($dbuser = '', $dbhost = '', $dbpassword = '', $cmd_base = 'mysql') {
+   $cmd = [];
 
    if (empty($dbuser) || empty($dbhost)) {
-      return array(
+      return [
          'returncode' => 2,
-         'output' => array("ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')")
-      );
+         'output' => ["ERROR: missing mysql parameters (user='{$dbuser}', host='{$dbhost}')"]
+      ];
    }
-   $cmd = array($cmd_base);
+   $cmd = [$cmd_base];
 
-   if (strpos($dbhost, ':') !== FALSE) {
+   if (strpos($dbhost, ':') !== false) {
       $dbhost = explode( ':', $dbhost);
       if (!empty($dbhost[0])) {
          $cmd[] = "--host ".$dbhost[0];
@@ -103,7 +105,8 @@ function construct_mysql_options($dbuser='', $dbhost='', $dbpassword='', $cmd_ba
 
 }
 
-function drop_database($dbuser='', $dbhost='', $dbdefault='', $dbpassword='') {
+
+function drop_database($dbuser = '', $dbhost = '', $dbdefault = '', $dbpassword = '') {
 
    $cmd = construct_mysql_options($dbuser, $dbhost, $dbpassword, 'mysql');
 
@@ -113,18 +116,17 @@ function drop_database($dbuser='', $dbhost='', $dbdefault='', $dbpassword='') {
 
    $cmd = 'echo "DROP DATABASE IF EXISTS \`'.$dbdefault .'\`; CREATE DATABASE \`'.$dbdefault.'\`" | ' . $cmd ." 2>&1";
 
-
    $returncode = 0;
-   $output = array();
+   $output = [];
    exec(
       $cmd,
       $output,
       $returncode
    );
-   array_unshift($output,"Output of '{$cmd}'");
-   return array(
+   array_unshift($output, "Output of '{$cmd}'");
+   return [
       'returncode'=>$returncode,
       'output' => $output
-   );
+   ];
 
 }
