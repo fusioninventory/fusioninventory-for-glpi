@@ -1,3 +1,5 @@
 dist/
 vendor/
+composer.lock
 .gh_token
+.idea
