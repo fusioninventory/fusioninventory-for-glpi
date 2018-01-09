@@ -51,60 +51,89 @@ class RuleLocationTest extends Common_TestCase {
 
       $DB->connect();
 
-      $rule = new Rule();
+      $rule     = new Rule();
       $location = new Location();
 
-      $input = array(
+      $location->deleteByCriteria(['name' => 'Monsols04'], true);
+      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $input = [
          'name'        => 'Monsols04',
          'entities_id' => 0
-      );
-      $location->add($input);
+      ];
+      $locations_id = $location->add($input);
 
-      $input = array(
+      $input = [
          'is_active' => 1,
          'name'      => 'Location regexp',
          'match'     => 'AND',
          'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
          'ranking'   => 1
-      );
+      ];
       $rules_id = $rule->add($input);
 
-         // Add criteria
-         $rulecriteria = new RuleCriteria();
-         $input = array(
-            'rules_id'  => $rules_id,
-            'criteria'  => "name",
-            'pattern'   => "/computer (.*)/",
-            'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
-         );
-         $rulecriteria->add($input);
+      // Add criteria
+      $rulecriteria = new RuleCriteria();
+      $input = [
+         'rules_id'  => $rules_id,
+         'criteria'  => "name",
+         'pattern'   => "/Item (.*)/",
+         'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
+      ];
+      $rulecriteria->add($input);
 
-         // Add action
-         $ruleaction = new RuleAction();
-         $input = array(
-            'rules_id'    => $rules_id,
-            'action_type' => 'assign',
-            'field'       => 'locations_id',
-            'value'       => 1
-         );
-         $ruleaction->add($input);
+      // Add criteria
+      $rulecriteria = new RuleCriteria();
+      $input = [
+         'rules_id'  => $rules_id,
+         'criteria'  => "itemtype",
+         'pattern'   => "/Computer|NetworkEquipment/",
+         'condition' => Rule::REGEX_MATCH
+      ];
+      $rulecriteria->add($input);
 
-      $input = array(
-         'name' => 'computer Monsols04'
-      );
+      // Add action
+      $ruleaction = new RuleAction();
+      $input = [
+         'rules_id'    => $rules_id,
+         'action_type' => 'assign',
+         'field'       => 'locations_id',
+         'value'       => $locations_id
+      ];
+      $ruleaction->add($input);
+
+      $input = [
+         'name'     => 'Item Monsols04',
+         'itemtype' => 'Computer'
+      ];
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
       $ruleLocation->getCollectionPart();
-      $loc = $ruleLocation->processAllRules($input, array());
+      $loc = $ruleLocation->processAllRules($input);
 
-      $a_references = array(
-         'locations_id' => 1,
+      $a_references = [
+         'locations_id' => $locations_id,
          '_ruleid'      => $rules_id
-      );
+      ];
 
       $this->assertEquals($a_references, $loc, 'Location result assign_result');
-      $rule->delete(array('id' => $rules_id), True);
+
+      //This time it should not match because
+      $input = [
+         'name'     => 'Printer01',
+         'itemtype' => 'Printer'
+      ];
+
+      $a_references = [
+         '_no_rule_matches' => 1,
+         '_rule_process'    => ''
+      ];
+
+      $ruleLocation->getCollectionPart();
+      $loc = $ruleLocation->processAllRules($input);
+
+      $this->assertEquals($a_references, $loc);
+      $rule->delete(['id' => $rules_id], true);
    }
 
 
@@ -118,6 +147,9 @@ class RuleLocationTest extends Common_TestCase {
       $DB->connect();
 
       $rule = new Rule();
+      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $location = new Location;
+      $location->getFromDBByCrit(['completename' => 'Monsols04']);;
 
       $input = array(
          'is_active' => 1,
@@ -128,42 +160,197 @@ class RuleLocationTest extends Common_TestCase {
       );
       $rules_id = $rule->add($input);
 
-         // Add criteria
-         $rulecriteria = new RuleCriteria();
-         $input = array(
-            'rules_id'  => $rules_id,
-            'criteria'  => "name",
-            'pattern'   => "/pc (.*)/",
-            'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
-         );
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction();
-         $input = array(
-            'rules_id'    => $rules_id,
-            'action_type' => 'regex_result',
-            'field'       => 'locations_id',
-            'value'       => '#0'
-         );
-         $ruleaction->add($input);
-
+      // Add criteria
+      $rulecriteria = new RuleCriteria();
       $input = array(
-         'name' => 'pc Monsols04'
+         'rules_id'  => $rules_id,
+         'criteria'  => "name",
+         'pattern'   => "/pc (.*)/",
+         'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
       );
+      $rulecriteria->add($input);
+
+      // Add criteria
+      $rulecriteria = new RuleCriteria();
+      $input = array(
+         'rules_id'  => $rules_id,
+         'criteria'  => "itemtype",
+         'pattern'   => "Computer",
+         'condition' => Rule::PATTERN_IS
+      );
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction();
+      $input = array(
+         'rules_id'    => $rules_id,
+         'action_type' => 'regex_result',
+         'field'       => 'locations_id',
+         'value'       => '#0'
+      );
+      $ruleaction->add($input);
+
+      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+
+      $input = [
+         'name'     => 'pc Monsols04',
+         'itemtype' => 'Computer'
+      ];
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
       $ruleLocation->getCollectionPart();
-      $loc = $ruleLocation->processAllRules($input, array());
+      $loc = $ruleLocation->processAllRules($input);
 
       $a_references = array(
-         'locations_id' => 1,
+         'locations_id' => $location->getID(),
          '_ruleid'      => $rules_id
       );
 
       $this->assertEquals($a_references, $loc, 'Location result regexp_result');
+
+      $input = [
+         'name'     => 'Monitor Monsols04',
+         'itemtype' => 'Monitor'
+      ];
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
+      $a_references = [
+         '_no_rule_matches' => 1,
+         '_rule_process'    => ''
+      ];
+
+      $ruleLocation->getCollectionPart();
+      $loc = $ruleLocation->processAllRules($input);
+
+      $this->assertEquals($a_references, $loc);
+   }
+
+   /**
+    * @test
+    */
+   public function RegexpRuleByIPTest() {
+      global $DB, $PF_CONFIG;
+
+      $DB->connect();
+
+      $rule = new Rule();
+      $rule->deleteByCriteria(['sub_type' => 'PluginFusioninventoryInventoryRuleLocation'], true);
+      $location = new Location;
+      $location->getFromDBByCrit(['completename' => 'Monsols04']);;
+
+      $input = array(
+         'is_active' => 1,
+         'name'      => 'Location by IP',
+         'match'     => 'AND',
+         'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
+         'ranking'   => 1
+      );
+      $rules_id = $rule->add($input);
+
+      // Add criteria
+      $rulecriteria = new RuleCriteria();
+      $input = array(
+         'rules_id'  => $rules_id,
+         'criteria'  => "ip",
+         'pattern'   => "192.168.0",
+         'condition' => Rule::PATTERN_CONTAIN
+      );
+      $rulecriteria->add($input);
+
+      // Add criteria
+      $rulecriteria = new RuleCriteria();
+      $input = array(
+         'rules_id'  => $rules_id,
+         'criteria'  => "itemtype",
+         'pattern'   => "/Computer|NetworkEquipment|Printer/",
+         'condition' => Rule::REGEX_MATCH
+      );
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction();
+      $input = array(
+         'rules_id'    => $rules_id,
+         'action_type' => 'assign',
+         'field'       => 'locations_id',
+         'value'       => $location->getID()
+      );
+      $ruleaction->add($input);
+
+      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+
+      $input = [
+         'name'     => 'pc Monsols04',
+         'ip'       => '192.168.0.10',
+         'itemtype' => 'Computer'
+      ];
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $ruleLocation->getCollectionPart();
+      $loc = $ruleLocation->processAllRules($input);
+
+      $a_references = array(
+         'locations_id' => $location->getID(),
+         '_ruleid'      => $rules_id
+      );
+
+      $this->assertEquals($a_references, $loc, 'Location by IP');
+
+      $input = [
+         'name'     => 'pc Monsols04',
+         'ip'       => '172.168.0.10',
+         'itemtype' => 'Computer'
+      ];
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $ruleLocation->getCollectionPart();
+      $loc = $ruleLocation->processAllRules($input);
+
+      $a_references = [
+         '_no_rule_matches' => 1,
+         '_rule_process'    => ''
+      ];
+
+      $this->assertEquals($a_references, $loc, 'Location by IP');
+
+      $input = [
+         'name'     => 'Monitor Monsols04',
+         'ip'       => '192.168.0.10',
+         'itemtype' => 'Monitor'
+      ];
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
+      $a_references = [
+         '_no_rule_matches' => 1,
+         '_rule_process'    => ''
+      ];
+
+      $ruleLocation->getCollectionPart();
+      $loc = $ruleLocation->processAllRules($input);
+
+      $this->assertEquals($a_references, $loc);
+
+      //Peripheral is an itemtype that can be targeted by the rules engine
+      $input = [
+         'name'     => 'Peripheral Monsols04',
+         'ip'       => '192.168.0.10',
+         'itemtype' => 'Peripheral'
+      ];
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
+      $a_references = [
+         '_no_rule_matches' => 1,
+         '_rule_process'    => ''
+      ];
+
+      $ruleLocation->getCollectionPart();
+      $loc = $ruleLocation->processAllRules($input);
+
+      $this->assertEquals($a_references, $loc);
+
    }
 
 }
-?>

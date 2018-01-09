@@ -87,9 +87,22 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
                                                             $db_printer,
                                                             $a_lockable);
 
+
       $a_inventory['Printer'] = $a_ret[0];
       $input                  = $a_inventory['Printer'];
       $input['id']            = $printers_id;
+      $input['itemtype']      = 'Printer';
+
+      if (isset($a_inventory['networkport'])) {
+         foreach ($a_inventory['networkport'] as $a_port) {
+            if (isset($a_port['ip'])) {
+               $input['ip'][] = $a_port['ip'];
+            }
+         }
+      }
+      //Add the location if needed (play rule locations engine)
+      $input = PluginFusioninventoryToolbox::addLocation($input);
+
       $printer->update($input);
 
       // * Printer fusion (ext)

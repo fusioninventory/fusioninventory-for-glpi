@@ -330,7 +330,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $crit = $this->getCriteria($ID);
          if (isset($crit['type'])
                  && $crit['type'] == 'dropdown_itemtype') {
-            $array = $this->getTypes();
+            $array = $this->getItemTypesForRules();
             return $array[$pattern];
          }
       }
@@ -971,15 +971,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case "dropdown_itemtype":
-               $types = $this->getTypes();
-               ksort($types);
+               $types = $this->getItemTypesForRules();
                Dropdown::showItemTypes($name, array_keys($types),
-                                          array('value' => $value));
+                                       ['value' => $value]);
                $display = true;
                break;
 
          }
-         $tested = true;
       }
       //Not a standard condition
       if (!$tested) {
@@ -1090,6 +1088,25 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       return $output;
    }
-}
 
-?>
+   /**
+    * Get itemtypes have state_type and unmanaged devices
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
+   static function getItemTypesForRules() {
+      global $CFG_GLPI;
+
+      $types = [];
+      foreach ($CFG_GLPI["state_types"] as $itemtype) {
+         if (class_exists($itemtype)) {
+            $item = new $itemtype();
+            $types[$itemtype] = $item->getTypeName();
+         }
+      }
+      $types[""] = __('No itemtype defined', 'fusioninventory');
+      ksort($types);
+      return $types;
+   }
+}
