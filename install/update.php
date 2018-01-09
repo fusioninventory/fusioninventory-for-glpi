@@ -4292,6 +4292,14 @@ function do_configsecurity_migration($migration) {
 
    changeDisplayPreference("5152", "PluginFusioninventoryConfigSecurity");
 
+   // Remove the protocols AES192 and AES256 because not managed in the agent
+   // with the perl module NET-SNMP
+
+   $query = "UPDATE `glpi_plugin_fusioninventory_configsecurities`
+      SET `encryption`='AES128'
+         WHERE `encryption` IN ('AES192', 'AES256')";
+   $DB->query($query);
+
 }
 
 
