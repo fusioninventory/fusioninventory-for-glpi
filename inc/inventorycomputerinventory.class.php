@@ -91,44 +91,14 @@ class PluginFusioninventoryInventoryComputerInventory {
          $name = strtolower($arrayinventory['CONTENT']['HARDWARE']['NAME']);
       }
 
-      // Clean all DB LOCK if exist more than 10 minutes
-      $time = 600;
-      $del_where = ['date' => ['<', new \QueryExpression("CURRENT_TIMESTAMP() - $time")]];
-      $tables = [
-         'glpi_plugin_fusioninventory_dblockinventorynames',
-         'glpi_plugin_fusioninventory_dblockinventories',
-         'glpi_plugin_fusioninventory_dblocksoftwares',
-         'glpi_plugin_fusioninventory_dblocksoftwareversions'
-      ];
+      $dbLock = new PluginFusioninventoryDBLock();
+      //Clean all locks lasting more than 10 minutes
+      $dbLock->releaseAllLocks();
 
-      foreach ($tables as $table) {
-         $DB->delete(
-            $table,
-            $del_where
-         );
+      if (!$dbLock->setLock('inventorynames', $name, true)) {
+         exit();
       }
-
-      // DB LOCK
-      $query = $DB->buildInsert(
-         'glpi_plugin_fusioninventory_dblockinventorynames', [
-            'value' => $name
-         ]
-      );
-      $CFG_GLPI["use_log_in_files"] = false;
-      $start_time = date('U');
-      while (!$DB->query($query)) {
-         usleep(100000);
-         if ((date('U') - $start_time) > 5) {
-            $communication = new PluginFusioninventoryCommunication();
-            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-         <REPLY>
-         <ERROR>ERROR: Timeout for DB lock based on name</ERROR>
-         </REPLY>");
-            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-            exit;
-         }
-      }
-      $CFG_GLPI["use_log_in_files"] = true;
+      //$CFG_GLPI["use_log_in_files"] = TRUE;
       $this->sendCriteria($p_DEVICEID, $arrayinventory);
       $DB->delete(
          'glpi_plugin_fusioninventory_dblockinventorynames', [
