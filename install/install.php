@@ -78,79 +78,69 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * Clean if Fusion / Tracker has been installed and uninstalled (not clean correctly)
     */
-      $migration->displayMessage("Clean data from old installation of the plugin");
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5150'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5151'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5152'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5153'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5156'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5157'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5158'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5159'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5161'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5165'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5166'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5167'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype`='5168'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype` LIKE 'PluginFusioninventory%'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype` LIKE 'PluginFusinvinventory%'";
-      $DB->query($sql);
-      $sql = "DELETE FROM `glpi_displaypreferences`
-         WHERE `itemtype` LIKE 'PluginFusinvsnmp%'";
-      $DB->query($sql);
-         // Purge network ports have itemtype tp 5153
-         $networkPort = new NetworkPort();
-         $sql = "SELECT * FROM `glpi_networkports`
-            WHERE `itemtype`='5153'";
-         $result=$DB->query($sql);
-   while ($data=$DB->fetch_array($result)) {
+   $migration->displayMessage("Clean data from old installation of the plugin");
+
+   $DB->delete(
+      'glpi_displaypreferences', [
+         'itemtype'  => [
+            '5150',
+            '5151',
+            '5152',
+            '5153',
+            '5156',
+            '5157',
+            '5158',
+            '5159',
+            '5161',
+            '5165',
+            '5166',
+            '5167',
+            '5168',
+         ]
+      ]
+   );
+
+   $DB->delete(
+      'glpi_displaypreferences', [
+         'itemtype' => ['LIKE', 'PluginFusioninventory%']
+      ]
+   );
+   $DB->delete(
+      'glpi_displaypreferences', [
+         'itemtype' => ['LIKE', 'PluginFusinvinventory%']
+      ]
+   );
+   $DB->delete(
+      'glpi_displaypreferences', [
+         'itemtype' => ['LIKE', 'PluginFusinvsnmp%']
+      ]
+   );
+
+   // Purge network ports have itemtype tp 5153
+   $networkPort = new NetworkPort();
+   $iterator = $DB->request([
+      'FROM'   => 'glpi_networkports',
+      'WHERE'  => ['itemtype' => '5153']
+   ]);
+   while ($data = $iterator->next()) {
       $networkPort->delete(['id'=>$data['id']], 1);
    }
 
    /*
     * Remove old rules
     */
-      $migration->displayMessage("Clean rules from old installation of the plugin");
-      $Rule = new Rule();
-      $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
+   $migration->displayMessage("Clean rules from old installation of the plugin");
+   $Rule = new Rule();
+   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
-      $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
+   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
 
-      $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleLocation'");
+   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleLocation'");
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
@@ -158,8 +148,8 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * Create DB structure
     */
-      $migration->displayMessage("Creation tables in database");
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-empty.sql";
+   $migration->displayMessage("Creation tables in database");
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-empty.sql";
    if (!$DB->runFile($DB_file)) {
       $migration->displayMessage("Error on creation tables in database");
    }
@@ -176,7 +166,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * Creation of folders
     */
-      $migration->displayMessage("Creation of folders");
+   $migration->displayMessage("Creation of folders");
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
    }
@@ -232,12 +222,12 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * bug of purge network port when purge unmanaged devices, so we clean
     */
-      $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
+   $sql = "SELECT `glpi_networkports`.`id` as nid FROM `glpi_networkports`
          LEFT JOIN `glpi_plugin_fusioninventory_unmanageds`
             ON `glpi_plugin_fusioninventory_unmanageds`.`id` = `glpi_networkports`.`items_id`
          WHERE `itemtype`='PluginFusioninventoryUnmanaged'
             AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL ";
-      $result=$DB->query($sql);
+   $result=$DB->query($sql);
    while ($data=$DB->fetch_array($result)) {
       $networkPort->delete(['id'=>$data['nid']], 1);
    }
@@ -245,86 +235,86 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * Add config
     */
-      $migration->displayMessage("Initialize configuration");
-      $pfConfig = new PluginFusioninventoryConfig();
-      $pfConfig->initConfigModule();
+   $migration->displayMessage("Initialize configuration");
+   $pfConfig = new PluginFusioninventoryConfig();
+   $pfConfig->initConfigModule();
 
-      $configLogField = new PluginFusioninventoryConfigLogField();
-      $configLogField->initConfig();
+   $configLogField = new PluginFusioninventoryConfigLogField();
+   $configLogField->initConfig();
 
    /*
     * Register Agent TASKS
     */
-      $migration->displayMessage("Initialize agent TASKS");
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $input = [];
-      $input['modulename'] = "WAKEONLAN";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $migration->displayMessage("Initialize agent TASKS");
+   $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+   $input = [];
+   $input['modulename'] = "WAKEONLAN";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
-      $input = [];
-      $input['modulename'] = "INVENTORY";
-      $input['is_active']  = 1;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $input = [];
+   $input['modulename'] = "INVENTORY";
+   $input['is_active']  = 1;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
-      $input = [];
-      $input['modulename'] = "InventoryComputerESX";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $input = [];
+   $input['modulename'] = "InventoryComputerESX";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
-      $input = [];
-      $input['modulename'] = "NETWORKINVENTORY";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $input = [];
+   $input['modulename'] = "NETWORKINVENTORY";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
-      $input = [];
-      $input['modulename'] = "NETWORKDISCOVERY";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $input = [];
+   $input['modulename'] = "NETWORKDISCOVERY";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
-      $input = [];
-      $input['modulename'] = "DEPLOY";
-      $input['is_active']  = 0;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $input = [];
+   $input['modulename'] = "DEPLOY";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
-      $input = [];
-      $input['modulename'] = "Collect";
-      $input['is_active']  = 1;
-      $input['exceptions'] = exportArrayToDB([]);
-      $pfAgentmodule->add($input);
+   $input = [];
+   $input['modulename'] = "Collect";
+   $input['is_active']  = 1;
+   $input['exceptions'] = exportArrayToDB([]);
+   $pfAgentmodule->add($input);
 
    /*
     * Add cron task
     */
-      $migration->displayMessage("Initialize cron task");
-      CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
-                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30]);
-      CronTask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
-                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]);
-      CronTask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
-                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30]);
-      CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
-                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-                               'comment'=> Toolbox::addslashes_deep(__('Delete agent that have not contacted the server since xxx days".', 'fusioninventory'))]);
-      CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
-                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                               'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'fusioninventory'))]);
-      CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
-                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                          'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
+   $migration->displayMessage("Initialize cron task");
+   CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
+                        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30]);
+   CronTask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
+                        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]);
+   CronTask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
+                        ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30]);
+   CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
+                        ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
+                              'comment'=> Toolbox::addslashes_deep(__('Delete agent that have not contacted the server since xxx days".', 'fusioninventory'))]);
+   CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
+                        ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                              'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'fusioninventory'))]);
+   CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
+                        ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                        'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
 
    /*
     * Create rules
     */
-      $migration->displayMessage("Create rules");
-      $pfSetup = new PluginFusioninventorySetup();
-      $pfSetup->initRules();
+   $migration->displayMessage("Create rules");
+   $pfSetup = new PluginFusioninventorySetup();
+   $pfSetup->initRules();
 
    /*
     * Add notification for configuration management
@@ -333,9 +323,9 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     *  Import OCS locks
     */
-      $migration->displayMessage("Import OCS locks if exists");
-      $pfLock = new PluginFusioninventoryLock();
-      $pfLock->importFromOcs();
+   $migration->displayMessage("Import OCS locks if exists");
+   $pfLock = new PluginFusioninventoryLock();
+   $pfLock->importFromOcs();
 
    CronTask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                       ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30]);
@@ -359,8 +349,13 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
          $agent_base_url = 'http://'.$http_host.$full_url;
       }
       $agent_base_url = str_replace('/front/plugin.form.php', '', $agent_base_url);
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_entities` SET "
-              . "`agent_base_url`='".$agent_base_url."' WHERE id=1");
+      $DB->update(
+         'glpi_plugin_fusioninventory_entities', [
+            'agent_base_url'  => $agent_base_url
+         ], [
+            'id'              => 1
+         ]
+      );
    }
 
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");

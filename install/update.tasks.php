@@ -219,15 +219,27 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    migrateTablesFusionInventory($migration, $table);
 
    // * Update method name changed
-   $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-      SET `method`='InventoryComputerESX'
-      WHERE `method`='ESX'");
-   $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-      SET `method`='networkinventory'
-      WHERE `method`='snmpinventory'");
-   $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-      SET `method`='networkdiscovery'
-      WHERE `method`='netdiscovery'");
+   $DB->update(
+      'glpi_plugin_fusioninventory_taskjobs', [
+         'method' => 'InventoryComputerESX'
+      ], [
+         'method' => 'ESX'
+      ]
+   );
+   $DB->update(
+      'glpi_plugin_fusioninventory_taskjobs', [
+         'method' => 'networkinventory'
+      ], [
+         'method' => 'snmpinventory'
+      ]
+   );
+   $DB->update(
+      'glpi_plugin_fusioninventory_taskjobs', [
+         'method' => 'networkdiscovery'
+      ], [
+         'method' => 'netdiscovery'
+      ]
+   );
 
    /*
     * Table glpi_plugin_fusioninventory_taskjoblogs
@@ -297,17 +309,34 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
       'fusioninventory::2' => 'agentcrashed',
       'fusioninventory::3' => 'importdenied'
    ];
-   $query = "SELECT * FROM `".$table['name']."`
-      WHERE `comment` LIKE '%==%'";
-   $result=$DB->query($query);
-   while ($data=$DB->fetch_array($result)) {
-      $comment = $data['comment'];
-      foreach ($texts as $key=>$value) {
-         $comment = str_replace("==".$key."==", "==".$value."==", $comment);
+
+   $iterator = $DB->request([
+      'FROM'   => $table['name'],
+      'WHERE'  => ['comment' => ['LIKE', '%==%']]
+   ]);
+   if (count($iterator)) {
+      $update = $DB->buildUpdate(
+         $table['name'], [
+            'comment'   => new \QueryParam()
+         ], [
+            'id'        => new \QueryParam()
+         ]
+      );
+      $stmt = $DB->prepare($update);
+      while ($data = $iterator->next()) {
+         $comment = $data['comment'];
+         foreach ($texts as $key=>$value) {
+            $comment = str_replace("==".$key."==", "==".$value."==", $comment);
+         }
+
+         $comment = $DB->escape($comment);
+         $stmt->bind_param(
+            'ss',
+            $comment,
+            $data['id']
+         );
       }
-      $DB->query("UPDATE `".$table['name']."`
-         SET `comment`='".$DB->escape($comment)."'
-         WHERE `id`='".$data['id']."'");
+      mysqli_stmt_close($stmt);
    }
 
    /*
