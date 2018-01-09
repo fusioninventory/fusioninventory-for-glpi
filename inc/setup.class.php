@@ -553,7 +553,7 @@ class PluginFusioninventorySetup {
       ];
 
       $rules[] = [
-         'name'      => 'NetworkEquipment import (by serial)',
+         'name'      => 'NetworkEquipment update (by serial)',
          'match'     => 'AND',
          'is_active' => 1,
          'criteria'  => [
