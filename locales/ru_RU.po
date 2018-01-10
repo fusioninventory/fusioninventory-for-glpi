@@ -465,7 +465,7 @@ msgstr "Поля черного списка"
 #: inc/profile.class.php:308 inc/collectrule.class.php:86
 #: inc/collectrulecollection.class.php:84 inc/menu.class.php:354
 msgid "Computer information rules"
-msgstr "Правила компьютеной информации"
+msgstr "Правила компьютерной информации"
 
 #: inc/profile.class.php:312 inc/ignoredimportdevice.class.php:75
 msgid "Equipment ignored on import"
