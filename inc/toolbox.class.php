@@ -803,4 +803,29 @@ class PluginFusioninventoryToolbox {
       return $input;
    }
 
+   /**
+    * Add a location if required by a rule
+    * @since 9.2+2.0
+    *
+    * @param array $input fields of the asset being inventoried
+    * @param array $output output array in which the location should be added (optionnal)
+    * @return array the fields with the locations_id filled, is necessary
+    */
+   static function addLocation($input, $output = false) {
+      //manage location
+      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+
+      // * Reload rules (required for unit tests)
+      $ruleLocation->getCollectionPart();
+
+      $dataLocation = $ruleLocation->processAllRules($input);
+      if (isset($dataLocation['locations_id'])) {
+         if ($output) {
+            $output['locations_id'] = $dataLocation['locations_id'];
+         } else {
+            $input['locations_id'] = $dataLocation['locations_id'];
+         }
+      }
+      return ($output?$output:$input);
+   }
 }

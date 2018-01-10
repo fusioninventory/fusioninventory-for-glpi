@@ -1516,6 +1516,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
       // * Monitors
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+
       $a_monitors = array();
       foreach ($a_computerinventory['monitor'] as $key => $arrays) {
          $input = array();
@@ -1527,6 +1528,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                ? $arrays['serial']
                                : "";
          $data = $rule->processAllRules($input, array(), array('class'=>$this, 'return' => TRUE));
+
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
                // add monitor
@@ -1604,6 +1606,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       // * Printers
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+
       $a_printers = array();
       foreach ($a_computerinventory['printer'] as $key => $arrays) {
          $input = array();
@@ -1619,6 +1622,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add printer
                $arrays['entities_id'] = $entities_id;
+
                $a_printers[] = $printer->add($arrays);
             } else {
                $a_printers[] = $data['found_equipment'][0];
@@ -1700,6 +1704,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add peripheral
                $arrays['entities_id'] = $entities_id;
+
                $a_peripherals[] = $peripheral->add($arrays);
             } else {
                $a_peripherals[] = $data['found_equipment'][0];

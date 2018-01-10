@@ -178,6 +178,16 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
       $criterias = array();
 
+      $criterias['itemtype']['name'] = __('Assets', 'fusioninventory').' : '.
+                                          __('Item type');
+      $criterias['itemtype']['type']            = 'dropdown_itemtype';
+      $criterias['itemtype']['is_global']       = false;
+      $criterias['itemtype']['allow_condition'] = [Rule::PATTERN_IS,
+                                                   Rule::PATTERN_IS_NOT,
+                                                   Rule::REGEX_MATCH,
+                                                   Rule::REGEX_NOT_MATCH
+                                                  ];
+
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
 
@@ -194,7 +204,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
 
 
       $criterias['name']['field']     = 'name';
-      $criterias['name']['name']      = __('Computer\'s name');
+      $criterias['name']['name']      = __('Name');
 
 
       $criterias['serial']['field']     = 'name';
@@ -223,12 +233,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       $actions['locations_id']['table'] = 'glpi_locations';
       $actions['locations_id']['force_actions'] = array('assign', 'regex_result');
 
-/*
-      $actions['_affect_entity_by_tag']['name'] = __('Entity from TAG');
-
-      $actions['_affect_entity_by_tag']['type'] = 'text';
-      $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
-*/
       $actions['_ignore_import']['name'] =
                      __('Ignore in FusionInventory import', 'fusioninventory');
 
@@ -253,7 +257,6 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       if ($test) {
          return FALSE;
       }
-
       switch ($condition) {
          case Rule::PATTERN_FIND:
             return FALSE;
@@ -269,6 +272,17 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
             return TRUE;
+
+         case Rule::PATTERN_IS:
+         case Rule::PATTERN_IS_NOT:
+            if (!empty($criteria)
+               && isset($criteria['type'])
+                  && $criteria['type'] == 'dropdown_itemtype') {
+               $types = $this->getItemTypesForRules();
+               Dropdown::showItemTypes($name, array_keys($types),
+                                       ['value' => $value]);
+               return true;
+            }
 
       }
 
@@ -367,6 +381,26 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       }
       return $res;
    }
-}
 
-?>
+   /**
+    * Get itemtypes have state_type and unmanaged devices
+    *
+    * @global array $CFG_GLPI
+    * @return array
+    */
+   function getItemTypesForRules() {
+      global $CFG_GLPI;
+
+      $types = [];
+      foreach ($CFG_GLPI["networkport_types"] as $itemtype) {
+         if (class_exists($itemtype)) {
+            $item = new $itemtype();
+            $types[$itemtype] = $item->getTypeName();
+         }
+      }
+      $types[""] = __('No itemtype defined', 'fusioninventory');
+      ksort($types);
+      return $types;
+   }
+
+}
