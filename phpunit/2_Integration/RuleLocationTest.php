@@ -200,7 +200,7 @@ class RuleLocationTest extends Common_TestCase {
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
-      $a_references = array(
+      $a_references = [
          'locations_id' => $location->getID(),
          '_ruleid'      => $rules_id
          ];
@@ -349,9 +349,5 @@ class RuleLocationTest extends Common_TestCase {
       $loc = $ruleLocation->processAllRules($input);
 
       $this->assertEquals($a_references, $loc);
-
->>>>>>> 70d48a869... add capability to location rule engine to work with snmp asset (#2352)
    }
-
-
 }
