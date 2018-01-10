@@ -1557,6 +1557,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add printer
                $arrays['entities_id'] = $entities_id;
+
                $a_printers[] = $printer->add($arrays);
             } else {
                $a_printers[] = $data['found_equipment'][0];
@@ -1635,6 +1636,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add peripheral
                $arrays['entities_id'] = $entities_id;
+
                $a_peripherals[] = $peripheral->add($arrays);
             } else {
                $a_peripherals[] = $data['found_equipment'][0];

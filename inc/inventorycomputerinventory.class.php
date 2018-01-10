@@ -344,15 +344,13 @@ class PluginFusioninventoryInventoryComputerInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                      "PluginFusioninventoryInventoryComputerInventory";
 
-      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
 
-      // * Reload rules (required for unit tests)
-      $ruleLocation->getCollectionPart();
-
-      $dataLocation = $ruleLocation->processAllRules($input, []);
-      if (isset($dataLocation['locations_id'])) {
+      //Add the location if needed (play rule locations engine)
+      $output = [];
+      $output = PluginFusioninventoryToolbox::addLocation($input, $output);
+      if (isset($output['locations_id'])) {
          $_SESSION['plugin_fusioninventory_locations_id'] =
-               $dataLocation['locations_id'];
+               $output['locations_id'];
       }
 
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -681,4 +679,3 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
 }
-

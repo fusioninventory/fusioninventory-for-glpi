@@ -65,7 +65,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
    function updateNetworkEquipment($a_inventory, $items_id) {
       global $DB;
 
-      $networkEquipment = new NetworkEquipment();
+      $networkEquipment   = new NetworkEquipment();
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
 
       $networkEquipment->getFromDB($items_id);
@@ -94,11 +94,18 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       $input = $a_inventory['NetworkEquipment'];
 
-      $input['id'] = $items_id;
+      $input['id']       = $items_id;
+      $input['itemtype'] = 'NetworkEquipment';
 
       //Add defaut status if there's one defined in the configuration
       //If we're here it's because we've manually injected an snmpinventory xml file
       $input = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+
+      //Add ips to the rule criteria array
+      $input['ip'] = $a_inventory['internalport'];
+
+      //Add the location if needed (play rule locations engine)
+      $input = PluginFusioninventoryToolbox::addLocation($input);
 
       $networkEquipment->update($input);
 
@@ -158,7 +165,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @param string $networkname_name
     */
    function internalPorts($a_ips, $networkequipments_id, $mac, $networkname_name) {
-
       $networkPort = new NetworkPort();
       $iPAddress = new IPAddress();
       $pfUnmanaged = new PluginFusioninventoryUnmanaged();
@@ -254,11 +260,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
    function importPorts($itemtype, $a_inventory, $items_id) {
       //TODO : try to report this code in PluginFusioninventoryInventoryCommon::importPorts
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
-      $networkPort = new NetworkPort();
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-
-      $networkports_id = 0;
+      $networkPort       = new NetworkPort();
+      $pfNetworkPort     = new PluginFusioninventoryNetworkPort();
+      $networkports_id   = 0;
+      $pfArrayPortInfos  = [];
       foreach ($a_inventory['networkport'] as $a_port) {
+
          $ifType = $a_port['iftype'];
          if ($pfNetworkporttype->isImportType($ifType)
                  || isset($a_inventory['aggregate'][$a_port['logical_number']])
