@@ -309,7 +309,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          $install = 0;
       }
 
-      $it = $it = new DBmysqlIterator($DB);
+      $it = new DBmysqlIterator($DB);
       $it->buildQuery([
          'FROM'   => 'glpi_plugin_fusioninventory_networkporttypes',
          'WHERE'  => ['number' => new QueryParam()]

@@ -966,7 +966,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             'entities_id'  => new \QueryParam()
          ], [
             'computers_id' => new \QueryParam(),
-            'is_dynamic'   => 1
+            'is_dynamic'   => 1,
+            'entities_id'  => 0
          ]
       );
       $stmt = $DB->prepare($update);
@@ -1463,15 +1464,21 @@ function do_config_migration($migration) {
       $iterator = $DB->request([
          'FROM'   => 'glpi_plugin_fusioninventory_configs',
          'WHERE'  => ['type' => 'version'],
-         'START'  => 0,
+         'START'  => 1,
          'LIMIT'  => 10
       ]);
-      while ($data = $iterator->next()) {
-         $DB->delete(
+      if (count($iterator)) {
+         $delete = $DB->buildDelete(
             'glpi_plugin_fusioninventory_configs', [
-               $id   => $data['id']
+               $id => new \QueryParam()
             ]
          );
+         $stmt = $DB->prepare($delete);
+         while ($data = $iterator->next()) {
+            $stmt->bind_param('s', $data['id']);
+            $stmt->execute();
+         }
+         mysqli_stmt_close($stmt);
       }
    }
 
@@ -2858,7 +2865,7 @@ function do_biosascomponentmigration() {
                   'manufacturers_id'   => $data['bios_manufacturers_id']
                ],
                'START'  => 0,
-               'OFFSET' => 1
+               'LIMIT'  => 1
             ]);
             if (count($iterator)) {
                $existing = $iterator->next();

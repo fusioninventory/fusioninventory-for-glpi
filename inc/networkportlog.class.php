@@ -274,7 +274,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             switch ($data['days']) {
                case '-1':
                   $DB->delete(
-                     $pfNetworkPortLog->getTabNameForItem(), [
+                     $pfNetworkPortLog->getTable(), [
                         'plugin_fusioninventory_mappings_id' => $data['plugin_fusioninventory_mappings_id']
                      ]
                   );
@@ -285,7 +285,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
                default:
                   $DB->delete(
-                     $pfNetworkPortLog->getTabNameForItem(), [
+                     $pfNetworkPortLog->getTable(), [
                         'plugin_fusioninventory_mappings_id'   => $data['plugin_fusioninventory_mappings_id'],
                         'date_mod'                             => new \QueryExpression(
                            "date_add(now(), interval - {$data['days']} day)"
