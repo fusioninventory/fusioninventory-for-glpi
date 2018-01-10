@@ -66,16 +66,16 @@ function pluginFusioninventoryGetCurrentVersion() {
          ($DB->tableExists("glpi_plugin_fusioninventory_config"))) {
 
       if ($DB->tableExists("glpi_plugin_fusioninventory_configs")) {
-         $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
-            WHERE `type`='version'
-            LIMIT 1";
+         $iterator = $DB->request([
+            'FROM'   => 'glpi_plugin_fusioninventory_configs',
+            'WHERE'  => ['type' => 'version'],
+            'LIMIT'  => 1
+         ]);
 
          $data = [];
-         if ($result=$DB->query($query)) {
-            if ($DB->numrows($result) == "1") {
-               $data = $DB->fetch_assoc($result);
-               return $data['value'];
-            }
+         if (count($iterator)) {
+            $data = $iterator->next();
+            return $data['value'];
          }
       }
 
@@ -96,18 +96,20 @@ function pluginFusioninventoryGetCurrentVersion() {
            ($DB->fieldExists("glpi_plugin_tracker_config", "version"))) ||
          ($DB->tableExists("glpi_plugin_fusioninventory_config"))) {
 
-         $query = "";
+         $querytable = 'glpi_plugin_fusioninventory_config';
          if ($DB->tableExists("glpi_plugin_tracker_agents")) {
-            $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
-         } else if ($DB->tableExists("glpi_plugin_fusioninventory_config")) {
-            $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
+            $querytable = 'glpi_plugin_tracker_config';
          }
 
+         $iterator = $DB->request([
+            'SELECT' => ['version'],
+            'FROM'   => $querytable,
+            'LIMIT'  => 1
+         ]);
+
          $data = [];
-         if ($result=$DB->query($query)) {
-            if ($DB->numrows($result) == "1") {
-               $data = $DB->fetch_assoc($result);
-            }
+         if (count($iterator)) {
+            $data = $iterator->next();
          }
 
          if ($data['version'] == "0") {
@@ -117,60 +119,63 @@ function pluginFusioninventoryGetCurrentVersion() {
          }
       }
    } else if ($DB->tableExists("glpi_plugin_fusioninventory_configs")) {
-      $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
-         WHERE `type`='version'
-         LIMIT 1";
+      $iterator = $DB->request([
+         'SELECT' => ['value'],
+         'FROM'   => 'glpi_plugin_fusioninventory_configs',
+         'WHERE'  => ['type' => 'version'],
+         'LIMIT'  => 1
+      ]);
 
       $data = [];
-      if ($result=$DB->query($query)) {
-         if ($DB->numrows($result) == "1") {
-            $data = $DB->fetch_assoc($result);
-            return $data['value'];
-         }
+      if (count($iterator)) {
+         $data = $iterator->next();
+         return $data['value'];
       }
       if ($DB->fieldExists('glpi_plugin_fusioninventory_agentmodules', 'plugins_id')) {
-         $query = "SELECT `plugins_id` FROM `glpi_plugin_fusioninventory_agentmodules`
-            WHERE `modulename`='WAKEONLAN'
-            LIMIT 1";
-         if ($result=$DB->query($query)) {
-            if ($DB->numrows($result) == "1") {
-               $ex_pluginid = $DB->fetch_assoc($result);
+         $iterator = $DB->request([
+            'SELECT' => ['plugins_id'],
+            'FROM'   => 'glpi_plugin_fusioninventory_agentmodules',
+            'WHERE'  => ['modulename' => 'WAKEONLAN'],
+            'LIMIT'  => 1
+         ]);
+         if (count($iterator)) {
+            $ex_pluginid = $iterator->next();
 
-               $DB->update(
-                  'glpi_plugin_fusioninventory_taskjobs', [
-                     'plugins_id'   => PluginFusioninventoryModule::getModuleId('fusioninventory')
-                  ], [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
-                  ]
-               );
+            $DB->update(
+               'glpi_plugin_fusioninventory_taskjobs', [
+                  'plugins_id'   => PluginFusioninventoryModule::getModuleId('fusioninventory')
+               ], [
+                  'plugins_id'   => $ex_pluginid['plugins_id']
+               ]
+            );
 
-               $DB->update(
-                  'glpi_plugin_fusioninventory_profiles', [
-                     'plugins_id'   => PluginFusioninventoryModule::getModuleId('fusioninventory')
-                  ], [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
-                  ]
-               );
+            $DB->update(
+               'glpi_plugin_fusioninventory_profiles', [
+                  'plugins_id'   => PluginFusioninventoryModule::getModuleId('fusioninventory')
+               ], [
+                  'plugins_id'   => $ex_pluginid['plugins_id']
+               ]
+            );
 
-               $DB->update(
-                  'glpi_plugin_fusioninventory_agentmodules', [
-                     'plugins_id'   => PluginFusioninventoryModule::getModuleId('fusioninventory')
-                  ], [
-                     'plugins_id'   => $ex_pluginid['plugins_id']
-                  ]
-               );
+            $DB->update(
+               'glpi_plugin_fusioninventory_agentmodules', [
+                  'plugins_id'   => PluginFusioninventoryModule::getModuleId('fusioninventory')
+               ], [
+                  'plugins_id'   => $ex_pluginid['plugins_id']
+               ]
+            );
 
-               $query = "SELECT `value` FROM `glpi_plugin_fusioninventory_configs`
-                  WHERE `type`='version'
-                  LIMIT 1";
+            $iterator = $DB->request([
+               'SELECT' => ['value'],
+               'FROM'   => 'glpi_plugin_fusioninventory_configs',
+               'WHERE'  => ['type' => 'version'],
+               'LIMIT'  => 1
+            ]);
 
-               $data = [];
-               if ($result=$DB->query($query)) {
-                  if ($DB->numrows($result) == "1") {
-                     $data = $DB->fetch_assoc($result);
-                     return $data['value'];
-                  }
-               }
+            $data = [];
+            if (count($iterator)) {
+               $data = $iterator->next();
+               return $data['value'];
             }
          }
       }
@@ -2966,9 +2971,8 @@ function do_configlogfield_migration($migration) {
                            $newTable);
    if ($DB->tableExists($newTable)) {
       if ($DB->fieldExists($newTable, "field")) {
-         $query = "SELECT * FROM `".$newTable."`";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
+         $iterator = $DB->request(['FROM' => $newTable]);
+         while ($data = $iterator->next()) {
             $pfMapping = new PluginFusioninventoryMapping();
             $mapping = 0;
             if ($mapping = $pfMapping->get("NetworkEquipment", $data['field'])) {
@@ -3342,22 +3346,25 @@ function do_networkport_migration($migration) {
       update213to220_ConvertField($migration);
 
       // **** Migration network history connections
-      $query = "SELECT count(ID) FROM `glpi_plugin_tracker_snmp_history`
-                              WHERE `Field`='0'";
-      $result = $DB->query($query);
-      $datas = $DB->fetch_assoc($result);
-      $nb = $datas['count(ID)'];
+      $iterator = $DB->request([
+         'FROM'   => 'glpi_plugin_tracker_snmp_history',
+         'COUNT'  => 'cpt',
+         'WHERE'  => ['Field' => 0]
+      ]);
+      $datas = $iterator->next();
+      $nb = $datas['cpt'];
 
       //echo "Move Connections history to another table...";
 
       for ($i=0; $i < $nb; $i = $i + 500) {
          $migration->displayMessage("$i / $nb");
-         $sql_connection = "SELECT * FROM `glpi_plugin_tracker_snmp_history`
-                                 WHERE `Field`='0'
-                                 ORDER BY `FK_process` DESC, `date_mod` DESC
-                                 LIMIT 500";
-         $result_connection = $DB->query($sql_connection);
-         while ($thread_connection = $DB->fetch_array($result_connection)) {
+         $iterator = $DB->request([
+            'FROM'   => 'glpi_plugin_tracker_snmp_history',
+            'WHERE'  => ['Field' => 0],
+            'ORDER'  => ['FK_process DESC', 'date_mod DESC'],
+            'LIMIT'  => 500
+         ]);
+         while ($thread_connection = $iterator->next()) {
             $input = [];
             $input['process_number'] = $thread_connection['FK_process'];
             $input['date'] = $thread_connection['date_mod'];
@@ -3373,20 +3380,19 @@ function do_networkport_migration($migration) {
                }
                $input['FK_port_source'] = $thread_connection["FK_ports"];
                $dataPort = [];
+               $portvalue = null;
                if ($thread_connection["old_device_ID"] != "0") {
-                  $queryPort = "SELECT *
-                                      FROM `glpi_networkports`
-                                      WHERE `mac`='".$thread_connection['old_value']."'
-                                      LIMIT 1";
-                  $resultPort = $DB->query($queryPort);
-                  $dataPort = $DB->fetch_assoc($resultPort);
+                  $portvalue = $thread_connection['old_value'];
                } else if ($thread_connection["new_device_ID"] != "0") {
-                  $queryPort = "SELECT *
-                                      FROM `glpi_networkports`
-                                      WHERE `mac`='".$thread_connection['new_value']."'
-                                      LIMIT 1";
-                  $resultPort = $DB->query($queryPort);
-                  $dataPort = $DB->fetch_assoc($resultPort);
+                  $portvalue = $thread_connection['new_value'];
+               }
+               if ($portvalue != null) {
+                  $port_iterator = $DB->request([
+                     'FROM'   => 'glpi_networkports',
+                     'WHERE'  => ['mac' => $thread_connection['old_value']],
+                     'LIMIT'  => 1
+                  ]);
+                  $dataPort = $port_iterator->next();
                }
                if (isset($dataPort['id'])) {
                   $input['FK_port_destination'] = $dataPort['id'];
@@ -3471,14 +3477,14 @@ function do_networkport_migration($migration) {
                         "int(11) NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
 
-         // Update with mapping
+   // Update with mapping
    if ($DB->fieldExists($newTable, "Field")) {
-      //            $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
       $pfMapping = new PluginFusioninventoryMapping();
-      $query = "SELECT * FROM `".$newTable."`
-               GROUP BY `Field`";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      $iterator = $DB->request([
+         'FROM'      => $newTable,
+         'GROUPBY'   => 'Field'
+      ]);
+      while ($data = $iterator->next()) {
          $mapping = 0;
          if ($mapping = $pfMapping->get("NetworkEquipment", $data['Field'])) {
             $DB->update(
@@ -8714,47 +8720,49 @@ function update213to220_ConvertField($migration) {
             $i++;
 
             // Search port from mac address
-            $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `mac`='".$data['new_value']."' ";
-            if ($result_port=$DB->query($query_port)) {
-               if ($DB->numrows($result_port) == '1') {
-                  $input = [];
-                  $data_port = $DB->fetch_assoc($result_port);
-                  $input['FK_port_source'] = $data_port['id'];
+            $iterator = $DB->request([
+               'FROM'   => 'glpi_networkports',
+               'WHERE'  => ['mac' => $data['new_value']]
+            ]);
+            if (count($iterator) == 1) {
+               $input = [];
+               $data_port = $iterator->next();
+               $input['FK_port_source'] = $data_port['id'];
 
-                  $query_port2 = "SELECT * FROM `glpi_networkports`
-                     WHERE `items_id` = '".$data['new_device_ID']."'
-                        AND `itemtype` = '".$data['new_device_type']."' ";
-                  if ($result_port2=$DB->query($query_port2)) {
-                     if ($DB->numrows($result_port2) == '1') {
-                        if ($stmt == null) {
-                           $insert = $DB->buildInsert(
-                              'glpi_plugin_fusinvsnmp_networkportconnectionlogs', [
-                                 'date_mod'                    => new \QueryParam(),
-                                 'creation'                    => new \QueryParam(),
-                                 'networkports_id_source'      => new \QueryParam(),
-                                 'networkports_id_destination' => new \QueryParam()
-                              ]
-                           );
-                           $stmt = $DB->prepare($insert);
-                        }
-                        $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['FK_port_destination'] = $data_port2['id'];
-
-                        $input['date'] = $data['date_mod'];
-                        $input['creation'] = 1;
-                        $input['process_number'] = $data['FK_process'];
-
-                        $stmt->bind_param(
-                           'ssss',
-                           $input['date'],
-                           $input['creation'],
-                           $input['FK_port_source'],
-                           $input['FK_port_destination']
-                        );
-                        $stmt->execute();
-                     }
+               $port_iterator = $DB->request([
+                  'FROM'   => 'glpi_networkports',
+                  'WHERE'  => [
+                     'items_id'  => $data['new_device_ID'],
+                     'itemtype'  => $data['new_device_type']
+                  ]
+               ]);
+               if (count($port_iterator) == 1) {
+                  if ($stmt == null) {
+                     $insert = $DB->buildInsert(
+                        'glpi_plugin_fusinvsnmp_networkportconnectionlogs', [
+                           'date_mod'                    => new \QueryParam(),
+                           'creation'                    => new \QueryParam(),
+                           'networkports_id_source'      => new \QueryParam(),
+                           'networkports_id_destination' => new \QueryParam()
+                        ]
+                     );
+                     $stmt = $DB->prepare($insert);
                   }
+                  $data_port2 = $port_iterator->next();
+                  $input['FK_port_destination'] = $data_port2['id'];
+
+                  $input['date'] = $data['date_mod'];
+                  $input['creation'] = 1;
+                  $input['process_number'] = $data['FK_process'];
+
+                  $stmt->bind_param(
+                     'ssss',
+                     $input['date'],
+                     $input['creation'],
+                     $input['FK_port_source'],
+                     $input['FK_port_destination']
+                  );
+                  $stmt->execute();
                }
             }
 
@@ -8789,48 +8797,50 @@ function update213to220_ConvertField($migration) {
             $i++;
 
             // Search port from mac address
-            $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `mac`='".$data['old_value']."' ";
-            if ($result_port=$DB->query($query_port)) {
-               if ($DB->numrows($result_port) == '1') {
-                  $input = [];
-                  $data_port = $DB->fetch_assoc($result_port);
-                  $input['FK_port_source'] = $data_port['id'];
+            $iterator = $DB->request([
+               'FROM'   => 'glpi_networkports',
+               'WHERE'  => ['mac' => $data['old_value']]
+            ]);
+            if (count($iterator) == 1) {
+               $input = [];
+               $data_port = $iterator->next();
+               $input['FK_port_source'] = $data_port['id'];
 
-                  $query_port2 = "SELECT * FROM `glpi_networkports`
-                     WHERE `items_id` = '".$data['old_device_ID']."'
-                        AND `itemtype` = '".$data['old_device_type']."' ";
-                  if ($result_port2=$DB->query($query_port2)) {
-                     if ($DB->numrows($result_port2) == '1') {
-                        $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['FK_port_destination'] = $data_port2['id'];
+               $port_iterator = $DB->request([
+                  'FROM'   => 'glpi_networkports',
+                  'WHERE'  => [
+                     'items_id'  => $data['old_device_ID'],
+                     'itemtype'  => $data['old_device_type']
+                  ]
+               ]);
+               if (count($port_iterator) == 1) {
+                  $data_port2 = $port_iterator->next();
+                  $input['FK_port_destination'] = $data_port2['id'];
 
-                        $input['date'] = $data['date_mod'];
-                        $input['creation'] = 1;
-                        $input['process_number'] = $data['FK_process'];
-                        if ($input['FK_port_source'] != $input['FK_port_destination']) {
-                           if ($stmt == null) {
-                              $insert = $DB->buildInsert(
-                                 'glpi_plugin_fusinvsnmp_networkportconnectionlogs', [
-                                    'date_mod'                    => new \QueryParam(),
-                                    'creation'                    => new \QueryParam(),
-                                    'networkports_id_source'      => new \QueryParam(),
-                                    'networkports_id_destination' => new \QueryParam()
-                                 ]
-                              );
-                              $stmt = $DB->prepare($insert);
-                           }
-
-                           $stmt->bind_param(
-                              'ssss',
-                              $input['date'],
-                              $input['creation'],
-                              $input['FK_port_source'],
-                              $input['FK_port_destination']
-                           );
-                           $stmt->execute();
-                        }
+                  $input['date'] = $data['date_mod'];
+                  $input['creation'] = 1;
+                  $input['process_number'] = $data['FK_process'];
+                  if ($input['FK_port_source'] != $input['FK_port_destination']) {
+                     if ($stmt == null) {
+                        $insert = $DB->buildInsert(
+                           'glpi_plugin_fusinvsnmp_networkportconnectionlogs', [
+                              'date_mod'                    => new \QueryParam(),
+                              'creation'                    => new \QueryParam(),
+                              'networkports_id_source'      => new \QueryParam(),
+                              'networkports_id_destination' => new \QueryParam()
+                           ]
+                        );
+                        $stmt = $DB->prepare($insert);
                      }
+
+                     $stmt->bind_param(
+                        'ssss',
+                        $input['date'],
+                        $input['creation'],
+                        $input['FK_port_source'],
+                        $input['FK_port_destination']
+                     );
+                     $stmt->execute();
                   }
                }
             }
