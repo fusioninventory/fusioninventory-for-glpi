@@ -811,283 +811,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       // * Software
          if ($pfConfig->getValue("import_software") != 0) {
-
-            $entities_id = 0;
-            if (count($a_computerinventory['software']) > 0) {
-               $a_softfirst = current($a_computerinventory['software']);
-               if (isset($a_softfirst['entities_id'])) {
-                  $entities_id = $a_softfirst['entities_id'];
-               }
-            }
-            $db_software = array();
-            if ($no_history === FALSE) {
-               $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
-                          `glpi_softwares`.`name`,
-                          `glpi_softwareversions`.`name` AS version,
-                          `glpi_softwares`.`manufacturers_id`,
-                          `glpi_softwareversions`.`entities_id`,
-                          `glpi_softwareversions`.`operatingsystems_id`,
-                          `glpi_computers_softwareversions`.`is_template_computer`,
-                          `glpi_computers_softwareversions`.`is_deleted_computer`
-                   FROM `glpi_computers_softwareversions`
-                   LEFT JOIN `glpi_softwareversions`
-                        ON (`glpi_computers_softwareversions`.`softwareversions_id`
-                              = `glpi_softwareversions`.`id`)
-                   LEFT JOIN `glpi_softwares`
-                        ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
-                   WHERE `glpi_computers_softwareversions`.`computers_id` = '$computers_id'
-                     AND `glpi_computers_softwareversions`.`is_dynamic`='1'";
-               $result = $DB->query($query);
-               while ($data = $DB->fetch_assoc($result)) {
-                  $idtmp = $data['sid'];
-                  unset($data['sid']);
-                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
-                     $data['name'] = Toolbox::addslashes_deep($data['name']);
-                  }
-                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
-                     $data['version'] = Toolbox::addslashes_deep($data['version']);
-                  }
-                  $comp_key = strtolower($data['name']).
-                               "$$$$".strtolower($data['version']).
-                               "$$$$".$data['manufacturers_id'].
-                               "$$$$".$data['entities_id'].
-                               "$$$$".$data['operatingsystems_id'];
-                  $db_software[$comp_key] = $idtmp;
-               }
-            }
-
-            $lastSoftwareid = 0;
-            $lastSoftwareVid = 0;
-
-            /*
-             * Schema
-             *
-             * LOCK software
-             * 1/ Add all software
-             * RELEASE software
-             *
-             * LOCK softwareversion
-             * 2/ Add all software versions
-             * RELEASE softwareversion
-             *
-             * 3/ add version to computer
-             *
-             */
-
-            if (count($db_software) == 0) { // there are no software associated with computer
-               $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
-               $options = array();
-               if ($nb_unicity == 0) {
-                  $options['disable_unicity_check'] = TRUE;
-               }
-
-               $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
-                     SET `value`='1'";
-               $CFG_GLPI["use_log_in_files"] = FALSE;
-               while (!$DB->query($queryDBLOCK)) {
-                  usleep(100000);
-               }
-               $CFG_GLPI["use_log_in_files"] = TRUE;
-               $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-               foreach ($a_computerinventory['software'] as $a_software) {
-                  if (!isset($this->softList[$a_software['name']."$$$$".
-                           $a_software['manufacturers_id']])) {
-                     $this->addSoftware($a_software,
-                                        $options);
-                  }
-               }
-               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
-                     WHERE `value`='1'";
-               $DB->query($queryDBLOCK);
-               $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
-                                              $a_computerinventory['software'],
-                                              $lastSoftwareVid);
-               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                     SET `value`='1'";
-               $CFG_GLPI["use_log_in_files"] = FALSE;
-               while (!$DB->query($queryDBLOCK)) {
-                  usleep(100000);
-               }
-               $CFG_GLPI["use_log_in_files"] = TRUE;
-               $this->loadSoftwareVersions($entities_id,
-                                           $a_computerinventory['software'],
-                                           $lastSoftwareVid);
-               foreach ($a_computerinventory['software'] as $a_software) {
-                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                  if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
-                     $this->addSoftwareVersion($a_software, $softwares_id);
-                  }
-               }
-               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                     WHERE `value`='1'";
-               $DB->query($queryDBLOCK);
-               $a_toinsert = array();
-               foreach ($a_computerinventory['software'] as $a_software) {
-                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
-                  $a_tmp = array(
-                      'computers_id'        => $computers_id,
-                      'softwareversions_id' => $softwareversions_id,
-                      'is_dynamic'          => 1,
-                      'entities_id'         => $computer->fields['entities_id'],
-                      'date_install'        => 'NULL'
-                      );
-                  if (isset($a_software['date_install'])) {
-                     $a_tmp['date_install'] = $a_software['date_install'];
-                  }
-                  $a_toinsert[] = "('".implode("','", $a_tmp)."')";
-               }
-               if (count($a_toinsert) > 0) {
-                  $this->addSoftwareVersionsComputer($a_toinsert);
-
-                  if (!$no_history) {
-                     foreach ($a_computerinventory['software'] as $a_software) {
-                        $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
-
-                        $changes[0] = '0';
-                        $changes[1] = "";
-                        $changes[2] = $a_software['name']." - ".
-                                sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
-                        $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
-                                     Log::HISTORY_INSTALL_SOFTWARE);
-
-                        $changes[0] = '0';
-                        $changes[1] = "";
-                        $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
-                        $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
-                                     Log::HISTORY_INSTALL_SOFTWARE);
-                     }
-                  }
-               }
-
-            } else {
-               foreach ($a_computerinventory['software'] as $key => $arrayslower) {
-                  if (isset($db_software[$key])) {
-                     unset($a_computerinventory['software'][$key]);
-                     unset($db_software[$key]);
-                  }
-               }
-
-               if (count($a_computerinventory['software']) == 0
-                  && count($db_software) == 0) {
-                  // Nothing to do
-               } else {
-                  if (count($db_software) > 0) {
-                     // Delete softwares in DB
-                     foreach ($db_software as $idtmp) {
-                        $this->computerSoftwareVersion->getFromDB($idtmp);
-                        $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
-//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
-
-                        if (!$no_history) {
-                           $changes[0] = '0';
-                           $changes[1] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
-                           $changes[2] = "";
-                           $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
-                                        Log::HISTORY_UNINSTALL_SOFTWARE);
-
-                           $changes[0] = '0';
-                           $changes[1] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
-                           $changes[2] = "";
-                           $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
-                                        Log::HISTORY_UNINSTALL_SOFTWARE);
-                        }
-                     }
-                     $query = "DELETE FROM `glpi_computers_softwareversions` "
-                             ."WHERE `id` IN ('".implode("', '", $db_software)."')";
-                     $DB->query($query);
-                  }
-                  if (count($a_computerinventory['software']) > 0) {
-                     $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software",
-                                                                              $entities_id));
-                     $options = array();
-                     if ($nb_unicity == 0) {
-                        $options['disable_unicity_check'] = TRUE;
-                     }
-                     $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-                     $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
-                           SET `value`='1'";
-                     $CFG_GLPI["use_log_in_files"] = FALSE;
-                     while (!$DB->query($queryDBLOCK)) {
-                        usleep(100000);
-                     }
-                     $CFG_GLPI["use_log_in_files"] = TRUE;
-                     $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-                     foreach ($a_computerinventory['software'] as $a_software) {
-                        if (!isset($this->softList[$a_software['name']."$$$$".
-                                 $a_software['manufacturers_id']])) {
-                           $this->addSoftware($a_software,
-                                              $options);
-                        }
-                     }
-                     $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
-                           WHERE `value`='1'";
-                     $DB->query($queryDBLOCK);
-
-                     $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
-                                                    $a_computerinventory['software'],
-                                                    $lastSoftwareVid);
-                     $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                           SET `value`='1'";
-                     $CFG_GLPI["use_log_in_files"] = FALSE;
-                     while (!$DB->query($queryDBLOCK)) {
-                        usleep(100000);
-                     }
-                     $CFG_GLPI["use_log_in_files"] = TRUE;
-                     $this->loadSoftwareVersions($entities_id,
-                                                 $a_computerinventory['software'],
-                                                 $lastSoftwareVid);
-                     foreach ($a_computerinventory['software'] as $a_software) {
-                        $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                        if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
-                           $this->addSoftwareVersion($a_software, $softwares_id);
-                        }
-                     }
-                     $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
-                           WHERE `value`='1'";
-                     $DB->query($queryDBLOCK);
-                     $a_toinsert = array();
-                     foreach ($a_computerinventory['software'] as $a_software) {
-                        $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
-                        $a_tmp = array(
-                            'computers_id'        => $computers_id,
-                            'softwareversions_id' => $softwareversions_id,
-                            'is_dynamic'          => 1,
-                            'entities_id'         => $computer->fields['entities_id'],
-                            'date_install'        => 'NULL'
-                            );
-                        if (isset($a_software['date_install'])) {
-                           $a_tmp['date_install'] = $a_software['date_install'];
-                        }
-                        $a_toinsert[] = "('".implode("','", $a_tmp)."')";
-                     }
-                     $this->addSoftwareVersionsComputer($a_toinsert);
-
-                     if (!$no_history) {
-                        foreach ($a_computerinventory['software'] as $a_software) {
-                           $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                           $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
-
-                           $changes[0] = '0';
-                           $changes[1] = "";
-                           $changes[2] = $a_software['name']." - ".
-                                 sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
-                           $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
-                                        Log::HISTORY_INSTALL_SOFTWARE);
-
-                           $changes[0] = '0';
-                           $changes[1] = "";
-                           $changes[2] = sprintf(__('%1$s (%2$s)'), $computerName, $computers_id);
-                           $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
-                                        Log::HISTORY_INSTALL_SOFTWARE);
-                        }
-                     }
-                  }
-               }
-            }
+            $this->importSoftware('Computer', $a_computerinventory, $computer, $no_history);
          }
 
       // * Virtualmachines
@@ -2307,7 +2031,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
 
    /**
-    * Load software from DB are in the incomming inventory
+    * Load softwares from database that are matching softwares coming from the
+    * currently processed inventory
     *
     * @global object $DB
     * @param integer $entities_id entitity id
@@ -2339,20 +2064,19 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
       $whereid .= " AND CONCAT_WS('$$$$', `name`, `manufacturers_id`) IN (".implode(",", $a_softSearch).")";
 
-      $sql = "SELECT max( id ) AS max FROM `glpi_softwares`";
-      $result = $DB->query($sql);
-      $data = $DB->fetch_assoc($result);
-      $lastid = $data['max'];
-      $whereid .= " AND `id` <= '".$lastid."'";
+      $sql     = "SELECT max( id ) AS max FROM `glpi_softwares`";
+      $result  = $DB->query($sql);
+      $data    = $DB->fetch_assoc($result);
+      $lastid  = $data['max'];
+      $whereid.= " AND `id` <= '".$lastid."'";
       if ($nbSoft == 0) {
          return $lastid;
       }
 
-      $sql = "SELECT `id`, `name`, `manufacturers_id` FROM `glpi_softwares`
-      WHERE `entities_id`='".$entities_id."'".$whereid;
-      $result = $DB->query($sql);
-
-      while ($data = $DB->fetch_assoc($result)) {
+      $sql = "SELECT `id`, `name`, `manufacturers_id`
+              FROM `glpi_softwares`
+              WHERE `entities_id`='".$entities_id."'".$whereid;
+      foreach ($DB->request($sql) as $data) {
          $this->softList[Toolbox::addslashes_deep($data['name'])."$$$$".$data['manufacturers_id']] = $data['id'];
       }
       return $lastid;
@@ -2649,6 +2373,329 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $DB->query("UPDATE `".$table."` SET `is_dynamic`='1'
                         WHERE `items_id`='".$computers_id."'
                            AND `itemtype`='Computer'");
+      }
+   }
+
+   /**
+    * Import software
+    * @since 9.2+2.0
+    *
+    * @param string $itemtype the itemtype to be inventoried
+    * @param array   $a_inventory Inventory data
+    * @param integer asset id
+    *
+    * @return void
+    */
+   function importSoftware($itemtype, $a_inventory, $computer, $no_history) {
+      global $DB;
+
+      //By default entity  = root
+      $entities_id  = 0;
+      $computers_id = $computer->getID();
+
+      //Try to guess the entity of the software
+      if (count($a_inventory['software']) > 0) {
+         //Get the first software of the list
+         $a_softfirst = current($a_inventory['software']);
+         //Get the entity of the first software : this info has been processed
+         //in formatconvert, so it's either the computer's entity or
+         //the entity as defined in the entity's configuration
+         if (isset($a_softfirst['entities_id'])) {
+            $entities_id = $a_softfirst['entities_id'];
+         }
+      }
+      $db_software = [];
+
+      //If we must take care of historical : it means we're not :
+      //- at computer first inventory
+      //- during the first inventory after an OS upgrade/change
+      if ($no_history === false) {
+         $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
+                    `glpi_softwares`.`name`,
+                    `glpi_softwareversions`.`name` AS version,
+                    `glpi_softwares`.`manufacturers_id`,
+                    `glpi_softwareversions`.`entities_id`,
+                    `glpi_softwareversions`.`operatingsystems_id`,
+                    `glpi_computers_softwareversions`.`is_template_computer`,
+                    `glpi_computers_softwareversions`.`is_deleted_computer`
+             FROM `glpi_computers_softwareversions`
+             LEFT JOIN `glpi_softwareversions`
+                  ON (`glpi_computers_softwareversions`.`softwareversions_id`
+                        = `glpi_softwareversions`.`id`)
+             LEFT JOIN `glpi_softwares`
+                  ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
+             WHERE `glpi_computers_softwareversions`.`computers_id` = '$computers_id'
+               AND `glpi_computers_softwareversions`.`is_dynamic`='1'";
+         foreach ($DB->request($query) as $data) {
+            $idtmp = $data['sid'];
+            unset($data['sid']);
+            //Escape software name if needed
+            if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
+               $data['name'] = Toolbox::addslashes_deep($data['name']);
+            }
+            //Escape software version if needed
+            if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
+               $data['version'] = Toolbox::addslashes_deep($data['version']);
+            }
+            $comp_key = strtolower($data['name']).
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($data['version']).
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['manufacturers_id'].
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['entities_id'].
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$data['operatingsystems_id'];
+            $db_software[$comp_key] = $idtmp;
+         }
+      }
+
+      $lastSoftwareid  = 0;
+      $lastSoftwareVid = 0;
+
+      /*
+      * Schema
+      *
+      * LOCK software
+      * 1/ Add all software
+      * RELEASE software
+      *
+      * LOCK softwareversion
+      * 2/ Add all software versions
+      * RELEASE softwareversion
+      *
+      * 3/ add version to computer
+      *
+      */
+
+      if (count($db_software) == 0) { // there are no software associated with computer
+         $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
+         $options    = [];
+         //There's no unicity rules, do not enable this feature
+         if ($nb_unicity == 0) {
+            $options['disable_unicity_check'] = TRUE;
+         }
+
+         $lastSoftwareid = $this->loadSoftwares($entities_id,
+                                                $a_inventory['software'],
+                                                $lastSoftwareid);
+
+         //-----------------------------------
+         //Step 1 : import softwares
+         //-----------------------------------
+         //Put a lock during software import for this computer
+         $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
+               SET `value`='1'";
+         $CFG_GLPI["use_log_in_files"] = false;
+         //If the lock is already in place : another software import is running
+         //loop until lock release!
+         while (!$DB->query($queryDBLOCK)) {
+            usleep(100000);
+         }
+         $CFG_GLPI["use_log_in_files"] = TRUE;
+         $this->loadSoftwares($entities_id,
+                              $a_inventory['software'],
+                              $lastSoftwareid);
+
+         //Browse softwares: add new software in database
+         foreach ($a_inventory['software'] as $a_software) {
+            if (!isset($this->softList[$a_software['name']."$$$$".
+                     $a_software['manufacturers_id']])) {
+               $this->addSoftware($a_software, $options);
+            }
+         }
+
+         //Release the lock
+         $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
+               WHERE `value`='1'";
+         $DB->query($queryDBLOCK);
+
+         //-----------------------------------
+         //Step 2 : import software versions
+         //-----------------------------------
+         $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
+                                        $a_inventory['software'],
+                                        $lastSoftwareVid);
+         $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
+               SET `value`='1'";
+         $CFG_GLPI["use_log_in_files"] = false;
+         while (!$DB->query($queryDBLOCK)) {
+            usleep(100000);
+         }
+         $CFG_GLPI["use_log_in_files"] = TRUE;
+         $this->loadSoftwareVersions($entities_id,
+                                     $a_inventory['software'],
+                                     $lastSoftwareVid);
+         foreach ($a_inventory['software'] as $a_software) {
+            $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+            if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+               $this->addSoftwareVersion($a_software, $softwares_id);
+            }
+         }
+         $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
+               WHERE `value`='1'";
+         $DB->query($queryDBLOCK);
+         $a_toinsert = [];
+         foreach ($a_inventory['software'] as $a_software) {
+            $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+            $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+            $a_tmp = array(
+                'computers_id'        => $computers_id,
+                'softwareversions_id' => $softwareversions_id,
+                'is_dynamic'          => 1,
+                'entities_id'         => $computer->fields['entities_id'],
+                'date_install'        => 'NULL'
+                );
+            if (isset($a_software['date_install'])) {
+               $a_tmp['date_install'] = $a_software['date_install'];
+            }
+            $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+         }
+         if (count($a_toinsert) > 0) {
+            $this->addSoftwareVersionsComputer($a_toinsert);
+
+            if (!$no_history) {
+               foreach ($a_inventory['software'] as $a_software) {
+                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+
+                  $changes[0] = '0';
+                  $changes[1] = "";
+                  $changes[2] = $a_software['name']." - ".
+                          sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                  $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                               Log::HISTORY_INSTALL_SOFTWARE);
+
+                  $changes[0] = '0';
+                  $changes[1] = "";
+                  $changes[2] = sprintf(__('%1$s (%2$s)'), $computer->getName(), $computers_id);
+                  $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
+                               Log::HISTORY_INSTALL_SOFTWARE);
+               }
+            }
+         }
+
+      } else {
+         foreach ($a_inventory['software'] as $key => $arrayslower) {
+            if (isset($db_software[$key])) {
+               unset($a_inventory['software'][$key]);
+               unset($db_software[$key]);
+            }
+         }
+
+         if (count($a_inventory['software']) == 0
+            && count($db_software) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_software) > 0) {
+               // Delete softwares in DB
+               foreach ($db_software as $idtmp) {
+                  $this->computerSoftwareVersion->getFromDB($idtmp);
+                  $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
+//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), false);
+
+                  if (!$no_history) {
+                     $changes[0] = '0';
+                     $changes[1] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
+                     $changes[2] = "";
+                     $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                                  Log::HISTORY_UNINSTALL_SOFTWARE);
+
+                     $changes[0] = '0';
+                     $changes[1] = sprintf(__('%1$s (%2$s)'), $computer->getName(), $computers_id);
+                     $changes[2] = "";
+                     $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
+                                  Log::HISTORY_UNINSTALL_SOFTWARE);
+                  }
+               }
+               $query = "DELETE FROM `glpi_computers_softwareversions` "
+                       ."WHERE `id` IN ('".implode("', '", $db_software)."')";
+               $DB->query($query);
+            }
+            if (count($a_inventory['software']) > 0) {
+               $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software",
+                                                                        $entities_id));
+               $options = [];
+               if ($nb_unicity == 0) {
+                  $options['disable_unicity_check'] = TRUE;
+               }
+               $lastSoftwareid = $this->loadSoftwares($entities_id, $a_inventory['software'], $lastSoftwareid);
+               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwares`
+                     SET `value`='1'";
+               $CFG_GLPI["use_log_in_files"] = false;
+               while (!$DB->query($queryDBLOCK)) {
+                  usleep(100000);
+               }
+               $CFG_GLPI["use_log_in_files"] = TRUE;
+               $this->loadSoftwares($entities_id, $a_inventory['software'], $lastSoftwareid);
+               foreach ($a_inventory['software'] as $a_software) {
+                  if (!isset($this->softList[$a_software['name']."$$$$".
+                           $a_software['manufacturers_id']])) {
+                     $this->addSoftware($a_software,
+                                        $options);
+                  }
+               }
+               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwares`
+                     WHERE `value`='1'";
+               $DB->query($queryDBLOCK);
+
+               $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
+                                              $a_inventory['software'],
+                                              $lastSoftwareVid);
+               $queryDBLOCK = "INSERT INTO `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                     SET `value`='1'";
+               $CFG_GLPI["use_log_in_files"] = false;
+               while (!$DB->query($queryDBLOCK)) {
+                  usleep(100000);
+               }
+               $CFG_GLPI["use_log_in_files"] = TRUE;
+               $this->loadSoftwareVersions($entities_id,
+                                           $a_inventory['software'],
+                                           $lastSoftwareVid);
+               foreach ($a_inventory['software'] as $a_software) {
+                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                  if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+                     $this->addSoftwareVersion($a_software, $softwares_id);
+                  }
+               }
+               $queryDBLOCK = "DELETE FROM `glpi_plugin_fusioninventory_dblocksoftwareversions`
+                     WHERE `value`='1'";
+               $DB->query($queryDBLOCK);
+               $a_toinsert = [];
+               foreach ($a_inventory['software'] as $a_software) {
+                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+                  $a_tmp = array(
+                      'computers_id'        => $computers_id,
+                      'softwareversions_id' => $softwareversions_id,
+                      'is_dynamic'          => 1,
+                      'entities_id'         => $computer->fields['entities_id'],
+                      'date_install'        => 'NULL'
+                      );
+                  if (isset($a_software['date_install'])) {
+                     $a_tmp['date_install'] = $a_software['date_install'];
+                  }
+                  $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+               }
+               $this->addSoftwareVersionsComputer($a_toinsert);
+
+               if (!$no_history) {
+                  foreach ($a_inventory['software'] as $a_software) {
+                     $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                     $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+
+                     $changes[0] = '0';
+                     $changes[1] = "";
+                     $changes[2] = $a_software['name']." - ".
+                           sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                     $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                                  Log::HISTORY_INSTALL_SOFTWARE);
+
+                     $changes[0] = '0';
+                     $changes[1] = "";
+                     $changes[2] = sprintf(__('%1$s (%2$s)'), $computer->getName(), $computers_id);
+                     $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
+                                  Log::HISTORY_INSTALL_SOFTWARE);
+                  }
+               }
+            }
+         }
       }
    }
 }
