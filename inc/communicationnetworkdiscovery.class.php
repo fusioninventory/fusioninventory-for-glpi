@@ -211,6 +211,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             case '2':
             case 'NETWORKING':
+            case 'STORAGE':
                $input['itemtype'] = "NetworkEquipment";
                 break;
 
@@ -478,6 +479,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
                   case '2':
                   case 'NETWORKING':
+                  case 'STORAGE':
                      $input['item_type'] = 'NetworkEquipment';
                      break;
 
