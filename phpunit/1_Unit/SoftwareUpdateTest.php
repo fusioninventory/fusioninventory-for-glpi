@@ -51,97 +51,98 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      // * Add rule ignore
-         $rule = new Rule();
-         $ruleCriteria = new RuleCriteria();
-         $ruleAction = new RuleAction();
+      $rule         = new Rule();
+      $ruleCriteria = new RuleCriteria();
+      $ruleAction   = new RuleAction();
 
-         $input = [];
-         $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input);
+      //Add a rule to rename indepnet manufacturer
+      $input               = [];
+      $input['sub_type']   = 'RuleDictionnaryManufacturer';
+      $input['name']       = 'Set indepnet manufacturer';
+      $input['match']      = 'AND';
+      $input['is_active']  = 1;
+      $rules_id = $rule->add($input);
 
-         $input = [];
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'glpi';
-         $ruleCriteria->add($input);
+      $input               = [];
+      $input['rules_id']   = $rules_id;
+      $input['criteria']   = 'name';
+      $input['condition']  = Rule::PATTERN_IS;
+      $input['pattern']    = 'indepnet assoce';
+      $ruleCriteria->add($input);
 
-         $input = [];
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = '_ignore_import';
-         $input['value']         = 1;
-         $ruleAction->add($input);
+      $input                  = [];
+      $input['rules_id']      = $rules_id;
+      $input['action_type']   = 'assign';
+      $input['field']         = 'name';
+      $input['value']         = 'indepnet';
+      $ruleAction->add($input);
+
+      // * Add a rule to explicitly ignore import of a software whose name is
+      // 'glpi'
+      $input               = [];
+      $input['sub_type']   = 'RuleDictionnarySoftware';
+      $input['name']       = 'Ignore glpi software import';
+      $input['match']      = 'AND';
+      $input['is_active']  = 1;
+      $rules_id = $rule->add($input);
+
+      $input               = [];
+      $input['rules_id']   = $rules_id;
+      $input['criteria']   = 'name';
+      $input['condition']  = Rule::PATTERN_IS;
+      $input['pattern']    = 'glpi';
+      $ruleCriteria->add($input);
+
+      $input                  = [];
+      $input['rules_id']      = $rules_id;
+      $input['action_type']   = 'assign';
+      $input['field']         = '_ignore_import';
+      $input['value']         = 1;
+      $ruleAction->add($input);
 
       // * Add rule rename software
-         $input = [];
-         $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi0.85';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input);
+      $input               = [];
+      $input['sub_type']   = 'RuleDictionnarySoftware';
+      $input['name']       = 'Change glpi name';
+      $input['match']      = 'AND';
+      $input['is_active']  = 1;
+      $rules_id = $rule->add($input);
 
-         $input = [];
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'glpi0.85';
-         $ruleCriteria->add($input);
+      $input               = [];
+      $input['rules_id']   = $rules_id;
+      $input['criteria']   = 'name';
+      $input['condition']  = Rule::PATTERN_IS;
+      $input['pattern']    = 'glpi0.85';
+      $ruleCriteria->add($input);
 
-         $input = [];
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'name';
-         $input['value']         = 'glpi';
-         $ruleAction->add($input);
-
-      // * Add rule rename manufacturer
-         $input = [];
-         $input['sub_type']   = 'RuleDictionnaryManufacturer';
-         $input['name']       = 'indepnet';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input);
-
-         $input = [];
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'indepnet assoce';
-         $ruleCriteria->add($input);
-
-         $input = [];
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'name';
-         $input['value']         = 'indepnet';
-         $ruleAction->add($input);
+      $input                  = [];
+      $input['rules_id']      = $rules_id;
+      $input['action_type']   = 'assign';
+      $input['field']         = 'name';
+      $input['value']         = 'glpi';
+      $ruleAction->add($input);
 
       // * Add rule Modify version
-         $input = [];
-         $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi0.85';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input);
+      $input               = [];
+      $input['sub_type']   = 'RuleDictionnarySoftware';
+      $input['name']       = 'Set glpi version';
+      $input['match']      = 'AND';
+      $input['is_active']  = 1;
+      $rules_id = $rule->add($input);
 
-         $input = [];
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'glpi0.85';
-         $ruleCriteria->add($input);
+      $input               = [];
+      $input['rules_id']   = $rules_id;
+      $input['criteria']   = 'name';
+      $input['condition']  = Rule::PATTERN_IS;
+      $input['pattern']    = 'glpi0.85';
+      $ruleCriteria->add($input);
 
-         $input = [];
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'version';
-         $input['value']         = '0.85';
-         $ruleAction->add($input);
+      $input                  = [];
+      $input['rules_id']      = $rules_id;
+      $input['action_type']   = 'assign';
+      $input['field']         = 'version';
+      $input['value']         = '0.85';
+      $ruleAction->add($input);
    }
 
 
@@ -154,7 +155,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
 
       $a_software = [];
       $a_software['SOFTWARES'][] = [
@@ -165,13 +166,16 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
             ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
+      $manufacturer     = new Manufacturer();
+      $manufacturers_id = $manufacturer->getFromDBByCrit(['name' => 'fusioninventory team']);
+      $this->assertGreaterThan(0, $manufacturers_id);
 
       $a_reference = [];
-      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0$$$$0"] = [
+      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"] =[
                'name'                  => 'fusioninventory',
-               'manufacturers_id'      => 1,
+               'manufacturers_id'      => $manufacturers_id,
                'version'               => '0.85+1.0',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -188,6 +192,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
 
    /**
+   * This tests ignore the import of a computer, based on the software dictionnary
     * @test
     */
    public function AddSoftwareIgnore() {
@@ -195,21 +200,21 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusioninventory_entity"] = 1;
-      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $a_software  = [];
+      $a_reference = [];
 
-      $a_software = [];
+      $_SESSION["plugin_fusioninventory_entity"] = 1;
+      $_SESSION["glpiname"]                      = 'Plugin_FusionInventory';
+
       $a_software['SOFTWARES'][] = [
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi',
                 'VERSION'   => '0.85'
-            ];
+               ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-
-      $a_reference = [];
       $a_reference['software'] = [];
 
       $this->assertEquals($a_reference, $a_return);
@@ -240,10 +245,13 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
+      $manufacturer     = new Manufacturer();
+      $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'indepnet']));
+
       $a_reference = [];
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = [
+      $a_reference['software']["glpi$$$$0.85$$$$".$manufacturer->getID()."$$$$0$$$$0"] = [
                'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
+               'manufacturers_id'      => $manufacturer->getID(),
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -278,23 +286,26 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                 'PUBLISHER' => 'indepnet assoce',
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85'
-            ];
+             ];
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
+      $manufacturer     = new Manufacturer();
+      $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'indepnet']));
 
       $a_reference = [];
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = [
+      $a_reference['software']["glpi$$$$0.85$$$$".$manufacturer->getID()."$$$$0$$$$0"] = [
                'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
+               'manufacturers_id'      => $manufacturer->getID(),
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0,
                'is_recursive'          => 0,
-               'operatingsystems_id'   => 0
-            ];
+               'operatingsystems_id'   => 0,
+               '_system_category'      => ''
+      ];
 
       $this->assertEquals($a_reference, $a_return);
 
@@ -324,10 +335,13 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
+      $manufacturer     = new Manufacturer();
+      $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'indepnet']));
+
       $a_reference = [];
-      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0$$$$0"] = [
+      $a_reference['software']["glpi$$$$0.85$$$$".$manufacturer->getID()."$$$$0$$$$0"] = [
                'name'                  => 'glpi',
-               'manufacturers_id'      => '2',
+               'manufacturers_id'      => $manufacturer->getID(),
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -384,10 +398,13 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
+      $manufacturer  = new Manufacturer();
+      $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'Audacity Team']));
+
       $a_reference = [];
-      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0"] = [
+      $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$".$manufacturer->getID()."$$$$0$$$$0"] = [
                'name'                  => 'Audacity 2.0.4',
-               'manufacturers_id'      => 3,
+               'manufacturers_id'      => $manufacturer->getID(),
                'version'               => '2.0.4',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -397,9 +414,12 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'date_install'          => '2013-10-16',
                '_system_category'      => 'application'
             ];
-      $a_reference['software']["autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0"] = [
+
+      $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'AutoIt Team']));
+
+      $a_reference['software']["autoit v3.3.8.1$$$$$$$$".$manufacturer->getID()."$$$$0$$$$0"] = [
                'name'                  => 'AutoIt v3.3.8.1',
-               'manufacturers_id'      => 4,
+               'manufacturers_id'      => $manufacturer->getID(),
                'version'               => '',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -409,8 +429,5 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                '_system_category'      => 'application'
       ];
       $this->assertEquals($a_reference, $a_return);
-
    }
-
-
 }
