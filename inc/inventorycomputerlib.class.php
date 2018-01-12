@@ -84,6 +84,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
 
    /**
+    * Initilize a list of installation that should not be logged
+    *
+    * @var array
+    */
+   var $installationWithoutLogs = array();
+
+   /**
     * __contruct function where initialize many variables
     */
    function __construct() {
@@ -2446,6 +2453,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
+
       $lastSoftwareid  = 0;
       $lastSoftwareVid = 0;
 
@@ -2523,8 +2531,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                      $a_inventory['software'],
                                      $lastSoftwareVid);
          foreach ($a_inventory['software'] as $a_software) {
+            //Get the software ID for the software we're processing
             $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+            //Check if the software version already exists
             if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+               //Software version doesn not exists: let's create it
                $this->addSoftwareVersion($a_software, $softwares_id);
             }
          }
@@ -2533,7 +2544,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $DB->query($queryDBLOCK);
          $a_toinsert = [];
          foreach ($a_inventory['software'] as $a_software) {
+            //Get the software ID for the software we're processing
             $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+            //Get the version ID for the software version we're processing
             $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
             $a_tmp = array(
                 'computers_id'        => $computers_id,
@@ -2542,6 +2555,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                 'entities_id'         => $computer->fields['entities_id'],
                 'date_install'        => 'NULL'
                 );
+            //By default date_install is null: if an install date is provided,
+            //we set it
             if (isset($a_software['date_install'])) {
                $a_tmp['date_install'] = $a_software['date_install'];
             }
@@ -2572,8 +2587,14 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
 
       } else {
+
+         //It's not the first inventory, or not an OS change/upgrade
+
+         //If software exists in DB, do not process it
          foreach ($a_inventory['software'] as $key => $arrayslower) {
+            //Software installation already exists for this computer ?
             if (isset($db_software[$key])) {
+               //It exists: remove the software from the key
                unset($a_inventory['software'][$key]);
                unset($db_software[$key]);
             }
@@ -2588,7 +2609,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                foreach ($db_software as $idtmp) {
                   $this->computerSoftwareVersion->getFromDB($idtmp);
                   $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
-//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), false);
 
                   if (!$no_history) {
                      $changes[0] = '0';
@@ -2695,6 +2715,31 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   }
                }
             }
+         }
+      }
+   }
+
+   /**
+   * Migration software versions without OS
+   * Before 0.90, no OS was added to an installation...
+   *
+   * @since 9.2+.20
+   *
+   */
+   function migratePlatformForVersion(&$a_inventory, &$db_inventory) {
+      //Browe each software in the inventory sent by an agent
+      foreach ($a_inventory['softwares'] as $key => $software) {
+         //Check:
+         //1 - if the software's version doesn't exists with software
+         //    + software_version + manufacturer + entity + OS
+         //2 - If not check if a version exists with software + software version
+         //   + manufacturer + entity + 0 (no OS)
+         if (!isset($db_inventory[$key]) && $db_inventory[$software['comp_key_noos']]) {
+            $this->installationWithoutLogs[] = $software['comp_key_noos'];
+            $this->installationWithoutLogs[] = $key;
+            //$db_inventory[$software[$key]]
+            unset($db_inventory[$software['comp_key_noos']]);
+
          }
       }
    }
