@@ -2007,15 +2007,31 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             break;
 
          case 'target_task':
-            $pfTask->getFromDB($ma->POST['tasks_id']);
+            $computer = new Computer();
+            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+
+            // Get the task and the package
+            $got_task = $pfTask->getFromDB($ma->POST['tasks_id']);
+            $got_package = $pfDeployPackage->getFromDB($ma->POST['packages_id']);
+            if (! $got_package or ! $got_task) {
+               // No task or package provided
+               foreach ($ids as $computer_id) {
+                  $computer->getFromDB($computer_id);
+                  $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
+               }
+               Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
+                  __('You must choose a task and a package to target a task with a deployment package.',
+                     'fusioninventory')), false, ERROR);
+               PluginFusioninventoryToolbox::logIfExtradebug(
+                  "pluginFusioninventory-tasks", "Missing task and/or package for targeting a task"
+               );
+               return;
+            }
+
             PluginFusioninventoryToolbox::logIfExtradebug(
                "pluginFusioninventory-tasks", "Target a task: " . $pfTask->getName() .
                   ", id: " . $pfTask->getId()
             );
-            // Get the required package
-            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-            $pfDeployPackage->getFromDB($ma->POST['packages_id']);
-            $computer = new Computer();
 
             $job_name = __('Deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName();
 
@@ -2055,7 +2071,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      $computer->getFromDB($computer_id);
                      $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
                   }
-//                  $ma->addMessage();
                   Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
                      __('The selected task already has a deployment job for another package: ' . $pfTaskjob->getName(), 'fusioninventory')),
                      false, ERROR);
