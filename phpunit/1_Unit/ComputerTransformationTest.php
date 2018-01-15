@@ -2030,18 +2030,34 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'POWER'   => '700 W',
             'VENDOR'  => 'DELL',
             'IS_ATX'  => 0
+         ),
+         array(
+            'SERIAL'  => 'CN716154CH71A5',
+            'PARTNUM' => '0HTRH4A01',
+            'POWER'   => '700 W',
+            'VENDOR'  => 'DELL',
+            'IS_ATX'  => 0
          )
       );
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
 
-      $a_reference[0] = array(
-         'serial'           => 'CN716154CH13E7',
-         'designation'      => '0HTRH4A01',
-         'power'            => '700 W',
-         'manufacturers_id' => 'DELL',
-         'is_atx'           => ''
+      $a_reference = array(
+         array(
+            'serial'           => 'CN716154CH13E7',
+            'designation'      => '0HTRH4A01',
+            'power'            => '700 W',
+            'manufacturers_id' => 'DELL',
+            'is_atx'           => ''
+         ),
+         array(
+            'serial'           => 'CN716154CH71A5',
+            'designation'      => '0HTRH4A01',
+            'power'            => '700 W',
+            'manufacturers_id' => 'DELL',
+            'is_atx'           => ''
+         )
       );
 
       $this->assertEquals($a_reference, $a_return['powersupply']);

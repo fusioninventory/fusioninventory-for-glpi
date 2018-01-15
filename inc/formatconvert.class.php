@@ -1474,9 +1474,10 @@ class PluginFusioninventoryFormatconvert {
                   'PARTNUM' => 'designation',
                   'POWER'   => 'power',
                   'IS_ATX'  => 'is_atx',
-                  'VENDOR'  => 'manufacturers_id'));
+                  'VENDOR'  => 'manufacturers_id')
+               );
+            $a_inventory['powersupply'][] = $array_tmp;
          }
-         $a_inventory['powersupply'][] = $array_tmp;
       }
 
       $plugin_params = array(
