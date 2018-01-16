@@ -1672,6 +1672,7 @@ class PluginFusioninventoryFormatconvert {
                   //String without the manufacturer
                   $comp_key_noos = strtolower($array_tmp['name']).
                               self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                              self::FI_SOFTWARE_SEPARATOR.$array_tmp['manufacturers_id'].
                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
                               self::FI_SOFTWARE_SEPARATOR.'0';
 
