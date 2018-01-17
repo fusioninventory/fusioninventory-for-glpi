@@ -211,8 +211,6 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
       $tab[17]['datatype']  = 'dropdown';
 
-      $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnmanaged");
-
       return $tab;
    }
 
