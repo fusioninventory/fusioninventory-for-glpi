@@ -208,6 +208,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
 
+      /* Do not display the search result on the current tab
+       * @mohierf: I do not remove this code if this feature is intended to be reactivated...
+       * -----
       // Include pagination parameters in the provided parameters
       foreach ($pagination_params as $key => $value) {
          $search_params[$key] = $value;
@@ -222,6 +225,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       Search::constructDatas($data);
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
       Search::displayDatas($data);
+      */
    }
 
 
