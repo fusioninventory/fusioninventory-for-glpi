@@ -63,4 +63,3 @@ $pfTaskjob->dropdownDefinition(
         filter_input(INPUT_POST, "deftypeid"),
         filter_input(INPUT_POST, "taskjobs_id"));
 
-?>

@@ -44,41 +44,41 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
 
    public $items_id = 0;
    public $datelatupdate = '';
-   public $computer_inventory = array();
+   public $computer_inventory = [];
 
 
    function __construct() {
-      $a_inventory = array(
-          'fusioninventorycomputer' => Array(
+      $a_inventory = [
+          'fusioninventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => date('Y-m-d H:i:s')
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          'computerdisk'   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          'computerdisk'   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-          );
-      $a_inventory['Computer'] = array(
+          ];
+      $a_inventory['Computer'] = [
           'name'                             => 'pc',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
@@ -94,14 +94,13 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
-      );
-      $a_inventory['fusioninventorycomputer'] = array(
+      ];
+      $a_inventory['fusioninventorycomputer'] = [
           'last_fusioninventory_update' => date('Y-m-d H:i:s'),
           'serialized_inventory'        => 'something'
-      );
+      ];
 
-
-      $a_inventory['virtualmachine'][] = array(
+      $a_inventory['virtualmachine'][] = [
           'ram'                      => '1024',
           'name'                     => 'Windows 7',
           'comment'                  => 'comment',
@@ -111,11 +110,10 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           'vcpu'                     => '1',
           'virtualmachinetypes_id'   => 'virtualbox',
           'is_dynamic'               => '1'
-      );
+      ];
 
       $this->computer_inventory = $a_inventory;
    }
-
 
 
    /**
@@ -146,20 +144,19 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-      $this->items_id = $computer->add(array('serial'      => 'XB63J7D',
-                                             'entities_id' => 0));
+      $this->items_id = $computer->add(['serial'      => 'XB63J7D',
+                                             'entities_id' => 0]);
 
-      $this->assertGreaterThan(0, $this->items_id, FALSE);
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, TRUE);
+      $this->assertGreaterThan(0, $this->items_id, false);
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, true);
 
       // To be sure not have 2 same informations
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-
 
 
    /**
@@ -180,8 +177,8 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
          $a_data[$id] = $data;
       }
 
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                       => '1',
                      'entities_id'              => '0',
                      'computers_id'             => '1',
@@ -195,11 +192,10 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
                      'ram'                      => '1024',
                      'is_deleted'               => '0',
                      'is_dynamic'               => '1',
-                 ),
-      );
+                 ],
+      ];
       $this->assertEquals($a_reference, $a_data);
    }
-
 
 
    /**
@@ -225,7 +221,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-      $pfiComputerLib->updateComputer($a_inventory, 1, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, 1, false);
 
       $nbvm = countElementsInTable("glpi_computervirtualmachines");
 
@@ -239,8 +235,8 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
          $a_data[$id] = $data;
       }
 
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                       => '1',
                      'entities_id'              => '0',
                      'computers_id'             => '1',
@@ -254,12 +250,12 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
                      'ram'                      => '2048',
                      'is_deleted'               => '0',
                      'is_dynamic'               => '1',
-                 ),
-      );
+                 ],
+      ];
       $this->assertEquals($a_reference, $a_data);
 
    }
 
+
 }
 
-?>

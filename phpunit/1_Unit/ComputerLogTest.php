@@ -42,7 +42,8 @@
 
 class ComputerLog extends RestoreDatabase_TestCase {
 
-   private $a_inventory = array();
+   private $a_inventory = [];
+
 
    public function testLog() {
       global $DB;
@@ -60,37 +61,37 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $this->a_inventory = array(
-          'fusioninventorycomputer' => Array(
+      $this->a_inventory = [
+          'fusioninventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          'computerdisk'   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'SOFTWARES'      => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          'computerdisk'   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'SOFTWARES'      => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-          );
-      $this->a_inventory['Computer'] = array(
+          ];
+      $this->a_inventory['Computer'] = [
           'name'                             => 'pc',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
@@ -106,10 +107,10 @@ class ComputerLog extends RestoreDatabase_TestCase {
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
-      );
+      ];
 
-      $this->a_inventory['processor'] = Array(
-            Array(
+      $this->a_inventory['processor'] = [
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -118,8 +119,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequency_default' => 2400
-                ),
-            Array(
+                ],
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -128,8 +129,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequency_default' => 2400
-                ),
-            Array(
+                ],
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -138,8 +139,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequency_default' => 2400
-                ),
-            Array(
+                ],
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -148,38 +149,38 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequency_default' => 2400
-                )
-        );
+                ]
+        ];
 
-      $this->a_inventory['memory'] = Array(
-            Array(
+      $this->a_inventory['memory'] = [
+            [
                     'size'                 => 2048,
                     'serial'               => '98F6FF18',
                     'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 1
-                ),
-            Array(
+                ],
+            [
                     'size'                 => 2048,
                     'serial'               => '95F1833E',
                     'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 2
-                )
-        );
+                ]
+        ];
 
-      $this->a_inventory['monitor'] = Array(
-            Array(
+      $this->a_inventory['monitor'] = [
+            [
                     'name'              => '',
                     'serial'            => '',
                     'manufacturers_id'  => ''
-                )
-      );
+                ]
+      ];
 
-      $this->a_inventory['networkport'] = Array(
-            'em0-00:23:18:cf:0d:93' => Array(
+      $this->a_inventory['networkport'] = [
+            'em0-00:23:18:cf:0d:93' => [
                     'name'                 => 'em0',
                     'netmask'              => '255.255.255.0',
                     'subnet'               => '192.168.30.0',
@@ -190,9 +191,9 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'gateway'              => '',
                     'dhcpserver'           => '',
                     'logical_number'       => 0,
-                    'ipaddress'            => Array('192.168.30.198')
-                ),
-            'lo0-' => Array(
+                    'ipaddress'            => ['192.168.30.198']
+                ],
+            'lo0-' => [
                     'name'                 => 'lo0',
                     'virtualdev'           => 1,
                     'mac'                  => '',
@@ -203,12 +204,12 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'netmask'              => '',
                     'dhcpserver'           => '',
                     'logical_number'       => 1,
-                    'ipaddress'            => Array('::1', 'fe80::1', '127.0.0.1')
-                )
-        );
+                    'ipaddress'            => ['::1', 'fe80::1', '127.0.0.1']
+                ]
+        ];
 
-      $this->a_inventory['software'] = Array(
-            'gentiumbasic$$$$110$$$$1$$$$0$$$$0' => Array(
+      $this->a_inventory['software'] = [
+            'gentiumbasic$$$$110$$$$1$$$$0$$$$0' => [
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
@@ -217,8 +218,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'is_deleted_computer'    => 0,
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
-                ),
-            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => Array(
+                ],
+            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => [
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
@@ -227,8 +228,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'is_deleted_computer'    => 0,
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
-                ),
-            'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => Array(
+                ],
+            'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => [
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
@@ -237,8 +238,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'is_deleted_computer'    => 0,
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
-                )
-          );
+                ]
+          ];
 
       $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory, 'Computer', 0);
 
@@ -246,8 +247,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-      $computer->add(array('serial' => 'XB63J7D',
-                           'entities_id' => 0));
+      $computer->add(['serial' => 'XB63J7D',
+                           'entities_id' => 0]);
 
       // truncate glpi_logs
       $DB->query('TRUNCATE TABLE `glpi_logs`;');
@@ -255,7 +256,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $this->assertEquals(0, countElementsInTable('glpi_logs'), "Log must be empty (truncate)");
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, true);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
@@ -264,8 +265,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
          $a_logs[$id] = $data;
       }
 
-      $a_reference = array(
-          1 => array(
+      $a_reference = [
+          1 => [
               'id'               => '1',
               'itemtype'         => 'DeviceProcessor',
               'items_id'         => '1',
@@ -275,8 +276,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          2 => array(
+              ],
+          2 => [
               'id'               => '2',
               'itemtype'         => 'DeviceMemory',
               'items_id'         => '1',
@@ -286,8 +287,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          3 => array(
+              ],
+          3 => [
               'id'               => '3',
               'itemtype'         => 'Software',
               'items_id'         => '1',
@@ -297,8 +298,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          4 => array(
+              ],
+          4 => [
               'id'               => '4',
               'itemtype'         => 'Software',
               'items_id'         => '2',
@@ -308,8 +309,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          5 => array(
+              ],
+          5 => [
               'id'               => '5',
               'itemtype'         => 'Software',
               'items_id'         => '3',
@@ -319,8 +320,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          6 => array(
+              ],
+          6 => [
               'id'               => '6',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '1',
@@ -330,8 +331,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          7 => array(
+              ],
+          7 => [
               'id'               => '7',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '2',
@@ -341,8 +342,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-          8 => array(
+              ],
+          8 => [
               'id'               => '8',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '3',
@@ -352,20 +353,19 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => '',
               'new_value'        => ''
-              ),
-      );
+              ],
+      ];
 
       $this->assertEquals($a_reference, $a_logs, "Log must be 8 ".print_r($a_logs, true));
       $DB->query('TRUNCATE `glpi_logs`');
 
       // Update a second time and must not have any new lines in glpi_logs
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, false);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
-      $a_reference = array();
+      $a_reference = [];
 
       $this->assertEquals($a_reference, $a_logs, "Log may be empty at second update ".print_r($a_logs, true));
-
 
       // * Modify: contact
       // * remove a processor
@@ -375,7 +375,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       unset($this->a_inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0$$$$0']);
 
       $DB->query('TRUNCATE `glpi_logs`');
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, false);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
@@ -383,8 +383,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
          unset($data['date_creation']);
          $a_logs[$id] = $data;
       }
-      $a_reference = array(
-          1 => array(
+      $a_reference = [
+          1 => [
               'id'               => '1',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
@@ -394,8 +394,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '7',
               'old_value'        => 'ddurieux',
               'new_value'        => 'root'
-          ),
-          2 => array(
+          ],
+          2 => [
               'id'               => '2',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
@@ -405,8 +405,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => 'Core i3 (1)',
               'new_value'        => ''
-          ),
-          3 => array(
+          ],
+          3 => [
               'id'               => '3',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
@@ -416,8 +416,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => 'ORBit2 - 2.14.19 (3)',
               'new_value'        => ''
-          ),
-          4 => array(
+          ],
+          4 => [
               'id'               => '4',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '3',
@@ -427,16 +427,17 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'id_search_option' => '0',
               'old_value'        => 'pc (1)',
               'new_value'        => ''
-          )
-      );
+          ]
+      ];
 
       $this->assertEquals($a_reference, $a_logs, "May have 5 logs (update contact, remove processor
          and remove a software)");
 
    }
- }
+
+
+}
 
 
 
 
-?>

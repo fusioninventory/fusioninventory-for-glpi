@@ -69,10 +69,11 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('FusionInventory', 'fusioninventory')
          .' - '._n('License', 'Licenses', $nb);
    }
+
 
    /**
     * Display form
@@ -94,8 +95,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
          echo '<table class="tab_cadre_fixe">';
          echo '<tr>';
-         echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory')
-            .' - '.self::getTypeName($iterator->numrows()).'</th>';
+         echo '<th colspan="4">'.self::getTypeName($iterator->numrows()).'</th>';
          echo '</tr>';
 
          foreach ($iterator as $licenseInfo) {
@@ -120,7 +120,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   ."&nbsp;(".implode(', ', $options).")";
             }
             echo "<td>";
-            if (!isset($licenseInfo['fullname'])) {
+            if (!empty($licenseInfo['fullname'])) {
                echo $licenseInfo['fullname'];
             } else {
                echo $licenseInfo['name'];
@@ -176,7 +176,6 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    }
 
 
-
    /**
     * Dropdown of software licenses found with information given
     *
@@ -221,7 +220,6 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    }
 
 
-
    /**
     * Associate a license found on computer and a license managed in GLPI
     *
@@ -250,6 +248,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       }
    }
 
+
    /**
     * Dissociate a license found on computer and a license managed in GLPI
     *
@@ -273,6 +272,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       }
    }
 
+
    /**
     * Delete all licenses linked to the computer (most cases when delete a
     * computer)
@@ -283,6 +283,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       $license = new self();
       $license->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * Delete all licenses linked to the computer (most cases when delete a
@@ -300,6 +301,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          $pfLicenseInfo->update(['id' => $lic['id'], 'softwarelicenses_id' => 0]);
       }
    }
+
+
 }
 
-?>

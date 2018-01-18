@@ -73,22 +73,22 @@ if (isset ($_POST["add"])) {
       $task = new PluginFusioninventoryTask();
       $taskjob = new PluginFusioninventoryTaskjob();
       $task->getFromDB($_POST['task_id']);
-      $input_task = array();
+      $input_task = [];
       $input_task['id'] = $task->fields['id'];
       $taskjob->getFromDB($_POST['taskjob_id']);
-      $input_taskjob                   = array();
+      $input_taskjob                   = [];
       $input_taskjob['id']             = $taskjob->fields['id'];
       $input_task["is_active"]         = $_POST['is_active'];
       $input_task["periodicity_count"] = $_POST['periodicity_count'];
       $input_task["periodicity_type"]  = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
-         $a_actionDB                                 = array();
+         $a_actionDB                                 = [];
          $a_actionDB[]['PluginFusioninventoryAgent'] = $_POST['action'];
          $input_taskjob["action"]                    = exportArrayToDB($a_actionDB);
       } else {
          $input_taskjob["action"] = '';
       }
-      $a_definition = array();
+      $a_definition = [];
       $a_definition[]['PluginFusioninventoryIPRange'] = $_POST['iprange'];
       $input_taskjob['definition'] = exportArrayToDB($a_definition);
       $input_task["communication"] = $_POST['communication'];
@@ -109,7 +109,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["purge"])) {
    if (isset($_POST['communication'])) {
       $task = new PluginFusioninventoryTask();
-      $task->delete(array('id' => $_POST['task_id']), 1);
+      $task->delete(['id' => $_POST['task_id']], 1);
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
       Html::back();
    } else {
@@ -129,8 +129,7 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
-$iprange->display(array('id' => $id));
+$iprange->display(['id' => $id]);
 
 Html::footer();
 
-?>

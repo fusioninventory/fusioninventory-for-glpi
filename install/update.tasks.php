@@ -45,6 +45,7 @@
  *
  */
 
+
 /**
  * Manage update the task system
  *
@@ -52,93 +53,91 @@
  * @param object $migration
  * @param integer $plugin_id
  */
-function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
+function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
    global $DB;
 
    /*
     * Table glpi_plugin_fusioninventory_tasks
     */
-   $table = array();
+   $table = [];
    $table['name'] = 'glpi_plugin_fusioninventory_tasks';
-   $table['oldname'] = array();
+   $table['oldname'] = [];
 
-   $table['fields']  = array(
-      'id' => array(
+   $table['fields']  = [
+      'id' => [
          'type'    => 'autoincrement',
          'value'   => ''
-      ),
-      'entities_id' => array(
+      ],
+      'entities_id' => [
          'type'    => 'integer',
-         'value'   => NULL
-      ),
-      'name' => array(
+         'value'   => null
+      ],
+      'name' => [
          'type'    => 'string',
-         'value'   => NULL
-      ),
-      'date_creation' => array(
+         'value'   => null
+      ],
+      'date_creation' => [
          'type'    => 'datetime',
-         'value'   => NULL
-      ),
-      'comment'    => array(
+         'value'   => null
+      ],
+      'comment'    => [
          'type'    => 'text',
-         'value'   => NULL
-      ),
-      'is_active'  => array(
+         'value'   => null
+      ],
+      'is_active'  => [
          'type'    => 'bool',
-         'value'   => NULL
-      ),
-      'datetime_start' => array(
+         'value'   => null
+      ],
+      'datetime_start' => [
          'type'    => 'datetime',
-         'value'   => NULL
-      ),
-      'datetime_end' => array(
+         'value'   => null
+      ],
+      'datetime_end' => [
          'type'    => 'datetime',
-         'value'   => NULL
-      ),
-      'plugin_fusioninventory_timeslots_prep_id' => array(
+         'value'   => null
+      ],
+      'plugin_fusioninventory_timeslots_prep_id' => [
          'type'    => 'integer',
-         'value'   => NULL
-      ),
-      'plugin_fusioninventory_timeslots_exec_id' => array(
+         'value'   => null
+      ],
+      'plugin_fusioninventory_timeslots_exec_id' => [
          'type'    => 'integer',
-         'value'   => NULL
-      ),
-   );
+         'value'   => null
+      ],
+   ];
 
-   $table['oldfields'] = array(
+   $table['oldfields'] = [
       "communication",
       "permanent",
       "periodicity_count",
       "periodicity_type",
       "execution_id",
       "is_advancedmode"
-   );
+   ];
 
-   $table['renamefields'] = array(
+   $table['renamefields'] = [
       'date_scheduled'                      => 'datetime_start',
       'plugin_fusioninventory_timeslots_id' => 'plugin_fusioninventory_timeslots_prep_id'
-   );
+   ];
 
-   $table['keys']   = array();
-   $table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
-   $table['keys'][] = array('field' => 'is_active', 'name' => '', 'type' => 'INDEX');
-   $table['keys'][] = array('field' => 'plugin_fusioninventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX');
-   $table['keys'][] = array('field' => 'plugin_fusioninventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX');
+   $table['keys']   = [];
+   $table['keys'][] = ['field' => 'entities_id', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'is_active', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'plugin_fusioninventory_timeslots_prep_id', 'name' => '', 'type' => 'INDEX'];
+   $table['keys'][] = ['field' => 'plugin_fusioninventory_timeslots_exec_id', 'name' => '', 'type' => 'INDEX'];
 
-   $table['oldkeys'] = array();
+   $table['oldkeys'] = [];
 
    migrateTablesFusionInventory($migration, $table);
-
-
 
    /*
     * Table glpi_plugin_fusioninventory_taskjobs
     */
-   $table = array();
+   $table = [];
    $table['name'] = 'glpi_plugin_fusioninventory_taskjobs';
-   $table['oldname'] = array();
+   $table['oldname'] = [];
 
-   $table['oldfields'] = array(
+   $table['oldfields'] = [
       'retry_nb',
       'retry_time',
       'plugins_id',
@@ -149,147 +148,156 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
       'periodicity_type',
       'execution_id',
       'ranking'
-   );
+   ];
 
-   $table['renamefields'] = array(
+   $table['renamefields'] = [
       'definition' => 'targets',
       'action' => 'actors'
-   );
+   ];
 
-   $table['fields'] = array(
-      'id' => array(
+   $table['fields'] = [
+      'id' => [
          'type'    => 'autoincrement',
          'value'   => ''
-      ),
-      'plugin_fusioninventory_tasks_id' => array(
+      ],
+      'plugin_fusioninventory_tasks_id' => [
          'type'    => 'integer',
-         'value'   => NULL
-      ),
-      'entities_id' => array(
+         'value'   => null
+      ],
+      'entities_id' => [
          'type'    => 'integer',
-         'value'   => NULL
-      ),
-      'name' => array(
+         'value'   => null
+      ],
+      'name' => [
          'type'    => 'string',
-         'value'   => NULL
-      ),
-      'date_creation' => array(
+         'value'   => null
+      ],
+      'date_creation' => [
          'type'    => 'datetime',
-         'value'   => NULL
-      ),
-      'method' => array(
+         'value'   => null
+      ],
+      'method' => [
          'type'    => 'string',
-         'value'   => NULL
-      ),
-      'targets' => array(
+         'value'   => null
+      ],
+      'targets' => [
          'type'    => 'text',
-         'value'   => NULL
-      ),
-      'actors' => array(
+         'value'   => null
+      ],
+      'actors' => [
          'type'    => 'text',
-         'value'   => NULL
-      ),
-      'comment' => array(
+         'value'   => null
+      ],
+      'comment' => [
          'type'    => 'text',
-         'value'   => NULL
-      )
-   );
+         'value'   => null
+      ]
+   ];
 
-
-   $table['keys']   = array();
-   $table['keys'][] = array(
+   $table['keys']   = [];
+   $table['keys'][] = [
       'field' => 'plugin_fusioninventory_tasks_id',
       'name' => '', 'type' => 'INDEX'
-   );
-   $table['keys'][] = array(
+   ];
+   $table['keys'][] = [
       'field' => 'entities_id',
       'name' => '',
       'type' => 'INDEX'
-   );
-   $table['keys'][] = array(
+   ];
+   $table['keys'][] = [
       'field' => 'method',
       'name' => '',
       'type' => 'INDEX'
-   );
+   ];
 
-   $table['oldkeys'] = array(
+   $table['oldkeys'] = [
       'plugins_id',
       'users_id',
       'rescheduled_taskjob_id'
-   );
+   ];
 
    migrateTablesFusionInventory($migration, $table);
 
    // * Update method name changed
-   $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-      SET `method`='InventoryComputerESX'
-      WHERE `method`='ESX'");
-   $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-      SET `method`='networkinventory'
-      WHERE `method`='snmpinventory'");
-   $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-      SET `method`='networkdiscovery'
-      WHERE `method`='netdiscovery'");
-
-
+   $DB->update(
+      'glpi_plugin_fusioninventory_taskjobs', [
+         'method' => 'InventoryComputerESX'
+      ], [
+         'method' => 'ESX'
+      ]
+   );
+   $DB->update(
+      'glpi_plugin_fusioninventory_taskjobs', [
+         'method' => 'networkinventory'
+      ], [
+         'method' => 'snmpinventory'
+      ]
+   );
+   $DB->update(
+      'glpi_plugin_fusioninventory_taskjobs', [
+         'method' => 'networkdiscovery'
+      ], [
+         'method' => 'netdiscovery'
+      ]
+   );
 
    /*
     * Table glpi_plugin_fusioninventory_taskjoblogs
     */
-   $table = array();
+   $table = [];
    $table['name'] = 'glpi_plugin_fusioninventory_taskjoblogs';
-   $table['oldname'] = array();
+   $table['oldname'] = [];
 
-   $table['fields']  = array(
-      'id' => array(
+   $table['fields']  = [
+      'id' => [
          'type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
          'value' => ''
-      ),
-      'plugin_fusioninventory_taskjobstates_id' => array(
+      ],
+      'plugin_fusioninventory_taskjobstates_id' => [
          'type' => 'integer',
-         'value' => NULL
-      ),
-      'date' => array(
+         'value' => null
+      ],
+      'date' => [
          'type' => 'datetime',
-         'value' => NULL
-      ),
-      'items_id' => array(
+         'value' => null
+      ],
+      'items_id' => [
          'type' => 'integer',
-         'value' => NULL
-      ),
-      'itemtype' => array(
+         'value' => null
+      ],
+      'itemtype' => [
          'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
-         'value' => NULL
-      ),
-      'state' => array(
+         'value' => null
+      ],
+      'state' => [
          'type' => 'integer',
-         'value' => NULL
-      ),
-      'comment' => array(
+         'value' => null
+      ],
+      'comment' => [
          'type' => 'text',
-         'value' => NULL
-      )
-   );
+         'value' => null
+      ]
+   ];
 
-   $table['oldfields']  = array();
+   $table['oldfields']  = [];
 
-   $table['renamefields'] = array(
+   $table['renamefields'] = [
       'plugin_fusioninventory_taskjobstatus_id' => 'plugin_fusioninventory_taskjobstates_id'
-   );
+   ];
 
-   $table['keys']   = array(
-      array('field' => array('plugin_fusioninventory_taskjobstates_id', 'state', 'date'),
-      'name' => 'plugin_fusioninventory_taskjobstates_id', 'type' => 'INDEX')
-   );
+   $table['keys']   = [
+      ['field' => ['plugin_fusioninventory_taskjobstates_id', 'state', 'date'],
+      'name' => 'plugin_fusioninventory_taskjobstates_id', 'type' => 'INDEX']
+   ];
 
-   $table['oldkeys'] = array(
+   $table['oldkeys'] = [
       'plugin_fusioninventory_taskjobstatus_id'
-   );
+   ];
 
    migrateTablesFusionInventory($migration, $table);
 
    // rename comments for new lang system (gettext in 0.84)
-   $texts = array(
+   $texts = [
       'fusinvsnmp::1' => 'devicesqueried',
       'fusinvsnmp::2' => 'devicesfound',
       'fusinvsnmp::3' => 'diconotuptodate',
@@ -300,97 +308,127 @@ function pluginFusioninventoryUpdateTasks($migration , $plugin_id) {
       'fusioninventory::1' => 'badtoken',
       'fusioninventory::2' => 'agentcrashed',
       'fusioninventory::3' => 'importdenied'
-   );
-   $query = "SELECT * FROM `".$table['name']."`
-      WHERE `comment` LIKE '%==%'";
-   $result=$DB->query($query);
-   while ($data=$DB->fetch_array($result)) {
-      $comment = $data['comment'];
-      foreach ($texts as $key=>$value) {
-         $comment = str_replace("==".$key."==", "==".$value."==", $comment);
+   ];
+
+   $iterator = $DB->request([
+      'FROM'   => $table['name'],
+      'WHERE'  => ['comment' => ['LIKE', '%==%']]
+   ]);
+   if (count($iterator)) {
+      $update = $DB->buildUpdate(
+         $table['name'], [
+            'comment'   => new \QueryParam()
+         ], [
+            'id'        => new \QueryParam()
+         ]
+      );
+      $stmt = $DB->prepare($update);
+      while ($data = $iterator->next()) {
+         $comment = $data['comment'];
+         foreach ($texts as $key=>$value) {
+            $comment = str_replace("==".$key."==", "==".$value."==", $comment);
+         }
+
+         $comment = $DB->escape($comment);
+         $stmt->bind_param(
+            'ss',
+            $comment,
+            $data['id']
+         );
       }
-      $DB->query("UPDATE `".$table['name']."`
-         SET `comment`='".$DB->escape($comment)."'
-         WHERE `id`='".$data['id']."'");
+      mysqli_stmt_close($stmt);
    }
 
    /*
     * Table glpi_plugin_fusioninventory_taskjobstates
     */
-   $table = array();
+   $table = [];
    $table['name'] = 'glpi_plugin_fusioninventory_taskjobstates';
-   $table['oldname'] = array(
+   $table['oldname'] = [
       'glpi_plugin_fusioninventory_taskjobstatus'
-   );
+   ];
 
-   $table['fields'] = array(
-      'id' => array(
+   $table['fields'] = [
+      'id' => [
          'type' => 'bigint(20) not null auto_increment',
          'value' => '0'
-      ),
-      'plugin_fusioninventory_taskjobs_id' => array(
+      ],
+      'plugin_fusioninventory_taskjobs_id' => [
          'type' => 'integer',
-         'value' => NULL
-      ),
-      'items_id' => array(
+         'value' => null
+      ],
+      'items_id' => [
          'type' => 'integer',
-         'value' => NULL
-      ),
-      'itemtype' => array(
+         'value' => null
+      ],
+      'itemtype' => [
          'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
          'value' => null
-      ),
-      'plugin_fusioninventory_agents_id' => array(
+      ],
+      'plugin_fusioninventory_agents_id' => [
          'type' => 'integer',
-         'value' => NULL
-      ),
-      'specificity' => array(
+         'value' => null
+      ],
+      'specificity' => [
          'type' => 'text',
          'value' => null
-      ),
-      'uniqid' => array(
+      ],
+      'uniqid' => [
          'type' => 'string',
          'value' => null
-      ),
-      'state' => array(
+      ],
+      'state' => [
          'type' => 'integer',
-         'value' => NULL
-      )
-   );
+         'value' => null
+      ],
+      'date_start' => [
+         'type' => 'datetime',
+         'value' => null
+      ],
+      'nb_retry' => [
+         'type' => 'integer',
+         'value' => 0
+      ],
+      'max_retry' => [
+         'type' => 'integer',
+         'value' => 1
+      ]
+   ];
 
-   $table['renamefields'] = array();
-   $table['oldfields'] = array(
+   $table['renamefields'] = [];
+   $table['oldfields'] = [
       'execution_id'
-   );
+   ];
 
-   $table['keys'] = array(
-      array(
-         'field' => array(
+   $table['keys'] = [
+      [
+         'field' => [
             'plugin_fusioninventory_taskjobs_id'
-         ),
+         ],
          'name' => '', 'type' => 'INDEX'
-      ),
-      array(
-         'field' => array(
+      ],
+      [
+         'field' => [
             'plugin_fusioninventory_agents_id',
             'state'
-         ),
+         ],
          'name' => '', 'type' => 'INDEX'
-      ),
-      array(
-         'field' => array(
+      ],
+      [
+         'field' => [
             'plugin_fusioninventory_agents_id',
             'plugin_fusioninventory_taskjobs_id',
             'items_id',
             'itemtype',
             'id',
             'state'
-         ),
+         ],
          'name' => 'plugin_fusioninventory_agents_items_states',
          'type' => 'INDEX'
-      ),
-   );
-   $table['oldkeys'] = array();
+      ]
+
+   ];
+   $table['oldkeys'] = [];
    migrateTablesFusionInventory($migration, $table);
 
 }

@@ -69,10 +69,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return _n('Blacklist', 'Blacklists', $nb);
    }
-
 
 
    /**
@@ -82,10 +81,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('BlackList');
-
 
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'value';
@@ -103,18 +101,17 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    }
 
 
-
    /**
     * Define tabs to display on form page
     *
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
+   function defineTabs($options = []) {
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
 
-      $ong = array();
+      $ong = [];
       $i = 1;
       $fields = $pfInventoryComputerCriteria->find("");
       foreach ($fields as $data) {
@@ -125,7 +122,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    }
 
 
-
    /**
     * Display form for blacklist
     *
@@ -133,7 +129,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($items_id, $options=array()) {
+   function showForm($items_id, $options = []) {
 
       if ($items_id!='') {
          $this->getFromDB($items_id);
@@ -146,21 +142,20 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('blacklisted value', 'fusioninventory')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this,'value');
+      Html::autocompletionTextField($this, 'value');
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
       Dropdown::show('PluginFusioninventoryInventoryComputerCriteria',
-                     array('name' => 'plugin_fusioninventory_criterium_id',
-                           'value' => $this->fields['plugin_fusioninventory_criterium_id']));
+                     ['name' => 'plugin_fusioninventory_criterium_id',
+                           'value' => $this->fields['plugin_fusioninventory_criterium_id']]);
       echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons();
 
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -175,7 +170,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $fields = $pfInventoryComputerCriteria->find("");
       foreach ($fields as $id=>$data) {
 
-         switch($data['comment']) {
+         switch ($data['comment']) {
 
             case 'ssn':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
@@ -236,7 +231,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                }
                break;
 
-           case 'winProdKey':
+            case 'winProdKey':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
@@ -248,7 +243,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                }
               break;
 
-           case 'smodel':
+            case 'smodel':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
@@ -280,46 +275,46 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
             case 'storagesSerial':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
-//               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
-//                  if (isset($arrayinventory['CONTENT']['STORAGES'])) {
-//                     foreach ($arrayinventory['CONTENT']['STORAGES'] as $key=>$storage) {
-//                        if ((isset($storage['SERIALNUMBER']))
-//                                AND ($storage['SERIALNUMBER'] == $blacklist_data['value'])) {
-//                           $arrayinventory['CONTENT']['STORAGES'][$key]['SERIALNUMBER'] = "";
-//                        }
-//                     }
-//                  }
-//               }
+               //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
+               //                  if (isset($arrayinventory['CONTENT']['STORAGES'])) {
+               //                     foreach ($arrayinventory['CONTENT']['STORAGES'] as $key=>$storage) {
+               //                        if ((isset($storage['SERIALNUMBER']))
+               //                                AND ($storage['SERIALNUMBER'] == $blacklist_data['value'])) {
+               //                           $arrayinventory['CONTENT']['STORAGES'][$key]['SERIALNUMBER'] = "";
+               //                        }
+               //                     }
+               //                  }
+               //               }
               break;
 
-           case 'drivesSerial':
+            case 'drivesSerial':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
-//               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
-//                  if (isset($arrayinventory['CONTENT']['DRIVES'])) {
-//                     foreach ($arrayinventory['CONTENT']['DRIVES'] as $key=>$drive) {
-//                        if ((isset($drive['SERIAL']))
-//                                AND ($drive['SERIAL'] == $blacklist_data['value'])) {
-//                           $arrayinventory['CONTENT']['DRIVES'][$key]['SERIAL'] = "";
-//                        }
-//                     }
-//                  }
-//               }
+               //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
+               //                  if (isset($arrayinventory['CONTENT']['DRIVES'])) {
+               //                     foreach ($arrayinventory['CONTENT']['DRIVES'] as $key=>$drive) {
+               //                        if ((isset($drive['SERIAL']))
+               //                                AND ($drive['SERIAL'] == $blacklist_data['value'])) {
+               //                           $arrayinventory['CONTENT']['DRIVES'][$key]['SERIAL'] = "";
+               //                        }
+               //                     }
+               //                  }
+               //               }
               break;
 
-           case 'assetTag':
+            case 'assetTag':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
-//               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
-//                  if ((isset($arrayinventory['CONTENT']['BIOS']['ASSETTAG']))
-//                          AND ($arrayinventory['CONTENT']['BIOS']['ASSETTAG'] ==
-//                               $blacklist_data['value'])) {
-//                     $arrayinventory['CONTENT']['BIOS']['ASSETTAG'] = "";
-//                  }
-//               }
+               //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
+               //                  if ((isset($arrayinventory['CONTENT']['BIOS']['ASSETTAG']))
+               //                          AND ($arrayinventory['CONTENT']['BIOS']['ASSETTAG'] ==
+               //                               $blacklist_data['value'])) {
+               //                     $arrayinventory['CONTENT']['BIOS']['ASSETTAG'] = "";
+               //                  }
+               //               }
               break;
 
-           case 'manufacturer':
+            case 'manufacturer':
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
@@ -393,6 +388,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       }
       return $a_computerinventory;
    }
+
+
 }
 
-?>

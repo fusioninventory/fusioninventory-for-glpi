@@ -52,7 +52,7 @@ $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
 
 if (isset($_POST['type_to_add'])) {
    foreach ($_POST['type_to_add'] as $id) {
-      $input = array();
+      $input = [];
       $input['id'] = $id;
       $input['import'] = 1;
       $pfNetworkporttype->update($input);
@@ -60,7 +60,7 @@ if (isset($_POST['type_to_add'])) {
    Html::back();
 } else if (isset($_POST['type_to_delete'])) {
    foreach ($_POST['type_to_delete'] as $id) {
-      $input = array();
+      $input = [];
       $input['id'] = $id;
       $input['import'] = 0;
       $pfNetworkporttype->update($input);
@@ -68,4 +68,3 @@ if (isset($_POST['type_to_add'])) {
    Html::back();
 }
 
-?>

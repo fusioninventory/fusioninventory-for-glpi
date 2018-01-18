@@ -42,9 +42,9 @@
 
 class FusinvDB extends PHPUnit_Framework_Assert{
 
-   public function checkInstall($pluginname='', $when='') {
-      global $DB;
 
+   public function checkInstall($pluginname = '', $when = '') {
+      global $DB;
 
       if ($pluginname == '') {
          return;
@@ -56,12 +56,12 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $file_content = file_get_contents(GLPI_ROOT."/plugins/".$pluginname."/install/mysql/".$comparaisonSQLFile);
       $a_lines = explode("\n", $file_content);
 
-      $a_tables_ref = array();
+      $a_tables_ref = [];
       $current_table = '';
       foreach ($a_lines as $line) {
          if (strstr($line, "CREATE TABLE ")
                  OR strstr($line, "CREATE VIEW")) {
-            $matches = array();
+            $matches = [];
             preg_match("/`(.*)`/", $line, $matches);
             $current_table = $matches[1];
          } else {
@@ -76,14 +76,14 @@ class FusinvDB extends PHPUnit_Framework_Assert{
          }
       }
 
-     // * Get tables from MySQL
-     $a_tables_db = array();
-     $a_tables = array();
-     // SHOW TABLES;
-     $query = "SHOW TABLES";
-     $result = $DB->query($query);
-     while ($data=$DB->fetch_array($result)) {
-        if ((strstr($data[0], "tracker")
+      // * Get tables from MySQL
+      $a_tables_db = [];
+      $a_tables = [];
+      // SHOW TABLES;
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if ((strstr($data[0], "tracker")
                 OR strstr($data[0], 'fusioninventory')
                 OR strstr($data[0], 'fusinvinventory')
                 OR strstr($data[0], 'fusinvsnmp')
@@ -94,10 +94,10 @@ class FusinvDB extends PHPUnit_Framework_Assert{
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbdevices"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))) {
 
-            $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
-            $data[0] = str_replace("( ", "(", $data[0]);
-            $data[0] = str_replace(" )", ")", $data[0]);
-            $a_tables[] = $data[0];
+             $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
+             $data[0] = str_replace("( ", "(", $data[0]);
+             $data[0] = str_replace(" )", ")", $data[0]);
+             $a_tables[] = $data[0];
          }
       }
 
@@ -110,21 +110,44 @@ class FusinvDB extends PHPUnit_Framework_Assert{
             foreach ($a_lines as $line) {
                if (strstr($line, "CREATE TABLE ")
                        OR strstr($line, "CREATE VIEW")) {
-                  $matches = array();
+                  $matches = [];
                   preg_match("/`(.*)`/", $line, $matches);
                   $current_table = $matches[1];
                } else {
                   if (preg_match("/^`/", trim($line))) {
                      $s_line = explode("`", $line);
                      $s_type = explode("COMMENT", $s_line[2]);
-                     $s_type[0] = trim($s_type[0]);
-                     $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
-                     $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
-                     $s_type[0] = str_replace(",", "", $s_type[0]);
+                     $s_type[0] = str_replace(
+                        [
+                           " COLLATE utf8_unicode_ci",
+                           " CHARACTER SET utf8",
+                           ',',
+                        ], [
+                           '',
+                           '',
+                           '',
+                        ],
+                        trim($s_type[0])
+                     );
+                     //Mariadb 10.2 will return current_timestamp()
+                     //while older retuns CURRENT_TIMESTAMP...
+                     $s_type[0] = preg_replace(
+                        '/ CURRENT_TIMESTAMP$/',
+                        ' CURRENT_TIMESTAMP()',
+                        $s_type[0]
+                     );
+                     //Mariadb 10.2 allow default vlues on longblob
+                     //while older retuns CURRENT_TIMESTAMP...
+                     $s_type[0] = preg_replace(
+                        '/^longblob$/',
+                        'longblob DEFAULT NULL',
+                        $s_type[0]
+                     );
                      if (trim($s_type[0]) == 'text'
                         || trim($s_type[0]) == 'longtext') {
                         $s_type[0] .= ' DEFAULT NULL';
                      }
+                     $s_type[0] = preg_replace("/(DEFAULT) ([-|+]?\d+)/", "$1 '$2'", $s_type[0]);
                      $a_tables_db[$current_table][$s_line[1]] = $s_type[0];
                   }
                }
@@ -132,11 +155,11 @@ class FusinvDB extends PHPUnit_Framework_Assert{
          }
       }
 
-      $a_tables_ref_tableonly = array();
+      $a_tables_ref_tableonly = [];
       foreach ($a_tables_ref as $table=>$data) {
          $a_tables_ref_tableonly[] = $table;
       }
-      $a_tables_db_tableonly = array();
+      $a_tables_db_tableonly = [];
       foreach ($a_tables_db as $table=>$data) {
          $a_tables_db_tableonly[] = $table;
       }
@@ -146,21 +169,21 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $tables_toadd = array_diff($a_tables_ref_tableonly, $a_tables_db_tableonly);
 
       // See tables missing or to delete
-      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.$when.' '.print_r($tables_toadd, TRUE));
-      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.$when.' '.print_r($tables_toremove, TRUE));
+      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.$when.' '.print_r($tables_toadd, true));
+      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.$when.' '.print_r($tables_toremove, true));
 
       // See if fields are same
       foreach ($a_tables_db as $table=>$data) {
          if (isset($a_tables_ref[$table])) {
-            $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
-            $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
+            $fields_toremove = array_udiff_assoc($data, $a_tables_ref[$table], 'strcasecmp');
+            $fields_toadd = array_udiff_assoc($a_tables_ref[$table], $data, 'strcasecmp');
             $diff = "======= DB ============== Ref =======> ".$table."\n";
-            $diff .= print_r($data, TRUE);
-            $diff .= print_r($a_tables_ref[$table], TRUE);
+            $diff .= print_r($data, true);
+            $diff .= print_r($a_tables_ref[$table], true);
 
             // See tables missing or to delete
-            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$when.' '.$table.' '.print_r($fields_toadd, TRUE)." into ".$diff);
-            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$when.' '.$table.' '.print_r($fields_toremove, TRUE)." into ".$diff);
+            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$when.' '.$table.' '.print_r($fields_toadd, true)." into ".$diff);
+            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$when.' '.$table.' '.print_r($fields_toremove, true)." into ".$diff);
 
          }
       }
@@ -198,12 +221,10 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 0, 'ESX module may be renommed in InventoryComputerESX');
 
-
-//      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
-//         WHERE `modulename`='DEPLOY'";
-//      $result = $DB->query($query);
-//      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
-
+      //      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
+      //         WHERE `modulename`='DEPLOY'";
+      //      $result = $DB->query($query);
+      //      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
 
       /*
        * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
@@ -230,9 +251,8 @@ class FusinvDB extends PHPUnit_Framework_Assert{
               'Cron cleannetworkportlogs not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryAgentWakeup', 'wakeupAgents'),
               'Cron wakeupAgents not created');
-     $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand'),
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand'),
               'Cron cleanondemand not created');
-
 
       /*
        * Verify config fields added
@@ -293,7 +313,6 @@ class FusinvDB extends PHPUnit_Framework_Assert{
 
       // TODO : test glpi_displaypreferences, rules, SavedSearch...
 
-
       /*
        * Verify table glpi_plugin_fusioninventory_inventorycomputercriterias
        * have right 10 lines
@@ -303,7 +322,6 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $this->assertEquals($DB->numrows($result), 11, "Number of criteria not right in table".
               " glpi_plugin_fusioninventory_inventorycomputercriterias ".$when);
 
-
       /*
        * Verify table `glpi_plugin_fusioninventory_inventorycomputerstats` filed with data
        */
@@ -312,6 +330,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_fusioninventory_inventorycomputerstats` not empty");
 
    }
+
+
 }
 
-?>

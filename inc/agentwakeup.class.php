@@ -69,10 +69,9 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Job', 'fusioninventory');
    }
-
 
 
    /**
@@ -85,11 +84,12 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    }
 
 
-
    /*
     * @function cronWakeupAgents
     * This function update already running tasks with dynamic groups
     */
+
+
    /**
     * Cron task: wake up agents. Configuration is in each tasks
     *
@@ -100,8 +100,8 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
    static function cronWakeupAgents($crontask) {
       global $DB;
 
-      $wakeupArray = array();
-      $tasks       = array();
+      $wakeupArray = [];
+      $tasks       = [];
       //Get the maximum number of agent to wakeup,
       //as allowed in the general configuration
       $config      = new PluginFusioninventoryConfig();
@@ -182,10 +182,13 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       $wokeup = 0;
       if (!empty($tasks)) {
          //Update last wake up time each task
-         $query_lastrun = "UPDATE `glpi_plugin_fusioninventory_tasks`
-                           SET `last_agent_wakeup`='".$_SESSION['glpi_currenttime']."'
-                           WHERE `id` IN (".implode(",", $tasks).")";
-         $DB->query($query_lastrun);
+         $DB->update(
+            'glpi_plugin_fusioninventory_tasks', [
+               'last_agent_wakeup' => $_SESSION['glpi_currenttime']
+            ], [
+               'id' => [$tasks]
+            ]
+         );
 
          $agent  = new PluginFusioninventoryAgent();
          //Try to wake up agents one by one
@@ -198,8 +201,8 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       }
 
       $crontask->addVolume($wokeup);
-      return TRUE;
+      return true;
    }
-}
 
-?>
+
+}

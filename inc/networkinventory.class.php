@@ -71,8 +71,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfIPRange = new PluginFusioninventoryIPRange();
       $pfAgent = new PluginFusioninventoryAgent();
-      $a_specificity = array();
-      $a_specificity['DEVICE'] = array();
+      $a_specificity = [];
+      $a_specificity['DEVICE'] = [];
 
       $uniqid = uniqid();
 
@@ -93,18 +93,17 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       // get all snmpauth
       $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
 
-
       // get items_id by type
-      $a_iprange = array();
-      $a_NetworkEquipment = array();
-      $a_Printer = array();
+      $a_iprange = [];
+      $a_NetworkEquipment = [];
+      $a_Printer = [];
       $communication = $pfTask->fields['communication'];
       $a_definition = importArrayFromDB($pfTaskjob->fields['definition']);
       foreach ($a_definition as $datas) {
          $itemtype = key($datas);
          $items_id = current($datas);
 
-         switch($itemtype) {
+         switch ($itemtype) {
 
             case 'PluginFusioninventoryIPRange':
                $a_iprange[] = $items_id;
@@ -134,7 +133,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $result=$DB->query($query);
                while ($data=$DB->fetch_array($result)) {
                   if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
-                     $input = array();
+                     $input = [];
                      $input['TYPE'] = 'NETWORKING';
                      $input['ID'] = $data['gID'];
                      $input['IP'] = $data['gnifaddr'];
@@ -169,7 +168,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $result=$DB->query($query);
                while ($data=$DB->fetch_array($result)) {
                   if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
-                     $input = array();
+                     $input = [];
                      $input['TYPE'] = 'PRINTER';
                      $input['ID'] = $data['gID'];
                      $input['IP'] = $data['gnifaddr'];
@@ -186,7 +185,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       // Get all devices on each iprange
       foreach ($a_iprange as $items_id) {
          $pfIPRange->getFromDB($items_id);
-      // Search NetworkEquipment
+         // Search NetworkEquipment
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                             `glpi_ipaddresses`.`name` AS `gnifaddr`,
                             `plugin_fusioninventory_configsecurities_id`,
@@ -219,18 +218,18 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $query .= " GROUP BY `glpi_networkequipments`.`id`";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-           if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
-              $input = array();
-              $input['TYPE'] = 'NETWORKING';
-              $input['ID'] = $data['gID'];
-              $input['IP'] = $data['gnifaddr'];
-              $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
-              $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
-              $a_NetworkEquipment[] = $data['gID'];
-           }
-        }
-     // Search Printer
-        $query = "SELECT `glpi_printers`.`id` AS `gID`,
+            if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+               $input = [];
+               $input['TYPE'] = 'NETWORKING';
+               $input['ID'] = $data['gID'];
+               $input['IP'] = $data['gnifaddr'];
+               $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+               $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
+               $a_NetworkEquipment[] = $data['gID'];
+            }
+         }
+         // Search Printer
+         $query = "SELECT `glpi_printers`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
                          `plugin_fusioninventory_configsecurities_id`,
                   FROM `glpi_printers`
@@ -262,7 +261,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
-               $input = array();
+               $input = [];
                $input['TYPE'] = 'PRINTER';
                $input['ID'] = $data['gID'];
                $input['IP'] = $data['gnifaddr'];
@@ -278,9 +277,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
       // *** For dynamic agent same subnet, it's an another management ***
       if (strstr($pfTaskjob->fields['action'], '".2"')) {
-         $a_subnet = array();
-         $a_agentList = array();
-         $a_devicesubnet = array();
+         $a_subnet = [];
+         $a_agentList = [];
+         $a_devicesubnet = [];
          foreach ($a_NetworkEquipment as $items_id) {
             $NetworkEquipment->getFromDB($items_id);
             $a_ip = explode(".", $NetworkEquipment->fields['ip']);
@@ -305,7 +304,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $a_devicesubnet[$ip_subnet]['Printer'][$items_id] = 1;
             }
          }
-         $a_agentsubnet = array();
+         $a_agentsubnet = [];
          foreach ($a_subnet as $subnet=>$num) {
             $a_agentList = $this->getAgentsSubnet($num, $communication, $subnet);
             if (!isset($a_agentList)) {
@@ -314,7 +313,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $a_agentsubnet[$subnet] = $a_agentList;
             }
          }
-         $a_input = array();
+         $a_input = [];
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 1;
          $a_input['plugin_fusioninventory_agents_id'] = 0;
@@ -414,7 +413,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          }
       } else {
-         $a_agentList = array();
+         $a_agentList = [];
          // *** Only agents not dynamic ***
          if ((!strstr($pfTaskjob->fields['action'], '".1"'))
                AND (!strstr($pfTaskjob->fields['action'], '".2"'))) {
@@ -440,9 +439,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   }
                }
             }
-         }
-
-         /*
+         } /*
           * Case : dynamic agent
           */
          else if (strstr($pfTaskjob->fields['action'], '".1"')) {
@@ -452,7 +449,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
           * Manage agents
           */
          if (count($a_agentList) == 0) {
-            $a_input = array();
+            $a_input = [];
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
             $a_input['plugin_fusioninventory_agents_id'] = 0;
@@ -472,12 +469,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                                 '',
                                                 1,
                                                 "Unable to find agent to run this job");
-            $input_taskjob = array();
+            $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             //$input_taskjob['status'] = 0;
             $pfTaskjob->update($input_taskjob);
-         } elseif ($count_device == 0) {
-            $a_input = array();
+         } else if ($count_device == 0) {
+            $a_input = [];
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
             $a_input['plugin_fusioninventory_agents_id'] = 0;
@@ -495,14 +492,14 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                                 '',
                                                 0,
                                                 "No suitable devices to inventory");
-            $input_taskjob = array();
+            $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             //$input_taskjob['status'] = 1;
             $pfTaskjob->update($input_taskjob);
          } else {
             foreach ($a_agentList as $agent_id) {
                //Add jobstate and put status (waiting on server = 0)
-               $a_input = array();
+               $a_input = [];
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                $a_input['state'] = 0;
                $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
@@ -526,7 +523,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      }
                      $a_input['itemtype'] = $getdevice;
 
-                     switch($getdevice) {
+                     switch ($getdevice) {
 
                         case 'NetworkEquipment':
                            $a_input['items_id'] = array_pop($a_NetworkEquipment);
@@ -554,7 +551,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   }
                }
             }
-            $input_taskjob = array();
+            $input_taskjob = [];
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             $input_taskjob['status'] = 1;
             $pfTaskjob->update($input_taskjob);
@@ -562,7 +559,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       return $uniqid;
    }
-
 
 
    /**
@@ -602,12 +598,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $pfAgent->fields["timeout_networkinventory"]);
          $sxml_param->addAttribute('PID', $current->fields['id']);
 
-
          $changestate = 0;
          $taskjobstatedatas = $jobstate->fields;
          $sxml_device = $sxml_option->addChild('DEVICE');
 
-         $a_extended = array('plugin_fusioninventory_configsecurities_id' => 0);
+         $a_extended = ['plugin_fusioninventory_configsecurities_id' => 0];
          if ($jobstate->fields['itemtype'] == 'Printer') {
             $sxml_device->addAttribute('TYPE', 'PRINTER');
             $pfPrinter = new PluginFusioninventoryPrinter();
@@ -650,7 +645,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
    }
 
 
-
    /**
     * Get agents by the subnet given
     *
@@ -662,7 +656,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
     * @param string $ipend
     * @return array
     */
-   function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
+   function getAgentsSubnet($nb_computers, $communication, $subnet = '', $ipstart = '', $ipend = '') {
       global $DB;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -672,8 +666,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $nb_computerByAgentMin = 20;
       $nb_agentsMax = ceil($nb_computers / $nb_computerByAgentMin);
 
-
-      $a_agentList = array();
+      $a_agentList = [];
 
       if ($subnet != '') {
          $subnet = " AND `glpi_ipaddresses`.`name` LIKE '".$subnet."%' ";
@@ -682,7 +675,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             AND  INET_ATON(`glpi_ipaddresses`.`name`) < INET_ATON('".$ipend."') ) ";
       }
       $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKINVENTORY');
-      $a_agentsid = array();
+      $a_agentsid = [];
       foreach ($a_agents as $a_agent) {
          $a_agentsid[] = $a_agent['id'];
       }
@@ -738,7 +731,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
    }
 
 
-
    /**
     * Get the devices have an IP in the IP range
     *
@@ -749,14 +741,14 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
    function getDevicesOfIPRange($ipranges_id) {
       global $DB;
 
-      $devicesList = array();
+      $devicesList = [];
       $pfIPRange = new PluginFusioninventoryIPRange();
 
       // get all snmpauth
       $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
 
       $pfIPRange->getFromDB($ipranges_id);
-   // Search NetworkEquipment
+      // Search NetworkEquipment
       $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                        `glpi_networkequipments`.`name` AS `gNAME`,
                        `glpi_ipaddresses`.`name` AS `gnifaddr`,
@@ -791,13 +783,13 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
-            $devicesList[] = array(
+            $devicesList[] = [
                'NetworkEquipment' => $data['gID']
-            );
+            ];
          }
-     }
-  // Search Printer
-     $query = "SELECT `glpi_printers`.`id` AS `gID`,
+      }
+      // Search Printer
+      $query = "SELECT `glpi_printers`.`id` AS `gID`,
                       `glpi_printers`.`name` AS `gNAME`,
                       `glpi_ipaddresses`.`name` AS `gnifaddr`,
                       `plugin_fusioninventory_configsecurities_id`
@@ -830,13 +822,14 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
-            $devicesList[] = array(
+            $devicesList[] = [
                'Printer' => $data['gID']
-            );
+            ];
          }
       }
       return $devicesList;
    }
+
+
 }
 
-?>

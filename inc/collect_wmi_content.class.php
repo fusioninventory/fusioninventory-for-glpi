@@ -69,10 +69,9 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Windows WMI content', 'fusioninventory');
    }
-
 
 
    /**
@@ -82,7 +81,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginFusioninventoryCollect') {
@@ -104,7 +103,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -113,13 +111,14 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_Wmi->showForCollect($item->getID());
       }
-      return TRUE;
+      return true;
    }
+
 
    /**
     * Delete all WMI contents linked to the computer (most cases when delete a
@@ -129,8 +128,9 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
     */
    static function cleanComputer($computers_id) {
       $collect_content = new self();
-      $collect_content->deleteByCriteria(array('computers_id' => $computers_id));
+      $collect_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * update wmi data to compute (add and update) with data sent by the agent
@@ -143,7 +143,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
    function updateComputer($computers_id, $wmi_data, $collects_wmis_id) {
       global $DB;
 
-      $db_wmis = array();
+      $db_wmis = [];
       $query = "SELECT `id`, `property`, `value`
                 FROM `glpi_plugin_fusioninventory_collects_wmis_contents`
                 WHERE `computers_id` = '".$computers_id."'
@@ -161,9 +161,9 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       foreach ($wmi_data as $key => $value) {
          foreach ($db_wmis as $keydb => $arraydb) {
             if ($arraydb['property'] == $key) {
-               $input = array('property' => $arraydb['property'],
+               $input = ['property' => $arraydb['property'],
                               'id'       => $keydb,
-                              'value'    => $value);
+                              'value'    => $value];
                $this->update($input);
                unset($wmi_data[$key]);
                unset($db_wmis[$keydb]);
@@ -173,19 +173,18 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
 
       foreach ($db_wmis as $id => $data) {
-         $this->delete(array('id' => $id), true);
+         $this->delete(['id' => $id], true);
       }
-      foreach($wmi_data as $key => $value) {
-         $input = array(
+      foreach ($wmi_data as $key => $value) {
+         $input = [
             'computers_id' => $computers_id,
             'plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id,
             'property'     => $key,
             'value'        => $value
-         );
+         ];
          $this->add($input);
       }
    }
-
 
 
    /**
@@ -201,7 +200,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
          $this->showForCollectWmi($data['id']);
       }
    }
-
 
 
    /**
@@ -243,7 +241,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
       echo '</table>';
    }
-
 
 
    /**
@@ -289,6 +286,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
       echo '</table>';
    }
+
+
 }
 
-?>

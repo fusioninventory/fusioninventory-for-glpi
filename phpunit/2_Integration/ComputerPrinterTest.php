@@ -41,172 +41,172 @@
  */
 
 class ComputerPrinter extends Common_TestCase {
-   public $a_computer1 = array();
-   public $a_computer1_beforeformat = array();
-   public $a_computer2 = array();
-   public $a_computer3 = array();
+   public $a_computer1 = [];
+   public $a_computer1_beforeformat = [];
+   public $a_computer2 = [];
+   public $a_computer3 = [];
+
 
    function __construct() {
-      $this->a_computer1 = array(
-          "Computer" => array(
+      $this->a_computer1 = [
+          "Computer" => [
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [
+              [
                   'name'    => 'p1',
                   'have_usb'=> 0,
                   'serial'  => '',
                   'is_dynamic' => 1
-              ),
-              array(
+              ],
+              [
                   'name'    => 'p2',
                   'have_usb'=> 0,
                   'serial'  => 's1537',
                   'is_dynamic' => 1
-              )
-          ),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $this->a_computer1_beforeformat = array(
-          "CONTENT" => array(
-              "HARDWARE" => array(
+      $this->a_computer1_beforeformat = [
+          "CONTENT" => [
+              "HARDWARE" => [
                   "NAME"   => "pc001"
-              ),
-              "BIOS" => array(
+              ],
+              "BIOS" => [
                   "SSN" => "ggheb7ne7"
-              ),
-              'PRINTERS'        => Array(
-                  array(
+              ],
+              'PRINTERS'        => [
+                  [
                       'NAME'    => 'p1',
                       'SERIAL'  => ''
-                  ),
-                  array(
+                  ],
+                  [
                       'NAME'    => 'p2',
                       'SERIAL'  => 's1537'
-                  )
-              )
-          )
-      );
+                  ]
+              ]
+          ]
+      ];
 
-      $this->a_computer2 = array(
-          "Computer" => array(
+      $this->a_computer2 = [
+          "Computer" => [
               "name"   => "pc002",
               "serial" => "ggheb7ne8"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [
+              [
                   'name'    => 'p1',
                   'have_usb'=> 0,
                   'serial'  => 'f275',
                   'is_dynamic' => 1
-              ),
-              array(
+              ],
+              [
                   'name'    => 'p2',
                   'have_usb'=> 0,
                   'serial'  => 's1537',
                   'is_dynamic' => 1
-              )
-          ),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $this->a_computer3 = array(
-          "Computer" => array(
+      $this->a_computer3 = [
+          "Computer" => [
               "name"   => "pc003",
               "serial" => "ggheb7ne9"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [
+              [
                   'name'    => 'p1',
                   'have_usb'=> 0,
                   'serial'  => '',
                   'is_dynamic' => 1
-              ),
-              array(
+              ],
+              [
                   'name'    => 'p2',
                   'have_usb'=> 0,
                   'serial'  => '',
                   'is_dynamic' => 1
-              )
-          ),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
    }
-
 
 
    /**
@@ -215,6 +215,7 @@ class ComputerPrinter extends Common_TestCase {
    public function PrinterUniqueSerialimport() {
       $this->mark_incomplete();
    }
+
 
    public function testPrinterDicoIgnoreImport() {
       global $DB;
@@ -236,7 +237,7 @@ class ComputerPrinter extends Common_TestCase {
       // Add dictionnary rule for ignore import for printer p2
       $rulecollection = new RuleDictionnaryPrinterCollection();
       $rule = $rulecollection->getRuleClass();
-      $input = array();
+      $input = [];
       $input['is_active']=1;
       $input['name']='Ignore import';
       $input['match']='AND';
@@ -247,7 +248,7 @@ class ComputerPrinter extends Common_TestCase {
       // Add criteria
       $rule = $rulecollection->getRuleClass();
       $rulecriteria = new RuleCriteria(get_class($rule));
-      $input = array();
+      $input = [];
       $input['rules_id'] = $rule_id;
       $input['criteria'] = "name";
       $input['pattern']= 'p2';
@@ -256,18 +257,17 @@ class ComputerPrinter extends Common_TestCase {
 
       // Add action
       $ruleaction = new RuleAction(get_class($rule));
-      $input = array();
+      $input = [];
       $input['rules_id'] = $rule_id;
       $input['action_type'] = 'assign';
       $input['field'] = '_ignore_import';
       $input['value'] = '1';
       $ruleaction->add($input);
 
-
       // Add dictionnary rule for ignore import for printer p3
       $rulecollection = new RuleDictionnaryPrinterCollection();
       $rule = $rulecollection->getRuleClass();
-      $input = array();
+      $input = [];
       $input['is_active']=1;
       $input['name']='rename';
       $input['match']='AND';
@@ -278,7 +278,7 @@ class ComputerPrinter extends Common_TestCase {
       // Add criteria
       $rule = $rulecollection->getRuleClass();
       $rulecriteria = new RuleCriteria(get_class($rule));
-      $input = array();
+      $input = [];
       $input['rules_id'] = $rule_id;
       $input['criteria'] = "name";
       $input['pattern']= 'p3';
@@ -287,7 +287,7 @@ class ComputerPrinter extends Common_TestCase {
 
       // Add action
       $ruleaction = new RuleAction(get_class($rule));
-      $input = array();
+      $input = [];
       $input['rules_id'] = $rule_id;
       $input['action_type'] = 'assign';
       $input['field'] = 'name';
@@ -296,7 +296,7 @@ class ComputerPrinter extends Common_TestCase {
 
       // Add action
       $ruleaction = new RuleAction(get_class($rule));
-      $input = array();
+      $input = [];
       $input['rules_id'] = $rule_id;
       $input['action_type'] = 'assign';
       $input['field'] = 'manufacturer';
@@ -305,7 +305,7 @@ class ComputerPrinter extends Common_TestCase {
 
       // Add action
       $ruleaction = new RuleAction(get_class($rule));
-      $input = array();
+      $input = [];
       $input['rules_id'] = $rule_id;
       $input['action_type'] = 'assign';
       $input['field'] = 'is_global';
@@ -323,14 +323,13 @@ class ComputerPrinter extends Common_TestCase {
       $a_printers = getAllDatasFromTable("glpi_printers");
 
       $this->assertEquals(0, countElementsInTable('glpi_printers'),
-              'Printer p2 may be ignored ('.print_r($a_printers, TRUE).')');
+              'Printer p2 may be ignored ('.print_r($a_printers, true).')');
 
       $printer = new Printer();
-      $printer->delete(array('id' => 1), 1);
+      $printer->delete(['id' => 1], 1);
       $DB->query("TRUNCATE TABLE `glpi_printers`");
 
    }
-
 
 
    /**
@@ -377,7 +376,6 @@ class ComputerPrinter extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -392,7 +390,6 @@ class ComputerPrinter extends Common_TestCase {
          $printer->fields['manufacturers_id'], 'Printer p3 may have manufacturer with id=1'
       );
    }
-
 
 
    /**
@@ -412,7 +409,6 @@ class ComputerPrinter extends Common_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -429,6 +425,6 @@ class ComputerPrinter extends Common_TestCase {
       $this->assertEquals('1', $printer->fields['is_global'], 'Printer p3 may be managed global');
    }
 
+
 }
 
-?>

@@ -42,6 +42,7 @@
 
 class TaskDeployDynamicGroup extends Common_TestCase {
 
+
    protected function setUp() {
 
       parent::setUp();
@@ -52,42 +53,42 @@ class TaskDeployDynamicGroup extends Common_TestCase {
       $computer = new Computer();
       $pfAgent  = new PluginFusioninventoryAgent();
 
-      $computer->add(array('name' => 'pc01', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 1, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc02', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 2, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc03', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 3, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc04', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 4, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc05', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 5, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc06', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 6, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc07', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 7, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc08', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 8, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc09', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 9, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc10', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 10, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc11', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 11, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc12', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 12, 'entities_id' => 0));
-      $computer->add(array('name' => 'pc13', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 13, 'entities_id' => 0));
-      $computer->add(array('name' => 'srv01', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 14, 'entities_id' => 0));
-      $computer->add(array('name' => 'srv02', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 15, 'entities_id' => 0));
-      $computer->add(array('name' => 'srv03', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 16, 'entities_id' => 0));
-      $computer->add(array('name' => 'srv04', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 17, 'entities_id' => 0));
-      $computer->add(array('name' => 'srv05', 'entities_id' => 0));
-      $pfAgent->add(array('computers_id'=> 18, 'entities_id' => 0));
+      $computer->add(['name' => 'pc01', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 1, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc02', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 2, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc03', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 3, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc04', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 4, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc05', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 5, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc06', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 6, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc07', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 7, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc08', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 8, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc09', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 9, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc10', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 10, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc11', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 11, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc12', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 12, 'entities_id' => 0]);
+      $computer->add(['name' => 'pc13', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 13, 'entities_id' => 0]);
+      $computer->add(['name' => 'srv01', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 14, 'entities_id' => 0]);
+      $computer->add(['name' => 'srv02', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 15, 'entities_id' => 0]);
+      $computer->add(['name' => 'srv03', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 16, 'entities_id' => 0]);
+      $computer->add(['name' => 'srv04', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 17, 'entities_id' => 0]);
+      $computer->add(['name' => 'srv05', 'entities_id' => 0]);
+      $pfAgent->add(['computers_id'=> 18, 'entities_id' => 0]);
 
    }
 
@@ -107,40 +108,40 @@ class TaskDeployDynamicGroup extends Common_TestCase {
       $pfTask                    = new PluginFusioninventoryTask();
       $pfTaskJob                 = new PluginFusioninventoryTaskjob();
 
-      $input = array(
+      $input = [
          'name' => 'test',
          'type' => 'DYNAMIC'
-      );
+      ];
       $pfDeployGroup->add($input);
 
-      $input = array(
+      $input = [
          'groups_id'      => 1,
          'fields_array'   => '{"entities_id":"0","name":"","field":["1"],"searchtype":["contains"],"contains":["^pc"],"plugin_fusioninventory_deploygroup_dynamicdatas_id":"1","id":"1","updaterule":"Update this rule","itemtype":"Computer"}'
-      );
+      ];
       $pfDeployGroup_Dynamicdata->add($input);
 
-      $input = array(
+      $input = [
          'name'        => 'ls',
          'entities_id' => 0
-      );
+      ];
       $pfDeployPackage->add($input);
 
-      $input = array(
+      $input = [
          'name'           => 'deploy',
          'is_active'      => 1,
          'communication'  => 'pull'
-      );
+      ];
       $pfTask->add($input);
 
       $a_plugins = current(getAllDatasFromTable('glpi_plugins', '`directory`="fusioninventory"'));
 
-      $input = array(
+      $input = [
          'plugin_fusioninventory_tasks_id' => 1,
          'name'        =>'deploy',
          'plugins_id'  => $a_plugins['id'],
          'method'      => 'deployinstall',
          'action'      => '[{"PluginFusioninventoryDeployGroup":"1"}]'
-      );
+      ];
       $pfTaskJob->add($input);
       $DB->query('UPDATE `glpi_plugin_fusioninventory_taskjobs`
          SET `definition`=\'[{"PluginFusioninventoryDeployPackage":"1"}]\'
@@ -155,8 +156,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
          $a_jobstates[$num] = $data;
       }
 
-      $a_reference = array(
-         1 => array(
+      $a_reference = [
+         1 => [
             'id'                                 => 1,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -165,8 +166,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 1,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         2 => array(
+         ],
+         2 => [
             'id'                                 => 2,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -175,8 +176,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 2,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         3 => array(
+         ],
+         3 => [
             'id'                                 => 3,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -185,8 +186,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 3,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         4 => array(
+         ],
+         4 => [
             'id'                                 => 4,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -195,8 +196,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 4,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         5 => array(
+         ],
+         5 => [
             'id'                                 => 5,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -205,8 +206,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 5,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         6 => array(
+         ],
+         6 => [
             'id'                                 => 6,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -215,8 +216,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 6,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         7 => array(
+         ],
+         7 => [
             'id'                                 => 7,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -225,8 +226,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 7,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         8 => array(
+         ],
+         8 => [
             'id'                                 => 8,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -235,8 +236,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 8,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         9 => array(
+         ],
+         9 => [
             'id'                                 => 9,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -245,8 +246,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 9,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         10 => array(
+         ],
+         10 => [
             'id'                                 => 10,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -255,8 +256,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 10,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         11 => array(
+         ],
+         11 => [
             'id'                                 => 11,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -265,8 +266,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 11,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         12 => array(
+         ],
+         12 => [
             'id'                                 => 12,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -275,8 +276,8 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 12,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         ),
-         13 => array(
+         ],
+         13 => [
             'id'                                 => 13,
             'plugin_fusioninventory_taskjobs_id' => 1,
             'items_id'                           => 1,
@@ -285,11 +286,12 @@ class TaskDeployDynamicGroup extends Common_TestCase {
             'plugin_fusioninventory_agents_id'   => 13,
             'specificity'                        => '',
             'execution_id'                       => '0'
-         )
-      );
+         ]
+      ];
 
       $this->assertEquals($a_reference, $a_jobstates);
 
    }
+
+
 }
-?>

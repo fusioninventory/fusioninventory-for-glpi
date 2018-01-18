@@ -48,10 +48,11 @@ $doc = <<<DOC
 cli_install.php
 
 Usage:
-   cli_install.php [--no-models-update] [--force-upgrade] [--as-user USER] [--optimize] [ --tests ]
+   cli_install.php [--no-models-update] [--force-install] [--force-upgrade] [--as-user USER] [--optimize] [ --tests ]
 
 Options:
-   --force-upgrade      Force upgrade.
+   --force-install      Force plugin installation.
+   --force-upgrade      Force plugin upgrade.
    --no-models-update   Do not perform SNMP models update.
    --as-user USER       Do install/upgrade as specified USER.
    --optimize           Optimize tables.
@@ -127,7 +128,7 @@ $migration->displayWarning("Version to update: ".PLUGIN_FUSIONINVENTORY_VERSION)
 // To prevent problem of execution time
 ini_set("max_execution_time", "0");
 ini_set("memory_limit", "-1");
-ini_set("session.use_cookies","0");
+ini_set("session.use_cookies", "0");
 $mess = '';
 if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
      AND $current_version!='0') {
@@ -141,11 +142,16 @@ if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
 $migration->displayWarning($mess);
 
 if ($args['--no-models-update']) {
-   define('NO_MODELS_UPDATE', TRUE);
+   define('NO_MODELS_UPDATE', true);
 }
 
+if ($args['--force-install']) {
+   define('FORCE_INSTALL', true);
+}
+
+
 if ($args['--force-upgrade']) {
-   define('FORCE_UPGRADE', TRUE);
+   define('FORCE_UPGRADE', true);
 }
 
 

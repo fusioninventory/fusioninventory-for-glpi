@@ -62,9 +62,11 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $result = $DB->query($query);
 
    if ($DB->numrows($result) == "0") {
-      $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_printers`(`printers_id`)
-                      VALUES('".$_POST['printers_id']."');";
-      $DB->query($queryInsert);
+      $DB->insert(
+         'glpi_plugin_fusioninventory_printers', [
+            'printers_id' => $_POST['printers_id']
+         ]
+      );
       $query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_printers`
                 WHERE `printers_id`='".$_POST['printers_id']."' ";
@@ -85,7 +87,7 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 }
 
 $arg = "";
-for ($i=1 ; $i <= 5 ; $i++) {
+for ($i=1; $i <= 5; $i++) {
    $value = '';
    switch ($i) {
       case 1:
@@ -115,7 +117,7 @@ for ($i=1 ; $i <= 5 ; $i++) {
 }
 
 if (isset($_POST['graph_plugin_fusioninventory_printer_period'])) {
-   $fields = array('graph_begin', 'graph_end', 'graph_timeUnit', 'graph_type');
+   $fields = ['graph_begin', 'graph_end', 'graph_timeUnit', 'graph_type'];
    foreach ($fields as $field) {
       if (isset($_POST[$field])) {
          $_SESSION['glpi_plugin_fusioninventory_'.$field] = $_POST[$field];
@@ -145,4 +147,3 @@ if (isset($_POST['graph_plugin_fusioninventory_printer_remove'])) {
 
 Html::back();
 
-?>

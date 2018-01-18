@@ -68,9 +68,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return "";
    }
+
 
    /**
     * Display information about computer (bios, last contact...)
@@ -93,7 +94,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<table class="tab_glpi" width="100%">';
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item->getID());
+      $pfAgent->showInfoForComputer($item);
 
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
@@ -143,6 +144,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
+
    /**
    * Get automatic inventory info for a computer
    * @since 9.1+1.2
@@ -159,6 +161,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
    }
 
+
    /**
     * Display information about computer that is linked to an agent but
     * has no inventory
@@ -170,7 +173,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showFormForAgentWithNoInventory($item) {
       $id = $item->getID();
       $pfComputer  = new self();
-      if (!empty($pfComputer->hasAutomaticInventory($id))) {
+      if ($item->isNewItem()
+          || !empty($pfComputer->hasAutomaticInventory($id))) {
          return true;
       } else {
          $pfAgent = new PluginFusioninventoryAgent();
@@ -182,11 +186,12 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
             echo '<tr>';
             echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
             echo '</tr>';
-            $pfAgent->showInfoForComputer($id, 4);
+            $pfAgent->showInfoForComputer($item, 4);
          }
          return true;
       }
    }
+
 
    /**
     * Display information about a computer operating system
@@ -199,7 +204,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    static function showFormOS($item) {
       $pfComputer = new self();
       $a_computerextend = current(
-         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'","",1)
+         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'", "", 1)
       );
       if (empty($a_computerextend)) {
          return;
@@ -233,6 +238,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       return true;
    }
+
 
    /**
     * Display information about computer (bios, last contact...)
@@ -270,15 +276,13 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if ($a_computerextend['remote_addr'] != '') {
          echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
-      } else {
       }
       echo "<td colspan='2'></td>";
 
       echo '</tr>';
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item->getID(), 4);
-
+      $pfAgent->showInfoForComputer($item, 4);
 
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {
@@ -309,6 +313,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return true;
    }
 
+
    static function showDownloadInventoryFile($computers_id) {
       global $CFG_GLPI;
 
@@ -335,6 +340,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
    }
 
+
    /**
     * Delete extended information of computer
     *
@@ -344,7 +350,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfComputer = new self();
       $pfComputer->deleteByCriteria(['computers_id' => $computers_id], true, false);
    }
-
 
 
    /**
@@ -365,4 +370,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       }
       return $a_computerextend['is_entitylocked'];
    }
+
+
 }

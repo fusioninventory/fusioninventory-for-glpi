@@ -78,4 +78,3 @@ $pfConfig->display();
 
 Html::footer();
 
-?>

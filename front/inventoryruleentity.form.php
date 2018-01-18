@@ -59,4 +59,3 @@ $rulecollection = new PluginFusioninventoryInventoryRuleEntityCollection();
 
 include (GLPI_ROOT . "/front/rule.common.form.php");
 
-?>

@@ -48,11 +48,11 @@ class TimeslotTest extends RestoreDatabase_TestCase {
     */
    public function addTimeslot() {
       $pfTimeslot = new PluginFusioninventoryTimeslot();
-      $input = array(
+      $input = [
           'entities_id'  => 0,
           'is_recursive' => 0,
           'name'         => 'unitdefault'
-      );
+      ];
       $pfTimeslot->add($input);
       $cnt = countElementsInTable('glpi_plugin_fusioninventory_timeslots');
       $this->assertEquals(1, $cnt, "Timeslot may be added");
@@ -63,44 +63,43 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
    public function addSimpleEntrieslot() {
       $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $input = array(
+      $input = [
           'plugin_fusioninventory_timeslots_id' => 1,
           'entities_id'  => 0,
           'is_recursive' => 0,
           'day'          => 1,
           'begin'        => 7215,
           'end'          => 43200
-      );
+      ];
       $pfTimeslotEntry->add($input);
 
-      $input = array(
+      $input = [
           'plugin_fusioninventory_timeslots_id' => 1,
           'entities_id'  => 0,
           'is_recursive' => 0,
           'day'          => 1,
           'begin'        => 72000,
           'end'          => 79200
-      );
+      ];
       $pfTimeslotEntry->add($input);
 
-      $input = array(
+      $input = [
           'plugin_fusioninventory_timeslots_id' => 1,
           'entities_id'  => 0,
           'is_recursive' => 0,
           'day'          => 3,
           'begin'        => 39600,
           'end'          => 79200
-      );
+      ];
       $pfTimeslotEntry->add($input);
 
-      $references = array(
-          '1' => array(
+      $references = [
+          '1' => [
               'id' => '1',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -108,8 +107,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '7215',
               'end'          => '43200'
-          ),
-          '2' => array(
+          ],
+          '2' => [
               'id'           => '2',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -117,8 +116,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '72000',
               'end'          => '79200'
-          ),
-          '3' => array(
+          ],
+          '3' => [
               'id'           => '3',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -126,8 +125,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '3',
               'begin'        => '39600',
               'end'          => '79200'
-          )
-      );
+          ]
+      ];
       $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 3 entries");
 
@@ -137,33 +136,32 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
    public function addEntrieslotYetAdded() {
 
       $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $input = array(
+      $input = [
           'timeslots_id' => 1,
           'beginday'     => 1,
           'lastday'      => 1,
           'beginhours'   => 7230,
           'lasthours'    => 43140
-      );
+      ];
       $pfTimeslotEntry->addEntry($input);
 
-      $input = array(
+      $input = [
           'timeslots_id' => 1,
           'beginday'     => 1,
           'lastday'      => 1,
           'beginhours'   => 72000,
           'lasthours'    => 79140
-      );
+      ];
       $pfTimeslotEntry->addEntry($input);
 
-      $references = array(
-          '1' => array(
+      $references = [
+          '1' => [
               'id' => '1',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -171,8 +169,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '7215',
               'end'          => '43200'
-          ),
-          '2' => array(
+          ],
+          '2' => [
               'id'           => '2',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -180,8 +178,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '72000',
               'end'          => '79200'
-          ),
-          '3' => array(
+          ],
+          '3' => [
               'id'           => '3',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -189,8 +187,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '3',
               'begin'        => '39600',
               'end'          => '79200'
-          )
-      );
+          ]
+      ];
       $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
 
@@ -200,24 +198,23 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
-  /**
+   /**
     * @test
     */
    public function addEntrieslotNotInRanges() {
 
       $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $input = array(
+      $input = [
           'timeslots_id' => 1,
           'beginday'     => 1,
           'lastday'      => 1,
           'beginhours'   => 15,
           'lasthours'    => 30
-      );
+      ];
       $pfTimeslotEntry->addEntry($input);
 
-      $references = array(
-          '1' => array(
+      $references = [
+          '1' => [
               'id' => '1',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -225,8 +222,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '72000',
               'end'          => '79200'
-          ),
-          '2' => array(
+          ],
+          '2' => [
               'id'           => '2',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -234,8 +231,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '7215',
               'end'          => '43200'
-          ),
-          '3' => array(
+          ],
+          '3' => [
               'id'           => '3',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -243,8 +240,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '3',
               'begin'        => '39600',
               'end'          => '79200'
-          ),
-          '4' => array(
+          ],
+          '4' => [
               'id'           => '4',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -252,8 +249,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '15',
               'end'          => '30'
-          )
-      );
+          ]
+      ];
       $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
 
@@ -263,24 +260,23 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
-  /**
+   /**
     * @test
     */
    public function addEntryin2Ranges() {
 
       $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $input = array(
+      $input = [
           'timeslots_id' => 1,
           'beginday'     => 1,
           'lastday'      => 1,
           'beginhours'   => 0,
           'lasthours'    => 79215
-      );
+      ];
       $pfTimeslotEntry->addEntry($input);
 
-      $references = array(
-          '3' => array(
+      $references = [
+          '3' => [
               'id'           => '3',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -288,8 +284,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '3',
               'begin'        => '39600',
               'end'          => '79200'
-          ),
-          '4' => array(
+          ],
+          '4' => [
               'id' => '4',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -297,8 +293,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '0',
               'end'          => '79215'
-          )
-      );
+          ]
+      ];
       $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 2 entries ".print_r($db, true));
 
@@ -308,24 +304,23 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
-  /**
+   /**
     * @test
     */
    public function addEntryForTwoDays() {
 
       $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $input = array(
+      $input = [
           'timeslots_id' => 1,
           'beginday'     => 1,
           'lastday'      => 4,
           'beginhours'   => 79230,
           'lasthours'    => 36000
-      );
+      ];
       $pfTimeslotEntry->addEntry($input);
 
-      $references = array(
-          '3' => array(
+      $references = [
+          '3' => [
               'id'           => '3',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -333,8 +328,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '3',
               'begin'        => '0',
               'end'          => '86400'
-          ),
-          '4' => array(
+          ],
+          '4' => [
               'id' => '4',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -342,8 +337,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '0',
               'end'          => '86400'
-          ),
-          '5' => array(
+          ],
+          '5' => [
               'id' => '5',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -351,8 +346,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '2',
               'begin'        => '0',
               'end'          => '86400'
-          ),
-          '6' => array(
+          ],
+          '6' => [
               'id' => '6',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -360,8 +355,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '4',
               'begin'        => '0',
               'end'          => '36000'
-          )
-      );
+          ]
+      ];
       $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 4 entries ".print_r($db, true));
 
@@ -371,24 +366,23 @@ class TimeslotTest extends RestoreDatabase_TestCase {
    }
 
 
-
-  /**
+   /**
     * @test
     */
    public function addEntryForTwoDaysYetAdded() {
 
       $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
-      $input = array(
+      $input = [
           'timeslots_id' => 1,
           'beginday'     => 2,
           'lastday'      => 3,
           'beginhours'   => 60,
           'lasthours'    => 36015
-      );
+      ];
       $pfTimeslotEntry->addEntry($input);
 
-      $references = array(
-          '3' => array(
+      $references = [
+          '3' => [
               'id'           => '3',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -396,8 +390,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '3',
               'begin'        => '0',
               'end'          => '86400'
-          ),
-          '4' => array(
+          ],
+          '4' => [
               'id' => '4',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -405,8 +399,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '1',
               'begin'        => '0',
               'end'          => '86400'
-          ),
-          '5' => array(
+          ],
+          '5' => [
               'id' => '5',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -414,8 +408,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '2',
               'begin'        => '0',
               'end'          => '86400'
-          ),
-          '6' => array(
+          ],
+          '6' => [
               'id' => '6',
               'entities_id'  => '0',
               'plugin_fusioninventory_timeslots_id' => '1',
@@ -423,8 +417,8 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'day'          => '4',
               'begin'        => '0',
               'end'          => '36000'
-          )
-      );
+          ]
+      ];
       $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 4 entries ".print_r($db, true));
 
@@ -432,6 +426,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
 
 }
 

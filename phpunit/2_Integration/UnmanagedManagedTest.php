@@ -59,22 +59,22 @@ class UnmanagedManagedTest extends Common_TestCase {
 
       $this->update_time = date('Y-m-d H:i:s');
 
-      $a_inventory = array(
-         'PluginFusioninventoryNetworkEquipment' => Array(
+      $a_inventory = [
+         'PluginFusioninventoryNetworkEquipment' => [
             'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
             'last_fusioninventory_update' => $this->update_time,
             'cpu'                         => 5,
             'memory'                      => 18,
             'uptime'                      => '157 days, 02:14:44.00'
-         ),
-         'networkport'       => array(),
-         'connection-mac'    => array(),
-         'vlans'             => array(),
-         'connection-lldp'   => array(),
-         'internalport'      => array('192.168.30.2'),
+         ],
+         'networkport'       => [],
+         'connection-mac'    => [],
+         'vlans'             => [],
+         'connection-lldp'   => [],
+         'internalport'      => ['192.168.30.2'],
          'itemtype'          => 'NetworkEquipment'
-      );
-      $a_inventory['NetworkEquipment'] = array(
+      ];
+      $a_inventory['NetworkEquipment'] = [
          'name'               => 'switchr2d2',
          'id'                 => 96,
          'serial'             => 'FOC147UJXXX',
@@ -87,10 +87,10 @@ class UnmanagedManagedTest extends Common_TestCase {
          'ram'                => 64,
          'is_dynamic'         => 1,
          'mac'                => '6c:50:4d:39:59:90'
-      );
+      ];
 
-      $a_inventory['networkport'] = array(
-         '10001' => array(
+      $a_inventory['networkport'] = [
+         '10001' => [
             'ifdescr'          => 'FastEthernet0/1',
             'ifinerrors'       => 869,
             'ifinoctets'       => 1953319640,
@@ -107,20 +107,19 @@ class UnmanagedManagedTest extends Common_TestCase {
             'mac'              => '6c:50:4d:39:59:81',
             'trunk'            => 0,
             'ifspeed'          => 100000000
-         )
-      );
-      $a_inventory['connection-mac'] = array(
-         '10001' => array('cc:f9:54:a1:03:45')
-      );
-      $a_inventory['vlans'] = array();
-      $a_inventory['connection-lldp'] = array();
-
+         ]
+      ];
+      $a_inventory['connection-mac'] = [
+         '10001' => ['cc:f9:54:a1:03:45']
+      ];
+      $a_inventory['vlans'] = [];
+      $a_inventory['connection-lldp'] = [];
 
       $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
 
-      $this->items_id = $networkEquipment->add(array('serial'      => 'FOC147UJXXX',
-         'entities_id' => 0));
+      $this->items_id = $networkEquipment->add(['serial'      => 'FOC147UJXXX',
+         'entities_id' => 0]);
 
       $this->assertGreaterThan(0, $this->items_id);
 
@@ -140,34 +139,34 @@ class UnmanagedManagedTest extends Common_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_inventory = array(
-         'fusioninventorycomputer' => Array(
+      $a_inventory = [
+         'fusioninventorycomputer' => [
             'last_fusioninventory_update' => date('Y-m-d H:i:s')
-         ),
-         'soundcard'      => array(),
-         'graphiccard'    => array(),
-         'controller'     => array(),
-         'processor'      => array(),
-         'computerdisk'   => array(),
-         'memory'         => array(),
-         'monitor'        => array(),
-         'printer'        => array(),
-         'peripheral'     => array(),
-         'networkport'    => array(),
-         'software'       => array(),
-         'harddrive'      => array(),
-         'virtualmachine' => array(),
-         'antivirus'      => array(),
-         'storage'        => array(),
-         'licenseinfo'    => array(),
-         'networkcard'    => array(),
-         'drive'          => array(),
-         'batteries'      => array(),
-         'remote_mgmt'    => array(),
-          'bios'           => array(),
+         ],
+         'soundcard'      => [],
+         'graphiccard'    => [],
+         'controller'     => [],
+         'processor'      => [],
+         'computerdisk'   => [],
+         'memory'         => [],
+         'monitor'        => [],
+         'printer'        => [],
+         'peripheral'     => [],
+         'networkport'    => [],
+         'software'       => [],
+         'harddrive'      => [],
+         'virtualmachine' => [],
+         'antivirus'      => [],
+         'storage'        => [],
+         'licenseinfo'    => [],
+         'networkcard'    => [],
+         'drive'          => [],
+         'batteries'      => [],
+         'remote_mgmt'    => [],
+          'bios'           => [],
          'itemtype'       => 'Computer'
-      );
-      $a_inventory['Computer'] = array(
+      ];
+      $a_inventory['Computer'] = [
          'name'                             => 'pc',
          'users_id'                         => 0,
          'operatingsystems_id'              => 1,
@@ -183,9 +182,9 @@ class UnmanagedManagedTest extends Common_TestCase {
          'computertypes_id'                 => 1,
          'is_dynamic'                       => 1,
          'contact'                          => 'ddurieux'
-      );
-      $a_inventory['networkport'] = Array(
-         'em0-cc:f9:54:a1:03:45' => Array(
+      ];
+      $a_inventory['networkport'] = [
+         'em0-cc:f9:54:a1:03:45' => [
             'name'                 => 'em0',
             'netmask'              => '255.255.255.0',
             'subnet'               => '192.168.30.0',
@@ -196,9 +195,9 @@ class UnmanagedManagedTest extends Common_TestCase {
             'gateway'              => '',
             'dhcpserver'           => '',
             'logical_number'       => 1,
-            'ipaddress'            => Array('192.168.30.198')
-         )
-      );
+            'ipaddress'            => ['192.168.30.198']
+         ]
+      ];
 
       $networkPort = new NetworkPort();
 
@@ -210,11 +209,11 @@ class UnmanagedManagedTest extends Common_TestCase {
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
 
-      $computers_id = $computer->add(array('serial'      => 'XB63J7D',
-         'entities_id' => 0));
+      $computers_id = $computer->add(['serial'      => 'XB63J7D',
+         'entities_id' => 0]);
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
       $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
 
@@ -231,5 +230,5 @@ class UnmanagedManagedTest extends Common_TestCase {
 
    }
 
+
 }
-?>

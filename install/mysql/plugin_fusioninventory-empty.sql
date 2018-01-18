@@ -171,6 +171,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_start` datetime DEFAULT NULL,
+  `nb_retry` int(11) NOT NULL DEFAULT '0',
+  `max_retry` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
@@ -225,14 +228,13 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `sysdescr` text DEFAULT NULL,
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
-   `serialized_inventory` longblob,
+   `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
    KEY `is_deleted` (`is_deleted`),
    KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
@@ -379,7 +381,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `wincompany` varchar(255) DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   `remote_addr` varchar(255) DEFAULT NULL,
-  `serialized_inventory` longblob,
+  `serialized_inventory` longblob DEFAULT NULL,
   `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
   `oscomment` text DEFAULT NULL,
   `hostid` varchar(255) DEFAULT NULL,
@@ -442,7 +444,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
    `memory` int(11) NOT NULL DEFAULT '0',
    `last_fusioninventory_update` datetime DEFAULT NULL,
    `last_PID_update` int(11) NOT NULL DEFAULT '0',
-   `serialized_inventory` longblob,
+   `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `networkequipments_id` (`networkequipments_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -470,7 +472,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` datetime DEFAULT NULL,
-   `serialized_inventory` longblob,
+   `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`printers_id`),
    KEY `plugin_fusioninventory_configsecurities_id` (`plugin_fusioninventory_configsecurities_id`),
@@ -802,6 +804,24 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `can_update_group` (`can_update_group`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+   `date_creation` datetime DEFAULT NULL,
+   `date_mod` datetime DEFAULT NULL,
+   `json` longtext DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `date_mod` (`date_mod`),
+   KEY `date_creation` (`date_creation`),
+   KEY `entities_id` (`entities_id`),
+   KEY `is_recursive` (`is_recursive`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 --
 -- END DEPLOY
 --
@@ -950,7 +970,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblockinventorynames`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_dblockinventorynames` (
   `value` varchar(100) NOT NULL DEFAULT '',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
 ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -961,7 +981,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblockinventories`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_dblockinventories` (
   `value` int(11) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
 ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -972,7 +992,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblocksoftwares`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwares` (
   `value` tinyint(1) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
 ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -983,7 +1003,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_dblocksoftwareversions`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
   `value` tinyint(1) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    PRIMARY KEY (`value`),
    UNIQUE KEY `value` (`value`)
 ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

@@ -52,7 +52,7 @@ Session::checkCentralAccess();
 $fi_move_item = filter_input(INPUT_POST, "move_item");
 if (!empty($fi_move_item)) { //ajax request
 
-   $json_response = ["success" => TRUE, "reason"  => ''];
+   $json_response = ["success" => true, "reason"  => ''];
 
    if (Session::haveRight('plugin_fusioninventory_package', UPDATE)) {
       $params = [
@@ -62,14 +62,15 @@ if (!empty($fi_move_item)) { //ajax request
                ];
       $itemtype = filter_input(INPUT_POST, "itemtype");
       if (class_exists($itemtype)) {
-         $itemtype::move_item($params);
+         $item = new $itemtype();
+         $item->move_item($params);
       } else {
          Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
          Html::displayErrorAndDie ("package subtype not found");
       }
 
    } else {
-      $json_response['success'] = FALSE;
+      $json_response['success'] = false;
       $json_response['reason']  = __('Package modification is forbidden by your profile.');
    }
 
@@ -87,7 +88,7 @@ if (!empty($fi_move_item)) { //ajax request
 
    if (!is_numeric($packages_id)) {
       Toolbox::logDebug("Error: orders_id in request is not an integer");
-      Toolbox::logDebug(print_r($packages_id, TRUE));
+      Toolbox::logDebug(print_r($packages_id, true));
       exit;
    }
 
@@ -104,27 +105,17 @@ if (!empty($fi_move_item)) { //ajax request
             ];
    $itemtype = filter_input(INPUT_POST, "subtype");
    switch (filter_input(INPUT_POST, "subtype")) {
-      case 'check':
-         PluginFusioninventoryDeployCheck::displayForm(
-                 $pfDeployPackage, $input, $rand, $mode);
-         break;
-
-      case 'file':
-         PluginFusioninventoryDeployFile::displayForm(
-                 $pfDeployPackage, $input, $rand, $mode);
-         break;
-
-      case 'action':
-         PluginFusioninventoryDeployAction::displayForm(
-                 $pfDeployPackage, $input, $rand, $mode);
-         break;
-
       case 'package_json_debug':
          if (isset($order->fields['json'])) {
             $pfDeployPackage->displayJSONDebug();
          } else {
             echo "{}";
          }
+         break;
+      default:
+         $classname = 'PluginFusioninventoryDeploy'.ucfirst($itemtype);
+         $class     = new $classname();
+         $class->displayForm($pfDeployPackage, $input, $rand, $mode);
          break;
    }
 }

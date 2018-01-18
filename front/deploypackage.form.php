@@ -52,21 +52,24 @@ $package = new PluginFusioninventoryDeployPackage();
 if (isset($_POST['update_json'])) {
    $json_clean = stripcslashes($_POST['json']);
 
-   $json = json_decode($json_clean,TRUE);
+   $json = json_decode($json_clean, true);
 
    $ret = PluginFusioninventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
    Html::back();
    exit;
-} elseif (isset($_POST['add_item'])) {
-   $data = array_map(array('Toolbox', 'stripslashes_deep'), $_POST);
+} else if (isset($_POST['add_item'])) {
+   $data = array_map(['Toolbox', 'stripslashes_deep'],
+                     $package->escapeText($_POST));
    PluginFusioninventoryDeployPackage::alterJSON('add_item', $data);
    Html::back();
-} elseif (isset($_POST['save_item'])) {
-   $data = array_map(array('Toolbox', 'stripslashes_deep'), $_POST);
+} else if (isset($_POST['save_item'])) {
+   $data = array_map(['Toolbox', 'stripslashes_deep'],
+                     $package->escapeText($_POST));
    PluginFusioninventoryDeployPackage::alterJSON('save_item', $data);
    Html::back();
-} elseif (isset($_POST['remove_item'])) {
-   $data = array_map(array('Toolbox', 'stripslashes_deep'), $_POST);
+} else if (isset($_POST['remove_item'])) {
+   $data = array_map(['Toolbox', 'stripslashes_deep'],
+                     $package->escapeText($_POST));
    PluginFusioninventoryDeployPackage::alterJSON('remove_item', $data);
    Html::back();
 }
@@ -91,7 +94,7 @@ if (isset ($data["add"])) {
    if (isset($_POST["_type"]) && !empty($_POST["_type"])
            && isset($_POST["plugin_fusioninventory_deploypackages_id"])
            && $_POST["plugin_fusioninventory_deploypackages_id"]) {
-      $item = NULL;
+      $item = null;
       switch ($_POST["_type"]) {
          case 'User' :
             if (isset($_POST['users_id']) && $_POST['users_id']) {
@@ -117,9 +120,9 @@ if (isset ($data["add"])) {
       }
       if (!is_null($item)) {
          $item->add($_POST);
-//         Event::log($_POST["plugin_fusioninventory_deploypackages_id"], "sla", 4, "tools",
-//                    //TRANS: %s is the user login
-//                    sprintf(__('%s adds a target'), $_SESSION["glpiname"]));
+         //         Event::log($_POST["plugin_fusioninventory_deploypackages_id"], "sla", 4, "tools",
+         //                    //TRANS: %s is the user login
+         //                    sprintf(__('%s adds a target'), $_SESSION["glpiname"]));
       }
    }
    Html::back();
@@ -135,4 +138,3 @@ if (isset($_GET["id"])) {
 $package->display($_GET);
 Html::footer();
 
-?>

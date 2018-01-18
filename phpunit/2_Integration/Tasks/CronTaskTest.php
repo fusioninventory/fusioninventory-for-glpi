@@ -42,6 +42,7 @@
 
 class CronTaskTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -59,132 +60,129 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $pfEntity        = new PluginFusioninventoryEntity();
 
-
-      $input = array(
+      $input = [
           'id'             => 1,
           'agent_base_url' => 'http://127.0.0.1/glpi'
-      );
+      ];
       $pfEntity->update($input);
 
       // Create package
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'package'
-      );
+      ];
       $packages_id = $pfDeployPackage->add($input);
 
       // Create fusioninventory dynamic group
-      $input = array(
+      $input = [
           'name' => 'all computers have name computer',
           'type' => 'DYNAMIC'
-      );
+      ];
       $groups_id = $pfDeployGroup->add($input);
 
-      $input = array(
+      $input = [
           'plugin_fusioninventory_deploygroups_id' => $groups_id,
           'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:8:"computer";}}s:12:"metacriteria";s:0:"";}'
-      );
+      ];
       $groups_id = $pfDeployGroup_Dynamicdata->add($input);
 
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'deploy',
           'is_active'   => 1
-      );
+      ];
       $tasks_id = $pfTask->add($input);
 
       // create takjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'deploy',
           'method'                          => 'deployinstall',
           'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
           'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.$groups_id.'"}]'
-      );
+      ];
       $pfTaskjob->add($input);
 
       // Create computers + agents
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'portdavid',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'portdavid',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
-
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer2'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer2',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer2',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
-
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer3'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer3',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer3',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
       // Create package
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'on demand package',
           'is_recursive' => 0,
           'plugin_fusioninventory_deploygroups_id' => $groups_id,
           'json' => '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}'
-      );
+      ];
       $packages_id_2 = $pfDeployPackage->add($input);
 
       // create task
-      $input = array(
+      $input = [
           'entities_id'             => 0,
           'name'                    => 'ondemand',
           'is_active'               => 1,
           'is_deploy_on_demand'     => 1,
           'reprepare_if_successful' => 0
-      );
+      ];
       $tasks_id_2 = $pfTask->add($input);
 
       // create takjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks_id_2,
           'entities_id'                     => 0,
           'name'                            => 'deploy',
           'method'                          => 'deployinstall',
           'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id_2.'"}]',
           'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.$groups_id.'"}]'
-      );
+      ];
       $pfTaskjob->add($input);
 
    }
@@ -203,17 +201,16 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
-      $ref = array(
+      $ref = [
           1 => 'portdavid',
           2 => 'computer2',
           3 => 'computer3'
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
    }
-
 
 
    /**
@@ -228,39 +225,37 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $computer = new Computer();
       $pfAgent  = new PluginFusioninventoryAgent();
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer4'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer4',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer4',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
-
 
       PluginFusioninventoryTask::cronTaskscheduler();
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
-      $ref = array(
+      $ref = [
           1 => 'portdavid',
           2 => 'computer2',
           3 => 'computer3',
           4 => 'computer4'
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
    }
-
 
 
    /**
@@ -274,34 +269,33 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $computer = new Computer();
 
-      $computer->update(array(
+      $computer->update([
           'id' => 2,
-          'name' => 'koin'));
+          'name' => 'koin']);
 
       PluginFusioninventoryTask::cronTaskscheduler();
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
-      $ref = array(
+      $ref = [
           1 => 'portdavid',
           2 => 'computer2',
           3 => 'computer3',
           4 => 'computer4'
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
 
-      $ref_prepared = array(
+      $ref_prepared = [
           1 => 1,
           3 => 3,
           4 => 7
-      );
+      ];
 
       $this->assertEquals($ref_prepared, $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters']['agents_prepared']);
    }
-
 
 
    /**
@@ -314,23 +308,22 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $pfTask->update(array(
+      $pfTask->update([
           'id'        => 1,
-          'is_active' => 0));
+          'is_active' => 0]);
 
       PluginFusioninventoryTask::cronTaskscheduler();
 
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
-      $ref = array();
+      $ref = [];
 
       $this->assertEquals($ref, $data['agents'], 'Task inactive, so no agent prepared');
 
-      $ref_prepared = array();
+      $ref_prepared = [];
 
       $this->assertEquals($ref_prepared, $data['tasks']);
    }
-
 
 
    /**
@@ -351,11 +344,11 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjoblogs`");
       $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
 
-      $input = array(
+      $input = [
           'id'                      => 1,
           'reprepare_if_successful' => 0,
           'is_active'               => 1
-      );
+      ];
       $pfTask->update($input);
 
       // prepare
@@ -365,17 +358,17 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $agent = $pfAgent->infoByKey('portdavid');
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
          $agent['id'],
-         array('deployinstall')
+         ['deployinstall']
       );
       foreach ($taskjobstates as $taskjobstate) {
          $jobstate_order = $deploycommon->run($taskjobstate);
-         $params = array(
+         $params = [
             'machineid' => 'portdavid',
             'uuid'      => $jobstate_order['job']['uuid'],
             'code'      => 'ok',
             'msg'       => 'seems ok',
-            'sendheaders' => False
-         );
+            'sendheaders' => false
+         ];
          PluginFusioninventoryCommunicationRest::updateLog($params);
       }
 
@@ -383,101 +376,101 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $agent = $pfAgent->infoByKey('computer3');
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
          $agent['id'],
-         array('deployinstall')
+         ['deployinstall']
       );
       foreach ($taskjobstates as $taskjobstate) {
-        $jobstate_order = $deploycommon->run($taskjobstate);
-        $params = array(
+         $jobstate_order = $deploycommon->run($taskjobstate);
+         $params = [
            'machineid' => 'computer3',
            'uuid'      => $jobstate_order['job']['uuid'],
            'code'      => 'running',
            'msg'       => 'gogogo',
-           'sendheaders' => False
-        );
-        PluginFusioninventoryCommunicationRest::updateLog($params);
-        $params = array(
+           'sendheaders' => false
+         ];
+         PluginFusioninventoryCommunicationRest::updateLog($params);
+         $params = [
            'machineid' => 'computer3',
            'uuid'      => $jobstate_order['job']['uuid'],
            'code'      => 'ko',
            'msg'       => 'failure of check #1 (error)',
-           'sendheaders' => False
-        );
-        PluginFusioninventoryCommunicationRest::updateLog($params);
+           'sendheaders' => false
+         ];
+         PluginFusioninventoryCommunicationRest::updateLog($params);
       }
 
       // re-prepare and will have only the computer in error be in prepared mode
-      $data = $pfTask->getJoblogs(array(1));
-      $reference = array(
-          'agents_prepared' => array(
+      $data = $pfTask->getJoblogs([1]);
+      $reference = [
+          'agents_prepared' => [
               '4' => 3
-              ),
-          'agents_cancelled' => array(),
-          'agents_running' => array(),
-          'agents_success' => array(
+              ],
+          'agents_cancelled' => [],
+          'agents_running' => [],
+          'agents_success' => [
               '1' => 1
-          ),
-          'agents_error' => array(
+          ],
+          'agents_error' => [
               '3' => 2
-          ),
-          'agents_notdone' => array(
+          ],
+          'agents_notdone' => [
               '4' => 3
-          )
-      );
+          ]
+      ];
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
       $this->assertEquals($reference, $counters);
 
       PluginFusioninventoryTask::cronTaskscheduler();
-      $data = $pfTask->getJoblogs(array(1));
-      $reference = array(
-          'agents_prepared' => array(
+      $data = $pfTask->getJoblogs([1]);
+      $reference = [
+          'agents_prepared' => [
               '3' => 7,
               '4' => 3
-              ),
-          'agents_cancelled' => array(),
-          'agents_running' => array(),
-          'agents_success' => array(
+              ],
+          'agents_cancelled' => [],
+          'agents_running' => [],
+          'agents_success' => [
               '1' => 1
-          ),
-          'agents_error' => array(
+          ],
+          'agents_error' => [
               '3' => 2
-          ),
-          'agents_notdone' => array(
+          ],
+          'agents_notdone' => [
               '4' => 3
-          )
-      );
+          ]
+      ];
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
       $this->assertEquals($reference, $counters);
 
-
-      $input = array(
+      $input = [
           'id'                      => 1,
           'reprepare_if_successful' => 1,
-      );
+      ];
       $pfTask->update($input);
       PluginFusioninventoryTask::cronTaskscheduler();
-      $data = $pfTask->getJoblogs(array(1));
-      $reference = array(
-          'agents_prepared' => array(
+      $data = $pfTask->getJoblogs([1]);
+      $reference = [
+          'agents_prepared' => [
               '1' => 9,
               '3' => 7,
               '4' => 3
-              ),
-          'agents_cancelled' => array(),
-          'agents_running' => array(),
-          'agents_success' => array(
+              ],
+          'agents_cancelled' => [],
+          'agents_running' => [],
+          'agents_success' => [
               '1' => 1
-          ),
-          'agents_error' => array(
+          ],
+          'agents_error' => [
               '3' => 2
-          ),
-          'agents_notdone' => array(
+          ],
+          'agents_notdone' => [
               '4' => 3
-          )
-      );
+          ]
+      ];
       $counters = $data['tasks'][1]['jobs'][1]['targets']['PluginFusioninventoryDeployPackage_1']['counters'];
       $this->assertEquals($reference, $counters);
 
    }
+
 
    /**
     * @test
@@ -588,6 +581,6 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
    }
 
+
 }
 
-?>

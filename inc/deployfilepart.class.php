@@ -65,15 +65,16 @@ class PluginFusioninventoryDeployFilepart {
          header("HTTP/1.1 500");
          exit;
       }
-      $matches = array();
+      $matches = [];
       preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
       $sha512 = $matches[1];
-//      $short_sha512 = substr($sha512, 0, 6);
+      //      $short_sha512 = substr($sha512, 0, 6);
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
-      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).'/'.$sha512;
+      $pfDeployFile = new PluginFusioninventoryDeployFile();
+      $filePath     = $repoPath.$pfDeployFile->getDirBySha512($sha512).'/'.$sha512;
 
       if (!is_file($filePath)) {
          header("HTTP/1.1 404");
@@ -101,6 +102,6 @@ class PluginFusioninventoryDeployFilepart {
       readfile($filePath);
       exit;
    }
-}
 
-?>
+
+}

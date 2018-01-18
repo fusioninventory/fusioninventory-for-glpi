@@ -63,9 +63,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
     * @return boolean
     */
    static function canCreate() {
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -74,9 +73,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
     * @return boolean
     */
    static function canView() {
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -97,8 +95,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                AND method = 'deployinstall'";
 
       $res  = $DB->query($sql);
-      $json  = array();
-      $temp_tasks = array();
+      $json  = [];
+      $temp_tasks = [];
       while ($row = $DB->fetch_assoc($res)) {
          $row['packages'] = importArrayFromDB($row['definition']);
          $row['actions'] = importArrayFromDB($row['action']);
@@ -111,20 +109,18 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          foreach ($task['actions'] as $action) {
             foreach ($task['packages'] as $package) {
 
-               $tmp = array_keys($action);
+               $tmp         = array_keys($action);
                $action_type = $tmp[0];
 
-               $json['tasks'][$i]['package_id'] = $package['PluginFusioninventoryDeployPackage'];
-
-               $json['tasks'][$i]['method'] = $task['method'];
-               $json['tasks'][$i]['comment'] = $task['comment'];
-               $json['tasks'][$i]['retry_nb'] = $task['retry_nb'];
-               $json['tasks'][$i]['retry_time'] = $task['retry_time'];
-
-               $json['tasks'][$i]['action_type'] = $action_type;
+               $json['tasks'][$i]['package_id']       = $package['PluginFusioninventoryDeployPackage'];
+               $json['tasks'][$i]['method']           = $task['method'];
+               $json['tasks'][$i]['comment']          = $task['comment'];
+               $json['tasks'][$i]['retry_nb']         = $task['retry_nb'];
+               $json['tasks'][$i]['retry_time']       = $task['retry_time'];
+               $json['tasks'][$i]['action_type']      = $action_type;
                $json['tasks'][$i]['action_selection'] = $action[$action_type];
 
-               $obj_action = new $action_type;
+               $obj_action = new $action_type();
                $obj_action->getFromDB($action[$action_type]);
                $json['tasks'][$i]['action_name'] = $obj_action->getField('name');
 
@@ -134,7 +130,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       }
       return json_encode($json);
    }
-
 
 
    /**
@@ -150,18 +145,35 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       $tasks = json_decode($params['tasks']);
 
       //remove old jobs from task
-      $query = "DELETE FROM ".$this->getTable()."
-      WHERE plugin_fusioninventory_deploytasks_id = '".$tasks_id."'";
-      $DB->query($query);
+      $this->deleteByCriteria(['plugin_fusioninventory_deploytasks_id' => $tasks_id], true);
 
       //get plugin id
-      $plug = new Plugin;
+      $plug = new Plugin();
       $plug->getFromDBbyDir('fusinvdeploy');
       $plugins_id = $plug->getField('id');
 
       //insert new rows
-      $sql_tasks = array();
+      $sql_tasks = [];
       $i = 0;
+
+      $qparam = new QueryParam();
+      $query = $DB::buildInsert(
+         $this->getTable(), [
+            'plugin_fusioninventory_deploytasks_id'   => $qparam,
+            'name'                                    => $qparam,
+            'date_creation'                           => $qparam,
+            'entities_id'                             => $qparam,
+            'plugins_id'                              => $qparam,
+            'method'                                  => $qparam,
+            'definition'                              => $qparam,
+            'action'                                  => $qparam,
+            'retry_nb'                                => $qparam,
+            'retry_time'                              => $qparam,
+            'periodicity_type'                        => $qparam,
+            'periodicity_count'                       => $qparam
+         ]
+      );
+      $stmt = $DB->prepare($query);
 
       foreach ($tasks as $task) {
          $task = get_object_vars($task);
@@ -170,26 +182,28 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          //$action = exportArrayToDB(array(array(
          //    $task['action_type'] => $task['action_selection'])));
          $action = exportArrayToDB($task['action']);
-         $definition = exportArrayToDB(array(array(
-            'PluginFusioninventoryDeployPackage' => $task['package_id'])));
+         $definition = exportArrayToDB([[
+            'PluginFusioninventoryDeployPackage' => $task['package_id']]]);
 
-         $sql_tasks[] = "INSERT INTO ".$this->getTable()."
-         (
-            plugin_fusioninventory_deploytasks_id, name, date_creation, entities_id,
-            plugins_id, method, definition, action,
-            retry_nb, retry_time, periodicity_type, periodicity_count
-         ) VALUES (
-            '$tasks_id', 'job_".$tasks_id."_$i', NOW(), '0',
-            '$plugins_id', '".$task['method']."', '$definition', '$action',
-            '".$task['retry_nb']."', '".$task['retry_time']."', 'minutes', '0'
-         )";
-         $i++;
+         $stmt->bind_param(
+            'ssssssssssss',
+            $tasks_id,
+            "job_$tasks_id_$i",
+            'NOW()',
+            '0',
+            $plugins_id,
+            $task['method'],
+            $definition,
+            $action,
+            $task['retry_nb'],
+            $task['retry_time'],
+            'minutes',
+            '0'
+         );
+         $stmt->execute();
       }
-      foreach ($sql_tasks as $query) {
-         $DB->query($query);
-      }
+      mysqli_stmt_close($stmt);
    }
-
 
 
    /**
@@ -199,22 +213,21 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
     */
    static function getActionTypes() {
 
-      return array(
-         array(
+      return [
+         [
             'name' => __('Computers'),
             'value' => 'Computer',
-         ),
-         array(
+         ],
+         [
             'name' => __('Group'),
             'value' => 'Group',
-         ),
-         array(
+         ],
+         [
             'name' => __('Groups of computers', 'fusioninventory'),
             'value' => 'PluginFusioninventoryDeployGroup',
-         )
-      );
+         ]
+      ];
    }
-
 
 
    /**
@@ -231,12 +244,12 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       if (!isset($params['get'])) {
          exit;
       }
-      switch($params['get']) {
+      switch ($params['get']) {
 
          case "type";
-            $res = json_encode(array(
+            $res = json_encode([
                'action_types' =>self::getActionTypes()
-            ));
+            ]);
             break;
          case "selection";
 
@@ -291,6 +304,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       }
       return $res;
    }
-}
 
-?>
+
+}

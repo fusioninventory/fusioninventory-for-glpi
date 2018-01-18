@@ -54,19 +54,20 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryFormatconvert {
 
+   const FI_SOFTWARE_SEPARATOR = "$$$$";
    /**
     * Initialize the foreignkey itemtypes
     *
     * @var array
     */
-   var $foreignkey_itemtype = array();
+   var $foreignkey_itemtype = [];
 
    /**
     * Initialize the manufacturer cache
     *
     * @var array
     */
-   var $manufacturer_cache = array();
+   var $manufacturer_cache = [];
 
 
    /**
@@ -80,7 +81,7 @@ class PluginFusioninventoryFormatconvert {
       global $PLUGIN_FUSIONINVENTORY_XML;
 
       $PLUGIN_FUSIONINVENTORY_XML = $xml;
-      $datainventory = json_decode(json_encode((array)$xml), TRUE);
+      $datainventory = json_decode(json_encode((array)$xml), true);
       if (isset($datainventory['CONTENT']['ENVS'])) {
          unset($datainventory['CONTENT']['ENVS']);
       }
@@ -92,98 +93,97 @@ class PluginFusioninventoryFormatconvert {
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
-         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES',
+         $a_fields = ['SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES',
                            'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS',
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT'];
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
-                    AND !is_array($datainventory['CONTENT'][$field])) {
-               $datainventory['CONTENT'][$field] = array($datainventory['CONTENT'][$field]);
+              AND !is_array($datainventory['CONTENT'][$field])) {
+               $datainventory['CONTENT'][$field] = [$datainventory['CONTENT'][$field]];
             } else if (isset($datainventory['CONTENT'][$field])
-                    AND !is_int(key($datainventory['CONTENT'][$field]))) {
-               $datainventory['CONTENT'][$field] = array($datainventory['CONTENT'][$field]);
+              AND !is_int(key($datainventory['CONTENT'][$field]))) {
+               $datainventory['CONTENT'][$field] = [$datainventory['CONTENT'][$field]];
             }
          }
-      if (isset($datainventory['CONTENT'])
+         if (isset($datainventory['CONTENT'])
               && isset($datainventory['CONTENT']['BIOS'])
               && !is_array($datainventory['CONTENT']['BIOS'])) {
          unset($datainventory['CONTENT']['BIOS']);
-      }
-      if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])) {
-         foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data) {
-            if (isset($data['NETWORKS'])
+         }
+         if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])) {
+            foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data) {
+               if (isset($data['NETWORKS'])
                     && !is_int(key($data['NETWORKS']))) {
-               $datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS'] =
-                  array($datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS']);
+                  $datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS'] =
+                     [$datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS']];
 
+               }
             }
          }
-      }
 
-      // Hack for Network discovery and inventory
-      if (isset($datainventory['CONTENT']['DEVICE'])
+         // Hack for Network discovery and inventory
+         if (isset($datainventory['CONTENT']['DEVICE'])
               AND !is_array($datainventory['CONTENT']['DEVICE'])) {
-         $datainventory['CONTENT']['DEVICE'] = array($datainventory['CONTENT']['DEVICE']);
-      } else if (isset($datainventory['CONTENT']['DEVICE'])
+         $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
+         } else if (isset($datainventory['CONTENT']['DEVICE'])
               AND !is_int(key($datainventory['CONTENT']['DEVICE']))) {
-         $datainventory['CONTENT']['DEVICE'] = array($datainventory['CONTENT']['DEVICE']);
-      }
-      if (isset($datainventory['CONTENT']['DEVICE'])) {
-         foreach ($datainventory['CONTENT']['DEVICE'] as $num=>$data) {
-            if (isset($data['INFO']['IPS']['IP'])
+         $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
+         }
+         if (isset($datainventory['CONTENT']['DEVICE'])) {
+            foreach ($datainventory['CONTENT']['DEVICE'] as $num=>$data) {
+               if (isset($data['INFO']['IPS']['IP'])
                     AND !is_array($data['INFO']['IPS']['IP'])) {
-               $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] =
-                     array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
-            } else if (isset($data['INFO']['IPS']['IP'])
+                  $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] =
+                     [$datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']];
+               } else if (isset($data['INFO']['IPS']['IP'])
                     AND !is_int(key($data['INFO']['IPS']['IP']))) {
-               $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] =
-                     array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
-            }
+                  $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] =
+                     [$datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']];
+               }
 
-            if (isset($data['PORTS']['PORT'])
+               if (isset($data['PORTS']['PORT'])
                     AND !is_array($data['PORTS']['PORT'])) {
-               $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] =
-                     array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
-            } else if (isset($data['PORTS']['PORT'])
+                  $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] =
+                     [$datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']];
+               } else if (isset($data['PORTS']['PORT'])
                     AND !is_int(key($data['PORTS']['PORT']))) {
-               $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] =
-                     array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
-            }
-            if (isset($datainventory['CONTENT']['DEVICE'][$num]['PORTS'])) {
-               foreach ($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']
+                  $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] =
+                     [$datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']];
+               }
+               if (isset($datainventory['CONTENT']['DEVICE'][$num]['PORTS'])) {
+                  foreach ($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']
                                     as $numport=>$a_port) {
-                  if (isset($a_port['CONNECTIONS'])
+                     if (isset($a_port['CONNECTIONS'])
                           && isset($a_port['CONNECTIONS']['CONNECTION'])
                           && isset($a_port['CONNECTIONS']['CONNECTION']['MAC'])
                           && !is_array($a_port['CONNECTIONS']['CONNECTION']['MAC'])) {
-                     $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['CONNECTIONS']['CONNECTION']['MAC'] =
-                           array($a_port['CONNECTIONS']['CONNECTION']['MAC']);
-                  }
-                  if (isset($a_port['VLANS'])
+                        $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['CONNECTIONS']['CONNECTION']['MAC'] =
+                              [$a_port['CONNECTIONS']['CONNECTION']['MAC']];
+                     }
+                     if (isset($a_port['VLANS'])
                           && isset($a_port['VLANS']['VLAN'])
                           && !is_int(key($a_port['VLANS']['VLAN']))) {
-                     $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['VLANS']['VLAN'] =
-                           array($a_port['VLANS']['VLAN']);
+                        $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['VLANS']['VLAN'] =
+                              [$a_port['VLANS']['VLAN']];
+                     }
                   }
                }
             }
          }
-      }
 
-      //Fix bad WINOWNER; see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/2095
-      if (isset($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
-         if (is_array($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
-            $fixed = trim(implode(' ', $datainventory['CONTENT']['HARDWARE']['WINOWNER']));
-            $datainventory['CONTENT']['HARDWARE']['WINOWNER'] = $fixed;
+         //Fix bad WINOWNER; see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/2095
+         if (isset($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
+            if (is_array($datainventory['CONTENT']['HARDWARE']['WINOWNER'])) {
+               $fixed = trim(implode(' ', $datainventory['CONTENT']['HARDWARE']['WINOWNER']));
+               $datainventory['CONTENT']['HARDWARE']['WINOWNER'] = $fixed;
+            }
          }
-      }
 
-      return $datainventory;
+         return $datainventory;
    }
-
 
 
    /**
@@ -193,11 +193,10 @@ class PluginFusioninventoryFormatconvert {
     * @return array
     */
    static function JSONtoArray($json) {
-      $datainventory = json_decode($json, TRUE);
+      $datainventory = json_decode($json, true);
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       return $datainventory;
    }
-
 
 
    /**
@@ -209,7 +208,7 @@ class PluginFusioninventoryFormatconvert {
    static function cleanArray($data) {
       foreach ($data as $key=>$value) {
          //if (is_array($value)) {
-           if ((array)$value === $value) {
+         if ((array)$value === $value) {
             if (count($value) == 0) {
                $value = '';
             } else {
@@ -231,7 +230,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Convert Fusioninventory Computer inventory to pre-prepared GLPI inventory
     *
@@ -245,34 +243,34 @@ class PluginFusioninventoryFormatconvert {
       global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
 
       // Initialize
-      $a_inventory = array(
-         'Computer'                => array(),
-         'fusioninventorycomputer' => array(),
-         'processor'               => array(),
-         'memory'                  => array(),
-         'harddrive'               => array(),
-         'drive'                   => array(),
-         'graphiccard'             => array(),
-         'networkcard'             => array(),
-         'soundcard'               => array(),
-         'controller'              => array(),
-         'SOFTWARES'               => array(),
-         'virtualmachine'          => array(),
-         'computerdisk'            => array(),
-         'networkport'             => array(),
-         'antivirus'               => array(),
-         'licenseinfo'             => array(),
-         'batteries'               => array(),
-         'monitor'                 => array(),
-         'printer'                 => array(),
-         'peripheral'              => array(),
-         'storage'                 => array(),
-         'remote_mgmt'             => array()
-      );
+      $a_inventory = [
+         'Computer'                => [],
+         'fusioninventorycomputer' => [],
+         'processor'               => [],
+         'memory'                  => [],
+         'harddrive'               => [],
+         'drive'                   => [],
+         'graphiccard'             => [],
+         'networkcard'             => [],
+         'soundcard'               => [],
+         'controller'              => [],
+         'SOFTWARES'               => [],
+         'virtualmachine'          => [],
+         'computerdisk'            => [],
+         'networkport'             => [],
+         'antivirus'               => [],
+         'licenseinfo'             => [],
+         'batteries'               => [],
+         'monitor'                 => [],
+         'printer'                 => [],
+         'peripheral'              => [],
+         'storage'                 => [],
+         'remote_mgmt'             => []
+      ];
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
 
-      $ignorecontrollers = array();
+      $ignorecontrollers = [];
 
       if (isset($array['ACCOUNTINFO'])) {
          $a_inventory['ACCOUNTINFO'] = $array['ACCOUNTINFO'];
@@ -280,7 +278,7 @@ class PluginFusioninventoryFormatconvert {
 
       // * HARDWARE
       $array_tmp = $thisc->addValues($array['HARDWARE'],
-                                     array(
+                                     [
                                         'NAME'           => 'name',
                                         'WINPRODID'      => 'licenseid',
                                         'WINPRODKEY'     => 'license_number',
@@ -290,9 +288,9 @@ class PluginFusioninventoryFormatconvert {
                                         'manufacturers_id' => 'manufacturers_id',
                                         'computermodels_id' => 'computermodels_id',
                                         'serial' => 'serial',
-                                        'computertypes_id' => 'computertypes_id'));
+                                        'computertypes_id' => 'computertypes_id']);
       if (!isset($array['OPERATINGSYSTEM']) || empty($array['OPERATINGSYSTEM'])) {
-         $array['OPERATINGSYSTEM'] = array();
+         $array['OPERATINGSYSTEM'] = [];
          if (isset($array['HARDWARE']['OSNAME'])) {
             $array['OPERATINGSYSTEM']['FULL_NAME'] = $array['HARDWARE']['OSNAME'];
          }
@@ -329,10 +327,10 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['Computer'] = $array_tmp;
 
       $array_tmp = $thisc->addValues($array['HARDWARE'],
-                                     array(
+                                     [
                                         'OSINSTALLDATE'  => 'operatingsystem_installationdate',
                                         'WINOWNER'       => 'winowner',
-                                        'WINCOMPANY'     => 'wincompany'));
+                                        'WINCOMPANY'     => 'wincompany']);
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
 
       // * Determine "Public contact address"
@@ -343,12 +341,12 @@ class PluginFusioninventoryFormatconvert {
          if ($forwarded_for_ip_tmp->is_valid()) {
             $array_tmp['remote_addr'] = $forwarded_for_ip_tmp->getTextual();
          }
-      } elseif (isset($_SERVER['HTTP_X_REAL_IP'])) { // Then try "X-Real-IP" HTTP header
+      } else if (isset($_SERVER['HTTP_X_REAL_IP'])) { // Then try "X-Real-IP" HTTP header
          $real_ip_tmp = new IPAddress($_SERVER['HTTP_X_REAL_IP']);
          if ($real_ip_tmp->is_valid()) {
             $array_tmp['remote_addr'] = $real_ip_tmp->getTextual();
          }
-      } elseif (isset($_SERVER['REMOTE_ADDR'])) { // Fall back on the currently connected IP
+      } else if (isset($_SERVER['REMOTE_ADDR'])) { // Fall back on the currently connected IP
          $array_tmp['remote_addr'] = $_SERVER['REMOTE_ADDR'];
       }
 
@@ -452,7 +450,7 @@ class PluginFusioninventoryFormatconvert {
          if (isset($array['HARDWARE']['CHASSIS_TYPE'])
                && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
             $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
-         } else  if (isset($array['BIOS']['TYPE'])
+         } else if (isset($array['BIOS']['TYPE'])
                && !empty($array['BIOS']['TYPE'])) {
             $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['TYPE'];
          } else if (isset($array['BIOS']['MMODEL'])
@@ -487,7 +485,7 @@ class PluginFusioninventoryFormatconvert {
             isset($array['BIOS']['BMANUFACTURER']) ? $array['BIOS']['BMANUFACTURER'] : ''
          );
 
-         $matches = array();
+         $matches = [];
          preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_bios['date'], $matches);
          if (count($matches) == 4) {
             $a_bios['date'] = $matches[3]."-".$matches[1]."-".$matches[2];
@@ -502,13 +500,13 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['OPERATINGSYSTEM'])) {
          $array_tmp = $thisc->addValues(
                  $array['OPERATINGSYSTEM'],
-                 array(
+                 [
                     'NAME'           => 'operatingsystems_id',
                     'VERSION'        => 'operatingsystemversions_id',
                     'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
                     'ARCH'           => 'operatingsystemarchitectures_id',
                     'KERNEL_NAME'    => 'operatingsystemkernels_id',
-                    'KERNEL_VERSION' => 'operatingsystemkernelversions_id'));
+                    'KERNEL_VERSION' => 'operatingsystemkernelversions_id']);
 
          if (isset($array['OPERATINGSYSTEM']['HOSTID'])) {
             $a_inventory['fusioninventorycomputer']['hostid'] = $array['OPERATINGSYSTEM']['HOSTID'];
@@ -526,7 +524,7 @@ class PluginFusioninventoryFormatconvert {
 
          $array_tmp['operatingsystemeditions_id'] = '';
          if (isset($array['OPERATINGSYSTEM']['FULL_NAME']) && $pfConfig->getValue('manage_osname') == 1) {
-            $matches = array();
+            $matches = [];
             preg_match("/.+ Windows (XP |\d\.\d |\d{1,4} |Vista(™)? )(.*)/", $array['OPERATINGSYSTEM']['FULL_NAME'], $matches);
             if (count($matches) == 4) {
                $array_tmp['operatingsystemeditions_id'] = $matches[3];
@@ -580,14 +578,14 @@ class PluginFusioninventoryFormatconvert {
                   }
                }
             }
-         } elseif (isset($array['OPERATINGSYSTEM']['FULL_NAME'])) {
+         } else if (isset($array['OPERATINGSYSTEM']['FULL_NAME'])) {
             $array_tmp['operatingsystems_id'] = $array['OPERATINGSYSTEM']['FULL_NAME'];
          }
          if (isset($array_tmp['operatingsystemarchitectures_id'])
                  && $array_tmp['operatingsystemarchitectures_id'] != '') {
 
             $rulecollection = new RuleDictionnaryOperatingSystemArchitectureCollection();
-            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['operatingsystemarchitectures_id']));
+            $res_rule = $rulecollection->processAllRules(["name"=>$array_tmp['operatingsystemarchitectures_id']]);
             if (isset($res_rule['name'])) {
                $array_tmp['operatingsystemarchitectures_id'] = $res_rule['name'];
             }
@@ -622,16 +620,16 @@ class PluginFusioninventoryFormatconvert {
       // Hack for problems of ESX inventory with same deviceid than real computer inventory
       if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])
               && strstr($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'], 'VMware ESX')) {
-         $PF_ESXINVENTORY = TRUE;
+         $PF_ESXINVENTORY = true;
       }
 
       // * BATTERIES
-      $a_inventory['batteries'] = array();
+      $a_inventory['batteries'] = [];
       if ($pfConfig->getValue('component_battery') == 1) {
          if (isset($array['BATTERIES'])) {
             foreach ($array['BATTERIES'] as $a_batteries) {
                $a_battery = $thisc->addValues($a_batteries,
-                  array(
+                  [
                      'NAME'         => 'designation',
                      'MANUFACTURER' => 'manufacturers_id',
                      'SERIAL'       => 'serial',
@@ -639,33 +637,34 @@ class PluginFusioninventoryFormatconvert {
                      'CAPACITY'     => 'capacity',
                      'CHEMISTRY'    => 'devicebatterytypes_id',
                      'VOLTAGE'      => 'voltage'
-                  )
+                  ]
                );
 
                // test date_install
-               $matches = array();
-               preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_battery['manufacturing_date'], $matches);
-               if (count($matches) == 4) {
-                  $a_battery['manufacturing_date'] = $matches[3]."-".$matches[2]."-".$matches[1];
-               } else {
-                  unset($a_battery['manufacturing_date']);
+               $matches = [];
+               if (isset($a_battery['manufacturing_date'])) {
+                  preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $a_battery['manufacturing_date'], $matches);
+                  if (count($matches) == 4) {
+                     $a_battery['manufacturing_date'] = $matches[3]."-".$matches[2]."-".$matches[1];
+                  } else {
+                     unset($a_battery['manufacturing_date']);
+                  }
                }
-
                $a_inventory['batteries'][] = $a_battery;
             }
          }
       }
 
       // * SOUNDS
-      $a_inventory['soundcard'] = array();
+      $a_inventory['soundcard'] = [];
       if ($pfConfig->getValue('component_soundcard') == 1) {
          if (isset($array['SOUNDS'])) {
             foreach ($array['SOUNDS'] as $a_sounds) {
                $a_inventory['soundcard'][] = $thisc->addValues($a_sounds,
-                                                           array(
+                                                           [
                                                               'NAME'          => 'designation',
                                                               'MANUFACTURER'  => 'manufacturers_id',
-                                                              'DESCRIPTION'   => 'comment'));
+                                                              'DESCRIPTION'   => 'comment']);
 
                $ignorecontrollers[$a_sounds['NAME']] = 1;
             }
@@ -673,15 +672,15 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * VIDEOS
-      $a_inventory['graphiccard'] = array();
+      $a_inventory['graphiccard'] = [];
       if ($pfConfig->getValue('component_graphiccard') == 1) {
          if (isset($array['VIDEOS'])) {
             foreach ($array['VIDEOS'] as $a_videos) {
                if (is_array($a_videos)
                        && isset($a_videos['NAME'])) {
-                  $array_tmp = $thisc->addValues($a_videos, array(
+                  $array_tmp = $thisc->addValues($a_videos, [
                                                               'NAME'   => 'designation',
-                                                              'MEMORY' => 'memory'));
+                                                              'MEMORY' => 'memory']);
                   $array_tmp['designation'] = trim($array_tmp['designation']);
                   $a_inventory['graphiccard'][] = $array_tmp;
                   if (isset($a_videos['NAME'])) {
@@ -696,7 +695,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * NETWORK CARD
-      $a_inventory['networkcard'] = array();
+      $a_inventory['networkcard'] = [];
       if ($pfConfig->getValue('component_networkcard') == 1) {
          if (isset($array['NETWORKS'])) {
             foreach ($array['NETWORKS'] as $a_netcards) {
@@ -704,7 +703,7 @@ class PluginFusioninventoryFormatconvert {
                        && isset($a_netcards['DESCRIPTION'])) {
 
                   // Search in controller if find NAME = CONTROLLER TYPE
-                  $a_found = array();
+                  $a_found = [];
                   if (isset($array['CONTROLLERS'])) {
                      foreach ($array['CONTROLLERS'] as $a_controllers) {
                         if (count($a_found) == 0) {
@@ -723,10 +722,10 @@ class PluginFusioninventoryFormatconvert {
                   }
                   if (count($a_found) > 0) {
                      $array_tmp = $thisc->addValues($a_found,
-                                                    array(
+                                                    [
                                                        'NAME'          => 'designation',
                                                        'MANUFACTURER'  => 'manufacturers_id',
-                                                       'MACADDR'       => 'mac'));
+                                                       'MACADDR'       => 'mac']);
                      if (isset($a_found['PCIID'])) {
                         $a_PCIData =
                               PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
@@ -753,10 +752,10 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * NETWORKS
-      $a_inventory['networkport'] = array();
+      $a_inventory['networkport'] = [];
       if ($pfConfig->getValue('component_networkcard') == 1) {
          if (isset($array['NETWORKS'])) {
-            $a_networknames = array();
+            $a_networknames = [];
             foreach ($array['NETWORKS'] as $a_networks) {
                $virtual_import = 1;
                if ($pfConfig->getValue("component_networkcardvirtual") == 0) {
@@ -768,7 +767,7 @@ class PluginFusioninventoryFormatconvert {
                }
                if ($virtual_import == 1) {
                   $array_tmp = $thisc->addValues($a_networks,
-                                                 array(
+                                                 [
                                                     'DESCRIPTION' => 'name',
                                                     'MACADDR'     => 'mac',
                                                     'TYPE'        => 'instantiation_type',
@@ -780,7 +779,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'IPMASK'      => 'netmask',
                                                     'IPDHCP'      => 'dhcpserver',
                                                     'WWN'         => 'wwn',
-                                                    'SPEED'       => 'speed'));
+                                                    'SPEED'       => 'speed']);
 
                   if ((isset($array_tmp['name'])
                           && $array_tmp['name'] != '')
@@ -815,10 +814,10 @@ class PluginFusioninventoryFormatconvert {
                      } else {
                         if (isset($array_tmp['ip'])
                                 && $array_tmp['ip'] != '') {
-                           $array_tmp['ipaddress'] = array($array_tmp['ip']);
+                           $array_tmp['ipaddress'] = [$array_tmp['ip']];
                            unset($array_tmp['ip']);
                         } else {
-                           $array_tmp['ipaddress'] = array();
+                           $array_tmp['ipaddress'] = [];
                         }
                         if (isset($a_networks['IPADDRESS6'])
                               && $a_networks['IPADDRESS6'] != '') {
@@ -845,8 +844,9 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
+                        // Test if the provided network speed is an integer number
                         if (isset($array_tmp['speed'])
-                                && is_numeric($array_tmp['speed'])) {
+                                && ctype_digit (strval($array_tmp['speed']))) {
                            // Old agent version have speed in b/s instead Mb/s
                            if ($array_tmp['speed'] > 100000) {
                               $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
@@ -871,17 +871,17 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * CONTROLLERS
-      $a_inventory['controller'] = array();
+      $a_inventory['controller'] = [];
       if ($pfConfig->getValue('component_control') == 1) {
          if (isset($array['CONTROLLERS'])) {
             foreach ($array['CONTROLLERS'] as $a_controllers) {
                if ((isset($a_controllers["NAME"]))
                        AND (!isset($ignorecontrollers[$a_controllers["NAME"]]))) {
                   $array_tmp = $thisc->addValues($a_controllers,
-                                                 array(
+                                                 [
                                                     'NAME'          => 'designation',
                                                     'MANUFACTURER'  => 'manufacturers_id',
-                                                    'type'          => 'interfacetypes_id'));
+                                                    'type'          => 'interfacetypes_id']);
                   if (isset($a_controllers['PCIID'])) {
                      $a_PCIData =
                            PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
@@ -902,7 +902,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * CPUS
-      $a_inventory['processor'] = array();
+      $a_inventory['processor'] = [];
       if ($pfConfig->getValue('component_processor') == 1) {
          if (isset($array['CPUS'])) {
             foreach ($array['CPUS'] as $a_cpus) {
@@ -910,13 +910,13 @@ class PluginFusioninventoryFormatconvert {
                        && (isset($a_cpus['NAME'])
                         || isset($a_cpus['TYPE']))) {
                   $array_tmp = $thisc->addValues($a_cpus,
-                                                 array(
+                                                 [
                                                     'SPEED'        => 'frequency',
                                                     'MANUFACTURER' => 'manufacturers_id',
                                                     'SERIAL'       => 'serial',
                                                     'NAME'         => 'designation',
                                                     'CORE'         => 'nbcores',
-                                                    'THREAD'       => 'nbthreads'));
+                                                    'THREAD'       => 'nbthreads']);
                   if ($array_tmp['designation'] == ''
                           && isset($a_cpus['TYPE'])) {
                      $array_tmp['designation'] = $a_cpus['TYPE'];
@@ -930,7 +930,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * DRIVES
-      $a_inventory['computerdisk'] = array();
+      $a_inventory['computerdisk'] = [];
       if (isset($array['DRIVES'])) {
          foreach ($array['DRIVES'] as $a_drives) {
             $isNetworkDriveOrFS = false;
@@ -953,15 +953,15 @@ class PluginFusioninventoryFormatconvert {
             if ($pfConfig->getValue("component_drive") == '0'
                 OR ($pfConfig->getValue("component_networkdrive") == '0' AND $isNetworkDriveOrFS)
                 OR ($pfConfig->getValue("component_removablemedia") == '0' AND $isRemovableMedia)) {
-
+               $coding_std = true;
             } else {
                if ($pfConfig->getValue('import_volume') == 1) {
                   $array_tmp = $thisc->addValues($a_drives,
-                                                 array(
+                                                 [
                                                     'VOLUMN'      => 'device',
                                                     'FILESYSTEM'  => 'filesystems_id',
                                                     'TOTAL'       => 'totalsize',
-                                                    'FREE'        => 'freesize'));
+                                                    'FREE'        => 'freesize']);
                   if ((isset($a_drives['LABEL'])) AND (!empty($a_drives['LABEL']))) {
                      $array_tmp['name'] = $a_drives['LABEL'];
                   } else if (((!isset($a_drives['VOLUMN']))
@@ -987,7 +987,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * MEMORIES
-      $a_inventory['memory'] = array();
+      $a_inventory['memory'] = [];
       if ($pfConfig->getValue('component_memory') == 1) {
          if (isset($array['MEMORIES'])) {
             foreach ($array['MEMORIES'] as $a_memories) {
@@ -995,14 +995,15 @@ class PluginFusioninventoryFormatconvert {
                     OR ((isset($a_memories["CAPACITY"]))
                             AND (!preg_match("/^[0-9]+$/i", $a_memories["CAPACITY"])))) {
                   // Nothing
+                  $coding_std = true;
                } else {
                   $array_tmp = $thisc->addValues($a_memories,
-                                                 array(
+                                                 [
                                                     'CAPACITY'     => 'size',
                                                     'SPEED'        => 'frequence',
                                                     'TYPE'         => 'devicememorytypes_id',
                                                     'SERIALNUMBER' => 'serial',
-                                                    'NUMSLOTS'     => 'busID'));
+                                                    'NUMSLOTS'     => 'busID']);
                   if ($array_tmp['size'] > 0) {
                      $array_tmp['designation'] = "";
                      if (isset($a_memories["TYPE"])
@@ -1024,8 +1025,8 @@ class PluginFusioninventoryFormatconvert {
             }
          } else if (isset($array['HARDWARE']['MEMORY'])) {
             $array_tmp = $thisc->addValues($array['HARDWARE'],
-                                           array(
-                                              'MEMORY' => 'size'));
+                                           [
+                                              'MEMORY' => 'size']);
             $array_tmp['designation'] = 'Dummy Memory Module';
             $array_tmp['frequence'] = 0;
             $array_tmp['serial'] = '';
@@ -1036,16 +1037,16 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * MONITORS
-      $a_inventory['monitor'] = array();
+      $a_inventory['monitor'] = [];
       if (isset($array['MONITORS'])) {
-         $a_serialMonitor = array();
+         $a_serialMonitor = [];
          foreach ($array['MONITORS'] as $a_monitors) {
             $array_tmp = $thisc->addValues($a_monitors,
-                                           array(
+                                           [
                                               'CAPTION'      => 'name',
                                               'MANUFACTURER' => 'manufacturers_id',
                                               'SERIAL'       => 'serial',
-                                              'DESCRIPTION'  => 'comment'));
+                                              'DESCRIPTION'  => 'comment']);
             $array_tmp['is_dynamic'] = 1;
             if (!isset($array_tmp['name'])) {
                $array_tmp['name'] = '';
@@ -1071,15 +1072,15 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * PRINTERS
-      $a_inventory['printer'] = array();
+      $a_inventory['printer'] = [];
       if (isset($array['PRINTERS'])) {
          $rulecollection = new RuleDictionnaryPrinterCollection();
          foreach ($array['PRINTERS'] as $a_printers) {
             $array_tmp = $thisc->addValues($a_printers,
-                                           array(
+                                           [
                                               'NAME'         => 'name',
                                               'PORT'         => 'port',
-                                              'SERIAL'       => 'serial'));
+                                              'SERIAL'       => 'serial']);
             $array_tmp['is_dynamic'] = 1;
             if (strstr($array_tmp['port'], "USB")) {
                $array_tmp['have_usb'] = 1;
@@ -1087,13 +1088,15 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['have_usb'] = 0;
             }
             unset($array_tmp['port']);
-            $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['name']));
+            $res_rule = $rulecollection->processAllRules(["name"=>$array_tmp['name']]);
             if (isset($res_rule['_ignore_ocs_import'])
                     && $res_rule['_ignore_ocs_import'] == "1") {
                // Ignrore import printer
+               $coding_std = true;
             } else if (isset($res_rule['_ignore_import'])
                     && $res_rule['_ignore_import'] == "1") {
                // Ignrore import printer
+               $coding_std = true;
             } else {
                if (isset($res_rule['name'])) {
                   $array_tmp['name'] = $res_rule['name'];
@@ -1107,17 +1110,17 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * PERIPHERAL
-      $a_inventory['peripheral'] = array();
-      $a_peripheral_name = array();
+      $a_inventory['peripheral'] = [];
+      $a_peripheral_name = [];
       $per = 0;
       if (isset($array['USBDEVICES'])) {
          foreach ($array['USBDEVICES'] as $a_peripherals) {
             $array_tmp = $thisc->addValues($a_peripherals,
-                                           array(
+                                           [
                                               'NAME'         => 'name',
                                               'MANUFACTURER' => 'manufacturers_id',
                                               'SERIAL'       => 'serial',
-                                              'PRODUCTNAME'  => 'productname'));
+                                              'PRODUCTNAME'  => 'productname']);
 
             $array_tmp['is_dynamic'] = 1;
             if (isset($a_peripherals['VENDORID'])
@@ -1151,7 +1154,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       if (isset($array['INPUTS'])) {
-         $a_pointingtypes = array(
+         $a_pointingtypes = [
              3 => 'Mouse',
              4 => 'Trackball',
              5 => 'Track Point',
@@ -1159,12 +1162,12 @@ class PluginFusioninventoryFormatconvert {
              7 => 'Touch Pad',
              8 => 'Touch Screen',
              9 => 'Mouse - Optical Sensor'
-         );
+         ];
          foreach ($array['INPUTS'] as $a_peripherals) {
             $array_tmp = $thisc->addValues($a_peripherals,
-                                           array(
+                                           [
                                               'NAME'         => 'name',
-                                              'MANUFACTURER' => 'manufacturers_id'));
+                                              'MANUFACTURER' => 'manufacturers_id']);
             $array_tmp['serial'] = '';
             $array_tmp['peripheraltypes_id'] = '';
             if (isset($a_peripherals['POINTINGTYPE'])
@@ -1187,7 +1190,7 @@ class PluginFusioninventoryFormatconvert {
       // * SLOTS
 
       // * SOFTWARES
-      $a_inventory['SOFTWARES'] = array();
+      $a_inventory['SOFTWARES'] = [];
       if ($pfConfig->getValue('import_software') == 1) {
          if (isset($array['SOFTWARES'])) {
             $a_inventory['SOFTWARES'] = $array['SOFTWARES'];
@@ -1195,42 +1198,42 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * STORAGES/COMPUTERDISK
-      $a_inventory['harddrive'] = array();
+      $a_inventory['harddrive'] = [];
       if (isset($array['STORAGES'])) {
          foreach ($array['STORAGES']  as $a_storage) {
             $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
             if ($type_tmp == "Drive") {
                // it's cd-rom / dvd
-//               if ($pfConfig->getValue(,
-//                    "component_drive") =! 0) {
+               //               if ($pfConfig->getValue(,
+               //                    "component_drive") =! 0) {
                if ($pfConfig->getValue('component_drive') == 1) {
                   $array_tmp = $thisc->addValues($a_storage,
-                                                 array(
+                                                 [
                                                     'SERIALNUMBER' => 'serial',
                                                     'NAME'         => 'designation',
                                                     'TYPE'         => 'interfacetypes_id',
                                                     'MANUFACTURER' => 'manufacturers_id',
-                                                     ));
+                                                     ]);
                   if ($array_tmp['designation'] == '') {
                      if (isset($a_storage['DESCRIPTION'])) {
                         $array_tmp['designation'] = $a_storage['DESCRIPTION'];
                      }
                   }
                   $a_inventory['drive'][] = $array_tmp;
-                }
+               }
             } else {
                // it's harddisk
-//               if ($pfConfig->getValue(,
-//                    "component_harddrive") != 0) {
+               //               if ($pfConfig->getValue(,
+               //                    "component_harddrive") != 0) {
                if (is_array($a_storage)) {
                   if ($pfConfig->getValue('component_harddrive') == 1) {
                      $array_tmp = $thisc->addValues($a_storage,
-                                                    array(
+                                                    [
                                                         'DISKSIZE'      => 'capacity',
                                                         'INTERFACE'     => 'interfacetypes_id',
                                                         'MANUFACTURER'  => 'manufacturers_id',
                                                         'MODEL'         => 'designation',
-                                                        'SERIALNUMBER'  => 'serial'));
+                                                        'SERIALNUMBER'  => 'serial']);
                      if ($array_tmp['designation'] == '') {
                         if (isset($a_storage['NAME'])) {
                            $array_tmp['designation'] = $a_storage['NAME'];
@@ -1257,9 +1260,9 @@ class PluginFusioninventoryFormatconvert {
          }
          foreach ($array['USERS'] as $a_users) {
             $array_tmp = $thisc->addValues($a_users,
-                                           array(
+                                           [
                                               'LOGIN'  => 'login',
-                                              'DOMAIN' => 'domain'));
+                                              'DOMAIN' => 'domain']);
             $user = '';
             if (isset($array_tmp['login'])) {
                $user = $array_tmp['login'];
@@ -1300,12 +1303,12 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * VIRTUALMACHINES
-      $a_inventory['virtualmachine'] = array();
+      $a_inventory['virtualmachine'] = [];
       if ($pfConfig->getValue('import_vm') == 1) {
          if (isset($array['VIRTUALMACHINES'])) {
             foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
                $array_tmp = $thisc->addValues($a_virtualmachines,
-                                              array(
+                                              [
                                                  'NAME'        => 'name',
                                                  'COMMENT'     => 'comment',
                                                  'VCPU'        => 'vcpu',
@@ -1313,7 +1316,7 @@ class PluginFusioninventoryFormatconvert {
                                                  'VMTYPE'      => 'virtualmachinetypes_id',
                                                  'SUBSYSTEM'   => 'virtualmachinesystems_id',
                                                  'STATUS'      => 'virtualmachinestates_id',
-                                                 'UUID'        => 'uuid'));
+                                                 'UUID'        => 'uuid']);
                $array_tmp['is_dynamic'] = 1;
                // Hack for BSD jails
                if ($array_tmp['virtualmachinetypes_id'] == 'jail') {
@@ -1340,7 +1343,7 @@ class PluginFusioninventoryFormatconvert {
                   $a_virtualmachines['MEMORY'] = $a_virtualmachines['MEMORY'] / 1000000;
                }
                $array_tmp = $thisc->addValues($a_virtualmachines,
-                                              array(
+                                              [
                                                  'NAME'            => 'name',
                                                  'COMMENT'         => 'comment',
                                                  'VCPU'            => 'vcpu',
@@ -1348,7 +1351,7 @@ class PluginFusioninventoryFormatconvert {
                                                  'VMTYPE'          => 'computertypes_id',
                                                  'UUID'            => 'uuid',
                                                  'OPERATINGSYSTEM' => 'operatingsystems_id',
-                                                 'CUSTOMFIELDS'    => 'comment'));
+                                                 'CUSTOMFIELDS'    => 'comment']);
                $array_tmp['is_dynamic'] = 1;
                if (isset($array_tmp['comment'])
                        && is_array($array_tmp['comment'])) {
@@ -1358,16 +1361,16 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['comment'] .= $data['NAME'].' : '.$data['VALUE'].'\n';
                   }
                }
-               $array_tmp['networkport'] = array();
+               $array_tmp['networkport'] = [];
                if (isset($a_virtualmachines['NETWORKS'])
                        && is_array($a_virtualmachines['NETWORKS'])) {
                   foreach ($a_virtualmachines['NETWORKS'] as $data) {
 
                      $array_tmp_np = $thisc->addValues($data,
-                                  array(
+                                  [
                                      'DESCRIPTION' => 'name',
                                      'MACADDR'     => 'mac',
-                                     'IPADDRESS'   => 'ip'));
+                                     'IPADDRESS'   => 'ip']);
                      $array_tmp_np['instantiation_type'] = 'NetworkPortEthernet';
                      $array_tmp_np['mac'] = strtolower($array_tmp_np['mac']);
                      if (isset($array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']])) {
@@ -1378,10 +1381,10 @@ class PluginFusioninventoryFormatconvert {
                      } else {
                         if (isset($array_tmp_np['ip'])
                                 && $array_tmp_np['ip'] != '') {
-                           $array_tmp_np['ipaddress'] = array($array_tmp_np['ip']);
+                           $array_tmp_np['ipaddress'] = [$array_tmp_np['ip']];
                            unset($array_tmp_np['ip']);
                         } else {
-                           $array_tmp_np['ipaddress'] = array();
+                           $array_tmp_np['ipaddress'] = [];
                         }
                         $array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']] = $array_tmp_np;
                      }
@@ -1393,27 +1396,30 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * ANTIVIRUS
-      $a_inventory['antivirus'] = array();
+      $a_inventory['antivirus'] = [];
       if ($pfConfig->getValue("import_antivirus") != 0) {
          if (isset($array['ANTIVIRUS'])) {
             foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
                $array_tmp = $thisc->addValues($a_antiviruses,
-                                             array(
+                                             [
                                                 'NAME'     => 'name',
                                                 'COMPANY'  => 'manufacturers_id',
                                                 'VERSION'  => 'antivirus_version',
                                                 'ENABLED'  => 'is_active',
-                                                'UPTODATE' => 'is_uptodate'));
+                                                'UPTODATE' => 'is_uptodate']);
                $a_inventory['antivirus'][] = $array_tmp;
             }
          }
       }
 
+      //Simcards
+      $thisc->simcardTransformation($array, $a_inventory);
+
       // * STORAGE/VOLUMES
-      $a_inventory['storage'] = array();
+      $a_inventory['storage'] = [];
 
       // * LICENSEINFOS
-      $a_inventory['licenseinfo'] = array();
+      $a_inventory['licenseinfo'] = [];
       if (isset($array['LICENSEINFOS'])) {
          foreach ($array['LICENSEINFOS'] as $a_licenseinfo) {
             $insert = true;
@@ -1427,31 +1433,31 @@ class PluginFusioninventoryFormatconvert {
             }
             if ($insert) {
                $array_tmp = $thisc->addValues($a_licenseinfo,
-                                              array(
+                                              [
                                                  'NAME'     => 'name',
                                                  'FULLNAME' => 'fullname',
-                                                 'KEY'      => 'serial'));
+                                                 'KEY'      => 'serial']);
                $a_inventory['licenseinfo'][] = $array_tmp;
             }
          }
       }
 
       // * REMOTE_MGMT
-      $a_inventory['remote_mgmt'] = array();
+      $a_inventory['remote_mgmt'] = [];
       if (isset($array['REMOTE_MGMT'])) {
          foreach ($array['REMOTE_MGMT'] as $a_remotemgmt) {
             $array_tmp = $thisc->addValues($a_remotemgmt,
-                                           array(
+                                           [
                                               'ID'   => 'number',
-                                              'TYPE' => 'type'));
+                                              'TYPE' => 'type']);
             $a_inventory['remote_mgmt'][] = $array_tmp;
          }
       }
 
-      $plugin_params = array(
+      $plugin_params = [
          'inventory' => $a_inventory,
          'source'    => $array
-      );
+      ];
       $plugin_values = Plugin::doHookFunction("fusioninventory_addinventoryinfos",
                                               $plugin_params);
 
@@ -1466,7 +1472,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Convert SOFTWARE part of computer inventory because need a special
     * transformation
@@ -1477,25 +1482,38 @@ class PluginFusioninventoryFormatconvert {
     */
    function computerSoftwareTransformation($a_inventory, $entities_id) {
 
-   /*
-    * Sometimes we can have 2 same software, but one without manufacturer and
-    * one with. So in this case, delete the software without manufacturer
-    */
+      /*
+      * Sometimes we can have 2 same software, but one without manufacturer and
+      * one with. So in this case, delete the software without manufacturer
+      */
+
+      //By default, no operating system is set
       $operatingsystems_id = 0;
+      //Get the operating system of the computer if set
       if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])) {
          $operatingsystems_id = $a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
       }
 
-      $softwareWithManufacturer = array();
-      $softwareWithoutManufacturer = array();
+      //Array to store softwares where the manufacturer is set
+      $softwareWithManufacturer    = [];
+      //Array to store software where the manufacturer is not set
+      $softwareWithoutManufacturer = [];
 
+      //Get the default entity for softwares, as defined in the entity's
+      //configuration
       $entities_id_software = Entity::getUsedConfig('entities_id_software',
                                                     $entities_id);
-      $is_software_recursive = 0;
-      $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules",
-                                                         "`sub_type`='RuleDictionnarySoftware'
-                                                            AND `is_active`='1'");
 
+      //By default a software is not recursive
+      $is_software_recursive = 0;
+
+      //Count the number of software dictionnary rules
+      $nb_RuleDictionnarySoftware
+                                 = countElementsInTable("glpi_rules",
+                                                ['sub_type'  => 'RuleDictionnarySoftware',
+                                                 'is_active' => 1
+                                                ]
+                                 );
       //Configuration says that software can be created in the computer's entity
       if ($entities_id_software < 0) {
          $entities_id_software = $entities_id;
@@ -1504,23 +1522,29 @@ class PluginFusioninventoryFormatconvert {
          //It should be set as recursive
          $is_software_recursive = 1;
       }
-      $a_inventory['software'] = array();
 
+      //Initialize the output software array
+      $a_inventory['software'] = [];
+
+      //Dictionnary for softwares
       $rulecollection = new RuleDictionnarySoftwareCollection();
 
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
+         //If the PUBLISHER field is an array, get the first value only
+         //TODO : document when it can happened. A FI or OCS agent bug ?
          if (isset($a_softwares['PUBLISHER'])
-                 && gettype($a_softwares['PUBLISHER']) == 'array')  {
+                 && gettype($a_softwares['PUBLISHER']) == 'array') {
             $a_softwares['PUBLISHER'] = current($a_softwares['PUBLISHER']);
          }
 
+         //Store the raw values in the array
          $array_tmp = $this->addValues($a_softwares,
-                                        array(
+                                        [
                                            'PUBLISHER'   => 'manufacturers_id',
                                            'NAME'        => 'name',
                                            'VERSION'     => 'version',
                                            'INSTALLDATE' => 'date_install',
-                                           'SYSTEM_CATEGORY' => '_system_category'));
+                                           'SYSTEM_CATEGORY' => '_system_category']);
          if (!isset($array_tmp['name'])
                  || $array_tmp['name'] == '') {
             if (isset($a_softwares['GUID'])
@@ -1529,84 +1553,113 @@ class PluginFusioninventoryFormatconvert {
             }
          }
          $array_tmp['operatingsystems_id'] = $operatingsystems_id;
-         // test date_install
+
+         //Check if the install date has the right format to be inserted in DB
          if (isset($array_tmp['date_install'])) {
-            $matches = array();
+            $matches = [];
             preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
+            //This is the right date format : rewrite the date
             if (count($matches) == 4) {
                $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
             } else {
+               //Not the right format, remove the date
                unset($array_tmp['date_install']);
             }
          }
 
-         if (!(!isset($array_tmp['name'])
-                 || $array_tmp['name'] == '')) {
+         //If the software name exists and is defined
+         if (isset($array_tmp['name']) && $array_tmp['name'] != '') {
             if (count($array_tmp) > 0) {
-               $res_rule = array();
+               $res_rule       = [];
+               //Save the original software infos for further tests
+               $original_infos = $array_tmp;
+
+               //Only play rules engine if there's at least one rule
+               //for software dictionnary
                if ($nb_RuleDictionnarySoftware > 0) {
-                  $res_rule = $rulecollection->processAllRules(
-                                               [
-                                                "name"         => $array_tmp['name'],
-                                                "manufacturer" => $array_tmp['manufacturers_id'],
-                                                "old_version"  => $array_tmp['version'],
-                                                "entities_id"  => $entities_id_software,
-                                                "_system_category" => $array_tmp['_system_category']
-                                                ]
-                                             );
+                  $rule_input = [
+                   "name"             => $array_tmp['name'],
+                   "manufacturer"     => $array_tmp['manufacturers_id'],
+                   "old_version"      => $array_tmp['version'],
+                   "entities_id"      => $entities_id_software,
+                   "_system_category" => $array_tmp['_system_category']
+                  ];
+                  $res_rule = $rulecollection->processAllRules($rule_input);
                }
 
-               if (isset($res_rule['_ignore_import'])
-                       && $res_rule['_ignore_import'] == 1) {
+               if (!isset($res_rule['_ignore_import'])
+                  || $res_rule['_ignore_import'] != 1) {
 
-               } else {
+                  //If the name has been modified by the rules engine
                   if (isset($res_rule["name"])) {
                      $array_tmp['name'] = $res_rule["name"];
                   }
+                  //If the version has been modified by the rules engine
                   if (isset($res_rule["version"])) {
                      $array_tmp['version'] = $res_rule["version"];
                   }
+                  //If the manufacturer has been modified or set by the rules engine
                   if (isset($res_rule["manufacturer"])) {
                      $array_tmp['manufacturers_id'] = Dropdown::import("Manufacturer",
-                                                   array('name' => $res_rule["manufacturer"]));
+                                                   ['name' => $res_rule["manufacturer"]]);
                   } else if (isset($array_tmp['manufacturers_id'])
                           && $array_tmp['manufacturers_id'] != ''
                           && $array_tmp['manufacturers_id'] != '0') {
 
+                     //Add the current manufacturer to the cache of manufacturers
                      if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
                         $new_value = Dropdown::importExternal('Manufacturer',
                                                               $array_tmp['manufacturers_id']);
                         $this->manufacturer_cache[$array_tmp['manufacturers_id']] = $new_value;
                      }
+                     //Set the manufacturer using the cache
                      $array_tmp['manufacturers_id'] =
                                  $this->manufacturer_cache[$array_tmp['manufacturers_id']];
                   } else {
+                     //Manufacturer not defined : set it's value to 0
                      $array_tmp['manufacturers_id'] = 0;
                   }
+
+                  //The rules engine has modified the entity
+                  //(meaning that the software is recursive and defined
+                  //in an upper entity)
                   if (isset($res_rule['new_entities_id'])) {
                      $array_tmp['entities_id'] = $res_rule['new_entities_id'];
-                     $is_software_recursive = 1;
+                     $is_software_recursive    = 1;
                   }
+
+                  //The entity has not been modified and is not set :
+                  //use the computer's entity
                   if (!isset($array_tmp['entities_id'])
                           || $array_tmp['entities_id'] == '') {
                      $array_tmp['entities_id'] = $entities_id_software;
                   }
+                  //version is undefined, set it to blank
                   if (!isset($array_tmp['version'])) {
                      $array_tmp['version'] = "";
                   }
+                  //This is a realy computer, not a template
                   $array_tmp['is_template_computer'] = 0;
-                  $array_tmp['is_deleted_computer'] = 0;
-                  $array_tmp['is_recursive']= $is_software_recursive;
-                  $comp_key = strtolower($array_tmp['name']).
-                               "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['manufacturers_id'].
-                               "$$$$".$array_tmp['entities_id'].
-                               "$$$$".$array_tmp['operatingsystems_id'];
 
+                  //The computer is not deleted
+                  $array_tmp['is_deleted_computer']  = 0;
+
+                  //Store if the software is recursive or not
+                  $array_tmp['is_recursive']         = $is_software_recursive;
+
+                  //Step 1 : test using the old format
+                  //String with the manufacturer
+                  $comp_key = strtolower($array_tmp['name']).
+                               self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['manufacturers_id'].
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
+
+                  //String without the manufacturer
                   $comp_key_simple = strtolower($array_tmp['name']).
-                               "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['entities_id'].
-                               "$$$$".$array_tmp['operatingsystems_id'];
+                               self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
 
                   if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
@@ -1620,13 +1673,16 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
-      foreach ($softwareWithoutManufacturer as $key=>$array_tmp) {
+
+      //Browse all softwares without a manufacturer. If one exists with a manufacturer
+      //the remove the one without
+      foreach ($softwareWithoutManufacturer as $key => $array_tmp) {
          if (!isset($softwareWithManufacturer[$key])) {
             $comp_key = strtolower($array_tmp['name']).
-                         "$$$$".strtolower($array_tmp['version']).
-                         "$$$$".$array_tmp['manufacturers_id'].
-                         "$$$$".$array_tmp['entities_id'].
-                         "$$$$".$array_tmp['operatingsystems_id'];
+                         self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                         self::FI_SOFTWARE_SEPARATOR.$array_tmp['manufacturers_id'].
+                         self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                         self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
             if (!isset($a_inventory['software'][$comp_key])) {
                $a_inventory['software'][$comp_key] = $array_tmp;
             }
@@ -1635,7 +1691,6 @@ class PluginFusioninventoryFormatconvert {
       unset($a_inventory['SOFTWARES']);
       return $a_inventory;
    }
-
 
 
    /**
@@ -1652,17 +1707,17 @@ class PluginFusioninventoryFormatconvert {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       // Get data from rules / collect registry, wmi, find files
-      $data_collect = array();
+      $data_collect = [];
 
       $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
                                          "`computers_id`='".$computers_id."'");
 
       foreach ($data_registries as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
-                       array(
+                       [
                            "regkey"   => $data['key'],
                            "regvalue" => $data['value'],
-                        )
+                        ]
                      );
          if (!isset($res_rule['_no_rule_matches'])) {
             $data_collect[] = $res_rule;
@@ -1674,10 +1729,10 @@ class PluginFusioninventoryFormatconvert {
 
       foreach ($data_wmis as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
-                       array(
+                       [
                            "wmiproperty"  => $data['property'],
                            "wmivalue"     => $data['value'],
-                        )
+                        ]
                      );
          if (!isset($res_rule['_no_rule_matches'])) {
             $data_collect[] = $res_rule;
@@ -1693,11 +1748,11 @@ class PluginFusioninventoryFormatconvert {
          $path = implode("/", $a_split);
 
          $res_rule = $pfCollectRuleCollection->processAllRules(
-                       array(
+                       [
                            "filename"  => $filename,
                            "filepath"  => $path,
                            "size"      => $data['size']
-                        )
+                        ]
                      );
          if (!isset($res_rule['_no_rule_matches'])) {
             $data_collect[] = $res_rule;
@@ -1736,10 +1791,10 @@ class PluginFusioninventoryFormatconvert {
          // Add software
          if (isset($data['software'])
                  && isset($data['softwareversion'])) {
-            $a_inventory['SOFTWARES'][] = array(
+            $a_inventory['SOFTWARES'][] = [
                 'NAME'     => $data['software'],
                 'VERSION'  => $data['softwareversion']
-            );
+            ];
          }
          // Update computer inventory number
          if (isset($data['otherserial'])) {
@@ -1748,7 +1803,6 @@ class PluginFusioninventoryFormatconvert {
       }
       return $a_inventory;
    }
-
 
 
    /**
@@ -1760,7 +1814,7 @@ class PluginFusioninventoryFormatconvert {
     * @return string|array
     */
    static function addValues($array, $a_key) {
-      $a_return = array();
+      $a_return = [];
       //if (!is_array($array)) {
       if ((array)$array !== $array) {
          return $a_return;
@@ -1771,13 +1825,13 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-      $a_int_values = array('capacity', 'freesize', 'totalsize', 'memory', 'memory_size',
+      $a_int_values = ['capacity', 'freesize', 'totalsize', 'memory', 'memory_size',
          'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
          'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
-         'nbcores', 'nbthreads', 'frequency');
+         'nbcores', 'nbthreads', 'frequency'];
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
@@ -1794,7 +1848,6 @@ class PluginFusioninventoryFormatconvert {
    }
 
 
-
    /**
     * Replace string in prepared data into GLPI ID (create items if required)
     *
@@ -1805,9 +1858,8 @@ class PluginFusioninventoryFormatconvert {
     * @param integer $level
     * @return array
     */
-   function replaceids($array, $itemtype, $items_id, $level=0) {
+   function replaceids($array, $itemtype, $items_id, $level = 0) {
       global $CFG_GLPI;
-
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
                                                              $items_id);
 
@@ -1817,6 +1869,7 @@ class PluginFusioninventoryFormatconvert {
                      || $key == 'ipaddress'
                      || $key == 'internalport')) {
             // do nothing
+            $coding_std = true;
          } else {
             //if (is_array($value)) {
             if ((array)$value === $value) {
@@ -1882,51 +1935,14 @@ class PluginFusioninventoryFormatconvert {
       return $array;
    }
 
-
-
    /**
-    * Convert network equipment in GLPI prepared data
-    *
-    * @param array $array
-    * @return array
-    */
-   static function networkequipmentInventoryTransformation($array) {
-
-      $a_inventory = array();
-      $thisc = new self();
-
-      // * INFO
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'NAME'         => 'name',
-                                        'SERIAL'       => 'serial',
-                                        'ID'           => 'id',
-                                        'LOCATION'     => 'locations_id',
-                                        'MODEL'        => 'networkequipmentmodels_id',
-                                        'MANUFACTURER' => 'manufacturers_id',
-                                        'RAM'          => 'ram',
-                                        'MEMORY'       => 'memory',
-                                        'MAC'          => 'mac'));
-
-      $array_tmp['is_dynamic'] = 1;
-      $a_inventory['NetworkEquipment'] = $array_tmp;
-      $a_inventory['itemtype'] = 'NetworkEquipment';
-
-
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'COMMENTS' => 'sysdescr',
-                                        'UPTIME'   => 'uptime',
-                                        'CPU'      => 'cpu',
-                                        'MEMORY'   => 'memory'));
-      if (!isset($array_tmp['cpu'])
-              || $array_tmp['cpu'] == '') {
-         $array_tmp['cpu'] = 0;
-      }
-
-      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
-      $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
-
+   * Manage translation for firmwares
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function firmwareTransformation($array, &$a_inventory) {
       //manage firmwares
       //['INFO']['FIRMWARE'] is the only available value until FI agent 2.3.21
       //['FIRWARES'] (multivalued) will be available in next releases
@@ -1949,7 +1965,7 @@ class PluginFusioninventoryFormatconvert {
             if (isset($firmware['VERSION'])) {
                $firmware['VERSION'] = self::cleanFwVersion($firmware['VERSION']);
             }
-            $a_firmwares[] = $thisc->addValues(
+            $a_firmwares[] = $this->addValues(
                $firmware,
                $mapping
             );
@@ -1959,9 +1975,148 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['firmwares'] = $a_firmwares;
          }
       }
+   }
+
+   /**
+   * Manage transformation for simcards
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function simcardTransformation($array, &$a_inventory) {
+      if (isset($array['SIMCARDS'])) {
+         //If there's only one entry
+         if (!isset($array['SIMCARDS'][0])) {
+            $tmp                 = $array['SIMCARDS'];
+            $array               = [];
+            //We're waiting for an array of simcards
+            $array['SIMCARDS'][0] = $tmp;
+         }
+         $mapping = [
+            'ICCID'         => 'serial',
+            'MANUFACTURER'  => 'manufacturers_id',
+            'IMSI'          => 'msin'
+         ];
+
+         foreach ($array['SIMCARDS'] as $id => $simcard) {
+            //If there's an ICCID value: process the simcard
+            if (isset($simcard['ICCID'])) {
+               $a_inventory['simcards'][] = $this->addValues($simcard, $mapping);
+            }
+         }
+      }
+   }
+
+   /**
+   * Manage transformation for network ports
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function networkPortTransformation($array, &$a_inventory) {
+      // * PORTS
+      $a_inventory['networkport'] = [];
+      if (isset($array['PORTS'])) {
+         foreach ($array['PORTS']['PORT'] as $a_port) {
+            if (isset($a_port['IFNUMBER'])) {
+               $array_tmp = $this->addValues($a_port,
+                                              array(
+                                                 'IFNAME'   => 'name',
+                                                 'IFNUMBER' => 'logical_number',
+                                                 'MAC'      => 'mac',
+                                                 'IP'       => 'ip',
+                                                 'IFTYPE'   => 'iftype'));
+
+               $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+            }
+         }
+      }
+   }
+
+   /**
+   * Manage transformation for general informations
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function generalInfosTransformation($itemtype, $array, &$a_inventory) {
+      // * INFO
+      $fk    = getForeignKeyFieldForTable(getTableForItemType($itemtype.'Model'));
+      $infos = [
+         'NAME'         => 'name',
+         'SERIAL'       => 'serial',
+         'ID'           => 'id',
+         'LOCATION'     => 'locations_id',
+         'MODEL'        => $fk,
+         'MANUFACTURER' => 'manufacturers_id',
+      ];
+      switch ($itemtype) {
+         case 'Printer':
+            $infos['MEMORY']            = 'memory_size';
+            break;
+         case 'NetworkEquipment':
+            $infos['RAM']    = 'ram';
+            $infos['MEMORY'] = 'memory';
+            $infos['MAC']    = 'mac';
+            break;
+      }
+      $array_tmp               = $this->addValues($array['INFO'], $infos);
+      $array_tmp['is_dynamic'] = 1;
+      if ($itemtype == 'Printer') {
+         $array_tmp['have_ethernet'] = 1;
+      }
+      $a_inventory[$itemtype]  = $array_tmp;
+      $a_inventory['itemtype'] = $itemtype;
+   }
+
+   /**
+   * Manage transformation for additional general informations
+   * @since 9.2+2.0
+   *
+   * @param array $array the inventory
+   * @param array $a_inventory reference to the output inventory
+   */
+   function additionalInfoTransformation($itemtype, $array, &$a_inventory) {
+      $infos             = [];
+      $infos['COMMENTS'] = 'sysdescr';
+      switch ($itemtype) {
+         case 'NetworkEquipment':
+            $infos['UPTIME'] = 'uptime';
+            $infos['CPU']    = 'cpu';
+            $infos['MEMORY'] = 'memory';
+            if (!isset($array_tmp['cpu']) || $array_tmp['cpu'] == '') {
+               $array_tmp['cpu'] = 0;
+            }
+            break;
+      }
+      $array_tmp = $this->addValues($array['INFO'], $infos);
+      $array_tmp['last_fusioninventory_update']       = date('Y-m-d H:i:s');
+      $a_inventory['PluginFusioninventory'.ucfirst($itemtype)] = $array_tmp;
+   }
+
+   /**
+    * Convert network equipment in GLPI prepared data
+    *
+    * @param array $array
+    * @return array
+    */
+   static function networkequipmentInventoryTransformation($array) {
+
+      $a_inventory = [];
+      $thisc       = new self();
+
+      $thisc->generalInfosTransformation('NetworkEquipment', $array,
+                                         $a_inventory);
+      $thisc->additionalInfoTransformation('NetworkEquipment', $array,
+                                           $a_inventory);
+      $thisc->firmwareTransformation($array, $a_inventory);
+      $thisc->simcardTransformation($array, $a_inventory);
 
       // * Internal ports
-      $a_inventory['internalport'] = array();
+      $a_inventory['internalport'] = [];
       if (isset($array['INFO']['IPS'])) {
          foreach ($array['INFO']['IPS']['IP'] as $IP) {
             $a_inventory['internalport'][] = $IP;
@@ -1970,11 +2125,11 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['internalport'] = array_unique($a_inventory['internalport']);
 
       // * PORTS
-      $a_inventory['networkport'] = array();
+      $a_inventory['networkport'] = [];
       if (isset($array['PORTS'])) {
          foreach ($array['PORTS']['PORT'] as $a_port) {
             $array_tmp = $thisc->addValues($a_port,
-                                           array(
+                                           [
                                               'IFNAME'            => 'name',
                                               'IFNUMBER'          => 'logical_number',
                                               'MAC'               => 'mac',
@@ -1991,7 +2146,7 @@ class PluginFusioninventoryFormatconvert {
                                               'IFSTATUS'          => 'ifstatus',
                                               'IFTYPE'            => 'iftype',
                                               'TRUNK'             => 'trunk',
-                                              'IFPORTDUPLEX'      => 'portduplex'));
+                                              'IFPORTDUPLEX'      => 'portduplex']);
             $array_tmp['ifspeed'] = $array_tmp['speed'];
             if ($array_tmp['ifdescr'] == '') {
                $array_tmp['ifdescr'] = $array_tmp['name'];
@@ -2008,24 +2163,24 @@ class PluginFusioninventoryFormatconvert {
                        && $a_port['CONNECTIONS']['CDP'] == 1) {
 
                   $array_tmp = $thisc->addValues($a_port['CONNECTIONS']['CONNECTION'],
-                                                 array(
+                                                 [
                                                     'IFDESCR'  => 'ifdescr',
                                                     'IFNUMBER' => 'logical_number',
                                                     'SYSDESCR' => 'sysdescr',
                                                     'MODEL'    => 'model',
                                                     'IP'       => 'ip',
                                                     'SYSMAC'   => 'mac',
-                                                    'SYSNAME'  => 'name'));
+                                                    'SYSNAME'  => 'name']);
                   $a_inventory['connection-lldp'][$a_port['IFNUMBER']] = $array_tmp;
                } else {
                   // MAC
                   if (isset($a_port['CONNECTIONS']['CONNECTION'])) {
                      if (!is_array($a_port['CONNECTIONS']['CONNECTION'])) {
                         $a_port['CONNECTIONS']['CONNECTION'] =
-                                       array($a_port['CONNECTIONS']['CONNECTION']);
+                                       [$a_port['CONNECTIONS']['CONNECTION']];
                      } else if (!is_int(key($a_port['CONNECTIONS']['CONNECTION']))) {
                         $a_port['CONNECTIONS']['CONNECTION'] =
-                                       array($a_port['CONNECTIONS']['CONNECTION']);
+                                       [$a_port['CONNECTIONS']['CONNECTION']];
                      }
                      foreach ($a_port['CONNECTIONS']['CONNECTION'] as $dataconn) {
                         foreach ($dataconn as $keymac=>$mac) {
@@ -2043,14 +2198,14 @@ class PluginFusioninventoryFormatconvert {
             // VLAN
             if (isset($a_port['VLANS'])) {
                if (!is_int(key($a_port['VLANS']['VLAN']))) {
-                  $a_port['VLANS']['VLAN'] = array($a_port['VLANS']['VLAN']);
+                  $a_port['VLANS']['VLAN'] = [$a_port['VLANS']['VLAN']];
                }
 
                foreach ($a_port['VLANS']['VLAN'] as $a_vlan) {
                   $array_tmp = $thisc->addValues($a_vlan,
-                                                 array(
+                                                 [
                                                     'NAME'   => 'name',
-                                                    'NUMBER' => 'tag'));
+                                                    'NUMBER' => 'tag']);
                   if (isset($array_tmp['tag'])) {
                      $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
                   }
@@ -2059,7 +2214,7 @@ class PluginFusioninventoryFormatconvert {
             // AGGREGATE PORT
             if (isset($a_port['AGGREGATE'])) {
                if (!is_int(key($a_port['AGGREGATE']['PORT']))) {
-                  $a_port['AGGREGATE']['PORT'] = array($a_port['AGGREGATE']['PORT']);
+                  $a_port['AGGREGATE']['PORT'] = [$a_port['AGGREGATE']['PORT']];
                }
                $a_inventory['aggregate'][$a_port['IFNUMBER']] = $a_port['AGGREGATE']['PORT'];
             }
@@ -2067,6 +2222,7 @@ class PluginFusioninventoryFormatconvert {
       }
       return $a_inventory;
    }
+
 
    /**
     * Clean firmware version
@@ -2085,6 +2241,7 @@ class PluginFusioninventoryFormatconvert {
       return $version;
    }
 
+
    /**
     * Convert printer in GLPI prepared data
     *
@@ -2093,67 +2250,29 @@ class PluginFusioninventoryFormatconvert {
     */
    static function printerInventoryTransformation($array) {
 
-      $a_inventory = array();
-      $thisc = new self();
+      $a_inventory = [];
+      $thisc       = new self();
 
-      // * INFO
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'NAME'         => 'name',
-                                        'SERIAL'       => 'serial',
-                                        'ID'           => 'id',
-                                        'MANUFACTURER' => 'manufacturers_id',
-                                        'LOCATION'     => 'locations_id',
-                                        'MODEL'        => 'printermodels_id',
-                                        'MEMORY'       => 'memory_size'));
-      $array_tmp['is_dynamic'] = 1;
-      $array_tmp['have_ethernet'] = 1;
-
-      $a_inventory['Printer'] = $array_tmp;
-      $a_inventory['itemtype'] = 'Printer';
-
-      $array_tmp = $thisc->addValues($array['INFO'],
-                                     array(
-                                        'COMMENTS' => 'sysdescr'));
-      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
-      $a_inventory['PluginFusioninventoryPrinter'] = $array_tmp;
-
-      // * PORTS
-      $a_inventory['networkport'] = array();
-      if (isset($array['PORTS'])) {
-         foreach ($array['PORTS']['PORT'] as $a_port) {
-            if (isset($a_port['IFNUMBER'])) {
-               $array_tmp = $thisc->addValues($a_port,
-                                              array(
-                                                 'IFNAME'   => 'name',
-                                                 'IFNUMBER' => 'logical_number',
-                                                 'MAC'      => 'mac',
-                                                 'IP'       => 'ip',
-                                                 'IFTYPE'   => 'iftype'));
-
-               $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
-            }
-         }
-      }
+      $thisc->generalInfosTransformation('Printer', $array, $a_inventory);
+      $thisc->firmwareTransformation($array, $a_inventory);
+      $thisc->simcardTransformation($array, $a_inventory);
+      $thisc->networkPortTransformation($array, $a_inventory);
+      $thisc->additionalInfoTransformation('Printer', $array, $a_inventory);
 
       // CARTRIDGES
-      $a_inventory['cartridge'] = array();
+      $a_inventory['cartridge'] = [];
       if (isset($array['CARTRIDGES'])) {
          $pfMapping = new PluginFusioninventoryMapping();
 
-         foreach ($array['CARTRIDGES'] as $name=>$value) {
+         foreach ($array['CARTRIDGES'] as $name => $value) {
             $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
             if ($plugin_fusioninventory_mappings) {
                if (strstr($value, 'pages')) { // 30pages
                   $value = str_replace('pages', '', $value);
                   $value = 0 - $value;
-               } else if ($value == '') { // no info
-                  // nothing to do
-               } else if (is_numeric($value)) { // percentage
-                  // nothing to do
                } else if ($value == 'OK') { // state type 'OK'
                   $value = 100000;
-               } else {
+               } else if ($value != '' && !is_numeric($value)) { // percentage or no info
                   // special cases
                   $value = '';
                }
@@ -2165,10 +2284,10 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * PAGESCOUNTER
-      $a_inventory['pagecounters'] = array();
+      $a_inventory['pagecounters'] = [];
       if (isset($array['PAGECOUNTERS'])) {
          $array_tmp = $thisc->addValues($array['PAGECOUNTERS'],
-                                        array(
+                                        [
                                            'TOTAL'       => 'pages_total',
                                            'BLACK'       => 'pages_n_b',
                                            'COLOR'       => 'pages_color',
@@ -2181,13 +2300,12 @@ class PluginFusioninventoryFormatconvert {
                                            'COPYBLACK'   => 'pages_n_b_copy',
                                            'COPYCOLOR'   => 'pages_color_copy',
                                            'FAXTOTAL'    => 'pages_total_fax'
-                                         ));
+                                         ]);
          $a_inventory['pagecounters'] = $array_tmp;
       }
 
       return $a_inventory;
    }
-
 
 
    /**
@@ -2215,4 +2333,6 @@ class PluginFusioninventoryFormatconvert {
       }
       return 'HardDrive';
    }
+
+
 }

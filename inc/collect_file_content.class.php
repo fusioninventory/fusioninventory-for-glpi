@@ -68,10 +68,9 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Find file content', 'fusioninventory');
    }
-
 
 
    /**
@@ -81,7 +80,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginFusioninventoryCollect') {
@@ -107,6 +106,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       return '';
    }
 
+
    /**
     * Delete all files contents linked to the computer (most cases when delete a
     * computer)
@@ -115,8 +115,9 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
     */
    static function cleanComputer($computers_id) {
       $file_content = new self();
-      $file_content->deleteByCriteria(array('computers_id' => $computers_id));
+      $file_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
+
 
    /**
     * Display the content of the tab
@@ -126,7 +127,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfCollect_File = new PluginFusioninventoryCollect_File_Content();
       if (get_class($item) == 'PluginFusioninventoryCollect') {
          $pfCollect_File->showForCollect($item->getID());
@@ -147,13 +148,13 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
     * @param integer $taskjobstates_id id of taskjobstate
     */
    function updateComputer($computers_id, $file_data, $collects_files_id) {
-      foreach($file_data as $key => $value) {
-         $input = array(
+      foreach ($file_data as $key => $value) {
+         $input = [
             'computers_id' => $computers_id,
             'plugin_fusioninventory_collects_files_id' => $collects_files_id,
             'pathfile'     => str_replace(['\\', '//'], ['/', '/'], $value['path']),
             'size'         => $value['size']
-         );
+         ];
          $this->add($input);
       }
    }
@@ -171,7 +172,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
          $this->showForCollectFile($data['id']);
       }
    }
-
 
 
    /**
@@ -218,7 +218,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
    }
 
 
-
    /**
     * Display all files found on all computers related to the collect file
     *
@@ -263,6 +262,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       echo '</table>';
    }
 
+
 }
 
-?>

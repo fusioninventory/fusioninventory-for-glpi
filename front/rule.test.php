@@ -67,7 +67,7 @@ if (isset($_POST["rules_id"])) {
 $rule = new $sub_type();
 $rule->checkGlobal(READ);
 
-$test_rule_output = NULL;
+$test_rule_output = null;
 
 if (!strpos($_SERVER['PHP_SELF'], "popup")) {
    Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "display");
@@ -76,7 +76,7 @@ if (!strpos($_SERVER['PHP_SELF'], "popup")) {
 $rule->showRulePreviewCriteriasForm($_SERVER['PHP_SELF'], $rules_id);
 
 if (isset($_POST["test_rule"])) {
-   $params = array();
+   $params = [];
    //Unset values that must not be processed by the rule
    unset($_POST["test_rule"]);
    unset($_POST["rules_id"]);
@@ -100,4 +100,3 @@ if (!strpos($_SERVER['PHP_SELF'], "popup")) {
    Html::footer();
 }
 
-?>

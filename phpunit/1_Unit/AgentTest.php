@@ -49,15 +49,16 @@ class AgentTest extends RestoreDatabase_TestCase {
    public function addAgent() {
       $pfAgent = new PluginFusioninventoryAgent();
       $agent_id = $pfAgent->add(
-         array(
+         [
             'name'           => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
             'device_id'      => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
             'computers_id'   => 100
-         )
+         ]
       );
-      $this->assertNotEquals(FALSE, $agent_id);
+      $this->assertNotEquals(false, $agent_id);
       return $pfAgent;
    }
+
 
    /**
     * @test
@@ -74,6 +75,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       return $pfAgent;
    }
 
+
    /**
     * @test
     */
@@ -86,6 +88,7 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(1, count($a_agents), "Agent not found");
    }
+
 
    /**
     * @test
@@ -107,6 +110,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertEquals($agent_id, $agent_from_asset['id']);
 
    }
+
 
    /**
     * @test
@@ -146,7 +150,6 @@ class AgentTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     */
@@ -159,9 +162,9 @@ class AgentTest extends RestoreDatabase_TestCase {
       $pfAgent = new PluginFusioninventoryAgent();
       $query = "UPDATE glpi_plugin_fusioninventory_agents SET `last_contact`='2015-01-01 00:00:01'";
       $DB->query($query);
-      $arrayinventory = array(
+      $arrayinventory = [
           'DEVICEID' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27',
-      );
+      ];
       $log = new Log();
       $nb = count($log->find());
 
@@ -174,6 +177,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       $this->assertContains(date('Y-m-d'), strstr($pfAgent->fields['last_contact'], date('Y-m-d')));
       $this->assertEquals($nb, count($log->find()));
    }
+
 
    /**
     * @test
@@ -199,5 +203,6 @@ class AgentTest extends RestoreDatabase_TestCase {
       $pfAgent->getFromDB($agent_id);
       $this->assertEquals(0, $pfAgent->fields['computers_id']);
    }
+
 
 }

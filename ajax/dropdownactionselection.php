@@ -78,4 +78,3 @@ if ((select.value.match(pattern1)) || (select.value.match(pattern2))) {
 
  </script>";
 
-?>

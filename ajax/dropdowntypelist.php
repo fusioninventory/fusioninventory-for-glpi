@@ -65,4 +65,3 @@ if ($myamemore != '') {
            filter_input(INPUT_POST, "taskjobs_id"));
 }
 
-?>

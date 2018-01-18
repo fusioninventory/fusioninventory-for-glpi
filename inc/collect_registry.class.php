@@ -67,10 +67,9 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Windows registry', 'fusioninventory');
    }
-
 
 
    /**
@@ -80,7 +79,7 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'registry') {
@@ -91,7 +90,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -100,13 +98,12 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
       $pfCollect_Registry->showRegistry($item->getID());
       $pfCollect_Registry->showForm($item->getID());
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -115,17 +112,16 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
     * @return array list of hives
     */
    static function getHives() {
-      $hives = array(
-//         "HKEY_CLASSES_ROOT"   => "HKEY_CLASSES_ROOT",
-//         "HKEY_CURRENT_USER"   => "HKEY_CURRENT_USER",
+      $hives = [
+      //         "HKEY_CLASSES_ROOT"   => "HKEY_CLASSES_ROOT",
+      //         "HKEY_CURRENT_USER"   => "HKEY_CURRENT_USER",
          "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
-//         "HKEY_USERS"          => "HKEY_USERS",
-//         "HKEY_CURRENT_CONFIG" => "HKEY_CURRENT_CONFIG",
-//         "HKEY_DYN_DATA"       => "HKEY_DYN_DATA"
-      );
+      //         "HKEY_USERS"          => "HKEY_USERS",
+      //         "HKEY_CURRENT_CONFIG" => "HKEY_CURRENT_CONFIG",
+      //         "HKEY_DYN_DATA"       => "HKEY_DYN_DATA"
+      ];
       return $hives;
    }
-
 
 
    /**
@@ -170,7 +166,6 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
    }
 
 
-
    /**
     * Display form to add registry
     *
@@ -178,7 +173,7 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($collects_id, $options=array()) {
+   function showForm($collects_id, $options = []) {
 
       $ID = 0;
 
@@ -192,7 +187,7 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
       echo "<td>";
       echo "<input type='hidden' name='plugin_fusioninventory_collects_id'
                value='".$collects_id."' />";
-      Html::autocompletionTextField($this,'name');
+      Html::autocompletionTextField($this, 'name');
       echo "</td>";
       echo "<td>".__('Hive', 'fusioninventory')."</td>";
       echo "<td>";
@@ -217,8 +212,9 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
+
+
 }
 
-?>

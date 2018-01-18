@@ -67,13 +67,13 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       $config = new PluginFusioninventoryConfig;
       $server_upload_path = $config->getValue("server_upload_path");
 
-
       // create a file in fusion upload folder
       $this->filename = $server_upload_path."/file1";
       $file_created = file_put_contents($this->filename, "test repository");
       $this->assertGreaterThan(0, $file_created);
       $this->sha512 = hash_file('sha512', $this->filename);
    }
+
 
    protected function teardown() {
       parent::teardown();
@@ -97,6 +97,7 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       unlink($this->filename);
    }
 
+
    /**
     * @test
     */
@@ -106,10 +107,10 @@ class RepositoryTest extends RestoreDatabase_TestCase {
 
       // create a file for this package
       $data_file = [
-         'id'              => $this->packages_1_id,
-         'itemtype'        => 'PluginFusioninventoryDeployFile',
-         'deploy_filetype' => 'Server',
-         'filename'        => $this->filename,
+         'id'        => $this->packages_1_id,
+         'itemtype'  => 'PluginFusioninventoryDeployFile',
+         'filestype' => 'Server',
+         'filename'  => $this->filename,
       ];
       PluginFusioninventoryDeployPackage::alterJSON('add_item', $data_file);
 
@@ -121,7 +122,7 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       //retrieve the sha512 of the single part
       $sha512_part = trim(file_get_contents(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$this->sha512), "\n");
       $fulldir  = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.
-                     PluginFusioninventoryDeployFile::getDirBySha512($sha512_part);
+                     $pfDeployFile->getDirBySha512($sha512_part);
       $firstdir = PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR.substr($sha512_part, 0, 1);
 
       // check presence of file in repo
@@ -174,6 +175,7 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       $this->assertFalse(is_dir($firstdir));
    }
 
+
    /**
     * @test
     */
@@ -183,10 +185,10 @@ class RepositoryTest extends RestoreDatabase_TestCase {
 
       // create a file and it to both packages
       $data_file = [
-         'id'              => $this->packages_1_id,
-         'itemtype'        => 'PluginFusioninventoryDeployFile',
-         'deploy_filetype' => 'Server',
-         'filename'        => $this->filename,
+         'id'        => $this->packages_1_id,
+         'itemtype'  => 'PluginFusioninventoryDeployFile',
+         'filestype' => 'Server',
+         'filename'  => $this->filename,
       ];
       PluginFusioninventoryDeployPackage::alterJSON('add_item', $data_file);
       $data_file['id'] = $this->packages_2_id;
@@ -204,4 +206,6 @@ class RepositoryTest extends RestoreDatabase_TestCase {
       ], true);
       $this->assertfalse($pfDeployFile->checkPresenceFile($this->sha512));
    }
+
+
 }

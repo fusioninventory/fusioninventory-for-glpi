@@ -62,16 +62,16 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
     */
    static $rightname = 'plugin_fusioninventory_agent';
 
+
    /**
     * Get name of this type by language of the user connected
     *
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return "Stat";
    }
-
 
 
    /**
@@ -82,16 +82,27 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
    static function init() {
       global $DB;
 
+      $insert = $DB->buildInsert(
+         'glpi_plugin_fusioninventory_inventorycomputerstats', [
+            'day'    => new \QueryParam(),
+            'hour'   => new \QueryParam()
+         ]
+      );
+      $stmt = $DB->prepare($insert);
+
       for ($d=1; $d<=365; $d++) {
          for ($h=0; $h<24; $h++) {
-            $query = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstats` "
-                    ."(`day`, `hour`) "
-                    ."VALUES ('".$d."', '".$h."')";
-            $DB->query($query);
+
+            $stmt->bind_param(
+               'ss',
+               $d,
+               $h
+            );
+            $stmt->execute();
          }
       }
+      mysqli_stmt_close($stmt);
    }
-
 
 
    /**
@@ -102,13 +113,15 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
    static function increment() {
       global $DB;
 
-      $query = "UPDATE `glpi_plugin_fusioninventory_inventorycomputerstats` "
-                 ."SET `counter` = counter + 1 "
-                 ."WHERE `day`='".date('z')."' "
-                 ."   AND `hour`='".date('G')."'";
-      $DB->query($query);
+      $DB->update(
+         'glpi_plugin_fusioninventory_inventorycomputerstats', [
+            'counter'   => new \QueryExpression($DB->quoteName('counter') . ' + 1')
+         ], [
+            'day'    => date('z'),
+            'hour'   => date('G')
+         ]
+      );
    }
-
 
 
    /**
@@ -118,10 +131,10 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
     * @param integer $nb
     * @return integer
     */
-   static function getLastHours($nb=11) {
+   static function getLastHours($nb = 11) {
       global $DB;
 
-      $a_counters = array();
+      $a_counters = [];
       $a_counters['key'] = 'test';
 
       $timestamp = date('U');
@@ -133,13 +146,14 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
                     ."LIMIT 1";
          $result = $DB->query($query);
          $data = $DB->fetch_assoc($result);
-         $a_counters['values'][] = array(
+         $a_counters['values'][] = [
              'label' => date('G', $timestampSearch)." ".__('hour'),
              'value' => (int)$data['counter']
-         );
+         ];
       }
       return $a_counters;
    }
+
+
 }
 
-?>

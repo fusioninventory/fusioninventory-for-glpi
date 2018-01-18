@@ -57,4 +57,3 @@ Session::checkLoginUser();
 
 PluginFusioninventoryDeployFile::getServerFileTree(filter_input(INPUT_POST, "node"));
 
-?>

@@ -47,6 +47,7 @@ class DeleteTest extends RestoreDatabase_TestCase {
    private static $taskjobstates_id = 0;
    private static $taskjoblogs_id = 0;
 
+
    /**
     * @test
     */
@@ -63,48 +64,47 @@ class DeleteTest extends RestoreDatabase_TestCase {
       $pfTaskjoblog    = new PluginFusioninventoryTaskjoblog;
       $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
 
-
       // Create package
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'package'
-      );
+      ];
       $packages_id = $pfDeployPackage->add($input);
 
       // Create fusioninventory dynamic group
-      $input = array(
+      $input = [
           'name' => 'all computers have name computer',
           'type' => 'DYNAMIC'
-      );
+      ];
       $groups_id = $pfDeployGroup->add($input);
 
-      $input = array(
+      $input = [
           'plugin_fusioninventory_deploygroups_id' => $groups_id,
           'fields_array' => 'a:2:{s:8:"criteria";a:1:{i:0;a:3:{s:5:"field";s:1:"1";s:10:"searchtype";s:8:"contains";s:5:"value";s:8:"computer";}}s:12:"metacriteria";s:0:"";}'
-      );
+      ];
       $pfDeployGroup_Dynamicdata->add($input);
 
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'deploy',
           'is_active'   => 1
-      );
+      ];
       self::$tasks_id = $pfTask->add($input);
 
       // create taskjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => self::$tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'deploy',
           'method'                          => 'deployinstall',
           'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
           'actors'                          => '[{"PluginFusioninventoryDeployGroup":"'.self::$tasks_id.'"}]'
-      );
+      ];
       self::$taskjobs_id = $pfTaskjob->add($input);
 
       //create taskjobstate
-      $input = array(
+      $input = [
           'plugin_fusioninventory_taskjobs_id' => self::$taskjobs_id,
           'items_id'                           => 0,
           'itemtype'                           => 'Computer',
@@ -112,19 +112,19 @@ class DeleteTest extends RestoreDatabase_TestCase {
           'plugin_fusioninventory_agents_id'   => 0,
           'specificity'                        => 0,
           'uniqid'                             => 0,
-         
-      );
+
+      ];
       self::$taskjobstates_id = $pfTaskjobState->add($input);
 
       //crfeate taskjoblogR
-      $input = array(
-         'plugin_fusioninventory_taskjobstates_id' => self::$taskjobstates_id, 
-         'date '                                   => date('Y-m-d H:i:s'), 
+      $input = [
+         'plugin_fusioninventory_taskjobstates_id' => self::$taskjobstates_id,
+         'date '                                   => date('Y-m-d H:i:s'),
          'items_id'                                => 0,
          'itemtype'                                => 'Computer',
          'state'                                   => PluginFusioninventoryTaskjoblog::TASK_RUNNING,
          'comment'                                 => "1 ==devicesfound=="
-      );
+      ];
       self::$taskjoblogs_id = $pfTaskjoblog->add($input);
    }
 
@@ -141,20 +141,21 @@ class DeleteTest extends RestoreDatabase_TestCase {
       $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog;
 
       //delete task
-      $return = $pfTask->delete(array('id' => self::$tasks_id));
+      $return = $pfTask->delete(['id' => self::$tasks_id]);
       $this->assertEquals(true, $return);
 
       //check deletion of job
       $jobs_found = $pfTaskjob->find("id = ".self::$taskjobs_id);
-      $this->assertEquals(array(), $jobs_found);
+      $this->assertEquals([], $jobs_found);
 
       //check deletion of state
       $states_found = $pfTaskjobState->find("id = ".self::$taskjobstates_id);
-      $this->assertEquals(array(), $states_found);
+      $this->assertEquals([], $states_found);
 
       //check deletion of log
       $logs_found = $pfTaskjoblog->find("id = ".self::$taskjobstates_id);
-      $this->assertEquals(array(), $logs_found);
+      $this->assertEquals([], $logs_found);
    }
+
+
 }
-?>

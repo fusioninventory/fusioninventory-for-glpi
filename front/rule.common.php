@@ -74,7 +74,7 @@ if (isset($_GET["action"])) {
             foreach ($_POST["item"] as $key => $val) {
                $rule->getFromDB($key);
                $rulecollection->deleteRuleOrder($rule->fields["ranking"]);
-               $rule->delete(array('id' => $key));
+               $rule->delete(['id' => $key]);
             }
             Event::log(0, "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item\'s deletion'));
 
@@ -96,7 +96,7 @@ if (isset($_GET["action"])) {
             $rule = new PluginFusioninventoryRule();
             foreach ($_POST["item"] as $key => $val) {
                if ($val == 1) {
-                  $input = array();
+                  $input = [];
                   $input['id'] = $key;
                   $input['is_active'] = $_POST["activate_rule"];
                   $rule->update($input);
@@ -139,14 +139,14 @@ if (isset($_GET["action"])) {
    $manufacturer = 0;
    if (!isset($_GET['offset'])) {
       // First run
-      $offset       = $rulecollection->replayRulesOnExistingDB(0, $max, array(), $_POST);
+      $offset       = $rulecollection->replayRulesOnExistingDB(0, $max, [], $_POST);
       $manufacturer = (isset($_POST["manufacturer"]) ? $_POST["manufacturer"] : 0);
 
    } else {
       // Next run
       $offset       = $rulecollection->replayRulesOnExistingDB($_GET['offset'],
                                                                $max,
-                                                               array(),
+                                                               [],
                                                                $_GET);
       $manufacturer = $_GET["manufacturer"];
 
@@ -168,43 +168,43 @@ if (isset($_GET["action"])) {
                         "?start=$start&replay_rule=1&offset=$offset&manufacturer="."$manufacturer");
    }
 
-   Html::footer(TRUE);
+   Html::footer(true);
    exit();
 }
 
 Html::header(_n('Rule', 'Rules', 2), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
              $rulecollection->menu_option);
 
-   $tabs = array();
-   if ($rulecollection->showInheritedTab()) {
-      $tabs[0] = array(
-                   'title'  => __('Rules applied', 'fusioninventory').' : '.
-                                   Dropdown::getDropdownName('glpi_entities',
-                                                             $_SESSION['glpiactive_entity']),
-                   'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
-                   'params' => "target=".$_SERVER['PHP_SELF']."&glpi_tab=1&inherited=1&itemtype=".
-                                    get_class($rulecollection));
-   }
+   $tabs = [];
+if ($rulecollection->showInheritedTab()) {
+   $tabs[0] = [
+             'title'  => __('Rules applied', 'fusioninventory').' : '.
+                             Dropdown::getDropdownName('glpi_entities',
+                                                       $_SESSION['glpiactive_entity']),
+             'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
+             'params' => "target=".$_SERVER['PHP_SELF']."&glpi_tab=1&inherited=1&itemtype=".
+                              get_class($rulecollection)];
+}
 
    $title = _n('Rule', 'Rules', 2);
 
-   if ($rulecollection->isRuleRecursive()) {
-      $title = __('Local rules', 'fusioninventory').' : '.
-                     Dropdown::getDropdownName('glpi_entities', $_SESSION['glpiactive_entity']);
-   }
-   $tabs[1] = array('title'  => $title,
+if ($rulecollection->isRuleRecursive()) {
+   $title = __('Local rules', 'fusioninventory').' : '.
+               Dropdown::getDropdownName('glpi_entities', $_SESSION['glpiactive_entity']);
+}
+   $tabs[1] = ['title'  => $title,
                    'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
                    'params' => "target=".$_SERVER['PHP_SELF']."&glpi_tab=0&inherited=0&itemtype=".
-                                 get_class($rulecollection));
+                                 get_class($rulecollection)];
 
    if ($rulecollection->showChildrensTab()) {
-      $tabs[2] = array(
+      $tabs[2] = [
                   'title'  => __('Rules applicable in the sub-entities'),
 
                   'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
                   'params' => "target=".$_SERVER['PHP_SELF'].
                                     "&glpi_tab=2&inherited=0&childrens=1&itemtype=".
-                                    get_class($rulecollection));
+                                    get_class($rulecollection)];
    }
 
 
@@ -213,6 +213,5 @@ Html::header(_n('Rule', 'Rules', 2), $_SERVER['PHP_SELF'], "admin", $rulecollect
    echo "<div id='tabcontent'>&nbsp;</div>";
    echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-Html::footer();
+   Html::footer();
 
-?>

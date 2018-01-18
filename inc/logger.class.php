@@ -53,6 +53,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryLogger {
 
+
    /**
     * Log when extra-debug is activated
     *
@@ -67,7 +68,6 @@ class PluginFusioninventoryLogger {
    }
 
 
-
    /**
     * log when extra-debug and debug mode is activated
     *
@@ -80,6 +80,7 @@ class PluginFusioninventoryLogger {
       }
       self::logIfExtradebug($file, $message);
    }
+
+
 }
 
-?>

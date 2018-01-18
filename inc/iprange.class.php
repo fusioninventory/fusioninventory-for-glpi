@@ -59,7 +59,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
    /**
     * The right name for this class
@@ -67,6 +67,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @var string
     */
    static $rightname = 'plugin_fusioninventory_iprange';
+
 
    /**
     * Check if can create an IP range
@@ -78,14 +79,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Get name of this type by language of the user connected
     *
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
@@ -102,7 +102,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Get comments of the object
     *
@@ -110,9 +109,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     */
    function getComments() {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
-      return Html::showToolTip($comment, array('display' => FALSE));
+      return Html::showToolTip($comment, ['display' => false]);
    }
-
 
 
    /**
@@ -121,7 +119,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @return array
     */
    function getSearchOptions() {
-      $tab = array();
+      $tab = [];
 
       $tab['common'] = __('IP range configuration', 'fusioninventory');
 
@@ -147,9 +145,26 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $tab[4]['linkfield'] = 'ip_end';
       $tab[4]['name'] = __('End of IP range', 'fusioninventory');
 
+      $tab[5] = [
+         'table'              => 'glpi_plugin_fusioninventory_configsecurities',
+         'field'              => 'name',
+         'datatype'           => 'dropdown',
+         'right'              => 'all',
+         'name'               => __('SNMP credentials', 'fusioninventory'),
+         'forcegroupby'       => true,
+         'massiveaction'      => false,
+         'joinparams'         => [
+            'beforejoin'         => [
+               'table'              => "glpi_plugin_fusioninventory_ipranges_configsecurities",
+               'joinparams'         => [
+                  'jointype'           => 'child',
+               ]
+            ]
+         ]
+      ];
+
       return $tab;
    }
-
 
 
    /**
@@ -158,15 +173,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
+   function defineTabs($options = []) {
 
-      $ong = array();
+      $ong = [];
       $this->addDefaultFormTab($ong);
       $ong[$this->getType().'$task'] = _n('Task', 'Tasks', 2);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
-
 
 
    /**
@@ -177,15 +191,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       if ($tabnum == 'task') {
          $pfTask = new PluginFusioninventoryTask();
          $pfTask->showJobLogs();
-         return TRUE;
+         return true;
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -195,7 +208,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options=array()) {
+   function showForm($id, $options = []) {
 
       $this->initForm($id, $options);
       $this->showFormHeader($options);
@@ -203,7 +216,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::autocompletionTextField($this,'name');
+      Html::autocompletionTextField($this, 'name');
       echo "</td>";
       echo "</tr>";
 
@@ -277,8 +290,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          echo "<td align='center' colspan='2'>".__('Entity')."</td>";
          echo "<td align='center' colspan='2'>";
          Dropdown::show('Entity',
-                        array('name'=>'entities_id',
-                              'value'=>$this->fields["entities_id"]));
+                        ['name'=>'entities_id',
+                              'value'=>$this->fields["entities_id"]]);
          echo "</td>";
       } else {
          echo "<td colspan='2'></td>";
@@ -287,9 +300,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -311,7 +323,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
 
       if ($count == '0') {
-         return TRUE;
+         return true;
       } else {
           Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP', 'fusioninventory').
             "</font><br/>".
@@ -321,10 +333,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
             __('End of IP range', 'fusioninventory')." : ".
             $a_input['ip_end0'].".".$a_input['ip_end1'].".".
             $a_input['ip_end2'].".".$a_input['ip_end3']);
-         return FALSE;
+         return false;
       }
    }
-
 
 
    /**
@@ -342,7 +353,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * After purge item, delete SNMP credentials linked to this ip range
     */
@@ -357,21 +367,21 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
     * @param object|null $checkitem
     * @return array list of actions
     */
-   function getSpecificMassiveActions($checkitem=NULL) {
+   function getSpecificMassiveActions($checkitem = null) {
 
-      $actions = array();
+      $actions = [];
       if (Session::haveRight("plugin_fusioninventory_task", UPDATE)) {
          $actions['PluginFusioninventoryTask'.MassiveAction::CLASS_ACTION_SEPARATOR.'addtojob_target'] = __('Target a task', 'fusioninventory');
       }
       return $actions;
    }
+
+
 }
 
-?>

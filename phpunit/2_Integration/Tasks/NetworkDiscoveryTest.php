@@ -42,6 +42,7 @@
 
 class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
 
+
    /**
     * @test
     */
@@ -57,72 +58,69 @@ class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
       $pfIPRange       = new PluginFusioninventoryIPRange();
 
       // Create computers + agents
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer1',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
-
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer2'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer2',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer2',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
-
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer3'
-      );
+      ];
       $computers_id = $computer->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'computer3',
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer3',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
           'computers_id'=> $computers_id
-      );
+      ];
       $pfAgent->add($input);
 
-
       // Add IPRange
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'Office',
           'ip_start'    => '10.0.0.1',
           'ip_end'      => '10.0.0.254'
-      );
+      ];
       $ipranges_id = $pfIPRange->add($input);
 
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'Office2',
           'ip_start'    => '10.0.2.1',
           'ip_end'      => '10.0.2.254'
-      );
+      ];
       $ipranges_id2 = $pfIPRange->add($input);
 
       // Allow all agents to do network discovery
@@ -132,42 +130,41 @@ class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
       $DB->query($query);
 
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'network discovery',
           'is_active'   => 1
-      );
+      ];
       $tasks_id = $pfTask->add($input);
 
       // create taskjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks_id,
           'entities_id'                     => 0,
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
           'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]',
           'actors'                          => '[{"PluginFusioninventoryAgent":"2"}]'
-      );
+      ];
       $pfTaskjob->add($input);
 
-
       // create task
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'name'        => 'network discovery2',
           'is_active'   => 1
-      );
+      ];
       $tasks2_id = $pfTask->add($input);
 
       // create taskjob
-      $input = array(
+      $input = [
           'plugin_fusioninventory_tasks_id' => $tasks2_id,
           'entities_id'                     => 0,
           'name'                            => 'discovery',
           'method'                          => 'networkdiscovery',
           'targets'                         => '[{"PluginFusioninventoryIPRange":"'.$ipranges_id2.'"}]',
           'actors'                          => '[{"PluginFusioninventoryAgent":"3"}]'
-      );
+      ];
       $pfTaskjob->add($input);
 
    }
@@ -183,14 +180,14 @@ class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       PluginFusioninventoryTask::cronTaskscheduler();
-      
+
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      $data = $pfTask->getJoblogs([1]);
 
-      $ref = array(
+      $ref = [
           2 => 'computer2',
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
    }
@@ -207,14 +204,14 @@ class NetworkDiscoveryTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(2));
+      $data = $pfTask->getJoblogs([2]);
 
-      $ref = array(
+      $ref = [
           3 => 'computer3',
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
    }
 
+
 }
-?>

@@ -53,4 +53,3 @@ echo "<meta http-equiv='refresh' content='0;URL=http://fusioninventory.org/docum
 
 Html::footer();
 
-?>

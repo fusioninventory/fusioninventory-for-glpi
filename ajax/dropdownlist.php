@@ -57,4 +57,3 @@ Session::checkCentralAccess();
 $pfTaskjob = new PluginFusioninventoryTaskjob();
 $pfTaskjob->showList();
 
-?>

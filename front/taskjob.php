@@ -63,4 +63,3 @@ echo "</div>";
 
 Html::footer();
 
-?>

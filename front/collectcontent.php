@@ -56,51 +56,50 @@ $collect = new PluginFusioninventoryInventoryComputerCollectContent();
 
 //Add a new collectcontent
 if (isset($_POST["add"])) {
-//we need to rebuild the post.
+   //we need to rebuild the post.
 
-   $data = array(
+   $data = [
        'plugin_fusioninventory_inventorycomputercollects_id' => $_POST['plugin_fusioninventory_inventorycomputercollects_id'],
        'plugin_fusioninventory_inventorycomputercollecttypes_id' =>
               $_POST['plugin_fusioninventory_inventorycomputercollecttypes_id'],
-       'name' => $_POST['name']);
+       'name' => $_POST['name']];
 
    switch ($_POST['plugin_fusioninventory_inventorycomputercollecttypes_id']) {
 
       case 1:
-         $data['details'] = serialize(array( 'hives_id' => $_POST['hives_id'],
+         $data['details'] = serialize([ 'hives_id' => $_POST['hives_id'],
                                              'path'     => $_POST['path'],
-                                             'key'      => $_POST['key'])
+                                             'key'      => $_POST['key']]
             );
          break;
 
       //getFromWMI
       case 2:
-         $data['details'] = serialize(array( 'class' => $_POST['class'],
-                                             'property'     => $_POST['property']));
+         $data['details'] = serialize([ 'class' => $_POST['class'],
+                                             'property'     => $_POST['property']]);
          break;
 
       //findFile
       case 3:
-         $data['details'] = serialize(array( 'path'         => $_POST['path'],
+         $data['details'] = serialize([ 'path'         => $_POST['path'],
                                              'filename'     => $_POST['filename'],
-                                             'getcontent'   => $_POST['getcontent']));
+                                             'getcontent'   => $_POST['getcontent']]);
          break;
 
       //runCommand
       case 4:
-         $data['details'] = serialize(array( 'path'         => $_POST['path'],
-                                             'command'     => $_POST['command']));
+         $data['details'] = serialize([ 'path'         => $_POST['path'],
+                                             'command'     => $_POST['command']]);
          break;
    }
 
    $collect->add($data);
    Html::back();
-// update the properties
+   // update the properties
 } else if (isset($_POST["delete_x"])) {
    $collect->delete($_POST);
    Html::back();
-}else{ //shoudn't happen
+} else { //shoudn't happen
    Html::back();
 }
 
-?>

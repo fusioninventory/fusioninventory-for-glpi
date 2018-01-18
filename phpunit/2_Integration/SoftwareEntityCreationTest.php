@@ -80,7 +80,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
          (`id`, `name`, `entities_id`, `completename`, `level`)
          VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
 
-
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
@@ -89,36 +88,36 @@ class SoftwareEntityCreationTest extends Common_TestCase {
       $computer = new Computer();
       $software = new Software();
 
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+      ];
+      $a_inventory['CONTENT']['SOFTWARES'][] = [
           'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
           'NAME'     => "curl",
           'VERSION'  => "7.24.0_1"
-          );
+          ];
 
       // * Add rule to entity 1
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
          $ruleAction = new RuleAction();
 
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'pc1';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'entities_id';
@@ -127,8 +126,8 @@ class SoftwareEntityCreationTest extends Common_TestCase {
 
       // ** Add agent
          $pfAgent = new PluginFusioninventoryAgent();
-         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                            'device_id' => 'pc-2013-02-13'));
+         $a_agents_id = $pfAgent->add(['name'      => 'pc-2013-02-13',
+                                            'device_id' => 'pc-2013-02-13']);
          $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
 
       // ** Add
@@ -141,7 +140,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
          $this->assertEquals(1, $software->fields['entities_id'], 'Software entity on add computer');
 
    }
-
 
 
    /**
@@ -174,36 +172,36 @@ class SoftwareEntityCreationTest extends Common_TestCase {
       $computer = new Computer();
       $software = new Software();
 
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc1'
-      );
-      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+      ];
+      $a_inventory['CONTENT']['SOFTWARES'][] = [
           'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
           'NAME'     => "curl",
           'VERSION'  => "7.24.0_1"
-          );
+          ];
 
       // * Add rule to entity 1
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
          $ruleAction = new RuleAction();
 
-         $input = array();
+         $input = [];
          $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
          $input['pattern']    = 'pc1';
          $ruleCriteria->add($input);
 
-         $input = array();
+         $input = [];
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'entities_id';
@@ -212,8 +210,8 @@ class SoftwareEntityCreationTest extends Common_TestCase {
 
       // ** Add agent
          $pfAgent = new PluginFusioninventoryAgent();
-         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                            'device_id' => 'pc-2013-02-13'));
+         $a_agents_id = $pfAgent->add(['name'      => 'pc-2013-02-13',
+                                            'device_id' => 'pc-2013-02-13']);
          $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
 
       // ** Add
@@ -229,7 +227,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
          $this->assertEquals(1, $software->fields['is_recursive'], 'Software may have recursive = 1');
 
    }
-
 
 
    /**
@@ -256,28 +253,28 @@ class SoftwareEntityCreationTest extends Common_TestCase {
       $computer = new Computer();
       $software = new Software();
 
-      $input = array(
+      $input = [
           'id'           => 1,
           'is_recursive' => 0
-      );
+      ];
       $software->update($input);
 
-      $computer->add(array('name' => 'pc2', 'entities_id' => 1));
+      $computer->add(['name' => 'pc2', 'entities_id' => 1]);
 
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
+      $a_inventory = [];
+      $a_inventory['CONTENT']['HARDWARE'] = [
           'NAME' => 'pc2'
-      );
-      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+      ];
+      $a_inventory['CONTENT']['SOFTWARES'][] = [
           'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
           'NAME'     => "curl",
           'VERSION'  => "7.24.0_1"
-          );
+          ];
 
       // ** Add agent
          $pfAgent = new PluginFusioninventoryAgent();
-         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                            'device_id' => 'pc-2013-02-13'));
+         $a_agents_id = $pfAgent->add(['name'      => 'pc-2013-02-13',
+                                            'device_id' => 'pc-2013-02-13']);
          $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
 
       // ** Add
@@ -298,5 +295,6 @@ class SoftwareEntityCreationTest extends Common_TestCase {
          $this->assertEquals(0, $software->fields['is_recursive'], 'Software may have recursive = 0');
 
    }
+
+
 }
-?>

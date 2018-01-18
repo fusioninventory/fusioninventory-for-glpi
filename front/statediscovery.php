@@ -58,4 +58,3 @@ $pfStateDiscovery->display();
 
 Html::footer();
 
-?>

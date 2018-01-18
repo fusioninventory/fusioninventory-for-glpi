@@ -55,6 +55,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryMapping extends CommonDBTM {
 
+
    /**
     * Get mapping
     *
@@ -68,9 +69,8 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       if (isset($mapping['id'])) {
          return $mapping;
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -87,20 +87,18 @@ class PluginFusioninventoryMapping extends CommonDBTM {
                                    $parm['name']."'"));
       if (empty($data)) {
          // Insert
+         $values = [
+            'itemtype'     => $parm['itemtype'],
+            'name'         => $parm['name'],
+            'table'        => $parm['table'],
+            'tablefield'   => $parm['tablefield'],
+            'locale'       => $parm['locale']
+         ];
          if (isset($parm['shortlocale'])) {
-            $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
-                        (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
-                     VALUES ('".$parm['itemtype']."', '".$parm['name']."', '".$parm['table']."',
-                             '".$parm['tablefield']."', '".$parm['locale']."',
-                                '".$parm['shortlocale']."')";
-         } else {
-            $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
-                        (`itemtype`, `name`, `table`, `tablefield`, `locale`)
-                     VALUES ('".$parm['itemtype']."', '".$parm['name']."', '".$parm['table']."',
-                             '".$parm['tablefield']."', '".$parm['locale']."')";
+            $values['shortlocale'] = $parm['shortlocale'];
          }
-         $DB->query($query);
-      } elseif ($data['table'] != $parm['table']
+         $DB->insert('glpi_plugin_fusioninventory_mappings', $values);
+      } else if ($data['table'] != $parm['table']
                 OR $data['tablefield'] != $parm['tablefield']
                 OR $data['locale'] != $parm['locale']) {
          $data['table'] = $parm['table'];
@@ -112,7 +110,6 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          $this->update($data);
       }
    }
-
 
 
    /**
@@ -806,6 +803,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
       return $mapping['name'];
    }
+
+
 }
 
-?>

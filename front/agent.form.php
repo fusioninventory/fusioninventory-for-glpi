@@ -50,18 +50,7 @@ $agent = new PluginFusioninventoryAgent();
 
 Session::checkRight('plugin_fusioninventory_agent', READ);
 
-if (isset($_POST['startagent'])) {
-   $agent = new PluginFusioninventoryAgent();
-   $agent->getFromDB($_POST['agent_id']);
-   if ($agent->wakeUp()) {
-       Session::addMessageAfterRedirect(__('The agent is running', 'fusioninventory'));
-
-   } else {
-       Session::addMessageAfterRedirect(__('Impossible to communicate with agent!', 'fusioninventory'));
-
-   }
-   Html::back();
-} else if (isset ($_POST["update"])) {
+if (isset ($_POST["update"])) {
    Session::checkRight('plugin_fusioninventory_agent', UPDATE);
    if (isset($_POST['items_id'])) {
       if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
@@ -78,9 +67,6 @@ if (isset($_POST['startagent'])) {
    Session::checkRight('plugin_fusioninventory_agent', UPDATE);
    $agent->disconnect($_POST);
    Html::back();
-} else if (isset ($_POST["startagent"])) {
-
-   Html::back();
 }
 
 
@@ -91,18 +77,16 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_GET["id"])) {
    $agent->display(
-      array(
+      [
          "id" => $_GET["id"]
-      )
+      ]
    );
 } else {
    $agent->display(
-      array(
+      [
          "id" => 0
-      )
+      ]
    );
 }
 
 Html::footer();
-
-?>

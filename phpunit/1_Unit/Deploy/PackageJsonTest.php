@@ -48,12 +48,12 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
     */
    public function JSONCreateNewPackage() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $input = array(
+      $input = [
           'name'        => 'test1',
-          'entities_id' => 0);
+          'entities_id' => 0];
       $packages_id = $pfDeployPackage->add($input);
       $pfDeployPackage->getFromDB(1);
-      $json_structure = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
    }
 
@@ -63,25 +63,27 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
     */
    public function AddItem() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $input = array(
-          'name'        => 'test2',
-          'entities_id' => 0);
+      $input = [
+                'name'        => 'test2',
+                'entities_id' => 0
+               ];
       $packages_id = $pfDeployPackage->add($input);
+      $check       = new PluginFusioninventoryDeployCheck();
 
       // Add check
-      $item = array(
+      $item = [
          'id'               => $packages_id,
          'name'             => 'check winkey',
          'itemtype'         => 'PluginFusioninventoryDeployCheck',
-         'deploy_checktype' => 'winkeyExists',
+         'checkstype'       => 'winkeyExists',
          'path'             => 'toto',
          'return'           => 'error',
          'add_item'         => 'Add'
-      );
+      ];
       PluginFusioninventoryDeployPackage::alterJSON('add_item', $item);
 
       $pfDeployPackage->getFromDB($packages_id);
-      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $pfDeployPackage->fields['json'], "json structure not right");
 
    }
@@ -92,7 +94,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
     */
    public function duplicate() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $packages = $pfDeployPackage->find("`name`='test2'");
+      $packages        = $pfDeployPackage->find("`name`='test2'");
       $this->assertEquals(1, count($packages));
       $package = current($packages);
 
@@ -102,7 +104,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($packages));
       $package = current($packages);
 
-      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+      $json_structure = '{"jobs":{"checks":[{"name":"check winkey","type":"winkeyExists","path":"toto","value":"","return":"error"}],"associatedFiles":[],"actions":[],"userinteractions":[]},"associatedFiles":[]}';
       $this->assertEquals($json_structure, $package['json']);
       $this->assertEquals(0, $package['entities_id']);
    }
@@ -159,19 +161,19 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
        // Check order right now
        $packages = getAllDatasFromTable('glpi_plugin_fusioninventory_deploypackages');
        $this->assertEquals(2, count($packages));
-       $jsons = array();
-       $names = array();
-       foreach ($packages as $package) {
-           $jsons[] = $package['json'];
-           $names[] = $package['name'];
-       }
-       $ref = array(
+       $jsons = [];
+       $names = [];
+      foreach ($packages as $package) {
+         $jsons[] = $package['json'];
+         $names[] = $package['name'];
+      }
+       $ref = [
            "{\"jobs\":{\"checks\":[],\"actions\":[{\"mkdir\":{\"list\":[\"c:\\packages\\vlc\"]}},{\"move\":{\"from\":\"*.*\",\"to\":\"c:\\packages\\vlc\"}},{\"cmd\":{\"exec\":\"c:\\packages\\vlc\\vlcinstall.cmd\"}}],\"associatedFiles\":[\"1f54a4730571d165a488f7f343e49d71f7e06c639091959df7065019971d1c3080f97da6517a94173083a50625dc1c1ba11f685d0c6f15705a75d5265c708cee\"]},\"associatedFiles\":{\"1f54a4730571d165a488f7f343e49d71f7e06c639091959df7065019971d1c3080f97da6517a94173083a50625dc1c1ba11f685d0c6f15705a75d5265c708cee\":{\"name\":\"vlc.zip\",\"p2p\":1,\"p2p-retention-duration\":16,\"uncompress\":1}}}",
            "{\"jobs\":{\"checks\":[],\"actions\":[{\"cmd\":{\"exec\":\"vlcuninstall.cmd\"}}],\"associatedFiles\":[\"b16d6a078538842df7b6e572be62845b16870d5f325ec39ac4ae3d6705b2845990684c5a39206c7f23db177226781660324fab14330d98e71f2315658d13584b\"]},\"associatedFiles\":{\"b16d6a078538842df7b6e572be62845b16870d5f325ec39ac4ae3d6705b2845990684c5a39206c7f23db177226781660324fab14330d98e71f2315658d13584b\":{\"name\":\"vlcuninstall.cmd\",\"p2p\":0,\"p2p-retention-duration\":5,\"uncompress\":0}}}"
-       );
+       ];
        $this->assertEquals($ref, $jsons);
 
-       $ref = array('INST VLC 2.1.5', 'INST VLC 2.1.5 (uninstall)');
+       $ref = ['INST VLC 2.1.5', 'INST VLC 2.1.5 (uninstall)'];
        $this->assertEquals($ref, $names);
    }
 }

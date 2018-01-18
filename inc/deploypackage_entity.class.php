@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
    static function getEntities($deploypackages_id) {
       global $DB;
 
-      $ent   = array();
+      $ent   = [];
       $query = "SELECT `glpi_plugin_fusioninventory_deploypackages_entities`.*
                 FROM `glpi_plugin_fusioninventory_deploypackages_entities`
                 WHERE `plugin_fusioninventory_deploypackages_id` = '$deploypackages_id'";
@@ -117,6 +117,7 @@ class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
       }
       return $ent;
    }
+
+
 }
 
-?>

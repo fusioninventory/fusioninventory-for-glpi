@@ -59,4 +59,3 @@ Search::show('PluginFusioninventoryConfigSecurity');
 
 Html::footer();
 
-?>

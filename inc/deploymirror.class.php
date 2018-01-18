@@ -79,10 +79,9 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return __('Mirror servers', 'fusioninventory');
    }
-
 
 
    /**
@@ -91,15 +90,14 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
+   function defineTabs($options = []) {
 
-      $ong=array();
+      $ong=[];
       $this->addDefaultFormTab($ong)
          ->addStandardTab('Log', $ong, $options);
 
       return $ong;
    }
-
 
 
    /**
@@ -126,7 +124,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       $computer = new Computer();
       $computer->getFromDB($agent['computers_id']);
-
 
       //If no configuration has been done in the plugin's configuration
       //then use location for mirrors as default
@@ -181,17 +178,17 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
             }
 
             $add_mirror = false;
-            if(is_array($entities)) {
-               if(in_array($computer->fields['entities_id'], $entities)) {
+            if (is_array($entities)) {
+               if (in_array($computer->fields['entities_id'], $entities)) {
                   $add_mirror = true;
                }
             } else {
-               if($computer->fields['entities_id'] == $result['entities_id']) {
+               if ($computer->fields['entities_id'] == $result['entities_id']) {
                   $add_mirror = true;
                }
             }
 
-            if(!in_array($result['url'], $mirrors) && $add_mirror) {
+            if (!in_array($result['url'], $mirrors) && $add_mirror) {
                $mirrors[] = $result['url'];
             }
          }
@@ -214,7 +211,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Display form
     *
@@ -223,7 +219,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options=array()) {
+   function showForm($id, $options = []) {
       global $CFG_GLPI;
 
       $this->initForm($id, $options);
@@ -232,7 +228,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'name', array('size' => 40));
+      Html::autocompletionTextField($this, 'name', ['size' => 40]);
       echo "</td>";
 
       echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
@@ -246,7 +242,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'url', array('size' => 40));
+      Html::autocompletionTextField($this, 'url', ['size' => 40]);
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -284,7 +280,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Get search function for the class
     *
@@ -292,7 +287,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     */
    function getSearchOptions() {
 
-      $tab = array();
+      $tab = [];
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         = 'name';
       $tab[1]['linkfield']     = 'name';
@@ -345,18 +340,16 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
 
-
    /**
     * Get the massive actions for this object
     *
     * @param object|null $checkitem
     * @return array list of actions
     */
-   function getSpecificMassiveActions($checkitem=NULL) {
+   function getSpecificMassiveActions($checkitem = null) {
       return [__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfer'
                => __('Transfer')];
    }
-
 
 
    /**
@@ -368,12 +361,11 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'transfer') {
          Dropdown::show('Entity');
-         echo Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
+         echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
          return true;
       }
       return false;
    }
-
 
 
    /**
@@ -392,7 +384,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          case "transfer" :
             foreach ($ids as $key) {
                if ($pfDeployMirror->getFromDB($key)) {
-                  $input = array();
+                  $input = [];
                   $input['id'] = $key;
                   $input['entities_id'] = $_POST['entities_id'];
                   if ($pfDeployMirror->update($input)) {
@@ -408,6 +400,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       }
    }
+
+
 }
 
-?>

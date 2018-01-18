@@ -41,115 +41,114 @@
  */
 
 class ComputerMonitor extends Common_TestCase {
-   public $a_computer1 = array();
-   public $a_computer1_beforeformat = array();
-   public $a_computer2 = array();
+   public $a_computer1 = [];
+   public $a_computer1_beforeformat = [];
+   public $a_computer2 = [];
 
    /*
     * Why do you define a constructor here while you can set this 2 variables up ahead ???
     */
    function __construct() {
-      $this->a_computer1 = array(
-          "Computer" => array(
+      $this->a_computer1 = [
+          "Computer" => [
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [
+              [
                   'name'    => 'DELL E1911',
                   'manufacturers_id'=> 2,
                   'serial'  => 'W6VPJ1840E7B',
                   'is_dynamic' => 1
-              )
-          ),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $this->a_computer1_beforeformat = array(
-          "CONTENT" => array(
-              "HARDWARE" => array(
+      $this->a_computer1_beforeformat = [
+          "CONTENT" => [
+              "HARDWARE" => [
                   "NAME"   => "pc001"
-              ),
-              "BIOS" => array(
+              ],
+              "BIOS" => [
                   "SSN" => "ggheb7ne7"
-              ),
-              'MONITORS'        => Array(
-                  array(
+              ],
+              'MONITORS'        => [
+                  [
                       'BASE64' => 'AP///////wAQrDbwQjdFMB8VAQMOKRp47u6Vo1RMmSYPUFS/74CVAHFPgYCVD4EAAQEBAQEBmimg0FGEIjBQmDYAmP8QAAAcAAAA/wBXNlZQSjE4NDBFN0IKAAAA/ABERUxMIEUxOTExCiAgAAAA/QA4Sx5TDgAKICAgICAgALM=',
                       'CAPTION' => 'DELL E1911',
                       'DESCRIPTION' => '31/2011',
                       'MANUFACTURER' => 'Dell Computer Corp.',
                       'SERIAL' => 'W6VPJ1840E7B'
-                  )
-              )
-          )
-      );
+                  ]
+              ]
+          ]
+      ];
 
-      $this->a_computer2 = array(
-          "Computer" => array(
+      $this->a_computer2 = [
+          "Computer" => [
               "name"   => "pc002",
               "serial" => "ggheb7ne8"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(
-              array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [
+              [
                   'name'    => 'DELL E1911',
                   'manufacturers_id'=> 2,
                   'serial'  => 'W6VPJ1840E7B',
                   'is_dynamic' => 1
-              )
-          ),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+              ]
+          ],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
    }
-
 
 
    /**
@@ -177,7 +176,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $computer->getFromDB(1);
@@ -191,7 +190,7 @@ class ComputerMonitor extends Common_TestCase {
       // Second try (verify not create a second same monitor)
        $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $computer->getFromDB(1);
@@ -210,7 +209,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'Second computer');
@@ -220,10 +219,10 @@ class ComputerMonitor extends Common_TestCase {
 
       // Retry first computer without monitor
       $a_computerinventory = $this->a_computer1;
-      $a_computerinventory['monitor'] = array();
+      $a_computerinventory['monitor'] = [];
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $computer->getFromDB(1);
@@ -234,12 +233,11 @@ class ComputerMonitor extends Common_TestCase {
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (3)');
 
-
       // * Retry first computer with monitor
       $a_computerinventory = $this->a_computer1;
       $pfiComputerLib->updateComputer($a_computerinventory,
                                       $computers_id,
-                                      FALSE,
+                                      false,
                                       1);
 
       $computer->getFromDB(1);
@@ -254,5 +252,6 @@ class ComputerMonitor extends Common_TestCase {
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'),
                           'First computer (number id of links recreated) (4)');
    }
+
+
 }
-?>

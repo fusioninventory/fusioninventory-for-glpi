@@ -72,7 +72,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     *
     * @var string
     */
-   static public $take_entity_1 = true ;
+   static public $take_entity_1 = true;
 
    /**
     * Itemtype for the second part of relation
@@ -93,8 +93,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     *
     * @var string
     */
-   static public $take_entity_2 = false ;
-
+   static public $take_entity_2 = false;
 
 
    /**
@@ -104,14 +103,13 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          return __('Associated SNMP credentials', 'fusioninventory');
       }
       return '';
    }
-
 
 
    /**
@@ -122,12 +120,11 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @param integer $withtemplate 1 if is a template form
     * @return true
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfIPRange_ConfigSecurity = new self();
       $pfIPRange_ConfigSecurity->showForm($item);
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -142,7 +139,6 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
    }
 
 
-
    /**
     * Display form
     *
@@ -150,16 +146,16 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     * @param array $options
     * @return boolean
     */
-   function showForm(CommonDBTM $item, $options=array()) {
+   function showForm(CommonDBTM $item, $options = []) {
 
       $ID = $item->getField('id');
 
       if ($item->isNewID($ID)) {
-         return FALSE;
+         return false;
       }
 
       if (!$item->can($item->fields['id'], READ)) {
-         return FALSE;
+         return false;
       }
       $rand = mt_rand();
 
@@ -167,7 +163,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
                                      "`plugin_fusioninventory_ipranges_id`='".$item->getID()."'",
                                      false,
                                      '`rank`');
-      $a_used = array();
+      $a_used = [];
       foreach ($a_data as $data) {
          $a_used[] = $data['plugin_fusioninventory_configsecurities_id'];
       }
@@ -181,11 +177,11 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</tr>";
       echo "<tr class='tab_bg_2'>";
       echo "<td>";
-      Dropdown::show('PluginFusioninventoryConfigSecurity', array('used' => $a_used));
+      Dropdown::show('PluginFusioninventoryConfigSecurity', ['used' => $a_used]);
       echo "</td>";
       echo "<td>";
       echo Html::hidden('plugin_fusioninventory_ipranges_id',
-                   array('value' => $item->getID()));
+                   ['value' => $item->getID()]);
       echo "<input type='submit' name='add' value=\"".
           _sx('button', 'Associate')."\" class='submit'>";
       echo "</td>";
@@ -200,7 +196,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
       echo "<div class='spaced'>";
       Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
-      $massiveactionparams = array('container' => 'mass'.__CLASS__.$rand);
+      $massiveactionparams = ['container' => 'mass'.__CLASS__.$rand];
       Html::showMassiveActions($massiveactionparams);
 
       echo "<table class='tab_cadre_fixe'>";
@@ -239,8 +235,9 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       $massiveactionparams['ontop'] =false;
       Html::showMassiveActions($massiveactionparams);
       echo "</div>";
-      return TRUE;
+      return true;
    }
+
+
 }
 
-?>

@@ -59,7 +59,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     *
     * @var boolean
     */
-   public $dohistory = TRUE;
+   public $dohistory = true;
 
    /**
     * The right name for this class
@@ -75,12 +75,11 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @param array $options
     * @return array containing the tabs name
     */
-   function defineTabs($options=array()) {
-      $ong = array();
+   function defineTabs($options = []) {
+      $ong = [];
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
-
 
 
    /**
@@ -90,7 +89,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($id, $options=array()) {
+   function showForm($id, $options = []) {
       Session::checkRight('plugin_fusioninventory_configsecurity', READ);
       $this->initForm($id, $options);
       $this->showFormHeader($options);
@@ -98,7 +97,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::autocompletionTextField($this,'name');
+      Html::autocompletionTextField($this, 'name');
       echo "</td>";
       echo "</tr>";
 
@@ -117,12 +116,12 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Community', 'fusioninventory') . "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'community');
+      Html::autocompletionTextField($this, 'community');
       echo "</td>";
 
       echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'username');
+      Html::autocompletionTextField($this, 'username');
       echo "</td>";
       echo "</tr>";
 
@@ -139,7 +138,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'auth_passphrase');
+      Html::autocompletionTextField($this, 'auth_passphrase');
       echo "</td>";
       echo "</tr>";
 
@@ -155,7 +154,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this,'priv_passphrase');
+      Html::autocompletionTextField($this, 'priv_passphrase');
       echo "</td>";
       echo "</tr>";
 
@@ -164,9 +163,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-      return TRUE;
+      return true;
    }
-
 
 
    /**
@@ -174,15 +172,14 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     *
     * @param null|string $p_value
     */
-   function showDropdownSNMPVersion($p_value=NULL) {
-      $snmpVersions = array(0 => '-----', '1', '2c', '3');
-      $options = array();
+   function showDropdownSNMPVersion($p_value = null) {
+      $snmpVersions = [0 => '-----', '1', '2c', '3'];
+      $options = [];
       if (!is_null($p_value)) {
-         $options = array('value' => $p_value);
+         $options = ['value' => $p_value];
       }
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
-
 
 
    /**
@@ -192,7 +189,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @return string
     */
    function getSNMPVersion($id) {
-      switch($id) {
+      switch ($id) {
 
          case '1':
             return '1';
@@ -208,21 +205,19 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP encryption protocols dropdown
     *
     * @param null|string $p_value
     */
-   function showDropdownSNMPAuth($p_value=NULL) {
-      $authentications = array(0=>'-----', 'MD5', 'SHA');
-      $options = array();
+   function showDropdownSNMPAuth($p_value = null) {
+      $authentications = [0=>'-----', 'MD5', 'SHA'];
+      $options = [];
       if (!is_null($p_value)) {
-         $options = array('value'=>$p_value);
+         $options = ['value'=>$p_value];
       }
       Dropdown::showFromArray("authentication", $authentications, $options);
    }
-
 
 
    /**
@@ -232,7 +227,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @return string
     */
    function getSNMPAuthProtocol($id) {
-      switch($id) {
+      switch ($id) {
 
          case '1':
             return 'MD5';
@@ -245,21 +240,19 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP encryption protocols dropdown
     *
     * @param string $p_value
     */
-   function showDropdownSNMPEncryption($p_value=NULL) {
-      $encryptions = array(0 => '-----', 'DES', 'AES128', 'AES192', 'AES256', 'Triple-DES');
-      $options = array();
+   function showDropdownSNMPEncryption($p_value = null) {
+      $encryptions = [0 => Dropdown::EMPTY_VALUE, 'DES', 'AES128', 'Triple-DES'];
+      $options     = [];
       if (!is_null($p_value)) {
-         $options = array('value' => $p_value);
+         $options = ['value' => $p_value];
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
    }
-
 
 
    /**
@@ -269,19 +262,13 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
     * @return string
     */
    function getSNMPEncryption($id) {
-      switch($id) {
+      switch ($id) {
 
          case '1':
             return 'DES';
 
          case '2':
             return 'AES';
-
-         case '3':
-            return 'AES192';
-
-         case '4':
-            return 'AES256';
 
          case '5':
             return '3DES';
@@ -291,20 +278,18 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
-
    /**
     * Display SNMP credentials dropdown
     *
     * @param string $selected
     */
-   static function authDropdown($selected="") {
+   static function authDropdown($selected = "") {
 
       Dropdown::show("PluginFusioninventoryConfigSecurity",
-                      array('name' => "plugin_fusioninventory_configsecurities_id",
+                      ['name' => "plugin_fusioninventory_configsecurities_id",
                            'value' => $selected,
-                           'comment' => FALSE));
+                           'comment' => false]);
    }
-
 
 
    /**
@@ -316,12 +301,11 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       if ($ma->getAction() == 'assign_auth') {
          PluginFusioninventoryConfigSecurity::authDropdown();
-         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
-         return TRUE;
+         echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
+         return true;
       }
-      return FALSE;
+      return false;
    }
-
 
 
    /**
@@ -339,7 +323,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       switch ($ma->getAction()) {
 
          case "assign_auth" :
-            switch($itemtype) {
+            switch ($itemtype) {
 
                case 'NetworkEquipment':
                   $equipement = new PluginFusioninventoryNetworkEquipment();
@@ -357,7 +341,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
             $fk = getForeignKeyFieldForItemType($itemtype);
             foreach ($ids as $key) {
                $found = $equipement->find("`$fk`='".$key."'");
-               $input = array();
+               $input = [];
                if (count($found) > 0) {
                   $current = current($found);
                   $equipement->getFromDB($current['id']);
@@ -384,6 +368,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       }
    }
-}
 
-?>
+
+}

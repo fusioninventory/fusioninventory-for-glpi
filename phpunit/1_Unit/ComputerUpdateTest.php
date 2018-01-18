@@ -45,6 +45,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    public $items_id = 0;
    public $datelatupdate = '';
 
+
    /**
     * @test
     */
@@ -63,8 +64,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_inventory = array(
-          'fusioninventorycomputer' => Array(
+      $a_inventory = [
+          'fusioninventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
@@ -80,31 +81,31 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                   'licenseid'                        => '',
                   'license_number'                   => ''
               ]
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          'computerdisk'   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'SOFTWARES'      => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          'computerdisk'   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'SOFTWARES'      => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-          );
-      $a_inventory['Computer'] = array(
+          ];
+      $a_inventory['Computer'] = [
           'name'                             => 'pc',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
@@ -115,10 +116,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
-      );
+      ];
 
-      $a_inventory['processor'] = Array(
-            Array(
+      $a_inventory['processor'] = [
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -127,8 +128,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'frequence'         => 2400,
                     'nbthreads'         => 2,
                     'frequency_default' => 2400
-                ),
-            Array(
+                ],
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -137,8 +138,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'frequence'         => 2400,
                     'nbthreads'         => 2,
                     'frequency_default' => 2400
-                ),
-            Array(
+                ],
+            [
                     'nbcores'           => 4,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -147,8 +148,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'frequence'         => 2405,
                     'nbthreads'         => 4,
                     'frequency_default' => 2405
-                ),
-            Array(
+                ],
+            [
                     'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -157,64 +158,64 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'frequence'         => 2600,
                     'nbthreads'         => 4,
                     'frequency_default' => 2600
-                )
-        );
+                ]
+        ];
 
-      $a_inventory['memory'] = Array(
-            Array(
+      $a_inventory['memory'] = [
+            [
                     'size'                 => 2048,
                     'serial'               => '98F6FF18',
                     'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 1
-                ),
-            Array(
+                ],
+            [
                     'size'                 => 2048,
                     'serial'               => '95F1833E',
                     'frequence'            => '1067',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 2
-                ),
-            Array(
+                ],
+            [
                     'size'                 => 2048,
                     'serial'               => '95F1833G',
                     'frequence'            => '1066',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 3
-                ),
-            Array(
+                ],
+            [
                     'size'                 => 2048,
                     'serial'               => '95F1833H',
                     'frequence'            => '1333',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)',
                     'busID'                => 4
-                )
-        );
+                ]
+        ];
 
-      $a_inventory['monitor'] = Array(
-            Array(
+      $a_inventory['monitor'] = [
+            [
                     'name'              => 'ThinkPad Display 1280x800',
                     'serial'            => 'UBYVUTFYEIUI',
                     'manufacturers_id'  => 'Lenovo',
                     'is_dynamic'        => 1
-                )
-      );
+                ]
+      ];
 
-      $a_inventory['printer'] = Array(
-            Array(
+      $a_inventory['printer'] = [
+            [
                     'name'      => 'HP Deskjet 5700 Series',
                     'serial'    => 'MY47L1W1JHEB6',
                     'have_usb'  => 1,
                     'is_dynamic' => 1
-                )
-      );
+                ]
+      ];
 
-      $a_inventory['networkport'] = Array(
-            'em0-00:23:18:cf:0d:93' => Array(
+      $a_inventory['networkport'] = [
+            'em0-00:23:18:cf:0d:93' => [
                     'name'                 => 'em0',
                     'netmask'              => '255.255.255.0',
                     'subnet'               => '192.168.30.0',
@@ -225,9 +226,9 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'gateway'              => '',
                     'dhcpserver'           => '',
                     'logical_number'       => 1,
-                    'ipaddress'            => Array('192.168.30.198')
-                ),
-            'lo0-' => Array(
+                    'ipaddress'            => ['192.168.30.198']
+                ],
+            'lo0-' => [
                     'name'                 => 'lo0',
                     'virtualdev'           => 1,
                     'mac'                  => '',
@@ -238,12 +239,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'netmask'              => '',
                     'dhcpserver'           => '',
                     'logical_number'       => 0,
-                    'ipaddress'            => Array('::1', 'fe80::1', '127.0.0.1')
-                )
-        );
+                    'ipaddress'            => ['::1', 'fe80::1', '127.0.0.1']
+                ]
+        ];
 
-      $a_inventory['software'] = Array(
-            'gentiumbasic$$$$110$$$$1$$$$0$$$$0' => Array(
+      $a_inventory['software'] = [
+            'gentiumbasic$$$$110$$$$1$$$$0$$$$0' => [
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
@@ -251,8 +252,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
                     'operatingsystems_id'    => 0
-                ),
-            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => Array(
+                ],
+            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => [
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
@@ -260,8 +261,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
                     'operatingsystems_id'    => 0
-                ),
-            'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => Array(
+                ],
+            'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => [
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
@@ -270,8 +271,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'is_deleted_computer'    => 0,
                     'operatingsystems_id'    => 0,
                     'date_install'           => '2016-07-20'
-                )
-          );
+                ]
+          ];
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
@@ -283,14 +284,14 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-      $this->items_id = $computer->add(array('serial'      => 'XB63J7D',
-                                             'entities_id' => 0));
+      $this->items_id = $computer->add(['serial'      => 'XB63J7D',
+                                             'entities_id' => 0]);
 
-      $this->assertGreaterThan(0, $this->items_id, FALSE);
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      $this->assertGreaterThan(0, $this->items_id, false);
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
       // To be sure not have 2 same informations
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
@@ -312,17 +313,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $computer->getFromDB(1);
       unset($computer->fields['date_mod']);
       unset($computer->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'name'                             => 'pc',
           'id'                               => '1',
           'entities_id'                      => '0',
           'serial'                           => 'XB63J7D',
-          'otherserial'                      => NULL,
+          'otherserial'                      => null,
           'contact'                          => 'ddurieux',
-          'contact_num'                      => NULL,
+          'contact_num'                      => null,
           'users_id_tech'                    => '0',
           'groups_id_tech'                   => '0',
-          'comment'                          => NULL,
+          'comment'                          => null,
           'autoupdatesystems_id'             => '0',
           'locations_id'                     => '0',
           'domains_id'                       => '1',
@@ -330,7 +331,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'computermodels_id'                => '0',
           'computertypes_id'                 => '1',
           'is_template'                      => '0',
-          'template_name'                    => NULL,
+          'template_name'                    => null,
           'manufacturers_id'                 => '0',
           'is_deleted'                       => '0',
           'is_dynamic'                       => '1',
@@ -340,7 +341,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'ticket_tco'                       => '0.0000',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'is_recursive'                     => '0'
-      );
+      ];
 
       $this->assertEquals($a_reference, $computer->fields);
 
@@ -362,14 +363,14 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          'operatingsystemeditions_id'        => '0',
          'is_deleted'                        => '0',
          'is_dynamic'                        => '1',
-         'entities_id'                       => '0'
+         'entities_id'                       => '0',
+         'is_recursive'                      => '0'
       ];
 
       unset($ios->fields['date_mod']);
       unset($ios->fields['date_creation']);
       $this->assertEquals($a_reference, $ios->fields);
    }
-
 
 
    /**
@@ -386,24 +387,23 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       unset($a_computer['last_fusioninventory_update']);
       $serialized_inventory = $a_computer['serialized_inventory'];
       unset($a_computer['serialized_inventory']);
-      $a_reference = array(
+      $a_reference = [
           'id'                                        => '1',
           'computers_id'                              => '1',
           'operatingsystem_installationdate'          => '2012-10-16 08:12:56',
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
-          'remote_addr'                               => NULL,
+          'remote_addr'                               => null,
           'is_entitylocked'                           => '0',
-          'oscomment'                                 => NULL,
-          'hostid'                                    => NULL
-      );
+          'oscomment'                                 => null,
+          'hostid'                                    => null
+      ];
 
       $this->assertEquals($a_reference, $a_computer);
 
-      $this->assertNotEquals(NULL, $serialized_inventory);
+      $this->assertNotEquals(null, $serialized_inventory);
 
    }
-
 
 
    /**
@@ -421,7 +421,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
    }
 
 
-
    /**
     * @test
     * @depends AddComputer
@@ -436,12 +435,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $software->getFromDB(1);
       unset($software->fields['date_mod']);
       unset($software->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'                      => '1',
           'name'                    => 'GentiumBasic',
           'entities_id'             => '0',
           'is_recursive'            => '0',
-          'comment'                 => NULL,
+          'comment'                 => null,
           'locations_id'            => '0',
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
@@ -450,18 +449,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'manufacturers_id'        => '1',
           'is_deleted'              => '0',
           'is_template'             => '0',
-          'template_name'           => NULL,
+          'template_name'           => null,
           'users_id'                => '0',
           'groups_id'               => '0',
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
           'is_valid'                   => '1',
-      );
+      ];
 
       $this->assertEquals($a_reference, $software->fields);
    }
-
 
 
    /**
@@ -478,12 +476,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $software->getFromDB(2);
       unset($software->fields['date_mod']);
       unset($software->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'                      => '2',
           'name'                    => 'ImageMagick',
           'entities_id'             => '0',
           'is_recursive'            => '0',
-          'comment'                 => NULL,
+          'comment'                 => null,
           'locations_id'            => '0',
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
@@ -492,18 +490,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'manufacturers_id'        => '2',
           'is_deleted'              => '0',
           'is_template'             => '0',
-          'template_name'           => NULL,
+          'template_name'           => null,
           'users_id'                => '0',
           'groups_id'               => '0',
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
           'is_valid'                   => '1',
-      );
+      ];
 
       $this->assertEquals($a_reference, $software->fields);
    }
-
 
 
    /**
@@ -520,12 +517,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $software->getFromDB(3);
       unset($software->fields['date_mod']);
       unset($software->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'                      => '3',
           'name'                    => 'ORBit2',
           'entities_id'             => '0',
           'is_recursive'            => '0',
-          'comment'                 => NULL,
+          'comment'                 => null,
           'locations_id'            => '0',
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
@@ -534,18 +531,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'manufacturers_id'        => '3',
           'is_deleted'              => '0',
           'is_template'             => '0',
-          'template_name'           => NULL,
+          'template_name'           => null,
           'users_id'                => '0',
           'groups_id'               => '0',
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
           'is_valid'                   => '1',
-      );
+      ];
 
       $this->assertEquals($a_reference, $software->fields);
    }
-
 
 
    /**
@@ -562,20 +558,19 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $softwareVersion->getFromDB(1);
       unset($softwareVersion->fields['date_mod']);
       unset($softwareVersion->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'                   => '1',
           'name'                 => '110',
           'entities_id'          => '0',
           'is_recursive'         => '0',
           'softwares_id'         => '1',
           'states_id'            => '0',
-          'comment'              => NULL,
+          'comment'              => null,
           'operatingsystems_id'  => '0'
-      );
+      ];
 
       $this->assertEquals($a_reference, $softwareVersion->fields);
    }
-
 
 
    /**
@@ -592,20 +587,19 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $softwareVersion->getFromDB(2);
       unset($softwareVersion->fields['date_mod']);
       unset($softwareVersion->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'                   => '2',
           'name'                 => '6.8.0.7_1',
           'entities_id'          => '0',
           'is_recursive'         => '0',
           'softwares_id'         => '2',
           'states_id'            => '0',
-          'comment'              => NULL,
+          'comment'              => null,
           'operatingsystems_id'  => '0'
-      );
+      ];
 
       $this->assertEquals($a_reference, $softwareVersion->fields);
    }
-
 
 
    /**
@@ -622,20 +616,19 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $softwareVersion->getFromDB(3);
       unset($softwareVersion->fields['date_mod']);
       unset($softwareVersion->fields['date_creation']);
-      $a_reference = array(
+      $a_reference = [
           'id'                   => '3',
           'name'                 => '2.14.19',
           'entities_id'          => '0',
           'is_recursive'         => '0',
           'softwares_id'         => '3',
           'states_id'            => '0',
-          'comment'              => NULL,
+          'comment'              => null,
           'operatingsystems_id'  => '0'
-      );
+      ];
 
       $this->assertEquals($a_reference, $softwareVersion->fields);
    }
-
 
 
    /**
@@ -649,10 +642,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(2);
+      $computer_SoftwareVersion->getFromDB(1);
 
-      $a_reference = array(
-          'id'                   => '2',
+      $a_reference = [
+          'id'                   => '1',
           'computers_id'         => '1',
           'softwareversions_id'  => '1',
           'is_deleted_computer'  => '0',
@@ -661,11 +654,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
           'date_install'         => null
-      );
+      ];
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
    }
-
 
 
    /**
@@ -679,10 +671,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(3);
+      $computer_SoftwareVersion->getFromDB(2);
 
-      $a_reference = array(
-          'id'                   => '3',
+      $a_reference = [
+          'id'                   => '2',
           'computers_id'         => '1',
           'softwareversions_id'  => '2',
           'is_deleted_computer'  => '0',
@@ -691,11 +683,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
           'date_install'         => null
-      );
+      ];
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
    }
-
 
 
    /**
@@ -709,10 +700,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
 
-      $computer_SoftwareVersion->getFromDB(1);
+      $computer_SoftwareVersion->getFromDB(3);
 
-      $a_reference = array(
-          'id'                   => '1',
+      $a_reference = [
+          'id'                   => '3',
           'computers_id'         => '1',
           'softwareversions_id'  => '3',
           'is_deleted_computer'  => '0',
@@ -721,11 +712,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
           'date_install'         => '2016-07-20'
-      );
+      ];
 
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
    }
-
 
 
    /**
@@ -743,37 +733,36 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          unset($data['date_creation']);
          $a_data[$id] = $data;
       }
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                 => '1',
                      'designation'        => 'Core i3',
                      'frequence'                => '2400',
-                     'comment'                  => NULL,
+                     'comment'                  => null,
                      'manufacturers_id'         => '1',
                      'frequency_default'        => '2400',
-                     'nbcores_default'          => NULL,
-                     'nbthreads_default'        => NULL,
+                     'nbcores_default'          => null,
+                     'nbthreads_default'        => null,
                      'entities_id'              => '0',
                      'is_recursive'             => '0',
-                     'deviceprocessormodels_id' => NULL
-                 ),
-          '2' => array(
+                     'deviceprocessormodels_id' => null
+                 ],
+          '2' => [
                      'id'                       => '2',
                      'designation'              => 'Core i3',
                      'frequence'                => '2600',
-                     'comment'                  => NULL,
+                     'comment'                  => null,
                      'manufacturers_id'         => '1',
                      'frequency_default'        => '2600',
-                     'nbcores_default'          => NULL,
-                     'nbthreads_default'        => NULL,
+                     'nbcores_default'          => null,
+                     'nbthreads_default'        => null,
                      'entities_id'              => '0',
                      'is_recursive'             => '0',
-                     'deviceprocessormodels_id' => NULL
-                 )
-      );
+                     'deviceprocessormodels_id' => null
+                 ]
+      ];
       $this->assertEquals($a_reference, $a_data);
    }
-
 
 
    /**
@@ -789,8 +778,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                                          "`itemtype`='Computer'
                                             AND `items_id`='1'");
 
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                    => '1',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -803,12 +792,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'nbthreads'             => '2',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL,
-                     'otherserial'           => NULL,
+                     'busID'                 => null,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 ),
-          '2' => array(
+                 ],
+          '2' => [
                      'id' => '2',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -821,12 +810,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'nbthreads'             => '2',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL,
-                     'otherserial'           => NULL,
+                     'busID'                 => null,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 ),
-          '3' => array(
+                 ],
+          '3' => [
                      'id' => '3',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -839,12 +828,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'nbthreads'             => '4',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL,
-                     'otherserial'           => NULL,
+                     'busID'                 => null,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 ),
-          '4' => array(
+                 ],
+          '4' => [
                      'id' => '4',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -857,16 +846,15 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'nbthreads'             => '4',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL,
-                     'otherserial'           => NULL,
+                     'busID'                 => null,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 )
-      );
+                 ]
+      ];
 
       $this->assertEquals($a_reference, $a_dataLink);
    }
-
 
 
    /**
@@ -884,35 +872,34 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          unset($data['date_creation']);
          $a_data[$id] = $data;
       }
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                    => '1',
                      'designation'           => 'DDR3 - SODIMM (None)',
                      'frequence'             => '1067',
-                     'comment'               => NULL,
+                     'comment'               => null,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
                      'devicememorytypes_id'  => '5',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'devicememorymodels_id' => NULL
-                 ),
-          '2' => array(
+                     'devicememorymodels_id' => null
+                 ],
+          '2' => [
                      'id'                    => '2',
                      'designation'           => 'DDR3 - SODIMM (None)',
                      'frequence'             => '1333',
-                     'comment'               => NULL,
+                     'comment'               => null,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
                      'devicememorytypes_id'  => '5',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'devicememorymodels_id' => NULL
-                 )
-      );
+                     'devicememorymodels_id' => null
+                 ]
+      ];
       $this->assertEquals($a_reference, $a_data);
    }
-
 
 
    /**
@@ -928,8 +915,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                                          "`itemtype`='Computer'
                                             AND `items_id`='1'");
 
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                    => '1',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -941,11 +928,11 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => 1,
-                     'otherserial'           => NULL,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 ),
-          '2' => array(
+                 ],
+          '2' => [
                      'id' => '2',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -957,11 +944,11 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => 2,
-                     'otherserial'           => NULL,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 ),
-          '3' => array(
+                 ],
+          '3' => [
                      'id' => '3',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -973,11 +960,11 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => 3,
-                     'otherserial'           => NULL,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 ),
-          '4' => array(
+                 ],
+          '4' => [
                      'id' => '4',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -989,15 +976,14 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => 4,
-                     'otherserial'           => NULL,
+                     'otherserial'           => null,
                      'locations_id'          => '0',
                      'states_id'             => '0'
-                 )
-      );
+                 ]
+      ];
 
       $this->assertEquals($a_reference, $a_dataLink);
    }
-
 
 
    /**
@@ -1019,8 +1005,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          $a_dataLink[$id] = $data;
       }
 
-      $a_reference = array(
-          '1' => array(
+      $a_reference = [
+          '1' => [
                      'id'                    => '1',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -1032,10 +1018,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'name'                  => 'em0',
                      'instantiation_type'    => 'NetworkPortEthernet',
                      'mac'                   => '00:23:18:cf:0d:93',
-                     'comment'               => NULL
+                     'comment'               => null
 
-                 ),
-          '2' => array(
+                 ],
+          '2' => [
                      'id'                    => '2',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
@@ -1047,13 +1033,12 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'name'                  => 'lo0',
                      'instantiation_type'    => 'NetworkPortLocal',
                      'mac'                   => '',
-                     'comment'               => NULL
-                 )
-      );
+                     'comment'               => null
+                 ]
+      ];
 
       $this->assertEquals($a_reference, $a_dataLink);
    }
-
 
 
    /**
@@ -1069,7 +1054,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals(1, count($a_dataMonit), "Must have 1 monitor created");
 
-
       $a_dataLink = getAllDatasFromTable("glpi_computers_items",
                                          "`itemtype`='Monitor'
                                             AND `computers_id`='1'");
@@ -1084,17 +1068,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       unset($monitor->fields['date_mod']);
       unset($monitor->fields['date_creation']);
 
-      $a_reference = array(
+      $a_reference = [
           'id'                => '1',
           'entities_id'       => '0',
           'name'              => 'ThinkPad Display 1280x800',
           'contact'           => 'ddurieux',
-          'contact_num'       => NULL,
+          'contact_num'       => null,
           'users_id_tech'     => '0',
           'groups_id_tech'    => '0',
-          'comment'           => NULL,
+          'comment'           => null,
           'serial'            => 'UBYVUTFYEIUI',
-          'otherserial'       => NULL,
+          'otherserial'       => null,
           'size'              => '0',
           'have_micro'        => '0',
           'have_speaker'      => '0',
@@ -1111,18 +1095,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_global'         => '0',
           'is_deleted'        => '0',
           'is_template'       => '0',
-          'template_name'     => NULL,
+          'template_name'     => null,
           'users_id'          => '0',
           'groups_id'         => '0',
           'states_id'         => '0',
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => '1',
           'is_recursive'      => '0'
-      );
+      ];
 
       $this->assertEquals($a_reference, $monitor->fields);
    }
-
 
 
    /**
@@ -1148,24 +1131,24 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       unset($printer->fields['date_mod']);
       unset($printer->fields['date_creation']);
 
-      $a_reference = array(
+      $a_reference = [
           'id'                   => '1',
           'entities_id'          => '0',
           'is_recursive'         => '0',
           'name'                 => 'HP Deskjet 5700 Series',
           'contact'              => 'ddurieux',
-          'contact_num'          => NULL,
+          'contact_num'          => null,
           'users_id_tech'        => '0',
           'groups_id_tech'       => '0',
           'serial'               => 'MY47L1W1JHEB6',
-          'otherserial'          => NULL,
+          'otherserial'          => null,
           'have_serial'          => '0',
           'have_parallel'        => '0',
           'have_usb'             => '1',
           'have_wifi'            => '0',
           'have_ethernet'        => '0',
-          'comment'              => NULL,
-          'memory_size'          => NULL,
+          'comment'              => null,
+          'memory_size'          => null,
           'locations_id'         => '0',
           'domains_id'           => '0',
           'networks_id'          => '0',
@@ -1175,7 +1158,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'is_global'            => '0',
           'is_deleted'           => '0',
           'is_template'          => '0',
-          'template_name'        => NULL,
+          'template_name'        => null,
           'init_pages_counter'   => '0',
           'last_pages_counter'   => '0',
           'users_id'             => '0',
@@ -1183,11 +1166,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'states_id'            => '0',
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => '1',
-      );
+      ];
 
       $this->assertEquals($a_reference, $printer->fields);
    }
-
 
 
    /**
@@ -1205,8 +1187,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $a_inventory = array(
-          'fusioninventorycomputer' => Array(
+      $a_inventory = [
+          'fusioninventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
@@ -1222,31 +1204,31 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                   'licenseid'                        => '',
                   'license_number'                   => ''
               ]
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          'computerdisk'   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'SOFTWARES'      => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          'computerdisk'   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'SOFTWARES'      => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-          );
-      $a_inventory['Computer'] = array(
+          ];
+      $a_inventory['Computer'] = [
           'name'                             => 'pcJ1',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
@@ -1258,9 +1240,9 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'computertypes_id'                 => 'Notebook',
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
-      );
-      $a_inventory['software'] = Array(
-            'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0$$$$0' => Array(
+      ];
+      $a_inventory['software'] = [
+            'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0$$$$0' => [
                     'name'                   => 'acrobat_Reader_9.2',
                     'version'                => '1.0.0.0',
                     'manufacturers_id'       => 192,
@@ -1268,8 +1250,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0,
                     'operatingsystems_id'    => 0
-                )
-          );
+                ]
+          ];
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
@@ -1282,20 +1264,22 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-      $this->items_id = $computer->add(array('serial'      => 'XB63J7J1',
-                                             'entities_id' => 0));
+      $this->items_id = $computer->add(['serial'      => 'XB63J7J1',
+                                             'entities_id' => 0]);
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "First computer added");
 
       $a_inventory['Computer']['name'] = "pcJ2";
       $a_inventory['Computer']['serial'] = "XB63J7J2";
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "Second computer added");
    }
+
+
 }

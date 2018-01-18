@@ -55,7 +55,7 @@ ob_start();
 include ("../../../../inc/includes.php");
 ob_end_clean();
 
-$response = FALSE;
+$response = false;
 //Agent communication using REST protocol
 $fi_machineid = filter_input(INPUT_GET, "machineid");
 if (!empty($fi_machineid)) {
@@ -73,19 +73,19 @@ if (!empty($fi_machineid)) {
          if (isset($agent['id'])) {
             $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                $agent['id'],
-               array('InventoryComputerESX')
+               ['InventoryComputerESX']
             );
 
             ////start of json response
             $order = new stdClass;
-            $order->jobs = array();
+            $order->jobs = [];
 
             $module = new PluginFusioninventoryInventoryComputerESX();
             foreach ($taskjobstates as $taskjobstate) {
                $order->jobs[] = $module->run($taskjobstate);
 
                $taskjobstate->changeStatus(
-                  $taskjobstate->fields['id'] ,
+                  $taskjobstate->fields['id'],
                   $taskjobstate::SERVER_HAS_SENT_DATA
                );
             }
@@ -106,11 +106,10 @@ if (!empty($fi_machineid)) {
          break;
    }
 
-   if ($response !== FALSE) {
+   if ($response !== false) {
       echo $response;
    } else {
-      echo json_encode((object)array());
+      echo json_encode((object)[]);
    }
 }
 
-?>

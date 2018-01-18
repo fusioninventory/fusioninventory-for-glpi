@@ -36,21 +36,23 @@ require ("./logging.php");
 define ( 'MANIFESTS_PATH',
    implode(
       DIRECTORY_SEPARATOR,
-      array( GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files' , 'manifests' )
+      [ GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files' , 'manifests' ]
    )
 );
 define ( 'REPOSITORY_PATH',
    implode(
       DIRECTORY_SEPARATOR,
-      array( GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files', 'repository' )
+      [ GLPI_PLUGIN_DOC_DIR, 'fusioninventory', 'files', 'repository' ]
    )
 );
 
 class MyRecursiveFilterIterator extends RecursiveFilterIterator {
 
+
    public function accept() {
-      return !preg_match('/^\./',  $this->current()->getFilename());
+      return !preg_match('/^\./', $this->current()->getFilename());
    }
+
 
 }
 
@@ -59,10 +61,11 @@ class MyRecursiveFilterIterator extends RecursiveFilterIterator {
  * Get every files used at least by one package.
  */
 
+
 function getManifestsUsed($logger) {
    global $DB;
 
-   $result = array();
+   $result = [];
 
    $orders = $DB->request('glpi_plugin_fusioninventory_deployorders');
 
@@ -91,10 +94,11 @@ function getManifestsUsed($logger) {
  * Get every files used at least by one package.
  */
 
+
 function getManifestsRegistered($logger) {
    global $DB;
 
-   $result = array();
+   $result = [];
 
    $files = $DB->request('glpi_plugin_fusioninventory_deployfiles');
 
@@ -115,9 +119,10 @@ function getManifestsRegistered($logger) {
  * Get the manifest files list in the repository.
  */
 
+
 function getManifests($logger) {
 
-   $result = array();
+   $result = [];
 
    $manifests = new DirectoryIterator( MANIFESTS_PATH );
 
@@ -136,13 +141,14 @@ function getManifests($logger) {
  * This will remove the fileparts from repository
  */
 
+
 function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_manifests) {
 
    $logger->info("Removing ".count($invalid_manifests)." invalid manifests");
 
-   $invalid_fileparts = array();
+   $invalid_fileparts = [];
    foreach ($invalid_manifests as $manifest) {
-      $filepath = implode( DIRECTORY_SEPARATOR, array(MANIFESTS_PATH,$manifest) );
+      $filepath = implode( DIRECTORY_SEPARATOR, [MANIFESTS_PATH,$manifest] );
       if (file_exists($filepath)) {
          $file = fopen($filepath, 'r');
          while (($buffer = fgets($file)) !== false) {
@@ -157,14 +163,14 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
 
    //Excluding valid fileparts shared with invalid fileparts.
    foreach ($valid_manifests as $manifest) {
-      $filepath = implode( DIRECTORY_SEPARATOR, array(MANIFESTS_PATH,$manifest) );
+      $filepath = implode( DIRECTORY_SEPARATOR, [MANIFESTS_PATH,$manifest] );
       //No need to process the file if it doesn't exist.
       if (file_exists($filepath)) {
          $file = fopen($filepath, 'r');
          while (($buffer = fgets($file)) !== false) {
             $buffer = trim($buffer);
             // Exclude the valid filepart from invalid list if it exists in the latter.
-            if (($index = array_search($buffer, $invalid_fileparts)) !== FALSE) {
+            if (($index = array_search($buffer, $invalid_fileparts)) !== false) {
                unset( $invalid_fileparts[$index] );
             }
          }
@@ -197,6 +203,7 @@ function removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_man
    $logger->info( $total . " fileparts have been removed.");
 }
 
+
 /**
  * Unregister the invalid manifests from database.
  */
@@ -214,13 +221,14 @@ function unregisterInvalidManifests($logger, $dryrun, $invalid_manifests) {
       foreach ($data as $config) {
          $pfDeployFile->getFromDB($config['id']);
          $logger->info("Unregister file " . $pfDeployFile->fields['name']);
-         if(!$dryrun) {
+         if (!$dryrun) {
             $pfDeployFile->deleteFromDB();
          }
       }
    }
 
 }
+
 
 /**
  * Process arguments passed to the script
@@ -299,6 +307,6 @@ $logger->debug($valid_manifests );
 removeInvalidManifests($logger, $dryrun, $invalid_manifests, $valid_manifests);
 unregisterInvalidManifests($logger, $dryrun, $invalid_manifests);
 
-$logger->info( 'Memory used : ' .number_format(memory_get_usage(true)/1024/1024,3) . 'MiB');
-$logger->info( 'Memory used (emalloc): ' .number_format(memory_get_usage()/1024/1024,3) . 'MiB');
+$logger->info( 'Memory used : ' .number_format(memory_get_usage(true)/1024/1024, 3) . 'MiB');
+$logger->info( 'Memory used (emalloc): ' .number_format(memory_get_usage()/1024/1024, 3) . 'MiB');
 

@@ -49,19 +49,20 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $filename = pathinfo(__FILE__);
       $json_filename = implode(
          DIRECTORY_SEPARATOR,
-         array(
+         [
             $filename['dirname'],
             $filename['filename']
-         )
+         ]
       ).".json";
 
       $jsondata = json_decode(
          file_get_contents( $json_filename ),
-         TRUE
+         true
       );
 
       return $jsondata['data'];
    }
+
 
    /**
     * @test
@@ -74,7 +75,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
 
-      $inventory = array();
+      $inventory = [];
       $inventory['CONTENT'] = $data['inventory']['CONTENT'];
 
       // ** Add agent
@@ -90,6 +91,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $this->CountSoftwares($data);
       $this->CountVersions($data);
    }
+
 
    public function CountSoftwares($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
@@ -127,11 +129,11 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
     */
    public function newComputerSoftwareInstalldate() {
 
-       $arrayinventory = array(
-           'CONTENT' => array(
-               'HARDWARE' => array(),
-               'SOFTWARES' => array(
-                   array(
+       $arrayinventory = [
+           'CONTENT' => [
+               'HARDWARE' => [],
+               'SOFTWARES' => [
+                   [
                        'ARCH' => 'i586',
                        'FROM' => 'registry',
                        'GUID' => 'ActiveTouchMeetingClient',
@@ -140,8 +142,8 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
                        'PUBLISHER' => 'Cisco WebEx LLC',
                        'UNINSTALL_STRING' => 'C:\PROGRA~2\WebEx\atcliun.exe',
                        'URL_INFO_ABOUT' => 'www.webex.com',
-                   ),
-                   array(
+                   ],
+                   [
                        'ARCH' => 'i586',
                        'FROM' => 'registry',
                        'GUID' => 'Adobe AIR',
@@ -149,10 +151,10 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
                        'PUBLISHER' => 'Adobe Systems Incorporated',
                        'UNINSTALL_STRING' => 'C:\Program Files\Common Files\Adobe AIR\Versions\1.0\Resources\Adobe AIR Updater.exe -arp:uninstall',
                        'VERSION' => '4.0.0.1390',
-                   )
-               )
-           )
-       );
+                   ]
+               ]
+           ]
+       ];
        $pfici = new PluginFusioninventoryInventoryComputerInventory();
        $software = new Software();
        $csv = new Computer_SoftwareVersion();
@@ -162,12 +164,11 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
        $soft_ids = array_keys($software->find());
        $csoftv_ids = array_keys($csv->find());
 
-
        // update with install_date
-       $dates = array(
-           array('06/02/2014', '27/01/2014'),
-           array('10/05/2016', '27/11/2015'),
-       );
+       $dates = [
+           ['06/02/2014', '27/01/2014'],
+           ['10/05/2016', '27/11/2015'],
+       ];
        foreach ($dates as $data_date) {
           $arrayinventory['CONTENT']['SOFTWARES'][0]['INSTALLDATE'] = $data_date[0];
           $arrayinventory['CONTENT']['SOFTWARES'][1]['INSTALLDATE'] = $data_date[1];
@@ -175,29 +176,28 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
           $this->assertEquals($soft_ids, array_keys($software->find()));
           $this->assertEquals($csoftv_ids, array_keys($csv->find()));
           foreach ($software->find() as $soft) {
-              if ($soft['name'] == 'Cisco WebEx Meetings') {
-                  $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
-                  $this->assertEquals($data_date[0], $csversion['date_install']);
-              } else if ($soft['name'] == 'Adobe Systems Incorporated') {
+             if ($soft['name'] == 'Cisco WebEx Meetings') {
+                $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+                $this->assertEquals($data_date[0], $csversion['date_install']);
+               } else if ($soft['name'] == 'Adobe Systems Incorporated') {
                   $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
                   $this->assertEquals($data_date[1], $csversion['date_install']);
-              }
-          }
-       }
+               }
+            }
+         }
 
-       // remove an installdate
-       unset($arrayinventory['CONTENT']['SOFTWARES'][0]['INSTALLDATE']);
-       $pfici->sendCriteria('TESTAAAA', $arrayinventory);
-       $this->assertEquals($soft_ids, array_keys($software->find()));
-       $this->assertEquals($csoftv_ids, array_keys($csv->find()));
-       foreach ($software->find() as $soft) {
-          if ($soft['name'] == 'Cisco WebEx Meetings') {
-             $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
-             $this->assertEquals('', $csversion['date_install']);
-          }
-       }
+         // remove an installdate
+         unset($arrayinventory['CONTENT']['SOFTWARES'][0]['INSTALLDATE']);
+         $pfici->sendCriteria('TESTAAAA', $arrayinventory);
+         $this->assertEquals($soft_ids, array_keys($software->find()));
+         $this->assertEquals($csoftv_ids, array_keys($csv->find()));
+         foreach ($software->find() as $soft) {
+            if ($soft['name'] == 'Cisco WebEx Meetings') {
+               $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+               $this->assertEquals('', $csversion['date_install']);
+            }
+         }
    }
-
 
 
    /**
@@ -205,12 +205,12 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
     */
    public function newComputerSoftwareOS() {
 
-      $arrayinventory = array(
-          'CONTENT' => array(
-              'HARDWARE' => array(
+      $arrayinventory = [
+          'CONTENT' => [
+              'HARDWARE' => [
                   'NAME' => 'portdavid'
-              ),
-              'OPERATINGSYSTEM' => array(
+              ],
+              'OPERATINGSYSTEM' => [
                   'ARCH'           => '32-bit',
                   'BOOT_TIME'      => '2016-04-06 11:56:40',
                   'FULL_NAME'      => 'Microsoft Windows 7',
@@ -219,9 +219,9 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
                   'KERNEL_VERSION' => '6.1.7601',
                   'NAME'           => 'Windows',
                   'SERVICE_PACK'   => 'Service Pack 1',
-               ),
-               'SOFTWARES' => array(
-                   array(
+               ],
+               'SOFTWARES' => [
+                   [
                        'ARCH' => 'i586',
                        'FROM' => 'registry',
                        'GUID' => 'ActiveTouchMeetingClient',
@@ -230,8 +230,8 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
                        'PUBLISHER' => 'Cisco WebEx LLC',
                        'UNINSTALL_STRING' => 'C:\PROGRA~2\WebEx\atcliun.exe',
                        'URL_INFO_ABOUT' => 'www.webex.com',
-                   ),
-                   array(
+                   ],
+                   [
                        'ARCH' => 'i586',
                        'FROM' => 'registry',
                        'GUID' => 'Adobe AIR',
@@ -239,10 +239,10 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
                        'PUBLISHER' => 'Adobe Systems Incorporated',
                        'UNINSTALL_STRING' => 'C:\Program Files\Common Files\Adobe AIR\Versions\1.0\Resources\Adobe AIR Updater.exe -arp:uninstall',
                        'VERSION' => '4.0.0.1390',
-                   )
-               )
-           )
-      );
+                   ]
+               ]
+           ]
+      ];
       $pfici = new PluginFusioninventoryInventoryComputerInventory();
       $software = new Software();
       $softwareVersion = new SoftwareVersion();
@@ -268,5 +268,5 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
 
    }
 
+
 }
-?>

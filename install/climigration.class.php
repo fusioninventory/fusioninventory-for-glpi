@@ -51,6 +51,7 @@
  */
 class CliMigration extends Migration {
 
+
    /**
     * __contruct function where initialize variables
     *
@@ -60,7 +61,6 @@ class CliMigration extends Migration {
       $this->deb     = time();
       $this->version = $ver;
    }
-
 
 
    /**
@@ -74,7 +74,6 @@ class CliMigration extends Migration {
    }
 
 
-
    /**
     * Display a title
     *
@@ -85,18 +84,19 @@ class CliMigration extends Migration {
    }
 
 
-
    /**
     * Display a warning message
     *
     * @param string $msg
     * @param boolean $red
     */
-   function displayWarning($msg, $red=FALSE) {
+   function displayWarning($msg, $red = false) {
       if ($red) {
          $msg = "** $msg";
       }
       echo str_pad($msg, 100)."\n";
    }
+
+
 }
 

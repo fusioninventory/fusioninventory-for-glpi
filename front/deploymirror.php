@@ -58,4 +58,3 @@ PluginFusioninventoryMenu::displayMenu("mini");
 Search::show('PluginFusioninventoryDeployMirror');
 Html::footer();
 
-?>

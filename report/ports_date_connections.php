@@ -60,14 +60,14 @@ if ($reset_search != '') {
    resetSearch();
 }
 
-$options=array('options'=>array('default'=>0));
+$options=['options'=>['default'=>0]];
 $start = filter_input(INPUT_GET, "start", FILTER_VALIDATE_INT, $options);
 $_GET["start"] = $start;
 
 $_GET=getValues($_GET, $_POST);
 displaySearchForm();
 
-if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
+if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 
    $date_search = '';
    if ($_POST['dropdown_sup_inf'] == 'sup') {
@@ -123,7 +123,6 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 Html::footer();
 
 
-
 /**
  * Display special search form
  *
@@ -140,7 +139,7 @@ function displaySearchForm() {
    echo "<td>";
    echo __('Initial contract period')." :";
 
-   $values=array();
+   $values=[];
    $values["sup"]=">";
    $values["inf"]="<";
    $values["equal"]="=";
@@ -176,7 +175,7 @@ function displaySearchForm() {
       }
    }
    Dropdown::showFromArray("dropdown_sup_inf", $values,
-                           array('value'=>(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup")));
+                           ['value'=>(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup")]);
    echo "</td>
       <td width='120'>";
    Html::showDateField("dropdown_calendar",
@@ -187,8 +186,8 @@ function displaySearchForm() {
    echo "<td>".__('Location')."</td>";
    echo "<td>";
    Dropdown::show("Location",
-                  array('name' => "location",
-                        'value' => (isset($_GET["location"])?$_GET["location"]:"")));
+                  ['name' => "location",
+                        'value' => (isset($_GET["location"])?$_GET["location"]:"")]);
    echo "</td>";
 
    // Display Reset search
@@ -211,7 +210,6 @@ function displaySearchForm() {
    Html::closeForm();
 
 }
-
 
 
 /**
@@ -238,7 +236,6 @@ function getContainsArray($get) {
 }
 
 
-
 /**
  * Generate the URL SavedSearch
  *
@@ -249,7 +246,6 @@ function getContainsArray($get) {
 function buildSavedSearchUrl($url, $get) {
     return $url."?field[0]=3&contains[0]=".getContainsArray($get);
 }
-
 
 
 /**
@@ -265,7 +261,7 @@ function getValues($get, $post) {
       foreach ($get["field"] as $index => $value) {
          $get["contains"][$index] = stripslashes($get["contains"][$index]);
          $get["contains"][$index] = htmlspecialchars_decode($get["contains"][$index]);
-         switch($value) {
+         switch ($value) {
             case 14:
                if (strpos( $get["contains"][$index], "=")==1) {
                   $get["dropdown_sup_inf"]="equal";
@@ -285,7 +281,6 @@ function getValues($get, $post) {
 }
 
 
-
 /**
  * Reset the search engine
  */
@@ -294,12 +289,12 @@ function resetSearch() {
    $_GET["order"]="ASC";
    $_GET["is_deleted"]=0;
    $_GET["distinct"]="N";
-   $_GET["link"]=array();
-   $_GET["field"]=array(0=>"view");
-   $_GET["contains"]=array(0=>"");
-   $_GET["link2"]=array();
-   $_GET["field2"]=array(0=>"view");
-   $_GET["contains2"]=array(0=>"");
+   $_GET["link"]=[];
+   $_GET["field"]=[0=>"view"];
+   $_GET["contains"]=[0=>""];
+   $_GET["link2"]=[];
+   $_GET["field2"]=[0=>"view"];
+   $_GET["contains2"]=[0=>""];
    $_GET["type2"]="";
    $_GET["sort"]=1;
 
@@ -307,4 +302,3 @@ function resetSearch() {
    $_GET["dropdown_calendar"]=date("Y-m-d H:i");
 }
 
-?>

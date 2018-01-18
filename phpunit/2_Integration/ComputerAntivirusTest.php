@@ -41,69 +41,69 @@
  */
 
 class ComputerAntivirusTest extends RestoreDatabase_TestCase {
-   public $a_computer1 = array();
-   public $a_computer1_beforeformat = array();
+   public $a_computer1 = [];
+   public $a_computer1_beforeformat = [];
+
 
    function __construct() {
-      $this->a_computer1 = array(
-          "Computer" => array(
+      $this->a_computer1 = [
+          "Computer" => [
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
-          ),
-          "fusioninventorycomputer" => Array(
+          ],
+          "fusioninventorycomputer" => [
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => array(),
-          'graphiccard'    => array(),
-          'controller'     => array(),
-          'processor'      => array(),
-          "computerdisk"   => array(),
-          'memory'         => array(),
-          'monitor'        => array(),
-          'printer'        => array(),
-          'peripheral'     => array(),
-          'networkport'    => array(),
-          'software'       => array(),
-          'harddrive'      => array(),
-          'virtualmachine' => array(),
-          'antivirus'      => array(
-             array(
+          ],
+          'soundcard'      => [],
+          'graphiccard'    => [],
+          'controller'     => [],
+          'processor'      => [],
+          "computerdisk"   => [],
+          'memory'         => [],
+          'monitor'        => [],
+          'printer'        => [],
+          'peripheral'     => [],
+          'networkport'    => [],
+          'software'       => [],
+          'harddrive'      => [],
+          'virtualmachine' => [],
+          'antivirus'      => [
+             [
                 'name'              => 'Trend Micro Security Agent',
                 'manufacturers_id'  => '',
                 'antivirus_version' => '',
                 'is_active'         => '1',
                 'is_uptodate'       => '1'
-             )
-          ),
-          'storage'        => array(),
-          'licenseinfo'    => array(),
-          'networkcard'    => array(),
-          'drive'          => array(),
-          'batteries'      => array(),
-          'remote_mgmt'    => array(),
-          'bios'           => array(),
+             ]
+          ],
+          'storage'        => [],
+          'licenseinfo'    => [],
+          'networkcard'    => [],
+          'drive'          => [],
+          'batteries'      => [],
+          'remote_mgmt'    => [],
+          'bios'           => [],
           'itemtype'       => 'Computer'
-      );
+      ];
 
-      $this->a_computer1_beforeformat = array(
-          "CONTENT" => array(
-              "HARDWARE" => array(
+      $this->a_computer1_beforeformat = [
+          "CONTENT" => [
+              "HARDWARE" => [
                   "NAME"   => "pc001"
-              ),
-              "BIOS" => array(
+              ],
+              "BIOS" => [
                   "SSN" => "ggheb7ne7"
-              ),
-              'ANTIVIRUS' => array(
+              ],
+              'ANTIVIRUS' => [
                  'ENABLED'  => 1,
                  'GUID'     => '{8242D66F-41BD-4049-C2E6-E578E73B62A0}',
                  'NAME'     => 'Trend Micro Security Agent',
                  'UPTODATE' => 1
-              )
-          )
-      );
+              ]
+          ]
+      ];
    }
-
 
 
    /**
@@ -129,7 +129,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
       $pfiComputerLib->updateComputer(
          $a_computerinventory,
          $computers_id,
-         FALSE,
+         false,
          1
       );
 
@@ -145,7 +145,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
       $pfComputerAntivirus = new ComputerAntivirus();
       $pfComputerAntivirus->getFromDB(1);
       $date = $pfComputerAntivirus->fields['date_creation'];
-      $a_ref = array(
+      $a_ref = [
           'id'                  => '1',
           'computers_id'        => '1',
           'name'                => 'Trend Micro Security Agent',
@@ -159,7 +159,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
           'date_mod'            => $date,
           'date_creation'       => $date,
           'date_expiration'     => null
-      );
+      ];
 
       $this->assertEquals(
          $a_ref,
@@ -174,12 +174,12 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
       $pfiComputerLib->updateComputer(
          $a_computerinventory,
          $computers_id,
-         FALSE,
+         false,
          1
       );
 
       $pfComputerAntivirus->getFromDB(1);
-      $a_ref = array(
+      $a_ref = [
           'id'                  => '1',
           'computers_id'        => '1',
           'name'                => 'Trend Micro Security Agent',
@@ -193,7 +193,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
           'date_mod'            => $date,
           'date_creation'       => $date,
           'date_expiration'     => null
-      );
+      ];
 
       $this->assertEquals(
          $a_ref,
@@ -201,4 +201,6 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
          'Antivirus updated data'
       );
    }
+
+
 }

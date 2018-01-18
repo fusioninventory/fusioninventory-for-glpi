@@ -90,6 +90,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     */
    static public $items_id_2 = 'items_id';
 
+
    /**
     * Get the tab name used for item
     *
@@ -97,7 +98,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param integer $withtemplate 1 if is a template form
     * @return string|array name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if (!$withtemplate
           && ($item->getType() == 'PluginFusioninventoryDeployGroup')
@@ -108,15 +109,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
                                   "`itemtype`='Computer'
                                     AND `plugin_fusioninventory_deploygroups_id`='".$item->getID()."'");
          if ($_SESSION['glpishow_count_on_tabs']) {
-            $tabs[2] = self::createTabEntry(_n('Associated item','Associated items', $count), $count);
+            $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
          } else {
-            $tabs[2] = _n('Associated item','Associated items', $count);
+            $tabs[2] = _n('Associated item', 'Associated items', $count);
          }
          return $tabs;
       }
       return '';
    }
-
 
 
    /**
@@ -127,7 +127,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       switch ($tabnum) {
 
          case 1:
@@ -141,7 +141,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
       return false;
    }
-
 
 
    /**
@@ -165,11 +164,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+      Search::constructData($data);
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      Search::displayDatas($data);
+      Search::displayData($data);
    }
-
 
 
    /**
@@ -180,23 +178,24 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
               && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
          $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
       }
-      $computers_params['metacriteria'] = array();
-      $computers_params['criteria'][]   = array('searchtype' => 'equals',
+      $computers_params['metacriteria'] = [];
+      $computers_params['criteria'][]   = ['searchtype' => 'equals',
                                                 'value' => $_GET['id'],
-                                                'field' => 6000);
+                                                'field' => 6000];
 
       $search_params = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
 
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
-      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
+      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+      Search::constructData($data);
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
-      Search::displayDatas($data);
+      Search::displayData($data);
    }
+
 
    /**
    * Duplicate entries from one group to another
@@ -219,4 +218,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
       return $result;
    }
+
+
 }

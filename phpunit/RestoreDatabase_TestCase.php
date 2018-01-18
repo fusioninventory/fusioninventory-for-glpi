@@ -13,7 +13,10 @@ include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 abstract class RestoreDatabase_TestCase extends Common_TestCase {
 
+
    public static function setUpBeforeClass() {
       self::restore_database();
    }
+
+
 }

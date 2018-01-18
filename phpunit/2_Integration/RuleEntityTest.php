@@ -67,100 +67,97 @@ class RuleEntityTest extends Common_TestCase {
 
       // Add a rule for get entity tag (1)
       $rule = new Rule();
-      $input = array(
+      $input = [
          'is_active' => 1,
          'name'      => 'entity rule 1',
          'match'     => 'AND',
          'sub_type'  => 'PluginFusioninventoryInventoryRuleEntity',
          'ranking'   => 1
-      );
+      ];
       $rule1_id = $rule->add($input);
 
          // Add criteria
          $rulecriteria = new RuleCriteria();
-         $input = array(
+         $input = [
             'rules_id'  => $rule1_id,
             'criteria'  => "name",
             'pattern'   => "/^([A-Za-z0-9]*) - ([A-Za-z0-9]*) - (.*)$/",
             'condition' => PluginFusioninventoryInventoryRuleEntity::REGEX_MATCH
-         );
+         ];
          $rulecriteria->add($input);
 
          // Add action
          $ruleaction = new RuleAction();
-         $input = array(
+         $input = [
             'rules_id'    => $rule1_id,
             'action_type' => 'regex_result',
             'field'       => '_affect_entity_by_tag',
             'value'       => '#2'
-         );
+         ];
          $ruleaction->add($input);
 
-      // Add a rule for get entity tag (2)
-      $rule = new Rule();
-      $input = array(
+         // Add a rule for get entity tag (2)
+         $rule = new Rule();
+         $input = [
          'is_active' => 1,
          'name'      => 'entity rule 2',
          'match'     => 'AND',
          'sub_type'  => 'PluginFusioninventoryInventoryRuleEntity',
          'ranking'   => 2
-      );
-      $rule2_id = $rule->add($input);
+         ];
+         $rule2_id = $rule->add($input);
 
          // Add criteria
          $rulecriteria = new RuleCriteria();
-         $input = array(
+         $input = [
             'rules_id'  => $rule2_id,
             'criteria'  => "name",
             'pattern'   => "/^([A-Za-z0-9]*) - (.*)$/",
             'condition' => PluginFusioninventoryInventoryRuleEntity::REGEX_MATCH
-         );
+         ];
          $rulecriteria->add($input);
 
          // Add action
          $ruleaction = new RuleAction();
-         $input = array(
+         $input = [
             'rules_id'    => $rule2_id,
             'action_type' => 'regex_result',
             'field'       => '_affect_entity_by_tag',
             'value'       => '#1'
-         );
+         ];
          $ruleaction->add($input);
 
-
-      $input = array(
+         $input = [
          'name' => 'computer01 - entC'
-      );
+         ];
 
-      $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
-      $ruleEntity->getCollectionPart();
-      $ent = $ruleEntity->processAllRules($input, array());
+         $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+         $ruleEntity->getCollectionPart();
+         $ent = $ruleEntity->processAllRules($input, []);
 
-      $a_references = array(
+         $a_references = [
          'entities_id' => 3,
          '_ruleid'     => $rule2_id
-      );
+         ];
 
-      $this->assertEquals($a_references, $ent, 'Entity C');
+         $this->assertEquals($a_references, $ent, 'Entity C');
 
-
-
-      $input = array(
+         $input = [
          'name' => 'computer01 - blabla - entB'
-      );
+         ];
 
-      $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
-      $ruleEntity->getCollectionPart();
-      $ent = $ruleEntity->processAllRules($input, array());
+         $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+         $ruleEntity->getCollectionPart();
+         $ent = $ruleEntity->processAllRules($input, []);
 
-      $a_references = array(
+         $a_references = [
          'entities_id' => 2,
          '_ruleid'     => $rule1_id
-      );
+         ];
 
-      $this->assertEquals($a_references, $ent, 'Entity B');
+         $this->assertEquals($a_references, $ent, 'Entity B');
 
    }
 
+
 }
-?>

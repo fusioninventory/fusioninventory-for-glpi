@@ -66,7 +66,7 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
     *
     * @var boolean
     */
-   public $stop_on_first_match=TRUE;
+   public $stop_on_first_match=true;
 
    /**
     * Define the name of menu option
@@ -86,7 +86,6 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
    }
 
 
-
    /**
     * Prepare input data for process the rule
     *
@@ -97,10 +96,11 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
    function prepareInputDataForProcess($input, $params) {
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-locationrules",
-         "execute action\n". print_r($input, TRUE). "\n" . print_r($params, TRUE)
+         "execute action\n". print_r($input, true). "\n" . print_r($params, true)
       );
       return $input;
    }
+
+
 }
 
-?>
