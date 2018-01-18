@@ -848,8 +848,9 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
+                        // Test if the provided network speed is an integer number
                         if (isset($array_tmp['speed'])
-                                && is_numeric($array_tmp['speed'])) {
+                                && ctype_digit (strval($array_tmp['speed']))) {
                            // Old agent version have speed in b/s instead Mb/s
                            if ($array_tmp['speed'] > 100000) {
                               $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
