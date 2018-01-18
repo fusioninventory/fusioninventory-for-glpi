@@ -329,7 +329,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       if (Session::haveRight('plugin_fusioninventory_ignoredimportdevice', READ)) {
-         $a_menu[2]['name'] = __('Ignored import devices', 'fusioninventory');
+         $a_menu[2]['name'] = __('Asset skipped during import', 'fusioninventory');
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
                     'PluginFusioninventoryIgnoredimportdevice'
