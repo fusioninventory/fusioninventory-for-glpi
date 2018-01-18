@@ -927,6 +927,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       // Number of computer inventories in last hour, 6 hours, 24 hours
       $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
 
+      /*
+       * As of #2412 - temporarily removing this
+       *
       // Deploy
       $restrict_entity = getEntitiesRestrictRequest(" AND", 'glpi_plugin_fusioninventory_taskjobs');
       $query = "SELECT `plugin_fusioninventory_tasks_id`
@@ -976,12 +979,17 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       for ($k=0; $k<4; $k++) {
          $dataDeploy[$k]['key'] .= " : ".$dataDeploy[$k]['y'];
       }
+       */
 
       echo "<div class='fi_board'>";
       self::showChart('computers', $dataComputer);
       self::showChartBar('nbinventory', $dataInventory,
                          __('Number of computer inventories of last hours', 'fusioninventory'));
+      /*
+       * As of #2412 - temporarily removing this
+       *
       self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
+      */
       self::showChart('snmp', $dataSNMP);
       self::showChart('ports', $dataPortL);
       self::showChart('portsconnected', $dataPortC);
