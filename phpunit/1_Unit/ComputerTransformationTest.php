@@ -1666,7 +1666,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'dhcpserver'         => '',
             'logical_number'     => 1,
             'ipaddress'          => [],
-         ], [
+         ],
          'Intel(R) Ethernet Connection (4) I219-LM-d4:81:d7:d6:12:87' => [
             'name'               => 'Intel(R) Ethernet Connection (4) I219-LM',
             'mac'                => 'd4:81:d7:d6:12:87',
