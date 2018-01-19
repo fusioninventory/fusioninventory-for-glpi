@@ -2037,7 +2037,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       foreach (['afpfs' => true, 'nfs' => true, 'smbfs' => true,
                 'ext4' => false, 'fat32' => false] as $fs => $result) {
          $drive['FILESYSTEM'] = $fs;
-         $this->assertEquals($result, $this->isANetworkDrive($drive));
+         $this->assertEquals($result, $pfFormatconvert->isANetworkDrive($drive));
       }
    }
 }
