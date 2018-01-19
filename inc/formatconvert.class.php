@@ -54,6 +54,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryFormatconvert {
 
+   const FI_SOFTWARE_SEPARATOR = "$$$$";
    /**
     * Initialize the foreignkey itemtypes
     *
@@ -843,8 +844,9 @@ class PluginFusioninventoryFormatconvert {
                         if (isset($array_tmp['ip'])) {
                            unset($array_tmp['ip']);
                         }
+                        // Test if the provided network speed is an integer number
                         if (isset($array_tmp['speed'])
-                                && is_numeric($array_tmp['speed'])) {
+                                && ctype_digit (strval($array_tmp['speed']))) {
                            // Old agent version have speed in b/s instead Mb/s
                            if ($array_tmp['speed'] > 100000) {
                               $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
@@ -1484,21 +1486,34 @@ class PluginFusioninventoryFormatconvert {
       * Sometimes we can have 2 same software, but one without manufacturer and
       * one with. So in this case, delete the software without manufacturer
       */
+
+      //By default, no operating system is set
       $operatingsystems_id = 0;
+      //Get the operating system of the computer if set
       if (isset($a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'])) {
          $operatingsystems_id = $a_inventory['fusioninventorycomputer']['items_operatingsystems_id']['operatingsystems_id'];
       }
 
-      $softwareWithManufacturer = [];
+      //Array to store softwares where the manufacturer is set
+      $softwareWithManufacturer    = [];
+      //Array to store software where the manufacturer is not set
       $softwareWithoutManufacturer = [];
 
+      //Get the default entity for softwares, as defined in the entity's
+      //configuration
       $entities_id_software = Entity::getUsedConfig('entities_id_software',
                                                     $entities_id);
-      $is_software_recursive = 0;
-      $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules",
-                                                         "`sub_type`='RuleDictionnarySoftware'
-                                                            AND `is_active`='1'");
 
+      //By default a software is not recursive
+      $is_software_recursive = 0;
+
+      //Count the number of software dictionnary rules
+      $nb_RuleDictionnarySoftware
+                                 = countElementsInTable("glpi_rules",
+                                                ['sub_type'  => 'RuleDictionnarySoftware',
+                                                 'is_active' => 1
+                                                ]
+                                 );
       //Configuration says that software can be created in the computer's entity
       if ($entities_id_software < 0) {
          $entities_id_software = $entities_id;
@@ -1507,16 +1522,22 @@ class PluginFusioninventoryFormatconvert {
          //It should be set as recursive
          $is_software_recursive = 1;
       }
+
+      //Initialize the output software array
       $a_inventory['software'] = [];
 
+      //Dictionnary for softwares
       $rulecollection = new RuleDictionnarySoftwareCollection();
 
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
+         //If the PUBLISHER field is an array, get the first value only
+         //TODO : document when it can happened. A FI or OCS agent bug ?
          if (isset($a_softwares['PUBLISHER'])
                  && gettype($a_softwares['PUBLISHER']) == 'array') {
             $a_softwares['PUBLISHER'] = current($a_softwares['PUBLISHER']);
          }
 
+         //Store the raw values in the array
          $array_tmp = $this->addValues($a_softwares,
                                         [
                                            'PUBLISHER'   => 'manufacturers_id',
@@ -1532,43 +1553,52 @@ class PluginFusioninventoryFormatconvert {
             }
          }
          $array_tmp['operatingsystems_id'] = $operatingsystems_id;
-         // test date_install
+
+         //Check if the install date has the right format to be inserted in DB
          if (isset($array_tmp['date_install'])) {
             $matches = [];
             preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_install'], $matches);
+            //This is the right date format : rewrite the date
             if (count($matches) == 4) {
                $array_tmp['date_install'] = $matches[3]."-".$matches[2]."-".$matches[1];
             } else {
+               //Not the right format, remove the date
                unset($array_tmp['date_install']);
             }
          }
 
-         if (!(!isset($array_tmp['name'])
-                 || $array_tmp['name'] == '')) {
+         //If the software name exists and is defined
+         if (isset($array_tmp['name']) && $array_tmp['name'] != '') {
             if (count($array_tmp) > 0) {
-               $res_rule = [];
+               $res_rule       = [];
+               //Save the original software infos for further tests
+               $original_infos = $array_tmp;
+
+               //Only play rules engine if there's at least one rule
+               //for software dictionnary
                if ($nb_RuleDictionnarySoftware > 0) {
-                  $res_rule = $rulecollection->processAllRules(
-                                               [
-                                                "name"         => $array_tmp['name'],
-                                                "manufacturer" => $array_tmp['manufacturers_id'],
-                                                "old_version"  => $array_tmp['version'],
-                                                "entities_id"  => $entities_id_software,
-                                                "_system_category" => $array_tmp['_system_category']
-                                                ]
-                                             );
+                  $rule_input = [
+                   "name"             => $array_tmp['name'],
+                   "manufacturer"     => $array_tmp['manufacturers_id'],
+                   "old_version"      => $array_tmp['version'],
+                   "entities_id"      => $entities_id_software,
+                   "_system_category" => $array_tmp['_system_category']
+                  ];
+                  $res_rule = $rulecollection->processAllRules($rule_input);
                }
 
-               if (isset($res_rule['_ignore_import'])
-                       && $res_rule['_ignore_import'] == 1) {
-                  $coding_std = true;
-               } else {
+               if (!isset($res_rule['_ignore_import'])
+                  || $res_rule['_ignore_import'] != 1) {
+
+                  //If the name has been modified by the rules engine
                   if (isset($res_rule["name"])) {
                      $array_tmp['name'] = $res_rule["name"];
                   }
+                  //If the version has been modified by the rules engine
                   if (isset($res_rule["version"])) {
                      $array_tmp['version'] = $res_rule["version"];
                   }
+                  //If the manufacturer has been modified or set by the rules engine
                   if (isset($res_rule["manufacturer"])) {
                      $array_tmp['manufacturers_id'] = Dropdown::import("Manufacturer",
                                                    ['name' => $res_rule["manufacturer"]]);
@@ -1576,40 +1606,60 @@ class PluginFusioninventoryFormatconvert {
                           && $array_tmp['manufacturers_id'] != ''
                           && $array_tmp['manufacturers_id'] != '0') {
 
+                     //Add the current manufacturer to the cache of manufacturers
                      if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
                         $new_value = Dropdown::importExternal('Manufacturer',
                                                               $array_tmp['manufacturers_id']);
                         $this->manufacturer_cache[$array_tmp['manufacturers_id']] = $new_value;
                      }
+                     //Set the manufacturer using the cache
                      $array_tmp['manufacturers_id'] =
                                  $this->manufacturer_cache[$array_tmp['manufacturers_id']];
                   } else {
+                     //Manufacturer not defined : set it's value to 0
                      $array_tmp['manufacturers_id'] = 0;
                   }
+
+                  //The rules engine has modified the entity
+                  //(meaning that the software is recursive and defined
+                  //in an upper entity)
                   if (isset($res_rule['new_entities_id'])) {
                      $array_tmp['entities_id'] = $res_rule['new_entities_id'];
-                     $is_software_recursive = 1;
+                     $is_software_recursive    = 1;
                   }
+
+                  //The entity has not been modified and is not set :
+                  //use the computer's entity
                   if (!isset($array_tmp['entities_id'])
                           || $array_tmp['entities_id'] == '') {
                      $array_tmp['entities_id'] = $entities_id_software;
                   }
+                  //version is undefined, set it to blank
                   if (!isset($array_tmp['version'])) {
                      $array_tmp['version'] = "";
                   }
+                  //This is a realy computer, not a template
                   $array_tmp['is_template_computer'] = 0;
-                  $array_tmp['is_deleted_computer'] = 0;
-                  $array_tmp['is_recursive']= $is_software_recursive;
-                  $comp_key = strtolower($array_tmp['name']).
-                               "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['manufacturers_id'].
-                               "$$$$".$array_tmp['entities_id'].
-                               "$$$$".$array_tmp['operatingsystems_id'];
 
+                  //The computer is not deleted
+                  $array_tmp['is_deleted_computer']  = 0;
+
+                  //Store if the software is recursive or not
+                  $array_tmp['is_recursive']         = $is_software_recursive;
+
+                  //Step 1 : test using the old format
+                  //String with the manufacturer
+                  $comp_key = strtolower($array_tmp['name']).
+                               self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['manufacturers_id'].
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
+
+                  //String without the manufacturer
                   $comp_key_simple = strtolower($array_tmp['name']).
-                               "$$$$".strtolower($array_tmp['version']).
-                               "$$$$".$array_tmp['entities_id'].
-                               "$$$$".$array_tmp['operatingsystems_id'];
+                               self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                               self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
 
                   if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
@@ -1623,13 +1673,16 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
-      foreach ($softwareWithoutManufacturer as $key=>$array_tmp) {
+
+      //Browse all softwares without a manufacturer. If one exists with a manufacturer
+      //the remove the one without
+      foreach ($softwareWithoutManufacturer as $key => $array_tmp) {
          if (!isset($softwareWithManufacturer[$key])) {
             $comp_key = strtolower($array_tmp['name']).
-                         "$$$$".strtolower($array_tmp['version']).
-                         "$$$$".$array_tmp['manufacturers_id'].
-                         "$$$$".$array_tmp['entities_id'].
-                         "$$$$".$array_tmp['operatingsystems_id'];
+                         self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                         self::FI_SOFTWARE_SEPARATOR.$array_tmp['manufacturers_id'].
+                         self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                         self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
             if (!isset($a_inventory['software'][$comp_key])) {
                $a_inventory['software'][$comp_key] = $array_tmp;
             }
