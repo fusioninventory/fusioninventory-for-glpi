@@ -482,7 +482,8 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     */
    function getEmpty() {
       parent::getEmpty();
-      $this->fields['reprepare_if_successful'] = 1;
+      $pfConfig = new PluginFusioninventoryConfig();
+      $this->fields['reprepare_if_successful'] = $pfConfig->getValue('reprepare_job');
    }
 
 
