@@ -2774,7 +2774,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          //Check if the installation exists without platform (OS)
          //if it is the case, then add the new and old installation
          //to the list of installation/uninstallation that must not be logged
-         if (isset($db_inventory[$software['comp_key_noos']])) {
+         if (isset($software['comp_key_noos']) && isset($db_inventory[$software['comp_key_noos']])) {
             //This array is used during version uninstallation
             $this->installationWithoutLogs[] = $software['comp_key_noos'];
             //This boolean is used for software version installation
