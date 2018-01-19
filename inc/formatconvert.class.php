@@ -947,9 +947,7 @@ class PluginFusioninventoryFormatconvert {
                      break;
                }
             }
-            if (isset($a_drives['FILESYSTEM']) && $a_drives['FILESYSTEM'] == 'nfs') {
-               $isNetworkDriveOrFS = true;
-            }
+            $isNetworkDriveOrFS = $thisc->isANetworkDrive($a_drives);
             if ($pfConfig->getValue("component_drive") == '0'
                 OR ($pfConfig->getValue("component_networkdrive") == '0' AND $isNetworkDriveOrFS)
                 OR ($pfConfig->getValue("component_removablemedia") == '0' AND $isRemovableMedia)) {
@@ -1426,7 +1424,8 @@ class PluginFusioninventoryFormatconvert {
             //Try to avoid duplicate license,
             //as FI agent may send several entries for the same license
             foreach ($a_inventory['licenseinfo'] as $lic) {
-               if ($lic['fullname'] == $a_licenseinfo['FULLNAME']
+               if (isset($a_licenseinfo['FULLNAME'])
+                  && $lic['fullname'] == $a_licenseinfo['FULLNAME']
                   && $lic['serial'] == $a_licenseinfo['KEY']) {
                   $insert = false;
                }
@@ -2334,5 +2333,20 @@ class PluginFusioninventoryFormatconvert {
       return 'HardDrive';
    }
 
-
+   /**
+   * Test if a drive is a local or network drive
+   * @since 9.2+2.0
+   *
+   * @param array $drive the drive inventory to be tested
+   * @return boolean true if it's a network drive, false if it's a local drive
+   */
+   function isANetworkDrive($drive) {
+      $network_drives = ['nfs', 'smbfs', 'afpfs'];
+      if (isset($drive['FILESYSTEM'])
+         && in_array(strtolower($drive['FILESYSTEM']), $network_drives)) {
+         return true;
+      } else {
+         return false;
+      }
+   }
 }
