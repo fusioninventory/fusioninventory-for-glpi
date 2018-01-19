@@ -880,8 +880,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       'location'                       => 0,
       'group'                          => 0,
       'manage_osname'                  => 0,
-      'component_networkcardvirtual'   => 1
-      'reprepare_job'                  => 0;
+      'component_networkcardvirtual'   => 1,
+      'reprepare_job'                  => 0
    ];
    $config->addValues($input, false);
 
