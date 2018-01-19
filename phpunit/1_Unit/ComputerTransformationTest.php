@@ -2036,9 +2036,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       foreach (['afpfs' => true, 'nfs' => true, 'smbfs' => true,
                 'ext4' => false, 'fat32' => false] as $fs => $result) {
-         $drive['FILESYSTEM' => $fs];
+         $drive['FILESYSTEM'] = $fs;
          $this->asserEqualss($result, $this->isANetworkDrive($drive));
-
       }
    }
 }
