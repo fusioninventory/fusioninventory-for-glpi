@@ -841,6 +841,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['group']                  = 0;
       $input['manage_osname']          = 0;
       $input['component_networkcardvirtual'] = 1;
+      $input['reprepare_job']          = 0;
       $config->addValues($input, FALSE);
 
       // Add new config values if not added
