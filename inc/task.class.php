@@ -670,19 +670,17 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   );
 
                   $run_id = $jobstate->add($run);
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-jobs",
+                     "- prepared a job execution: ". print_r($run, true));
                   if ($run_id !== false) {
                      $log = array_merge(
                         $log_base,
                         [
                            'plugin_fusioninventory_taskjobstates_id' => $run_id,
-                           ''
                         ]
                      );
                      $joblog->add($log);
-                     PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-jobs",
-                        "- prepared: ". print_r($log, true));
-
                   }
                }
             }
@@ -957,12 +955,17 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $query_where = ["WHERE 1"];
 
-      if (isset($_SESSION['glpiactiveentities_string'])) {
-         $query_where[] = getEntitiesRestrictRequest("AND", 'task');
+      // The concerned tasks list
+      if (is_array($task_ids) AND count($task_ids) > 0) {
+         $tasks_list = implode("', '",$task_ids);
+         $tasks_list = "AND task.`id` IN ('$tasks_list')";
+      } else {
+         // Not task identifiers provided
+         return ['tasks' => $logs, 'agents' => $agents];
       }
 
-      if (is_array($task_ids) AND count($task_ids) > 0) {
-         $query_where[] = "AND task.`id` IN (" . implode(",",$task_ids) . ")";
+      if (isset($_SESSION['glpiactiveentities_string'])) {
+         $query_where[] = getEntitiesRestrictRequest("AND", 'task');
       }
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -973,10 +976,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "start" => microtime(true),
          "end"   => 0
       ];
-      // quickly filter empty WHERE entry
-      $query_where = array_filter($query_where);
 
-      $active_task = $only_active ? "AND `is_active`='1'" : "";
+      $active_task = $only_active ? "AND task.`is_active`='1'" : "";
       $data_structure = [
          'query' => "SELECT
             `job`.`id` as 'job.id',
@@ -987,8 +988,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             `task`.`name` as 'task.name'
             FROM `glpi_plugin_fusioninventory_taskjobs` as job
             INNER JOIN `glpi_plugin_fusioninventory_tasks` as task
-              ON job.`plugin_fusioninventory_tasks_id` = task.`id` $active_task "
-            .implode("\n", $query_where),
+              ON job.`plugin_fusioninventory_tasks_id` = task.`id` $active_task $tasks_list",
          'result' => null,
          "start" => microtime(true),
          "end"   => 0
@@ -1005,7 +1005,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       //Target cache (used to speed up data formatting)
-      $targets_cache = [];
       $expanded      = [];
       if (isset($_SESSION['plugin_fusioninventory_tasks_expanded'])) {
          $expanded = $_SESSION['plugin_fusioninventory_tasks_expanded'];
@@ -1106,9 +1105,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "pluginFusioninventory-tasks",
          $prepare_chrono);
 
-      // The concerned tasks list
-      $tasks_list = implode("', '",$task_ids);
-
       // How many run log must we provide ?
       $max_runs = 1;
       if (isset($_SESSION['glpi_plugin_fusioninventory']['includeoldjobs'])) {
@@ -1143,8 +1139,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                `task`.`entities_id` as 'task.entities_id',
                `task`.`name` as 'task.name'
             FROM `glpi_plugin_fusioninventory_taskjobs` as job
-            INNER JOIN `glpi_plugin_fusioninventory_tasks` AS task
-              ON task.`id` = job.`plugin_fusioninventory_tasks_id`
+            LEFT JOIN `glpi_plugin_fusioninventory_tasks` AS task
+              ON job.`plugin_fusioninventory_tasks_id` = task.`id` $active_task $tasks_list
             INNER JOIN (
               SELECT 
                 `me`.id, 
@@ -1157,12 +1153,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
               INNER JOIN `glpi_plugin_fusioninventory_taskjobs`
               ON `plugin_fusioninventory_taskjobs_id`=`glpi_plugin_fusioninventory_taskjobs`.`id` 
               ORDER BY `me`.`id` DESC 
-              LIMIT $max_runs
             ) AS run
               ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`
             INNER JOIN `glpi_plugin_fusioninventory_agents` AS agent
               ON agent.`id` = run.`plugin_fusioninventory_agents_id`
-            WHERE job.`plugin_fusioninventory_tasks_id` IN ('$tasks_list') 
             GROUP BY
                run.`plugin_fusioninventory_agents_id`,
                run.`plugin_fusioninventory_taskjobs_id`,
@@ -1333,9 +1327,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                "pluginFusioninventory-tasks",
                "Log query: " . print_r($q_job_state_last_log, true));
             while ($log_result = $q_job_state_last_log['result']->fetch_assoc()) {
-//               PluginFusioninventoryToolbox::logIfExtradebug(
-//                  "pluginFusioninventory-tasks",
-//                  "Log: " . print_r($log_result, true));
+               PluginFusioninventoryToolbox::logIfExtradebug(
+                  "pluginFusioninventory-tasks",
+                  "Log: " . print_r($log_result, true));
                $targets[$target_id]['agents'][$agent_id][] = [
                   'agent_id'      => $agent_id,
                   'link'          => $CFG_GLPI['root_doc']."/front/computer.form.php?id=" .$result['agent.computers_id'],
@@ -1365,6 +1359,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-tasks",
          "Got $count_results results");
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-tasks",
+         ['tasks' => $logs, 'agents' => $agents]);
 
       return ['tasks' => $logs, 'agents' => $agents];
    }
