@@ -77,7 +77,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
          if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
             if ($pfTaskjobstate->fields['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
-               $pfTaskjobstate->changeStatus($a_CONTENT['PROCESSNUMBER'], 2);
+               $pfTaskjobstate->changeStatus($a_CONTENT['PROCESSNUMBER'], PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
                if ((!isset($a_CONTENT['AGENT']['START']))
                        AND (!isset($a_CONTENT['AGENT']['END']))) {
                   $nb_devices = 0;

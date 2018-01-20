@@ -87,10 +87,7 @@ switch (filter_input(INPUT_GET, "action")) {
                   }
 
                   // change status of state table row
-                  $pfTaskjobstate->changeStatus(
-                        $taskjobstate->fields['id'],
-                        PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA
-                  );
+                  $pfTaskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
 
                   $a_input = array(
                         'plugin_fusioninventory_taskjobstates_id'    => $taskjobstate->fields['id'],
@@ -177,8 +174,7 @@ switch (filter_input(INPUT_GET, "action")) {
             }
 
             // change status of state table row
-            $pfTaskjobstate->changeStatus($jobstate['id'],
-                       PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+            $pfTaskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
             // add logs to job
             if (count($a_values)) {

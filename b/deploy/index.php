@@ -127,10 +127,7 @@ switch (filter_input(INPUT_GET, "action")) {
                         $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }
-                  $taskjobstate->changeStatus(
-                     $taskjobstate->fields['id'] ,
-                     $taskjobstate::SERVER_HAS_SENT_DATA
-                  );
+                  $taskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
                }
 
                // return an empty dictionnary if there are no jobs.

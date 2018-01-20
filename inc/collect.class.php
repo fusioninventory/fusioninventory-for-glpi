@@ -423,9 +423,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       $c_input= array();
       $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-      $c_input['state']                              = 0;
-      $c_input['plugin_fusioninventory_agents_id']   = 0;
-      $c_input['execution_id']                       = $task->fields['execution_id'];
+      $c_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
+      $c_input['plugin_fusioninventory_agents_id'] = 0;
+      $c_input['execution_id'] = $task->fields['execution_id'];
 
       $pfCollect = new PluginFusioninventoryCollect();
 
@@ -453,7 +453,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                              $pfCollect->fields['id']."'");
                      foreach ($a_registries as $data_r) {
                         $uniqid= uniqid();
-                        $c_input['state'] = 0;
+                        $c_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
                         $c_input['itemtype'] = 'PluginFusioninventoryCollect_Registry';
                         $c_input['items_id'] = $data_r['id'];
                         $c_input['date'] = date("Y-m-d H:i:s");
@@ -484,7 +484,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                              $pfCollect->fields['id']."'");
                      foreach ($a_wmies as $data_r) {
                         $uniqid= uniqid();
-                        $c_input['state'] = 0;
+                        $c_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
                         $c_input['itemtype'] = 'PluginFusioninventoryCollect_Wmi';
                         $c_input['items_id'] = $data_r['id'];
                         $c_input['date'] = date("Y-m-d H:i:s");
@@ -515,7 +515,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                              $pfCollect->fields['id']."'");
                      foreach ($a_files as $data_r) {
                         $uniqid= uniqid();
-                        $c_input['state'] = 0;
+                        $c_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
                         $c_input['itemtype'] = 'PluginFusioninventoryCollect_File';
                         $c_input['items_id'] = $data_r['id'];
                         $c_input['date'] = date("Y-m-d H:i:s");

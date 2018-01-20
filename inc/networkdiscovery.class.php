@@ -157,10 +157,10 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                $a_input = array();
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
                $a_input['plugin_fusioninventory_agents_id'] = 0;
-               $a_input['state']        = 1;
-               $a_input['itemtype']     = 'PluginFusioninventoryIPRange';
-               $a_input['items_id']     = $iprange_id;
-               $a_input['uniqid']       = $uniqid;
+               $a_input['state'] = PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA;
+               $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
+               $a_input['items_id'] = $iprange_id;
+               $a_input['uniqid'] = $uniqid;
                $a_input['execution_id'] = $task->fields['execution_id'];
 
                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
@@ -191,7 +191,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   //Add jobstate and put status (waiting on server = 0)
                   $a_input = array();
                   $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-                  $a_input['state'] = 0;
+                  $a_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
                   $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                   $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
                   $a_input['uniqid'] = $uniqid;
@@ -369,7 +369,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $sxml_rangeip->addAttribute('ENTITY', $pfIPRange->fields["entities_id"]);
 
       if ($changestate == '0') {
-         $pfTaskjobstate->changeStatus($pfTaskjobstate->fields['id'], 1);
+         $pfTaskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
          $pfTaskjoblog->addTaskjoblog($pfTaskjobstate->fields['id'],
                                  '0',
                                  'PluginFusioninventoryAgent',

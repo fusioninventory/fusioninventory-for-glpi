@@ -180,7 +180,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @return string
    *
    **/
-   function stateTaskjob ($taskjobs_id, $width=930, $return='html', $style='') {
+   function stateTaskjob($taskjobs_id, $width=930, $return='html', $style='') {
       global $DB;
 
       $state = [0 => 0, 1 => 0, 2 => 0, 3 => 0];
@@ -333,14 +333,13 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    /**
     * Change the state
     *
-    * @todo There is no need to pass $id since we should use this method with
-    *       an instantiated object
-    *
-    * @param integer $id id of the taskjobstate
     * @param integer $state state to set
     */
-   function changeStatus($id, $state) {
-      $this->update(['id' => $id, 'state' => $state]);
+   function changeStatus($state) {
+      $this->update(['id' => $this->getID(), 'state' => $state]);
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-jobs",
+         "Job execution ". $this->getID() ." changed state: $state");
    }
 
 
@@ -478,6 +477,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
 
       $this->update($input);
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-jobs",
+         "Job execution $taskjobstates_id changed state: " . $input['state']);
+
       $log_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
       $log_input['items_id'] = $items_id;
       $log_input['itemtype'] = $itemtype;
@@ -550,6 +553,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'id'    => $this->fields['id'],
          'state' => $jobstate_state
       ]);
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-jobs",
+         "Job execution (update_state)".$this->fields['id']." changed state: $jobstate_state");
    }
 
    private function processPostonedJob($type) {

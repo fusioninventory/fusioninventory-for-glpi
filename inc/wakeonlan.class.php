@@ -206,7 +206,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       if (count($a_agentList) == '0') {
          $a_input = array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-         $a_input['state'] = 1;
+         $a_input['state'] = PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA;
          $a_input['plugin_fusioninventory_agents_id'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['items_id'] = 0;
@@ -214,7 +214,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $Taskjobstates_id = $pfTaskjobstate->add($a_input);
             //Add log of taskjob
             $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
-            $a_input['state'] = 7;
+            $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
             $a_input['date'] = date("Y-m-d H:i:s");
             $pfTaskjoblog->add($a_input);
 
@@ -240,7 +240,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                 $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
                   $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
-                  $a_input['state'] = 7;
+                  $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_PREPARED;
                   $a_input['date'] = date("Y-m-d H:i:s");
                   $pfTaskjoblog->add($a_input);
                   unset($a_input['state']);
@@ -276,6 +276,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $changestate = 0;
 //      foreach ($taskjobstates as $jobstate) {
          $data = $jobstate->fields;
+         $pfTaskjobstate->fields['id'] = $data['id'];
          $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".
                                                 $data['items_id']."' ");
          $computerip = 0;
@@ -288,7 +289,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                   //$sxml_param->addAttribute('IP', $datanetwork['ip']);
 
                   if ($changestate == '0') {
-                     $pfTaskjobstate->changeStatus($data['id'], 1);
+                     $pfTaskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
                      $pfTaskjoblog->addTaskjoblog($data['id'],
                                              '0',
                                              'Computer',

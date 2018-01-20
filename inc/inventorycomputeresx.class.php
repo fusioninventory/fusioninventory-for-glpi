@@ -95,9 +95,9 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       if (empty($agent_actionslist)) {
          $a_input= array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-         $a_input['state']                              = 0;
+         $a_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
          $a_input['plugin_fusioninventory_agents_id']   = 0;
-         $a_input['uniqid']                             = $uniqid;
+         $a_input['uniqid'] = $uniqid;
          $a_input['execution_id']                       = $task->fields['execution_id'];
 
          foreach ($task_definitions as $task_definition) {
@@ -131,13 +131,13 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                   foreach ($task_definition as $task_itemtype => $task_items_id) {
                      $a_input = array();
                      $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-                     $a_input['state']                              = 0;
+                     $a_input['state'] = PluginFusioninventoryTaskjobstate::PREPARED;
                      $a_input['plugin_fusioninventory_agents_id']   = $items_id;
-                     $a_input['itemtype']                           = $task_itemtype;
-                     $a_input['items_id']                           = $task_items_id;
-                     $a_input['uniqid']                             = $uniqid;
-                     $a_input['date']                               = date("Y-m-d H:i:s");
-                     $a_input['execution_id']                       = $task->fields['execution_id'];
+                     $a_input['itemtype'] = $task_itemtype;
+                     $a_input['items_id'] = $task_items_id;
+                     $a_input['uniqid'] = $uniqid;
+                     $a_input['date'] = date("Y-m-d H:i:s");
+                     $a_input['execution_id'] = $task->fields['execution_id'];
 
                      $jobstates_id = $jobstate->add($a_input);
                      //Add log of taskjob

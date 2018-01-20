@@ -84,10 +84,7 @@ if (!empty($fi_machineid)) {
             foreach ($taskjobstates as $taskjobstate) {
                $order->jobs[] = $module->run($taskjobstate);
 
-               $taskjobstate->changeStatus(
-                  $taskjobstate->fields['id'] ,
-                  $taskjobstate::SERVER_HAS_SENT_DATA
-               );
+               $taskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
             }
 
             // return an empty dictionnary if there are no jobs.

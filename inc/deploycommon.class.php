@@ -248,9 +248,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
       $c_input= [];
       $c_input['plugin_fusioninventory_taskjobs_id'] = $job->fields['id'];
-      $c_input['state']                              = 0;
-      $c_input['plugin_fusioninventory_agents_id']   = 0;
-      $c_input['execution_id']                       = $task->fields['execution_id'];
+      $c_input['state'] = 0;
+      $c_input['plugin_fusioninventory_agents_id'] = 0;
+      $c_input['execution_id'] = $task->fields['execution_id'];
 
       $package = new PluginFusioninventoryDeployPackage();
 
@@ -261,11 +261,11 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
             $uniqid = uniqid();
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
 
-            $c_input['state']    = 0;
+            $c_input['state'] = 0;
             $c_input['itemtype'] = 'PluginFusioninventoryDeployPackage';
             $c_input['items_id'] = $package->fields['id'];
-            $c_input['date']     = date("Y-m-d H:i:s");
-            $c_input['uniqid']   = $uniqid;
+            $c_input['date'] = date("Y-m-d H:i:s");
+            $c_input['uniqid'] = $uniqid;
 
             //get agent for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);

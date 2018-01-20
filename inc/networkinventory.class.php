@@ -605,6 +605,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
          $changestate = 0;
          $taskjobstatedatas = $jobstate->fields;
+         $pfTaskjobstate->fields['id'] = $taskjobstatedatas['id'];
          $sxml_device = $sxml_option->addChild('DEVICE');
 
          $a_extended = array('plugin_fusioninventory_configsecurities_id' => 0);
@@ -623,7 +624,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $sxml_device->addAttribute('AUTHSNMP_ID', $a_extended['plugin_fusioninventory_configsecurities_id']);
 
          if ($changestate == '0') {
-            $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
+            $pfTaskjobstate->changeStatus(PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA);
             $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
                '0',
                'PluginFusioninventoryAgent',
