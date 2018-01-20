@@ -362,10 +362,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                                  "PluginFusioninventoryCommunicationNetworkInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Input data : ".print_r($input, true));
       $data = $rule->processAllRules($input, []);
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
       if (isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
@@ -437,18 +437,18 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     */
    function rulepassed($items_id, $itemtype) {
 
-      PluginFusioninventoryLogger::logIfExtradebug(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
-      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          'fusioninventorycommunication',
          'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().'
       );
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->rulepassed().');

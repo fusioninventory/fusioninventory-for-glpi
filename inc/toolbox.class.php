@@ -56,7 +56,7 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-    * Log if extra debug enabled
+    * Log if extra debug is enabled in the plugin configuration
     *
     * @param string $file
     * @param string $message
@@ -67,7 +67,7 @@ class PluginFusioninventoryToolbox {
          if (is_array($message)) {
             $message = print_r($message, true);
          }
-         Toolbox::logInFile($file, $message);
+         Toolbox::logInFile($file, $message . "\n", true);
       }
    }
 

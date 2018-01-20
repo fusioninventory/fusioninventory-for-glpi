@@ -408,7 +408,7 @@ class PluginFusioninventoryCommunication {
          return;
       }
 
-      PluginFusioninventoryConfig::logIfExtradebug(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          'pluginFusioninventory-dial' . uniqid(),
          $xml
       );
