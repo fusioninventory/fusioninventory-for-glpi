@@ -1669,6 +1669,14 @@ class PluginFusioninventoryFormatconvert {
                                self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
                                self::FI_SOFTWARE_SEPARATOR.$array_tmp['operatingsystems_id'];
 
+                  //String without the manufacturer
+                  $comp_key_noos = strtolower($array_tmp['name']).
+                              self::FI_SOFTWARE_SEPARATOR.strtolower($array_tmp['version']).
+                              self::FI_SOFTWARE_SEPARATOR.$array_tmp['manufacturers_id'].
+                              self::FI_SOFTWARE_SEPARATOR.$array_tmp['entities_id'].
+                              self::FI_SOFTWARE_SEPARATOR.'0';
+
+                  $array_tmp['comp_key_noos'] = $comp_key_noos;
                   if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
                   } else {

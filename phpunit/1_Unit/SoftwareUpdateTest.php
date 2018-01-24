@@ -183,7 +183,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
-               '_system_category'      => 'devel'
+               '_system_category'      => 'devel',
+               'comp_key_noos'         => "fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -259,7 +260,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               '_system_category'      => 'devel'
+               '_system_category'      => 'devel',
+               'comp_key_noos'         => 'glpi$$$$0.85$$$$2$$$$0$$$$0'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -351,7 +353,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               '_system_category'      => 'devel'
+               '_system_category'      => 'devel',
+               'comp_key_noos' => 'glpi$$$$0.85$$$$2$$$$0$$$$0'
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -415,7 +418,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                'date_install'          => '2013-10-16',
-               '_system_category'      => 'application'
+               '_system_category'      => 'application',
+               'comp_key_noos'         => 'audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0'
             );
 
       $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'AutoIt Team']));
@@ -429,7 +433,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               '_system_category'      => 'application'
+               '_system_category'      => 'application',
+               'comp_key_noos'         => 'autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0'
       );
       $this->assertEquals($a_reference, $a_return);
    }
