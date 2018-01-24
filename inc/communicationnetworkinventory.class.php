@@ -177,7 +177,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   $_SESSION['plugin_fusioninventory_xmlnum'] = $xml_num;
                   $a_inventory = array();
                   if (isset($dchild['INFO'])) {
-                     if ($dchild['INFO']['TYPE'] == "NETWORKING") {
+                     if ($dchild['INFO']['TYPE'] == "NETWORKING" || $dchild['INFO']['TYPE'] == "STORAGE") {
                         $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
                      } else if ($dchild['INFO']['TYPE'] == "PRINTER") {
                         $a_inventory = PluginFusioninventoryFormatconvert::printerInventoryTransformation($dchild);
@@ -185,7 +185,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   }
                   if (isset($dchild['ERROR'])) {
                      $itemtype = "";
-                     if ($dchild['ERROR']['TYPE'] == "NETWORKING") {
+                     if ($dchild['ERROR']['TYPE'] == "NETWORKING" || $dchild['ERROR']['TYPE'] == "STORAGE") {
                         $itemtype = "NetworkEquipment";
                      } else if ($dchild['ERROR']['TYPE'] == "PRINTER") {
                         $itemtype = "Printer";
