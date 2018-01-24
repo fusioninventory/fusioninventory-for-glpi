@@ -267,6 +267,4 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $this->assertEquals(count($softversion_ids) + 2, count(array_keys($softwareVersion->find())));
 
    }
-
-
 }

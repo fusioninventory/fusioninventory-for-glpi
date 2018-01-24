@@ -84,6 +84,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
 
    /**
+    * Initilize a list of installation that should not be logged
+    *
+    * @var array
+    */
+   var $installationWithoutLogs = array();
+
+   /**
     * __contruct function where initialize many variables
     */
    function __construct() {
@@ -2211,8 +2218,20 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $a_software['_no_history']          = true;
       $a_software['entities_id']          = $computers_id['entities_id'];
 
-      if ($this->computerSoftwareVersion->add($a_software, $options, false)) {
-         if (!$no_history) {
+      //Check if historical has been disabled for this software only
+      $comp_key = strtolower($a_software['name']).
+                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($a_software['version']).
+                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id'].
+                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['entities_id'].
+                   PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id'];
+      if (isset($a_software['no_history']) && $a_software['no_history']) {
+         $no_history_for_this_software = true;
+      } else {
+         $no_history_for_this_software = false;
+      }
+
+      if ($this->computerSoftwareVersion->add($a_software, $options, FALSE)) {
+         if (!$no_history && !$no_history_for_this_software) {
             $changes[0] = '0';
             $changes[1] = "";
             $changes[2] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
@@ -2439,6 +2458,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
+
       $lastSoftwareid  = 0;
       $lastSoftwareVid = 0;
 
@@ -2524,8 +2544,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                      $a_inventory['software'],
                                      $lastSoftwareVid);
          foreach ($a_inventory['software'] as $a_software) {
+            //Get the software ID for the software we're processing
             $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+            //Check if the software version already exists
             if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
+               //Software version doesn not exists: let's create it
                $this->addSoftwareVersion($a_software, $softwares_id);
             }
          }
@@ -2536,7 +2559,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          );
          $a_toinsert = [];
          foreach ($a_inventory['software'] as $a_software) {
+            //Get the software ID for the software we're processing
             $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+            //Get the version ID for the software version we're processing
             $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
             $a_tmp = array(
                 'computers_id'        => $computers_id,
@@ -2545,6 +2570,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                 'entities_id'         => $computer->fields['entities_id'],
                 'date_install'        => 'NULL'
                 );
+            //By default date_install is null: if an install date is provided,
+            //we set it
             if (isset($a_software['date_install'])) {
                $a_tmp['date_install'] = $a_software['date_install'];
             }
@@ -2553,7 +2580,19 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          if (count($a_toinsert) > 0) {
             $this->addSoftwareVersionsComputer($a_toinsert);
 
-            if (!$no_history) {
+            //Check if historical has been disabled for this software only
+            $comp_key = strtolower($a_software['name']).
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.strtolower($a_software['version']).
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id'].
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['entities_id'].
+                         PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id'];
+            if (isset($a_software['no_history']) && $a_software['no_history']) {
+               $no_history_for_this_software = true;
+            } else {
+               $no_history_for_this_software = false;
+            }
+
+            if (!$no_history && !$no_history_for_this_software) {
                foreach ($a_inventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                   $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
@@ -2575,8 +2614,17 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
 
       } else {
+
+         //It's not the first inventory, or not an OS change/upgrade
+
+         //Do software migration first if needed
+         $a_inventory = $this->migratePlatformForVersion($a_inventory, $db_software);
+
+         //If software exists in DB, do not process it
          foreach ($a_inventory['software'] as $key => $arrayslower) {
+            //Software installation already exists for this computer ?
             if (isset($db_software[$key])) {
+               //It exists: remove the software from the key
                unset($a_inventory['software'][$key]);
                unset($db_software[$key]);
             }
@@ -2589,11 +2637,16 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if (count($db_software) > 0) {
                // Delete softwares in DB
                foreach ($db_software as $idtmp) {
+
+                  if (isset($this->installationWithoutLogs[$idtmp])) {
+                     $no_history_for_this_software = true;
+                  } else {
+                     $no_history_for_this_software = false;
+                  }
                   $this->computerSoftwareVersion->getFromDB($idtmp);
                   $this->softwareVersion->getFromDB($this->computerSoftwareVersion->fields['softwareversions_id']);
-//                        $this->computerSoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), false);
 
-                  if (!$no_history) {
+                  if (!$no_history && !$no_history_for_this_software) {
                      $changes[0] = '0';
                      $changes[1] = addslashes($this->computerSoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
                      $changes[2] = "";
@@ -2673,7 +2726,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   ]
                );
                $a_toinsert = [];
-               foreach ($a_inventory['software'] as $a_software) {
+               foreach ($a_inventory['software'] as $key => $a_software) {
+                  //Check if historical has been disabled for this software only
+                  if (isset($a_software['no_history']) && $a_software['no_history']) {
+                     $no_history_for_this_software = true;
+                  } else {
+                     $no_history_for_this_software = false;
+                  }
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                   $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
                   $a_tmp = [
@@ -2690,7 +2749,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                }
                $this->addSoftwareVersionsComputer($a_toinsert);
 
-               if (!$no_history) {
+               if (!$no_history && !$no_history_for_this_software) {
                   foreach ($a_inventory['software'] as $a_software) {
                      $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                      $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
@@ -2712,5 +2771,33 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             }
          }
       }
+   }
+
+   /**
+   * Migration software versions without OS
+   * Before 0.90, no OS was added to an installation...
+   *
+   * @since 9.2+.20
+   *
+   * @param array $a_inventory the incoming inventory as an array
+   * @param array $db_inventory the software inventory by reading GLPI db
+   * @return array the incoming inventory modified if needed
+   */
+   function migratePlatformForVersion($a_inventory, $db_inventory) {
+      //Browse each software in the inventory sent by an agent
+      foreach ($a_inventory['software'] as $key => $software) {
+         //Check if the installation exists without platform (OS)
+         //if it is the case, then add the new and old installation
+         //to the list of installation/uninstallation that must not be logged
+         if (isset($software['comp_key_noos']) && isset($db_inventory[$software['comp_key_noos']])) {
+            //This array is used during version uninstallation
+            $this->installationWithoutLogs[] = $software['comp_key_noos'];
+            //This boolean is used for software version installation
+            $software['no_history']          = true;
+            //Software the modified array in the incoming inventory
+            $a_inventory['software'][$key]   = $software;
+         }
+      }
+      return $a_inventory;
    }
 }
