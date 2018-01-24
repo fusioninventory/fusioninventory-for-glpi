@@ -71,8 +71,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      if ($this->canView()
-         && PluginFusioninventoryToolbox::isAFusionInventoryDevice($item)) {
+      if ($this->canView()) {
          return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
       }
       return '';
@@ -1279,4 +1278,3 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
 }
-
