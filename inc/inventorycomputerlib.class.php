@@ -2544,11 +2544,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                      $a_inventory['software'],
                                      $lastSoftwareVid);
          foreach ($a_inventory['software'] as $a_software) {
-            //Get the software ID for the software we're processing
-            $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-            //Check if the software version already exists
-            if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
-               //Software version doesn not exists: let's create it
+            $softwares_id = $this->softList[$a_software['name']
+               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
+            if (!isset($this->softVersionList[strtolower($a_software['version'])
+            .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
+            .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']])) {
                $this->addSoftwareVersion($a_software, $softwares_id);
             }
          }
@@ -2559,16 +2559,17 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          );
          $a_toinsert = [];
          foreach ($a_inventory['software'] as $a_software) {
-            //Get the software ID for the software we're processing
-            $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-            //Get the version ID for the software version we're processing
-            $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+            $softwares_id = $this->softList[$a_software['name']
+               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
+            $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])
+               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
+               .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
             $a_tmp = array(
                 'computers_id'        => $computers_id,
                 'softwareversions_id' => $softwareversions_id,
                 'is_dynamic'          => 1,
                 'entities_id'         => $computer->fields['entities_id'],
-                'date_install'        => 'NULL'
+                'date_install'        => null
                 );
             //By default date_install is null: if an install date is provided,
             //we set it
@@ -2594,8 +2595,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
             if (!$no_history && !$no_history_for_this_software) {
                foreach ($a_inventory['software'] as $a_software) {
-                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
+                  $softwares_id = $this->softList[$a_software['name']
+                     .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['manufacturers_id']];
+                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])
+                     .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
+                     .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
 
                   $changes[0] = '0';
                   $changes[1] = "";
