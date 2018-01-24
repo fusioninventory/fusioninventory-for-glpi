@@ -463,5 +463,96 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'IP address');
    }
 
+   /**
+    * @test
+    */
+   public function updatePrinterFromNetdiscoveryToInventory() {
+      global $DB;
 
+      $DB->connect();
+
+      $pfCNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
+      $_SESSION['SOURCE_XMLDEVICE'] = [
+         'AUTHSNMP'     => '1',
+         'DESCRIPTION'  => 'SHARP MX-5140N',
+         'ENTITY'       => '0',
+         'FIRMWARE'     => '',
+         'IP'           => '10.120.80.61',
+         'IPS'          => ['IP' => '10.120.80.61', 'IP' => '127.0.0.1'],
+         'MAC'          => '24:26:42:1e:5a:90',
+         'MANUFACTURER' => 'Sharp',
+         'MODEL'        => '',
+         'NETBIOSNAME'  => 'SHARP MX-5140N',
+         'SERIAL'       => '8512418234',
+         'SNMPHOSTNAME' => 'SHARP MX-5140N',
+         'TYPE'         => 'PRINTER'
+      ];
+
+      //First: discover the device
+      $printer     = new Printer();
+      $printers_id = $printer->add([
+         'serial'      => '8512418234',
+         'entities_id' => 0
+      ]);
+      $printer->getFromDB($printers_id);
+      $pfCNetworkDiscovery->importDevice($printer);
+
+      $this->assertGreaterThan(0, $printer->getFromDBByCrit(['serial' => '8512418234']));
+
+      $this->assertEquals('SHARP MX-5140N', $printer->fields['name'], 'Name must be updated');
+
+      // Check mac
+      $networkPort = new NetworkPort();
+      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $this->assertEquals('1', count($a_ports),
+         'May have one network port');
+      $a_port = current($a_ports);
+      $this->assertEquals('24:26:42:1e:5a:90', $a_port['mac'], 'Mac address');
+
+      //Logical number shoud be 0
+      $this->assertEquals(0, $a_port['logical_number'], 'Logical number equals 0');
+
+      $a_inventory = [
+         'PluginFusioninventoryPrinter' => [
+            'sysdescr'                    => 'SHARP MX-5140N',
+            'last_fusioninventory_update' => $_SESSION['glpi_currenttime'],
+
+         ],
+         'networkport'  => [
+            [
+               'name'           => 'Ethernet',
+               'logical_number' => 1,
+               'mac'            => '24:26:42:1e:5a:90',
+               'ip'             => '10.120.80.61'
+            ]
+         ],
+         'pagecounters' => [],
+         'cartridge'    => [],
+         'itemtype'    => 'Printer'
+      ];
+
+      $a_inventory['Printer'] = [
+         'name'               => 'SHARP MX-5140N',
+         'id'                 => $printers_id,
+         'serial'             => '8512418234',
+         'memory_size'        => 64,
+         'is_dynamic'         => 1,
+         'have_ethernet'      => 1
+      ];
+
+   $pfCNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
+   $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory);
+
+   $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+   $this->assertEquals('1', count($a_ports), 'Should have only one port');
+
+   $a_port = current($a_ports);
+   //Logical number shoud be 0
+   $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
+   $this->assertEquals('Ethernet', $a_port['name'], 'Name has changed');
+
+   }
 }
