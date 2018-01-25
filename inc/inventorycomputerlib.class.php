@@ -124,7 +124,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $item_DeviceBattery           = new Item_DeviceBattery();
       $deviceBattery                = new DeviceBattery();
       $computerVirtualmachine       = new ComputerVirtualMachine();
-      $computerDisk                 = new ComputerDisk();
+      $itemDisk                     = new Item_Disk();
       $item_DeviceControl           = new Item_DeviceControl();
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
       $item_DeviceDrive             = new Item_DeviceDrive();
@@ -907,15 +907,16 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
-      // * ComputerDisk
+      // * Item_Disk
       if ($pfConfig->getValue("import_volume") != 0) {
-         $db_computerdisk = [];
+         $db_itemdisk = [];
          if ($no_history === false) {
             $iterator = $DB->request([
                'SELECT' => ['id', 'name', 'device', 'mountpoint'],
-               'FROM'   => 'glpi_computerdisks',
+               'FROM'   => 'glpi_items_disks',
                'WHERE'  => [
-                  'computers_id' => $computers_id,
+                  'items_id' => $computers_id,
+                  'itemtype' => 'Computer',
                   'is_dynamic'   => 1
                ]
             ]);
@@ -924,21 +925,21 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
                $data2 = array_map('strtolower', $data1);
-               $db_computerdisk[$idtmp] = $data2;
+               $db_itemdisk[$idtmp] = $data2;
             }
          }
-         $simplecomputerdisk = [];
-         foreach ($a_computerinventory['computerdisk'] as $key=>$a_computerdisk) {
+         $simpleitemdisk = [];
+         foreach ($a_computerinventory['computerdisk'] as $key=>$a_itemdisk) {
             $a_field = ['name', 'device', 'mountpoint'];
             foreach ($a_field as $field) {
-               if (isset($a_computerdisk[$field])) {
-                  $simplecomputerdisk[$key][$field] = $a_computerdisk[$field];
+               if (isset($a_itemdisk[$field])) {
+                  $simpleitemdisk[$key][$field] = $a_itemdisk[$field];
                }
             }
          }
-         foreach ($simplecomputerdisk as $key => $arrays) {
+         foreach ($simpleitemdisk as $key => $arrays) {
             $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_computerdisk as $keydb => $arraydb) {
+            foreach ($db_itemdisk as $keydb => $arraydb) {
                if ($arrayslower == $arraydb) {
                   $input = [];
                   $input['id'] = $keydb;
@@ -949,28 +950,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];
                   $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
                   $input['_no_history'] = true;
-                  $computerDisk->update($input, false);
-                  unset($simplecomputerdisk[$key]);
+                  $itemDisk->update($input, false);
+                  unset($simpleitemdisk[$key]);
                   unset($a_computerinventory['computerdisk'][$key]);
-                  unset($db_computerdisk[$keydb]);
+                  unset($db_itemdisk[$keydb]);
                   break;
                }
             }
          }
 
-         if (count($a_computerinventory['computerdisk']) || count($db_computerdisk)) {
-            if (count($db_computerdisk) != 0) {
-               // Delete computerdisk in DB
-               foreach ($db_computerdisk as $idtmp => $data) {
-                  $computerDisk->delete(['id'=>$idtmp], 1);
+         if (count($a_computerinventory['computerdisk']) || count($db_itemdisk)) {
+            if (count($db_itemdisk) != 0) {
+               // Delete Item_Disk in DB
+               foreach ($db_itemdisk as $idtmp => $data) {
+                  $itemDisk->delete(['id'=>$idtmp], 1);
                }
             }
             if (count($a_computerinventory['computerdisk']) != 0) {
-               foreach ($a_computerinventory['computerdisk'] as $a_computerdisk) {
-                  $a_computerdisk['computers_id']  = $computers_id;
-                  $a_computerdisk['is_dynamic']    = 1;
-                  $a_computerdisk['_no_history']   = $no_history;
-                  $computerDisk->add($a_computerdisk, [], !$no_history);
+               foreach ($a_computerinventory['computerdisk'] as $a_itemdisk) {
+                  $a_itemdisk['items_id']  = $computers_id;
+                  $a_itemdisk['itemtype']  = 'Computer';
+                  $a_itemdisk['is_dynamic']    = 1;
+                  $a_itemdisk['_no_history']   = $no_history;
+                  $itemDisk->add($a_itemdisk, [], !$no_history);
                }
             }
          }
@@ -2354,7 +2356,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $computer->update($input);
 
       $a_tables = [
-         'glpi_computerdisks',
+         'glpi_Item_Disks',
          'glpi_computers_items',
          'glpi_computers_softwareversions',
          'glpi_computervirtualmachines'
