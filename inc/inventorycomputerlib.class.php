@@ -88,7 +88,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
     *
     * @var array
     */
-   var $installationWithoutLogs = array();
+   var $installationWithoutLogs = [];
 
    /**
     * __contruct function where initialize many variables
@@ -2230,7 +2230,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $no_history_for_this_software = false;
       }
 
-      if ($this->computerSoftwareVersion->add($a_software, $options, FALSE)) {
+      if ($this->computerSoftwareVersion->add($a_software, $options, false)) {
          if (!$no_history && !$no_history_for_this_software) {
             $changes[0] = '0';
             $changes[1] = "";
@@ -2458,7 +2458,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
-
       $lastSoftwareid  = 0;
       $lastSoftwareVid = 0;
 
@@ -2482,7 +2481,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $options    = [];
          //There's no unicity rules, do not enable this feature
          if ($nb_unicity == 0) {
-            $options['disable_unicity_check'] = TRUE;
+            $options['disable_unicity_check'] = true;
          }
 
          $lastSoftwareid = $this->loadSoftwares($entities_id,
@@ -2504,7 +2503,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          while (!$DB->query($queryDBLOCK)) {
             usleep(100000);
          }
-         $CFG_GLPI["use_log_in_files"] = TRUE;
+         $CFG_GLPI["use_log_in_files"] = true;
          $this->loadSoftwares($entities_id,
                               $a_inventory['software'],
                               $lastSoftwareid);
@@ -2539,7 +2538,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          while (!$DB->query($queryDBLOCK)) {
             usleep(100000);
          }
-         $CFG_GLPI["use_log_in_files"] = TRUE;
+         $CFG_GLPI["use_log_in_files"] = true;
          $this->loadSoftwareVersions($entities_id,
                                      $a_inventory['software'],
                                      $lastSoftwareVid);
@@ -2564,13 +2563,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])
                .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
                .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
-            $a_tmp = array(
+            $a_tmp = [
                 'computers_id'        => $computers_id,
                 'softwareversions_id' => $softwareversions_id,
                 'is_dynamic'          => 1,
                 'entities_id'         => $computer->fields['entities_id'],
                 'date_install'        => null
-                );
+                ];
             //By default date_install is null: if an install date is provided,
             //we set it
             if (isset($a_software['date_install'])) {
@@ -2675,7 +2674,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                                                         $entities_id));
                $options = [];
                if ($nb_unicity == 0) {
-                  $options['disable_unicity_check'] = TRUE;
+                  $options['disable_unicity_check'] = true;
                }
                $lastSoftwareid = $this->loadSoftwares($entities_id, $a_inventory['software'], $lastSoftwareid);
                $queryDBLOCK = $DB->buildInsert(
@@ -2687,7 +2686,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                while (!$DB->query($queryDBLOCK)) {
                   usleep(100000);
                }
-               $CFG_GLPI["use_log_in_files"] = TRUE;
+               $CFG_GLPI["use_log_in_files"] = true;
                $this->loadSoftwares($entities_id, $a_inventory['software'], $lastSoftwareid);
                foreach ($a_inventory['software'] as $a_software) {
                   if (!isset($this->softList[$a_software['name']."$$$$".
@@ -2714,7 +2713,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                while (!$DB->query($queryDBLOCK)) {
                   usleep(100000);
                }
-               $CFG_GLPI["use_log_in_files"] = TRUE;
+               $CFG_GLPI["use_log_in_files"] = true;
                $this->loadSoftwareVersions($entities_id,
                                            $a_inventory['software'],
                                            $lastSoftwareVid);

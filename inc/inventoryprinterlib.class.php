@@ -87,7 +87,6 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
                                                             $db_printer,
                                                             $a_lockable);
 
-
       $a_inventory['Printer'] = $a_ret[0];
       $input                  = $a_inventory['Printer'];
       $input['id']            = $printers_id;

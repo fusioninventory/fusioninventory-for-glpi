@@ -2029,12 +2029,12 @@ class PluginFusioninventoryFormatconvert {
          foreach ($array['PORTS']['PORT'] as $a_port) {
             if (isset($a_port['IFNUMBER'])) {
                $array_tmp = $this->addValues($a_port,
-                                              array(
+                                              [
                                                  'IFNAME'   => 'name',
                                                  'IFNUMBER' => 'logical_number',
                                                  'MAC'      => 'mac',
                                                  'IP'       => 'ip',
-                                                 'IFTYPE'   => 'iftype'));
+                                                 'IFTYPE'   => 'iftype']);
 
                $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
             }

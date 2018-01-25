@@ -161,32 +161,32 @@ class RuleLocationTest extends Common_TestCase {
 
       // Add criteria
       $rulecriteria = new RuleCriteria();
-      $input = array(
+      $input = [
          'rules_id'  => $rules_id,
          'criteria'  => "name",
          'pattern'   => "/pc (.*)/",
          'condition' => PluginFusioninventoryInventoryRuleLocation::REGEX_MATCH
-      );
+      ];
       $rulecriteria->add($input);
 
       // Add criteria
       $rulecriteria = new RuleCriteria();
-      $input = array(
+      $input = [
          'rules_id'  => $rules_id,
          'criteria'  => "itemtype",
          'pattern'   => "Computer",
          'condition' => Rule::PATTERN_IS
-      );
+      ];
       $rulecriteria->add($input);
 
       // Add action
       $ruleaction = new RuleAction();
-      $input = array(
+      $input = [
          'rules_id'    => $rules_id,
          'action_type' => 'regex_result',
          'field'       => 'locations_id',
          'value'       => '#0'
-      );
+      ];
       $ruleaction->add($input);
 
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
@@ -238,43 +238,43 @@ class RuleLocationTest extends Common_TestCase {
       $location = new Location;
       $location->getFromDBByCrit(['completename' => 'Monsols04']);;
 
-      $input = array(
+      $input = [
          'is_active' => 1,
          'name'      => 'Location by IP',
          'match'     => 'AND',
          'sub_type'  => 'PluginFusioninventoryInventoryRuleLocation',
          'ranking'   => 1
-      );
+      ];
       $rules_id = $rule->add($input);
 
       // Add criteria
       $rulecriteria = new RuleCriteria();
-      $input = array(
+      $input = [
          'rules_id'  => $rules_id,
          'criteria'  => "ip",
          'pattern'   => "192.168.0",
          'condition' => Rule::PATTERN_CONTAIN
-      );
+      ];
       $rulecriteria->add($input);
 
       // Add criteria
       $rulecriteria = new RuleCriteria();
-      $input = array(
+      $input = [
          'rules_id'  => $rules_id,
          'criteria'  => "itemtype",
          'pattern'   => "/Computer|NetworkEquipment|Printer/",
          'condition' => Rule::REGEX_MATCH
-      );
+      ];
       $rulecriteria->add($input);
 
       // Add action
       $ruleaction = new RuleAction();
-      $input = array(
+      $input = [
          'rules_id'    => $rules_id,
          'action_type' => 'assign',
          'field'       => 'locations_id',
          'value'       => $location->getID()
-      );
+      ];
       $ruleaction->add($input);
 
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
@@ -289,10 +289,10 @@ class RuleLocationTest extends Common_TestCase {
       $ruleLocation->getCollectionPart();
       $loc = $ruleLocation->processAllRules($input);
 
-      $a_references = array(
+      $a_references = [
          'locations_id' => $location->getID(),
          '_ruleid'      => $rules_id
-      );
+      ];
 
       $this->assertEquals($a_references, $loc, 'Location by IP');
 

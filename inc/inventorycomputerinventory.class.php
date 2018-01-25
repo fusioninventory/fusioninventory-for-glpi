@@ -351,7 +351,6 @@ class PluginFusioninventoryInventoryComputerInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                      "PluginFusioninventoryInventoryComputerInventory";
 
-
       //Add the location if needed (play rule locations engine)
       $output = [];
       $output = PluginFusioninventoryToolbox::addLocation($input, $output);
