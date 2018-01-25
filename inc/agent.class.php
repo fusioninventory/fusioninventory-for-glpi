@@ -402,7 +402,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                "<img src='".$CFG_GLPI['root_doc']."/pics/delete.png' /></a>";
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
-                                        $_SESSION['glpiactive_entity']);
+                                        $this->fields['entities_id']);
       }
       echo "</td>";
       echo "<td>".__('Token')."&nbsp:</td>";
