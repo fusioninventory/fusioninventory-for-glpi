@@ -200,7 +200,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                                              $arrayinventory['CONTENT']);
 
       // Get tag is defined and put it in fusioninventory_agent table
-         $tagAgent = "";
+      $tagAgent = "";
       if (isset($a_computerinventory['ACCOUNTINFO'])) {
          if (isset($a_computerinventory['ACCOUNTINFO']['KEYNAME'])
               && $a_computerinventory['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
@@ -210,11 +210,11 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
       }
-         $pfAgent = new PluginFusioninventoryAgent();
-         $input = [];
-         $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
-         $input['tag'] = $tagAgent;
-         $pfAgent->update($input);
+      $pfAgent = new PluginFusioninventoryAgent();
+      $input = [];
+      $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+      $input['tag'] = $tagAgent;
+      $pfAgent->update($input);
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
@@ -306,13 +306,13 @@ class PluginFusioninventoryInventoryComputerInventory {
       } else {
          $input['name'] = '';
       }
-         $input['itemtype'] = "Computer";
+      $input['itemtype'] = "Computer";
 
-         // If transfer is disable, get entity and search only on this entity
-         // (see http://forge.fusioninventory.org/issues/1503)
+      // If transfer is disable, get entity and search only on this entity
+      // (see http://forge.fusioninventory.org/issues/1503)
 
-         // * entity rules
-            $inputent = $input;
+      // * entity rules
+      $inputent = $input;
       if ((isset($a_computerinventory['Computer']['domains_id']))
                     AND (!empty($a_computerinventory['Computer']['domains_id']))) {
          $inputent['domain'] = $a_computerinventory['Computer']['domains_id'];
@@ -320,12 +320,12 @@ class PluginFusioninventoryInventoryComputerInventory {
       if (isset($inputent['serial'])) {
          $inputent['serialnumber'] = $inputent['serial'];
       }
-            $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+      $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
 
-            // * Reload rules (required for unit tests)
-            $ruleEntity->getCollectionPart();
+      // * Reload rules (required for unit tests)
+      $ruleEntity->getCollectionPart();
 
-            $dataEntity = $ruleEntity->processAllRules($inputent, []);
+      $dataEntity = $ruleEntity->processAllRules($inputent, []);
       if (isset($dataEntity['_ignore_import'])) {
          return;
       }
