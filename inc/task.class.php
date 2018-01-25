@@ -969,8 +969,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $query_joins         = [];
       $query_joins['task'] = "
          INNER JOIN `glpi_plugin_fusioninventory_tasks` as task
-            ON job.`plugin_fusioninventory_tasks_id` = task.`id`
-            AND task.`is_active` = 1";
+            ON job.`plugin_fusioninventory_tasks_id` = task.`id`";
 
       $data_structure = [
          'query' => "SELECT
