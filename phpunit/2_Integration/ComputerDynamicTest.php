@@ -105,7 +105,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $computers_id = $computer->add($a_computer);
       $a_cdisk = [
-          "computers_id" => $computers_id,
+          "items_id"     => $computers_id,
+          "itemtype"     => 'Computer',
           "name"         => "D:",
           "mountpoint"   => "D:",
           "entities_id"  => 0
@@ -198,7 +199,8 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                                       0);
 
       $a_cdisk = [
-          "computers_id" => $computers_id,
+          "items_id"     => $computers_id,
+          "itemtype"     => "Computer",
           "name"         => "D:",
           "mountpoint"   => "D:",
           "entities_id"  => 0
