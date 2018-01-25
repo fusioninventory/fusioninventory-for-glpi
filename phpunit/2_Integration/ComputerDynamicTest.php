@@ -205,14 +205,14 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       ];
       $itemDisk->add($a_cdisk);
 
-      $a_computerdisk = $itemDisk->find("`computers_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
       $this->assertEquals(2, count($a_computerdisk), 'May have dynamic + no dynamic computerdisk');
 
-      $a_computerdisk = $itemDisk->find("`computers_id`='".$computers_id."'
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'
          AND `is_dynamic`='0'");
       $this->assertEquals(1, count($a_computerdisk), '(1)Not dynamic');
 
-      $a_computerdisk = $itemDisk->find("`computers_id`='".$computers_id."'
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'
          AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), '(2)Dynamic');
 
