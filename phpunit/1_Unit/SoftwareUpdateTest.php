@@ -414,7 +414,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                'date_install'          => '2013-10-16',
-               '_system_category'      => 'application'
                '_system_category'      => 'application',
                'comp_key_noos'         => 'audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0'
             ];
@@ -430,7 +429,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               '_system_category'      => 'application'
                '_system_category'      => 'application',
                'comp_key_noos'         => 'autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0'
       ];
