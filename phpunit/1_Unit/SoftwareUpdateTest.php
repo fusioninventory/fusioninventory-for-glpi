@@ -350,7 +350,6 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
-               '_system_category'      => 'devel'
                '_system_category'      => 'devel',
                'comp_key_noos' => 'glpi$$$$0.85$$$$2$$$$0$$$$0'
             ];
