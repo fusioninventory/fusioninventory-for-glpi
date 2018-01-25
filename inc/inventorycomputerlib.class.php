@@ -2356,7 +2356,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $computer->update($input);
 
       $a_tables = [
-         'glpi_Item_Disks',
+         'glpi_items_disks',
          'glpi_computers_items',
          'glpi_computers_softwareversions',
          'glpi_computervirtualmachines'

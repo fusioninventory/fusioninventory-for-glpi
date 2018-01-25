@@ -57,7 +57,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
-      $computerDisk = new ComputerDisk();
+      $itemDisk = new Item_Disk();
 
       $a_computerinventory = [
           "Computer" => [
@@ -110,9 +110,9 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           "mountpoint"   => "D:",
           "entities_id"  => 0
       ];
-      $computerDisk->add($a_cdisk);
+      $itemDisk->add($a_cdisk);
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
       $this->assertEquals(1, count($a_computerdisk), 'Right no dynamic added');
 
       $pfiComputerLib->updateComputer($a_computerinventory,
@@ -120,11 +120,10 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                                       false,
                                       1);
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
       $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk');
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='1'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."' AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk and is dynamic');
    }
 
@@ -145,7 +144,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
-      $computerDisk = new ComputerDisk();
+      $itemDisk = new Item_Disk();
 
       $a_computerinventory = [
           "Computer" => [
@@ -204,16 +203,16 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
           "mountpoint"   => "D:",
           "entities_id"  => 0
       ];
-      $computerDisk->add($a_cdisk);
+      $itemDisk->add($a_cdisk);
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(2, count($a_computerdisk), 'May have dynamic + no dynamic computerdisk');
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
+      $a_computerdisk = $itemDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='0'");
       $this->assertEquals(1, count($a_computerdisk), '(1)Not dynamic');
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
+      $a_computerdisk = $itemDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), '(2)Dynamic');
 
@@ -222,16 +221,14 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                                       false,
                                       1);
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
       $this->assertEquals(2, count($a_computerdisk), 'May ALWAYS have dynamic '.
                                                      '+ no dynamic computerdisk');
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='0'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."' AND `is_dynamic`='0'");
       $this->assertEquals(1, count($a_computerdisk), '(3)Not dynamic');
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='1'");
+      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."' AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), '(4)Dynamic');
    }
 
