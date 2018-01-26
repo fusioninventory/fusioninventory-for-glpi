@@ -163,13 +163,15 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
       $formatConvert = new PluginFusioninventoryFormatconvert();
 
       $input = [
-            'SIMCARDS' => [
-            'COUNTRY'       => 'France',
-            'ICCID'         => "11124406000051565111",
-            'IMSI'          => "204043721717241",
-            'OPERATOR_CODE' => '208.10',
-            'OPERATOR_NAME' => 'SFR',
-            'STATE'         => 'SIM1 - Ready (PIN checking disabled)',
+         'SIMCARDS' => [
+            0  => [
+               'COUNTRY'       => 'France',
+               'ICCID'         => "11124406000051565111",
+               'IMSI'          => "204043721717241",
+               'OPERATOR_CODE' => '208.10',
+               'OPERATOR_NAME' => 'SFR',
+               'STATE'         => 'SIM1 - Ready (PIN checking disabled)'
+            ]
          ]
       ];
       $a_inventory = [];
