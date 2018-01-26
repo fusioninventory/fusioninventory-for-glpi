@@ -288,11 +288,11 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
             "lib/lazy.js-0.4.0/lazy".($debug_mode?"":".min").".js",
             "lib/mustache.js-2.0.0/mustache".($debug_mode?"":".min").".js",
-            "js/taskjobs".($debug_mode?"":".min").".js"
+            "js/taskjobs".($debug_mode || !file_exists('js/taskjobs.min.js')?"":".min").".js"
          );
       }
       if (script_endswith("menu.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "js/stats".($debug_mode || !file_exists('js/stats.min.js')?"":".min").".js";
       }
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
