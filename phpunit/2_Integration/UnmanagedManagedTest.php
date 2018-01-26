@@ -163,7 +163,8 @@ class UnmanagedManagedTest extends Common_TestCase {
          'drive'          => [],
          'batteries'      => [],
          'remote_mgmt'    => [],
-          'bios'           => [],
+         'bios'           => [],
+         'powersupply'    => [],
          'itemtype'       => 'Computer'
       ];
       $a_inventory['Computer'] = [

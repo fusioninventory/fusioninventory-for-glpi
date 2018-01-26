@@ -874,6 +874,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       'component_networkdrive'         => 1,
       'component_control'              => 1,
       'component_battery'              => 1,
+      'component_powersupply'          => 1,
       'states_id_default'              => 0,
       'location'                       => 0,
       'group'                          => 0,

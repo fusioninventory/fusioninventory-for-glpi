@@ -93,6 +93,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'powersupply'    => [],
           'itemtype'       => 'Computer'
       ];
 
@@ -183,6 +184,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'powersupply'    => [],
           'itemtype'       => 'Computer'
       ];
 
@@ -264,6 +266,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'powersupply'    => [],
           'bios'           => [
               'manufacturers_id' => 'Award',
               'designation'      => 'Award BIOS'

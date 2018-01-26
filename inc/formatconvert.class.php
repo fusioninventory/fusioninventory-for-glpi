@@ -113,7 +113,7 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT'];
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT','POWERSUPPLIES'];
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
               AND !is_array($datainventory['CONTENT'][$field])) {
@@ -279,6 +279,7 @@ class PluginFusioninventoryFormatconvert {
          'printer'                 => [],
          'peripheral'              => [],
          'storage'                 => [],
+         'powersupply'             => [],
          'remote_mgmt'             => []
       ];
       $thisc = new self();
@@ -1507,6 +1508,23 @@ class PluginFusioninventoryFormatconvert {
                                               'ID'   => 'number',
                                               'TYPE' => 'type']);
             $a_inventory['remote_mgmt'][] = $array_tmp;
+         }
+      }
+
+      // * POWER SUPPLIES
+      $a_inventory['powersupply'] = [];
+      if (isset($array['POWERSUPPLIES'])) {
+         foreach ($array['POWERSUPPLIES'] as $a_psu) {
+            $array_tmp = $thisc->addValues(
+               $a_psu,
+               [
+                  'SERIALNUMBER'  => 'serial',
+                  'PARTNUM'       => 'designation',
+                  'MANUFACTURER'  => 'manufacturers_id',
+                  'POWER_MAX'     => 'power'
+               ]
+            );
+            $a_inventory['powersupply'][] = $array_tmp;
          }
       }
 
