@@ -88,6 +88,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
          ],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'powersupply'    => [],
          'itemtype'       => 'Computer'
       ];
 
