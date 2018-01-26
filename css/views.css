@@ -948,3 +948,35 @@ table.runs td.comment {
 #force_inventory_button:hover:before {
    color: #CC7D7D;
 }
+
+.beta {
+   position: relative;
+   margin: .5em auto;
+   padding: .5em;
+   border: 1px solid red;
+   border-radius: .5em;
+   width: 40em;
+   color: red;
+}
+
+
+.beta .fa,
+.beta a {
+   color: red;
+   vertical-align: middle;
+}
+
+.beta a:nth-child(2) {
+   font-size: 1.5em;
+}
+
+.beta .trans {
+   position: absolute;
+   bottom: .2em;
+   right: .2em;
+   text-align: right;
+}
+
+.beta + h2 {
+   text-align: center;
+}
