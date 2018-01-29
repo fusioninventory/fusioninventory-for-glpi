@@ -80,6 +80,10 @@
    </authors>
    <versions>
       <version>
+         <num>9.2+2.0-RC1</num>
+         <compatibility>9.2</compatibility>
+      </version>
+      <version>
          <num>9.2+1.0</num>
          <compatibility>9.2</compatibility>
       </version>
