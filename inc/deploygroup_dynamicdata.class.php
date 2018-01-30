@@ -88,10 +88,59 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       if (!$withtemplate
           && $item->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-         return [_n('Criterion', 'Criteria', 2), _n('Associated item', 'Associated items', 2)];
+         $tabs[1] = _n('Criterion', 'Criteria', 2);
+         // Get the count of matching items
+         $count = self::getMatchingItemsCount($item);
+         if ($_SESSION['glpishow_count_on_tabs']) {
+            $tabs[2] = self::createTabEntry(_n('Associated item','Associated items', $count), $count);
+         } else {
+            $tabs[2] = _n('Associated item','Associated items', $count);
+         }
+         return $tabs;
       }
       return '';
    }
+
+
+   /**
+    * Get the count of items matching the dynamic search criteria
+    *
+    * This function saves and restores the pagination parameters to avoid breaking the pagination in the
+    * query results.
+    *
+    * @param object $item the item object
+    * @param integer $withtemplate 1 if is a template form
+    * @return string name of the tab
+    */
+   function getMatchingItemsCount(CommonGLPI $item) {
+      // Save pagination parameters
+      $pagination_params = [];
+      foreach (array('sort', 'order', 'start') as $field) {
+         if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
+            $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+         }
+      }
+
+      $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+      $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
+      if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
+         $params['metacriteria'] = [];
+      }
+      $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
+
+      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $params);
+      Search::constructSQL($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
+      // Restore pagination parameters
+      foreach ($pagination_params as $key => $value) {
+         $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field] = $pagination_params[$field];
+      }
+      return $data['data']['totalcount'];
+   }
+
 
 
    /**
@@ -105,39 +154,77 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       switch ($tabnum) {
 
-         case 0:
-            $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
-            if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
-               unset($search_params['metacriteria']);
-            }
-            PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
+         case 1:
+            self::showCriteriaAndSearch($item);
             return true;
 
-         case 1:
-            $params_dyn = [];
-            foreach (['sort', 'order', 'start'] as $field) {
+         case 2:
+            // Save pagination parameters
+            $pagination_params = [];
+            foreach (array('sort', 'order', 'start') as $field) {
                if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
-                  $params_dyn[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+                  $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
                }
             }
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-
-            foreach ($params_dyn as $key => $value) {
+            // Include pagination parameters in the provided parameters
+            foreach ($pagination_params as $key => $value) {
                $params[$key] = $value;
             }
-
             if (isset($params['metacriteria']) && !is_array($params['metacriteria'])) {
                $params['metacriteria'] = [];
             }
-
-            $params['target'] = Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup", true).
-                                "?id=".$item->getID();
-            self::showList('PluginFusioninventoryComputer', $params, ['2', '1']);
+            $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
+            self::showList('PluginFusioninventoryComputer', $params, array('1', '2'));
             return true;
 
       }
       return false;
+   }
+
+
+
+   /**
+    * Display criteria form + list of computers
+    *
+    * @param object $item PluginFusioninventoryDeployGroup instance
+    */
+   static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
+      // Save pagination parameters
+      $pagination_params = [];
+      foreach (array('sort', 'order', 'start') as $field) {
+         if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
+            $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
+         }
+      }
+      // WITHOUT checking post values
+      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+      //If metacriteria array is empty, remove it as it displays the metacriteria form,
+      //and it's is not we want !
+      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+         unset($search_params['metacriteria']);
+      }
+      PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
+
+      /* Do not display the search result on the current tab
+       * @mohierf: I do not remove this code if this feature is intended to be reactivated...
+       * -----
+      // Include pagination parameters in the provided parameters
+      foreach ($pagination_params as $key => $value) {
+         $search_params[$key] = $value;
+      }
+      // Add extra parameters for massive action display : only the Add action should be displayed
+      $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
+      $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
+      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
+
+      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      Search::constructSQL($data);
+      Search::constructDatas($data);
+      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
+      Search::displayDatas($data);
+      */
    }
 
 
@@ -149,16 +236,20 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     * @param array $forcedisplay
     */
    static function showList($itemtype, $params, $forcedisplay) {
-      $_GET['_in_modal'] = true;
       $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
       Search::constructSQL($data);
-      $data['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-              "`mainitemtype` = 'Computer'", $data['sql']['search']);
-      Search::constructData($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
+      // Remove some fields from the displayed columns
       if (Session::isMultiEntitiesMode()) {
-         $data['data']['cols'] = array_slice($data['data']['cols'], 0, 2);
+         // Remove entity and computer Id
+         unset($data['data']['cols'][1]);
+         unset($data['data']['cols'][2]);
       } else {
-         $data['data']['cols'] = array_slice($data['data']['cols'], 0, 1);
+         // Remove computer Id
+         unset($data['data']['cols'][1]);
       }
       Search::displayData($data);
    }
@@ -211,9 +302,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
          $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, ['2']);
          Search::constructSQL($results);
-         $results['sql']['search'] = str_replace("`mainitemtype` = 'PluginFusioninventoryComputer'",
-              "`mainitemtype` = 'Computer'", $results['sql']['search']);
-         Search::constructData($results);
+
+         // Use our specific constructDatas function rather than Glpi function
+         PluginFusioninventorySearch::constructDatas($results);
 
          foreach ($results['data']['rows'] as $id => $row) {
             $ids[$row['id']] = $row['id'];
@@ -291,4 +382,3 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
 
 }
-
