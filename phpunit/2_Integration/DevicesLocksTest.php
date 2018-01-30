@@ -370,7 +370,7 @@ class DevicesLocks extends RestoreDatabase_TestCase {
       $networkEquipment->add($input);
 
       $PLUGIN_FUSIONINVENTORY_XML = '';
-      $pfCommunicationNetworkInventory->importDevice('NetworkEquipment', 1, $a_inventory);
+      $pfCommunicationNetworkInventory->importDevice('NetworkEquipment', 1, $a_inventory, 1);
 
       $this->assertEquals(countElementsInTable('glpi_locations'), 0, 'Location has been created :/');
       $networkEquipment->getFromDB(1);

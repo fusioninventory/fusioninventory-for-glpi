@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
     * @param integer $printers_id id of the printer
     * @param boolean $no_history notice if changes must be logged or not
     */
-   function updatePrinter($a_inventory, $printers_id, $no_history) {
+   function updatePrinter($a_inventory, $printers_id, $no_history = false) {
       global $DB;
 
       $printer   = new Printer();
@@ -102,7 +102,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       }
       //Add the location if needed (play rule locations engine)
       $input = PluginFusioninventoryToolbox::addLocation($input);
-      $printer->update($input, $no_history);
+      $printer->update($input, !$no_history);
 
       $db_printer = [];
 

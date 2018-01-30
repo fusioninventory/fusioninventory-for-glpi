@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @param integer $items_id id of the networkequipment
     * @param boolean $no_history notice if changes must be logged or not
     */
-   function updateNetworkEquipment($a_inventory, $items_id, $no_history) {
+   function updateNetworkEquipment($a_inventory, $items_id, $no_history = false) {
       global $DB;
 
       $networkEquipment   = new NetworkEquipment();
@@ -108,7 +108,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       //Add the location if needed (play rule locations engine)
       $input = PluginFusioninventoryToolbox::addLocation($input);
 
-      $networkEquipment->update($input, $no_history);
+      $networkEquipment->update($input, !$no_history);
 
       $this->internalPorts($a_inventory['internalport'],
                            $items_id,

@@ -103,7 +103,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
                'is_dynamic'   => 1,
                'entities_id'  => $_SESSION['glpiactive_entity']
             ];
-            $relation->add($input, [], $no_history);
+            $relation->add($input, [], !$no_history);
          }
       }
    }
@@ -147,7 +147,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
             $a_port['instantiation_type'] = 'NetworkPortEthernet';
             $a_port['items_id']    = $items_id;
             $a_port['itemtype']    = $itemtype;
-            $networkports_id = $networkPort->add($a_port, [], $no_history);
+            $networkports_id = $networkPort->add($a_port, [], !$no_history);
             unset($a_port['id']);
             $a_pfnetworkport_DB = current($pfNetworkPort->find(
                     "`networkports_id`='".$networkports_id."'", '', 1));
@@ -223,7 +223,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
          $input['is_dynamic']    = 1;
          $input['entities_id']   = $_SESSION['glpiactive_entity'];
          if ($relation->isNewItem()) {
-            $relations_id = $relation->add($input, [], $no_history);
+            $relations_id = $relation->add($input, [], !$no_history);
          } else {
             $input['id']  = $relation->getID();
             $relations_id = $relation->update($input);
