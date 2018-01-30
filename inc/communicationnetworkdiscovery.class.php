@@ -227,7 +227,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                      "PluginFusioninventoryCommunicationNetworkDiscovery";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = $rule->processAllRules($input, []);
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
 
       if (isset($data['action'])
@@ -299,11 +299,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     */
    function rulepassed($items_id, $itemtype, $entities_id = 0) {
 
-      PluginFusioninventoryLogger::logIfExtradebug(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
-      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          'fusioninventorycommunication',
          'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().'
       );
@@ -363,7 +363,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     */
    function importDevice($item) {
 
-      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+      PluginFusioninventoryToolbox::logIfExtradebug(
          'fusioninventorycommunication',
          'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().'
       );

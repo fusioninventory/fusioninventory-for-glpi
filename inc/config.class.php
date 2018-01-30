@@ -925,22 +925,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Log when extra-debug is activated
-    *
-    * @param string $file name of log file to update
-    * @param string $message the message to put in log file
-    */
-   static function logIfExtradebug($file, $message) {
-      if (self::isExtradebugActive()) {
-         if (is_array($message)) {
-            $message = print_r($message, true);
-         }
-         Toolbox::logInFile($file, $message);
-      }
-   }
-
-
-   /**
     * Load all configuration in global variable $PF_CONFIG
     *
     * Test if table exists before loading cache
