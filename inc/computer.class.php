@@ -67,22 +67,24 @@ class PluginFusioninventoryComputer extends Computer {
     * @return array
     */
    function getSearchOptions() {
+      // Start with the base Glpi computer items
       $computer = new Computer();
       $options  = $computer->getSearchOptions();
 
+      // Add the network port items
       $options += NetworkPort::getSearchOptionsToAdd('Computer');
 
-      $options['6000']['name']          = __('Static group', 'fusioninventory');
-      $options['6000']['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
-      $options['6000']['massiveaction'] = FALSE;
-      $options['6000']['field']         ='name';
-      $options['6000']['forcegroupby']  = true;
-      $options['6000']['usehaving']     = true;
-      $options['6000']['datatype']      = 'dropdown';
-      $options['6000']['joinparams']    = array('beforejoin'
-                                         => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
-                                                  'joinparams' => array('jointype'          => 'itemtype_item',
-                                                                        'specific_itemtype' => 'Computer')));
+      $plugin = new Plugin();
+      if ($plugin->isInstalled('fields')) {
+         if ($plugin->isActivated('fields')) {
+            $options += [
+               'id'                 => 'fields_plugin',
+               'name'               => __('Plugin fields')
+            ];
+            $options += PluginFieldsContainer::getAddSearchOptions('Computer');
+         }
+      }
+
       return $options;
    }
 

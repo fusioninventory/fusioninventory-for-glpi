@@ -150,6 +150,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param object $item PluginFusioninventoryDeployGroup instance
     */
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
+      // WITH checking post values
       $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
       //If metacriteria array is empty, remove it as it displays the metacriteria form,
       //and it's is not we want !
@@ -165,7 +166,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
       Search::displayDatas($data);
    }
@@ -183,7 +187,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $computers_params['metacriteria'] = array();
       $computers_params['criteria'][]   = array('searchtype' => 'equals',
                                                 'value' => $_GET['id'],
-                                                'field' => 6000);
+                                                'field' => 5171);
 
       $search_params = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
 
@@ -193,7 +197,10 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array('action', 'id');
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
       Search::constructSQL($data);
-      Search::constructDatas($data);
+
+      // Use our specific constructDatas function rather than Glpi function
+      PluginFusioninventorySearch::constructDatas($data);
+
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
       Search::displayDatas($data);
    }

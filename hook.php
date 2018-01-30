@@ -55,138 +55,140 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
    $sopt = array();
    if ($itemtype == 'Computer' or $itemtype == 'PluginFusioninventoryComputer') {
 
-         $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5150]['field']     = 'last_fusioninventory_update';
-         $sopt[5150]['linkfield'] = 'id';
-         $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
-            __('Last inventory', 'fusioninventory');
-         $sopt[5150]['datatype']  = 'datetime';
-         $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
-         $sopt[5150]['massiveaction'] = FALSE;
+      $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5150]['field']     = 'last_fusioninventory_update';
+      $sopt[5150]['linkfield'] = 'id';
+      $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
+         __('Last inventory', 'fusioninventory');
+      $sopt[5150]['datatype']  = 'datetime';
+      $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
+      $sopt[5150]['massiveaction'] = FALSE;
 
-         $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5157]['field']     = 'operatingsystem_installationdate';
-         $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".
-                                       strtolower(__('Date')).")";
-         $sopt[5157]['joinparams']  = array('jointype' => 'child');
-         $sopt[5157]['datatype']  = 'date';
-         $sopt[5157]['massiveaction'] = FALSE;
+      $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5157]['field']     = 'operatingsystem_installationdate';
+      $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".
+                                    strtolower(__('Date')).")";
+      $sopt[5157]['joinparams']  = array('jointype' => 'child');
+      $sopt[5157]['datatype']  = 'date';
+      $sopt[5157]['massiveaction'] = FALSE;
 
-         $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5158]['field']     = 'winowner';
-         $sopt[5158]['joinparams']  = array('jointype' => 'child');
-         $sopt[5158]['name']      = __('Owner', 'fusioninventory');
-         $sopt[5158]['massiveaction'] = FALSE;
+      $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5158]['field']     = 'winowner';
+      $sopt[5158]['joinparams']  = array('jointype' => 'child');
+      $sopt[5158]['name']      = __('Owner', 'fusioninventory');
+      $sopt[5158]['massiveaction'] = FALSE;
 
-         $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5159]['field']     = 'wincompany';
-         $sopt[5159]['name']      = __('Company', 'fusioninventory');
-         $sopt[5159]['joinparams']  = array('jointype' => 'child');
-         $sopt[5159]['massiveaction'] = FALSE;
+      $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5159]['field']     = 'wincompany';
+      $sopt[5159]['name']      = __('Company', 'fusioninventory');
+      $sopt[5159]['joinparams']  = array('jointype' => 'child');
+      $sopt[5159]['massiveaction'] = FALSE;
 
-         $sopt[5160]['table']     = 'glpi_plugin_fusioninventory_agents';
-         $sopt[5160]['field']     = 'useragent';
-         $sopt[5160]['name']      = __('Useragent', 'fusioninventory');
-         $sopt[5160]['joinparams']  = array('jointype' => 'child');
-         $sopt[5160]['massiveaction'] = FALSE;
+      $sopt[5160]['table']     = 'glpi_plugin_fusioninventory_agents';
+      $sopt[5160]['field']     = 'useragent';
+      $sopt[5160]['name']      = __('Useragent', 'fusioninventory');
+      $sopt[5160]['joinparams']  = array('jointype' => 'child');
+      $sopt[5160]['massiveaction'] = FALSE;
 
-         $sopt[5161]['table']     = 'glpi_plugin_fusioninventory_agents';
-         $sopt[5161]['field']     = 'tag';
-         $sopt[5161]['linkfield'] = '';
-         $sopt[5161]['name']      = __('FusionInventory tag', 'fusioninventory');
+      $sopt[5161]['table']     = 'glpi_plugin_fusioninventory_agents';
+      $sopt[5161]['field']     = 'tag';
+      $sopt[5161]['linkfield'] = '';
+      $sopt[5161]['name']      = __('FusionInventory tag', 'fusioninventory');
 
-         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5163]['field']     = 'oscomment';
-         $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
-         $sopt[5163]['joinparams']  = array('jointype' => 'child');
-         $sopt[5163]['massiveaction'] = FALSE;
+      $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5163]['field']     = 'oscomment';
+      $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
+      $sopt[5163]['joinparams']  = array('jointype' => 'child');
+      $sopt[5163]['massiveaction'] = FALSE;
 
-         $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5164]['field']         = "DEPLOY";
-         $sopt[5164]['linkfield']     = "DEPLOY";
-         $sopt[5164]['name']          = __('Module', 'fusioninventory')."-".__('Deploy', 'fusioninventory');
-         $sopt[5164]['datatype']      = 'bool';
-         $sopt[5164]['massiveaction'] = FALSE;
+      $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5164]['field']         = "DEPLOY";
+      $sopt[5164]['linkfield']     = "DEPLOY";
+      $sopt[5164]['name']          = __('Module', 'fusioninventory')."-".__('Deploy', 'fusioninventory');
+      $sopt[5164]['datatype']      = 'bool';
+      $sopt[5164]['massiveaction'] = FALSE;
 
-         $sopt[5165]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5165]['field']         = "WAKEONLAN";
-         $sopt[5165]['linkfield']     = "WAKEONLAN";
-         $sopt[5165]['name']          = __('Module', 'fusioninventory')."-".__('WakeOnLan', 'fusioninventory');
-         $sopt[5165]['datatype']      = 'bool';
-         $sopt[5165]['massiveaction'] = FALSE;
+      $sopt[5165]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5165]['field']         = "WAKEONLAN";
+      $sopt[5165]['linkfield']     = "WAKEONLAN";
+      $sopt[5165]['name']          = __('Module', 'fusioninventory')."-".__('WakeOnLan', 'fusioninventory');
+      $sopt[5165]['datatype']      = 'bool';
+      $sopt[5165]['massiveaction'] = FALSE;
 
-         $sopt[5166]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5166]['field']         = "INVENTORY";
-         $sopt[5166]['linkfield']     = "INVENTORY";
-         $sopt[5166]['name']          = __('Module', 'fusioninventory')."-".__('Local inventory', 'fusioninventory');
-         $sopt[5166]['datatype']      = 'bool';
-         $sopt[5166]['massiveaction'] = FALSE;
+      $sopt[5166]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5166]['field']         = "INVENTORY";
+      $sopt[5166]['linkfield']     = "INVENTORY";
+      $sopt[5166]['name']          = __('Module', 'fusioninventory')."-".__('Local inventory', 'fusioninventory');
+      $sopt[5166]['datatype']      = 'bool';
+      $sopt[5166]['massiveaction'] = FALSE;
 
-         $sopt[5167]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5167]['field']         = "InventoryComputerESX";
-         $sopt[5167]['linkfield']     = "InventoryComputerESX";
-         $sopt[5167]['name']          = __('Module', 'fusioninventory')."-".__('ESX/VMWare', 'fusioninventory');
-         $sopt[5167]['datatype']      = 'bool';
-         $sopt[5167]['massiveaction'] = FALSE;
+      $sopt[5167]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5167]['field']         = "InventoryComputerESX";
+      $sopt[5167]['linkfield']     = "InventoryComputerESX";
+      $sopt[5167]['name']          = __('Module', 'fusioninventory')."-".__('ESX/VMWare', 'fusioninventory');
+      $sopt[5167]['datatype']      = 'bool';
+      $sopt[5167]['massiveaction'] = FALSE;
 
-         $sopt[5168]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5168]['field']         = "NETWORKINVENTORY";
-         $sopt[5168]['linkfield']     = "NETWORKINVENTORY";
-         $sopt[5168]['name']          = __('Module', 'fusioninventory')."-".__('Network inventory', 'fusioninventory');
-         $sopt[5168]['datatype']      = 'bool';
-         $sopt[5168]['massiveaction'] = FALSE;
+      $sopt[5168]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5168]['field']         = "NETWORKINVENTORY";
+      $sopt[5168]['linkfield']     = "NETWORKINVENTORY";
+      $sopt[5168]['name']          = __('Module', 'fusioninventory')."-".__('Network inventory', 'fusioninventory');
+      $sopt[5168]['datatype']      = 'bool';
+      $sopt[5168]['massiveaction'] = FALSE;
 
-         $sopt[5169]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5169]['field']         = "NETWORKDISCOVERY";
-         $sopt[5169]['linkfield']     = "NETWORKDISCOVERY";
-         $sopt[5169]['name']          = __('Module', 'fusioninventory')."-".__('Network discovery', 'fusioninventory');
-         $sopt[5169]['datatype']      = 'bool';
-         $sopt[5169]['massiveaction'] = FALSE;
+      $sopt[5169]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5169]['field']         = "NETWORKDISCOVERY";
+      $sopt[5169]['linkfield']     = "NETWORKDISCOVERY";
+      $sopt[5169]['name']          = __('Module', 'fusioninventory')."-".__('Network discovery', 'fusioninventory');
+      $sopt[5169]['datatype']      = 'bool';
+      $sopt[5169]['massiveaction'] = FALSE;
 
-         $sopt[5170]['table']         = "glpi_plugin_fusioninventory_agentmodules";
-         $sopt[5170]['field']         = "Collect";
-         $sopt[5170]['linkfield']     = "Collect";
-         $sopt[5170]['name']          = __('Module', 'fusioninventory')."-".__('Collect', 'fusioninventory');
-         $sopt[5170]['datatype']      = 'bool';
-         $sopt[5170]['massiveaction'] = FALSE;
+      $sopt[5170]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+      $sopt[5170]['field']         = "Collect";
+      $sopt[5170]['linkfield']     = "Collect";
+      $sopt[5170]['name']          = __('Module', 'fusioninventory')."-".__('Collect', 'fusioninventory');
+      $sopt[5170]['datatype']      = 'bool';
+      $sopt[5170]['massiveaction'] = FALSE;
 
-         $sopt[5171]['name']          = __('Static group', 'fusioninventory');
-         $sopt[5171]['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
-         $sopt[5171]['massiveaction'] = FALSE;
-         $sopt[5171]['field']         ='name';
-         $sopt[5171]['forcegroupby']  = true;
-         $sopt[5171]['usehaving']     = true;
-         $sopt[5171]['datatype']      = 'dropdown';
-         $sopt[5171]['joinparams']    = array('beforejoin'
-                                          => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
-                                                   'joinparams' => array('jointype'          => 'itemtype_item',
-                                                                           'specific_itemtype' => 'Computer')));
+      $sopt[5171]['name']          = __('Group of computers', 'fusioninventory');
+      $sopt[5171]['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
+      $sopt[5171]['massiveaction'] = FALSE;
+      $sopt[5171]['field']         ='name';
+      $sopt[5171]['forcegroupby']  = true;
+      $sopt[5171]['usehaving']     = true;
+      $sopt[5171]['datatype']      = 'dropdown';
+      $sopt[5171]['joinparams']    = array('beforejoin'
+                                       => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
+                                                'joinparams' => array('jointype'          => 'itemtype_item',
+                                                                        'specific_itemtype' => 'Computer')));
 
-         $sopt[5178]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
-         $sopt[5178]['field']     = 'hostid';
-         $sopt[5178]['name']      = __('HostID', 'fusioninventory');
-         $sopt[5178]['joinparams']  = array('jointype' => 'child');
-         $sopt[5178]['massiveaction'] = FALSE;
+      $sopt[5178]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5178]['field']     = 'hostid';
+      $sopt[5178]['name']      = __('HostID', 'fusioninventory');
+      $sopt[5178]['joinparams']  = array('jointype' => 'child');
+      $sopt[5178]['massiveaction'] = FALSE;
 
-         $sopt[5179]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
-         $sopt[5179]['field']     = 'serial';
-         $sopt[5179]['name']      = __('License serial number', 'fusioninventory');
-         $sopt[5179]['joinparams']  = array('jointype' => 'child');
-         $sopt[5179]['massiveaction'] = FALSE;
+      $sopt[5179]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+      $sopt[5179]['field']     = 'serial';
+      $sopt[5179]['name']      = __('License serial number', 'fusioninventory');
+      $sopt[5179]['joinparams']  = array('jointype' => 'child');
+      $sopt[5179]['massiveaction'] = FALSE;
 
-         $sopt[5180]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
-         $sopt[5180]['field']     = 'fullname';
-         $sopt[5180]['name']      = __('License full name', 'fusioninventory');
-         $sopt[5180]['joinparams']  = array('jointype' => 'child');
-         $sopt[5180]['massiveaction'] = FALSE;
+      $sopt[5180]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+      $sopt[5180]['field']     = 'fullname';
+      $sopt[5180]['name']      = __('License full name', 'fusioninventory');
+      $sopt[5180]['joinparams']  = array('jointype' => 'child');
+      $sopt[5180]['massiveaction'] = FALSE;
 
 
-         $sopt[5181]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
-         $sopt[5181]['field']     = 'name';
-         $sopt[5181]['name']      = _n('License', 'Licenses', 2);
-         $sopt[5181]['joinparams']  = array('jointype' => 'child');
-         $sopt[5181]['massiveaction'] = FALSE;
+      $sopt[5181]['table']     = 'glpi_plugin_fusioninventory_computerlicenseinfos';
+      $sopt[5181]['field']     = 'name';
+      $sopt[5181]['name']      = _n('License', 'Licenses', 2);
+      $sopt[5181]['joinparams']  = array('jointype' => 'child');
+      $sopt[5181]['massiveaction'] = FALSE;
 
+      // These will start on 5220
+      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
    }
 
    if ($itemtype == 'Computer') {
@@ -204,16 +206,12 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Switch ports');
       $sopt[5193]['forcegroupby']='1';
 
-      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
-
-
       $sopt[5197]['table']         = 'glpi_plugin_fusioninventory_agents';
       $sopt[5197]['field']         = 'last_contact';
       $sopt[5197]['linkfield']     = '';
       $sopt[5197]['joinparams']    = array('jointype' => 'child');
       $sopt[5197]['name']          = __('FusInv', 'fusioninventory')." - ".
                                      __('Last contact', 'fusioninventory');
-
    }
 
    if ($itemtype == 'Entity') {
