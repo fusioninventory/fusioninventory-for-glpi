@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
     *
     * @return void
     */
-   function importFirmwares($itemtype, $a_inventory, $items_id) {
+   function importFirmwares($itemtype, $a_inventory, $items_id, $no_history = false) {
       if (!isset($a_inventory['firmwares']) || !count($a_inventory['firmwares'])) {
          return;
       }
@@ -103,7 +103,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
                'is_dynamic'   => 1,
                'entities_id'  => $_SESSION['glpiactive_entity']
             ];
-            $relation->add($input);
+            $relation->add($input, [], !$no_history);
          }
       }
    }
@@ -114,7 +114,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
     * @param array $a_inventory
     * @param integer $items_id
     */
-   function importPorts($itemtype, $a_inventory, $items_id) {
+   function importPorts($itemtype, $a_inventory, $items_id, $no_history = false) {
 
       $networkPort     = new NetworkPort();
       $pfNetworkPort   = new PluginFusioninventoryNetworkPort();
@@ -145,9 +145,9 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
          if ($new) {
             // Add port
             $a_port['instantiation_type'] = 'NetworkPortEthernet';
-            $a_port['items_id'] = $items_id;
-            $a_port['itemtype'] = $itemtype;
-            $networkports_id = $networkPort->add($a_port);
+            $a_port['items_id']    = $items_id;
+            $a_port['itemtype']    = $itemtype;
+            $networkports_id = $networkPort->add($a_port, [], !$no_history);
             unset($a_port['id']);
             $a_pfnetworkport_DB = current($pfNetworkPort->find(
                     "`networkports_id`='".$networkports_id."'", '', 1));
@@ -185,7 +185,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
     *
     * @return void
     */
-   function importSimcards($itemtype, $a_inventory, $items_id) {
+   function importSimcards($itemtype, $a_inventory, $items_id, $no_history = false) {
       if (!isset($a_inventory['simcards']) || !count($a_inventory['simcards'])) {
          return;
       }
@@ -218,12 +218,12 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
          //Check if there's already a connection between the simcard and an asset
          $relation->getFromDBByCrit($input);
 
-         $input['itemtype']    = $itemtype;
-         $input['items_id']    = $items_id;
-         $input['is_dynamic']  = 1;
-         $input['entities_id'] = $_SESSION['glpiactive_entity'];
+         $input['itemtype']      = $itemtype;
+         $input['items_id']      = $items_id;
+         $input['is_dynamic']    = 1;
+         $input['entities_id']   = $_SESSION['glpiactive_entity'];
          if ($relation->isNewItem()) {
-            $relations_id = $relation->add($input);
+            $relations_id = $relation->add($input, [], !$no_history);
          } else {
             $input['id']  = $relation->getID();
             $relations_id = $relation->update($input);

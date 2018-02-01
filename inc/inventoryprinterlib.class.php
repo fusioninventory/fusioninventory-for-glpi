@@ -61,8 +61,9 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
     * @global object $DB
     * @param array $a_inventory data fron agent inventory
     * @param integer $printers_id id of the printer
+    * @param boolean $no_history notice if changes must be logged or not
     */
-   function updatePrinter($a_inventory, $printers_id) {
+   function updatePrinter($a_inventory, $printers_id, $no_history = false) {
       global $DB;
 
       $printer   = new Printer();
@@ -92,7 +93,6 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       $input                  = $a_inventory['Printer'];
       $input['id']            = $printers_id;
       $input['itemtype']      = 'Printer';
-
       if (isset($a_inventory['networkport'])) {
          foreach ($a_inventory['networkport'] as $a_port) {
             if (isset($a_port['ip'])) {
@@ -102,16 +102,17 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       }
       //Add the location if needed (play rule locations engine)
       $input = PluginFusioninventoryToolbox::addLocation($input);
+      $printer->update($input, !$no_history);
 
-      $printer->update($input);
+      $db_printer = [];
 
       // * Printer fusion (ext)
-      $db_printer = array();
-      $query = "SELECT *
-            FROM `".  getTableForItemType("PluginFusioninventoryPrinter")."`
-            WHERE `printers_id` = '$printers_id'";
-      $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      $params = [
+         'FROM'  => getTableForItemType("PluginFusioninventoryPrinter"),
+         'WHERE' => ['printers_id' => $printers_id]
+      ];
+      $iterator = $DB->request($params);
+      while ($data = $iterator->next()) {
          foreach ($data as $key=>$value) {
             $db_printer[$key] = Toolbox::addslashes_deep($value);
          }
@@ -122,7 +123,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
             $printers_id;
          $pfPrinter->add($a_inventory['PluginFusioninventoryPrinter']);
       } else { // Update
-         $idtmp = $db_printer['id'];
+         $idtmp      = $db_printer['id'];
          unset($db_printer['id']);
          unset($db_printer['printers_id']);
          unset($db_printer['plugin_fusioninventory_configsecurities_id']);
@@ -137,13 +138,13 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       }
 
       // * Ports
-      $this->importPorts('Printer', $a_inventory, $printers_id);
+      $this->importPorts('Printer', $a_inventory, $printers_id, $no_history);
 
       //Import firmwares
-      $this->importFirmwares('Printer', $a_inventory, $printers_id);
+      $this->importFirmwares('Printer', $a_inventory, $printers_id, $no_history);
 
       //Import simcards
-      $this->importSimcards('Printer', $a_inventory, $printers_id);
+      $this->importSimcards('Printer', $a_inventory, $printers_id, $no_history);
 
       // Page counters
       $this->importPageCounters($a_inventory['pagecounters'], $printers_id);

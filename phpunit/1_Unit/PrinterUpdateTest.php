@@ -105,10 +105,10 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $this->assertGreaterThan(0, $this->items_id);
 
-      $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id);
+      $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id, 1);
 
       // To be sure not have 2 sme informations
-      $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id);
+      $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id, 0);
 
    }
 
@@ -551,7 +551,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       ];
 
    $pfCNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
-   $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory);
+   $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory, 0);
 
    $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
    $this->assertEquals('1', count($a_ports), 'Should have only one port');

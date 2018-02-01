@@ -245,9 +245,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @param string $itemtype
     * @param integer $items_id
     * @param array $a_inventory
+    * @param boolean $no_history notice if changes must be logged or not
     * @return string errors or empty string
     */
-   function importDevice($itemtype, $items_id, $a_inventory) {
+   function importDevice($itemtype, $items_id, $a_inventory, $no_history) {
       global $PLUGIN_FUSIONINVENTORY_XML;
 
       PluginFusioninventoryCommunication::addLog(
@@ -287,14 +288,14 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
             $a_inventory['PluginFusioninventoryPrinter']['serialized_inventory'] =
                         Toolbox::addslashes_deep($serialized);
-            $pfiPrinterLib->updatePrinter($a_inventory, $items_id);
+            $pfiPrinterLib->updatePrinter($a_inventory, $items_id, $no_history);
             break;
 
          case 'NetworkEquipment':
             $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
             $a_inventory['PluginFusioninventoryNetworkEquipment']['serialized_inventory'] =
                         Toolbox::addslashes_deep($serialized);
-            $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
+            $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id, $no_history);
             break;
 
          default:
@@ -443,6 +444,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     */
    function rulepassed($items_id, $itemtype) {
 
+      $no_history = false;
+
       PluginFusioninventoryLogger::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
@@ -477,8 +480,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $_SESSION["plugin_fusioninventory_entity"] = $input['entities_id'];
 
          //Add defaut status if there's one defined in the configuration
-         $input    = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
-         $items_id = $class->add($input);
+         $input      = PluginFusioninventoryToolbox::addDefaultStateIfNeeded('snmp', $input);
+         $items_id   = $class->add($input);
+         $no_history = true;
          if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
             $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
             $inputrulelog = array();
@@ -523,7 +527,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==detail==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
-         $errors .= $this->importDevice($itemtype, $items_id, $a_inventory);
+         $errors .= $this->importDevice($itemtype, $items_id, $a_inventory, $no_history);
       }
       return $errors;
    }

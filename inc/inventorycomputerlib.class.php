@@ -183,13 +183,14 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $ios->update(['id' => $ios->getID()] + $input_os);
                }
             } else {
+               $input_os['_no_history'] = $no_history;
                $ios->add($input_os);
             }
          }
 
          if ($pfConfig->getValue("component_simcard") != 0) {
             //Import simcards
-            $this->importSimcards('Computer', $a_computerinventory, $computers_id);
+            $this->importSimcards('Computer', $a_computerinventory, $computers_id, $no_history);
          }
 
       // * Computer
