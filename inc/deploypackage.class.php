@@ -751,11 +751,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $zip->addEmptyDir('files');
             $zip->addEmptyDir('files/manifests');
             $zip->addEmptyDir('files/repository');
+            $pfDeployFile = new PluginFusioninventoryDeployFile();
             foreach ($a_files as $hash=>$data) {
                $sha512 = trim(file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash));
                $zip->addFile(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash, "files/manifests/".$hash);
                $a_xml['manifests'][] = $hash;
-               $file = PluginFusioninventoryDeployFile::getDirBySha512($sha512).
+               $file = $pfDeployFile->getDirBySha512($sha512).
                        "/".$sha512;
                $zip->addFile(GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/".$file, "files/repository/".$file);
                $a_xml['repository'][] = $file;
