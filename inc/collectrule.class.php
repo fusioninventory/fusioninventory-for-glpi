@@ -248,6 +248,9 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['otherserial']['name']  = __('Inventory number');
       $actions['otherserial']['force_actions'] = ['assign', 'regex_result'];
 
+      $actions['comment']['name']  = _n('Comment', 'Comments', 2);
+      $actions['comment']['force_actions'] = array('assign', 'regex_result');
+
       return $actions;
    }
 

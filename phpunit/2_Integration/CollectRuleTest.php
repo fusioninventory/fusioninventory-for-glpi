@@ -212,6 +212,31 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       ];
       $this->ruleactions_id = $ruleAction->add($input);
 
+      // * computer comment assign
+      $input = array(
+          'entities_id' => 0,
+          'sub_type' => 'PluginFusioninventoryCollectRule',
+          'name' => 'comment assign rule',
+          'match' => 'AND'
+      );
+      $rules_id = $rule->add($input);
+
+      $input = array(
+          'rules_id'  => $rules_id,
+          'criteria'  => 'filename',
+          'condition' => 6,
+          'pattern'   => "/dell (.*)/"
+      );
+      $ruleCriteria->add($input);
+
+      $input = array(
+          'rules_id'    => $rules_id,
+          'action_type' => 'assign',
+          'field'       => 'comment',
+          'value'       => 'mycomment'
+      );
+      $this->ruleactions_id = $ruleAction->add($input);
+
       // * create items
       $computerModel = new ComputerModel();
       $input = [
@@ -221,6 +246,30 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
 
    }
 
+
+   /**
+    * @test
+    */
+   public function getComputerCommentAssign() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
+
+      $res_rule = $pfCollectRuleCollection->processAllRules(
+                    array(
+                        "filename"  => 'dell d630',
+                        "filepath"  => '/tmp',
+                        "size"      => 1000
+                     )
+                  );
+      $this->assertEquals('mycomment', $res_rule['comment']);
+   }
 
    /**
     * @test
