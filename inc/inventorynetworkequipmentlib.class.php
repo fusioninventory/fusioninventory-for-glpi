@@ -123,7 +123,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          'FROM'  => getTableForItemType("PluginFusioninventoryNetworkEquipment"),
          'WHERE' => ['networkequipments_id' => $items_id]
       ];
-      foreach ($DB->request($params) as $data) {
+      $iterator = $DB->request($params);
+      while ($data = $iterator->next()) {
          foreach ($data as $key=>$value) {
             $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
          }
