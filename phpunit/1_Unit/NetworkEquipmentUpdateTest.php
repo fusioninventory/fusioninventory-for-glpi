@@ -208,14 +208,14 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
 
       $this->assertGreaterThan(0, $this->items_id);
 
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 1);
 
       $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
               ." SET `import`='0'"
               ." WHERE `number`='54'");
 
       // To be sure not have 2 sme informations
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 0);
 
    }
 

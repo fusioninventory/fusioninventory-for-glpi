@@ -61,8 +61,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @global object $DB
     * @param array $a_inventory data fron agent inventory
     * @param integer $items_id id of the networkequipment
+    * @param boolean $no_history notice if changes must be logged or not
     */
-   function updateNetworkEquipment($a_inventory, $items_id) {
+   function updateNetworkEquipment($a_inventory, $items_id, $no_history = false) {
       global $DB;
 
       $networkEquipment   = new NetworkEquipment();
@@ -107,7 +108,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       //Add the location if needed (play rule locations engine)
       $input = PluginFusioninventoryToolbox::addLocation($input);
 
-      $networkEquipment->update($input);
+      $networkEquipment->update($input, !$no_history);
 
       $this->internalPorts($a_inventory['internalport'],
                            $items_id,
@@ -115,12 +116,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                            'Internal');
 
       // * NetworkEquipment fusion (ext)
-      $db_networkequipment = [];
-      $query = "SELECT *
-         FROM `".  getTableForItemType("PluginFusioninventoryNetworkEquipment")."`
-         WHERE `networkequipments_id` = '$items_id'";
-      $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      $db_networkequipment = array();
+
+      $params = [
+         'FROM'  => getTableForItemType("PluginFusioninventoryNetworkEquipment"),
+         'WHERE' => ['networkequipments_id' => $items_id]
+      ];
+      $iterator = $DB->request($params);
+      while ($data = $iterator->next()) {
          foreach ($data as $key=>$value) {
             $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
          }
@@ -139,19 +142,19 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                      $a_inventory['PluginFusioninventoryNetworkEquipment'],
                      $db_networkequipment);
          $a_inventory['PluginFusioninventoryNetworkEquipment'] = $a_ret[0];
-         $input = $a_inventory['PluginFusioninventoryNetworkEquipment'];
-         $input['id'] = $idtmp;
+         $input                = $a_inventory['PluginFusioninventoryNetworkEquipment'];
+         $input['id']          = $idtmp;
          $pfNetworkEquipment->update($input);
       }
 
       // * Ports
-      $this->importPorts('NetworkEquipment', $a_inventory, $items_id);
+      $this->importPorts('NetworkEquipment', $a_inventory, $items_id, $no_history);
 
       //Import firmwares
-      $this->importFirmwares('NetworkEquipment', $a_inventory, $items_id);
+      $this->importFirmwares('NetworkEquipment', $a_inventory, $items_id, $no_history);
 
       //Import simcards
-      $this->importSimcards('NetworkEquipment', $a_inventory, $items_id);
+      $this->importSimcards('NetworkEquipment', $a_inventory, $items_id, $no_history);
 
    }
 
@@ -257,7 +260,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
     * @param array $a_inventory
     * @param integer $items_id
     */
-   function importPorts($itemtype, $a_inventory, $items_id) {
+   function importPorts($itemtype, $a_inventory, $items_id, $no_history = false) {
       //TODO : try to report this code in PluginFusioninventoryInventoryCommon::importPorts
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $networkPort       = new NetworkPort();
@@ -284,7 +287,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                }
                $a_port['items_id'] = $items_id;
                $a_port['itemtype'] = 'NetworkEquipment';
-               $networkports_id = $networkPort->add($a_port);
+               $networkports_id = $networkPort->add($a_port, [], $no_history);
                unset($a_port['id']);
                $a_pfnetworkport_DB = current($pfNetworkPort->find(
                        "`networkports_id`='".$networkports_id."'", '', 1));
