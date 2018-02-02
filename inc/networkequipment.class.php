@@ -1227,7 +1227,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       if (empty($folder)) {
          $folder = '0';
       }
-      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/NetworkEquipment/".$folder."/".$items_id)) {
+      if (file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR."networkequipment/".$folder."/".$items_id)) {
          echo "/ <a href='".$CFG_GLPI['root_doc'].
          "/plugins/fusioninventory/front/send_inventory.php".
          "?itemtype=networkequipment".

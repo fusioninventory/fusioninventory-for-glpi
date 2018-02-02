@@ -188,12 +188,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks');
-   }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels');
-   }
+
    /*
     * Deploy folders
     */
@@ -361,4 +356,3 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 
 }
-

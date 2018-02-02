@@ -62,6 +62,8 @@ define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
 define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/");
+define("PLUGIN_FUSIONINVENTORY_XML_DIR",
+       GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/");
 
 
 /**

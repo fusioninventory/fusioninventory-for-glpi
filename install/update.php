@@ -277,20 +277,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/computer');
+   if (!is_dir(PLUGIN_FUSIONINVENTORY_XML_DIR.'computer')) {
+      mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR.'computer');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/printer');
+   if (!is_dir(PLUGIN_FUSIONINVENTORY_XML_DIR.'printer')) {
+      mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR.'printer');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
-   }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks');
-   }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels');
+   if (!is_dir(PLUGIN_FUSIONINVENTORY_XML_DIR.'networkequipment')) {
+      mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR.'networkequipment');
    }
 
    // ********* Deploy folders ********************************************** //

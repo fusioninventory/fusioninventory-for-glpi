@@ -322,7 +322,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          $folder = '0';
       }
 
-      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$computers_id)) {
+      if (file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR."computer/".$folder."/".$computers_id)) {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
