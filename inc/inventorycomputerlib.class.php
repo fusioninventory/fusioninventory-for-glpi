@@ -177,14 +177,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $same = false;
                   break;
                }
-            } else {
-               $input_os['_no_history'] = $no_history;
-               $ios->add($input_os);
             }
             if ($same === false) {
                $ios->update(['id' => $ios->getID()] + $input_os);
             }
          } else {
+            $input_os['_no_history'] = $no_history;
             $ios->add($input_os);
          }
       }

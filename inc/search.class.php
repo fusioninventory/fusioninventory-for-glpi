@@ -97,7 +97,7 @@ class PluginFusioninventorySearch extends CommonDBTM {
       $data['sql']['search'] = str_replace("`itemtype` = 'PluginFusioninventoryComputer'",
          "`itemtype` = 'Computer'", $data['sql']['search']);
 
-      Search::constructDatas($data, $onlycount);
+      Search::constructData($data, $onlycount);
    }
 
 
