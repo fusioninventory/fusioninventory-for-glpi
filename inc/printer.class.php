@@ -52,7 +52,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the printer extended information.
  */
-class PluginFusioninventoryPrinter extends CommonDBTM {
+class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
 
    /**
     * The right name for this class
@@ -60,6 +60,8 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
     * @var string
     */
    static $rightname = 'plugin_fusioninventory_printer';
+
+   public $itemtype  = 'Printer';
 
 
    /**
@@ -113,7 +115,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
          $pfPrinter = new PluginFusioninventoryPrinter();
          $pfPrinter->showForm($item,
                      ['target' => $CFG_GLPI['root_doc'].
-                                          '/plugins/fusioninventory/front/printer_info.form.php']);
+                        '/plugins/fusioninventory/front/printer_info.form.php']);
          echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
          $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
@@ -139,140 +141,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->updateDB();
-   }
-
-
-   /**
-    * Display form
-    *
-    * @param object $item Printer instance
-    * @param array $options
-    * @return true
-    */
-   function showForm(Printer $item, $options = []) {
-      Session::checkRight('plugin_fusioninventory_printer', READ);
-
-      $id = $item->getID();
-      if (!$data = $this->find("`printers_id`='".$id."'", '', 1)) {
-         // Add in database if not exist
-         $input = [];
-         $input['printers_id'] = $id;
-         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_printers';
-         $ID_tn = $this->add($input);
-         $this->getFromDB($ID_tn);
-      } else {
-         foreach ($data as $datas) {
-            $this->fields = $datas;
-         }
-      }
-
-      // Form printer informations
-
-      echo "<div align='center'>";
-      echo "<form method='post' name='snmp_form' id='snmp_form'
-                 action=\"".$options['target']."\">";
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>";
-      echo __('SNMP information', 'fusioninventory');
-
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo __('Sysdescr', 'fusioninventory');
-
-      echo "</td>";
-      echo "<td>";
-      echo "<textarea name='sysdescr' cols='45' rows='5'>";
-      echo $this->fields['sysdescr'];
-      echo "</textarea>";
-      echo "</td>";
-      echo "<td align='center'>";
-      echo __('Last inventory', 'fusioninventory')."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      echo Html::convDateTime(
-              $this->fields['last_fusioninventory_update']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'></td>";
-      echo "<td align='center'>";
-      echo "</td>";
-      echo "<td align='center'>".__('SNMP credentials', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::authDropdown(
-              $this->fields["plugin_fusioninventory_configsecurities_id"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_2 center'>";
-      echo "<td colspan='4'>";
-      echo "<div align='center'>";
-      echo "<input type='hidden' name='id' value='".$id."'>";
-      echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
-      Html::closeForm();
-      echo "</div>";
-      return true;
-   }
-
-
-   /**
-    * Display serialized inventory
-    *
-    * @global array $CFG_GLPI
-    * @param integer $printers_id
-    */
-   function displaySerializedInventory($printers_id) {
-      global $CFG_GLPI;
-
-      $a_printerextend = current($this->find("`printers_id`='".$printers_id."'",
-                                               "", 1));
-
-      $this->getFromDB($a_printerextend['id']);
-
-      if (empty($this->fields['serialized_inventory'])) {
-         return;
-      }
-
-      $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
-
-      echo "<br/>";
-
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>";
-      echo __('Last inventory', 'fusioninventory');
-      echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo __('Download', 'fusioninventory');
-      echo "</th>";
-      echo "<td>";
-      echo "<a href='".$CFG_GLPI['root_doc'].
-              "/plugins/fusioninventory/front/send_inventory.php".
-              "?itemtype=PluginFusioninventoryPrinter".
-              "&function=sendSerializedInventory&items_id=".$a_printerextend['id'].
-              "&filename=Printer-".$printers_id.".json'".
-              "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
-      echo "</td>";
-      echo "</tr>";
-
-      PluginFusioninventoryToolbox::displaySerializedValues($data);
-
-      echo "</table>";
    }
 
 
@@ -319,6 +187,5 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
       echo "</table>";
    }
-
 
 }
