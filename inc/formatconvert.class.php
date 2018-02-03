@@ -2081,15 +2081,15 @@ class PluginFusioninventoryFormatconvert {
       ];
       switch ($itemtype) {
          case 'Printer':
-            $infos['MEMORY']            = 'memory_size';
+            $infos['MEMORY'] = 'memory_size';
             break;
          case 'NetworkEquipment':
-            $infos['RAM']    = 'ram';
             $infos['MEMORY'] = 'memory';
+            $infos['RAM']    = 'ram';
             $infos['MAC']    = 'mac';
             break;
       }
-      $array_tmp               = $this->addValues($array['INFO'], $infos);
+      $array_tmp = $this->addValues($array['INFO'], $infos);
       $array_tmp['is_dynamic'] = 1;
       if ($itemtype == 'Printer') {
          $array_tmp['have_ethernet'] = 1;
@@ -2106,14 +2106,15 @@ class PluginFusioninventoryFormatconvert {
    * @param array $a_inventory reference to the output inventory
    */
    function additionalInfoTransformation($itemtype, $array, &$a_inventory) {
-      $infos             = [];
+      $infos  = $array_tmp = [];
       $infos['COMMENTS'] = 'sysdescr';
       switch ($itemtype) {
          case 'NetworkEquipment':
             $infos['UPTIME'] = 'uptime';
             $infos['CPU']    = 'cpu';
             $infos['MEMORY'] = 'memory';
-            if (!isset($array_tmp['cpu']) || $array_tmp['cpu'] == '') {
+            if (!isset($a_inventory[$itemtype]['cpu'])
+               || $a_inventory[$itemtype]['cpu'] == '') {
                $array_tmp['cpu'] = 0;
             }
             break;

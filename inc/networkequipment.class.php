@@ -53,7 +53,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage and display extended information of network equipments.
  */
-class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
+class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
    /**
     * The right name for this class
@@ -61,6 +61,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     * @var string
     */
    static $rightname = 'plugin_fusioninventory_networkequipment';
+
+   public $itemtype  = 'NetworkEquipment';
+
 
    /**
     * Get the tab name used for item
@@ -77,7 +80,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Display the content of the tab
     *
@@ -90,22 +92,24 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       global $CFG_GLPI;
 
       if ($item->getID() > 0) {
-         $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+         $pfNetworkEquipment = new self();
+         $options = [
+            'target' => $CFG_GLPI['root_doc'].
+               '/plugins/fusioninventory/front/switch_info.form.php'
+         ];
 
-         if (isset($_GET['displaysnmpinfo'])) {
-            $pfNetworkEquipment->showNetworkEquipmentInformation($item,
-                                                                 array('target'=>$CFG_GLPI['root_doc'].
-                                                                       '/plugins/fusioninventory/front/switch_info.form.php'));
-         } else {
-            $pfNetworkEquipment->showForm($item,
-                 array('target'=>$CFG_GLPI['root_doc'].
-                                    '/plugins/fusioninventory/front/switch_info.form.php'));
+         switch (Session::getActiveTab('NetworkEquipment')) {
+            case 'PluginFusioninventoryNetworkEquipment$1':
+               $pfNetworkEquipment->showForm($item, $options);
+               break;
+
+            case 'NetworkPort$1':
+               $pfNetworkEquipment->showExtendedInfos($item, $options);
+               break;
          }
-         return TRUE;
       }
-      return FALSE;
+      return true;
    }
-
 
 
    /**
@@ -118,7 +122,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
    /**
     * Display form
     *
@@ -127,20 +130,20 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     * @param object $item
     * @param array $options
     */
-   function showForm(CommonDBTM $item, $options=array()) {
+   function showExtendedInfos(CommonDBTM $item, $options=array()) {
       global $DB, $CFG_GLPI;
 
       if (!Session::haveRight('plugin_fusioninventory_networkequipment', READ)) {
          NetworkPort::showForItem($item);
          return;
       }
-      $canedit = FALSE;
+      $canedit = false;
       if (Session::haveRight('plugin_fusioninventory_networkequipment', UPDATE)) {
-         $canedit = TRUE;
+         $canedit = true;
       }
 
       $id = $item->getID();
-     if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
+      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
          $input = array();
          $input['networkequipments_id'] = $id;
@@ -152,12 +155,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             $this->fields = $datas;
          }
       }
-
-      if (isset($_POST['displaysnmpinfo'])) {
-         $this->showNetworkEquipmentInformation($id, $options);
-         return;
-      }
-//$_SESSION['plugin_fusioninventory_networkportview'] = 'glpi';
 
       if (!isset($_SESSION['plugin_fusioninventory_networkportview'])) {
          $_SESSION['plugin_fusioninventory_networkportview'] = 'fusioninventory';
@@ -286,7 +283,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       $result = $this->showNetworkPortDetailHeader($monitoring, $query);
 
       if ($result) {
-         while ($data=$DB->fetch_array($result)) {
+         while ($data = $DB->fetch_array($result)) {
             $this->showNetworkPortDetail($data, $monitoring);
 
             if ($data['instantiation_type'] == 'NetworkPortAggregate') {
@@ -312,7 +309,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      $result_agp = $DB->query($query_agp);
                      if ($DB->numrows($result_agp) > 0) {
                         $data_agp = $DB->fetch_assoc($result_agp);
-                        $this->showNetworkPortDetail($data_agp, $monitoring, TRUE);
+                        $this->showNetworkPortDetail($data_agp, $monitoring, true);
                      }
                   }
                }
@@ -337,7 +334,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          }
       }
    }
-
 
 
    /**
@@ -367,7 +363,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       return $size;
    }
-
 
 
    /**
@@ -431,8 +426,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                   $link1 = $item->getLink(1);
                   $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
                                       $item->getLink());
-//                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
-//                                       $item->getLink());
                   echo "<tr>";
                   $icon = $this->getItemtypeIcon($classname);
                   echo "<td align='center'  ".$background_img."
@@ -452,7 +445,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       echo "</table>";
    }
-
 
 
    /**
@@ -488,114 +480,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       $DB->query($query);
    }
 
-
-
-   /**
-    * Display network equipment extended information
-    *
-    * @global object $DB
-    * @param object $item
-    * @param array $options
-    */
-   function showNetworkEquipmentInformation(CommonDBTM $item, $options) {
-      global $DB;
-
-      $id = $item->getID();
-      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
-         // Add in database if not exist
-         $input = array();
-         $input['networkequipments_id'] = $id;
-         $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
-         $ID_tn = $this->add($input);
-         $this->getFromDB($ID_tn);
-      } else {
-         foreach ($data as $datas) {
-            $this->fields = $datas;
-         }
-      }
-
-
-      // Form networking informations
-      echo "<form name='form' method='post' action='".$options['target']."'>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>";
-      echo __('SNMP information', 'fusioninventory');
-
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' rowspan='4'>";
-      echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
-      echo "</td>";
-      echo "<td rowspan='4'>";
-      echo "<textarea name='sysdescr' cols='45' rows='5'>";
-      echo $this->fields['sysdescr'];
-      echo "</textarea>";
-      echo "<td align='center'></td>";
-      echo "<td align='center'>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::authDropdown(
-                 $this->fields['plugin_fusioninventory_configsecurities_id']
-              );
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo __('CPU usage (in %)', 'fusioninventory')."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      Html::displayProgressBar(250, $this->fields['cpu'],
-                  array('simple' => TRUE));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo __('Memory usage (in %)', 'fusioninventory')."&nbsp;:";
-      echo "</td>";
-      echo "<td>";
-      $query2 = "SELECT *
-                 FROM `glpi_networkequipments`
-                 WHERE `id`='".$id."';";
-      $result2 = $DB->query($query2);
-      $data2 = $DB->fetch_assoc($result2);
-      $ram_pourcentage = 0;
-      if (!empty($data2["ram"]) AND !empty($this->fields['memory'])) {
-         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->fields['memory'])) / $data2["ram"]);
-      }
-      if ((($data2["ram"] - $this->fields['memory']) < 0)
-           OR (empty($this->fields['memory']))) {
-         echo "<center><strong>".__('Datas not available', 'fusioninventory')."</strong></center>";
-      } else {
-         Html::displayProgressBar(250, $ram_pourcentage,
-                        array('title' => " (".($data2["ram"] - $this->fields['memory'])." Mo / ".
-                         $data2["ram"]." Mo)"));
-      }
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_2 center'>";
-      echo "<td colspan='4'>";
-      echo "<input type='hidden' name='id' value='".$id."'>";
-      echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
-      Html::closeForm();
-   }
-
-
-
    /**
     * Display informations about networkequipment (automatic inventory)
     *
@@ -607,11 +491,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
 
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-      $a_networkequipmentextend = current($pfNetworkEquipment->find(
-                                              "`networkequipments_id`='".$item->getID()."'",
-                                              "", 1));
-      if (empty($a_networkequipmentextend)) {
-         return;
+
+      $params = ['networkequipments_id' => $item->getID()];
+      if ($pfNetworkEquipment->getFromDBByCrit($params) === false) {
+         return ;
       }
 
       echo '<table class="tab_glpi" width="100%">';
@@ -624,51 +507,21 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo __('Last inventory', 'fusioninventory');
       echo '</td>';
       echo '<td>';
-      echo Html::convDateTime($a_networkequipmentextend['last_fusioninventory_update']);
+      echo Html::convDateTime($pfNetworkEquipment->fields['last_fusioninventory_update']);
       echo '</td>';
       echo '</tr>';
 
-      if ($a_networkequipmentextend['uptime'] != '') {
+      if ($pfNetworkEquipment->fields['uptime'] != '') {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Uptime', 'fusioninventory').'</td>';
          echo '<td>';
-         $sysUpTime = $a_networkequipmentextend['uptime'];
-         $day = 0;
-         $hour = 0;
-         $minute = 0;
-         $sec = 0;
-         $ticks = 0;
-         if (strstr($sysUpTime, "days")) {
-            list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
-         } else if (strstr($sysUpTime, "hours")) {
-            $day = 0;
-            list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d hours, %d:%d.%d");
-         } else if (strstr($sysUpTime, "minutes")) {
-            $day = 0;
-            $hour = 0;
-            list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
-         } else if ($sysUpTime == "0") {
-            $day = 0;
-            $hour = 0;
-            $minute = 0;
-            $sec = 0;
-         } else {
-            list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d:%d:%d.%d");
-            $day = 0;
-         }
-
-         echo "<b>$day</b> ".__('day(s)', 'fusioninventory')." ";
-         echo "<b>$hour</b> ".__('hour(s)', 'fusioninventory')." ";
-         echo "<b>$minute</b> ".__('Minute(s)', 'fusioninventory')." ";
-         echo " ".__('and')." <b>$sec</b> ".__('sec(s)', 'fusioninventory')." ";
-
+         echo $pfNetworkEquipment->displayUptimeAsString($pfNetworkEquipment->fields['uptime']);
          echo '</td>';
          echo '</tr>';
       }
 
       echo '</table>';
    }
-
 
 
    /**
@@ -691,7 +544,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<th colspan='".(count($a_pref) + 3)."'>";
       echo __('Ports array', 'fusioninventory');
 
-      $result=$DB->query($query);
+      $result = $DB->query($query);
       echo ' ('.$DB->numrows($result).')';
 
       $tmp = " class='pointer' onClick=\"";
@@ -699,8 +552,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                                              ".dialog('open');\">";
       $tmp .= Ajax::createIframeModalWindow('search_config_top',
                                           $CFG_GLPI["root_doc"].
-                                             "/front/displaypreference.form.php?itemtype=PluginFusioninventoryNetworkPort"
-                                             ,
+                                             "/front/displaypreference.form.php?itemtype=PluginFusioninventoryNetworkPort",
                                           array('title'
                                                    => __('Select default items to show'),
                                                 'reloadonclose'
@@ -712,7 +564,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                           __s('Select default items to show')."\" src='".
                           $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
       echo $tmp;
-
 
       $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/".
                         "En_VI_visualisationsdonnees_2_reseau";
@@ -821,7 +672,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
       return $result;
    }
-
 
 
    /**
@@ -991,7 +841,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                // ** Mac address and link to device which are connected to this port
                $opposite_port = $nw->getOppositeContact($data["id"]);
                if ($opposite_port != ""
-                       && $opposite_port!= 0) {
+                       && $opposite_port != 0) {
                   $networkPortOpposite = new NetworkPort();
                   if ($networkPortOpposite->getFromDB($opposite_port)) {
                      $data_device = $networkPortOpposite->fields;
@@ -1004,12 +854,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      // * GetIP
                         $a_networknames = current($networkName->find("`itemtype`='NetworkPort'
                                           AND `items_id`='".$opposite_port."'", "", 1));
-                        if (isset($a_networknames['id'])) {
-                           $a_ipaddresses =  current($iPAddress->find("`itemtype`='NetworkName'
+                     if (isset($a_networknames['id'])) {
+                        $a_ipaddresses = current($iPAddress->find("`itemtype`='NetworkName'
                                              AND `items_id`='".$a_networknames['id']."'", "", 1));
-                           $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
-                                                $item->getLink());
-                        }
+                        $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
+                                          $item->getLink());
+                     }
 
                      if ($data_device["itemtype"] == 'PluginFusioninventoryUnmanaged') {
                         $icon = $this->getItemtypeIcon($item->fields["item_type"]);
@@ -1125,7 +975,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                if ($DB->numrows($result_vlan) > 0) {
                   echo "<table cellpadding='0' cellspacing='0'>";
                   while ($line = $DB->fetch_array($result_vlan)) {
-                     $used[]=$line["vlans_id"];
+                     $used[] = $line["vlans_id"];
                      $vlan = new Vlan();
                      $vlan->getFromDB($line["vlans_id"]);
                      if ($line['tagged'] == '1') {
@@ -1162,9 +1012,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                } else if ($pfNetworkPort->fields['lastup'] == "") {
                   echo '-';
                } else {
-                  $time = strtotime(date('Y-m-d H:i:s'))
-                              - strtotime($pfNetworkPort->fields['lastup']);
-                  echo Html::timestampToString($time, FALSE);
+                  $time = strtotime(date('Y-m-d H:i:s')) - strtotime($pfNetworkPort->fields['lastup']);
+                  echo Html::timestampToString($time, false);
                }
                echo "</td>";
                break;
@@ -1190,74 +1039,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
-
-   /**
-    * Display serialized inventory
-    *
-    * @global array $CFG_GLPI
-    * @param integer $items_id
-    */
-   function displaySerializedInventory($items_id) {
-      global $CFG_GLPI;
-
-      $a_networkequipmentextend = current($this->find("`networkequipments_id`='".$items_id."'",
-                                               "", 1));
-
-      $this->getFromDB($a_networkequipmentextend['id']);
-
-      if (empty($this->fields['serialized_inventory'])) {
-         return;
-      }
-
-      $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
-
-      echo "<br/>";
-
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>";
-      echo __('Last inventory', 'fusioninventory');
-      echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo __('Download', 'fusioninventory');
-      echo "</th>";
-      echo "<td>";
-      echo "<a href='".$CFG_GLPI['root_doc'].
-              "/plugins/fusioninventory/front/send_inventory.php".
-              "?itemtype=PluginFusioninventoryNetworkEquipment".
-              "&function=sendSerializedInventory&items_id=".$a_networkequipmentextend['id'].
-              "&filename=NetworkEquipment-".$items_id.".json'".
-              "target='_blank'>PHP Array</a> ";
-
-      $folder = substr($items_id, 0, -1);
-      if (empty($folder)) {
-         $folder = '0';
-      }
-      if (file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR."networkequipment/".$folder."/".$items_id)) {
-         echo "/ <a href='".$CFG_GLPI['root_doc'].
-        "/plugins/fusioninventory/front/send_inventory.php".
-        "?itemtype=networkequipment".
-        "&function=sendXML&items_id=NetworkEquipment/".$folder."/".$items_id.
-        "&filename=NetworkEquipment-".$items_id.".xml'".
-        "target='_blank'>XML</a>";
-      }
-
-
-      echo "</td>";
-      echo "</tr>";
-
-      PluginFusioninventoryToolbox::displaySerializedValues($data);
-
-      echo "</table>";
-   }
-
-
-
    /**
     * Get the icon related to the itemtype
     *
@@ -1268,26 +1049,72 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    function getItemtypeIcon($itemtype) {
       global $CFG_GLPI;
 
-      $icon = '';
-      if ($itemtype == 'Computer') {
-         $icon = "<img src='".$CFG_GLPI['root_doc'].
-                 "/plugins/fusioninventory/pics/computer_icon.png' ".
-                 "style='float:left'/> ";
-      } else if ($itemtype == 'Printer') {
-         $icon = "<img src='".$CFG_GLPI['root_doc'].
-                 "/plugins/fusioninventory/pics/printer_icon.png' ".
-                 "style='float:left'/> ";
-      } else if ($itemtype == 'Phone') {
-         $icon = "<img src='".$CFG_GLPI['root_doc'].
-                 "/plugins/fusioninventory/pics/phone_icon.png' ".
-                 "style='float:left'/> ";
-      } else if ($itemtype == 'NetworkEquipment') {
-         $icon = "<img src='".$CFG_GLPI['root_doc'].
-                 "/plugins/fusioninventory/pics/network_icon.png' ".
-                 "style='float:left'/> ";
+      $icon = false;
+      switch ($itemtype) {
+         case 'Computer':
+            $icon = "computer_icon.png";
+            break;
+         case 'Phone':
+            $icon = "phone_icon.png";
+            break;
+         case 'NetworkEquipment':
+            $icon = "network_icon.png";
+            break;
       }
-      return $icon;
+      if ($icon) {
+         return "<img src='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusioninventory/pics/$icon' ".
+                 "style='float:left'/> ";
+      } else {
+         return '';
+      }
+   }
+
+
+   function addMoreInfos($options = []) {
+      global $DB;
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo __('CPU usage (in %)', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Html::displayProgressBar(250, $this->fields['cpu'],
+                               ['simple' => true]);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo __('Memory usage (in %)', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      $params = [
+         'FROM'   => 'glpi_networkequipments',
+         'FIELDS' => ['ram'],
+         'WHERE'  => [
+            'id' => $this->fields['networkequipments_id']
+         ],
+         'LIMIT'  => 1
+      ];
+      $iterator = $DB->request($params);
+      if ($iterator->numrows()) {
+         $ram_pourcentage = 0;
+         $data            = $iterator->next();
+         if (!empty($data["ram"])
+            && !empty($this->fields['memory'])) {
+            $ram_pourcentage = ceil((100 * ($data["ram"] - $this->fields['memory'])) / $data["ram"]);
+         }
+         if ((($data["ram"] - $this->fields['memory']) < 0)
+              || (empty($this->fields['memory']))) {
+            echo "<center><strong>".__('No data available', 'fusioninventory')."</strong></center>";
+         } else {
+            Html::displayProgressBar(250, $ram_pourcentage,
+                           ['title' => " (".($data["ram"] - $this->fields['memory']).__('Mio')." / ".
+                            $data["ram"].__('Mio').")"]);
+         }
+      }
+      echo "</td>";
+      echo "</tr>";
    }
 }
-
-?>
