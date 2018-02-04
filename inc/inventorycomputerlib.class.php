@@ -176,6 +176,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                if ($ios->fields[$key] != $value) {
                   $same = false;
                   break;
+               } else {
+                  $input_os['_no_history'] = $no_history;
+                  $ios->add($input_os);
                }
             }
             if ($same === false) {
