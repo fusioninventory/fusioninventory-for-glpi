@@ -53,26 +53,13 @@ if (!defined('GLPI_ROOT')) {
  * Manage the wmi information found by the collect module of agent.
  */
 
-class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
+class PluginFusioninventoryCollect_Wmi_Content
+   extends PluginFusioninventoryCollectContentCommon {
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-   static $rightname = 'plugin_fusioninventory_collect';
+      public $collect_itemtype = 'PluginFusioninventoryCollect_Wmi';
+      public $collect_table    = 'glpi_plugin_fusioninventory_collects_wmis';
 
-
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
-   static function getTypeName($nb = 0) {
-      return __('Windows WMI content', 'fusioninventory');
-   }
-
+      public $type = 'wmi';
 
    /**
     * Get the tab name used for item
@@ -80,8 +67,8 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
     * @param object $item the item object
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
+    */ /*
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginFusioninventoryCollect') {
@@ -100,36 +87,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
          }
       }
       return '';
-   }
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi_Content();
-      if (get_class($item) == 'PluginFusioninventoryCollect') {
-         $pfCollect_Wmi->showForCollect($item->getID());
-      }
-      return true;
-   }
-
-
-   /**
-    * Delete all WMI contents linked to the computer (most cases when delete a
-    * computer)
-    *
-    * @param integer $computers_id
-    */
-   static function cleanComputer($computers_id) {
-      $collect_content = new self();
-      $collect_content->deleteByCriteria(['computers_id' => $computers_id]);
-   }
+   }*/
 
 
    /**
@@ -186,22 +144,6 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
       }
    }
 
-
-   /**
-    * Display wmi information in collect form (tab wmi)
-    *
-    * @param integer $collects_id id of collect
-    */
-   function showForCollect($collects_id) {
-
-      $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis',
-                                              "`plugin_fusioninventory_collects_id`='".$collects_id."'");
-      foreach ($a_colregs as $data) {
-         $this->showForCollectWmi($data['id']);
-      }
-   }
-
-
    /**
     * Display wmi information of computer
     *
@@ -248,7 +190,7 @@ class PluginFusioninventoryCollect_Wmi_Content extends CommonDBTM {
     *
     * @param integer $collects_wmis_id
     */
-   function showForCollectWmi($collects_wmis_id) {
+   function showContent($collects_wmis_id) {
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
       $computer = new Computer();
 
