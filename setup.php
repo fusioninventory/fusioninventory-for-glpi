@@ -149,8 +149,7 @@ function plugin_init_fusioninventory() {
               ['addtabon' => ['Computer']]);
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerInventory');
       $Plugin->registerClass('PluginFusioninventoryCollect',
-                              ['addtabon' => ['PluginFusioninventoryCollect',
-                                             'Computer']]);
+                              ['addtabon' => ['Computer']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_Registry',
               ['addtabon' => ['PluginFusioninventoryCollect']]);
       $Plugin->registerClass('PluginFusioninventoryCollect_Registry_Content',

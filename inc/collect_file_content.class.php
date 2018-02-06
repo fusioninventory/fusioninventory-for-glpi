@@ -52,90 +52,12 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files found by the collect module of agent.
  */
-class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
+class PluginFusioninventoryCollect_File_Content
+   extends PluginFusioninventoryCollectContentCommon {
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-   static $rightname = 'plugin_fusioninventory_collect';
-
-
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
-   static function getTypeName($nb=0) {
-      return __('Find file content', 'fusioninventory');
-   }
-
-
-
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getID() > 0) {
-         if (get_class($item) == 'PluginFusioninventoryCollect') {
-            if ($item->fields['type'] == 'file') {
-               $a_colfiles = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files',
-                                                 "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
-               if (count($a_colfiles) == 0) {
-                  return '';
-               }
-               $in = array_keys($a_colfiles);
-               if (countElementsInTable('glpi_plugin_fusioninventory_collects_files_contents',
-                                "`plugin_fusioninventory_collects_files_id` IN ('".implode("','", $in)."')") > 0) {
-                  return __('Find file content', 'fusioninventory');
-               }
-            }
-         } else if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_collects_files_contents',
-                             "`computers_id`='".$item->getID()."'") > 0) {
-               return __('Find file content', 'fusioninventory');
-            }
-         }
-      }
-      return '';
-   }
-
-   /**
-    * Delete all files contents linked to the computer (most cases when delete a
-    * computer)
-    *
-    * @param integer $computers_id
-    */
-   static function cleanComputer($computers_id) {
-      $file_content = new self();
-      $file_content->deleteByCriteria(array('computers_id' => $computers_id));
-   }
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $pfCollect_File = new PluginFusioninventoryCollect_File_Content();
-      if (get_class($item) == 'PluginFusioninventoryCollect') {
-         $pfCollect_File->showForCollect($item->getID());
-      } else if (get_class($item) == 'Computer') {
-         $pfCollect_File->showForComputer($item->getID());
-      }
-      return true;
-   }
-
+   public $collect_itemtype = 'PluginFusioninventoryCollect_File';
+   public $collect_table    = 'glpi_plugin_fusioninventory_collects_files';
+   public $type             = 'file';
 
    /**
     * Update computer files (add and update files) related to this
@@ -157,21 +79,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
          $this->add($input);
       }
    }
-
-
-   /**
-    * Show all files defined
-    *
-    * @param integer $collects_id id of collect
-    */
-   function showForCollect($collects_id) {
-      $a_colfiles = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files',
-                                              "`plugin_fusioninventory_collects_id`='".$collects_id."'");
-      foreach ($a_colfiles as $data) {
-         $this->showForCollectFile($data['id']);
-      }
-   }
-
 
 
    /**
@@ -224,7 +131,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
     *
     * @param integer $collects_files_id id of collect_file
     */
-   function showForCollectFile($collects_files_id) {
+   function showContent($collects_files_id) {
       $pfCollect_File = new PluginFusioninventoryCollect_File();
       $computer = new Computer();
 

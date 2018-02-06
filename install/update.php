@@ -237,6 +237,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskview.class.php';
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskjobview.class.php';
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/item.class.php';
+   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/collectcommon.class.php';
+   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/collectcontentcommon.class.php';
 
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);

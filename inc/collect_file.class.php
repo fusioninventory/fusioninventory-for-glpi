@@ -51,15 +51,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the files to search in collect module.
  */
-class PluginFusioninventoryCollect_File extends CommonDBTM {
+class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectCommon {
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-   static $rightname = 'plugin_fusioninventory_collect';
-
+   public $type = 'file';
 
    /**
     * Get name of this type by language of the user connected
@@ -68,149 +62,66 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb=0) {
-      return __('Find file', 'fusioninventory');
+      return _n('Found file', 'Found files', $nb, 'fusioninventory');
    }
 
 
+   function getListHeaders() {
+      return [
+         __("Name"),
+         __("Limit", "fusioninventory"),
+         __("Folder", "fusioninventory"),
+         __("Recursive", "fusioninventory"),
+         __("Regex", "fusioninventory"),
+         __("Size", "fusioninventory"),
+         __("Checksum SHA512", "fusioninventory"),
+         __("Checksum SHA2", "fusioninventory"),
+         __("Name", "fusioninventory"),
+         __("Iname", "fusioninventory"),
+         __("Type", "fusioninventory"),
+         __("Action")
+      ];
+   }
 
-   /**
-    * Get the tab name used for item
-    *
-    * @param object $item the item object
-    * @param integer $withtemplate 1 if is a template form
-    * @return string name of the tab
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->getID() > 0) {
-         if ($item->fields['type'] == 'file') {
-            return __('Find file', 'fusioninventory');
-         }
+   function displayOneRow($row = []) {
+      $filter = $type = '';
+      if (!empty($row['filter_sizeequals'])) {
+         $filter = '= '.$row['filter_sizeequals'];
+      } else if (!empty($row['filter_sizegreater'])) {
+         $filer = '> '.$row['filter_sizegreater'];
+      } else if (!empty($row['filter_sizelower'])) {
+         $filter = '< '.$row['filter_sizelower'];
       }
-      return '';
-   }
-
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
-      $pfCollect_File->showFile($item->getID());
-      $pfCollect_File->showForm($item->getID());
-      return TRUE;
-   }
-
-
-
-   /**
-    * Display files of this collect id
-    *
-    * @param integer $collects_id id of the collect
-    */
-   function showFile($collects_id) {
-
-      $content = $this->find("`plugin_fusioninventory_collects_id`='".
-                              $collects_id."'");
-
-      echo "<div class='spaced'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr>";
-      echo "<th colspan=12>".__('Find file associated', 'fusioninventory')."</th>";
-      echo "</tr>";
-      echo "<tr>
-      <th>".__("Name")."</th>
-      <th>".__("Limit", "fusioninventory")."</th>
-      <th>".__("Folder", "fusioninventory")."</th>
-      <th>".__("Recursive", "fusioninventory")."</th>
-      <th>".__("Regex", "fusioninventory")."</th>
-      <th>".__("Size", "fusioninventory")."</th>
-      <th>".__("Checksum SHA512", "fusioninventory")."</th>
-      <th>".__("Checksum SHA2", "fusioninventory")."</th>
-      <th>".__("Name", "fusioninventory")."</th>
-      <th>".__("Iname", "fusioninventory")."</th>
-      <th>".__("Type", "fusioninventory")."</th>
-      <th>".__("Action")."</th>
-      </tr>";
-      foreach ($content as $data) {
-         echo "<tr>";
-         echo "<td align='center'>".$data['name']."</td>";
-         echo "<td align='center'>".$data['limit']."</td>";
-         echo "<td align='center'>".$data['dir']."</td>";
-         echo "<td align='center'>".$data['is_recursive']."</td>";
-         echo "<td align='center'>".$data['filter_regex']."</td>";
-         echo "<td align='center'>";
-         if (!empty($data['filter_sizeequals'])) {
-            echo '= '.$data['filter_sizeequals'];
-         } else if (!empty($data['filter_sizegreater'])) {
-            echo '> '.$data['filter_sizegreater'];
-         } else if (!empty($data['filter_sizelower'])) {
-            echo '< '.$data['filter_sizelower'];
-         }
-         echo "</td>";
-         echo "<td align='center'>".$data['filter_checksumsha512']."</td>";
-         echo "<td align='center'>".$data['filter_checksumsha2']."</td>";
-         echo "<td align='center'>".$data['filter_name']."</td>";
-         echo "<td align='center'>".$data['filter_iname']."</td>";
-         echo "<td align='center'>";
-         if ($data['filter_is_file'] == 1) {
-            echo __('File', 'fusioninventory');
-         } else {
-            echo __('Folder', 'fusioninventory');
-         }
-         echo "</td>";
-         echo "<td align='center'>
-            <form name='form_bundle_item' action='".Toolbox::getItemTypeFormURL(__CLASS__).
-                   "' method='post'>";
-            echo Html::hidden('id', array('value' => $data['id']));
-            echo "<input type='image' name='delete' src='../pics/drop.png'>";
-         Html::closeForm();
-         echo "</td>";
-         echo "</tr>";
+      if ($row['filter_is_file'] == 1) {
+         $type = __('File', 'fusioninventory');
+      } else {
+         $type = __('Folder', 'fusioninventory');
       }
-      echo "</table>";
-      echo "</div>";
+
+      return [
+         $row['name'],
+         $row['limit'],
+         $row['dir'],
+         $row['is_recursive'],
+         $row['filter_regex'],
+         $filter,
+         $row['filter_checksumsha512'],
+         $row['filter_checksumsha2'],
+         $row['filter_name'],
+         $row['filter_iname'],
+         $type
+      ];
    }
 
-
-
-   /**
-    * Display form to add a new file of collect
-    *
-    * @param integer $collects_id id of collect
-    * @param array $options
-    * @return true
-    */
-   function showForm($collects_id, $options=array()) {
-
-      $ID = 0;
-
-      $this->initForm($ID, $options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __('Name');
-      echo "</td>";
-      echo "<td>";
-      echo Html::hidden('plugin_fusioninventory_collects_id',
-                        array('value' => $collects_id));
-      echo "<input type='text' name='name' value='' />";
-      echo "</td>";
+   function displayNewSpecificities() {
       echo "<td>".__('Limit', 'fusioninventory')."</td>";
       echo "<td>";
-      Dropdown::showNumber('limit',
-                           array('min'   => 1,
-                                 'max'   => 100,
-                                 'value' => 5
-                                 )
-                           );
+      Dropdown::showNumber('limit',[
+                           'min'   => 1,
+                           'max'   => 100,
+                           'value' => 5
+                           ]
+      );
       echo "</td>";
       echo "</tr>\n";
 
@@ -246,12 +157,13 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Size', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('sizetype', array(
+      Dropdown::showFromArray('sizetype', [
           'none'    => __('Disabled', 'fusioninventory'),
           'equals'  => '=',
           'greater' => '>',
           'lower'   => '<'
-      ));
+         ]
+      );
       echo "<input type='text' name='size' value='' />";
       echo "</td>";
       echo "</tr>\n";
@@ -276,28 +188,24 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Filename', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('filter_nametype', array(
+      Dropdown::showFromArray('filter_nametype', [
           'none'  => __('Disabled', 'fusioninventory'),
           'name'  => __('Non sentitive case', 'fusioninventory'),
           'iname' => __('Sentitive case', 'fusioninventory')
-      ));
+         ]
+      );
       echo "<input type='text' name='filter_name' value='' />";
       echo "</td>";
       echo "<td>";
       echo __('Type', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('type',
-         array('file' => __('File', 'fusioninventory'),
-               'dir'  => __('Folder', 'fusioninventory')
-         )
+      Dropdown::showFromArray('type', [
+            'file' => __('File', 'fusioninventory'),
+            'dir'  => __('Folder', 'fusioninventory')
+         ]
       );
       echo "</td>";
-      echo "</tr>\n";
-
-      $this->showFormButtons($options);
-
-      return TRUE;
    }
 }
 
