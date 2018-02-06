@@ -120,7 +120,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
+//         'nodisplay'        => true,
          'joinparams'       => array(
             'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = 1",
             'jointype'  => 'child'
@@ -137,7 +137,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
+//         'nodisplay'        => true,
          'joinparams'       => array(
             'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = 1",
             'jointype'  => 'child'
@@ -155,7 +155,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
+//         'nodisplay'        => true,
          'joinparams'       => array(
             'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = 1",
             'jointype'  => 'child'
@@ -173,7 +173,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
          'datatype'         => 'text',
          'forcegroupby'     => true,
          'massiveaction'    => false,
-         'nodisplay'        => true,
+//         'nodisplay'        => true,
          'joinparams'       => array(
             'condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = 1",
             'jointype'  => 'child'
