@@ -778,7 +778,7 @@ class CollectsTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
-      $pfCollect = new PluginFusioninventoryCollect();
+      $pfCollect = new PluginFusioninventoryCollect_File();
       $input = array(
          'name'         => 'Files collect',
          'entities_id'  => $_SESSION['glpiactive_entity'],

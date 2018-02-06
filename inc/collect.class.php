@@ -144,12 +144,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return array [name] => description
     */
    static function getTypes() {
-      $elements             = array();
-      $elements['registry'] = __('Registry', 'fusioninventory');
-      $elements['wmi']      = __('WMI', 'fusioninventory');
-      $elements['file']     = __('Find file', 'fusioninventory');
-
-      return $elements;
+      return [
+         'registry' => __('Registry', 'fusioninventory'),
+         'wmi'      => __('WMI', 'fusioninventory'),
+         'file'     => __('Find file', 'fusioninventory')
+      ];
    }
 
 
