@@ -765,7 +765,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
-         "execute action\n"
+         "execute actions, data:\n". print_r($output, TRUE). "\n" . print_r($params, TRUE)
+      );
+
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "execute actions: ". count($this->actions) ."\n"
       );
 
       if (count($this->actions)) {
@@ -773,7 +778,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             if ($action->fields['field'] == '_fusion') {
                PluginFusioninventoryToolbox::logIfExtradebug(
                   "pluginFusioninventory-rules",
-                  "value".$action->fields["value"]."\n"
+                  "- value".$action->fields["value"]."\n"
                );
 
                if ($action->fields["value"] == self::RULE_ACTION_LINK) {
@@ -837,6 +842,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      }
                   }
                } else if ($action->fields["value"] == self::RULE_ACTION_DENIED) {
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-rules",
+                     "- action denied\n"
+                  );
                   $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                   $output['action'] = self::LINK_RESULT_DENIED;
                   return $output;
@@ -844,12 +853,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             } else if ($action->fields['field'] == '_ignore_import') {
                PluginFusioninventoryToolbox::logIfExtradebug(
                   "pluginFusioninventory-rules",
-                  "value".$action->fields["value"]."\n"
+                  "- ignore import\n"
                );
                $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                $output['action'] = self::LINK_RESULT_DENIED;
                return $output;
             } else {
+               PluginFusioninventoryToolbox::logIfExtradebug(
+                  "pluginFusioninventory-rules",
+                  "- no import\n"
+               );
                // no import
                $itemtype_found = 0;
                if (count($this->criterias)) {

@@ -123,18 +123,29 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    function executeActions($output, $params) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-entityrules",
-         "execute action\n"
+         "pluginFusioninventory-rules-entity",
+         "execute actions, data:\n". print_r($output, TRUE). "\n" . print_r($params, TRUE)
+      );
+
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules-entity",
+         "execute actions: ". count($this->actions) ."\n"
       );
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
+            PluginFusioninventoryToolbox::logIfExtradebug(
+               "pluginFusioninventory-rules-entity",
+               "- action: ". $action->fields["action_type"] ." for: ". $action->fields["field"] ."\n"
+            );
+
             switch ($action->fields["action_type"]) {
                case "assign" :
                   PluginFusioninventoryToolbox::logIfExtradebug(
-                     "pluginFusioninventory-entityrules",
-                     "value ".$action->fields["value"]."\n"
+                     "pluginFusioninventory-rules-entity",
+                     "- value ".$action->fields["value"]."\n"
                   );
+                  // todo: If always for an entity, use entities_id, no?
                   $output[$action->fields["field"]] = $action->fields["value"];
                   break;
 
@@ -142,8 +153,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                   //Assign entity using the regex's result
                   if ($action->fields["field"] == "_affect_entity_by_tag") {
                      PluginFusioninventoryToolbox::logIfExtradebug(
-                        "pluginFusioninventory-entityrules",
-                        "value ".$action->fields["value"]."\n"
+                        "pluginFusioninventory-rules-entity",
+                        "- value ".$action->fields["value"]."\n"
                      );
                      //Get the TAG from the regex's results
                      $res = RuleAction::getRegexResultById($action->fields["value"],
@@ -153,6 +164,10 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                         $target_entity = Entity::getEntityIDByTag($res);
                         if ($target_entity != '') {
                            $output["entities_id"]=$target_entity;
+                           PluginFusioninventoryToolbox::logIfExtradebug(
+                              "pluginFusioninventory-rules-entity",
+                              "- set entity: ".$target_entity."\n"
+                           );
                         } else {
                            $output['pass_rule'] = True;
                         }

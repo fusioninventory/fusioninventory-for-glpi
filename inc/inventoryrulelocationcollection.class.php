@@ -95,10 +95,6 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
     * @return array
     */
    function prepareInputDataForProcess($input, $params) {
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-locationrules",
-         "execute action\n". print_r($input, TRUE). "\n" . print_r($params, TRUE)
-      );
       return $input;
    }
 }
