@@ -84,23 +84,4 @@ class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollectio
    function getTitle() {
       return __('Location rules', 'fusioninventory');
    }
-
-
-   /**
-    * Prepare input data for process the rule
-    *
-    * @param array $input
-    * @param array $params
-    * @return array
-    */
-   function prepareInputDataForProcess($input, $params) {
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-locationrules",
-         "execute action\n". print_r($input, true). "\n" . print_r($params, true)
-      );
-      return $input;
-   }
-
-
 }
-
