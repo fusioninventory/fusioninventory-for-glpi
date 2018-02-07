@@ -152,12 +152,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
                              && $_SESSION["plugin_fusioninventory_entity"] > 0) {
                         $entities_id = $_SESSION["plugin_fusioninventory_entity"];
                      }
-                     $res = Dropdown::importExternal(
-                             getItemTypeForTable(
-                                     getTableNameForForeignKeyField(
-                                             $action->fields['field'])),
-                             $res,
-                             $entities_id);
+                     $res = Dropdown::importExternal(getItemtypeForForeignKeyField($action->fields['field']), $res, $entities_id);
                   }
                   $output[$action->fields["field"]] = $res;
                   break;

@@ -142,11 +142,11 @@ class PluginFusioninventoryCollectRule extends Rule {
                               && $action->fields["field"] != 'otherserial'
                               && $action->fields["field"] != 'software'
                               && $action->fields["field"] != 'softwareversion')) {
-                     $res = Dropdown::importExternal(
-                             getItemTypeForTable(
-                                     getTableNameForForeignKeyField(
-                                             $action->fields['field'])),
-                             $res);
+                     $entities_id = 0;
+                     if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+                        $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                     }
+                     $res = Dropdown::importExternal(getItemtypeForForeignKeyField($action->fields['field']), $res, $entities_id);
                   }
                   $output[$action->fields["field"]] = $res;
                   break;
