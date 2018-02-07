@@ -465,8 +465,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (!in_array('domain', $a_lockable)) {
                if (isset($arrayinventory['WORKGROUP'])
                        && !empty($arrayinventory['WORKGROUP'])) {
-               $input['domain'] = Dropdown::importExternal("Domain",
-                                       $arrayinventory['WORKGROUP'], $arrayinventory['ENTITY']);
+               $input['domain'] = Dropdown::importExternal("Domain", $arrayinventory['WORKGROUP'], $arrayinventory['ENTITY']);
                }
             }
             if (!empty($arrayinventory['TYPE'])) {
