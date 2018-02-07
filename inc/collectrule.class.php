@@ -120,11 +120,29 @@ class PluginFusioninventoryCollectRule extends Rule {
     */
    function executeActions($output, $params) {
 
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules-collect",
+         "execute actions, data:\n". print_r($output, TRUE). "\n" . print_r($params, TRUE)
+      );
+
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules-collect",
+         "execute actions: ". count($this->actions) ."\n"
+      );
+
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
-            switch ($action->fields["action_type"]) {
+            PluginFusioninventoryToolbox::logIfExtradebug(
+               "pluginFusioninventory-rules-collect",
+               "- action: ". $action->fields["action_type"] ." for: ". $action->fields["field"] ."\n"
+            );
 
+            switch ($action->fields["action_type"]) {
                case "assign" :
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-rules-collect",
+                     "- value ".$action->fields["value"]."\n"
+                  );
                   $output[$action->fields["field"]] = $action->fields["value"];
                   break;
 
@@ -132,8 +150,16 @@ class PluginFusioninventoryCollectRule extends Rule {
                   //Regex result : assign value from the regex
                   $res = "";
                   if (isset($this->regex_results[0])) {
+                     PluginFusioninventoryToolbox::logIfExtradebug(
+                        "pluginFusioninventory-rules-collect",
+                        "- regex ".print_r($this->regex_results[0], true)."\n"
+                     );
                      $res .= RuleAction::getRegexResultById($action->fields["value"],
                                                             $this->regex_results[0]);
+                     PluginFusioninventoryToolbox::logIfExtradebug(
+                        "pluginFusioninventory-rules-collect",
+                        "- regex result: ".$res."\n"
+                     );
                   } else {
                      $res .= $action->fields["value"];
                   }
@@ -148,6 +174,10 @@ class PluginFusioninventoryCollectRule extends Rule {
                                              $action->fields['field'])),
                              $res);
                   }
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-rules-collect",
+                     "- value ".$res."\n"
+                  );
                   $output[$action->fields["field"]] = $res;
                   break;
 
