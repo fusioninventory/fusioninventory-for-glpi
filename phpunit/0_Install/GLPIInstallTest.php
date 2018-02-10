@@ -43,7 +43,7 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
       $output = array();
       $returncode = 0;
       exec(
-         "php ".GLPI_ROOT. "/tools/cliupdate.php --dev --force",
+         "php ".GLPI_ROOT. "/scripts/cliupdate.php --dev --force",
          $output, $returncode
       );
       $this->assertEquals(0,$returncode,
