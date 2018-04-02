@@ -288,8 +288,9 @@ class CollectsTest extends RestoreDatabase_TestCase {
 
       // Get jobs
       $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
       $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_tm.'"},'
-                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_fi.'"}]}');
+                                          . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_fi.'"}],"postmethod":"POST","token":"'.$matches[1].'"}');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
@@ -459,8 +460,9 @@ class CollectsTest extends RestoreDatabase_TestCase {
 
       // Get jobs
       $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
       $this->assertEquals($result, '{"jobs":[{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Name"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kn.'"},'
-                                          . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kd.'"}]}');
+                                          . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_kd.'"}],"postmethod":"POST","token":"'.$matches[1].'"}');
 
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
@@ -636,8 +638,9 @@ class CollectsTest extends RestoreDatabase_TestCase {
 
       // Get jobs
       $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+      preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
       $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:Users\totoDesktop","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_desktop.'"},'
-                                          . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_down.'"}]}');
+                                          . '{"function":"findFile","dir":"C:Users\totoDownloads","limit":"10","recursive":"1","filter":{"is_file":"1","is_dir":"0"},"uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_down.'"}],"postmethod":"POST","token":"'.$matches[1].'"}');
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
