@@ -1893,13 +1893,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             echo "</tr>";
 
             echo "<tr>";
-            echo "<td colspan='2'>";
-            Html::showCheckbox(['name' => 'separate_jobs', 'value' => 1]);
-            echo __('Create a job for each group', 'fusioninventory');
-            echo "</td>";
-            echo "</tr>";
-
-            echo "<tr>";
             echo "<td colspan='2' align='center'>";
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             echo "</td>";
@@ -1966,23 +1959,23 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       switch ($ma->getAction()) {
 
          case "duplicate":
-            foreach ($ids as $key) {
-               if ($pfTask->getFromDB($key)) {
+            foreach ($ids as $computer_id) {
+               if ($pfTask->getFromDB($computer_id)) {
                   if ($pfTask->duplicate($pfTask->getID())) {
                      //set action massive ok for this item
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                     $ma->itemDone($item->getType(), $computer_id, MassiveAction::ACTION_OK);
                   } else {
                      // KO
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                     $ma->itemDone($item->getType(), $computer_id, MassiveAction::ACTION_KO);
                   }
                }
             }
-         break;
+            break;
 
          case "transfert" :
-            foreach ($ids as $key) {
-               if ($pfTask->getFromDB($key)) {
-                  $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$key."'");
+            foreach ($ids as $computer_id) {
+               if ($pfTask->getFromDB($computer_id)) {
+                  $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$computer_id."'");
                   foreach ($a_taskjobs as $data1) {
                      $input = [];
                      $input['id'] = $data1['id'];
@@ -1991,56 +1984,119 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
 
                   $input = [];
-                  $input['id'] = $key;
+                  $input['id'] = $computer_id;
                   $input['entities_id'] = $_POST['entities_id'];
 
                   if ($pfTask->update($input)) {
                      //set action massive ok for this item
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                     $ma->itemDone($item->getType(), $computer_id, MassiveAction::ACTION_OK);
                   } else {
                      // KO
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                     $ma->itemDone($item->getType(), $computer_id, MassiveAction::ACTION_KO);
                   }
                }
             }
             break;
 
-         case 'target_task' :
-            // prepare base insertion
+         case 'target_task':
+            $computer = new Computer();
+            $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+
+            // Get the task and the package
+            $got_task = $pfTask->getFromDB($ma->POST['tasks_id']);
+            $got_package = $pfDeployPackage->getFromDB($ma->POST['packages_id']);
+            if (! $got_package or ! $got_task) {
+               // No task or package provided
+               foreach ($ids as $computer_id) {
+                  $computer->getFromDB($computer_id);
+                  $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
+               }
+               Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
+                  __('You must choose a task and a package to target a task with a deployment package.',
+                     'fusioninventory')), false, ERROR);
+               PluginFusioninventoryToolbox::logIfExtradebug(
+                  "pluginFusioninventory-tasks", "Missing task and/or package for targeting a task"
+               );
+               return;
+            }
+
+            PluginFusioninventoryToolbox::logIfExtradebug(
+               "pluginFusioninventory-tasks", "Target a task: " . $pfTask->getName() .
+                  ", id: " . $pfTask->getId()
+            );
+
+            $job_name = __('Deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName();
+
+            // Prepare base data
             $input = [
-               'plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'],
+               'plugin_fusioninventory_tasks_id' => $pfTask->getId(),
                'entities_id'                     => 0,
-               'name'                            => 'deploy',
+               'name'                            => $job_name,
                'method'                          => 'deployinstall',
                'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$ma->POST['packages_id'].'"}]',
                'actor'                           => []
             ];
 
-            if (array_key_exists('separate_jobs', $_POST)) {
-               foreach ($ids as $key) {
-                  $input['actors'] = '[{"Computer":"'.$key.'"}]';
-                  if ($pfTaskjob->add($input)) {
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
-                  } else {
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
-                  }
+            if ($pfTaskjob->getFromDBByQuery("WHERE `plugin_fusioninventory_tasks_id`=". $ma->POST['tasks_id'] .
+               " AND `name` = '$job_name'")) {
+               // The task already has a job with the same name - update the job actors
+               $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
+                  __('Updated a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
+                  __(', actors: ', 'fusioninventory'));
+               foreach ($ids as $computer_id) {
+                  $computer->getFromDB($computer_id);
+                  $message .= $computer->getName() . ",";
+                  $input['actors'][] = array('Computer' => $computer_id);
+                  $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_OK);
                }
-            } else {
-               foreach ($ids as $key) {
-                  $input['actors'][] = ['Computer' => $key];
-                  $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
-               }
+//               $ma->addMessage($message);
+               Session::addMessageAfterRedirect($message, false, INFO);
+               $input['id'] = $pfTaskjob->getID();
                $input['actors'] = json_encode($input['actors']);
-               $pfTaskjob->add($input);
+               PluginFusioninventoryToolbox::logIfExtradebug(
+                  "pluginFusioninventory-tasks", "Update the task job: " . serialize($input)
+               );
+               $pfTaskjob->update($input);
+            } else {
+               if ($pfTaskjob->getFromDBByQuery("WHERE `plug   in_fusioninventory_tasks_id`=". $pfTask->getID())) {
+                  // The task already has a job - do not replace!
+                  foreach ($ids as $computer_id) {
+                     $computer->getFromDB($computer_id);
+                     $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_KO);
+                  }
+                  Session::addMessageAfterRedirect(sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
+                     __('The selected task already has a deployment job for another package: ' . $pfTaskjob->getName(), 'fusioninventory')),
+                     false, ERROR);
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-tasks", "Not allowed to update the task job"
+                  );
+               } else {
+                  // The task do not have a job - create a new one
+                  $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
+                     __('Created a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
+                     __(', actors: ', 'fusioninventory'));
+                  foreach ($ids as $computer_id) {
+                     $computer->getFromDB($computer_id);
+                     $message .= $computer->getName() . ",";
+                     $input['actors'][] = array('Computer' => $computer_id);
+                     $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_OK);
+                  }
+                  $input['actors'] = json_encode($input['actors']);
+//                  $ma->addMessage($message);
+                  Session::addMessageAfterRedirect($message, false, INFO);
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     "pluginFusioninventory-tasks", "Create the task job: " . serialize($input)
+                  );
+                  $pfTaskjob->add($input);
+               }
             }
-
             break;
 
          case 'addtojob_target':
             $taskjob = new PluginFusioninventoryTaskjob();
             foreach ($ids as $items_id) {
                $taskjob->additemtodefatc('targets', $item->getType(), $items_id, $ma->POST['taskjobs_id']);
-               $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+               $ma->itemDone($item->getType(), $items_id, MassiveAction::ACTION_OK);
             }
             break;
 
