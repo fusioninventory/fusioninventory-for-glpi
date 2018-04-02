@@ -238,9 +238,6 @@ class PluginFusioninventoryCommunicationRest {
 
          //Get taskjoblog associated
          $taskjoblog = new PluginFusioninventoryTaskjoblog();
-         $taskjoblog->getFromDBByQuery(
-            "WHERE `plugin_fusioninventory_taskjobstates_id`=". $jobstate['id']
-         );
          switch ($p['code']) {
 
             case 'running':
