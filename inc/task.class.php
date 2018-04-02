@@ -2055,8 +2055,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                'actor'                           => []
             ];
 
-            if ($pfTaskjob->getFromDBByQuery("WHERE `plugin_fusioninventory_tasks_id`=". $ma->POST['tasks_id'] .
-               " AND `name` = '$job_name'")) {
+            if ($pfTaskjob->getFromDBByCrit(['plugin_fusioninventory_tasks_id' => $ma->POST['tasks_id'], 'name' => $job_name])) {
                // The task already has a job with the same name - update the job actors
                $message = sprintf(__('%1$s: %2$s'), $pfTask->getLink(),
                   __('Updated a deployment job, package: ', 'fusioninventory') . $pfDeployPackage->getName() .
@@ -2076,7 +2075,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                );
                $pfTaskjob->update($input);
             } else {
-               if ($pfTaskjob->getFromDBByQuery("WHERE `plug   in_fusioninventory_tasks_id`=". $pfTask->getID())) {
+               if ($pfTaskjob->getFromDBByCrit(['plugin_fusioninventory_tasks_id' => $pfTask->getID()])) {
                   // The task already has a job - do not replace!
                   foreach ($ids as $computer_id) {
                      $computer->getFromDB($computer_id);

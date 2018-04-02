@@ -132,11 +132,10 @@ class AgentTest extends RestoreDatabase_TestCase {
       $pfAgent = new PluginFusioninventoryAgent();
       // Load Agent
       $this->assertTrue(
-         $pfAgent->getFromDBByQuery(
-            "WHERE `device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27' ".
-            "LIMIT 1"
-         ),
-         "Could not load agent"
+         $pfAgent->getFromDBByCrit([
+               'device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27'
+            ]),
+            "Could not load agent"
       );
 
       $pfAgent->setAgentWithComputerid(100,
@@ -170,10 +169,10 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $pfAgent->importToken($arrayinventory);
 
-      $pfAgent->getFromDBByQuery(
-         "WHERE `device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27' ".
-         "LIMIT 1"
-      );
+      $pfAgent->getFromDBByCrit([
+         'device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27'
+      ]);
+
       $this->assertContains(date('Y-m-d'), strstr($pfAgent->fields['last_contact'], date('Y-m-d')));
       $this->assertEquals($nb, count($log->find()));
    }

@@ -1805,7 +1805,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $deviceBios       = new DeviceFirmware();
 
       $fwTypes = new DeviceFirmwareType();
-      $fwTypes->getFromDBByQuery("WHERE `name` = 'BIOS'");
+      $fwTypes->getFromDBByCrit([
+         'name' => 'BIOS'
+      ]);
       $type_id = $fwTypes->getID();
       $data['devicefirmwaretypes_id'] = $type_id;
 
