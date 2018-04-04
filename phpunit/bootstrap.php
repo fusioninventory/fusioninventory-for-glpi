@@ -35,8 +35,6 @@ if (!defined('GLPI_ROOT')) {
    );
 }
 
-require_once (GLPI_ROOT . "/inc/autoload.function.php");
-
 include_once("Common_TestCase.php");
 include_once("RestoreDatabase_TestCase.php");
 include_once("LogTest.php");

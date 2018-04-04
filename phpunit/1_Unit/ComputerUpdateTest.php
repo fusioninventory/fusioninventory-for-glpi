@@ -333,7 +333,10 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $ios = new Item_OperatingSystem();
       $this->assertEquals(1, $ios->countForItem($computer));
-      $ios->getFromDBByQuery("WHERE itemtype='Computer' AND items_id=" . $computer->getID());
+      $ios->getFromDBByCrit([
+         'itemtype' => 'Computer',
+         'items_id' => $computer->getID()
+      ]);
 
       $a_reference = [
          'id'                                => '1',

@@ -92,7 +92,10 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
 
 
    protected function setUp() {
-      global $CFG_GLPI,$DB;
+      global $CFG_GLPI, $DB;
+
+      include(GLPI_ROOT.'/inc/includes.php');
+
       $DB = new DB();
       // Force profile in session to SuperAdmin
       $_SESSION['glpiprofiles'] = ['4' => ['entities' => 0]];
@@ -102,8 +105,6 @@ abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
       $_SESSION['glpiactiveentities'] = [0, 1];
 
       $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
-
-      require (GLPI_ROOT . "/inc/includes.php");
 
       $plugin = new Plugin();
       $DB->connect();
