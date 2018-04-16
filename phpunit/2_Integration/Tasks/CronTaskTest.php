@@ -203,12 +203,53 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      // All tasks (active or not) and get logs
+      // Default parameters
+      $data = $pfTask->getJoblogs([1]);
 
+      // If agents exist in the output, this means that some jobs are existing and they have some logs
       $ref = array(
           1 => 'portdavid',
           2 => 'computer2',
           3 => 'computer3'
+      );
+
+      $this->assertEquals($ref, $data['agents']);
+      foreach ($data['tasks'] as $task_id => &$task) {
+         foreach ($task['jobs'] as $job_id => &$job) {
+            foreach ($job['targets'] as $target_id => &$target) {
+               foreach ($target['agents'] as $agent_id => &$agent) {
+                  $logs = $data['tasks'][$task_id]['jobs'][$job_id]['targets'][$target_id]['agents'][$agent_id];
+                  $this->assertEquals(1, count($logs));
+                  /* We get something like:
+                     [agent_id] => 1
+                     [link] => ./vendor/bin/phpunit/front/computer.form.php?id=1
+                     [numstate] => 0
+                     [state] => prepared
+                     [jobstate_id] => 1
+                     [last_log_id] => 1
+                     [last_log_date] => 2018-01-20 12:44:06
+                     [timestamp] => 1516448646
+                     [last_log] =>
+                   */
+                  foreach ($logs as $log_id => &$log) {
+                     $this->assertEquals($log['agent_id'], $agent_id);
+                     $this->assertEquals($log['state'], "prepared");
+                     $this->assertEquals($log['last_log'], "");
+                  }
+               }
+            }
+         }
+      }
+
+      // All tasks (active or not) and get logs
+      $data = $pfTask->getJoblogs([1], true, false);
+
+      // If agents exist in the output, this means that some jobs are existing and they have some logs
+      $ref = array(
+         1 => 'portdavid',
+         2 => 'computer2',
+         3 => 'computer3'
       );
 
       $this->assertEquals($ref, $data['agents']);
@@ -249,7 +290,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      // All tasks (active or not) and get logs
+      $data = $pfTask->getJoblogs([1], true, false);
 
       $ref = array(
           1 => 'portdavid',
@@ -282,7 +324,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       $pfTask = new PluginFusioninventoryTask();
 
-      $data = $pfTask->getJoblogs(array(1));
+      // All tasks (active or not) and get logs
+      $data = $pfTask->getJoblogs([1], true, false);
 
       $ref = array(
           1 => 'portdavid',
@@ -320,7 +363,8 @@ class CronTaskTest extends RestoreDatabase_TestCase {
 
       PluginFusioninventoryTask::cronTaskscheduler();
 
-      $data = $pfTask->getJoblogs(array(1));
+      // Only for active tasks and with logs
+      $data = $pfTask->getJoblogs([1], true, true);
 
       $ref = array();
 
@@ -331,6 +375,41 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $this->assertEquals($ref_prepared, $data['tasks']);
    }
 
+
+   public function prepareTaskNoLogs() {
+      global $DB;
+
+      // Verify prepare a deploy task
+      $DB->connect();
+
+      PluginFusioninventoryTask::cronTaskscheduler();
+
+      $pfTask = new PluginFusioninventoryTask();
+
+      // All tasks (active or not) and no logs
+      $data = $pfTask->getJoblogs([1], false, false);
+
+      // If agents exist in the output, this means that some jobs are existing and they have some logs
+      $ref = array(
+         1 => 'portdavid',
+         2 => 'computer2',
+         3 => 'computer3'
+      );
+
+      $this->assertEquals($ref, $data['agents']);
+
+      foreach ($data['tasks'] as $task_id => &$task) {
+         foreach ($task['jobs'] as $job_id => &$job) {
+            foreach ($job['targets'] as $target_id => &$target) {
+               foreach ($target['agents'] as $agent_id => &$agent) {
+                  $logs = $data['tasks'][$task_id]['jobs'][$job_id]['targets'][$target_id]['agents'][$agent_id];
+                  // No logs
+                  $this->assertEquals(0, count($logs));
+               }
+            }
+         }
+      }
+   }
 
 
    /**
