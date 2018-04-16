@@ -62,17 +62,17 @@ class PluginFusioninventoryToolbox {
     */
    static function logIfExtradebug($file, $message) {
       $config = new PluginFusioninventoryConfig();
-      if ($config->getValue('extradebug')) {
+      if (PluginFusioninventoryConfig::isExtradebugActive()) {
          if (is_array($message)) {
-            $message = print_r($message, TRUE);
+            $message = print_r($message, true);
          }
-         Toolbox::logInFile($file, $message . "\n");
+         Toolbox::logInFile($file, $message . "\n", true);
       }
    }
 
 
 
-   /** Fonction get on http://www.php.net/manual/en/function.gzdecode.php#82930
+   /** Function get on http://www.php.net/manual/en/function.gzdecode.php#82930
     *  used to uncompress gzip string
     *
     * @param string $data
