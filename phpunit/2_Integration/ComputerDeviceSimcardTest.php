@@ -73,6 +73,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
          'networkcard'    => [],
          'drive'          => [],
          'batteries'      => [],
+         'powersupplies'  => [],
          'remote_mgmt'    => [],
          'bios'           => [],
          'simcards'       => [
@@ -141,6 +142,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
          'networkcard'    => [],
          'drive'          => [],
          'batteries'      => [],
+         'powersupplies'  => [],
          'remote_mgmt'    => [],
          'bios'           => [],
          'simcards'       => [

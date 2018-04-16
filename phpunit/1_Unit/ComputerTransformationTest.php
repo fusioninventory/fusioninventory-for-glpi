@@ -137,6 +137,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'simcard'        => array(),
           );
@@ -224,6 +225,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'simcard'        => array()
           );
@@ -329,6 +331,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'simcard'        => array()
           );
@@ -1044,6 +1047,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'simcard'        => array()
           );
@@ -1367,6 +1371,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(
               'date'             => '2006-05-30',
@@ -1483,6 +1488,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(
               'date'             => '2006-05-30',
@@ -1862,6 +1868,77 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    /**
     * @test
     */
+   public function ComputerPowersupply() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = [];
+      $a_computer['HARDWARE'] = [
+         'NAME'           => 'vbox-winxp',
+         'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+         'CHASSIS_TYPE'   => '',
+         'DESCRIPTION'    => '',
+         'OSCOMMENTS'     => 'Service Pack 3 BAD',
+         'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+         'OSVERSION'      => '5.1.2600 BAD',
+         'VMSYSTEM'       => 'VirtualBox',
+         'WINCOMPANY'     => 'siprossii',
+         'WINLANG'        => '1036',
+         'WINOWNER'       => 'test',
+         'WINPRODID'      => '76413-OEM-0054453-04701',
+         'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+         'WORKGROUP'      => 'WORKGROUP'
+      ];
+
+      $a_computer['POWERSUPPLIES'] = [
+         [
+            'NAME'           => 'Power Supply 1',
+            'SERIALNUMBER'   => 'XJ48VR',
+            'CAPACITY'       => '500',
+            'MANUFACTURER'   => 'Supermicro',
+            'MODEL'          => 'dx-546',
+            'HOTREPLACEABLE' => '1',
+            'PLUGGED'        => '1'
+         ],
+         [
+            'NAME'           => 'Power Supply 2',
+            'CAPACITY'       => '0',
+            'MANUFACTURER'   => 'HP',
+            'HOTREPLACEABLE' => '1',
+            'PLUGGED'        => '1'
+         ]
+      ];
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+
+      $a_reference[0] = [
+         'designation'                => 'Power Supply 1',
+         'manufacturers_id'           => 'Supermicro',
+         'serial'                     => 'XJ48VR',
+         'power'                      => '500',
+         'devicepowersupplymodels_id' => 'dx-546'
+      ];
+      $a_reference[1] = [
+         'designation'                => 'Power Supply 2',
+         'manufacturers_id'           => 'HP',
+         'serial'                     => '',
+         'power'                      => '0',
+         'devicepowersupplymodels_id' => ''
+      ];
+
+      $this->assertEquals($a_reference, $a_return['powersupplies']);
+   }
+
+
+   /**
+    * @test
+    */
    public function ComputerRemotemgmt() {
       global $DB;
 
@@ -1997,6 +2074,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(
               'date'             => '2006-05-30',

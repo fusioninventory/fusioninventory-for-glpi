@@ -131,6 +131,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_networkcardvirtual'] = 1;
       $input['otherserial']            = 0;
       $input['component_battery']      = 1;
+      $input['component_powersupply']  = 1;
 
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
@@ -718,6 +719,22 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                           $pfConfig->getValue('component_simcard'));
       echo "</td>";
 
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo "</td>";
+      echo "<td>";
+      echo "</td>";
+
+      echo "</td>";
+      echo "<td>";
+      echo _n('Power supply', 'Power supplies', 2);
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("component_powersupply",
+                          $pfConfig->getValue('component_powersupply'));
+      echo "</td>";
       echo "</tr>";
 
       $options['candel'] = false;

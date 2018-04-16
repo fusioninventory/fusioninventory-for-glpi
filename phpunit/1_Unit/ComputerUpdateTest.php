@@ -100,6 +100,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
           'itemtype'       => 'Computer'
@@ -1243,6 +1244,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'networkcard'    => array(),
           'drive'          => array(),
           'batteries'      => array(),
+          'powersupplies'  => array(),
           'remote_mgmt'    => array(),
           'bios'           => array(),
           'itemtype'       => 'Computer'

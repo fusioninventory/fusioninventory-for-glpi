@@ -113,7 +113,8 @@ class PluginFusioninventoryFormatconvert {
                            'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
                            'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
-                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT');
+                           'LICENSEINFOS', 'STORAGES', 'INPUTS', 'REMOTE_MGMT',
+                           'POWERSUPPLIES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -261,31 +262,32 @@ class PluginFusioninventoryFormatconvert {
       global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
 
       // Initialize
-      $a_inventory = array(
-         'Computer'                => array(),
-         'fusioninventorycomputer' => array(),
-         'processor'               => array(),
-         'memory'                  => array(),
-         'harddrive'               => array(),
-         'drive'                   => array(),
-         'graphiccard'             => array(),
-         'networkcard'             => array(),
-         'soundcard'               => array(),
-         'controller'              => array(),
-         'SOFTWARES'               => array(),
-         'virtualmachine'          => array(),
-         'computerdisk'            => array(),
-         'networkport'             => array(),
-         'antivirus'               => array(),
-         'licenseinfo'             => array(),
-         'batteries'               => array(),
-         'simcard'                 => array(),
-         'monitor'                 => array(),
-         'printer'                 => array(),
-         'peripheral'              => array(),
-         'storage'                 => array(),
-         'remote_mgmt'             => array()
-      );
+      $a_inventory = [
+         'Computer'                => [],
+         'fusioninventorycomputer' => [],
+         'processor'               => [],
+         'memory'                  => [],
+         'harddrive'               => [],
+         'drive'                   => [],
+         'graphiccard'             => [],
+         'networkcard'             => [],
+         'soundcard'               => [],
+         'controller'              => [],
+         'SOFTWARES'               => [],
+         'virtualmachine'          => [],
+         'computerdisk'            => [],
+         'networkport'             => [],
+         'antivirus'               => [],
+         'licenseinfo'             => [],
+         'batteries'               => [],
+         'powersupplies'           => [],
+         'simcard'                 => [],
+         'monitor'                 => [],
+         'printer'                 => [],
+         'peripheral'              => [],
+         'storage'                 => [],
+         'remote_mgmt'             => []
+      ];
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -670,6 +672,27 @@ class PluginFusioninventoryFormatconvert {
                   }
                }
                $a_inventory['batteries'][] = $a_battery;
+            }
+         }
+      }
+
+      // * POWERSUPPLIES
+      $a_inventory['powersupplies'] = [];
+      if ($pfConfig->getValue('component_powersupply') == 1) {
+         if (isset($array['POWERSUPPLIES'])) {
+            foreach ($array['POWERSUPPLIES'] as $a_powersupplies) {
+               $a_powersupply = $thisc->addValues($a_powersupplies,
+                  array(
+                     'NAME'         => 'designation',
+                     'MANUFACTURER' => 'manufacturers_id',
+                     'SERIALNUMBER' => 'serial',
+                     'CAPACITY'     => 'power',
+                     'MODEL'        => 'devicepowersupplymodels_id'
+//                     'HOTREPLACEABLE' => ''
+//                     'PLUGGED'      => ''
+                  )
+               );
+               $a_inventory['powersupplies'][] = $a_powersupply;
             }
          }
       }

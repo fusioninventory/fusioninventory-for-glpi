@@ -124,6 +124,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $deviceMemory                 = new DeviceMemory();
       $item_DeviceBattery           = new Item_DeviceBattery();
       $deviceBattery                = new DeviceBattery();
+      $item_DevicePowerSupply       = new Item_DevicePowerSupply();
+      $devicePowerSupply            = new DevicePowerSupply();
       $computerVirtualmachine       = new ComputerVirtualMachine();
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
@@ -1218,7 +1220,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      }
 
                      if ($update === true) {
-                        $item_DeviceMemory->update($input);
+                        $item_DeviceBattery->update($input);
                      }
 
                      unset($a_computerinventory['batteries'][$key]);
@@ -1240,6 +1242,81 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   foreach ($a_computerinventory['batteries'] as $a_battery) {
                      $this->addBattery($a_battery, $computers_id, $no_history);
                   }
+               }
+            }
+         }
+      }
+
+      // * Powersupplies
+      if ($pfConfig->getValue("component_powersupply") != 0) {
+         $db_powersupplies = array();
+         if ($no_history === FALSE) {
+            $query = "SELECT `glpi_items_devicepowersupplies`.`id`, `serial`, `designation`, `power`
+                        FROM `glpi_items_devicepowersupplies`
+                           LEFT JOIN `glpi_devicepowersupplies` ON `devicepowersupplies_id`=`glpi_devicepowersupplies`.`id`
+                        WHERE `items_id` = '$computers_id'
+                           AND `itemtype`='Computer'
+                           AND `is_dynamic`='1'";
+
+            $result = $DB->query($query);
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['id'];
+               unset($data['id']);
+               $data = Toolbox::addslashes_deep($data);
+               $data = array_map('strtolower', $data);
+               $db_powersupplies[$idtmp] = $data;
+            }
+         }
+
+         if (count($db_powersupplies) == 0) {
+            foreach ($a_computerinventory['powersupplies'] as $a_powersupply) {
+               $this->addPowersupply($a_powersupply, $computers_id, $no_history);
+            }
+         } else {
+            // Check all fields from source: 'designation', 'serial',
+            // 'devicepowersupplytypes_id'
+            foreach ($a_computerinventory['powersupplies'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_powersupplies as $keydb => $arraydb) {
+                  if ((isset($arrayslower['serial'])
+                        && isset($arraydb['serial'])
+                        && !empty($arraydb['serial'])
+                        && $arrayslower['serial'] == $arraydb['serial'])
+                     || (empty($arraydb['serial'])
+                        && $arrayslower['designation'] == $arraydb['designation'])
+                  ) {
+                     $update = false;
+                     if ($arraydb['power'] == 0
+                              && $arrayslower['power'] > 0) {
+                        $input = array(
+                           'id'    => $keydb,
+                           'power' => $arrayslower['power']
+                        );
+                        $update = true;
+                     }
+
+                     if ($update === true) {
+                        $item_DevicePowerSupply->update($input);
+                     }
+
+                     unset($a_computerinventory['powersupplies'][$key]);
+                     unset($db_powersupplies[$keydb]);
+                     break;
+                  }
+               }
+            }
+            //delete remaining powersupplies in database
+            if (count($db_powersupplies) > 0) {
+               // Delete powersupply in DB
+               foreach ($db_powersupplies as $idtmp => $data) {
+                  $item_DevicePowerSupply->delete(array('id' => $idtmp), 1);
+               }
+            }
+
+            //add new powersupplies in database
+            if (count($a_computerinventory['powersupplies']) != 0) {
+               foreach ($a_computerinventory['powersupplies'] as $a_powersupply) {
+                  $this->addPowersupply($a_powersupply, $computers_id, $no_history);
                }
             }
          }
@@ -2035,6 +2112,32 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $data['is_dynamic']         = 1;
       $data['_no_history']        = $no_history;
       $item_DeviceBattery->add($data, array(), !$no_history);
+   }
+
+
+   /**
+    * Add a new power supply component
+    *
+    * @param array   $data
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
+   function addPowerSupply($data, $computers_id, $no_history) {
+      $item_DevicePowerSupply  = new Item_DevicePowerSupply();
+      $devicePowerSupply       = new DevicePowerSupply();
+
+      if (empty($data['designation'])) {
+         //Placebo designation; sometimes missing from agent
+         $data['designation'] = __('Internal powersupply', 'fusioninventory');
+      }
+
+      $powersupplies_id = $devicePowerSupply->import($data);
+      $data['devicepowersupplies_id'] = $powersupplies_id;
+      $data['itemtype']           = 'Computer';
+      $data['items_id']           = $computers_id;
+      $data['is_dynamic']         = 1;
+      $data['_no_history']        = $no_history;
+      $item_DevicePowerSupply->add($data, array(), !$no_history);
    }
 
 
