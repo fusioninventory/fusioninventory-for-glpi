@@ -1,6 +1,0 @@
-inverted emptyString
-inverted emptyArray
-inverted zero
-inverted null
-inverted undefined
-inverted NaN
