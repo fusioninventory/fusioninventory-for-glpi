@@ -388,6 +388,15 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          $order_files = (object)[];
       }
 
+      // Fix some command like : echo "write in file" >> c:\TEMP\HELLO.txt
+      if (isset($order_job['actions'])){
+          foreach($order_job['actions'] as $key => $value){
+              if(isset($value['cmd']) && isset($value['cmd']['exec'])){
+                  $order_job['actions'][$key]['cmd']['exec']= Toolbox::unclean_cross_side_scripting_deep($value['cmd']['exec']);
+              }
+          }
+      }
+
       $order = [
          "job"             => $order_job,
          "associatedFiles" => $order_files

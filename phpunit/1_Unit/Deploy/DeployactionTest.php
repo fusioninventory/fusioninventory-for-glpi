@@ -227,4 +227,95 @@ class DeployactionTest extends RestoreDatabase_TestCase {
       $json     = $action->getJson($packages_id);
       $this->assertEquals($expected, $json);
    }
+
+   /**
+    * @test
+    */
+   public function testRunCommand() {
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $pfDeployCommon = new PluginFusioninventoryDeployCommon();
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $computer = new Computer();
+      $pfAgent = new PluginFusioninventoryAgent();
+      $action = new PluginFusioninventoryDeployAction();
+      $pfEntity = new PluginFusioninventoryEntity();
+
+      $input = array(
+          'id'             => 1,
+          'agent_base_url' => 'http://127.0.0.1/glpi'
+      );
+      $pfEntity->update($input);
+
+      $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+      $json = '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"ls","name":"echo","logLineLimit":"10"}}],"userinteractions":[]},"associatedFiles":[]}';
+      $input = ['name'        => 'cmd test',
+                'entities_id' => 0,
+                'json'        => $json];
+      $packages_id = $pfDeployPackage->add($input);
+
+      $params = ['id'                => $packages_id,
+                 'index'             => 0,
+                 'actionstype'       => 'exec',
+                 'name'              => 'echo',
+                 'exec'              => 'echo "test de l\'echo" >> /tmp/echo',
+                 'logLineLimit'      => '10',
+                 'retChecks'         => ['type' => 'okCode', 'values' => [0]],
+                ];
+      $action->save_item($params);
+
+      // create task
+      $input = [
+          'entities_id' => 0,
+          'name'        => 'deploy',
+          'is_active'   => 1
+      ];
+      $tasks_id = $pfTask->add($input);
+
+      // create takjob
+      $input = [
+          'plugin_fusioninventory_tasks_id' => $tasks_id,
+          'entities_id'                     => 0,
+          'name'                            => 'deploy',
+          'method'                          => 'deployinstall',
+          'targets'                         => '[{"PluginFusioninventoryDeployPackage":"'.$packages_id.'"}]',
+          'actors'                          => '[{"Computer":"1"}]'
+      ];
+      $pfTaskjob->add($input);
+
+      // Create computers + agents
+      $input = [
+          'entities_id' => 0,
+          'name'        => 'computer1'
+      ];
+      $computers_id = $computer->add($input);
+
+      $input = [
+          'entities_id' => 0,
+          'name'        => 'portdavid',
+          'version'     => '{"INVENTORY":"v2.4"}',
+          'device_id'   => 'portdavid',
+          'useragent'   => 'FusionInventory-Agent_v2.4',
+          'computers_id'=> $computers_id
+      ];
+      $agents_id = $pfAgent->add($input);
+
+      // prepare task
+      PluginFusioninventoryTask::cronTaskscheduler();
+
+      $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+         $agents_id,
+         array('deployinstall')
+      );
+      $this->assertEquals(1, count($taskjobstates));
+
+      foreach ($taskjobstates as $taskjobstate) {
+         $data = $pfDeployCommon->run($taskjobstate);
+
+         $this->assertNotContains($data['job']['actions'][0]['exec']['exec'], "&gt;", "&gt; found instead >");
+         $this->assertContains(">>", $data['job']['actions'][0]['exec']['exec'], "We may have >>");
+      }
+   }
 }
