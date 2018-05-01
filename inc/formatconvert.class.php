@@ -1622,8 +1622,12 @@ class PluginFusioninventoryFormatconvert {
 
                      //Add the current manufacturer to the cache of manufacturers
                      if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
-                        $new_value = Dropdown::importExternal('Manufacturer',
-                                                              $array_tmp['manufacturers_id']);
+                        $entities_id = 0;
+                        if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+                           $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                        }
+                        $new_value = Dropdown::importExternal(
+                           'Manufacturer', $array_tmp['manufacturers_id'], $entities_id);
                         $this->manufacturer_cache[$array_tmp['manufacturers_id']] = $new_value;
                      }
                      //Set the manufacturer using the cache
@@ -1908,8 +1912,7 @@ class PluginFusioninventoryFormatconvert {
                      $manufacturer = new Manufacturer();
                      $array[$key]  = $manufacturer->processName($value);
                      if ($key == 'bios_manufacturers_id') {
-                        $this->foreignkey_itemtype[$key] =
-                                 getItemTypeForTable(getTableNameForForeignKeyField('manufacturers_id'));
+                        $this->foreignkey_itemtype[$key] = getItemtypeForForeignKeyField('manufacturers_id');
                      } else {
                         if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value])) {
                            $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value] = $array[$key];
@@ -1917,21 +1920,18 @@ class PluginFusioninventoryFormatconvert {
                      }
                   }
                   if (!is_numeric($key)) {
+                     $entities_id = 0;
+                     if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+                        $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+                     }
                      if ($key == "locations_id") {
-                        $array[$key] = Dropdown::importExternal('Location',
-                                                                $value,
-                                                                $_SESSION["plugin_fusioninventory_entity"]);
+                        $array[$key] = Dropdown::importExternal('Location', $value, $entities_id);
                      } else if (isset($this->foreignkey_itemtype[$key])) {
-                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value,
-                                                                $_SESSION["plugin_fusioninventory_entity"]);
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key], $value, $entities_id);
                      } else if (isForeignKeyField($key)
                              && $key != "users_id") {
-                        $this->foreignkey_itemtype[$key] =
-                                    getItemTypeForTable(getTableNameForForeignKeyField($key));
-                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                                $value,
-                                                                $_SESSION["plugin_fusioninventory_entity"]);
+                        $this->foreignkey_itemtype[$key] = getItemtypeForForeignKeyField($key);
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key], $value, $entities_id);
 
                         if ($key == 'operatingsystemkernelversions_id'
                            && isset($array['operatingsystemkernels_id'])
@@ -2070,15 +2070,15 @@ class PluginFusioninventoryFormatconvert {
       ];
       switch ($itemtype) {
          case 'Printer':
-            $infos['MEMORY']            = 'memory_size';
+            $infos['MEMORY'] = 'memory_size';
             break;
          case 'NetworkEquipment':
-            $infos['RAM']    = 'ram';
             $infos['MEMORY'] = 'memory';
+            $infos['RAM']    = 'ram';
             $infos['MAC']    = 'mac';
             break;
       }
-      $array_tmp               = $this->addValues($array['INFO'], $infos);
+      $array_tmp = $this->addValues($array['INFO'], $infos);
       $array_tmp['is_dynamic'] = 1;
       if ($itemtype == 'Printer') {
          $array_tmp['have_ethernet'] = 1;
@@ -2095,14 +2095,15 @@ class PluginFusioninventoryFormatconvert {
    * @param array $a_inventory reference to the output inventory
    */
    function additionalInfoTransformation($itemtype, $array, &$a_inventory) {
-      $infos             = [];
+      $infos  = $array_tmp = [];
       $infos['COMMENTS'] = 'sysdescr';
       switch ($itemtype) {
          case 'NetworkEquipment':
             $infos['UPTIME'] = 'uptime';
             $infos['CPU']    = 'cpu';
             $infos['MEMORY'] = 'memory';
-            if (!isset($array_tmp['cpu']) || $array_tmp['cpu'] == '') {
+            if (!isset($a_inventory[$itemtype]['cpu'])
+               || $a_inventory[$itemtype]['cpu'] == '') {
                $array_tmp['cpu'] = 0;
             }
             break;

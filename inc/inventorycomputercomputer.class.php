@@ -51,7 +51,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the extended information of a computer.
  */
-class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninventoryItem {
 
 
    /**
@@ -61,6 +61,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     */
    static $rightname = 'computer';
 
+   public $itemtype  = 'Computer';
 
    /**
     * Get name of this type by language of the user connected
@@ -142,23 +143,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '</tr>';
       }
       return true;
-   }
-
-
-   /**
-   * Get automatic inventory info for a computer
-   * @since 9.1+1.2
-   * @param computers_id the computer ID to look for
-   * @return inventory computer infos or an empty array
-   */
-   function hasAutomaticInventory($computers_id) {
-      $a_computerextend = current($this->find("`computers_id`='$computers_id'",
-                                              "", 1));
-      if (empty($a_computerextend)) {
-         return [];
-      } else {
-         return $a_computerextend;
-      }
    }
 
 
@@ -312,34 +296,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '</table>';
       return true;
    }
-
-
-   static function showDownloadInventoryFile($computers_id) {
-      global $CFG_GLPI;
-
-      $folder = substr($computers_id, 0, -1);
-      if (empty($folder)) {
-         $folder = '0';
-      }
-
-      if (file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR."computer/".$folder."/".$computers_id)) {
-         echo "<table class='tab_cadre_fixe'>";
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo "<a href='".$CFG_GLPI['root_doc'].
-           "/plugins/fusioninventory/front/send_inventory.php".
-           "?itemtype=PluginFusioninventoryInventoryComputerComputer".
-           "&function=sendXML&items_id=computer/".$folder."/".$computers_id.
-           "&filename=Computer-".$computers_id.".xml'".
-           "target='_blank'>";
-         $message = __('Download inventory file', 'fusioninventory');
-         echo "<img src=\"".$CFG_GLPI["root_doc"].
-                 "/pics/icones/csv-dist.png\" alt='$message' title='$message'>";
-         echo "&nbsp;$message</a>";
-         echo "</th></tr></table>";
-      }
-   }
-
 
    /**
     * Delete extended information of computer

@@ -222,9 +222,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       $rule    = new PluginFusioninventoryInventoryRuleImport();
       $pfAgent = new PluginFusioninventoryAgent();
 
-      if ($itemtype == 'Computer') {
-         PluginFusioninventoryInventoryComputerComputer::showDownloadInventoryFile($items_id);
-      }
+      $class = PluginFusioninventoryItem::getFIItemClassInstance($itemtype);
+      $class->showDownloadInventoryFile($items_id);
 
       if (isset($_GET["start"])) {
          $start = $_GET["start"];

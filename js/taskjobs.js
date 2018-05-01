@@ -16,7 +16,7 @@ taskjobs.register_update_method = function (rand_id) {
    $("#" + rand_id )
       .off("change", "*")
       .on("change", function(e) {
-         $("#method_selected").text(e.val);
+         $("#method_selected").text($(this).val());
          //reset targets and actors dropdown
          taskjobs.hide_moduletypes_dropdown();
          taskjobs.hide_moduleitems_dropdown();
@@ -31,8 +31,7 @@ taskjobs.register_update_items = function (rand_id, moduletype, ajax_url) {
    $("#" + rand_id )
       .off("change", "*")
       .on("change",function(e) {
-            //$("#taskjob_moduleitems_dropdown").text(e.val);
-            taskjobs.show_moduleitems(ajax_url, moduletype, e.val);
+            taskjobs.show_moduleitems(ajax_url, moduletype, $(this).val());
       });
 };
 

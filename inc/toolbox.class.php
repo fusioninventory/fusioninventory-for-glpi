@@ -67,7 +67,7 @@ class PluginFusioninventoryToolbox {
          if (is_array($message)) {
             $message = print_r($message, true);
          }
-         Toolbox::logInFile($file, $message);
+         Toolbox::logInFile($file, $message . "\n");
       }
    }
 
@@ -311,17 +311,18 @@ class PluginFusioninventoryToolbox {
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/")) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/");
+      if (!file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR)) {
+         mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR);
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype);
+      $itemtype_dir = PLUGIN_FUSIONINVENTORY_XML_DIR.strtolower($itemtype);
+      if (!file_exists($itemtype_dir)) {
+         mkdir($itemtype_dir);
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder);
+      if (!file_exists($itemtype_dir."/".$folder)) {
+         mkdir($itemtype_dir."/".$folder);
       }
-      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder."/".
-                           $items_id, 'w');
+      $file     = $itemtype_dir."/".$folder."/".$items_id.'.xml';
+      $fileopen = fopen($file, 'w');
       fwrite($fileopen, $xml);
       fclose($fileopen);
    }

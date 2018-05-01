@@ -250,6 +250,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/commonview.class.php';
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskview.class.php';
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskjobview.class.php';
+   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/item.class.php';
 
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);
@@ -4995,7 +4996,7 @@ function do_operatingsystemedition_migration($migration) {
       $ose = new OperatingSystemEdition();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions') as $edition) {
          //check if arch already exists in core
-         if ($ose->getFromDBByQuery(' WHERE name = "' . $DB->escape($edition['name']) . '"')) {
+         if ($ose->getFromDBByCrit(['name' => $DB->escape($edition['name'])])) {
             $new_id = $ose->fields['id'];
          } else {
             unset($edition['id']);
@@ -5049,10 +5050,10 @@ function do_operatingsystemkernel_migration($migration) {
          $key = "{$row['kid']}|{$row['kvid']}";
          if (!isset($mapping[$key])) {
             //find in db for an existing kernel name
-            if (!$kernels->getFromDBByQuery("WHERE name='" . $DB->escape($row['kname']). "'")) {
+            if (!$kernels->getFromDBByCrit(['name' => $DB->escape($row['kname'])])) {
                $kernels->add(['name' => $row['kname']]);
             }
-            if (!$kversions->getFromDBByQuery("WHERE name='" . $DB->escape($row['kversion']). "' AND operatingsystemkernels_id = " . $kernels->getID())) {
+            if (!$kversions->getFromDBByCrit(['name' => $DB->escape($row['kversion']), 'operatingsystemkernels_id' => $kernels->getID()])) {
                $kversions->add([
                   'name'                        => $row['kversion'],
                   'operatingsystemkernels_id'  => $kernels->getID()

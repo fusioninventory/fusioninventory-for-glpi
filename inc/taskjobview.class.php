@@ -104,9 +104,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
             $pfTaskJob->showListForTask($item->getID());
             echo "</div>";
-
-            //Just a sortable test (must me removed after testing)
-            //echo file_get_contents('http://' . $_SERVER['HTTP_HOST'] . "/test.html");
             return true;
          }
       }
@@ -175,25 +172,28 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * Display list header
     *
     * @param integer $task_id
-    * @param boolean $deletion_activated
+    * @param boolean $deletion_enabled as TRUE to create the deletion check boews
+    * @param boolean $addition_enabled as TRUE to create a job addition button
     */
-   public function showListHeader($task_id, $deletion_activated) {
+   public function showListHeader($task_id, $deletion_enabled, $addition_enabled) {
       echo "<tr>";
       //Show checkbox to select every objects for deletion.
-      if ($deletion_activated) {
+      if ($deletion_enabled) {
          echo "<th>";
          echo Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand());
          echo "</th>";
       }
-      echo "<th colspan='2' class='center'>
+      if ($addition_enabled) {
+         echo "<th colspan='2' class='center'>
                <input type='button'
                       class='submit taskjobs_create'
                       data-ajaxurl='".$this->getBaseUrlFor('fi.job.create')."'
                       data-task_id='$task_id'
                       style='padding:5px;margin:0;right:0'
                       value=' ".__('Add a job', 'fusioninventory')." '/>
-            </th>
-            </tr>";
+            </th>";
+      }
+      echo "</tr>";
    }
 
 
@@ -253,23 +253,30 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       $taskjobs = $this->getTaskjobs($task_id);
 
+      // Check if cron GLPI running
+      if (count($taskjobs) > 1) {
+         $message = __('Several jobs in the same task is not anymore supported because of unexpected side-effects. 
+         Please consider modifying this task to avoid unexpected results.', 'fusioninventory');
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+      }
+
       //Activate massive deletion if there are some.
-      $deletion_activated = (count($taskjobs)>0);
+      $deletion_enabled = (count($taskjobs)>0);
+      $addition_enabled = (count($taskjobs)==0);
 
       echo "<form id='taskjobs_form' method='post' action='".$this->getFormURL()."'>";
       echo "<table class='tab_cadrehov package_item_list' id='taskjobs_list'>\n";
-      $this->showListHeader($task_id, $deletion_activated);
       foreach ($taskjobs as $taskjob_data) {
          echo "<tr class='tab_bg_2'>\n";
-         $this->showTaskjobSummary( $taskjob_data );
+         $this->showTaskjobSummary($taskjob_data);
          echo "</tr>\n";
       }
 
-      $this->showListHeader($task_id, $deletion_activated);
+      $this->showListHeader($task_id, $deletion_enabled, $addition_enabled);
       echo "</table>\n";
 
       //Show the delete button for selected object
-      if ($deletion_activated) {
+      if ($deletion_enabled) {
          echo "<div class='left'>";
          echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
          echo "<input type='submit' name='delete_taskjobs' value=\"".
@@ -321,6 +328,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             </td>
             <td class='rowhandler control'><div class='drag'/></td>";
 
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-tasks", "Task job edit : " . $this->getBaseUrlFor('fi.job.edit')
+      );
       if (isset($_REQUEST['edit_job'])) {
          echo Html::scriptBlock("$(document).ready(function() {
             taskjobs.edit(
