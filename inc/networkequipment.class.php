@@ -252,6 +252,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       }
 
       $query = "SELECT `glpi_networkports`.`id`, `instantiation_type`,
+         `ifdescr`,
          `glpi_plugin_fusioninventory_networkports`.`id` as `fusionid`
       FROM glpi_plugin_fusioninventory_networkports
 
@@ -261,8 +262,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
          ".$where."
          AND NOT (glpi_networkports.name='general'
-                     AND glpi_networkports.logical_number=0)
-      ORDER BY logical_number ";
+                     AND glpi_networkports.logical_number=0) ";
 
       $nbcol = 5;
       if ($monitoring == '1') {
@@ -283,7 +283,14 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       $result = $this->showNetworkPortDetailHeader($monitoring, $query);
 
       if ($result) {
+         $aDescr = []; $aResult = [];
          while ($data = $DB->fetch_array($result)) {
+            $aDescr[]  = $data['ifdescr'];
+            $aResult[] = $data;
+         }
+         array_multisort($aDescr, SORT_ASC, SORT_NATURAL, $aResult);
+
+         foreach($aResult as $data) {
             $this->showNetworkPortDetail($data, $monitoring);
 
             if ($data['instantiation_type'] == 'NetworkPortAggregate') {
