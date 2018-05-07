@@ -970,7 +970,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'color' => '#aaaaff'
       );
       $dataDeploy[2] = array(
-          'key' => __('Successfull', 'fusioninventory'),
+          'key' => __('Successful', 'fusioninventory'),
           'y'   => 0,
           'color' => '#aaffaa'
       );

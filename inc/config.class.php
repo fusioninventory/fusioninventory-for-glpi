@@ -379,7 +379,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("extradebug", $this->isFieldActive('extradebug'));
       echo "</td>";
 
-      echo "<td>".__('Re-prepare successfull jobs', 'fusioninventory')."</td>";
+      echo "<td>".__('Re-prepare successful jobs', 'fusioninventory')."</td>";
       echo "<td>";
       Dropdown::showYesNo("reprepare_job", $this->isFieldActive('reprepare_job'));
       echo "</td>";

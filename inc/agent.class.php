@@ -1175,7 +1175,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @global object $DB
     * @param object $task
-    * @return boolean true if successfull, otherwise false
+    * @return boolean true if successful, otherwise false
     */
    static function cronCleanoldagents($task=NULL) {
       global $DB;
