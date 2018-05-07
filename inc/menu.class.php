@@ -848,12 +848,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $dataSNMP = [];
       $dataSNMP[] = [
-          'key' => __('NetworkEquipments (SNMP)', 'fusioninventory').' : '.$networkequipment,
+          'key' => __('Network equipments', 'fusioninventory').' : '.$networkequipment,
           'y'   => $networkequipment,
           'color' => '#3d94ff'
       ];
       $dataSNMP[] = [
-          'key' => __('Printers (SNMP)', 'fusioninventory').' : '.$printer,
+          'key' => __('Printers', 'fusioninventory').' : '.$printer,
           'y'   => $printer,
           'color' => '#3dff7d'
       ];
@@ -887,7 +887,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $dataPortL = [];
       $dataPortL[] = [
-          'key' => __('SNMP switch network ports linked', 'fusioninventory').' : '.$networkPortsLinked,
+          'key' => __('Linked with a device', 'fusioninventory').' : '.$networkPortsLinked,
           'y'   => $networkPortsLinked,
           'color' => '#3dff7d'
       ];
@@ -916,12 +916,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $dataPortC = [];
       $dataPortC[] = [
-          'key' => __('Ports connected', 'fusioninventory').' : '.$networkPortsConnected,
+          'key' => __('Linked with a device', 'fusioninventory').' : '.$networkPortsConnected,
           'y'   => $networkPortsConnected,
           'color' => '#3dff7d'
       ];
       $dataPortC[] = [
-          'key' => __('Ports not connected', 'fusioninventory').' : '.($allSwitchesPortSNMP - $networkPortsConnected),
+          'key' => __('Not linked', 'fusioninventory').' : '.($allSwitchesPortSNMP - $networkPortsConnected),
           'y'   => ($allSwitchesPortSNMP - $networkPortsConnected),
           'color' => '#dedede'
       ];
@@ -956,15 +956,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'key' => __('Running', 'fusioninventory'),
           'y'   => 0,
           'color' => '#aaaaff'
-<<<<<<< HEAD
       ];
       $dataDeploy[2] = [
-          'key' => __('Successfull', 'fusioninventory'),
-=======
-      );
-      $dataDeploy[2] = array(
           'key' => __('Successful', 'fusioninventory'),
->>>>>>> 760ec3fae... Fix type. closes #2539 (#2541)
           'y'   => 0,
           'color' => '#aaffaa'
       ];
@@ -988,13 +982,13 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       echo "<div class='fi_board'>";
-      self::showChart('computers', $dataComputer);
+      self::showChart('computers', $dataComputer, __('Automatic inventory vs manually added', 'fusioninventory'));
       self::showChartBar('nbinventory', $dataInventory,
-                         __('Number of computer inventories of last hours', 'fusioninventory'));
+                         __('Computer inventories in the last hours', 'fusioninventory'));
       self::showChart('deploy', $dataDeploy, __('Deployment', 'fusioninventory'));
-      self::showChart('snmp', $dataSNMP);
-      self::showChart('ports', $dataPortL);
-      self::showChart('portsconnected', $dataPortC);
+      self::showChart('snmp', $dataSNMP, __('Network inventory by SNMP', 'fusioninventory'));
+      self::showChart('ports', $dataPortL, __('Ports on network equipments (inventoried by SNMP)', 'fusioninventory'));
+      self::showChart('portsconnected', $dataPortC, __('Ports on all network equipments', 'fusioninventory'));
       echo "</div>";
 
    }

@@ -147,7 +147,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
          $result = $DB->query($query);
          $data = $DB->fetch_assoc($result);
          $a_counters['values'][] = [
-             'label' => date('G', $timestampSearch)." ".__('hour'),
+             'label' => date('H', $timestampSearch).":00",
              'value' => (int)$data['counter']
          ];
       }

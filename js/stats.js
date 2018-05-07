@@ -18,6 +18,8 @@ function statHalfDonut(svgname, jsondata) {
           .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
           .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
 
+      chart.legend.maxKeyLength(200);
+
       d3.select('#' + svgname)
           .datum(JSON.parse(jsondata))
           .transition().duration(1200)
