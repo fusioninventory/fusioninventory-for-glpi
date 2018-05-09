@@ -84,111 +84,141 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Agent', 'fusioninventory');
+      $tab[] = ['id' => 'common', 'name' => __('Agent', 'fusioninventory')];
 
-      $tab[1]['table']     = $this->getTable();
-      $tab[1]['field']     = 'name';
-      $tab[1]['linkfield'] = 'name';
-      $tab[1]['name']      = __('Name');
-      $tab[1]['datatype']  = 'itemlink';
+      $tab[] = [
+         'table'     => $this->getTable(),
+         'field'     => 'name',
+         'linkfield' => 'name',
+         'name'      => __('Name'),
+         'datatype'  => 'itemlink',
+      ];
 
-      $tab[2]['table']     = 'glpi_entities';
-      $tab[2]['field']     = 'completename';
-      $tab[2]['name']      = __('Entity');
-      $tab[2]['datatype'] = 'dropdown';
+      $tab[] = [
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown',
+      ];
 
-      $tab[3]['table']     = $this->getTable();
-      $tab[3]['field']     = 'is_recursive';
-      $tab[3]['linkfield'] = 'is_recursive';
-      $tab[3]['name']      = __('Child entities');
-      $tab[3]['datatype']  = 'bool';
+      $tab[] = [
+         'table'     => $this->getTable(),
+         'field'     => 'is_recursive',
+         'linkfield' => 'is_recursive',
+         'name'      => __('Child entities'),
+         'datatype'  => 'bool',
+      ];
 
-      $tab[4]['table']     = $this->getTable();
-      $tab[4]['field']     = 'last_contact';
-      $tab[4]['linkfield'] = '';
-      $tab[4]['name']      = __('Last contact', 'fusioninventory');
-      $tab[4]['datatype']  = 'datetime';
+      $tab[] = [
+         'table'     => $this->getTable(),
+         'field'     => 'last_contact',
+         'linkfield' => '',
+         'name'      => __('Last contact', 'fusioninventory'),
+         'datatype'  => 'datetime',
+      ];
 
-      $tab[5]['table']     = $this->getTable();
-      $tab[5]['field']     = 'lock';
-      $tab[5]['linkfield'] = 'lock';
-      $tab[5]['name']      = __('locked', 'fusioninventory');
-      $tab[5]['datatype']  = 'bool';
+      $tab[] = [
+         'table'     => $this->getTable(),
+         'field'     => 'lock',
+         'linkfield' => 'lock',
+         'name'      => __('locked', 'fusioninventory'),
+         'datatype'  => 'bool',
+      ];
 
-      $tab[6]['table']     = $this->getTable();
-      $tab[6]['field']     = 'device_id';
-      $tab[6]['linkfield'] = 'device_id';
-      $tab[6]['name']      = __('Device_id', 'fusioninventory');
-      $tab[6]['datatype']  = 'text';
-      $tab[6]['massiveaction'] = false;
+      $tab[] = [
+         'table'         => $this->getTable(),
+         'field'         => 'device_id',
+         'linkfield'     => 'device_id',
+         'name'          => __('Device_id', 'fusioninventory'),
+         'datatype'      => 'text',
+         'massiveaction' => false,
+      ];
 
-      $tab[7]['table']         = 'glpi_computers';
-      $tab[7]['field']         = 'name';
-      $tab[7]['name']          = __('Computer link', 'fusioninventory');
-      $tab[7]['datatype']      = 'itemlink';
-      $tab[7]['itemlink_type'] = 'Computer';
-      $tab[7]['massiveaction'] = false;
+      $tab[] = [
+         'table'         => 'glpi_computers',
+         'field'         => 'name',
+         'name'          => __('Computer link', 'fusioninventory'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => 'Computer',
+         'massiveaction' => false,
+      ];
 
-      $tab[8]['table']     = $this->getTable();
-      $tab[8]['field']     = 'version';
-      $tab[8]['linkfield'] = 'version';
-      $tab[8]['name']      = __('Version');
-      $tab[8]['datatype']  = 'text';
-      $tab[8]['massiveaction'] = false;
+      $tab[] = [
+         'table'         => $this->getTable(),
+         'field'         => 'version',
+         'linkfield'     => 'version',
+         'name'          => __('Version'),
+         'datatype'      => 'text',
+         'massiveaction' => false,
+      ];
 
-      $tab[9]['table']     = $this->getTable();
-      $tab[9]['field']     = 'token';
-      $tab[9]['linkfield'] = 'token';
-      $tab[9]['name']      = __('Token');
-      $tab[9]['datatype']  = 'text';
-      $tab[9]['massiveaction'] = false;
+      $tab[] = [
+         'table'         => $this->getTable(),
+         'field'         => 'token',
+         'linkfield'     => 'token',
+         'name'          => __('Token'),
+         'datatype'      => 'text',
+         'massiveaction' => false,
+      ];
 
-      $tab[10]['table']     = $this->getTable();
-      $tab[10]['field']     = 'useragent';
-      $tab[10]['linkfield'] = 'useragent';
-      $tab[10]['name']      = __('Useragent', 'fusioninventory');
-      $tab[10]['datatype']  = 'text';
-      $tab[10]['massiveaction'] = false;
+      $tab[] = [
+         'table'         => $this->getTable(),
+         'field'         => 'useragent',
+         'linkfield'     => 'useragent',
+         'name'          => __('Useragent', 'fusioninventory'),
+         'datatype'      => 'text',
+         'massiveaction' => false,
+      ];
 
-      $tab[11]['table']     = $this->getTable();
-      $tab[11]['field']     = 'tag';
-      $tab[11]['name']      = __('FusionInventory tag', 'fusioninventory');
-      $tab[11]['datatype']  = 'text';
-      $tab[11]['massiveaction'] = false;
+      $tab[] = [
+         'table'         => $this->getTable(),
+         'field'         => 'tag',
+         'name'          => __('FusionInventory tag', 'fusioninventory'),
+         'datatype'      => 'text',
+         'massiveaction' => false,
+      ];
 
-      $tab[12]['table']     = $this->getTable();
-      $tab[12]['field']     = 'threads_networkdiscovery';
-      $tab[12]['name']      = __('Threads number', 'fusioninventory')."&nbsp;(".
-                                 strtolower(__('Network discovery', 'fusioninventory')).
-                                 ")";
-      $tab[12]['datatype']  = 'integer';
+      $tab[] = [
+         'table'    => $this->getTable(),
+         'field'    => 'threads_networkdiscovery',
+         'name'     => __('Threads number', 'fusioninventory') . "&nbsp;(" .
+            strtolower(__('Network discovery', 'fusioninventory')) .
+            ")",
+         'datatype' => 'integer',
+      ];
 
-      $tab[13]['table']     = $this->getTable();
-      $tab[13]['field']     = 'threads_networkinventory';
-      $tab[13]['name']      = __('Threads number', 'fusioninventory')."&nbsp;(".
-                                 strtolower(__('Network inventory (SNMP)', 'fusioninventory')).
-                                 ")";
-      $tab[13]['datatype']  = 'integer';
+      $tab[] = [
+         'table'    => $this->getTable(),
+         'field'    => 'threads_networkinventory',
+         'name'     => __('Threads number', 'fusioninventory') . "&nbsp;(" .
+            strtolower(__('Network inventory (SNMP)', 'fusioninventory')) .
+            ")",
+         'datatype' => 'integer',
+      ];
 
-      $tab[14]['table']     = $this->getTable();
-      $tab[14]['field']     = 'agent_port';
-      $tab[14]['linkfield'] = 'agent_port';
-      $tab[14]['name']      = __('Agent port', 'fusioninventory');
+      $tab[] = [
+         'table'     => $this->getTable(),
+         'field'     => 'agent_port',
+         'linkfield' => 'agent_port',
+         'name'      => __('Agent port', 'fusioninventory'),
+      ];
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data) {
-         $tab[$i]['table']         = $pfAgentmodule->getTable();
-         $tab[$i]['field']         = $data["modulename"];
-         $tab[$i]['linkfield']     = $data["modulename"];
-         $tab[$i]['name']          = __('Module', 'fusioninventory')." - ".$data["modulename"];
-         $tab[$i]['datatype']      = 'bool';
-         $tab[$i]['massiveaction'] = false;
+         $tab = [
+            'table'         => $pfAgentmodule->getTable(),
+            'field'         => $data["modulename"],
+            'linkfield'     => $data["modulename"],
+            'name'          => __('Module', 'fusioninventory') . " - " . $data["modulename"],
+            'datatype'      => 'bool',
+            'massiveaction' => false,
+         ];
          $i++;
       }
       return $tab;

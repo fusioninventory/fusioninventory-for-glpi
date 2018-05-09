@@ -138,32 +138,43 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
+      $tab[] = [
+         'id'   => 'common',
+         'name' => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+      ];
 
-      $tab[1]['table']     = $this->getTable();
-      $tab[1]['field']     = 'name';
-      $tab[1]['name']      = __('Name');
-      $tab[1]['datatype']  = 'itemlink';
+      $tab[] = [
+         'table'    => $this->getTable(),
+         'field'    => 'name',
+         'name'     => __('Name'),
+         'datatype' => 'itemlink',
+      ];
 
-      $tab[2]['table'] = 'glpi_entities';
-      $tab[2]['field'] = 'completename';
-      $tab[2]['name']  = __('Entity');
-      $tab[2]['datatype'] = 'dropdown';
+      $tab[] = [
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown',
+      ];
 
-      $tab[3]['table'] = $this->getTable();
-      $tab[3]['field'] = 'name';
-      $tab[3]['name']  = __('Authentication for remote devices (VMware)', 'fusioninventory');
-      $tab[3]['datatype']      = 'itemlink';
-      $tab[3]['itemlink_type'] = 'PluginFusioninventoryCredential';
+      $tab[] = [
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'name'          => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => 'PluginFusioninventoryCredential',
+      ];
 
-      $tab[4]['table'] = $this->getTable();
-      $tab[4]['field'] = 'ip';
-      $tab[4]['name']  = __('IP');
-      $tab[4]['datatype']      = 'string';
+      $tab[] = [
+         'table'    => $this->getTable(),
+         'field'    => 'ip',
+         'name'     => __('IP'),
+         'datatype' => 'string',
+      ];
 
       return $tab;
    }
