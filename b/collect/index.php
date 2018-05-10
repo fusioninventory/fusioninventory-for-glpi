@@ -186,11 +186,11 @@ switch (filter_input(INPUT_GET, "action")) {
                );
             }
 
-            // change status of state table row
-            $pfTaskjobstate->changeStatus($jobstate['id'],
-                       PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+         // change status of state table row
+         $pfTaskjobstate->changeStatus($jobstate['id'],
+                    PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
-            // add logs to job
+         // add logs to job
             if (count($a_values)) {
                $flag    = PluginFusioninventoryTaskjoblog::TASK_INFO;
                $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
@@ -198,13 +198,13 @@ switch (filter_input(INPUT_GET, "action")) {
                $flag    = PluginFusioninventoryTaskjoblog::TASK_ERROR;
                $message = __('Path not found', 'fusioninventory');
             }
-            $pfTaskjoblog->addTaskjoblog($jobstate['id'],
-                                         $jobstate['items_id'],
-                                         $jobstate['itemtype'],
-                                         $flag,
-                                         $message);
+         $pfTaskjoblog->addTaskjoblog($jobstate['id'],
+                                      $jobstate['items_id'],
+                                      $jobstate['itemtype'],
+                                      $flag,
+                                      $message);
          }
-         break;
+      break;
 
 
 
@@ -215,7 +215,7 @@ switch (filter_input(INPUT_GET, "action")) {
                                              $jobstate['items_id'],
                                              $jobstate['itemtype']);
 
-         break;
+      break;
       }
 
    if (count($response) > 0) {
