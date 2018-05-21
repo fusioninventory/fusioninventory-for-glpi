@@ -108,39 +108,54 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Task');
+      $tab[] = ['id' => 'common', 'name' => __('Task')];
 
-      $tab[1]['table']          = $this->getTable();
-      $tab[1]['field']          = 'name';
-      $tab[1]['linkfield']      = '';
-      $tab[1]['name']           = __('Name');
-      $tab[1]['datatype']       = 'itemlink';
+      $tab[] = [
+         'id'        => 1,
+         'table'     => $this->getTable(),
+         'field'     => 'name',
+         'linkfield' => '',
+         'name'      => __('Name'),
+         'datatype'  => 'itemlink',
+      ];
 
-      $tab[2]['table']           = 'glpi_entities';
-      $tab[2]['field']           = 'completename';
-      $tab[2]['linkfield']       = 'entities_id';
-      $tab[2]['name']            = __('Entity');
+      $tab[] = [
+         'id'        => 2,
+         'table'     => 'glpi_entities',
+         'field'     => 'completename',
+         'linkfield' => 'entities_id',
+         'name'      => __('Entity'),
+      ];
 
-      $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
-      $tab[4]['field']          = 'name';
-      $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
-      $tab[4]['name']           = __('Task');
-      $tab[4]['datatype']       = 'itemlink';
-      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
+      $tab[] = [
+         'id'            => 4,
+         'table'         => 'glpi_plugin_fusioninventory_tasks',
+         'field'         => 'name',
+         'linkfield'     => 'plugin_fusioninventory_tasks_id',
+         'name'          => __('Task'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => 'PluginFusioninventoryTask',
+      ];
 
-      $tab[5]['table']          = $this->getTable();
-      $tab[5]['field']          = 'status';
-      $tab[5]['linkfield']      = '';
-      $tab[5]['name']           = __('Status');
+      $tab[] = [
+         'id'        => 5,
+         'table'     => $this->getTable(),
+         'field'     => 'status',
+         'linkfield' => '',
+         'name'      => __('Status'),
+      ];
 
-      $tab[6]['table']          = $this->getTable();
-      $tab[6]['field']          = 'id';
-      $tab[6]['linkfield']      = '';
-      $tab[6]['name']           = __('ID');
+      $tab[] = [
+         'id'        => 6,
+         'table'     => $this->getTable(),
+         'field'     => 'id',
+         'linkfield' => '',
+         'name'      => __('ID'),
+      ];
 
       return $tab;
    }

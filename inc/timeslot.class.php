@@ -85,34 +85,46 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Time slot', 'fusioninventory');
+      $tab[] = ['id' => 'common', 'name' => __('Time slot', 'fusioninventory')];
 
-      $tab[1]['table']     = $this->getTable();
-      $tab[1]['field']     = 'name';
-      $tab[1]['linkfield'] = 'name';
-      $tab[1]['name']      = __('Name');
-      $tab[1]['datatype']  = 'itemlink';
+      $tab[] = [
+         'id'        => 1,
+         'table'     => $this->getTable(),
+         'field'     => 'name',
+         'linkfield' => 'name',
+         'name'      => __('Name'),
+         'datatype'  => 'itemlink',
+      ];
 
-      $tab[2]['table']     = 'glpi_entities';
-      $tab[2]['field']     = 'completename';
-      $tab[2]['name']      = __('Entity');
-      $tab[2]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'       => 2,
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown',
+      ];
 
-      $tab[3]['table']     = $this->getTable();
-      $tab[3]['field']     = 'is_recursive';
-      $tab[3]['linkfield'] = 'is_recursive';
-      $tab[3]['name']      = __('Child entities');
-      $tab[3]['datatype']  = 'bool';
+      $tab[] = [
+         'id'        => 3,
+         'table'     => $this->getTable(),
+         'field'     => 'is_recursive',
+         'linkfield' => 'is_recursive',
+         'name'      => __('Child entities'),
+         'datatype'  => 'bool',
+      ];
 
-      $tab[4]['table']     = $this->getTable();
-      $tab[4]['field']     = 'name';
-      $tab[4]['linkfield'] = '';
-      $tab[4]['name']      = __('Name');
-      $tab[4]['datatype']  = 'string';
+      $tab[] = [
+         'id'        => 4,
+         'table'     => $this->getTable(),
+         'field'     => 'name',
+         'linkfield' => '',
+         'name'      => __('Name'),
+         'datatype'  => 'string',
+      ];
 
       return $tab;
    }

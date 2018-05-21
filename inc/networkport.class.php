@@ -90,72 +90,117 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab                     = [];
-      $tab['common']           = __('Characteristics');
+      $tab[] = ['id' => 'common', 'name' => __('Characteristics')];
 
-      $tab[1]['table']         = 'glpi_networkports';
-      $tab[1]['field']         = 'name';
-      $tab[1]['name']          = __('Name');
-      $tab[1]['type']          = 'text';
-      $tab[1]['massiveaction'] = false;
+      $tab[] = [
+         'id'            => 1,
+         'table'         => 'glpi_networkports',
+         'field'         => 'name',
+         'name'          => __('Name'),
+         'type'          => 'text',
+         'massiveaction' => false,
+      ];
 
-      $tab[3]['table']         = $this->getTable();
-      $tab[3]['field']         = 'ifmtu';
-      $tab[3]['name']          = __('MTU', 'fusioninventory');
+      $tab[] = [
+         'id'    => 3,
+         'table' => $this->getTable(),
+         'field' => 'ifmtu',
+         'name'  => __('MTU', 'fusioninventory'),
+      ];
 
-      $tab[5]['table']         = $this->getTable();
-      $tab[5]['field']         = 'ifspeed';
-      $tab[5]['name']          = __('Speed');
+      $tab[] = [
+         'id'    => 5,
+         'table' => $this->getTable(),
+         'field' => 'ifspeed',
+         'name'  => __('Speed'),
+      ];
 
-      $tab[6]['table']         = $this->getTable();
-      $tab[6]['field']         = 'ifinternalstatus';
-      $tab[6]['name']          = __('Internal status', 'fusioninventory');
+      $tab[] = [
+         'id'    => 6,
+         'table' => $this->getTable(),
+         'field' => 'ifinternalstatus',
+         'name'  => __('Internal status', 'fusioninventory'),
+      ];
 
-      $tab[7]['table']         = $this->getTable();
-      $tab[7]['field']         = 'iflastchange';
-      $tab[7]['name']          = __('Last change', 'fusioninventory');
+      $tab[] = [
+         'id'    => 7,
+         'table' => $this->getTable(),
+         'field' => 'iflastchange',
+         'name'  => __('Last change', 'fusioninventory'),
+      ];
 
-      $tab[8]['table']         = $this->getTable();
-      $tab[8]['field']         = 'ifinoctets';
-      $tab[8]['name']          = __('Number of bytes received / Number of bytes sent', 'fusioninventory');
+      $tab[] = [
+         'id'    => 8,
+         'table' => $this->getTable(),
+         'field' => 'ifinoctets',
+         'name'  => __('Number of bytes received / Number of bytes sent', 'fusioninventory'),
+      ];
 
-      $tab[9]['table']         = $this->getTable();
-      $tab[9]['field']         = 'ifinerrors';
-      $tab[9]['name']          = __('Number of input errors / Number of errors in reception', 'fusioninventory');
+      $tab[] = [
+         'id'    => 9,
+         'table' => $this->getTable(),
+         'field' => 'ifinerrors',
+         'name'  => __('Number of input errors / Number of errors in reception', 'fusioninventory'),
+      ];
 
-      $tab[10]['table']         = $this->getTable();
-      $tab[10]['field']         = 'portduplex';
-      $tab[10]['name']          = __('Duplex', 'fusioninventory');
+      $tab[] = [
+         'id'    => 10,
+         'table' => $this->getTable(),
+         'field' => 'portduplex',
+         'name'  => __('Duplex', 'fusioninventory'),
+      ];
 
-      $tab[11]['table']         = $this->getTable();
-      $tab[11]['field']         = 'mac';
-      $tab[11]['name']          = __('Internal MAC address', 'fusioninventory');
+      $tab[] = [
+         'id'    => 11,
+         'table' => $this->getTable(),
+         'field' => 'mac',
+         'name'  => __('Internal MAC address', 'fusioninventory'),
+      ];
 
-      $tab[12]['table']         = $this->getTable();
-      $tab[12]['field']         = 'vlan';
-      $tab[12]['name']          = __('VLAN');
+      $tab[] = [
+         'id'    => 12,
+         'table' => $this->getTable(),
+         'field' => 'vlan',
+         'name'  => __('VLAN'),
+      ];
 
-      $tab[13]['table']         = $this->getTable();
-      $tab[13]['field']         = 'connectedto';
-      $tab[13]['name']          = __('Connected to');
+      $tab[] = [
+         'id'    => 13,
+         'table' => $this->getTable(),
+         'field' => 'connectedto',
+         'name'  => __('Connected to'),
+      ];
 
-      $tab[14]['table']         = $this->getTable();
-      $tab[14]['field']         = 'ifconnectionstatus';
-      $tab[14]['name']          = __('Connection');
+      $tab[] = [
+         'id'    => 14,
+         'table' => $this->getTable(),
+         'field' => 'ifconnectionstatus',
+         'name'  => __('Connection'),
+      ];
 
-      $tab[15]['table']         = $this->getTable();
-      $tab[15]['field']         = 'lastup';
-      $tab[15]['name']          = __('Port not connected since', 'fusioninventory');
+      $tab[] = [
+         'id'    => 15,
+         'table' => $this->getTable(),
+         'field' => 'lastup',
+         'name'  => __('Port not connected since', 'fusioninventory'),
+      ];
 
-      $tab[16]['table']         = $this->getTable();
-      $tab[16]['field']         = 'ifalias';
-      $tab[16]['name']          = __('Alias', 'fusioninventory');
+      $tab[] = [
+         'id'    => 16,
+         'table' => $this->getTable(),
+         'field' => 'ifalias',
+         'name'  => __('Alias', 'fusioninventory'),
+      ];
 
-      $tab[17]['table']          = 'glpi_netpoints';
-      $tab[17]['field']          = 'name';
-      $tab[17]['name']           = _n('Network outlet', 'Network outlets', 1);
+      $tab[] = [
+         'id'    => 17,
+         'table' => 'glpi_netpoints',
+         'field' => 'name',
+         'name'  => _n('Network outlet', 'Network outlets', 1),
+      ];
 
       return $tab;
    }

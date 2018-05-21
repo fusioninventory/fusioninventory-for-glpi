@@ -118,49 +118,62 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
       $tab = [];
 
-      $tab['common'] = __('IP range configuration', 'fusioninventory');
+      $tab[] = ['id' => 'common', 'name' => __('IP range configuration', 'fusioninventory')];
 
-      $tab[1]['table'] = $this->getTable();
-      $tab[1]['field'] = 'name';
-      $tab[1]['linkfield'] = 'name';
-      $tab[1]['name'] = __('Name');
-      $tab[1]['datatype'] = 'itemlink';
+      $tab[] = [
+         'id'        => 1,
+         'table'     => $this->getTable(),
+         'field'     => 'name',
+         'linkfield' => 'name',
+         'name'      => __('Name'),
+         'datatype'  => 'itemlink',
+      ];
 
-      $tab[2]['table'] = 'glpi_entities';
-      $tab[2]['field'] = 'completename';
-      $tab[2]['linkfield'] = 'entities_id';
-      $tab[2]['name'] = __('Entity');
-      $tab[2]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'        => 2,
+         'table'     => 'glpi_entities',
+         'field'     => 'completename',
+         'linkfield' => 'entities_id',
+         'name'      => __('Entity'),
+         'datatype'  => 'dropdown',
+      ];
 
-      $tab[3]['table'] = $this->getTable();
-      $tab[3]['field'] = 'ip_start';
-      $tab[3]['linkfield'] = 'ip_start';
-      $tab[3]['name'] = __('Start of IP range', 'fusioninventory');
+      $tab[] = [
+         'id'        => 3,
+         'table'     => $this->getTable(),
+         'field'     => 'ip_start',
+         'linkfield' => 'ip_start',
+         'name'      => __('Start of IP range', 'fusioninventory'),
+      ];
 
-      $tab[4]['table'] = $this->getTable();
-      $tab[4]['field'] = 'ip_end';
-      $tab[4]['linkfield'] = 'ip_end';
-      $tab[4]['name'] = __('End of IP range', 'fusioninventory');
+      $tab[] = [
+         'id'        => 4,
+         'table'     => $this->getTable(),
+         'field'     => 'ip_end',
+         'linkfield' => 'ip_end',
+         'name'      => __('End of IP range', 'fusioninventory'),
+      ];
 
-      $tab[5] = [
-         'table'              => 'glpi_plugin_fusioninventory_configsecurities',
-         'field'              => 'name',
-         'datatype'           => 'dropdown',
-         'right'              => 'all',
-         'name'               => __('SNMP credentials', 'fusioninventory'),
-         'forcegroupby'       => true,
-         'massiveaction'      => false,
-         'joinparams'         => [
-            'beforejoin'         => [
-               'table'              => "glpi_plugin_fusioninventory_ipranges_configsecurities",
-               'joinparams'         => [
-                  'jointype'           => 'child',
-               ]
-            ]
-         ]
+      $tab[] = [
+         'id'            => 5,
+         'table'         => 'glpi_plugin_fusioninventory_configsecurities',
+         'field'         => 'name',
+         'datatype'      => 'dropdown',
+         'right'         => 'all',
+         'name'          => __('SNMP credentials', 'fusioninventory'),
+         'forcegroupby'  => true,
+         'massiveaction' => false,
+         'joinparams'    => [
+            'beforejoin' => [
+               'table'      => "glpi_plugin_fusioninventory_ipranges_configsecurities",
+               'joinparams' => [
+                  'jointype' => 'child',
+               ],
+            ],
+         ],
       ];
 
       return $tab;

@@ -178,30 +178,45 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
+      $tab[] = [
+         'id'   => 'common',
+         'name' => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+      ];
 
-      $tab[1]['table']     = $this->getTable();
-      $tab[1]['field']     = 'name';
-      $tab[1]['name']      = __('Name');
-      $tab[1]['datatype']  = 'itemlink';
+      $tab[] = [
+         'id'       => 1,
+         'table'    => $this->getTable(),
+         'field'    => 'name',
+         'name'     => __('Name'),
+         'datatype' => 'itemlink',
+      ];
 
-      $tab[2]['table']  = 'glpi_entities';
-      $tab[2]['field']  = 'completename';
-      $tab[2]['name']   = __('Entity');
-      $tab[2]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'       => 2,
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown',
+      ];
 
-      $tab[3]['table']           = $this->getTable();
-      $tab[3]['field']           = 'itemtype';
-      $tab[3]['name']            = __('Type');
-      $tab[3]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 3,
+         'table'         => $this->getTable(),
+         'field'         => 'itemtype',
+         'name'          => __('Type'),
+         'massiveaction' => false,
+      ];
 
-      $tab[4]['table']  = $this->getTable();
-      $tab[4]['field']  = 'username';
-      $tab[4]['name']   = __('Login');
+      $tab[] = [
+         'id'    => 4,
+         'table' => $this->getTable(),
+         'field' => 'username',
+         'name'  => __('Login'),
+      ];
 
       return $tab;
    }

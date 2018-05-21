@@ -321,50 +321,71 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
       $tab = [];
-      $tab['common']           = __('Characteristics');
+      $tab[] = ['id' => 'common', 'name' => __('Characteristics')];
 
-      $tab[1]['table']         = $this->getTable();
-      $tab[1]['field']         = 'name';
-      $tab[1]['linkfield']     = 'name';
-      $tab[1]['name']          = __('Name');
-      $tab[1]['datatype']      = 'itemlink';
-      $tab[1]['itemlink_link'] = $this->getType();
+      $tab[] = [
+         'id'            => 1,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'linkfield'     => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'itemlink_link' => $this->getType(),
+      ];
 
-      $tab[2]['table']     = $this->getTable();
-      $tab[2]['field']     = 'id';
-      $tab[2]['linkfield'] = '';
-      $tab[2]['name']      = __('ID');
+      $tab[] = [
+         'id'        => 2,
+         'table'     => $this->getTable(),
+         'field'     => 'id',
+         'linkfield' => '',
+         'name'      => __('ID'),
+      ];
 
-      $tab[16]['table']     = $this->getTable();
-      $tab[16]['field']     = 'comment';
-      $tab[16]['linkfield'] = 'comment';
-      $tab[16]['name']      = __('Comments');
-      $tab[16]['datatype']  = 'text';
+      $tab[] = [
+         'id'        => 16,
+         'table'     => $this->getTable(),
+         'field'     => 'comment',
+         'linkfield' => 'comment',
+         'name'      => __('Comments'),
+         'datatype'  => 'text',
+      ];
 
-      $tab[19]['table']     = $this->getTable();
-      $tab[19]['field']     = 'date_mod';
-      $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = __('Last update');
-      $tab[19]['datatype']  = 'datetime';
+      $tab[] = [
+         'id'        => 19,
+         'table'     => $this->getTable(),
+         'field'     => 'date_mod',
+         'linkfield' => '',
+         'name'      => __('Last update'),
+         'datatype'  => 'datetime',
+      ];
 
-      $tab[80]['table']     = 'glpi_entities';
-      $tab[80]['field']     = 'completename';
-      $tab[80]['name']      = __('Entity');
-      $tab[80]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'       => 80,
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown',
+      ];
 
-      $tab[86]['table']     = $this->getTable();
-      $tab[86]['field']     = 'is_recursive';
-      $tab[86]['linkfield'] = 'is_recursive';
-      $tab[86]['name']      = __('Child entities');
-      $tab[86]['datatype']  = 'bool';
+      $tab[] = [
+         'id'        => 86,
+         'table'     => $this->getTable(),
+         'field'     => 'is_recursive',
+         'linkfield' => 'is_recursive',
+         'name'      => __('Child entities'),
+         'datatype'  => 'bool',
+      ];
 
-      $tab[20]['table']     = 'glpi_plugin_fusioninventory_deploygroups';
-      $tab[20]['field']     = 'name';
-      $tab[20]['name']      = __('Enable deploy on demand for the following group',
-                                 'fusioninventory');
-      $tab[20]['datatype']  = 'dropdown';
+      $tab[20] = [
+         'id'       => 20,
+         'table'    => 'glpi_plugin_fusioninventory_deploygroups',
+         'field'    => 'name',
+         'name'     => __('Enable deploy on demand for the following group',
+            'fusioninventory'),
+         'datatype' => 'dropdown',
+      ];
 
       return $tab;
    }
