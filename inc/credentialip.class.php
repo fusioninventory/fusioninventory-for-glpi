@@ -148,6 +148,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'       => 1,
          'table'    => $this->getTable(),
          'field'    => 'name',
          'name'     => __('Name'),
@@ -155,6 +156,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'       => 2,
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -162,6 +164,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'            => 3,
          'table'         => $this->getTable(),
          'field'         => 'name',
          'name'          => __('Authentication for remote devices (VMware)', 'fusioninventory'),
@@ -170,6 +173,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'       => 4,
          'table'    => $this->getTable(),
          'field'    => 'ip',
          'name'     => __('IP'),

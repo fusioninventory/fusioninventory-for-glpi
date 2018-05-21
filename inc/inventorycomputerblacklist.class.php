@@ -86,6 +86,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $tab[] = ['id' => 'common', 'name' => __('BlackList')];
 
       $tab[] = [
+         'id'        => 1,
          'table'     => $this->getTable(),
          'field'     => 'value',
          'linkfield' => 'value',
@@ -93,6 +94,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 2,
          'table'         => 'glpi_plugin_fusioninventory_inventorycomputercriterias',
          'field'         => 'name',
          'linkfield'     => 'plugin_fusioninventory_criterium_id',

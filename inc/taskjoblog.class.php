@@ -173,6 +173,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt['common'] = __('Logs');
 
       $sopt[] = [
+         'id'            => 1,
          'table'         => $this->getTable(),
          'field'         => 'id',
          'name'          => __('ID'),
@@ -180,6 +181,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'            => 2,
          'table'         => 'glpi_plugin_fusioninventory_tasks',
          'field'         => 'name',
          'name'          => _n('Task', 'Tasks', 2),
@@ -188,6 +190,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'            => 3,
          'table'         => 'glpi_plugin_fusioninventory_taskjobs',
          'field'         => 'name',
          'name'          => __('Job', 'fusioninventory'),
@@ -196,6 +199,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'         => 4,
          'table'      => $this->getTable(),
          'field'      => 'state',
          'name'       => __('Status'),
@@ -203,6 +207,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'            => 5,
          'table'         => $this->getTable(),
          'field'         => 'date',
          'name'          => __('Date'),
@@ -211,6 +216,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'       => 6,
          'table'    => 'glpi_plugin_fusioninventory_taskjobstates',
          'field'    => 'uniqid',
          'name'     => __('Unique id', 'fusioninventory'),
@@ -218,6 +224,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'       => 7,
          'table'    => $this->getTable(),
          'field'    => 'comment',
          'name'     => __('Comments'),
@@ -225,6 +232,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       ];
 
       $sopt[] = [
+         'id'           => 8,
          'table'        => "glpi_plugin_fusioninventory_agents",
          'field'        => 'name',
          'name'         => __('Agent', 'fusioninventory'),

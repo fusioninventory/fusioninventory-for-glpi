@@ -188,6 +188,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'       => 1,
          'table'    => $this->getTable(),
          'field'    => 'name',
          'name'     => __('Name'),
@@ -195,13 +196,15 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'       => 2,
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
          'datatype' => 'dropdown',
       ];
 
-      $tab[3] = [
+      $tab[] = [
+         'id'            => 3,
          'table'         => $this->getTable(),
          'field'         => 'itemtype',
          'name'          => __('Type'),
@@ -209,6 +212,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       ];
 
       $tab[] = [
+         'id'    => 4,
          'table' => $this->getTable(),
          'field' => 'username',
          'name'  => __('Login'),

@@ -127,6 +127,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $tab[] = ['id' => 'common', 'name' => __('Unmanaged device', 'fusioninventory')];
 
       $tab[] = [
+         'id'            => 1,
          'table'         => $this->getTable(),
          'field'         => 'name',
          'linkfield'     => 'name',
@@ -136,6 +137,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 2,
          'table'     => $this->getTable(),
          'field'     => 'id',
          'linkfield' => '',
@@ -143,6 +145,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 3,
          'table'     => 'glpi_locations',
          'field'     => 'name',
          'linkfield' => 'locations_id',
@@ -151,6 +154,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 4,
          'table'     => $this->getTable(),
          'field'     => 'serial',
          'linkfield' => 'serial',
@@ -158,6 +162,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 5,
          'table'     => $this->getTable(),
          'field'     => 'otherserial',
          'linkfield' => 'otherserial',
@@ -165,6 +170,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 6,
          'table'     => $this->getTable(),
          'field'     => 'contact',
          'linkfield' => 'contact',
@@ -172,6 +178,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 7,
          'table'     => $this->getTable(),
          'field'     => 'hub',
          'linkfield' => 'hub',
@@ -180,6 +187,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 8,
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
@@ -188,6 +196,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 9,
          'table'     => 'glpi_domains',
          'field'     => 'name',
          'linkfield' => 'domain',
@@ -196,6 +205,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 10,
          'table'     => $this->getTable(),
          'field'     => 'comment',
          'linkfield' => 'comment',
@@ -204,6 +214,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 13,
          'table'     => $this->getTable(),
          'field'     => 'item_type',
          'linkfield' => 'item_type',
@@ -212,6 +223,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 14,
          'table'     => $this->getTable(),
          'field'     => 'date_mod',
          'linkfield' => '',
@@ -220,6 +232,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 15,
          'table'     => $this->getTable(),
          'field'     => 'sysdescr',
          'linkfield' => '',
@@ -228,6 +241,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 17,
          'table'     => 'glpi_plugin_fusioninventory_configsecurities',
          'field'     => 'name',
          'linkfield' => 'plugin_fusioninventory_configsecurities_id',

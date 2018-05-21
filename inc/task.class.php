@@ -95,6 +95,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt['common'] = __('Task');
 
       $sopt[] = [
+         'id'        => 1,
          'table'     => $this->getTable(),
          'field'     => 'name',
          'linkfield' => 'name',
@@ -103,6 +104,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 2,
          'table'     => $this->getTable(),
          'field'     => 'datetime_start',
          'linkfield' => 'datetime_start',
@@ -111,6 +113,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 2,
          'table'     => $this->getTable(),
          'field'     => 'datetime_end',
          'linkfield' => 'datetime_end',
@@ -119,6 +122,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 3,
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
@@ -127,6 +131,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 4,
          'table'     => $this->getTable(),
          'field'     => 'comment',
          'linkfield' => 'comment',
@@ -134,6 +139,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 5,
          'table'     => $this->getTable(),
          'field'     => 'is_active',
          'linkfield' => 'is_active',
@@ -142,6 +148,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 6,
          'table'     => $this->getTable(),
          'field'     => 'reprepare_if_successful',
          'linkfield' => 'reprepare_if_successful',
@@ -151,6 +158,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'       => 7,
          'table'    => $this->getTable(),
          'field'    => 'is_deploy_on_demand',
          'name'     => __('deploy on demand task', 'fusioninventory'),
@@ -158,6 +166,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       ];
 
       $sopt[] = [
+         'id'        => 30,
          'table'     => $this->getTable(),
          'field'     => 'id',
          'linkfield' => '',

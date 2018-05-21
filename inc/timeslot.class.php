@@ -92,6 +92,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $tab[] = ['id' => 'common', 'name' => __('Time slot', 'fusioninventory')];
 
       $tab[] = [
+         'id'        => 1,
          'table'     => $this->getTable(),
          'field'     => 'name',
          'linkfield' => 'name',
@@ -100,6 +101,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'       => 2,
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -107,6 +109,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 3,
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
          'linkfield' => 'is_recursive',
@@ -115,6 +118,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 4,
          'table'     => $this->getTable(),
          'field'     => 'name',
          'linkfield' => '',

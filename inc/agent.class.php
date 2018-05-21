@@ -91,6 +91,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[] = ['id' => 'common', 'name' => __('Agent', 'fusioninventory')];
 
       $tab[] = [
+         'id'        => 1,
          'table'     => $this->getTable(),
          'field'     => 'name',
          'linkfield' => 'name',
@@ -99,6 +100,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'       => 2,
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -106,6 +108,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 3,
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
          'linkfield' => 'is_recursive',
@@ -114,6 +117,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 4,
          'table'     => $this->getTable(),
          'field'     => 'last_contact',
          'linkfield' => '',
@@ -122,6 +126,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 5,
          'table'     => $this->getTable(),
          'field'     => 'lock',
          'linkfield' => 'lock',
@@ -130,6 +135,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 6,
          'table'         => $this->getTable(),
          'field'         => 'device_id',
          'linkfield'     => 'device_id',
@@ -139,6 +145,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 7,
          'table'         => 'glpi_computers',
          'field'         => 'name',
          'name'          => __('Computer link', 'fusioninventory'),
@@ -148,6 +155,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 8,
          'table'         => $this->getTable(),
          'field'         => 'version',
          'linkfield'     => 'version',
@@ -157,6 +165,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 9,
          'table'         => $this->getTable(),
          'field'         => 'token',
          'linkfield'     => 'token',
@@ -166,6 +175,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 10,
          'table'         => $this->getTable(),
          'field'         => 'useragent',
          'linkfield'     => 'useragent',
@@ -175,6 +185,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 11,
          'table'         => $this->getTable(),
          'field'         => 'tag',
          'name'          => __('FusionInventory tag', 'fusioninventory'),
@@ -183,6 +194,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'       => 12,
          'table'    => $this->getTable(),
          'field'    => 'threads_networkdiscovery',
          'name'     => __('Threads number', 'fusioninventory') . "&nbsp;(" .
@@ -192,6 +204,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'       => 13,
          'table'    => $this->getTable(),
          'field'    => 'threads_networkinventory',
          'name'     => __('Threads number', 'fusioninventory') . "&nbsp;(" .
@@ -201,6 +214,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 14,
          'table'     => $this->getTable(),
          'field'     => 'agent_port',
          'linkfield' => 'agent_port',
@@ -211,7 +225,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data) {
-         $tab = [
+         $tab[] = [
+            'id'            => $i,
             'table'         => $pfAgentmodule->getTable(),
             'field'         => $data["modulename"],
             'linkfield'     => $data["modulename"],

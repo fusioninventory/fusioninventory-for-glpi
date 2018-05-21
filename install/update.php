@@ -4136,7 +4136,14 @@ function do_printer_migration($migration) {
          }
       } else {
          while ($data=$DB->fetch_array($result)) {
-            if (!isset($a_searchoptions[$data['num']])) {
+            $delete = true;
+            foreach ($a_searchoptions as $searchoption){
+               if($searchoption['id'] == $data['num']){
+                  $delete = false;
+                  continue;
+               }
+            }
+            if ($delete) {
                $DB->delete(
                   'glpi_displaypreferences', [
                      'id'  => $data['id']

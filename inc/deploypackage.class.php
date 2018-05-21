@@ -326,6 +326,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $tab[] = ['id' => 'common', 'name' => __('Characteristics')];
 
       $tab[] = [
+         'id'            => 1,
          'table'         => $this->getTable(),
          'field'         => 'name',
          'linkfield'     => 'name',
@@ -335,6 +336,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 2,
          'table'     => $this->getTable(),
          'field'     => 'id',
          'linkfield' => '',
@@ -342,6 +344,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 16,
          'table'     => $this->getTable(),
          'field'     => 'comment',
          'linkfield' => 'comment',
@@ -350,6 +353,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 19,
          'table'     => $this->getTable(),
          'field'     => 'date_mod',
          'linkfield' => '',
@@ -358,6 +362,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'       => 80,
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -365,6 +370,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 86,
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
          'linkfield' => 'is_recursive',
@@ -373,6 +379,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[20] = [
+         'id'       => 20,
          'table'    => 'glpi_plugin_fusioninventory_deploygroups',
          'field'    => 'name',
          'name'     => __('Enable deploy on demand for the following group',

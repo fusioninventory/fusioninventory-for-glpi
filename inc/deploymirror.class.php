@@ -289,6 +289,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       $tab = [];
       $tab[] = [
+         'id'            => 1,
          'table'         => $this->getTable(),
          'field'         => 'name',
          'linkfield'     => 'name',
@@ -298,6 +299,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 19,
          'table'     => $this->getTable(),
          'field'     => 'date_mod',
          'linkfield' => '',
@@ -306,6 +308,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 2,
          'table'     => $this->getTable(),
          'field'     => 'url',
          'linkfield' => 'url',
@@ -314,6 +317,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 3,
          'table'     => $this->getTable(),
          'field'     => 'is_active',
          'linkfield' => 'is_active',
@@ -322,6 +326,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 16,
          'table'     => $this->getTable(),
          'field'     => 'comment',
          'linkfield' => 'comment',
@@ -330,6 +335,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'       => 80,
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -337,6 +343,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 81,
          'table'     => getTableNameForForeignKeyField('locations_id'),
          'field'     => 'completename',
          'linkfield' => 'locations_id',
@@ -345,6 +352,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 86,
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
          'linkfield' => 'is_recursive',

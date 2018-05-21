@@ -124,6 +124,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $tab[] = ['id' => 'common', 'name' => __('IP range configuration', 'fusioninventory')];
 
       $tab[] = [
+         'id'        => 1,
          'table'     => $this->getTable(),
          'field'     => 'name',
          'linkfield' => 'name',
@@ -132,6 +133,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 2,
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
@@ -140,6 +142,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 3,
          'table'     => $this->getTable(),
          'field'     => 'ip_start',
          'linkfield' => 'ip_start',
@@ -147,6 +150,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'        => 4,
          'table'     => $this->getTable(),
          'field'     => 'ip_end',
          'linkfield' => 'ip_end',
@@ -154,21 +158,22 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       ];
 
       $tab[] = [
-         'table'              => 'glpi_plugin_fusioninventory_configsecurities',
-         'field'              => 'name',
-         'datatype'           => 'dropdown',
-         'right'              => 'all',
-         'name'               => __('SNMP credentials', 'fusioninventory'),
-         'forcegroupby'       => true,
-         'massiveaction'      => false,
-         'joinparams'         => [
-            'beforejoin'         => [
-               'table'              => "glpi_plugin_fusioninventory_ipranges_configsecurities",
-               'joinparams'         => [
-                  'jointype'           => 'child',
-               ]
-            ]
-         ]
+         'id'            => 5,
+         'table'         => 'glpi_plugin_fusioninventory_configsecurities',
+         'field'         => 'name',
+         'datatype'      => 'dropdown',
+         'right'         => 'all',
+         'name'          => __('SNMP credentials', 'fusioninventory'),
+         'forcegroupby'  => true,
+         'massiveaction' => false,
+         'joinparams'    => [
+            'beforejoin' => [
+               'table'      => "glpi_plugin_fusioninventory_ipranges_configsecurities",
+               'joinparams' => [
+                  'jointype' => 'child',
+               ],
+            ],
+         ],
       ];
 
       return $tab;

@@ -309,6 +309,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 1,
          'table'         => $this->getTable(),
          'field'         => 'name',
          'linkfield'     => '',
@@ -318,6 +319,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 2,
          'table'         => $this->getTable(),
          'field'         => 'type',
          'name'          => __('Type'),

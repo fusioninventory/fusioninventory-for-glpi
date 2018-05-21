@@ -78,7 +78,7 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
 
       foreach ($tab as $searchOptions){
          if($searchOptions['table'] == PluginFusioninventoryPrinterLog::getTable()) {
-            $tab[]['forcegroupby']='1';
+            $tab[$searchOptions['id']]['forcegroupby']='1';
          }
       }
       return $tab;
