@@ -1611,7 +1611,7 @@ function do_entities_migration($migration) {
             'glpi_plugin_fusioninventory_entities', [
                'agent_base_url' => $agent_base_url
             ], [
-               '1 = 1'
+               '1' => '1'
             ]
          );
       }
@@ -4589,7 +4589,7 @@ function do_networkequipment_migration($migration) {
          'glpi_networkequipments', [
             'id'  => new \QueryParam()
          ], [
-            '1 = 1'
+            '1' => '1'
          ]
       );
       $stmt = $DB->prepare($update);
