@@ -250,10 +250,10 @@ class DeployactionTest extends RestoreDatabase_TestCase {
       $action = new PluginFusioninventoryDeployAction();
       $pfEntity = new PluginFusioninventoryEntity();
 
-      $input = array(
+      $input = [
           'id'             => 1,
           'agent_base_url' => 'http://127.0.0.1/glpi'
-      );
+      ];
       $pfEntity->update($input);
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
@@ -314,7 +314,7 @@ class DeployactionTest extends RestoreDatabase_TestCase {
 
       $taskjobstates = $pfTask->getTaskjobstatesForAgent(
          $agents_id,
-         array('deployinstall')
+         ['deployinstall']
       );
       $this->assertEquals(1, count($taskjobstates));
 
@@ -325,5 +325,5 @@ class DeployactionTest extends RestoreDatabase_TestCase {
          $this->assertContains(">>", $data['job']['actions'][0]['exec']['exec'], "We may have >>");
       }
    }
-   
+
 }

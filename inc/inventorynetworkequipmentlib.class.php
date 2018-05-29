@@ -116,7 +116,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                            'Internal');
 
       // * NetworkEquipment fusion (ext)
-      $db_networkequipment = array();
+      $db_networkequipment = [];
 
       $params = [
          'FROM'  => getTableForItemType("PluginFusioninventoryNetworkEquipment"),

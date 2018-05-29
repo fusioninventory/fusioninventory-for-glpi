@@ -739,7 +739,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
-         "execute actions, data:\n". print_r($output, TRUE). "\n" . print_r($params, TRUE)
+         "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
       );
 
       PluginFusioninventoryToolbox::logIfExtradebug(

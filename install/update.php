@@ -4137,8 +4137,8 @@ function do_printer_migration($migration) {
       } else {
          while ($data=$DB->fetch_array($result)) {
             $delete = true;
-            foreach ($a_searchoptions as $searchoption){
-               if($searchoption['id'] == $data['num']){
+            foreach ($a_searchoptions as $searchoption) {
+               if ($searchoption['id'] == $data['num']) {
                   $delete = false;
                   continue;
                }

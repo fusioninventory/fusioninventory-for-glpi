@@ -213,28 +213,28 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $this->ruleactions_id = $ruleAction->add($input);
 
       // * computer comment assign
-      $input = array(
+      $input = [
           'entities_id' => 0,
           'sub_type' => 'PluginFusioninventoryCollectRule',
           'name' => 'comment assign rule',
           'match' => 'AND'
-      );
+      ];
       $rules_id = $rule->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'  => $rules_id,
           'criteria'  => 'filename',
           'condition' => 6,
           'pattern'   => "/dell (.*)/"
-      );
+      ];
       $ruleCriteria->add($input);
 
-      $input = array(
+      $input = [
           'rules_id'    => $rules_id,
           'action_type' => 'assign',
           'field'       => 'comment',
           'value'       => 'mycomment'
-      );
+      ];
       $this->ruleactions_id = $ruleAction->add($input);
 
       // * create items
@@ -262,11 +262,11 @@ class CollectRuleTest extends RestoreDatabase_TestCase {
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
 
       $res_rule = $pfCollectRuleCollection->processAllRules(
-                    array(
+                    [
                         "filename"  => 'dell d630',
                         "filepath"  => '/tmp',
                         "size"      => 1000
-                     )
+                     ]
                   );
       $this->assertEquals('mycomment', $res_rule['comment']);
    }
