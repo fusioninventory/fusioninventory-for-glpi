@@ -4585,7 +4585,9 @@ function do_networkequipment_migration($migration) {
    if (count($iterator)) {
       $update = $DB->buildUpdate(
          'glpi_networkequipments', [
-            'id'  => new \QueryParam()
+            'is_dynamic'   => 1
+         ], [
+            'id'           => new \QueryParam()
          ]
       );
       $stmt = $DB->prepare($update);
