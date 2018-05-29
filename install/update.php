@@ -1610,7 +1610,7 @@ function do_entities_migration($migration) {
          $DB->update(
             'glpi_plugin_fusioninventory_entities', [
                'agent_base_url' => $agent_base_url
-            ], []
+            ], [true]
          );
       }
    }
