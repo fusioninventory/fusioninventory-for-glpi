@@ -134,7 +134,17 @@ class PluginFusioninventoryItem extends CommonDBTM {
     * @param array $options optional parameters to be used for display purpose
     */
    function showForm(CommonDBTM $item, $options = []) {
-      Session::checkRight('plugin_fusioninventory_printer', READ);
+      $PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
+      $rights = $PluginFusioninventoryProfile->getRightsInventory();
+      $class  = get_class($this);
+
+      $aRight = array_filter($rights, function($a) use ($class) {
+         return (isset($a['itemtype']) && $a['itemtype'] == "$class");
+      });
+      $aRight = reset($aRight);
+      $right  = $aRight['field'];
+
+      Session::checkRight($right, READ);
 
       $fk     = getForeignKeyFieldForItemType($this->itemtype);
       $params = [$fk => $item->getID()];
