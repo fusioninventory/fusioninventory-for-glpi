@@ -165,11 +165,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $i = 5200;
 
       $pfCollect = new PluginFusioninventoryCollect();
-      foreach ($pfCollect->find(getEntitiesRestrictRequest("", $pfCollect->getTable())) as $collect) {
+      foreach ($pfCollect->find(getEntitiesRestrictRequest("", $pfCollect->getTable()), 'id ASC') as $collect) {
 
          //registries
          $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-         $registries = $pfCollect_Registry->find('plugin_fusioninventory_collects_id = ' . $collect['id']);
+         $registries = $pfCollect_Registry->find('plugin_fusioninventory_collects_id = ' . $collect['id'], 'id ASC');
          foreach ($registries as $registry) {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_registries_contents';
             $tab[$i]['field']         = 'value';
@@ -187,7 +187,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
          //WMIs
          $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-         $wmis = $pfCollect_Wmi->find('plugin_fusioninventory_collects_id  = ' . $collect['id']);
+         $wmis = $pfCollect_Wmi->find('plugin_fusioninventory_collects_id  = ' . $collect['id'], 'id ASC');
          foreach ($wmis as $wmi) {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_wmis_contents';
             $tab[$i]['field']         = 'value';
@@ -205,7 +205,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
          //Files
          $pfCollect_File = new PluginFusioninventoryCollect_File();
-         $files = $pfCollect_File->find('plugin_fusioninventory_collects_id = ' . $collect['id']);
+         $files = $pfCollect_File->find('plugin_fusioninventory_collects_id = ' . $collect['id'], 'id ASC');
          foreach ($files as $file) {
 
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
