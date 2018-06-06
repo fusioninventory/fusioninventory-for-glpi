@@ -81,80 +81,113 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Agent', 'fusioninventory');
+      $tab[] = ['id' => 'common', 'name' => __('Agent', 'fusioninventory')];
 
-      $tab[1]['table']     = $this->getTable();
-      $tab[1]['field']     = 'name';
-      $tab[1]['linkfield'] = 'name';
-      $tab[1]['name']      = __('Name');
-      $tab[1]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 2,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'linkfield'     => 'name',
+         'name'          => __('Name'),
+         'massiveaction' => false,
+      ];
 
-      $tab[2]['table']     = 'glpi_rules';
-      $tab[2]['field']     = 'id';
-      $tab[2]['name']      = __('Rule name', 'fusioninventory');
-      $tab[2]['datatype']  = 'itemlink';
-      $tab[7]['itemlink_type'] = 'PluginFusioninventoryInventoryRuleImport';
-      $tab[2]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 2,
+         'table'         => 'glpi_rules',
+         'field'         => 'id',
+         'name'          => __('Rule name', 'fusioninventory'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'massiveaction' => false,
+      ];
 
-      $tab[3]['table']     = $this->getTable();
-      $tab[3]['field']     = 'date';
-      $tab[3]['linkfield'] = '';
-      $tab[3]['name']      = __('Date');
-      $tab[3]['datatype']  = 'datetime';
-      $tab[3]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 3,
+         'table'         => $this->getTable(),
+         'field'         => 'date',
+         'linkfield'     => '',
+         'name'          => __('Date'),
+         'datatype'      => 'datetime',
+         'massiveaction' => false,
+      ];
 
-      $tab[4]['table']         = $this->getTable();
-      $tab[4]['field']         = 'itemtype';
-      $tab[4]['name']          = __('Item type');
-      $tab[4]['massiveaction'] = false;
-      $tab[4]['datatype']      = 'itemtypename';
+      $tab[] = [
+         'id'            => 4,
+         'table'         => $this->getTable(),
+         'field'         => 'itemtype',
+         'name'          => __('Item type'),
+         'massiveaction' => false,
+         'datatype'      => 'itemtypename',
+      ];
 
-      $tab[5]['table']     = 'glpi_entities';
-      $tab[5]['field']     = 'completename';
-      $tab[5]['name']      = __('Entity');
-      $tab[5]['massiveaction']  = false;
-      $tab[5]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'            => 5,
+         'table'         => 'glpi_entities',
+         'field'         => 'completename',
+         'name'          => __('Entity'),
+         'massiveaction' => false,
+         'datatype'      => 'dropdown',
+      ];
 
-      $tab[6]['table']           = $this->getTable();
-      $tab[6]['field']           = 'serial';
-      $tab[6]['name']            = __('Serial number');
-      $tab[6]['datatype']        = 'string';
-      $tab[6]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 6,
+         'table'         => $this->getTable(),
+         'field'         => 'serial',
+         'name'          => __('Serial number'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+      ];
 
-      $tab[7]['table']          = $this->getTable();
-      $tab[7]['field']          = 'uuid';
-      $tab[7]['name']           = __('UUID');
-      $tab[7]['datatype']       = 'string';
-      $tab[7]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 7,
+         'table'         => $this->getTable(),
+         'field'         => 'uuid',
+         'name'          => __('UUID'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+      ];
 
-      $tab[8]['table']           = $this->getTable();
-      $tab[8]['field']           = 'ip';
-      $tab[8]['name']            = __('IP');
-      $tab[8]['datatype']        = 'string';
-      $tab[8]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 8,
+         'table'         => $this->getTable(),
+         'field'         => 'ip',
+         'name'          => __('IP'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+      ];
 
-      $tab[9]['table']           = $this->getTable();
-      $tab[9]['field']           = 'mac';
-      $tab[9]['name']            = __('MAC');
-      $tab[9]['datatype']        = 'string';
-      $tab[9]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 9,
+         'table'         => $this->getTable(),
+         'field'         => 'mac',
+         'name'          => __('MAC'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+      ];
 
-      $tab[10]['table']           = $this->getTable();
-      $tab[10]['field']           = 'method';
-      $tab[10]['name']            = __('Module', 'fusioninventory');
-      $tab[10]['datatype']        = 'string';
-      $tab[10]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 10,
+         'table'         => $this->getTable(),
+         'field'         => 'method',
+         'name'          => __('Module', 'fusioninventory'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+      ];
 
-      $tab[11]['table']         = 'glpi_plugin_fusioninventory_agents';
-      $tab[11]['field']         = 'name';
-      $tab[11]['name']          = __('Agent', 'fusioninventory');
-      $tab[11]['datatype']      = 'itemlink';
-      $tab[11]['massiveaction'] = false;
-      $tab[11]['itemlink_type'] = 'PluginFusioninventoryAgent';
+      $tab[] = [
+         'id'            => 11,
+         'table'         => 'glpi_plugin_fusioninventory_agents',
+         'field'         => 'name',
+         'name'          => __('Agent', 'fusioninventory'),
+         'datatype'      => 'itemlink',
+         'massiveaction' => false,
+         'itemlink_type' => 'PluginFusioninventoryAgent',
+      ];
 
       return $tab;
    }

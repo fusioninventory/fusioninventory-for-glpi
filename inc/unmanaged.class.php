@@ -120,92 +120,134 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = __('Unmanaged device', 'fusioninventory');
+      $tab[] = ['id' => 'common', 'name' => __('Unmanaged device', 'fusioninventory')];
 
-      $tab[1]['table']         = $this->getTable();
-      $tab[1]['field']         =  'name';
-      $tab[1]['linkfield']     ='name';
-      $tab[1]['name']          = __('Name');
-      $tab[1]['datatype']      = 'itemlink';
-      $tab[1]['itemlink_type'] = $this->getType();
+      $tab[] = [
+         'id'            => 1,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'linkfield'     => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => $this->getType(),
+      ];
 
-      $tab[2]['table']     = $this->getTable();
-      $tab[2]['field']     = 'id';
-      $tab[2]['linkfield'] = '';
-      $tab[2]['name']      = __('ID');
+      $tab[] = [
+         'id'        => 2,
+         'table'     => $this->getTable(),
+         'field'     => 'id',
+         'linkfield' => '',
+         'name'      => __('ID'),
+      ];
 
-      $tab[3]['table']     = 'glpi_locations';
-      $tab[3]['field']     = 'name';
-      $tab[3]['linkfield'] = 'locations_id';
-      $tab[3]['name']      = __('Location');
-      $tab[3]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'        => 3,
+         'table'     => 'glpi_locations',
+         'field'     => 'name',
+         'linkfield' => 'locations_id',
+         'name'      => __('Location'),
+         'datatype'  => 'dropdown',
+      ];
 
-      $tab[4]['table']     = $this->getTable();
-      $tab[4]['field']     = 'serial';
-      $tab[4]['linkfield'] = 'serial';
-      $tab[4]['name']      = __('Serial Number');
+      $tab[] = [
+         'id'        => 4,
+         'table'     => $this->getTable(),
+         'field'     => 'serial',
+         'linkfield' => 'serial',
+         'name'      => __('Serial Number'),
+      ];
 
-      $tab[5]['table']     = $this->getTable();
-      $tab[5]['field']     = 'otherserial';
-      $tab[5]['linkfield'] = 'otherserial';
-      $tab[5]['name']      = __('Inventory number');
+      $tab[] = [
+         'id'        => 5,
+         'table'     => $this->getTable(),
+         'field'     => 'otherserial',
+         'linkfield' => 'otherserial',
+         'name'      => __('Inventory number'),
+      ];
 
-      $tab[6]['table']     = $this->getTable();
-      $tab[6]['field']     = 'contact';
-      $tab[6]['linkfield'] = 'contact';
-      $tab[6]['name']      = __('Contact');
+      $tab[] = [
+         'id'        => 6,
+         'table'     => $this->getTable(),
+         'field'     => 'contact',
+         'linkfield' => 'contact',
+         'name'      => __('Contact'),
+      ];
 
-      $tab[7]['table']     = $this->getTable();
-      $tab[7]['field']     = 'hub';
-      $tab[7]['linkfield'] = 'hub';
-      $tab[7]['name']      = __('Network hub', 'fusioninventory');
-      $tab[7]['datatype']  = 'bool';
+      $tab[] = [
+         'id'        => 7,
+         'table'     => $this->getTable(),
+         'field'     => 'hub',
+         'linkfield' => 'hub',
+         'name'      => __('Network hub', 'fusioninventory'),
+         'datatype'  => 'bool',
+      ];
 
-      $tab[8]['table']     = 'glpi_entities';
-      $tab[8]['field']     = 'completename';
-      $tab[8]['linkfield'] = 'entities_id';
-      $tab[8]['name']      = __('Entity');
-      $tab[8]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'        => 8,
+         'table'     => 'glpi_entities',
+         'field'     => 'completename',
+         'linkfield' => 'entities_id',
+         'name'      => __('Entity'),
+         'datatype'  => 'dropdown',
+      ];
 
-      $tab[9]['table']     = 'glpi_domains';
-      $tab[9]['field']     = 'name';
-      $tab[9]['linkfield'] = 'domain';
-      $tab[9]['name']      = __('Domain');
-      $tab[9]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'        => 9,
+         'table'     => 'glpi_domains',
+         'field'     => 'name',
+         'linkfield' => 'domain',
+         'name'      => __('Domain'),
+         'datatype'  => 'dropdown',
+      ];
 
-      $tab[10]['table']     = $this->getTable();
-      $tab[10]['field']     = 'comment';
-      $tab[10]['linkfield'] = 'comment';
-      $tab[10]['name']      = __('Comments');
-      $tab[10]['datatype']  = 'text';
+      $tab[] = [
+         'id'        => 10,
+         'table'     => $this->getTable(),
+         'field'     => 'comment',
+         'linkfield' => 'comment',
+         'name'      => __('Comments'),
+         'datatype'  => 'text',
+      ];
 
-      $tab[13]['table']     = $this->getTable();
-      $tab[13]['field']     = 'item_type';
-      $tab[13]['linkfield'] = 'item_type';
-      $tab[13]['name']      = __('Type');
-      $tab[13]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'        => 13,
+         'table'     => $this->getTable(),
+         'field'     => 'item_type',
+         'linkfield' => 'item_type',
+         'name'      => __('Type'),
+         'datatype'  => 'dropdown',
+      ];
 
-      $tab[14]['table']     = $this->getTable();
-      $tab[14]['field']     = 'date_mod';
-      $tab[14]['linkfield'] = '';
-      $tab[14]['name']      = __('Last update');
-      $tab[14]['datatype']  = 'datetime';
+      $tab[] = [
+         'id'        => 14,
+         'table'     => $this->getTable(),
+         'field'     => 'date_mod',
+         'linkfield' => '',
+         'name'      => __('Last update'),
+         'datatype'  => 'datetime',
+      ];
 
-      $tab[15]['table']     = $this->getTable();
-      $tab[15]['field']     = 'sysdescr';
-      $tab[15]['linkfield'] = '';
-      $tab[15]['name']      = __('Sysdescr', 'fusioninventory');
-      $tab[15]['datatype']  = 'text';
+      $tab[] = [
+         'id'        => 15,
+         'table'     => $this->getTable(),
+         'field'     => 'sysdescr',
+         'linkfield' => '',
+         'name'      => __('Sysdescr', 'fusioninventory'),
+         'datatype'  => 'text',
+      ];
 
-      $tab[17]['table']     = 'glpi_plugin_fusioninventory_configsecurities';
-      $tab[17]['field']     = 'name';
-      $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
-      $tab[17]['name']      = __('SNMP credentials', 'fusioninventory');
-      $tab[17]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'        => 17,
+         'table'     => 'glpi_plugin_fusioninventory_configsecurities',
+         'field'     => 'name',
+         'linkfield' => 'plugin_fusioninventory_configsecurities_id',
+         'name'      => __('SNMP credentials', 'fusioninventory'),
+         'datatype'  => 'dropdown',
+      ];
 
       return $tab;
    }

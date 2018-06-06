@@ -66,10 +66,10 @@ class PluginFusioninventoryComputer extends Computer {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
       // Start with the base Glpi computer items
       $computer = new Computer();
-      $options  = $computer->getSearchOptions();
+      $options  = $computer->getSearchOptionsNew();
 
       // Add the network port items
       $options += NetworkPort::getSearchOptionsToAdd('Computer');

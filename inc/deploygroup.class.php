@@ -299,25 +299,34 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
 
-      $tab['common'] = self::getTypeName();
+      $tab[] = [
+         'id'   => 'common',
+         'name' => self::getTypeName(),
+      ];
 
-      $tab[1]['table']          = $this->getTable();
-      $tab[1]['field']          = 'name';
-      $tab[1]['linkfield']      = '';
-      $tab[1]['name']           = __('Name');
-      $tab[1]['datatype']       = 'itemlink';
-      $tab[1]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 1,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'linkfield'     => '',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'massiveaction' => false,
+      ];
 
-      $tab[2]['table']           = $this->getTable();
-      $tab[2]['field']           = 'type';
-      $tab[2]['name']            = __('Type');
-      $tab[2]['datatype']        = 'specific';
-      $tab[2]['massiveaction']   = false;
-      $tab[2]['searchtype']      = 'equals';
+      $tab[] = [
+         'id'            => 2,
+         'table'         => $this->getTable(),
+         'field'         => 'type',
+         'name'          => __('Type'),
+         'datatype'      => 'specific',
+         'massiveaction' => false,
+         'searchtype'    => 'equals',
+      ];
 
       return $tab;
    }

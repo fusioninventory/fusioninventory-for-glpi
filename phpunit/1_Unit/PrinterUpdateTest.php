@@ -543,16 +543,16 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'have_ethernet'      => 1
       ];
 
-   $pfCNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
-   $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory, 0);
+      $pfCNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
+      $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory, 0);
 
-   $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
-   $this->assertEquals('1', count($a_ports), 'Should have only one port');
+      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $this->assertEquals('1', count($a_ports), 'Should have only one port');
 
-   $a_port = current($a_ports);
-   //Logical number shoud be 0
-   $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
-   $this->assertEquals('Ethernet', $a_port['name'], 'Name has changed');
+      $a_port = current($a_ports);
+      //Logical number shoud be 0
+      $this->assertEquals(1, $a_port['logical_number'], 'Logical number changed to 1');
+      $this->assertEquals('Ethernet', $a_port['name'], 'Name has changed');
 
    }
 }

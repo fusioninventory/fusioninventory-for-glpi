@@ -71,24 +71,16 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();
-      $tab = $pfPrinterLog->getSearchOptions();
+      $tab = $pfPrinterLog->getSearchOptionsNew();
 
-      $tab[6]['forcegroupby']='1';
-      $tab[7]['forcegroupby']='1';
-      $tab[8]['forcegroupby']='1';
-      $tab[9]['forcegroupby']='1';
-      $tab[10]['forcegroupby']='1';
-      $tab[11]['forcegroupby']='1';
-      $tab[12]['forcegroupby']='1';
-      $tab[13]['forcegroupby']='1';
-      $tab[14]['forcegroupby']='1';
-      $tab[15]['forcegroupby']='1';
-      $tab[16]['forcegroupby']='1';
-      $tab[17]['forcegroupby']='1';
-
+      foreach ($tab as $searchOptions) {
+         if ($searchOptions['table'] == PluginFusioninventoryPrinterLog::getTable()) {
+            $tab[$searchOptions['id']]['forcegroupby']='1';
+         }
+      }
       return $tab;
    }
 

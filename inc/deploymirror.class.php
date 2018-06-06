@@ -285,56 +285,80 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function getSearchOptionsNew() {
 
       $tab = [];
-      $tab[1]['table']         = $this->getTable();
-      $tab[1]['field']         = 'name';
-      $tab[1]['linkfield']     = 'name';
-      $tab[1]['name']          = __('Name');
-      $tab[1]['datatype']      = 'itemlink';
-      $tab[1]['itemlink_type'] = $this->getType();
+      $tab[] = [
+         'id'            => 1,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'linkfield'     => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => $this->getType(),
+      ];
 
-      $tab[19]['table']     = $this->getTable();
-      $tab[19]['field']     = 'date_mod';
-      $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = __('Last update');
-      $tab[19]['datatype']  = 'datetime';
+      $tab[] = [
+         'id'        => 19,
+         'table'     => $this->getTable(),
+         'field'     => 'date_mod',
+         'linkfield' => '',
+         'name'      => __('Last update'),
+         'datatype'  => 'datetime',
+      ];
 
-      $tab[2]['table']     = $this->getTable();
-      $tab[2]['field']     = 'url';
-      $tab[2]['linkfield'] = 'url';
-      $tab[2]['name']      = __('Mirror server address', 'fusioninventory');
-      $tab[2]['datatype']  = 'string';
+      $tab[] = [
+         'id'        => 2,
+         'table'     => $this->getTable(),
+         'field'     => 'url',
+         'linkfield' => 'url',
+         'name'      => __('Mirror server address', 'fusioninventory'),
+         'datatype'  => 'string',
+      ];
 
-      $tab[3]['table']     = $this->getTable();
-      $tab[3]['field']     = 'is_active';
-      $tab[3]['linkfield'] = 'is_active';
-      $tab[3]['name']      = __('Active');
-      $tab[3]['datatype']  = 'bool';
+      $tab[] = [
+         'id'        => 3,
+         'table'     => $this->getTable(),
+         'field'     => 'is_active',
+         'linkfield' => 'is_active',
+         'name'      => __('Active'),
+         'datatype'  => 'bool',
+      ];
 
-      $tab[16]['table']     = $this->getTable();
-      $tab[16]['field']     = 'comment';
-      $tab[16]['linkfield'] = 'comment';
-      $tab[16]['name']      = __('Comments');
-      $tab[16]['datatype']  = 'text';
+      $tab[] = [
+         'id'        => 16,
+         'table'     => $this->getTable(),
+         'field'     => 'comment',
+         'linkfield' => 'comment',
+         'name'      => __('Comments'),
+         'datatype'  => 'text',
+      ];
 
-      $tab[80]['table']     = 'glpi_entities';
-      $tab[80]['field']     = 'completename';
-      $tab[80]['name']      = __('Entity');
-      $tab[80]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'       => 80,
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown',
+      ];
 
-      $tab[81]['table']     = getTableNameForForeignKeyField('locations_id');
-      $tab[81]['field']     = 'completename';
-      $tab[81]['linkfield'] = 'locations_id';
-      $tab[81]['name']      = Location::getTypeName();
-      $tab[81]['datatype']  = 'itemlink';
+      $tab[] = [
+         'id'        => 81,
+         'table'     => getTableNameForForeignKeyField('locations_id'),
+         'field'     => 'completename',
+         'linkfield' => 'locations_id',
+         'name'      => Location::getTypeName(),
+         'datatype'  => 'itemlink',
+      ];
 
-      $tab[86]['table']     = $this->getTable();
-      $tab[86]['field']     = 'is_recursive';
-      $tab[86]['linkfield'] = 'is_recursive';
-      $tab[86]['name']      = __('Child entities');
-      $tab[86]['datatype']  = 'bool';
+      $tab[] = [
+         'id'        => 86,
+         'table'     => $this->getTable(),
+         'field'     => 'is_recursive',
+         'linkfield' => 'is_recursive',
+         'name'      => __('Child entities'),
+         'datatype'  => 'bool',
+      ];
 
       return $tab;
    }

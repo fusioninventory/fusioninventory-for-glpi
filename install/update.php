@@ -1610,7 +1610,7 @@ function do_entities_migration($migration) {
          $DB->update(
             'glpi_plugin_fusioninventory_entities', [
                'agent_base_url' => $agent_base_url
-            ], []
+            ], [true]
          );
       }
    }
@@ -4097,7 +4097,7 @@ function do_printer_migration($migration) {
       * Modify displaypreference for PluginFusioninventoryPrinterLog
       */
       $pfPrinterLogReport = new PluginFusioninventoryPrinterLog();
-      $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
+      $a_searchoptions = $pfPrinterLogReport->getSearchOptionsNew();
       $iterator2 = $DB->request([
          'FROM'   => 'glpi_displaypreferences',
          'WHERE'  => [
@@ -4136,7 +4136,14 @@ function do_printer_migration($migration) {
          }
       } else {
          while ($data=$DB->fetch_array($result)) {
-            if (!isset($a_searchoptions[$data['num']])) {
+            $delete = true;
+            foreach ($a_searchoptions as $searchoption) {
+               if ($searchoption['id'] == $data['num']) {
+                  $delete = false;
+                  continue;
+               }
+            }
+            if ($delete) {
                $DB->delete(
                   'glpi_displaypreferences', [
                      'id'  => $data['id']
@@ -4578,7 +4585,9 @@ function do_networkequipment_migration($migration) {
    if (count($iterator)) {
       $update = $DB->buildUpdate(
          'glpi_networkequipments', [
-            'id'  => new \QueryParam()
+            'is_dynamic'   => 1
+         ], [
+            'id'           => new \QueryParam()
          ]
       );
       $stmt = $DB->prepare($update);
