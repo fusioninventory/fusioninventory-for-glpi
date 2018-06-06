@@ -1610,7 +1610,7 @@ function do_entities_migration($migration) {
          $DB->update(
             'glpi_plugin_fusioninventory_entities', [
                'agent_base_url' => $agent_base_url
-            ], []
+            ], [true]
          );
       }
    }
@@ -4137,8 +4137,8 @@ function do_printer_migration($migration) {
       } else {
          while ($data=$DB->fetch_array($result)) {
             $delete = true;
-            foreach ($a_searchoptions as $searchoption){
-               if($searchoption['id'] == $data['num']){
+            foreach ($a_searchoptions as $searchoption) {
+               if ($searchoption['id'] == $data['num']) {
                   $delete = false;
                   continue;
                }
@@ -4585,7 +4585,9 @@ function do_networkequipment_migration($migration) {
    if (count($iterator)) {
       $update = $DB->buildUpdate(
          'glpi_networkequipments', [
-            'id'  => new \QueryParam()
+            'is_dynamic'   => 1
+         ], [
+            'id'           => new \QueryParam()
          ]
       );
       $stmt = $DB->prepare($update);

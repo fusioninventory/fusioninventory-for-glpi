@@ -2090,10 +2090,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                foreach ($ids as $computer_id) {
                   $computer->getFromDB($computer_id);
                   $message .= $computer->getName() . ",";
-                  $input['actors'][] = array('Computer' => $computer_id);
+                  $input['actors'][] = ['Computer' => $computer_id];
                   $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_OK);
                }
-//               $ma->addMessage($message);
+               //               $ma->addMessage($message);
                Session::addMessageAfterRedirect($message, false, INFO);
                $input['id'] = $pfTaskjob->getID();
                $input['actors'] = json_encode($input['actors']);
@@ -2122,11 +2122,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   foreach ($ids as $computer_id) {
                      $computer->getFromDB($computer_id);
                      $message .= $computer->getName() . ",";
-                     $input['actors'][] = array('Computer' => $computer_id);
+                     $input['actors'][] = ['Computer' => $computer_id];
                      $ma->itemDone($computer->getType(), $computer_id, MassiveAction::ACTION_OK);
                   }
                   $input['actors'] = json_encode($input['actors']);
-//                  $ma->addMessage($message);
+                  //                  $ma->addMessage($message);
                   Session::addMessageAfterRedirect($message, false, INFO);
                   PluginFusioninventoryToolbox::logIfExtradebug(
                      "pluginFusioninventory-tasks", "Create the task job: " . serialize($input)

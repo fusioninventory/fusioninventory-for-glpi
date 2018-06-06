@@ -75,7 +75,7 @@ if (isset($_GET['save'])) {
    }
 
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$_GET['id']);
-} else if(isset($_FILES['importcsvfile'])) {
+} else if (isset($_FILES['importcsvfile'])) {
    PluginFusioninventoryDeployGroup_Staticdata::csvImport($_POST, $_FILES);
    Html::back();
 } else if (isset($_POST["add"])) {
