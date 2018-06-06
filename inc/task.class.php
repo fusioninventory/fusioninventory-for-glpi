@@ -605,7 +605,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             // If task have not reprepare_if_successful, do not reprerare
-            // successfull taskjobstate
+            // successful taskjobstate
             if (!$result['task']['reprepare_if_successful']) {
                $jobstates_running = $jobstate->find(
                   implode(" \n", [
