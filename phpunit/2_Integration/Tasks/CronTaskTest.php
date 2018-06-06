@@ -244,11 +244,11 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs([1], true, false);
 
       // If agents exist in the output, this means that some jobs are existing and they have some logs
-      $ref = array(
+      $ref = [
          1 => 'portdavid',
          2 => 'computer2',
          3 => 'computer3'
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
    }
@@ -384,11 +384,11 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $data = $pfTask->getJoblogs([1], false, false);
 
       // If agents exist in the output, this means that some jobs are existing and they have some logs
-      $ref = array(
+      $ref = [
          1 => 'portdavid',
          2 => 'computer2',
          3 => 'computer3'
-      );
+      ];
 
       $this->assertEquals($ref, $data['agents']);
 

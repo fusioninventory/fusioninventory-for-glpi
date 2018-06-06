@@ -962,7 +962,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @param bool $only_active, set to true to include only active tasks
     * @return array
     */
-   function getJoblogs($task_ids=[], $with_logs=true, $only_active=false) {
+   function getJoblogs($task_ids = [], $with_logs = true, $only_active = false) {
       global $DB;
 
       // Results grouped by tasks > jobs > jobstates
@@ -1170,7 +1170,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // Parse the query result to update the data to return
       $tasks_list1 = '';
       if (is_array($task_ids) && count($task_ids) > 0) {
-         $tasks_list1 = "`plugin_fusioninventory_tasks_id` IN ('".implode("', '",$task_ids)."')";
+         $tasks_list1 = "`plugin_fusioninventory_tasks_id` IN ('".implode("', '", $task_ids)."')";
       }
       $taskjobs = $pftaskjob->find($tasks_list1);
       $counter_agents = [];
@@ -1473,7 +1473,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * @param bool $only_active, set to true to include only active tasks
     * @return object
     */
-   function getTasksPlanned($tasks_id=0, $only_active=true) {
+   function getTasksPlanned($tasks_id = 0, $only_active = true) {
       global $DB;
 
       $where = '';
@@ -1601,10 +1601,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
       }
 
-
       // Filter by entity
       if (isset($filter['by_entities'])
-	         AND (bool)$filter['by_entities']) {
+            AND (bool)$filter['by_entities']) {
          $where[] = getEntitiesRestrictRequest("", 'task');
       }
 

@@ -944,7 +944,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $pfTask = new PluginFusioninventoryTask();
       // Do not get logs with the jobs states, this to avoid long request time
       // and this is not useful on the plugin home page
-      $data = $pfTask->getJoblogs($a_tasks, $with_logs=false);
+      $data = $pfTask->getJoblogs($a_tasks, $with_logs = false);
 
       $dataDeploy = [];
       $dataDeploy[0] = [
