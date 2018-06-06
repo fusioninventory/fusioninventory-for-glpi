@@ -956,9 +956,15 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'key' => __('Running', 'fusioninventory'),
           'y'   => 0,
           'color' => '#aaaaff'
+<<<<<<< HEAD
       ];
       $dataDeploy[2] = [
           'key' => __('Successfull', 'fusioninventory'),
+=======
+      );
+      $dataDeploy[2] = array(
+          'key' => __('Successful', 'fusioninventory'),
+>>>>>>> 760ec3fae... Fix type. closes #2539 (#2541)
           'y'   => 0,
           'color' => '#aaffaa'
       ];

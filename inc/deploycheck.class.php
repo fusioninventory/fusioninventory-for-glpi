@@ -130,7 +130,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    function getAuditDescription($type, $return) {
       $return_string = $this->getLabelForAType($type);
       //The skip case is a litte bit different. So we notice to the user
-      //that if audit is successfull, the the audit check process continue
+      //that if audit is successful, the the audit check process continue
       if ($return == 'skip') {
          $return_string.=' : '.__('continue', 'fusioninventory');
       } else {
@@ -534,7 +534,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
 
       echo "<tr>";
-      echo "<th>".__("If not successfull", 'fusioninventory')."</th>";
+      echo "<th>".__("If not successful", 'fusioninventory')."</th>";
       echo "<td>";
       Dropdown::showFromArray('return', $this->getAllReturnValues(),
                               ['value' => $values['return']]);

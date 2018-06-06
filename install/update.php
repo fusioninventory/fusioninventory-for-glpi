@@ -938,7 +938,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,
                          ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'hourmin' =>22, 'hourmax'=>6,
-                               'comment'=>Toolbox::addslashes_deep(__('Delete agent that have not contacted the server since xxx days".', 'fusioninventory'))]);
+                               'comment'=>Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'fusioninventory'))]);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand')) {
       CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
