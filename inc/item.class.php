@@ -134,7 +134,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
     * @param array $options optional parameters to be used for display purpose
     */
    function showForm(CommonDBTM $item, $options = []) {
-      Session::checkRight('plugin_fusioninventory_printer', READ);
+      Session::checkRight($this::$rightname, READ);
 
       $fk     = getForeignKeyFieldForItemType($this->itemtype);
       $params = [$fk => $item->getID()];
@@ -196,7 +196,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
       echo "<tr class='tab_bg_2 center'>";
       echo "<td colspan='4'>";
       echo "<div align='center'>";
-      echo Html::hidden('id', ['value' => $this->fields['id']]);
+      echo Html::hidden('id', ['value' => $this->fields[$fk]]);
       echo Html::submit(__('Update'), ['name' => 'update']);
       echo "</td>";
       echo "</tr>";
