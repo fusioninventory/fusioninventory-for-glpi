@@ -98,7 +98,12 @@ class PluginFusioninventoryComputer extends Computer {
     */
    function getSpecificMassiveActions($checkitem=NULL) {
 
-      $actions = array();
+      $actions = [];
+      if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/report.dynamic.php')) {
+         // In case we export list (CSV, PDF...) we do not have massive actions.
+         return $actions;
+      }
+
       if (isset($_GET['id'])) {
          $id = $_GET['id'];
       } else {
