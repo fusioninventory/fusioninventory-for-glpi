@@ -2353,3 +2353,28 @@ function plugin_fusioninventory_preshowtab($params) {
       }
    }
 }
+
+/**
+ * Code for export dynamic groups in CSV / PDF with all columns defined in view (global / personal)
+ *
+ * @param array $params
+ * @return boolean
+ */
+function plugin_fusioninventory_dynamicReport($params) {
+   switch ($params['item_type']) {
+      case "PluginFusioninventoryComputer";
+         if ($url = parse_url($_SERVER['HTTP_REFERER'])) {
+            $params = Search::manageParams($_GET["item_type"], $_GET);
+
+            $data = Search::prepareDatasForSearch($params["item_type"], $params);
+            $data['itemtype'] = 'Computer';
+            Search::constructSQL($data);
+            Search::constructDatas($data);
+            Search::displayDatas($data);
+
+            return true;
+         }
+         break;
+   }
+   return false;
+}
