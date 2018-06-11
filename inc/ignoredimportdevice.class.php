@@ -81,23 +81,25 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('Agent', 'fusioninventory')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Agent', 'fusioninventory')
+      ];
 
       $tab[] = [
-         'id'            => 2,
+         'id'            => '1',
          'table'         => $this->getTable(),
          'field'         => 'name',
-         'linkfield'     => 'name',
          'name'          => __('Name'),
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 2,
+         'id'            => '2',
          'table'         => 'glpi_rules',
          'field'         => 'id',
          'name'          => __('Rule name', 'fusioninventory'),
@@ -107,17 +109,16 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 3,
+         'id'            => '3',
          'table'         => $this->getTable(),
          'field'         => 'date',
-         'linkfield'     => '',
          'name'          => __('Date'),
          'datatype'      => 'datetime',
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 4,
+         'id'            => '4',
          'table'         => $this->getTable(),
          'field'         => 'itemtype',
          'name'          => __('Item type'),
@@ -126,7 +127,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 5,
+         'id'            => '5',
          'table'         => 'glpi_entities',
          'field'         => 'completename',
          'name'          => __('Entity'),
@@ -135,7 +136,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 6,
+         'id'            => '6',
          'table'         => $this->getTable(),
          'field'         => 'serial',
          'name'          => __('Serial number'),
@@ -144,7 +145,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 7,
+         'id'            => '7',
          'table'         => $this->getTable(),
          'field'         => 'uuid',
          'name'          => __('UUID'),
@@ -153,7 +154,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 8,
+         'id'            => '8',
          'table'         => $this->getTable(),
          'field'         => 'ip',
          'name'          => __('IP'),
@@ -162,7 +163,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 9,
+         'id'            => '9',
          'table'         => $this->getTable(),
          'field'         => 'mac',
          'name'          => __('MAC'),
@@ -171,7 +172,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 10,
+         'id'            => '10',
          'table'         => $this->getTable(),
          'field'         => 'method',
          'name'          => __('Module', 'fusioninventory'),
@@ -180,7 +181,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 11,
+         'id'            => '11',
          'table'         => 'glpi_plugin_fusioninventory_agents',
          'field'         => 'name',
          'name'          => __('Agent', 'fusioninventory'),
@@ -205,4 +206,3 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
 
 }
-

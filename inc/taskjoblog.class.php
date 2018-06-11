@@ -166,22 +166,25 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
-      $sopt = [];
+      $tab = [];
 
-      $sopt['common'] = __('Logs');
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Logs')
+      ];
 
-      $sopt[] = [
-         'id'            => 1,
+      $tab[] = [
+         'id'            => '1',
          'table'         => $this->getTable(),
          'field'         => 'id',
          'name'          => __('ID'),
          'massiveaction' => false, // implicit field is i,
       ];
 
-      $sopt[] = [
-         'id'            => 2,
+      $tab[] = [
+         'id'            => '2',
          'table'         => 'glpi_plugin_fusioninventory_tasks',
          'field'         => 'name',
          'name'          => _n('Task', 'Tasks', 2),
@@ -189,8 +192,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'itemlink_type' => "PluginFusioninventoryTask",
       ];
 
-      $sopt[] = [
-         'id'            => 3,
+      $tab[] = [
+         'id'            => '3',
          'table'         => 'glpi_plugin_fusioninventory_taskjobs',
          'field'         => 'name',
          'name'          => __('Job', 'fusioninventory'),
@@ -198,16 +201,16 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'itemlink_type' => "PluginFusioninventoryTaskjob",
       ];
 
-      $sopt[] = [
-         'id'         => 4,
+      $tab[] = [
+         'id'         => '4',
          'table'      => $this->getTable(),
          'field'      => 'state',
          'name'       => __('Status'),
          'searchtype' => 'equals',
       ];
 
-      $sopt[] = [
-         'id'            => 5,
+      $tab[] = [
+         'id'            => '5',
          'table'         => $this->getTable(),
          'field'         => 'date',
          'name'          => __('Date'),
@@ -215,24 +218,24 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'massiveaction' => false,
       ];
 
-      $sopt[] = [
-         'id'       => 6,
+      $tab[] = [
+         'id'       => '6',
          'table'    => 'glpi_plugin_fusioninventory_taskjobstates',
          'field'    => 'uniqid',
          'name'     => __('Unique id', 'fusioninventory'),
          'datatype' => 'string',
       ];
 
-      $sopt[] = [
-         'id'       => 7,
+      $tab[] = [
+         'id'       => '7',
          'table'    => $this->getTable(),
          'field'    => 'comment',
          'name'     => __('Comments'),
          'datatype' => 'string',
       ];
 
-      $sopt[] = [
-         'id'           => 8,
+      $tab[] = [
+         'id'           => '8',
          'table'        => "glpi_plugin_fusioninventory_agents",
          'field'        => 'name',
          'name'         => __('Agent', 'fusioninventory'),
@@ -245,7 +248,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             ],
          ],
       ];
-      return $sopt;
+      return $tab;
    }
 
 

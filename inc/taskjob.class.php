@@ -108,23 +108,25 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('Task')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Task')
+      ];
 
       $tab[] = [
-         'id'        => 1,
+         'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
-         'linkfield' => '',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
       ];
 
       $tab[] = [
-         'id'        => 2,
+         'id'        => '2',
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
@@ -132,7 +134,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       ];
 
       $tab[] = [
-         'id'            => 4,
+         'id'            => '4',
          'table'         => 'glpi_plugin_fusioninventory_tasks',
          'field'         => 'name',
          'linkfield'     => 'plugin_fusioninventory_tasks_id',
@@ -142,18 +144,16 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       ];
 
       $tab[] = [
-         'id'        => 5,
+         'id'        => '5',
          'table'     => $this->getTable(),
          'field'     => 'status',
-         'linkfield' => '',
          'name'      => __('Status'),
       ];
 
       $tab[] = [
-         'id'        => 6,
+         'id'        => '6',
          'table'     => $this->getTable(),
          'field'     => 'id',
-         'linkfield' => '',
          'name'      => __('ID'),
       ];
 

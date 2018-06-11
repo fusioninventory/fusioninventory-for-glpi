@@ -321,48 +321,47 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
       $tab = [];
-      $tab[] = ['id' => 'common', 'name' => __('Characteristics')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Characteristics')
+      ];
 
       $tab[] = [
-         'id'            => 1,
+         'id'            => '1',
          'table'         => $this->getTable(),
          'field'         => 'name',
-         'linkfield'     => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_link' => $this->getType(),
       ];
 
       $tab[] = [
-         'id'        => 2,
+         'id'        => '2',
          'table'     => $this->getTable(),
          'field'     => 'id',
-         'linkfield' => '',
          'name'      => __('ID'),
       ];
 
       $tab[] = [
-         'id'        => 16,
+         'id'        => '16',
          'table'     => $this->getTable(),
          'field'     => 'comment',
-         'linkfield' => 'comment',
          'name'      => __('Comments'),
          'datatype'  => 'text',
       ];
 
       $tab[] = [
-         'id'        => 19,
+         'id'        => '19',
          'table'     => $this->getTable(),
          'field'     => 'date_mod',
-         'linkfield' => '',
          'name'      => __('Last update'),
          'datatype'  => 'datetime',
       ];
 
       $tab[] = [
-         'id'       => 80,
+         'id'       => '80',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -370,20 +369,18 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 86,
+         'id'        => '86',
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
-         'linkfield' => 'is_recursive',
          'name'      => __('Child entities'),
          'datatype'  => 'bool',
       ];
 
-      $tab[20] = [
-         'id'       => 20,
+      $tab[] = [
+         'id'       => '20',
          'table'    => 'glpi_plugin_fusioninventory_deploygroups',
          'field'    => 'name',
-         'name'     => __('Enable deploy on demand for the following group',
-            'fusioninventory'),
+         'name'     => __('Enable deploy on demand for the following group', 'fusioninventory'),
          'datatype' => 'dropdown',
       ];
 

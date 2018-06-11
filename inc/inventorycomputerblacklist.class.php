@@ -79,22 +79,24 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('BlackList')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('BlackList')
+      ];
 
       $tab[] = [
-         'id'        => 1,
+         'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'value',
-         'linkfield' => 'value',
          'name'      => __('blacklisted value', 'fusioninventory'),
       ];
 
       $tab[] = [
-         'id'            => 2,
+         'id'            => '2',
          'table'         => 'glpi_plugin_fusioninventory_inventorycomputercriterias',
          'field'         => 'name',
          'linkfield'     => 'plugin_fusioninventory_criterium_id',

@@ -120,32 +120,33 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('Unmanaged device', 'fusioninventory')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Unmanaged device', 'fusioninventory')
+      ];
 
       $tab[] = [
-         'id'            => 1,
+         'id'            => '1',
          'table'         => $this->getTable(),
          'field'         => 'name',
-         'linkfield'     => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_type' => $this->getType(),
       ];
 
       $tab[] = [
-         'id'        => 2,
+         'id'        => '2',
          'table'     => $this->getTable(),
          'field'     => 'id',
-         'linkfield' => '',
          'name'      => __('ID'),
       ];
 
       $tab[] = [
-         'id'        => 3,
+         'id'        => '3',
          'table'     => 'glpi_locations',
          'field'     => 'name',
          'linkfield' => 'locations_id',
@@ -154,40 +155,36 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 4,
+         'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'serial',
-         'linkfield' => 'serial',
          'name'      => __('Serial Number'),
       ];
 
       $tab[] = [
-         'id'        => 5,
+         'id'        => '5',
          'table'     => $this->getTable(),
          'field'     => 'otherserial',
-         'linkfield' => 'otherserial',
          'name'      => __('Inventory number'),
       ];
 
       $tab[] = [
-         'id'        => 6,
+         'id'        => '6',
          'table'     => $this->getTable(),
          'field'     => 'contact',
-         'linkfield' => 'contact',
          'name'      => __('Contact'),
       ];
 
       $tab[] = [
-         'id'        => 7,
+         'id'        => '7',
          'table'     => $this->getTable(),
          'field'     => 'hub',
-         'linkfield' => 'hub',
          'name'      => __('Network hub', 'fusioninventory'),
          'datatype'  => 'bool',
       ];
 
       $tab[] = [
-         'id'        => 8,
+         'id'        => '8',
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
@@ -196,7 +193,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 9,
+         'id'        => '9',
          'table'     => 'glpi_domains',
          'field'     => 'name',
          'linkfield' => 'domain',
@@ -205,43 +202,39 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 10,
+         'id'        => '10',
          'table'     => $this->getTable(),
          'field'     => 'comment',
-         'linkfield' => 'comment',
          'name'      => __('Comments'),
          'datatype'  => 'text',
       ];
 
       $tab[] = [
-         'id'        => 13,
+         'id'        => '13',
          'table'     => $this->getTable(),
          'field'     => 'item_type',
-         'linkfield' => 'item_type',
          'name'      => __('Type'),
          'datatype'  => 'dropdown',
       ];
 
       $tab[] = [
-         'id'        => 14,
+         'id'        => '14',
          'table'     => $this->getTable(),
          'field'     => 'date_mod',
-         'linkfield' => '',
          'name'      => __('Last update'),
          'datatype'  => 'datetime',
       ];
 
       $tab[] = [
-         'id'        => 15,
+         'id'        => '15',
          'table'     => $this->getTable(),
          'field'     => 'sysdescr',
-         'linkfield' => '',
          'name'      => __('Sysdescr', 'fusioninventory'),
          'datatype'  => 'text',
       ];
 
       $tab[] = [
-         'id'        => 17,
+         'id'        => '17',
          'table'     => 'glpi_plugin_fusioninventory_configsecurities',
          'field'     => 'name',
          'linkfield' => 'plugin_fusioninventory_configsecurities_id',

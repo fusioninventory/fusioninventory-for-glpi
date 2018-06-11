@@ -71,10 +71,10 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();
-      $tab = $pfPrinterLog->getSearchOptionsNew();
+      $tab = $pfPrinterLog->rawSearchOptions();
 
       foreach ($tab as $searchOptions) {
          if ($searchOptions['table'] == PluginFusioninventoryPrinterLog::getTable()) {

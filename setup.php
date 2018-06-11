@@ -249,6 +249,7 @@ function plugin_init_fusioninventory() {
       $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
       $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnmanaged';
+      $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryComputer';
 
       /**
        * Load the relevant javascript/css files only on pages that need them.

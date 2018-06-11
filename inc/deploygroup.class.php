@@ -299,7 +299,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
@@ -309,17 +309,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 1,
+         'id'            => '1',
          'table'         => $this->getTable(),
          'field'         => 'name',
-         'linkfield'     => '',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 2,
+         'id'            => '2',
          'table'         => $this->getTable(),
          'field'         => 'type',
          'name'          => __('Type'),

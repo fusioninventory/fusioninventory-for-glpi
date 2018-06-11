@@ -84,23 +84,25 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('Agent', 'fusioninventory')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Agent', 'fusioninventory')
+      ];
 
       $tab[] = [
-         'id'        => 1,
+         'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
-         'linkfield' => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
       ];
 
       $tab[] = [
-         'id'       => 2,
+         'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -108,44 +110,40 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 3,
+         'id'        => '3',
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
-         'linkfield' => 'is_recursive',
          'name'      => __('Child entities'),
          'datatype'  => 'bool',
       ];
 
       $tab[] = [
-         'id'        => 4,
+         'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'last_contact',
-         'linkfield' => '',
          'name'      => __('Last contact', 'fusioninventory'),
          'datatype'  => 'datetime',
       ];
 
       $tab[] = [
-         'id'        => 5,
+         'id'        => '5',
          'table'     => $this->getTable(),
          'field'     => 'lock',
-         'linkfield' => 'lock',
          'name'      => __('locked', 'fusioninventory'),
          'datatype'  => 'bool',
       ];
 
       $tab[] = [
-         'id'            => 6,
+         'id'            => '6',
          'table'         => $this->getTable(),
          'field'         => 'device_id',
-         'linkfield'     => 'device_id',
          'name'          => __('Device_id', 'fusioninventory'),
          'datatype'      => 'text',
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 7,
+         'id'            => '7',
          'table'         => 'glpi_computers',
          'field'         => 'name',
          'name'          => __('Computer link', 'fusioninventory'),
@@ -155,37 +153,34 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 8,
+         'id'            => '8',
          'table'         => $this->getTable(),
          'field'         => 'version',
-         'linkfield'     => 'version',
          'name'          => __('Version'),
          'datatype'      => 'text',
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 9,
+         'id'            => '9',
          'table'         => $this->getTable(),
          'field'         => 'token',
-         'linkfield'     => 'token',
          'name'          => __('Token'),
          'datatype'      => 'text',
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 10,
+         'id'            => '10',
          'table'         => $this->getTable(),
          'field'         => 'useragent',
-         'linkfield'     => 'useragent',
          'name'          => __('Useragent', 'fusioninventory'),
          'datatype'      => 'text',
          'massiveaction' => false,
       ];
 
       $tab[] = [
-         'id'            => 11,
+         'id'            => '11',
          'table'         => $this->getTable(),
          'field'         => 'tag',
          'name'          => __('FusionInventory tag', 'fusioninventory'),
@@ -194,7 +189,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'       => 12,
+         'id'       => '12',
          'table'    => $this->getTable(),
          'field'    => 'threads_networkdiscovery',
          'name'     => __('Threads number', 'fusioninventory') . "&nbsp;(" .
@@ -204,7 +199,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'       => 13,
+         'id'       => '13',
          'table'    => $this->getTable(),
          'field'    => 'threads_networkinventory',
          'name'     => __('Threads number', 'fusioninventory') . "&nbsp;(" .
@@ -214,11 +209,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 14,
+         'id'        => '14',
          'table'     => $this->getTable(),
          'field'     => 'agent_port',
-         'linkfield' => 'agent_port',
          'name'      => __('Agent port', 'fusioninventory'),
+         'datatype'  => 'integer',
       ];
 
       $i = 20;
@@ -229,7 +224,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             'id'            => $i,
             'table'         => $pfAgentmodule->getTable(),
             'field'         => $data["modulename"],
-            'linkfield'     => $data["modulename"],
             'name'          => __('Module', 'fusioninventory') . " - " . $data["modulename"],
             'datatype'      => 'bool',
             'massiveaction' => false,

@@ -4097,7 +4097,7 @@ function do_printer_migration($migration) {
       * Modify displaypreference for PluginFusioninventoryPrinterLog
       */
       $pfPrinterLogReport = new PluginFusioninventoryPrinterLog();
-      $a_searchoptions = $pfPrinterLogReport->getSearchOptionsNew();
+      $a_searchoptions = $pfPrinterLogReport->rawSearchOptions();
       $iterator2 = $DB->request([
          'FROM'   => 'glpi_displaypreferences',
          'WHERE'  => [

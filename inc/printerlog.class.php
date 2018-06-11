@@ -59,14 +59,17 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('History meter printer', 'fusioninventory')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('History meter printer', 'fusioninventory')
+      ];
 
       $tab[] = [
-         'id'            => 1,
+         'id'            => '1',
          'table'         => "glpi_printers",
          'field'         => 'name',
          'linkfield'     => 'printers_id',
@@ -76,14 +79,14 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'    => 2,
-         'table' => $this->getTable(),
-         'field' => 'id',
-         'name'  => 'id',
+         'id'            => '2',
+         'table'         => $this->getTable(),
+         'field'         => 'id',
+         'name'          => 'id',
       ];
 
       $tab[] = [
-         'id'            => 24,
+         'id'            => '24',
          'table'         => 'glpi_locations',
          'field'         => 'name',
          'linkfield'     => 'locations_id',
@@ -93,7 +96,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'            => 19,
+         'id'            => '19',
          'table'         => 'glpi_printertypes',
          'field'         => 'name',
          'linkfield'     => 'printertypes_id',
@@ -112,7 +115,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       //      ];
 
       $tab[] = [
-         'id'        => 18,
+         'id'        => '18',
          'table'     => 'glpi_states',
          'field'     => 'name',
          'linkfield' => 'states_id',
@@ -121,7 +124,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 20,
+         'id'        => '20',
          'table'     => 'glpi_printers',
          'field'     => 'serial',
          'linkfield' => 'printers_id',
@@ -129,7 +132,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 23,
+         'id'        => '23',
          'table'     => 'glpi_printers',
          'field'     => 'otherserial',
          'linkfield' => 'printers_id',
@@ -137,7 +140,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 21,
+         'id'        => '21',
          'table'     => 'glpi_users',
          'field'     => 'name',
          'linkfield' => 'users_id',
@@ -145,7 +148,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 3,
+         'id'        => '3',
          'table'     => 'glpi_manufacturers',
          'field'     => 'name',
          'linkfield' => 'manufacturers_id',
@@ -160,13 +163,13 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          'jointype'          => 'itemtype_item',
          'specific_itemtype' => 'NetworkPort',
          'beforejoin'        => [
-            'table'      => 'glpi_networkports',
-            'joinparams' => $joinparams,
+            'table'          => 'glpi_networkports',
+            'joinparams'     => $joinparams,
          ],
       ];
 
       $tab[] = [
-         'id'            => 5,
+         'id'            => '5',
          'table'         => 'glpi_ipaddresses',
          'field'         => 'name',
          'name'          => __('IP'),
@@ -184,7 +187,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 6,
+         'id'        => '6',
          'table'     => 'glpi_plugin_fusioninventory_printerlogs',
          'field'     => 'pages_total',
          'linkfield' => 'id',
@@ -192,7 +195,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 7,
+         'id'        => '7',
          'table'     => 'glpi_plugin_fusioninventory_printerlogs',
          'field'     => 'pages_n_b',
          'linkfield' => 'id',
@@ -200,7 +203,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 8,
+         'id'        => '8',
          'table'     => 'glpi_plugin_fusioninventory_printerlogs',
          'field'     => 'pages_color',
          'linkfield' => 'id',
@@ -208,7 +211,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 9,
+         'id'        => '9',
          'table'     => $this->getTable(),
          'field'     => 'pages_recto_verso',
          'linkfield' => 'id',
@@ -216,7 +219,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 10,
+         'id'        => '10',
          'table'     => $this->getTable(),
          'field'     => 'scanned',
          'linkfield' => 'id',
@@ -224,7 +227,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 11,
+         'id'        => '11',
          'table'     => $this->getTable(),
          'field'     => 'pages_total_print',
          'linkfield' => 'id',
@@ -232,7 +235,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 12,
+         'id'        => '12',
          'table'     => $this->getTable(),
          'field'     => 'pages_n_b_print',
          'linkfield' => 'id',
@@ -240,7 +243,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 13,
+         'id'        => '13',
          'table'     => $this->getTable(),
          'field'     => 'pages_color_print',
          'linkfield' => 'id',
@@ -248,7 +251,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 14,
+         'id'        => '14',
          'table'     => $this->getTable(),
          'field'     => 'pages_total_copy',
          'linkfield' => 'id',
@@ -256,7 +259,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 15,
+         'id'        => '15',
          'table'     => $this->getTable(),
          'field'     => 'pages_n_b_copy',
          'linkfield' => 'id',
@@ -264,7 +267,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 16,
+         'id'        => '16',
          'table'     => $this->getTable(),
          'field'     => 'pages_color_copy',
          'linkfield' => 'id',
@@ -272,7 +275,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 17,
+         'id'        => '17',
          'table'     => $this->getTable(),
          'field'     => 'pages_total_fax',
          'linkfield' => 'id',

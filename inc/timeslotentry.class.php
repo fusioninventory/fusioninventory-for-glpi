@@ -84,23 +84,25 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab[] = ['id' => 'common', 'name' => __('Time slot', 'fusioninventory')];
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Time slot', 'fusioninventory')
+      ];
 
       $tab[] = [
-         'id'        => 1,
+         'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
-         'linkfield' => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
       ];
 
       $tab[] = [
-         'id'       => 2,
+         'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -108,19 +110,17 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 3,
+         'id'        => '3',
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
-         'linkfield' => 'is_recursive',
          'name'      => __('Child entities'),
          'datatype'  => 'bool',
       ];
 
       $tab[] = [
-         'id'        => 4,
+         'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'name',
-         'linkfield' => '',
          'name'      => __('Name'),
          'datatype'  => 'string',
       ];
