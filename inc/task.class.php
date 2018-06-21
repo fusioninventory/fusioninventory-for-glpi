@@ -88,41 +88,41 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
-      $sopt = [];
+      $tab = [];
 
-      $sopt['common'] = __('Task');
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Task')
+      ];
 
-      $sopt[] = [
-         'id'        => 1,
+      $tab[] = [
+         'id'        => '1',
          'table'     => $this->getTable(),
          'field'     => 'name',
-         'linkfield' => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
       ];
 
-      $sopt[] = [
-         'id'        => 2,
+      $tab[] = [
+         'id'        => '2',
          'table'     => $this->getTable(),
          'field'     => 'datetime_start',
-         'linkfield' => 'datetime_start',
          'name'      => __('Schedule start', 'fusioninventory'),
          'datatype'  => 'datetime',
       ];
 
-      $sopt[] = [
-         'id'        => 2,
+      $tab[] = [
+         'id'        => '8',
          'table'     => $this->getTable(),
          'field'     => 'datetime_end',
-         'linkfield' => 'datetime_end',
          'name'      => __('Schedule end', 'fusioninventory'),
          'datatype'  => 'datetime',
       ];
 
-      $sopt[] = [
-         'id'        => 3,
+      $tab[] = [
+         'id'        => '3',
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
@@ -130,51 +130,47 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'datatype'  => 'dropdown',
       ];
 
-      $sopt[] = [
-         'id'        => 4,
+      $tab[] = [
+         'id'        => '4',
          'table'     => $this->getTable(),
          'field'     => 'comment',
-         'linkfield' => 'comment',
          'name'      => __('Comments'),
       ];
 
-      $sopt[] = [
-         'id'        => 5,
+      $tab[] = [
+         'id'        => '5',
          'table'     => $this->getTable(),
          'field'     => 'is_active',
-         'linkfield' => 'is_active',
          'name'      => __('Active'),
          'datatype'  => 'bool',
       ];
 
-      $sopt[] = [
-         'id'        => 6,
+      $tab[] = [
+         'id'        => '6',
          'table'     => $this->getTable(),
          'field'     => 'reprepare_if_successful',
-         'linkfield' => 'reprepare_if_successful',
          'name'      => __('Re-prepare a target-actor if previous run is successful',
             'fusioninventory'),
          'datatype'  => 'bool',
       ];
 
-      $sopt[] = [
-         'id'       => 7,
+      $tab[] = [
+         'id'       => '7',
          'table'    => $this->getTable(),
          'field'    => 'is_deploy_on_demand',
          'name'     => __('deploy on demand task', 'fusioninventory'),
          'datatype' => 'bool',
       ];
 
-      $sopt[] = [
-         'id'        => 30,
+      $tab[] = [
+         'id'        => '30',
          'table'     => $this->getTable(),
          'field'     => 'id',
-         'linkfield' => '',
          'name'      => __('ID'),
          'datatype'  => 'number',
       ];
 
-      return $sopt;
+      return $tab;
    }
 
 

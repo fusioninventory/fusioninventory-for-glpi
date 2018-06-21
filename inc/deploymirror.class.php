@@ -285,57 +285,58 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
 
       $tab = [];
+
       $tab[] = [
-         'id'            => 1,
+         'id'   => 'common',
+         'name' => self::getTypeName(),
+      ];
+
+      $tab[] = [
+         'id'            => '1',
          'table'         => $this->getTable(),
          'field'         => 'name',
-         'linkfield'     => 'name',
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_type' => $this->getType(),
       ];
 
       $tab[] = [
-         'id'        => 19,
+         'id'        => '19',
          'table'     => $this->getTable(),
          'field'     => 'date_mod',
-         'linkfield' => '',
          'name'      => __('Last update'),
          'datatype'  => 'datetime',
       ];
 
       $tab[] = [
-         'id'        => 2,
+         'id'        => '2',
          'table'     => $this->getTable(),
          'field'     => 'url',
-         'linkfield' => 'url',
          'name'      => __('Mirror server address', 'fusioninventory'),
          'datatype'  => 'string',
       ];
 
       $tab[] = [
-         'id'        => 3,
+         'id'        => '6',
          'table'     => $this->getTable(),
          'field'     => 'is_active',
-         'linkfield' => 'is_active',
          'name'      => __('Active'),
          'datatype'  => 'bool',
       ];
 
       $tab[] = [
-         'id'        => 16,
+         'id'        => '16',
          'table'     => $this->getTable(),
          'field'     => 'comment',
-         'linkfield' => 'comment',
          'name'      => __('Comments'),
          'datatype'  => 'text',
       ];
 
       $tab[] = [
-         'id'       => 80,
+         'id'       => '80',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
          'name'     => __('Entity'),
@@ -343,22 +344,20 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => 81,
-         'table'     => getTableNameForForeignKeyField('locations_id'),
-         'field'     => 'completename',
-         'linkfield' => 'locations_id',
-         'name'      => Location::getTypeName(),
-         'datatype'  => 'itemlink',
-      ];
-
-      $tab[] = [
-         'id'        => 86,
+         'id'        => '86',
          'table'     => $this->getTable(),
          'field'     => 'is_recursive',
-         'linkfield' => 'is_recursive',
          'name'      => __('Child entities'),
          'datatype'  => 'bool',
       ];
+
+      $name = _n('Volume', 'Volumes', Session::getPluralNumber());
+      $tab[] = [
+          'id'                 => 'disk',
+          'name'               => $name
+      ];
+
+      $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
 
       return $tab;
    }

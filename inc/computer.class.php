@@ -66,13 +66,10 @@ class PluginFusioninventoryComputer extends Computer {
     *
     * @return array
     */
-   function getSearchOptionsNew() {
+   function rawSearchOptions() {
       // Start with the base Glpi computer items
       $computer = new Computer();
-      $options  = $computer->getSearchOptionsNew();
-
-      // Add the network port items
-      $options += NetworkPort::getSearchOptionsToAdd('Computer');
+      $tab  = $computer->rawSearchOptions();
 
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {
@@ -81,11 +78,10 @@ class PluginFusioninventoryComputer extends Computer {
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
             ];
-            $options += PluginFieldsContainer::getAddSearchOptions('Computer');
+            $tab = array_merge($tab, PluginFieldsContainer::getAddSearchOptions('Computer'));
          }
       }
-
-      return $options;
+      return $tab;
    }
 
 

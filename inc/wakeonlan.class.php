@@ -174,15 +174,15 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                }
             }
          }
-      } /*
-       * Case 3 : dynamic agent
-       */
-      else if (strstr($pfTaskjob->fields['action'], '".1"')) {
+      } else if (strstr($pfTaskjob->fields['action'], '".1"')) {
+         /*
+          * Case 3 : dynamic agent
+          */
          $a_agentList = $this->getAgentsSubnet(count($a_computers_to_wake), $communication);
-      } /*
-       * Case 4 : dynamic agent same subnet
-       */
-      else if (in_array('.2', $a_actions)) {
+      } else if (in_array('.2', $a_actions)) {
+         /*
+          * Case 4 : dynamic agent same subnet
+          */
          $subnet = '';
          foreach ($a_computers_to_wake as $items_id) {
             $sql = "SELECT * FROM `glpi_networkports`
