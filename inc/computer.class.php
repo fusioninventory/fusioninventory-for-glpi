@@ -70,7 +70,6 @@ class PluginFusioninventoryComputer extends Computer {
       // Start with the base Glpi computer items
       $computer = new Computer();
       $tab  = $computer->rawSearchOptions();
-      Toolbox::logDebug($tab);
 
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {

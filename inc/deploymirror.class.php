@@ -319,13 +319,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'datatype'  => 'string',
       ];
 
-      // $tab[] = [
-      //    'id'        => '3',
-      //    'table'     => $this->getTable(),
-      //    'field'     => 'is_active',
-      //    'name'      => __('Active'),
-      //    'datatype'  => 'bool',
-      // ];
+      $tab[] = [
+         'id'        => '3',
+         'table'     => $this->getTable(),
+         'field'     => 'is_active',
+         'name'      => __('Active'),
+         'datatype'  => 'bool',
+      ];
 
       $tab[] = [
          'id'        => '16',
