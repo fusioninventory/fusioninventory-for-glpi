@@ -320,7 +320,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => '3',
+         'id'        => '6',
          'table'     => $this->getTable(),
          'field'     => 'is_active',
          'name'      => __('Active'),
