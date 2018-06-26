@@ -138,8 +138,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $count = 0;
       if ($itemtype == 'PluginFusionInventoryTaskjob') {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $datas = $pfTaskjob->find("`actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'");
-         $count = count($datas);
+         $data = $pfTaskjob->find("`actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'");
+         $count = count($data);
       }
       return $count;
    }
