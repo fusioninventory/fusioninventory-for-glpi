@@ -124,8 +124,84 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    function defineTabs($options=[]) {
       $ong = [];
       $this->addDefaultFormTab($ong);
+
+      $count = self::getMatchingItemsCount("PluginFusionInventoryTaskjob");
+      $ong[$this->getType().'$task'] = self::createTabEntry(_n('Associated task','Associated tasks', $count), $count);
+
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
+   }
+
+
+
+   function getMatchingItemsCount($itemtype) {
+      $count = 0;
+      if ($itemtype == 'PluginFusionInventoryTaskjob') {
+         $pfTaskjob = new PluginFusioninventoryTaskjob();
+         $data = $pfTaskjob->find("`actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'");
+         $count = count($data);
+      }
+      return $count;
+   }
+
+
+   /**
+    * Display the content of the tab
+    *
+    * @param object $item
+    * @param integer $tabnum number of the tab to display
+    * @param integer $withtemplate 1 if is a template form
+    * @return boolean
+    */
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $DB;
+
+      if ($tabnum == 'task') {
+         echo "<table width='950' class='tab_cadre_fixe'>";
+
+         echo "<tr>";
+         echo "<th>";
+         echo __('Task');
+         echo "</th>";
+         echo "<th>";
+         echo __('Active');
+         echo "</th>";
+         echo "<th>";
+         echo __('Module method');
+         echo "</th>";
+         echo "</tr>";
+
+         $modules_methods = PluginFusioninventoryStaticmisc::getModulesMethods();
+         $link = Toolbox::getItemTypeFormURL("PluginFusioninventoryTask");
+
+         $query = "SELECT
+            glpi_plugin_fusioninventory_tasks.id as id,
+            glpi_plugin_fusioninventory_tasks.name as tname,
+            glpi_plugin_fusioninventory_tasks.is_active,
+            glpi_plugin_fusioninventory_taskjobs.method
+            FROM glpi_plugin_fusioninventory_taskjobs
+            LEFT JOIN glpi_plugin_fusioninventory_tasks on plugin_fusioninventory_tasks_id=glpi_plugin_fusioninventory_tasks.id
+            WHERE `actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'
+            ORDER BY glpi_plugin_fusioninventory_tasks.name";
+         $res = $DB->query($query);
+
+         while ($row = $DB->fetch_assoc($res)) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo "<a href='".$link."?id=".$row['id']."'>".$row['tname']."</a>";
+            echo "</td>";
+            echo "<td>";
+            echo Dropdown::getYesNo($row['is_active']);
+            echo "</td>";
+            echo "<td>";
+            echo $modules_methods[$row['method']];
+            echo "</td>";
+            echo "</tr>";
+         }
+         echo "</table>";
+         return true;
+      }
+      return false;
    }
 
 
