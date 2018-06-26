@@ -61,7 +61,7 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return _n('Found file', 'Found files', $nb, 'fusioninventory');
    }
 
@@ -116,7 +116,7 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
    function displayNewSpecificities() {
       echo "<td>".__('Limit', 'fusioninventory')."</td>";
       echo "<td>";
-      Dropdown::showNumber('limit',[
+      Dropdown::showNumber('limit', [
                            'min'   => 1,
                            'max'   => 100,
                            'value' => 5

@@ -70,7 +70,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       $class = get_called_class();
       return $class::getTypeName();
    }
@@ -113,7 +113,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getID() > 0) {
          $class   = $this->collect_itemtype;
@@ -174,5 +174,3 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
       }
    }
 }
-
-?>

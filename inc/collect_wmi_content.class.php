@@ -56,10 +56,10 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryCollect_Wmi_Content
    extends PluginFusioninventoryCollectContentCommon {
 
-      public $collect_itemtype = 'PluginFusioninventoryCollect_Wmi';
-      public $collect_table    = 'glpi_plugin_fusioninventory_collects_wmis';
+   public $collect_itemtype = 'PluginFusioninventoryCollect_Wmi';
+   public $collect_table    = 'glpi_plugin_fusioninventory_collects_wmis';
 
-      public $type = 'wmi';
+   public $type = 'wmi';
 
    /**
     * Get the tab name used for item

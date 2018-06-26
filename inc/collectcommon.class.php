@@ -68,7 +68,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
     * @param integer $nb number of elements
     * @return string name of this type
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return '';
    }
 
@@ -81,7 +81,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return string name of the tab
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       if ($item->getID() > 0) {
          if ($item->fields['type'] == $this->type) {
             return __('Collect configuration');
@@ -99,7 +99,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $class     = get_called_class();
       $pfCollect = new $class();
       $pfCollect->showList($item->getID());
@@ -191,7 +191,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($collects_id, $options=array()) {
+   function showForm($collects_id, $options = []) {
       $this->initForm(0, $options);
       $this->showFormHeader($options);
 
@@ -213,5 +213,3 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       return true;
    }
 }
-
-?>
