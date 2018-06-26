@@ -123,7 +123,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $this->addDefaultFormTab($ong);
 
       $count = self::getMatchingItemsCount("PluginFusionInventoryTaskjob");
-      $ong[$this->getType().'$task'] = self::createTabEntry(_n('Associated task','Associated tasks', $count), $count);
+      $ong[$this->getType().'$task'] = self::createTabEntry(_n('Associated task', 'Associated tasks', $count), $count);
 
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
@@ -150,7 +150,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param integer $withtemplate 1 if is a template form
     * @return boolean
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       global $DB;
 
       if ($tabnum == 'task') {
