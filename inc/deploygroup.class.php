@@ -167,7 +167,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          echo __('Active');
          echo "</th>";
          echo "<th>";
-         print_r();
          echo __('Module method');
          echo "</th>";
          echo "</tr>";
