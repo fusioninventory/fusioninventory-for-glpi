@@ -512,7 +512,7 @@ function plugin_fusioninventory_check_prerequisites() {
    global $DB;
 
    $version = rtrim(GLPI_VERSION, '-dev');
-   if (version_compare($version, '9.2', 'lt')) {
+   if (version_compare($version, '9.3', 'lt')) {
       echo "This plugin requires GLPI 9.3";
       return false;
    }
@@ -521,13 +521,13 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = [];
    }
 
-   if (version_compare(GLPI_VERSION, '9.2-dev', '!=')
-      && version_compare(GLPI_VERSION, '9.2', 'lt')
-      || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+   if (version_compare(GLPI_VERSION, '9.3-dev', '!=')
+      && version_compare(GLPI_VERSION, '9.3', 'lt')
+      || version_compare(GLPI_VERSION, '9.4', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.2', '9.3');
+         echo Plugin::messageIncompatible('core', '9.3', '9.4');
       } else {
-         echo __('Your GLPI version not compatible, require >= 9.2 and < 9.3', 'fusioninventory');
+         echo __('Your GLPI version not compatible, require >= 9.3 and < 9.4', 'fusioninventory');
       }
       return false;
    }
