@@ -6875,7 +6875,7 @@ function doDynamicDataSearchParamsMigration() {
    ]);
 
    if (count($iterator)) {
-      $update = $DB->update(
+      $update = $DB->buildUpdate(
          'glpi_plugin_fusioninventory_deploygroups_dynamicdatas', [
             'fields_array' => new \QueryParam()
          ], [
