@@ -164,7 +164,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $i = 5200;
 
       $pfCollect = new PluginFusioninventoryCollect();
-      foreach ($pfCollect->find(getEntitiesRestrictRequest("", $pfCollect->getTable()), 'id ASC') as $collect) {
+      foreach ($pfCollect->find(getEntitiesRestrictRequest("", $pfCollect->getTable(), '', '', true), 'id ASC') as $collect) {
 
          //registries
          $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
