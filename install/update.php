@@ -4107,7 +4107,7 @@ function do_printer_migration($migration) {
             'users_id'  => 0
          ]
       ]);
-      if (!count($iterator)) {
+      if (!count($iterator2)) {
          if ($stmt === null) {
             $insert = $DB->buildInsert(
                'glpi_displaypreferences', [
@@ -4137,7 +4137,7 @@ function do_printer_migration($migration) {
             $stmt->execute();
          }
       } else {
-         while ($data=$DB->fetch_array($result)) {
+         while ($data = $iterator2->next()) {
             $delete = true;
             foreach ($a_searchoptions as $searchoption) {
                if ($searchoption['id'] == $data['num']) {
