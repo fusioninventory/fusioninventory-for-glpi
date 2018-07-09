@@ -224,6 +224,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             'id'            => $i,
             'table'         => $pfAgentmodule->getTable(),
             'field'         => $data["modulename"],
+            'linkfield'     => $data["modulename"],
             'name'          => __('Module', 'fusioninventory') . " - " . $data["modulename"],
             'datatype'      => 'bool',
             'massiveaction' => false,
