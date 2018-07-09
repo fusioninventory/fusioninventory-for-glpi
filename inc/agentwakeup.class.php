@@ -112,22 +112,30 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       //Get all active timeslots
       $timeslot = new PluginFusioninventoryTimeslot();
       $timeslots = $timeslot->getCurrentActiveTimeslots();
-      if (empty($timeslots)) {
-         $query_timeslot = '';
-      } else {
-         $query_timeslot = "OR (`plugin_fusioninventory_timeslots_exec_id` IN (".implode(',', $timeslots)."))";
+      $query_timeslot = [];
+      if (!empty($timeslots)) {
+         $query_timeslot = [
+            'OR'  => [
+               'plugin_fusioninventory_timeslots_exec_id' => $timeslots
+            ]
+         ];
       }
       //Get all active task requiring an agent wakeup
       //Check all tasks without timeslot or task with a current active timeslot
-      $query  = "SELECT `id`, `wakeup_agent_counter`, `wakeup_agent_time`, `last_agent_wakeup`
-                 FROM `glpi_plugin_fusioninventory_tasks`
-                 WHERE `wakeup_agent_time` > 0
-                    AND `wakeup_agent_counter` > 0
-                    AND `is_active`='1'
-                    AND (`plugin_fusioninventory_timeslots_exec_id` = '0'
-                    $query_timeslot)";
+      $iterator = $DB->request([
+         'SELECT' => ['id', 'wakeup_agent_counter', 'wakeup_agent_time', 'last_agent_wakeup'],
+         'FROM'   => 'glpi_plugin_fusioninventory_tasks',
+         'WHERE'  => [
+            'wakeup_agent_counter'  => ['>', 0],
+            'wakeup_agent_time'     => ['>', 0],
+            'is_active'             => 1,
+            [
+               'plugin_fusioninventory_timeslots_exec_id'   => 0
+            ] + $query_timeslot
+         ]
+      ]);
 
-      foreach ($DB->request($query) as $task) {
+      while ($task = $iterator->next()) {
          if (!is_null($task['wakeup_agent_time'])) {
             //Do not wake up is last wake up in inferior to the minimum wake up interval
             $interval   = time() - strtotime($task['last_agent_wakeup']);
@@ -138,19 +146,35 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
          //For each task, get a number of taskjobs at the PREPARED state
          //(the maximum is defined in wakeup_agent_counter)
-         $query_states = "SELECT `taskjobstates`.`plugin_fusioninventory_agents_id`,
-                                 `tasks`.`id` as `taskID`,
-                                 `tasks`.`wakeup_agent_time`,
-                                 `tasks`.`last_agent_wakeup`
-                          FROM `glpi_plugin_fusioninventory_taskjobstates` as `taskjobstates`,
-                               `glpi_plugin_fusioninventory_taskjobs` as `taskjobs`
-                          LEFT JOIN `glpi_plugin_fusioninventory_tasks` as `tasks`
-                             ON `tasks`.`id`=`taskjobs`.`plugin_fusioninventory_tasks_id`
-                          WHERE `tasks`.`id`='".$task['id']."'
-                             AND `taskjobs`.`id`=`taskjobstates`.`plugin_fusioninventory_taskjobs_id`
-                             AND `taskjobstates`.`state`='".PluginFusioninventoryTaskjobstate::PREPARED."'
-                          ORDER BY `taskjobstates`.`id` ASC LIMIT ".$task['wakeup_agent_counter'];
-         foreach ($DB->request($query_states) as $state) {
+         $iterator2 = $DB->request([
+            'SELECT'    => [
+               'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id',
+               'glpi_plugin_fusioninventory_tasks.id AS taskID',
+               'glpi_plugin_fusioninventory_tasks.wakeup_agent_time',
+               'glpi_plugin_fusioninventory_tasks.last_agent_wakeup'
+            ],
+            'FROM'      => [
+               'glpi_plugin_fusioninventory_taskjobstates',
+               'glpi_plugin_fusioninventory_taskjobs'
+            ],
+            'LEFT JOIN' => [
+               'glpi_plugin_fusioninventory_tasks' => [
+                  'FKEY' => [
+                     'glpi_plugin_fusioninventory_tasks'    => 'id',
+                     'glpi_plugin_fusioninventory_taskjobs' => 'plugin_fusioninventory_tasks_id'
+                  ]
+               ]
+            ],
+            'WHERE'     => [
+               'glpi_plugin_fusioninventory_tasks.id'             => $taks['id'],
+               'glpi_plugin_fusioninventory_taskjobs.id'          => 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_taskjobs_id',
+               'glpi_plugin_fusioninventory_taskjobstates.state'  => PluginFusioninventoryTaskjobstate::PREPARED
+            ],
+            'ORDER'     => 'glpi_plugin_fusioninventory_taskjobstates.id',
+            'START'     => 0,
+            'LIMIT'     => $task['wakeup_agent_counter']
+         ]);
+         while ($state = $iterator2->next()) {
             $agents_id = $state['plugin_fusioninventory_agents_id'];
             //Check if agent is already added to the list of agents to wake up
             if (!isset($wakeupArray[$agents_id])) {
