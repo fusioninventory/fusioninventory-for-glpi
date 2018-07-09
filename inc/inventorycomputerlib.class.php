@@ -217,11 +217,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       // * Computer fusion (ext)
       $db_computer = [];
       if ($no_history === false) {
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
-                WHERE `computers_id` = '$computers_id'
-                LIMIT 1";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_assoc($result)) {
+         $iterator = $DB->request([
+            'FROM'   => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+            'WHERE'  => ['computers_id' => $computers_id],
+            'START'  => 0,
+            'LIMIT'  => 1
+         ]);
+         while ($data = $iterator->next()) {
             foreach ($data as $key=>$value) {
                $data[$key] = Toolbox::addslashes_deep($value);
             }
@@ -259,16 +261,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       // * BIOS
       $db_bios = [];
       if ($no_history === false) {
-         $query = "SELECT `glpi_items_devicefirmwares`.`id`, `serial`,
-               `designation`, `version`
-               FROM `glpi_items_devicefirmwares`
-                  LEFT JOIN `glpi_devicefirmwares`
-                     ON `devicefirmwares_id`=`glpi_devicefirmwares`.`id`
-            WHERE `items_id` = '$computers_id'
-               AND `itemtype`='Computer'
-               AND `is_dynamic`='1'";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_assoc($result)) {
+         $iterator = $DB->request([
+            'SELECT'    => [
+               'glpi_items_devicefirmwares.id',
+               'serial',
+               'designation',
+               'version'
+            ],
+            'FROM'      => 'glpi_items_devicefirmwares',
+            'LEFT JOIN' => [
+               'glpi_devicefirmwares' => [
+                  'FKEY' => [
+                     'glpi_items_devicefirmwares'  => 'devicefirmwares_id',
+                     'glpi_devicefirmwares'        => 'id'
+                  ]
+               ]
+            ],
+            'WHERE'     => [
+               'items_id'     => $computers_id,
+               'itemtype'     => 'Computer',
+               'is_dynamic'   => 1
+            ]
+         ]);
+         while ($data = $iterator->next()) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -309,18 +324,34 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_processor") != 0) {
          $db_processors = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`,
-                     `frequency`, `frequence`, `frequency_default`,
-                     `serial`, `manufacturers_id`, `glpi_items_deviceprocessors`.`nbcores`,
-                     `glpi_items_deviceprocessors`.`nbthreads`
-                  FROM `glpi_items_deviceprocessors`
-                  LEFT JOIN `glpi_deviceprocessors`
-                     ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while (($data = $DB->fetch_assoc($result))) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_deviceprocessors.id',
+                  'designation',
+                  'frequency',
+                  'frequence',
+                  'frequency_default',
+                  'serial',
+                  'manufacturers_id',
+                  'glpi_items_deviceprocessors.nbcores',
+                  'glpi_items_deviceprocessors.nbthreads'
+               ],
+               'FROM'      => 'glpi_items_deviceprocessors',
+               'LEFT JOIN' => [
+                  'glpi_deviceprocessors' => [
+                     'FKEY' => [
+                        'glpi_deviceprocessors'       => 'id',
+                        'glpi_items_deviceprocessors' => 'deviceprocessors_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'  => $computers_id,
+                  'itemtype'  => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $db_processors[$idtmp] = Toolbox::addslashes_deep($data);
@@ -377,16 +408,33 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_memory") != 0) {
          $db_memories = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicememories`.`id`, `designation`, `size`,
-                     `frequence`, `serial`, `devicememorytypes_id`,
-                     `glpi_items_devicememories`.`busID`
-                     FROM `glpi_items_devicememories`
-                  LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicememories.id',
+                  'designation',
+                  'size',
+                  'frequence',
+                  'serial',
+                  'devicememorytypes_id',
+                  'glpi_items_devicememories.busID',
+               ],
+               'FROM'      => 'glpi_items_devicememories',
+               'LEFT JOIN' => [
+                  'glpi_devicememories' => [
+                     'FKEY' => [
+                        'glpi_devicememories'         => 'id',
+                        'glpi_items_devicememories'   => 'devicememories_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'  => $computers_id,
+                  'itemtype'  => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -441,14 +489,20 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_harddrive") != 0) {
          $db_harddrives = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`,
-                     `capacity`
-                     FROM `glpi_items_deviceharddrives`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT' => [
+                  'id',
+                  'serial',
+                  'capacity'
+               ],
+               'FROM'   => 'glpi_items_deviceharddrives',
+               'WHERE'  => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -508,15 +562,28 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_drive") != 0) {
          $db_drives = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicedrives`.`id`, `serial`,
-                     `glpi_devicedrives`.`designation`
-                     FROM `glpi_items_devicedrives`
-                  LEFT JOIN `glpi_devicedrives` ON `devicedrives_id`=`glpi_devicedrives`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicedrives.id',
+                  'serial',
+                  'glpi_devicedrives.designation'
+               ],
+               'FROM'      => 'glpi_items_devicedrives',
+               'LEFT JOIN' => [
+                  'glpi_devicedrives' => [
+                     'FKEY' => [
+                        'glpi_devicedrives'        => 'id',
+                        'glpi_items_devicedrives'  => 'devicedrives_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -571,15 +638,28 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_graphiccard") != 0) {
          $db_graphiccards = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicegraphiccards`.`id`, `designation`, `memory`
-                     FROM `glpi_items_devicegraphiccards`
-                  LEFT JOIN `glpi_devicegraphiccards`
-                     ON `devicegraphiccards_id`=`glpi_devicegraphiccards`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicegraphiccards.id',
+                  'designation',
+                  'memory'
+               ],
+               'FROM'      => 'glpi_items_devicegraphiccards',
+               'LEFT JOIN' => [
+                  'glpi_devicegraphiccards' => [
+                     'FKEY' => [
+                        'glpi_devicegraphiccards'        => 'id',
+                        'glpi_items_devicegraphiccards'  => 'devicegraphiccards_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
@@ -627,16 +707,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_networkcard") != 0) {
          $db_networkcards = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicenetworkcards`.`id`, `designation`, `mac`,
-                     `manufacturers_id`
-                     FROM `glpi_items_devicenetworkcards`
-                  LEFT JOIN `glpi_devicenetworkcards`
-                     ON `devicenetworkcards_id`=`glpi_devicenetworkcards`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicenetworkcards.id',
+                  'designation',
+                  'mac',
+                  'manufacturers_id'
+               ],
+               'FROM'      => 'glpi_items_devicenetworkcards',
+               'LEFT JOIN' => [
+                  'glpi_devicenetworkcards' => [
+                     'FKEY' => [
+                        'glpi_devicenetworkcards'        => 'id',
+                        'glpi_items_devicenetworkcards'  => 'devicenetworkcards_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
@@ -684,15 +777,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_soundcard") != 0) {
          $db_soundcards = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicesoundcards`.`id`, `designation`, `comment`,
-                     `manufacturers_id` FROM `glpi_items_devicesoundcards`
-                  LEFT JOIN `glpi_devicesoundcards`
-                     ON `devicesoundcards_id`=`glpi_devicesoundcards`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicesoundcards.id',
+                  'designation',
+                  'comment',
+                  'manufacturers_id'
+               ],
+               'FROM'      => 'glpi_items_devicesoundcards',
+               'LEFT JOIN' => [
+                  'glpi_devicesoundcards' => [
+                     'FKEY' => [
+                        'glpi_devicesoundcards'       => 'id',
+                        'glpi_items_devicesoundcards' => 'devicesoundcards_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -738,14 +845,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_control") != 0) {
          $db_controls = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicecontrols`.`id`, `interfacetypes_id`,
-                     `manufacturers_id`, `designation` FROM `glpi_items_devicecontrols`
-                  LEFT JOIN `glpi_devicecontrols` ON `devicecontrols_id`=`glpi_devicecontrols`.`id`
-                  WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicecontrols.id',
+                  'interfacetypes_id',
+                  'manufacturers_id',
+                  'designation'
+               ],
+               'FROM'      => 'glpi_items_devicecontrols',
+               'LEFT JOIN' => [
+                  'glpi_devicecontrols' => [
+                     'FKEY' => [
+                        'glpi_devicecontrols'         => 'id',
+                        'glpi_items_devicecontrols'   => 'devicecontrols_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -880,12 +1002,17 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
                if (isset($a_vm['uuid'])
                && $a_vm['uuid'] != '') {
-                  $query = "SELECT * FROM `glpi_computers`
-                        WHERE `uuid` ".ComputerVirtualMachine::getUUIDRestrictRequest($a_vm['uuid'])."
-                        LIMIT 1"; // TODO: Add entity search
-                  $result = $DB->query($query);
+                  $iterator = $DB->request([
+                     'FROM'   => 'glpi_computers',
+                     'WHERE'  => [
+                        'RAW' => [
+                           'LOWER(uuid)'  => self::getUUIDRestrictCriteria($fields['uuid'])
+                        ]
+                     ],
+                     'LIMIT'  => 1
+                  ]);
                   $computers_vm_id = 0;
-                  while ($data = $DB->fetch_assoc($result)) {
+                  while ($data = $iterator->next()) {
                      $computers_vm_id = $data['id'];
                   }
                   if ($computers_vm_id == 0) {
@@ -989,11 +1116,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("import_antivirus") != 0) {
          $db_antivirus = [];
          if ($no_history === false) {
-            $query = "SELECT `id`, `name`, `antivirus_version`
-                  FROM `".$pfInventoryComputerAntivirus->getTable()."`
-               WHERE `computers_id` = '$computers_id'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            $iterator = $DB->request([
+               'SELECT' => ['id', 'name', 'antivirus_version'],
+               'FROM'   => $pfInventoryComputerAntivirus->getTable(),
+               'WHERE'  => ['computers_id' => $computers_id]
+            ]);
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data1 = Toolbox::addslashes_deep($data);
@@ -1045,11 +1173,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       // * Licenseinfo
          $db_licenseinfo = [];
       if ($no_history === false) {
-         $query = "SELECT `id`, `name`, `fullname`, `serial`
-                  FROM `glpi_plugin_fusioninventory_computerlicenseinfos`
-               WHERE `computers_id` = '$computers_id'";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_assoc($result)) {
+         $iterator = $DB->request([
+            'SELECT' => ['id', 'name', 'fullname', 'serial'],
+            'FROM'   => 'glpi_plugin_fusioninventory_computerlicenseinfos',
+            'WHERE'  => ['computers_id' => $computers_id]
+         ]);
+         while ($data = $iterator->next()) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -1084,11 +1213,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       // * Remote_mgmt
          $db_remotemgmt = [];
       if ($no_history === false) {
-         $query = "SELECT `id`, `type`, `number`
-                  FROM `glpi_plugin_fusioninventory_computerremotemanagements`
-               WHERE `computers_id` = '$computers_id'";
-         $result = $DB->query($query);
-         while ($data = $DB->fetch_assoc($result)) {
+         $iterator = $DB->request([
+            'SELECT' => ['id', 'type', 'number'],
+            'FROM'   => 'glpi_plugin_fusioninventory_computerremotemanagements',
+            'WHERE'  => ['computers_id' => $computers_id]
+         ]);
+         while ($data = $iterator->next()) {
             $idtmp = $data['id'];
             unset($data['id']);
             $data1 = Toolbox::addslashes_deep($data);
@@ -1124,15 +1254,30 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("component_battery") != 0) {
          $db_batteries = [];
          if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicebatteries`.`id`, `serial`, `voltage`, `capacity`
-                        FROM `glpi_items_devicebatteries`
-                           LEFT JOIN `glpi_devicebatteries` ON `devicebatteries_id`=`glpi_devicebatteries`.`id`
-                        WHERE `items_id` = '$computers_id'
-                           AND `itemtype`='Computer'
-                           AND `is_dynamic`='1'";
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'glpi_items_devicebatteries.id',
+                  'serial',
+                  'voltage',
+                  'capacity'
+               ],
+               'FROM'      => 'glpi_items_devicebatteries',
+               'LEFT JOIN' => [
+                  'glpi_devicebatteries' => [
+                     'FKEY' => [
+                        'glpi_devicebatteries'        => 'id',
+                        'glpi_items_devicebatteries'  => 'devicebatteries_id'
+                     ]
+                  ]
+               ],
+               'WHERE'     => [
+                  'items_id'     => $computers_id,
+                  'itemtype'     => 'Computer',
+                  'is_dynamic'   => 1
+               ]
+            ]);
 
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
+            while ($data = $iterator->next()) {
                $idtmp = $data['id'];
                unset($data['id']);
                $data = Toolbox::addslashes_deep($data);
@@ -1226,17 +1371,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
 
       $db_monitors = [];
-      $query = "SELECT `glpi_monitors`.`id`,
-                       `glpi_computers_items`.`id` as link_id
-            FROM `glpi_computers_items`
-         LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
-         WHERE `itemtype`='Monitor'
-            AND `computers_id`='".$computers_id."'
-            AND `entities_id`='".$entities_id."'
-            AND `glpi_computers_items`.`is_dynamic`='1'
-            AND `glpi_monitors`.`is_global`='0'";
-      $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      $iterator = $DB->request([
+         'SELECT'    => [
+            'glpi_monitors.id',
+            'glpi_computers_items.id AS link_id'
+         ],
+         'FROM'      => 'glpi_computers_items',
+         'LEFT JOIN' => [
+            'glpi_monitors' => [
+               'FKEY' => [
+                  'glpi_monitors'         => 'id',
+                  'glpi_computers_items'  => 'items_id'
+               ]
+            ]
+         ],
+         'WHERE'     => [
+            'itemtype'                          => 'Monitor',
+            'computers_id'                      => $computers_id,
+            'entities_id'                       => $entities_id,
+            'glpi_computers_items.is_dynamic'   => 1,
+            'glpi_monitors.is_global'           => 0
+         ]
+      ]);
+      while ($data = $iterator->next()) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_monitors[$idtmp] = $data['id'];
@@ -1308,16 +1465,30 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
       $db_printers = [];
-      $query = "SELECT `glpi_printers`.`id`, `glpi_computers_items`.`id` as link_id
-            FROM `glpi_computers_items`
-         LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
-         WHERE `itemtype`='Printer'
-            AND `computers_id`='".$computers_id."'
-            AND `entities_id`='".$entities_id."'
-            AND `glpi_computers_items`.`is_dynamic`='1'
-            AND `glpi_printers`.`is_global`='0'";
-      $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      $iterator = $DB->request([
+         'SELECT'    => [
+            'glpi_printers.id',
+            'glpi_computers_items.id AS link_id'
+         ],
+         'FROM'      => 'glpi_computers_items',
+         'LEFT JOIN' => [
+            'glpi_printers' => [
+               'FKEY' => [
+                  'glpi_printers'         => 'id',
+                  'glpi_computers_items'  => 'items_id'
+               ]
+            ]
+         ],
+         'WHERE'     => [
+            'itemtype'                          => 'Printer',
+            'computers_id'                      => $computers_id,
+            'entities_id'                       => $entities_id,
+            'glpi_computers_items.is_dynamic'   => 1,
+            'glpi_printers.is_global'           => 0
+         ]
+      ]);
+
+      while ($data = $iterator->next()) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_printers[$idtmp] = $data['id'];
@@ -1387,16 +1558,30 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
       $db_peripherals = [];
-      $query = "SELECT `glpi_peripherals`.`id`, `glpi_computers_items`.`id` as link_id
-            FROM `glpi_computers_items`
-         LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
-         WHERE `itemtype`='Peripheral'
-            AND `computers_id`='".$computers_id."'
-            AND `entities_id`='".$entities_id."'
-            AND `glpi_computers_items`.`is_dynamic`='1'
-      AND `glpi_peripherals`.`is_global`='0'";
-      $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      $iterator = $DB->request([
+         'SELECT'    => [
+            'glpi_peripherals.id',
+            'glpi_computers_items.id AS link_id'
+         ],
+         'FROM'      => 'glpi_computers_items',
+         'LEFT JOIN' => [
+            'glpi_peripherals' => [
+               'FKEY' => [
+                  'glpi_peripherals'      => 'id',
+                  'glpi_computers_items'  => 'items_id'
+               ]
+            ]
+         ],
+         'WHERE'     => [
+            'itemtype'                          => 'Peripheral',
+            'computers_id'                      => $computers_id,
+            'entities_id'                       => $entities_id,
+            'glpi_computers_items.is_dynamic'   => 1,
+            'glpi_peripherals.is_global'           => 0
+         ]
+      ]);
+
+      while ($data = $iterator->next()) {
          $idtmp = $data['link_id'];
          unset($data['link_id']);
          $db_peripherals[$idtmp] = $data['id'];
@@ -1545,13 +1730,16 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $db_networkport = [];
       if ($no_history === false) {
-         $query = "SELECT `id`, `name`, `mac`, `instantiation_type`, `logical_number`
-             FROM `glpi_networkports`
-             WHERE `items_id` = '$computers_id'
-               AND `itemtype`='Computer'
-               AND `is_dynamic`='1'";
-         $result = $DB->query($query);
-         while (($data = $DB->fetch_assoc($result))) {
+         $iterator = $DB->request([
+            'SELECT' => ['id', 'name', 'mac', 'instantiation_type', 'logical_number'],
+            'FROM'   => 'glpi_networkports',
+            'WHERE'  => [
+               'items_id'     => $computers_id,
+               'itemtype'     => 'Computer',
+               'is_dynamic'   => 1
+            ]
+         ]);
+         while ($data = $iterator->next()) {
             $idtmp = $data['id'];
             unset($data['id']);
             if (is_null($data['mac'])) {
@@ -1677,11 +1865,15 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
                // Same networkport, verify ipaddresses
                $db_addresses = [];
-               $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
-                   WHERE `items_id` = '".$a_networknames_find['id']."'
-                     AND `itemtype`='NetworkName'";
-               $result = $DB->query($query);
-               while ($data = $DB->fetch_assoc($result)) {
+               $iterator = $DB->request([
+                  'SELECT' => ['id', 'name'],
+                  'FROM'   => 'glpi_ipaddresses',
+                  'WHERE'  => [
+                     'items_id'  => $a_networknames_find['id'],
+                     'itemtype'  => 'NetworkName'
+                  ]
+               ]);
+               while ($data = $iterator->next()) {
                   $db_addresses[$data['id']] = $data['name'];
                }
                $a_computerinventory_ipaddress =

@@ -569,15 +569,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function infoByKey($device_id) {
       global $DB;
 
-      $query = "SELECT * FROM `".$this->getTable()."`
-         WHERE `device_id`='".$device_id."' LIMIT 1";
+      $iterator = $DB->request([
+         'FROM'   => $this->getTable(),
+         'WHERE'  => ['device_id' => $device_id],
+         'START'  => 0,
+         'LIMIT'  => 1
+      ]);
 
       $agent = [];
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            $agent = $DB->fetch_assoc($result);
-         }
+      if (count($iterator)) {
+         $agent = $iterator->next();
       }
       return $agent;
    }
@@ -1207,23 +1208,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($retentiontime == 0) {
          return true;
       }
-      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_agents`
-                   WHERE `last_contact` < date_add(now(), interval -".$retentiontime." day)";
-      $result = $DB->query($sql);
 
-      if ($result) {
+      $iterator = $DB->request([
+         'FROM'   => 'glpi_plugin_fusioninventory_agents',
+         'WHERE'  => [
+            'last_contact' => ['<', new QueryExpression("date_add(now(), interval -".$retentiontime." day)")]
+         ]
+      ]);
+
+      if (count($iterator)) {
          $cron_status = false;
          $action = $pfConfig->getValue('agents_action');
          if ($action == PluginFusioninventoryConfig::ACTION_CLEAN) {
             //delete agents
-            while ($data = $DB->fetch_array($result)) {
+            while ($data = $iterator->next()) {
                $pfAgent->delete($data);
                $task->addVolume(1);
                $cron_status = true;
             }
          } else {
             //change status of agents
-            while ($data = $DB->fetch_array($result)) {
+            while ($data = $iterator->next()) {
                $computer = new Computer();
                if ($computer->getFromDB($data['computers_id'])) {
                   $computer->update([
