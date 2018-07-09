@@ -412,7 +412,7 @@ msgstr "Agenttiin ei saada yhteyttä!"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "CSV-tuonti"
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
@@ -426,7 +426,7 @@ msgstr ""
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
-msgstr ""
+msgstr "CSV-tiedostoa ei voi lukea"
 
 #: inc/taskview.class.php:78
 msgid "Include old jobs"
@@ -497,7 +497,7 @@ msgstr "Valmistele uudestaan kohde/toimijapari, jos edellinen ajo onnistui"
 
 #: inc/taskview.class.php:336
 msgid "This is an on demand deployment task"
-msgstr ""
+msgstr "Tämä on kysyntään perustuva asennus"
 
 #: inc/taskview.class.php:348 inc/task.class.php:112
 msgid "Schedule start"
@@ -625,7 +625,7 @@ msgstr "SNMP:n tiedot"
 
 #: inc/item.class.php:186
 msgid "SNMP authentication"
-msgstr ""
+msgstr "SNMP-todennus"
 
 #: inc/item.class.php:299
 msgid "sec(s)"
@@ -699,8 +699,8 @@ msgstr "Pakota lopetus"
 #: inc/collect_file.class.php:65
 msgid "Found file"
 msgid_plural "Found files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tiedosto löytyi"
+msgstr[1] "Tiedostot löytyivät"
 
 #: inc/collect_file.class.php:72 inc/collect_file.class.php:117
 msgid "Limit"
@@ -1168,7 +1168,7 @@ msgstr "Muistinkäyttö (prosentteina)"
 
 #: inc/networkequipment.class.php:1118
 msgid "No data available"
-msgstr ""
+msgstr "Tietoja ei ole saatavilla"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -1832,7 +1832,7 @@ msgstr "Tehtävät"
 
 #: inc/menu.class.php:331
 msgid "Asset skipped during import"
-msgstr ""
+msgstr "Omaisuus ohitettu tuonnin aikana"
 
 #: inc/menu.class.php:339
 msgid "Computer entity rules"
@@ -1986,15 +1986,15 @@ msgstr "Muut tietokoneet"
 
 #: inc/menu.class.php:851
 msgid "Network equipments"
-msgstr ""
+msgstr "Verkkolaitteet"
 
 #: inc/menu.class.php:856
 msgid "Printers"
-msgstr ""
+msgstr "Tulostimet"
 
 #: inc/menu.class.php:890 inc/menu.class.php:919
 msgid "Linked with a device"
-msgstr ""
+msgstr "Liitetty laitteeseen"
 
 #: inc/menu.class.php:895
 msgid "SNMP switch network ports not linked"
@@ -2002,19 +2002,19 @@ msgstr "SNMP-kytkinportit, joita ei ole linkitetty"
 
 #: inc/menu.class.php:924
 msgid "Not linked"
-msgstr ""
+msgstr "Ei liitetty"
 
 #: inc/menu.class.php:951
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Valmis ja odottaa"
 
 #: inc/menu.class.php:985
 msgid "Automatic inventory vs manually added"
-msgstr ""
+msgstr "Automaattinen inventaario vs. käsin lisätty"
 
 #: inc/menu.class.php:987
 msgid "Computer inventories in the last hours"
-msgstr ""
+msgstr "Tietokone inventaariot viimeisten tuntien aikana"
 
 #: inc/menu.class.php:988
 msgid "Deployment"
@@ -2022,7 +2022,7 @@ msgstr ""
 
 #: inc/menu.class.php:989
 msgid "Network inventory by SNMP"
-msgstr ""
+msgstr "Verkon inventaario SNMP avulla"
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
@@ -2030,7 +2030,7 @@ msgstr ""
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr ""
+msgstr "Kaikkien verkkolaitteiden portit"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
@@ -2181,8 +2181,8 @@ msgstr "Agentti pysähtyi/kaatui"
 #: inc/collect_wmi.class.php:65
 msgid "Found WMI"
 msgid_plural "Found WMIs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "WMI löytyi"
+msgstr[1] "WMI:t löytyivät"
 
 #: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
 msgid "Properties"

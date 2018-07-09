@@ -259,7 +259,7 @@ msgstr "Caminho não encontrado"
 
 #: install/update.php:943 install/install.php:302
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
+msgstr "Excluir agente que não contatou o servidor desde xxx dias"
 
 #: install/install.php:305
 msgid "Wake agents ups"
@@ -411,21 +411,23 @@ msgstr "Impossível se comunicar com um agente!"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "Importar CSV"
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
 msgstr ""
+"Importar uma lista de computadores de um arquivo CSV (a primeira coluna deve"
+" conter a ID do computador)"
 
 #: inc/deploygroup_staticdata.class.php:296
 msgid "Computers imported successfully from CSV file"
-msgstr ""
+msgstr "Computadores importados de arquivo CSV com sucesso"
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
-msgstr ""
+msgstr "Impossível ler o arquivo CSV"
 
 #: inc/taskview.class.php:78
 msgid "Include old jobs"
@@ -546,8 +548,8 @@ msgstr "Hora de término"
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
 msgid_plural "Found entries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Entrada encontradas"
+msgstr[1] "Entradas encontradas"
 
 #: inc/collect_registry.class.php:82 inc/collect_registry.class.php:99
 msgid "Hive"
@@ -624,7 +626,7 @@ msgstr "Informações SNMP"
 
 #: inc/item.class.php:186
 msgid "SNMP authentication"
-msgstr ""
+msgstr "Autenticação SNMP"
 
 #: inc/item.class.php:299
 msgid "sec(s)"
@@ -698,8 +700,8 @@ msgstr "Forçar ao final"
 #: inc/collect_file.class.php:65
 msgid "Found file"
 msgid_plural "Found files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Arquivo encontrado"
+msgstr[1] "Arquivos encontrados"
 
 #: inc/collect_file.class.php:72 inc/collect_file.class.php:117
 msgid "Limit"
@@ -840,7 +842,7 @@ msgstr "depuração-extra"
 
 #: inc/config.class.php:374
 msgid "Re-prepare successful jobs"
-msgstr ""
+msgstr "Re-preparar trabalhos bem sucedidos"
 
 #: inc/config.class.php:382
 msgid "Maximum number of agents to wake up in a task"
@@ -1165,7 +1167,7 @@ msgstr "Uso de memória (em%)"
 
 #: inc/networkequipment.class.php:1118
 msgid "No data available"
-msgstr ""
+msgstr "Sem dados disponíveis"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -1576,26 +1578,28 @@ msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr ""
+"Você deve escolher uma tarefa e um pacote para destinar uma tarefa com "
+"pacote de implantação"
 
 #: inc/task.class.php:2088
 msgid "Deployment job, package: "
-msgstr ""
+msgstr "Trabalho de implantação, pacote:"
 
 #: inc/task.class.php:2103
 msgid "Updated a deployment job, package: "
-msgstr ""
+msgstr "Trabalho de implantação atualizado, pacote:"
 
 #: inc/task.class.php:2104 inc/task.class.php:2136
 msgid ", actors: "
-msgstr ""
+msgstr ", atores:"
 
 #: inc/task.class.php:2127
 msgid "The selected task already has a deployment job for another package: "
-msgstr ""
+msgstr "O trabalho selecionado já possui uma tarefa de outro pacote:"
 
 #: inc/task.class.php:2135
 msgid "Created a deployment job, package: "
-msgstr ""
+msgstr "Trabalho de implantação criado, pacote:"
 
 #: inc/deploypackageitem.class.php:323 inc/deploypackage.class.php:982
 msgid "The modified JSON contained a syntax error :"
@@ -1990,15 +1994,15 @@ msgstr "Outros computadores"
 
 #: inc/menu.class.php:851
 msgid "Network equipments"
-msgstr ""
+msgstr "Equipamento de rede SNMP"
 
 #: inc/menu.class.php:856
 msgid "Printers"
-msgstr ""
+msgstr "Impressoras SNMP"
 
 #: inc/menu.class.php:890 inc/menu.class.php:919
 msgid "Linked with a device"
-msgstr ""
+msgstr "Vinculado a um dispositivo"
 
 #: inc/menu.class.php:895
 msgid "SNMP switch network ports not linked"
@@ -2006,35 +2010,35 @@ msgstr "Portas de rede do switch SNMP desconectadas"
 
 #: inc/menu.class.php:924
 msgid "Not linked"
-msgstr ""
+msgstr "Não vinculado"
 
 #: inc/menu.class.php:951
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Preparado e aguardando"
 
 #: inc/menu.class.php:985
 msgid "Automatic inventory vs manually added"
-msgstr ""
+msgstr "Inventário automático x adicionado manualmente"
 
 #: inc/menu.class.php:987
 msgid "Computer inventories in the last hours"
-msgstr ""
+msgstr "Inventário de computadores nas últimas horas"
 
 #: inc/menu.class.php:988
 msgid "Deployment"
-msgstr ""
+msgstr "Implantação"
 
 #: inc/menu.class.php:989
 msgid "Network inventory by SNMP"
-msgstr ""
+msgstr "Descoberta de rede SNMP"
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr ""
+msgstr "Portas dos equipamentos de rede (inventariados pelo SNMP)"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr ""
+msgstr "Portas em todos os equipamentos de rede"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
@@ -2185,8 +2189,8 @@ msgstr "Agente parou/travou"
 #: inc/collect_wmi.class.php:65
 msgid "Found WMI"
 msgid_plural "Found WMIs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Encontrou WMI"
+msgstr[1] "Encontrou WMIs"
 
 #: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
 msgid "Properties"
@@ -2377,6 +2381,9 @@ msgid ""
 "Several jobs in the same task is not anymore supported because of unexpected side-effects. \n"
 "         Please consider modifying this task to avoid unexpected results."
 msgstr ""
+"Vários trabalhos na mesma tarefa não são mais suportados por efeitos "
+"colaterais inesperados. Por favor considere modificar essa tarefa para "
+"evitar resultados inesperados."
 
 #: inc/taskjobview.class.php:355
 msgid "Actor Type"
@@ -3376,7 +3383,7 @@ msgstr "Unidade"
 
 #: inc/deploycheck.class.php:537
 msgid "If not successful"
-msgstr ""
+msgstr "Se não tiver êxito"
 
 #: inc/iprange.class.php:93
 msgid "Communication mode"

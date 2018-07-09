@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Walid Nouh, 2018\n"
+"Last-Translator: Thomas Wolf (TW1920) <mail@thomaswolf.eu>, 2018\n"
 "Language-Team: German (Germany) (https://www.transifex.com/ddurieux/teams/797/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +45,7 @@ msgstr "FusionInventory"
 
 #: report/not_queried_recently.php:70 setup.php:392
 msgid "Number of days since last inventory"
-msgstr "Anzahl Tage seite der letzten Inventarisierung"
+msgstr "Anzahl Tage seit der letzten Inventarisierung"
 
 #: report/not_queried_recently.php:156 report/computer_last_inventory.php:130
 #: hook.php:63 hook.php:255 hook.php:281 inc/item.class.php:176
@@ -60,7 +60,7 @@ msgstr "Computer, welche seit xx Tagen nicht inventorisiert wurden"
 
 #: report/computer_last_inventory.php:75
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "Anzahl Tage seit der letzten Inventarisierung (mindestens)"
 
 #: front/deploygroup.php:51 inc/deploytaskjob.class.php:226
 #: inc/profile.class.php:414 inc/menu.class.php:256
@@ -104,7 +104,7 @@ msgstr "Keine Datei zum importieren gefunden!"
 
 #: front/inventoryruleimport.php:67
 msgid "Reset import rules (define only default rules)"
-msgstr ""
+msgstr "Setze Import-Richtlinie zurück (legt Standardrichtlinie fest)"
 
 #: front/configlogfield.form.php:51 front/config.form.php:52
 msgid "Features"
@@ -191,7 +191,7 @@ msgstr ""
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:423 inc/deploycheck.class.php:565
 msgid "skip job"
-msgstr ""
+msgstr "Überspringe die Aufgabe"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:424 inc/deploycheck.class.php:566
 msgid "report info"
@@ -215,11 +215,11 @@ msgstr "Kopieren"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:76 inc/deployaction.class.php:87
 msgid "Delete directory"
-msgstr ""
+msgstr "Lösche Verzeichnis"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:78 inc/deployaction.class.php:88
 msgid "Create directory"
-msgstr ""
+msgstr "Erstelle Verzeichnis"
 
 #: b/deploy/index.php:85
 msgid "Deploy module has been disabled for this agent"
@@ -243,7 +243,7 @@ msgstr "Aktionen"
 
 #: b/deploy/index.php:278
 msgid "User canceled the job"
-msgstr ""
+msgstr "Benutzer hat Aufgabe abgebrochen"
 
 #: b/deploy/index.php:280
 msgid "User postponed the job"
@@ -339,7 +339,7 @@ msgstr "Statische Gruppe"
 
 #: hook.php:168 inc/inventorycomputercomputer.class.php:217
 msgid "HostID"
-msgstr ""
+msgstr "HostID"
 
 #: hook.php:174
 msgid "License serial number"
@@ -394,7 +394,7 @@ msgstr ""
 
 #: ajax/remote_status.php:69
 msgid "cannot contact the agent"
-msgstr ""
+msgstr "Kann den Agent nicht erreichen"
 
 #: ajax/remote_status.php:75
 #, php-format
@@ -411,7 +411,7 @@ msgstr "Kann nicht mit dem Agent kommunizieren!"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "CSV importieren"
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
@@ -463,7 +463,7 @@ msgstr ""
 #: inc/taskview.class.php:202 inc/menu.class.php:961
 #: inc/deploypackage.class.php:1297
 msgid "Successful"
-msgstr ""
+msgstr "Erfolgreich"
 
 #: inc/taskview.class.php:203 inc/menu.class.php:956
 #: inc/deploypackage.class.php:1298
@@ -546,8 +546,8 @@ msgstr "Endzeit"
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
 msgid_plural "Found entries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Gefundene Einträge"
+msgstr[1] "Gefundene Einträge"
 
 #: inc/collect_registry.class.php:82 inc/collect_registry.class.php:99
 msgid "Hive"
@@ -570,7 +570,7 @@ msgstr "Werte in der schwarzen Liste"
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:91
 msgid "Remote management"
-msgstr ""
+msgstr "Remote-Verwaltung"
 
 #: inc/collect.class.php:72 inc/staticmisc.class.php:674
 msgid "Collect information"
@@ -579,16 +579,16 @@ msgstr "Informationen sammeln"
 #: inc/rulematchedlog.class.php:103 inc/rulematchedlog.class.php:111
 #: inc/rulematchedlog.class.php:117 inc/rulematchedlog.class.php:139
 msgid "Import information"
-msgstr ""
+msgstr "Omport-Information"
 
 #: inc/rulematchedlog.class.php:249 inc/rulematchedlog.class.php:326
 msgid "Rule import logs"
-msgstr ""
+msgstr "Regel-Import Log"
 
 #: inc/rulematchedlog.class.php:260 inc/rulematchedlog.class.php:337
 #: inc/ignoredimportdevice.class.php:105
 msgid "Rule name"
-msgstr ""
+msgstr "Regel-Name"
 
 #: inc/rulematchedlog.class.php:264 inc/stateinventory.class.php:116
 #: inc/statediscovery.class.php:170 inc/ignoredimportdevice.class.php:90
@@ -616,7 +616,7 @@ msgstr "Verschlüsselungmethode für Daten"
 
 #: inc/item.class.php:122
 msgid "Download inventory file"
-msgstr ""
+msgstr "Lade Inventory-Datei herunter"
 
 #: inc/item.class.php:158
 msgid "SNMP information"
@@ -698,8 +698,8 @@ msgstr "Beendigung erzwingen"
 #: inc/collect_file.class.php:65
 msgid "Found file"
 msgid_plural "Found files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Gefundene Dateien"
+msgstr[1] "Gefundene Dateien"
 
 #: inc/collect_file.class.php:72 inc/collect_file.class.php:117
 msgid "Limit"
@@ -800,7 +800,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:113
 msgid "OEM"
-msgstr ""
+msgstr "OEM"
 
 #: inc/computerlicenseinfo.class.php:119
 msgid "Option"
@@ -828,7 +828,7 @@ msgstr "Periodizität des Inventars (in Stunden)"
 
 #: inc/config.class.php:350
 msgid "Delete tasks logs after"
-msgstr ""
+msgstr "Lösche Aufgaben-Log nach"
 
 #: inc/config.class.php:362 inc/agent.class.php:215 inc/agent.class.php:531
 msgid "Agent port"
@@ -844,19 +844,19 @@ msgstr ""
 
 #: inc/config.class.php:382
 msgid "Maximum number of agents to wake up in a task"
-msgstr ""
+msgstr "Maximale Anzahl von Agenten zum starten je Vorgang"
 
 #: inc/config.class.php:395
 msgid "Update agents"
-msgstr ""
+msgstr "Update Agenten"
 
 #: inc/config.class.php:397
 msgid "Update agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Update Agenten haben den Server nicht kontaktiert seit (in Tagen)"
 
 #: inc/config.class.php:432 inc/config.class.php:462
 msgid "Change the status"
-msgstr ""
+msgstr "Ändere den Status"
 
 #: inc/config.class.php:465
 msgid "Clean agents"
@@ -895,8 +895,8 @@ msgstr "Netzwerklaufwerke"
 #: inc/config.class.php:696
 msgid "Removable medias"
 msgid_plural "Removable medias"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Entfernbare Medien"
+msgstr[1] "Wechselmedien"
 
 #: inc/config.class.php:737
 msgid "Network options"
@@ -959,11 +959,11 @@ msgstr ""
 
 #: inc/inventorycomputercomputer.class.php:102
 msgid "BIOS date"
-msgstr ""
+msgstr "BIOS Datum"
 
 #: inc/inventorycomputercomputer.class.php:109
 msgid "BIOS version"
-msgstr ""
+msgstr "BIOS Version"
 
 #: inc/inventorycomputercomputer.class.php:261
 msgid "Public contact address"
@@ -1055,7 +1055,7 @@ msgstr ""
 
 #: inc/staticmisc.class.php:115
 msgid "Collect data"
-msgstr ""
+msgstr "Sammel Daten"
 
 #: inc/staticmisc.class.php:289 inc/profile.class.php:398
 msgid "Agents"
@@ -1157,7 +1157,7 @@ msgstr ""
 
 #: inc/networkequipment.class.php:836
 msgid "Full"
-msgstr ""
+msgstr "Vollständig"
 
 #: inc/networkequipment.class.php:1097
 msgid "Memory usage (in %)"
@@ -1165,7 +1165,7 @@ msgstr "Speicherauslastung (in %)"
 
 #: inc/networkequipment.class.php:1118
 msgid "No data available"
-msgstr ""
+msgstr "Keine Daten verfügbar"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -1342,15 +1342,15 @@ msgstr "Geräte die beim Import ignoriert wurden"
 
 #: inc/communicationnetworkdiscovery.class.php:123
 msgid "Processed:"
-msgstr ""
+msgstr "Abgeschlossen:"
 
 #: inc/communicationnetworkdiscovery.class.php:124
 msgid "Created:"
-msgstr ""
+msgstr "Erstellt:"
 
 #: inc/communicationnetworkdiscovery.class.php:125
 msgid " Updated:"
-msgstr ""
+msgstr "Aktualisiert:"
 
 #: inc/commonview.class.php:293
 msgid "Warning:"
@@ -1362,7 +1362,7 @@ msgstr "Fehler:"
 
 #: inc/inventorycomputerlib.class.php:2010
 msgid "Internal battery"
-msgstr ""
+msgstr "Interne Batterie"
 
 #: inc/deployaction.class.php:69
 msgid "Return code is equal to"
@@ -1436,12 +1436,12 @@ msgstr "Ignorieren beim Import von FusionInventory"
 #: inc/inventoryruleentity.class.php:293
 #: inc/inventoryrulelocation.class.php:309
 msgid "is CIDR"
-msgstr ""
+msgstr "ist CIDR"
 
 #: inc/inventoryruleentity.class.php:294
 #: inc/inventoryrulelocation.class.php:310
 msgid "is not CIDR"
-msgstr ""
+msgstr "ist nicht CIDR"
 
 #: inc/display.class.php:176
 msgid "Progress"
@@ -1482,7 +1482,7 @@ msgstr "Dateigrösse"
 
 #: inc/collectrule.class.php:275
 msgid "Software version"
-msgstr ""
+msgstr "Software Version"
 
 #: inc/configlogfield.class.php:171
 msgid "History configuration"
@@ -1559,7 +1559,7 @@ msgstr ""
 
 #: inc/task.class.php:1709
 msgid "Task has been disabled"
-msgstr ""
+msgstr "Aufgabe wurde deaktiviert"
 
 #: inc/task.class.php:1945 inc/deploypackage.class.php:107
 msgid "Package"
@@ -1677,7 +1677,7 @@ msgstr "Zeiteinheit"
 
 #: inc/printerlog.class.php:603
 msgid "Year"
-msgstr ""
+msgstr "Jahr"
 
 #: inc/printerlog.class.php:615
 msgid "Display"
@@ -1729,7 +1729,7 @@ msgstr "Felder in der schwarzen Liste"
 
 #: inc/profile.class.php:322
 msgid "Manage packages"
-msgstr ""
+msgstr "Verwalte Pakete"
 
 #: inc/profile.class.php:328 inc/menu.class.php:465
 #: inc/deploymirror.class.php:83
@@ -1754,7 +1754,7 @@ msgstr "SNMP-Discovery der Drucker"
 
 #: inc/profile.class.php:368
 msgid "Unmanaged devices"
-msgstr ""
+msgstr "Unverwaltete Geräte"
 
 #: inc/profile.class.php:371
 msgid "computer XML manual import"
@@ -1801,7 +1801,7 @@ msgstr ""
 
 #: inc/menu.class.php:229
 msgid "documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 #: inc/menu.class.php:250
 msgid "Agents management"
@@ -1870,7 +1870,7 @@ msgstr ""
 
 #: inc/menu.class.php:530 inc/menu.class.php:601
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiken"
 
 #: inc/menu.class.php:530
 msgid "Number of computer inventories of last hours"
@@ -1884,10 +1884,11 @@ msgstr ""
 #: inc/menu.class.php:548
 msgid "Configure frequency of agent contact (and so each inventory)"
 msgstr ""
+"Konfiguriere Verarbeitungs-Frequenz der Agenten (und somit der Inventur)"
 
 #: inc/menu.class.php:553
 msgid "Configure inventory options"
-msgstr ""
+msgstr "Konfiguriere Inventur-Optionen"
 
 #: inc/menu.class.php:558
 msgid "Define rules for entity"
@@ -1921,7 +1922,7 @@ msgstr ""
 
 #: inc/menu.class.php:642
 msgid "`Network Discovery`, used to discover the devices on the network"
-msgstr ""
+msgstr "`Network Discovery`, genutzt zum Erkennen von Geräten im Netzwerk"
 
 #: inc/menu.class.php:647
 msgid "Define IP Ranges of your network + related SNMP credentials"
@@ -1929,7 +1930,7 @@ msgstr ""
 
 #: inc/menu.class.php:652
 msgid "Define an agent allowed to discover the network"
-msgstr ""
+msgstr "Lege einen Agenten fest zum Durchsuchen des Netzwerkes"
 
 #: inc/menu.class.php:657
 msgid ""
@@ -1943,6 +1944,8 @@ msgstr ""
 #: inc/menu.class.php:667
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr ""
+"`Network Inventory`, genutzt zum Abschließen der Inventur der erkannten "
+"Geräte"
 
 #: inc/menu.class.php:672
 msgid "Define an agent allowed to inventory the network by SNMP"
@@ -2025,8 +2028,8 @@ msgstr "Änderung verweigert"
 #: inc/deploypackage.class.php:280
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
+msgstr[1] "Die folgenden Aufgaben werden mit diesem Paket ausgeführt"
 
 #: inc/deploypackage.class.php:383 inc/deploypackage.class.php:499
 msgid "Enable deploy on demand for the following group"
@@ -2110,7 +2113,7 @@ msgstr "OK"
 
 #: inc/taskjoblog.class.php:113 inc/taskjoblog.class.php:582
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: inc/taskjoblog.class.php:413
 msgid "Process number"
@@ -2191,8 +2194,8 @@ msgstr "ein"
 #: inc/deployuserinteraction.class.php:98
 msgid "User interaction"
 msgid_plural "User interactions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Benutzer Aktionen"
+msgstr[1] "Benutzer Aktionen"
 
 #: inc/deployuserinteraction.class.php:109
 msgid "Before download"
@@ -2243,15 +2246,15 @@ msgstr ""
 
 #: inc/deployuserinteraction.class.php:458
 msgid "Retry"
-msgstr ""
+msgstr "Wiederholen"
 
 #: inc/deployuserinteraction.class.php:464
 msgid "Abort"
-msgstr ""
+msgstr "Abbrechen"
 
 #: inc/deployuserinteraction.class.php:467
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorieren"
 
 #: inc/deployuserinteraction.class.php:473
 msgid "Alert duration exceeded"
@@ -3472,7 +3475,7 @@ msgstr ""
 
 #: inc/agent.class.php:853
 msgid "not yet requested, refresh?"
-msgstr ""
+msgstr "bisher nicht abgefragt, aktualisieren?"
 
 #: inc/agent.class.php:860
 msgid "Force inventory"
