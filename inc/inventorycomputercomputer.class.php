@@ -249,28 +249,28 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo '<th colspan="4">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
 
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->showInfoForComputer($item, 4);
+
       echo '<tr class="tab_bg_1">';
+      if ($a_computerextend['remote_addr'] != '') {
+         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['remote_addr'].'</td>';
+      } else {
+         echo "<td colspan='2'></td>";
+      }
+
       echo '<td>';
       echo __('Last inventory', 'fusioninventory');
       echo '</td>';
       echo '<td>';
       echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
       echo '</td>';
-
-      if ($a_computerextend['remote_addr'] != '') {
-         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
-         echo '<td>'.$a_computerextend['remote_addr'].'</td>';
-      }
-      echo "<td colspan='2'></td>";
-
       echo '</tr>';
 
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->showInfoForComputer($item, 4);
-
+      echo '<tr class="tab_bg_1">';
       // Display automatic entity transfer
       if (Session::isMultiEntitiesMode()) {
-         echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
          echo '<td>';
          $pfEntity = new PluginFusioninventoryEntity();
@@ -288,8 +288,16 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
             }
          }
          echo '</td>';
-         echo '</tr>';
+      } else {
+         echo "<td colspan='2'></td>";
       }
+      echo '<td>';
+      echo __('Last boot', 'fusioninventory');
+      echo '</td>';
+      echo '<td>';
+      echo Html::convDateTime($a_computerextend['last_boot']);
+      echo '</td>';
+      echo '</tr>';
 
       $pfRemoteManagement = new PluginFusioninventoryComputerRemoteManagement();
       $pfRemoteManagement->showInformation($item->getID());
