@@ -43,11 +43,6 @@
 /*
  * bootstrop.php needs to be loaded since tests are run in separate process
  */
-include_once('bootstrap.php');
-include_once('commonfunction.php');
-include_once (GLPI_ROOT . "/inc/based_config.php");
-include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
-include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 include_once('0_Install/FusinvDB.php');
 
@@ -68,6 +63,11 @@ class UpdateTest extends RestoreDatabase_TestCase {
       if ($version == '') {
          return;
       }
+
+      // uninstall the plugin FusionInventory
+      $plugin = new Plugin();
+      $plugin->getFromDBByCrit(['directory' => 'fusioninventory']);
+      $plugin->uninstall($plugin->fields['id']);
 
       $query = "SHOW TABLES";
       $result = $DB->query($query);

@@ -5498,7 +5498,7 @@ function do_deploypackage_migration($migration) {
    $migration->renameTable('glpi_plugin_fusinvdeploy_orders', $order_table);
 
    if ($DB->tableExists($order_table)
-           and $DB->fieldExists($order_table, 'type')) {
+           and $DB->fieldExists($order_table, 'type', false)) {
 
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/deploypackage.class.php");
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
@@ -5518,7 +5518,7 @@ function do_deploypackage_migration($migration) {
          if (countElementsInTable($order_table, [
                'type'                                     => '0',
                'plugin_fusioninventory_deploypackages_id' => $uninstall['plugin_fusioninventory_deploypackages_id'],
-               'json'                                     => ['!=', ''],
+               'json'                                     => ['<>', ''],
             ]) > 0) {
             // have install and uninstall, so duplicate package
             $pfDeployPackage->getFromDB($uninstall['plugin_fusioninventory_deploypackages_id']);

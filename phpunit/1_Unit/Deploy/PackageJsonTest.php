@@ -118,7 +118,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       // create package orders used before 9.1 version
-      $query = "DROP TABLE `glpi_plugin_fusioninventory_deploypackages` ";
+      $query = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages` ";
       $DB->query($query);
 
       $query = "CREATE TABLE `glpi_plugin_fusioninventory_deploypackages` (
@@ -138,6 +138,9 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       $DB->query($query);
 
        // glpi_plugin_fusioninventory_deployorders
+      $query = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployorders` ";
+      $DB->query($query);
+
       $query = "CREATE TABLE `glpi_plugin_fusioninventory_deployorders` (
         `id` int(11) NOT NULL,
         `type` int(11) NOT NULL,

@@ -93,6 +93,7 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
 (597, 'PluginFusinvsnmpStateDiscovery', 11, 9, 0),
 (598, 'PluginFusinvsnmpStateDiscovery', 12, 10, 0);
 
+DELETE FROM glpi_plugins where directory='fusioninventory';
 
 INSERT INTO `glpi_plugins` (`id`, `directory`, `name`, `version`, `state`, `author`, `homepage`, `license`) VALUES
 (2, 'fusinvinventory', 'FusionInventory INVENTORY', '0.83+2.1', 1, '<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>\n                                    & FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+'),
