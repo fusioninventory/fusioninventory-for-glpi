@@ -371,6 +371,10 @@ class PluginFusioninventoryFormatconvert {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] =
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
       }
+      if (isset($array['OPERATINGSYSTEM']['BOOT_TIME'])
+              && !empty($array['OPERATINGSYSTEM']['BOOT_TIME'])) {
+         $a_inventory['fusioninventorycomputer']['last_boot'] = $array['OPERATINGSYSTEM']['BOOT_TIME'];
+      }
 
       if (isset($array['HARDWARE']['DESCRIPTION'])) {
          $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
@@ -378,6 +382,10 @@ class PluginFusioninventoryFormatconvert {
 
       if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
+      }
+
+      if (empty($a_inventory['fusioninventorycomputer']['last_boot'])) {
+         $a_inventory['fusioninventorycomputer']['last_boot'] = "NULL";
       }
 
       // * BIOS

@@ -2739,25 +2739,27 @@ function do_computercomputer_migration($migration) {
 
    $a_table['fields']  = [];
    $a_table['fields']['id']                     = ['type'    => 'autoincrement',
-                                                        'value'   => ''];
+                                                   'value'   => ''];
    $a_table['fields']['computers_id']           = ['type'    => 'integer',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['operatingsystem_installationdate'] = ['type'    => 'datetime',
-                                                                  'value'   => null];
+                                                             'value'   => null];
    $a_table['fields']['winowner']               = ['type'    => 'string',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['wincompany']             = ['type'    => 'string',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['last_fusioninventory_update']     = ['type'    => 'datetime',
-                                                                 'value'   => null];
+                                                            'value'   => null];
    $a_table['fields']['remote_addr']            = ['type'    => 'string',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['serialized_inventory']   = ['type'    => 'longblob',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['is_entitylocked']        = ['type'    => 'bool',
-                                                        'value'   => "0"];
+                                                   'value'   => "0"];
    $a_table['fields']['oscomment']              = ['type'    => 'text',
-                                                        'value'   => null];
+                                                   'value'   => null];
+   $a_table['fields']['last_boot']              = ['type'    => 'datetime',
+                                                   'value'   => null];
 
    $a_table['oldfields']  = [
       'plugin_fusioninventory_computerarchs_id',
