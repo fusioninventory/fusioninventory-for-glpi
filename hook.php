@@ -187,6 +187,13 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5181]['joinparams']  = ['jointype' => 'child'];
       $sopt[5181]['massiveaction'] = false;
 
+      $sopt[5182]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5182]['field']     = 'last_boot';
+      $sopt[5182]['name']      = __('FusInv', 'fusioninventory')." - ".__('Last boot', 'fusioninventory');
+      $sopt[5182]['joinparams']  = ['jointype' => 'child'];
+      $sopt[5182]['datatype']  = 'datetime';
+      $sopt[5182]['massiveaction'] = false;
+
    }
 
    if ($itemtype == 'Computer') {
