@@ -113,7 +113,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function Licenses() {
+   public function testAddLicensesWhenInventory() {
       global $DB;
 
       $DB->connect();
@@ -124,7 +124,6 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
-      $GLPIlog          = new GLPIlogs();
 
       $a_computerinventory = $this->a_computer1;
       $a_computer = $a_computerinventory['Computer'];

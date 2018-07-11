@@ -110,7 +110,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function Antiviruses() {
+   public function testAntiviruses() {
       global $DB;
 
       $DB->connect();

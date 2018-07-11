@@ -20,9 +20,9 @@
   <testsuites>
     <testsuite name="Install">
       <!-- Then, install Fusioninventory (last version) -->
-      <file>0_Install/FusinvInstallTest.php</file>
+      <file>./0_Install/FusinvInstallTest.php</file>
       <!-- Dump install to speed up setUp() tests -->
-      <file>0_Install/SaveInstallTest.php</file>
+      <file>./0_Install/SaveInstallTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>

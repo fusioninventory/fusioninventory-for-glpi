@@ -1,15 +1,8 @@
 <?php
-include_once('bootstrap.php');
-include_once('commonfunction.php');
-
-include_once (GLPI_ROOT . "/inc/based_config.php");
-include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
-include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 use PHPUnit\Framework\TestCase;
 
 abstract class Common_TestCase extends TestCase {
-
 
    public function mark_incomplete($description = null) {
       $this->markTestIncomplete(
@@ -22,7 +15,6 @@ abstract class Common_TestCase extends TestCase {
 
       self::drop_database();
       self::load_mysql_file('./save.sql');
-
    }
 
 
@@ -62,27 +54,30 @@ abstract class Common_TestCase extends TestCase {
          "Failed to drop GLPI database:\n".
          implode("\n", $result['output'])
       );
-
    }
 
 
    protected function setUp() {
       global $CFG_GLPI, $DB;
 
-      include(GLPI_ROOT.'/inc/includes.php');
-
-      $DB = new DB();
       // Force profile in session to SuperAdmin
       $_SESSION['glpiprofiles'] = ['4' => ['entities' => 0]];
-
       $_SESSION['glpi_plugin_fusioninventory_profile']['unmanaged'] = 'w';
-
       $_SESSION['glpiactiveentities'] = [0, 1];
+      $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
+      $_SESSION['glpilanguage'] = 'en_GB';
 
-      $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
+      include (GLPI_ROOT . "/inc/based_config.php");
+      include_once (GLPI_ROOT . "/inc/config.php");
+      include_once(GLPI_CONFIG_DIR . "/config_db.php");
+      include_once (GLPI_ROOT . "/inc/define.php");
+
+      $DB = new DB();
+      $DB->connect();
 
       $plugin = new Plugin();
       $DB->connect();
+      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
 
@@ -101,15 +96,12 @@ abstract class Common_TestCase extends TestCase {
             }
          }
       }
-
       include_once (GLPI_ROOT . "/inc/timer.class.php");
-
       // Security of PHP_SELF
       $_SERVER['PHP_SELF']=Html::cleanParametersURL($_SERVER['PHP_SELF']);
 
       ini_set("memory_limit", "-1");
       ini_set("max_execution_time", "0");
-
    }
 
 
