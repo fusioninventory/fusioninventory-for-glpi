@@ -115,7 +115,7 @@ class PluginFusioninventoryCollectRule extends Rule {
     * @param array $params
     * @return array
     */
-   function executeActions($output, $params) {
+   function executeActions($output, $params, $input) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules-collect",
@@ -181,7 +181,7 @@ class PluginFusioninventoryCollectRule extends Rule {
                default:
                   //plugins actions
                   $executeaction = clone $this;
-                  $output = $executeaction->executePluginsActions($action, $output, $params);
+                  $output = $executeaction->executePluginsActions($action, $output, $params, $input);
                   break;
 
             }
