@@ -1592,11 +1592,13 @@ class PluginFusioninventoryFormatconvert {
                //for software dictionnary
                if ($nb_RuleDictionnarySoftware > 0) {
                   $rule_input = [
-                   "name"             => $array_tmp['name'],
-                   "manufacturer"     => $array_tmp['manufacturers_id'],
-                   "old_version"      => $array_tmp['version'],
-                   "entities_id"      => $entities_id_software,
-                   "_system_category" => $array_tmp['_system_category']
+                   "name"                 => $array_tmp['name'],
+                   "manufacturer"         => $array_tmp['manufacturers_id'],
+                   "old_version"          => $array_tmp['version'],
+                   "entities_id"          => $entities_id_software,
+                   "operatingsystems_id"  => $array_tmp['operatingsystems_id'],
+                   "_system_category"     => $array_tmp['_system_category'],
+                   "device_id"            => $a_inventory['Computer']['device_id'],
                   ];
                   $res_rule = $rulecollection->processAllRules($rule_input);
                }

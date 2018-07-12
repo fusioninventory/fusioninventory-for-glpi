@@ -474,6 +474,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                                                    $a_computerinventory,
                                                    $items_id);
          }
+         $a_computerinventory['Computer']['device_id'] = $this->device_id;
          $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                                 $a_computerinventory,
                                                 $entities_id);
@@ -581,7 +582,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                     'computer');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnmanaged') {
-
+         $a_computerinventory['Computer']['device_id'] = $this->device_id;
          $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                                 $a_computerinventory,
                                                 $entities_id);
