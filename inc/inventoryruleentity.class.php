@@ -395,7 +395,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          if ($this->checkCriterias($input)) {
             unset($output["_no_rule_matches"]);
             $refoutput = $output;
-            $output = $this->executeActions($output, $params);
+            $output = $this->executeActions($output, $params, $input);
             if (!isset($output['pass_rule'])) {
                $this->updateOnlyCriteria($options, $refoutput, $output);
                //Hook
