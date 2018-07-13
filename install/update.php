@@ -833,6 +833,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
       $input['component_battery']      = 1;
+      $input['component_powersupply']  = 1;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;

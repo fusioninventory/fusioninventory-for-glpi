@@ -83,6 +83,7 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
                'serial'                => '0E52B'
             ]
          ],
+         'powersupplies'  => [],
          'remote_mgmt'    => [],
          'bios'           => [],
          'itemtype'       => 'Computer'
