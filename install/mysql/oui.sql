@@ -6,7 +6,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `mac` (`mac`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_fusioninventory_ouis`
       (`id`, `mac`, `name`) VALUES 

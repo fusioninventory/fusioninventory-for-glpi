@@ -2653,7 +2653,7 @@ function do_rulematchedlog_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
-               ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -2991,7 +2991,7 @@ function do_configlogfield_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                   `id` int(8) NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
-               ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -3059,7 +3059,7 @@ function do_networkport_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                         "ID",
@@ -3141,7 +3141,7 @@ function do_networkport_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -3192,7 +3192,7 @@ function do_networkport_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
@@ -3432,7 +3432,7 @@ function do_networkport_migration($migration) {
       $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
@@ -3713,7 +3713,7 @@ function do_printer_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
@@ -3813,7 +3813,7 @@ function do_printer_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
@@ -3948,7 +3948,7 @@ function do_printer_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` bigint(100) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4262,7 +4262,7 @@ function do_networkequipment_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4385,7 +4385,7 @@ function do_networkequipment_migration($migration) {
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
       $migration->changeField($newTable,
                               "id",
@@ -4626,7 +4626,7 @@ function do_configsecurity_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
@@ -4756,7 +4756,7 @@ function do_statediscovery_migration($migration) {
       $DB->query("CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
-                ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
    }
    $migration->changeField($newTable,
                            "id",
@@ -5262,7 +5262,7 @@ function do_deployuserinteraction_migration($migration) {
          KEY `date_creation` (`date_creation`),
          KEY `entities_id` (`entities_id`),
          KEY `is_recursive` (`is_recursive`)
-      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
       $DB->query($query);
    }
 }
@@ -8897,7 +8897,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
          $query = "CREATE TABLE `".$a_table['name']."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
       }
 
       $DB->query($query);

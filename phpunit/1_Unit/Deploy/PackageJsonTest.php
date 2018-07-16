@@ -130,7 +130,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
             `date_mod` datetime DEFAULT NULL,
             `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
             PRIMARY KEY (`id`)
-          ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+          ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
 
       $query = "INSERT INTO `glpi_plugin_fusioninventory_deploypackages` (`id`, `name`, `comment`, `entities_id`, `is_recursive`, `date_mod`, `uuid`) VALUES
@@ -145,7 +145,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
         `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL,
         `json` longtext COLLATE utf8_unicode_ci,
         PRIMARY KEY (`id`)
-      ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
 
       $query = "INSERT INTO `glpi_plugin_fusioninventory_deployorders` (`id`, `type`, `create_date`, `plugin_fusioninventory_deploypackages_id`, `json`) VALUES
