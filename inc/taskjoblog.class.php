@@ -148,62 +148,89 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     *
     * @return array
     */
-   function getSearchOptions() {
+   function rawSearchOptions() {
 
-      $sopt = [];
+      $tab = [];
 
-      $sopt['common'] = __('Logs');
-
-      $sopt[1]['table']         = $this->getTable();
-      $sopt[1]['field']         = 'id';
-      $sopt[1]['name']          = __('ID');
-      $sopt[1]['massiveaction'] = false; // implicit field is id
-
-      $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
-      $sopt[2]['field']          = 'name';
-      $sopt[2]['name']           = _n('Task', 'Tasks', 2);
-      $sopt[2]['datatype']       = 'itemlink';
-      $sopt[2]['itemlink_type']  = "PluginFusioninventoryTask";
-
-      $sopt[3]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
-      $sopt[3]['field']          = 'name';
-      $sopt[3]['name']           = __('Job', 'fusioninventory');
-      $sopt[3]['datatype']       = 'itemlink';
-      $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
-
-      $sopt[4]['table']          = $this->getTable();
-      $sopt[4]['field']          = 'state';
-      $sopt[4]['name']           = __('Status');
-      $sopt[4]['searchtype']     = 'equals';
-
-      $sopt[5]['table']         = $this->getTable();
-      $sopt[5]['field']         = 'date';
-      $sopt[5]['name']          = __('Date');
-      $sopt[5]['datatype']      = 'datetime';
-      $sopt[5]['massiveaction'] = false;
-
-      $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
-      $sopt[6]['field']          = 'uniqid';
-      $sopt[6]['name']           = __('Unique id', 'fusioninventory');
-      $sopt[6]['datatype']       = 'string';
-
-      $sopt[7]['table']          = $this->getTable();
-      $sopt[7]['field']          = 'comment';
-      $sopt[7]['name']           = __('Comments');
-      $sopt[7]['datatype']       = 'string';
-
-      $sopt[8]['table']          = "glpi_plugin_fusioninventory_agents";
-      $sopt[8]['field']          = 'name';
-      $sopt[8]['name']           = __('Agent', 'fusioninventory');
-      $sopt[8]['datatype']       = 'itemlink';
-      $sopt[8]['forcegroupby']   = true;
-      $sopt[8]['joinparams']     = [
-         'beforejoin' => [
-            'table'      => 'glpi_plugin_fusioninventory_taskjobstates',
-            'joinparams' => ['jointype' => 'child']
-         ]
+      $tab[] = [
+         'id' => 'common',
+         'name' => __('Logs')
       ];
-      return $sopt;
+
+      $tab[] = [
+         'id'            => '1',
+         'table'         => $this->getTable(),
+         'field'         => 'id',
+         'name'          => __('ID'),
+         'massiveaction' => false, // implicit field is i,
+      ];
+
+      $tab[] = [
+         'id'            => '2',
+         'table'         => 'glpi_plugin_fusioninventory_tasks',
+         'field'         => 'name',
+         'name'          => _n('Task', 'Tasks', 2),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => "PluginFusioninventoryTask",
+      ];
+
+      $tab[] = [
+         'id'            => '3',
+         'table'         => 'glpi_plugin_fusioninventory_taskjobs',
+         'field'         => 'name',
+         'name'          => __('Job', 'fusioninventory'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => "PluginFusioninventoryTaskjob",
+      ];
+
+      $tab[] = [
+         'id'         => '4',
+         'table'      => $this->getTable(),
+         'field'      => 'state',
+         'name'       => __('Status'),
+         'searchtype' => 'equals',
+      ];
+
+      $tab[] = [
+         'id'            => '5',
+         'table'         => $this->getTable(),
+         'field'         => 'date',
+         'name'          => __('Date'),
+         'datatype'      => 'datetime',
+         'massiveaction' => false,
+      ];
+
+      $tab[] = [
+         'id'       => '6',
+         'table'    => 'glpi_plugin_fusioninventory_taskjobstates',
+         'field'    => 'uniqid',
+         'name'     => __('Unique id', 'fusioninventory'),
+         'datatype' => 'string',
+      ];
+
+      $tab[] = [
+         'id'       => '7',
+         'table'    => $this->getTable(),
+         'field'    => 'comment',
+         'name'     => __('Comments'),
+         'datatype' => 'string',
+      ];
+
+      $tab[] = [
+         'id'           => '8',
+         'table'        => "glpi_plugin_fusioninventory_agents",
+         'field'        => 'name',
+         'name'         => __('Agent', 'fusioninventory'),
+         'datatype'     => 'itemlink',
+         'forcegroupby' => true,
+         'joinparams'   => [
+            'beforejoin' => [
+               'table'      => 'glpi_plugin_fusioninventory_taskjobstates',
+               'joinparams' => ['jointype' => 'child'],
+            ],
+         ],
+      ];
+      return $tab;
    }
 
 

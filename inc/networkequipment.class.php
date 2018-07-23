@@ -109,7 +109,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
     * @param object $item
     * @param array $options
     */
-   function showExtendedInfos(CommonDBTM $item, $options=array()) {
+   function showExtendedInfos(CommonDBTM $item, $options = []) {
       global $DB, $CFG_GLPI;
 
       if (!Session::haveRight('plugin_fusioninventory_networkequipment', READ)) {
@@ -269,7 +269,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          }
          array_multisort($aDescr, SORT_ASC, SORT_NATURAL, $aResult);
 
-         foreach($aResult as $data) {
+         foreach ($aResult as $data) {
             $this->showNetworkPortDetail($data, $monitoring);
 
             if ($data['instantiation_type'] == 'NetworkPortAggregate') {
@@ -482,7 +482,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       $params = ['networkequipments_id' => $item->getID()];
       if ($pfNetworkEquipment->getFromDBByCrit($params) === false) {
-         return ;
+         return;
       }
 
       echo '<table class="tab_glpi" width="100%">';

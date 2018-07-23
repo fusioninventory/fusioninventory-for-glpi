@@ -48,14 +48,14 @@ chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
  include ("../../../inc/includes.php");
 
- if (isset($_SERVER['argv'])) {
-    for ($i=1; $i<$_SERVER['argc']; $i++) {
-       $it    = explode("=", $_SERVER['argv'][$i], 2);
-       $it[0] = preg_replace('/^--/', '', $it[0]);
+if (isset($_SERVER['argv'])) {
+   for ($i=1; $i<$_SERVER['argc']; $i++) {
+      $it    = explode("=", $_SERVER['argv'][$i], 2);
+      $it[0] = preg_replace('/^--/', '', $it[0]);
 
-       $_GET[$it[0]] = (isset($it[1]) ? $it[1] : true);
-    }
- }
+      $_GET[$it[0]] = (isset($it[1]) ? $it[1] : true);
+   }
+}
 
 if (isset($_GET['help']) || !count($_GET)) {
    echo "This script create an IP Range, a community, and 2 SNMP tasks: one for discovery and one for inventory\n";
@@ -181,7 +181,7 @@ $task      = new PluginFusioninventoryTask();
 $taskjob   = new PluginFusioninventoryTaskjob();
 $task_name = $params['name'].'-disco';
 $result    = $task->getFromDBByCrit(['name' => $task_name]);
-if ($result > 0 ) {
+if ($result > 0) {
    $tasks_id_disco = $task->getID();
    echo "Discovery task ".$task_name." already present with id $tasks_id_disco\n";
 } else {
@@ -207,7 +207,7 @@ if ($result > 0 ) {
 
 $task_name = $params['name'].'-inv';
 $result    = $task->getFromDBByCrit(['name' => $task_name]);
-if ($result > 0 ) {
+if ($result > 0) {
    $tasks_id_inv = $task->getID();
    echo "Inventory task ".$task_name." already present with id $tasks_id_inv\n";
 } else {

@@ -352,6 +352,10 @@ class PluginFusioninventoryFormatconvert {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] =
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
       }
+      if (isset($array['OPERATINGSYSTEM']['BOOT_TIME'])
+              && !empty($array['OPERATINGSYSTEM']['BOOT_TIME'])) {
+         $a_inventory['fusioninventorycomputer']['last_boot'] = $array['OPERATINGSYSTEM']['BOOT_TIME'];
+      }
 
       if (isset($array['HARDWARE']['DESCRIPTION'])) {
          $a_inventory['fusioninventorycomputer']['oscomment'] = $array['HARDWARE']['DESCRIPTION'];
@@ -359,6 +363,10 @@ class PluginFusioninventoryFormatconvert {
 
       if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
+      }
+
+      if (empty($a_inventory['fusioninventorycomputer']['last_boot'])) {
+         $a_inventory['fusioninventorycomputer']['last_boot'] = "NULL";
       }
 
       // * BIOS
@@ -1267,13 +1275,32 @@ class PluginFusioninventoryFormatconvert {
             }
             if ($cnt == 0) {
                if (isset($array_tmp['login'])) {
-                  $query = "SELECT `id`
-                            FROM `glpi_users`
-                            WHERE `name` = '" . $array_tmp['login'] . "'
-                            LIMIT 1";
-                  $result = $DB->query($query);
-                  if ($DB->numrows($result) == 1) {
-                     $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+                  // Search on domain
+                  $where_add = [];
+                  if (isset($array_tmp['domain'])
+                          && !empty($array_tmp['domain'])) {
+                     $ldaps = $DB->request('glpi_authldaps',
+                           ['WHERE'  => "`inventory_domain` = '".$array_tmp['domain']."'"]
+                     );
+                     $ldaps_ids = [];
+                     foreach ($ldaps as $data_LDAP) {
+                        $ldaps_ids[] = $data_LDAP['id'];
+                     }
+                     if (count($ldaps_ids)) {
+                        $where_add['authtype'] = Auth::LDAP;
+                        $where_add['auths_id'] = $ldaps_ids;
+                     }
+                  }
+                  $iterator = $DB->request([
+                     'SELECT' => ['id'],
+                     'FROM'   => 'glpi_users',
+                     'WHERE'  => [
+                        'name'   => $array_tmp['login']
+                     ] + $where_add,
+                     'LIMIT'  => 1
+                  ]);
+                  if ($row = $iterator->next()) {
+                     $a_inventory['Computer']['users_id'] = $row['id'];
                   }
                }
             }

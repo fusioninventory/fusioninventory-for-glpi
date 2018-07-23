@@ -56,6 +56,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date,
+              'last_boot'                       => '2018-06-11 08:03:32',
               'items_operatingsystems_id'       => [
                   'operatingsystems_id'              => 'freebsd',
                   'operatingsystemversions_id'       => '9.1-RELEASE',
@@ -380,6 +381,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'id'                                        => '1',
           'computers_id'                              => '1',
           'operatingsystem_installationdate'          => '2012-10-16 08:12:56',
+          'last_boot'                                 => '2018-06-11 08:03:32',
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
           'remote_addr'                               => null,
@@ -1182,6 +1184,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date,
+              'last_boot'                       => 'NULL',
               'items_operatingsystems_id'       => [
                   'operatingsystems_id'              => 'freebsd',
                   'operatingsystemversions_id'       => '9.1-RELEASE',

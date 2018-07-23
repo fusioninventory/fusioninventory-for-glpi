@@ -367,12 +367,12 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       }
 
       // Fix some command like : echo "write in file" >> c:\TEMP\HELLO.txt
-      if (isset($order_job['actions'])){
-          foreach($order_job['actions'] as $key => $value){
-              if(isset($value['cmd']) && isset($value['cmd']['exec'])){
-                  $order_job['actions'][$key]['cmd']['exec']= Toolbox::unclean_cross_side_scripting_deep($value['cmd']['exec']);
-              }
-          }
+      if (isset($order_job['actions'])) {
+         foreach ($order_job['actions'] as $key => $value) {
+            if (isset($value['cmd']) && isset($value['cmd']['exec'])) {
+               $order_job['actions'][$key]['cmd']['exec']= Toolbox::unclean_cross_side_scripting_deep($value['cmd']['exec']);
+            }
+         }
       }
 
       $order = [

@@ -233,6 +233,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskview.class.php';
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskjobview.class.php';
    require_once GLPI_ROOT.'/plugins/fusioninventory/inc/item.class.php';
+   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/collectcommon.class.php';
+   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/collectcontentcommon.class.php';
 
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);
@@ -920,7 +922,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', 86400,
                          ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                                'hourmin' =>22, 'hourmax'=>6,
-                               'comment'=>Toolbox::addslashes_deep(__('Delete agent that have not contacted the server since xxx days".', 'fusioninventory'))]);
+                               'comment'=>Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'fusioninventory'))]);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'cleanondemand')) {
       CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
@@ -1592,7 +1594,7 @@ function do_entities_migration($migration) {
          $DB->update(
             'glpi_plugin_fusioninventory_entities', [
                'agent_base_url' => $agent_base_url
-            ], []
+            ], [true]
          );
       }
    }
@@ -2719,25 +2721,27 @@ function do_computercomputer_migration($migration) {
 
    $a_table['fields']  = [];
    $a_table['fields']['id']                     = ['type'    => 'autoincrement',
-                                                        'value'   => ''];
+                                                   'value'   => ''];
    $a_table['fields']['computers_id']           = ['type'    => 'integer',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['operatingsystem_installationdate'] = ['type'    => 'datetime',
-                                                                  'value'   => null];
+                                                             'value'   => null];
    $a_table['fields']['winowner']               = ['type'    => 'string',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['wincompany']             = ['type'    => 'string',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['last_fusioninventory_update']     = ['type'    => 'datetime',
-                                                                 'value'   => null];
+                                                            'value'   => null];
    $a_table['fields']['remote_addr']            = ['type'    => 'string',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['serialized_inventory']   = ['type'    => 'longblob',
-                                                        'value'   => null];
+                                                   'value'   => null];
    $a_table['fields']['is_entitylocked']        = ['type'    => 'bool',
-                                                        'value'   => "0"];
+                                                   'value'   => "0"];
    $a_table['fields']['oscomment']              = ['type'    => 'text',
-                                                        'value'   => null];
+                                                   'value'   => null];
+   $a_table['fields']['last_boot']              = ['type'    => 'datetime',
+                                                   'value'   => null];
 
    $a_table['oldfields']  = [
       'plugin_fusioninventory_computerarchs_id',
@@ -4079,7 +4083,7 @@ function do_printer_migration($migration) {
       * Modify displaypreference for PluginFusioninventoryPrinterLog
       */
       $pfPrinterLogReport = new PluginFusioninventoryPrinterLog();
-      $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
+      $a_searchoptions = $pfPrinterLogReport->rawSearchOptions();
       $iterator2 = $DB->request([
          'FROM'   => 'glpi_displaypreferences',
          'WHERE'  => [
@@ -4087,7 +4091,7 @@ function do_printer_migration($migration) {
             'users_id'  => 0
          ]
       ]);
-      if (!count($iterator)) {
+      if (!count($iterator2)) {
          if ($stmt === null) {
             $insert = $DB->buildInsert(
                'glpi_displaypreferences', [
@@ -4117,8 +4121,15 @@ function do_printer_migration($migration) {
             $stmt->execute();
          }
       } else {
-         while ($data=$DB->fetch_array($result)) {
-            if (!isset($a_searchoptions[$data['num']])) {
+         while ($data = $iterator2->next()) {
+            $delete = true;
+            foreach ($a_searchoptions as $searchoption) {
+               if ($searchoption['id'] == $data['num']) {
+                  $delete = false;
+                  continue;
+               }
+            }
+            if ($delete) {
                $DB->delete(
                   'glpi_displaypreferences', [
                      'id'  => $data['id']
@@ -4560,7 +4571,9 @@ function do_networkequipment_migration($migration) {
    if (count($iterator)) {
       $update = $DB->buildUpdate(
          'glpi_networkequipments', [
-            'id'  => new \QueryParam()
+            'is_dynamic'   => 1
+         ], [
+            'id'           => new \QueryParam()
          ]
       );
       $stmt = $DB->prepare($update);
@@ -6846,7 +6859,7 @@ function doDynamicDataSearchParamsMigration() {
    ]);
 
    if (count($iterator)) {
-      $update = $DB->update(
+      $update = $DB->buildUpdate(
          'glpi_plugin_fusioninventory_deploygroups_dynamicdatas', [
             'fields_array' => new \QueryParam()
          ], [

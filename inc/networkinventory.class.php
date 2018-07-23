@@ -421,10 +421,10 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   }
                }
             }
-         } /*
-          * Case : dynamic agent
-          */
-         else if (strstr($pfTaskjob->fields['action'], '".1"')) {
+         } else if (strstr($pfTaskjob->fields['action'], '".1"')) {
+            /*
+             * Case : dynamic agent
+             */
             $a_agentList = $this->getAgentsSubnet($count_device, $communication);
          }
          /*

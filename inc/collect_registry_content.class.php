@@ -33,26 +33,13 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Manage the registry keys found by the collect module of agent.
  */
-class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
+class PluginFusioninventoryCollect_Registry_Content
+   extends PluginFusioninventoryCollectContentCommon {
 
-   /**
-    * The right name for this class
-    *
-    * @var string
-    */
-   static $rightname = 'plugin_fusioninventory_collect';
+   public $collect_itemtype = 'PluginFusioninventoryCollect_Registry';
+   public $collect_table    = 'glpi_plugin_fusioninventory_collects_registries';
 
-
-   /**
-    * Get name of this type by language of the user connected
-    *
-    * @param integer $nb number of elements
-    * @return string name of this type
-    */
-   static function getTypeName($nb = 0) {
-      return __('Windows registry content', 'fusioninventory');
-   }
-
+   public $type = 'registry';
 
    /**
     * Get the tab name used for item
@@ -80,35 +67,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
          }
       }
       return '';
-   }
-
-
-   /**
-    * Display the content of the tab
-    *
-    * @param object $item
-    * @param integer $tabnum number of the tab to display
-    * @param integer $withtemplate 1 if is a template form
-    * @return boolean
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry_Content();
-      if (get_class($item) == 'PluginFusioninventoryCollect') {
-         $pfCollect_Registry->showForCollect($item->getID());
-      }
-      return true;
-   }
-
-
-   /**
-    * Delete all registriies contents linked to the computer (most cases when delete a
-    * computer)
-    *
-    * @param integer $computers_id
-    */
-   static function cleanComputer($computers_id) {
-      $registry_content = new self();
-      $registry_content->deleteByCriteria(['computers_id' => $computers_id]);
    }
 
 
@@ -170,22 +128,6 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       }
    }
 
-
-   /**
-    * Display registries keys related with collect id
-    *
-    * @param integer $collects_id id of collect
-    */
-   function showForCollect($collects_id) {
-
-      $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries',
-                                              "`plugin_fusioninventory_collects_id`='".$collects_id."'");
-      foreach ($a_colregs as $data) {
-         $this->showForCollectRegistry($data['id']);
-      }
-   }
-
-
    /**
     * Show registries keys of the computer
     *
@@ -238,7 +180,7 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
     *
     * @param integer $collects_registries_id
     */
-   function showForCollectRegistry($collects_registries_id) {
+   function showContent($collects_registries_id) {
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
       $computer = new Computer();
 

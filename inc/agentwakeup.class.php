@@ -167,7 +167,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
             'glpi_plugin_fusioninventory_tasks', [
                'last_agent_wakeup' => $_SESSION['glpi_currenttime']
             ], [
-               'id' => [$tasks]
+               'id' => $tasks
             ]
          );
 

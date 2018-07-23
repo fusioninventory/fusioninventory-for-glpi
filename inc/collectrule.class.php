@@ -100,7 +100,7 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules-collect",
-         "execute actions, data:\n". print_r($output, TRUE). "\n" . print_r($params, TRUE)
+         "execute actions, data:\n". print_r($output, true). "\n" . print_r($params, true)
       );
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -260,7 +260,7 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['otherserial']['force_actions'] = ['assign', 'regex_result'];
 
       $actions['comment']['name']  = _n('Comment', 'Comments', 2);
-      $actions['comment']['force_actions'] = array('assign', 'regex_result');
+      $actions['comment']['force_actions'] = ['assign', 'regex_result'];
 
       return $actions;
    }

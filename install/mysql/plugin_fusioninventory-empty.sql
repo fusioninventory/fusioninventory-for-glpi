@@ -412,6 +412,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
   `oscomment` text DEFAULT NULL,
   `hostid` varchar(255) DEFAULT NULL,
+  `last_boot` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)

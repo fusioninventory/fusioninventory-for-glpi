@@ -82,6 +82,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date,
+              'last_boot'                       => 'NULL',
               'oscomment'                       => 'amd64/-1-11-30 22:04:44',
               'items_operatingsystems_id'       => [
                 'operatingsystems_id'              => 'freebsd',
@@ -176,6 +177,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date,
+              'last_boot'                       => 'NULL',
               'items_operatingsystems_id' => [
                   'operatingsystems_id'              => '',
                   'operatingsystemversions_id'       => '',
@@ -278,6 +280,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
               'last_fusioninventory_update'              => $date,
+              'last_boot'                                => 'NULL',
               'oscomment'                                => '',
               'items_operatingsystems_id' => [
                   'operatingsystems_id'              => 'Windows',
@@ -989,6 +992,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date,
+              'last_boot'                       => 'NULL',
               'oscomment'                       => '',
               'items_operatingsystems_id' => [
                   'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
@@ -1309,6 +1313,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => 'NULL',
               'last_fusioninventory_update'              => $date,
+              'last_boot'                                => 'NULL',
               'oscomment'                                => '',
               'items_operatingsystems_id' => [
                   'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
@@ -1424,6 +1429,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => 'NULL',
               'last_fusioninventory_update'              => $date,
+              'last_boot'                                => 'NULL',
               'oscomment'                                => '',
               'items_operatingsystems_id'                => [
                   'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
@@ -1933,6 +1939,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
               'wincompany'                               => 'siprossii',
               'operatingsystem_installationdate'         => 'NULL',
               'last_fusioninventory_update'              => $date,
+              'last_boot'                                => 'NULL',
               'oscomment'                                => '',
               'items_operatingsystems_id'                => [
                   'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',

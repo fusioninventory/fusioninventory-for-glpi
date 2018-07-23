@@ -2,7 +2,7 @@ language: php
 
 env:
   global:
-    - GLPI=9.3/bugfixes
+    - GLPI=master
     - DB=mysql
 
 cache:
@@ -62,13 +62,7 @@ before_script:
   - php -S localhost:8088 -t glpi > /dev/null 2>&1 &
 
 script:
+ - composer install
  - mysql -u root -e 'select version();'
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
-
-after_script:
- - cp -fr build glpi/plugins/fusioninventory/
- - cd glpi/plugins/fusioninventory/
- - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require satooshi/php-coveralls; fi
- - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/coveralls -v; fi
- - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then php vendor/bin/robo --no-interaction code:cs; fi
-
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then cd glpi/plugins/fusioninventory && composer install && php vendor/bin/robo --no-interaction code:cs; fi

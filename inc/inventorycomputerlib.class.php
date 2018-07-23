@@ -2593,10 +2593,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             }
          }
 
-         if (count($a_inventory['software']) == 0
-            && count($db_software) == 0) {
-            // Nothing to do
-         } else {
+         if (count($a_inventory['software']) > 0
+            || count($db_software) > 0) {
             if (count($db_software) > 0) {
                // Delete softwares in DB
                foreach ($db_software as $idtmp) {

@@ -72,9 +72,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          // Get the count of matching items
          $count = self::getMatchingItemsCount($item);
          if ($_SESSION['glpishow_count_on_tabs']) {
-            $tabs[2] = self::createTabEntry(_n('Associated item','Associated items', $count), $count);
+            $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);
          } else {
-            $tabs[2] = _n('Associated item','Associated items', $count);
+            $tabs[2] = _n('Associated item', 'Associated items', $count);
          }
          return $tabs;
       }
@@ -95,7 +95,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    function getMatchingItemsCount(CommonGLPI $item) {
       // Save pagination parameters
       $pagination_params = [];
-      foreach (array('sort', 'order', 'start') as $field) {
+      foreach (['sort', 'order', 'start'] as $field) {
          if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
             $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
          }
@@ -141,7 +141,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          case 2:
             // Save pagination parameters
             $pagination_params = [];
-            foreach (array('sort', 'order', 'start') as $field) {
+            foreach (['sort', 'order', 'start'] as $field) {
                if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
                   $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
                }
@@ -156,7 +156,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
                $params['metacriteria'] = [];
             }
             $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
-            self::showList('PluginFusioninventoryComputer', $params, array('1', '2'));
+            self::showList('PluginFusioninventoryComputer', $params, ['1', '2']);
             return true;
 
       }
@@ -173,7 +173,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
       // Save pagination parameters
       $pagination_params = [];
-      foreach (array('sort', 'order', 'start') as $field) {
+      foreach (['sort', 'order', 'start'] as $field) {
          if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field])) {
             $pagination_params[$field] = $_SESSION['glpisearch']['PluginFusioninventoryComputer'][$field];
          }

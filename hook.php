@@ -168,6 +168,13 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5181]['joinparams']  = ['jointype' => 'child'];
       $sopt[5181]['massiveaction'] = false;
 
+      $sopt[5182]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
+      $sopt[5182]['field']     = 'last_boot';
+      $sopt[5182]['name']      = __('FusInv', 'fusioninventory')." - ".__('Last boot', 'fusioninventory');
+      $sopt[5182]['joinparams']  = ['jointype' => 'child'];
+      $sopt[5182]['datatype']  = 'datetime';
+      $sopt[5182]['massiveaction'] = false;
+
    }
 
    if ($itemtype == 'Computer') {
@@ -2333,4 +2340,29 @@ function plugin_fusioninventory_preshowtab($params) {
             break;
       }
    }
+}
+
+/**
+ * Code for export dynamic groups in CSV / PDF with all columns defined in view (global / personal)
+ *
+ * @param array $params
+ * @return boolean
+ */
+function plugin_fusioninventory_dynamicReport($params) {
+   switch ($params['item_type']) {
+      case "PluginFusioninventoryComputer";
+         if ($url = parse_url($_SERVER['HTTP_REFERER'])) {
+            $params = Search::manageParams($_GET["item_type"], $_GET);
+
+            $data = Search::prepareDatasForSearch($params["item_type"], $params);
+            $data['itemtype'] = 'Computer';
+            Search::constructSQL($data);
+            Search::constructDatas($data);
+            Search::displayDatas($data);
+
+            return true;
+         }
+         break;
+   }
+   return false;
 }
