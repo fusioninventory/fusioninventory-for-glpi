@@ -74,7 +74,7 @@ class PluginFusioninventoryComputer extends Computer {
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {
          if ($plugin->isActivated('fields')) {
-            $options += [
+            $tab += [
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
             ];
