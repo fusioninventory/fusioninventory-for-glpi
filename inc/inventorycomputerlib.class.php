@@ -1569,12 +1569,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          if ($a_networkport['gateway'] != ''
                  && $a_networkport['netmask'] != ''
                  && $a_networkport['subnet']  != '') {
-
             if (countElementsInTable('glpi_ipnetworks',
-                                     "`address`='".$a_networkport['subnet']."'
-                                     AND `netmask`='".$a_networkport['netmask']."'
-                                     AND `gateway`='".$a_networkport['gateway']."'
-                                     AND `entities_id`='".$_SESSION["plugin_fusioninventory_entity"]."'") == 0) {
+                  [
+                     'address'     => $a_networkport['subnet'],
+                     'netmask'     => $a_networkport['netmask'],
+                     'gateway'     => $a_networkport['gateway'],
+                     'entities_id' => $_SESSION["plugin_fusioninventory_entity"],
+                  ]) == 0) {
 
                $input_ipanetwork = [
                    'name'    => $a_networkport['subnet'].'/'.

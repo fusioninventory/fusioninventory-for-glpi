@@ -139,11 +139,13 @@ class UpdateTest extends RestoreDatabase_TestCase {
          return;
       }
 
-      $cnt_old = countElementsInTable("glpi_rules", "`sub_type`='PluginFusinvinventoryRuleEntity'");
+      $cnt_old = countElementsInTable("glpi_rules",
+         ['sub_type' => 'PluginFusinvinventoryRuleEntity']);
 
       $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
 
-      $cnt_new = countElementsInTable("glpi_rules", "`sub_type`='PluginFusioninventoryInventoryRuleEntity'");
+      $cnt_new = countElementsInTable("glpi_rules",
+         ['sub_type' => 'PluginFusioninventoryInventoryRuleEntity']);
 
       $this->assertEquals($nbrules, $cnt_new, "May have ".$nbrules." entity rules");
 
@@ -155,7 +157,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
-                                        "`type`='states_id_default'");
+         ['type' => 'states_id_default']);
 
       $this->assertEquals(1, count($a_configs), "May have conf states_id_default");
 

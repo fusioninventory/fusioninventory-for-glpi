@@ -123,15 +123,16 @@ class PluginFusioninventoryCommunicationRest {
                   $taskname = $method['task'];
                }
                $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($method['module']);
-
                if ((isset($method['task']) && strtolower($method['task']) == strtolower($task))
                   && (isset($method['use_rest']) && $method['use_rest'])
                   && method_exists($class, self::getMethodForParameters($task))
                   && $pfAgentModule->isAgentCanDo($taskname, $a_agent['id'])
                   && countElementsInTable('glpi_plugin_fusioninventory_taskjobstates',
-                          "`plugin_fusioninventory_agents_id`='".$a_agent['id']."' "
-                          . " AND `itemtype`='".$classname."'"
-                          . " AND `state`='0'") > 0) {
+                     [
+                        'plugin_fusioninventory_agents_id' => $a_agent['id'],
+                        'itemtype'                         => $classname,
+                        'state'                            => 0,
+                     ]) > 0) {
                   /*
                    * Since migration, there is only one plugin in one directory
                    * It's maybe time to redo this function -- kiniou

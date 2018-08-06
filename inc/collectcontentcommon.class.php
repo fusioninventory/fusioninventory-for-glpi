@@ -122,14 +122,14 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
             case 'PluginFusioninventoryCollect':
                if ($item->fields['type'] == $this->type) {
                   $a_colfiles = getAllDatasFromTable($collect::getTable(),
-                                                    "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
+                     ['plugin_fusioninventory_collects_id' => $item->getID()]);
                   if (count($a_colfiles) == 0) {
                      return '';
                   }
                   $in = array_keys($a_colfiles);
                   $fk = getForeignKeyFieldForItemType($collect);
                   if ($nb = countElementsInTable($this->getTable(),
-                                   "`$fk` IN ('".implode("','", $in)."')") > 0) {
+                        [$fk => $in]) > 0) {
                      return self::createTabEntry($collect::getTypeName(Session::getPluralNumber()), $nb);
                   }
                }

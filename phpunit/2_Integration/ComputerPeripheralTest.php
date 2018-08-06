@@ -242,7 +242,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
 
-      $data = getAllDatasFromTable('glpi_logs', "`id`>'".$last_id."'");
+      $data = getAllDatasFromTable('glpi_logs', ['id' => ['>', $last_id]]);
       $this->assertEquals([], $data, 'On update peripherals, may not have new lines in glpi_logs');
 
    }

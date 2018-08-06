@@ -52,7 +52,7 @@ $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
 if (isset ($_POST["add"])) {
 
    $a_data = current(getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
-                                 "`plugin_fusioninventory_ipranges_id`='".$_POST['plugin_fusioninventory_ipranges_id']."'",
+                                 ['plugin_fusioninventory_ipranges_id' => $_POST['plugin_fusioninventory_ipranges_id']],
                                  false,
                                  '`rank` DESC'));
    $_POST['rank'] = 1;

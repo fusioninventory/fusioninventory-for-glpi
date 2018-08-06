@@ -123,8 +123,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       if (isset($a_CONTENT['AGENT']['END'])) {
          $cnt = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
-                                       "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
-                          . " AND `comment` LIKE '%[==detail==] Update %'");
+            [
+               'plugin_fusioninventory_taskjobstates_id' => $a_CONTENT['PROCESSNUMBER'],
+               'comment'                                 => ["LIKE", '%[==detail==] Update %'],
+            ]);
 
           $pfTaskjobstate->changeStatusFinish(
                   $a_CONTENT['PROCESSNUMBER'],

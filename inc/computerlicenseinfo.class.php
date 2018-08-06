@@ -292,9 +292,11 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $computers_id
     */
    static function cleanLicense(Computer_SoftwareLicense $license) {
-      $sql = "`softwarelicenses_id`='".$license->fields['softwarelicenses_id']."'";
-      $sql.= " AND `computers_id`='".$license->fields['computers_id']."'";
-      $licenses = getAllDatasFromTable('glpi_plugin_fusioninventory_computerlicenseinfos', $sql);
+      $licenses = getAllDatasFromTable('glpi_plugin_fusioninventory_computerlicenseinfos',
+         [
+            'softwarelicenses_id' => $license->fields['softwarelicenses_id'],
+            'computers_id'        => $license->fields['computers_id'],
+         ]);
       if (!empty($licenses)) {
          $lic = current($licenses);
          $pfLicenseInfo = new self();
