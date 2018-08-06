@@ -184,7 +184,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer');
       $this->assertEquals(1,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
+                          countElementsInTable('glpi_computers_items', ['itemtype' => 'Monitor']),
                           'First computer (links)');
 
       // Second try (verify not create a second same monitor)
@@ -198,7 +198,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (2)');
       $this->assertEquals(1,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
+                          countElementsInTable('glpi_computers_items', ['itemtype' => 'Monitor']),
                           'First computer (links) (2)');
 
       // Second computer with same monitor
@@ -214,7 +214,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'Second computer');
       $this->assertEquals(1,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
+                          countElementsInTable('glpi_computers_items', ['itemtype' => 'Monitor']),
                           'Second computer (links)');
 
       // Retry first computer without monitor
@@ -230,7 +230,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (3)');
       $this->assertEquals(1,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
+                          countElementsInTable('glpi_computers_items', ['itemtype' => 'Monitor']),
                           'First computer (links) (3)');
 
       // * Retry first computer with monitor
@@ -245,11 +245,11 @@ class ComputerMonitor extends Common_TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (4)');
       $this->assertEquals(1,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
+                          countElementsInTable('glpi_computers_items', ['itemtype'=> 'Monitor']),
                           'First computer (links) (4)');
 
       $this->assertEquals(0,
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'),
+                          countElementsInTable('glpi_computers_items', ['itemtype' => 'Monitor', 'id' => ['>', 3]]),
                           'First computer (number id of links recreated) (4)');
    }
 

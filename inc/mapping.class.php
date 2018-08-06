@@ -83,8 +83,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       global $DB;
 
       $data = current(getAllDatasFromTable("glpi_plugin_fusioninventory_mappings",
-                                   "`itemtype`='".$parm['itemtype']."' AND `name`='".
-                                   $parm['name']."'"));
+         ['itemtype' => $parm['itemtype'], 'name' => $parm['name']]));
       if (empty($data)) {
          // Insert
          $values = [

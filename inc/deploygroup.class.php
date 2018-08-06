@@ -253,9 +253,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
                foreach ($ids as $id) {
                   if (!countElementsInTable($group_item->getTable(),
-                                            "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
-                                               AND `itemtype`='Computer'
-                                               AND `items_id`='$id'")) {
+                     [
+                        'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                        'itemtype'                               => 'Computer',
+                        'items_id'                               => $id,
+                     ])) {
                      $values = [
                           'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
                           'itemtype' => 'Computer',

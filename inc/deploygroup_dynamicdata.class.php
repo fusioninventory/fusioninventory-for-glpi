@@ -348,7 +348,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
       $ids  = false;
       $data = getAllDatasFromTable(self::getTable(),
-                                   "`plugin_fusioninventory_deploygroups_id` = '".$group->getID()."'");
+         ['plugin_fusioninventory_deploygroups_id' => $group->getID()]);
       if (count($data)) {
          $first = array_shift($data);
          $ids   = json_decode($first['computers_id_cache'], true);

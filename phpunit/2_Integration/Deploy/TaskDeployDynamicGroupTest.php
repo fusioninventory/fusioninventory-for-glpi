@@ -133,7 +133,7 @@ class TaskDeployDynamicGroup extends Common_TestCase {
       ];
       $pfTask->add($input);
 
-      $a_plugins = current(getAllDatasFromTable('glpi_plugins', '`directory`="fusioninventory"'));
+      $a_plugins = current(getAllDatasFromTable('glpi_plugins', ['directory' => 'fusioninventory']));
 
       $input = [
          'plugin_fusioninventory_tasks_id' => 1,

@@ -1549,12 +1549,12 @@ class PluginFusioninventoryFormatconvert {
       $is_software_recursive = 0;
 
       //Count the number of software dictionnary rules
-      $nb_RuleDictionnarySoftware
-                                 = countElementsInTable("glpi_rules",
-                                                ['sub_type'  => 'RuleDictionnarySoftware',
-                                                 'is_active' => 1
-                                                ]
-                                 );
+      $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules",
+         [
+            'sub_type'  => 'RuleDictionnarySoftware',
+            'is_active' => 1,
+         ]
+      );
       //Configuration says that software can be created in the computer's entity
       if ($entities_id_software < 0) {
          $entities_id_software = $entities_id;
@@ -1763,7 +1763,7 @@ class PluginFusioninventoryFormatconvert {
       $data_collect = [];
 
       $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
-                                         "`computers_id`='".$computers_id."'");
+         ['computers_id' => $computers_id]);
 
       foreach ($data_registries as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
@@ -1778,7 +1778,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents',
-                                         "`computers_id`='".$computers_id."'");
+         ['computers_id' => $computers_id]);
 
       foreach ($data_wmis as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
@@ -1793,7 +1793,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents',
-                                         "`computers_id`='".$computers_id."'");
+         ['computers_id' => $computers_id]);
 
       foreach ($data_files as $data) {
          $a_split = explode("/", $data['pathfile']);
