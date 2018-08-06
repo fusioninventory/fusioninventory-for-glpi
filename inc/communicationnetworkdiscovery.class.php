@@ -113,11 +113,15 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                    'Updated'     => 0
                ];
                $messages['Updated'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
-                                    "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
-                       . " AND `comment` LIKE '%==updatetheitem==%'");
+                  [
+                     'plugin_fusioninventory_taskjobstates_id' => $a_CONTENT['PROCESSNUMBER'],
+                     'comment'                                 => ['LIKE', '%==updatetheitem==%'],
+                  ]);
                $messages['Created'] = countElementsInTable('glpi_plugin_fusioninventory_taskjoblogs',
-                                    "`plugin_fusioninventory_taskjobstates_id`='".$a_CONTENT['PROCESSNUMBER']."' "
-                       . " AND `comment` LIKE '%==addtheitem==%'");
+                  [
+                     'plugin_fusioninventory_taskjobstates_id' => $a_CONTENT['PROCESSNUMBER'],
+                     'comment'                                 => ['LIKE', '%==addtheitem==%'],
+                  ]);
                $messages['Total Found'] = $messages['Updated'] + $messages['Created'];
 
                $message = __('Processed:', 'fusioninventory').$messages['Total Found'].' ';

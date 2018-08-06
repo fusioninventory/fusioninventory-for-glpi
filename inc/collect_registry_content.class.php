@@ -73,13 +73,13 @@ class PluginFusioninventoryCollect_Registry_Content
          if (get_class($item) == 'PluginFusioninventoryCollect') {
             if ($item->fields['type'] == 'registry') {
                $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries',
-                                                 "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
+                                                 ['plugin_fusioninventory_collects_id' => $item->getID()]);
                if (count($a_colregs) == 0) {
                   return '';
                }
                $in = array_keys($a_colregs);
                if (countElementsInTable('glpi_plugin_fusioninventory_collects_registries_contents',
-                                "`plugin_fusioninventory_collects_registries_id` IN ('".implode("','", $in)."')") > 0) {
+                     ['plugin_fusioninventory_collects_registries_id' => $in]) > 0) {
                   return __('Windows registry content', 'fusioninventory');
                }
             }

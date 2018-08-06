@@ -372,7 +372,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    function post_purgeItem() {
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
       $a_data = getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
-                                     "`plugin_fusioninventory_ipranges_id`='".$this->fields['id']."'");
+         ['plugin_fusioninventory_ipranges_id' => $this->fields['id']]);
       foreach ($a_data as $data) {
          $pfIPRange_ConfigSecurity->delete($data);
       }

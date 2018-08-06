@@ -750,7 +750,7 @@ class PluginFusioninventoryToolbox {
       }
       if ($table) {
          return $item->isDynamic()
-            && countElementsInTable($table, "`$fk`='".$item->getID()."'");
+            && countElementsInTable($table, [$fk => $item->getID()]);
       } else {
          return 0;
       }

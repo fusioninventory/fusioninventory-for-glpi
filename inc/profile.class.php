@@ -432,7 +432,7 @@ class PluginFusioninventoryProfile extends Profile {
       $profileRight = new ProfileRight();
       foreach ($rights as $right => $value) {
          if (!countElementsInTable('glpi_profilerights',
-                                   "`profiles_id`='$profiles_id' AND `name`='$right'")) {
+            ['profiles_id' => $profiles_id, 'name' => $right])) {
             $myright['profiles_id'] = $profiles_id;
             $myright['name']        = $right;
             $myright['rights']      = $value;
@@ -538,9 +538,9 @@ class PluginFusioninventoryProfile extends Profile {
       $pfProfile = new self();
       $profile   = new Profile();
       $a_rights  = $pfProfile->getAllRights();
-
       foreach ($a_rights as $data) {
-         if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
+         if (countElementsInTable("glpi_profilerights",
+               ['name' => $data['field']]) == 0) {
             ProfileRight::addProfileRights([$data['field']]);
             $_SESSION['glpiactiveprofile'][$data['field']] = 0;
          }

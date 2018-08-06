@@ -80,10 +80,11 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @return integer
     */
    static function countForItem(CommonDBTM $item) {
-
       return countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
-                                  "`itemtype` = '".$item->getType()."'
-                                   AND `items_id` ='".$item->getField('id')."'");
+         [
+            'itemtype' => $item->getType(),
+            'items_id' => $item->getField('id'),
+         ]);
    }
 
 

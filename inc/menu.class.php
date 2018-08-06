@@ -800,8 +800,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       // All Computers
-      $allComputers    = countElementsInTableForMyEntities('glpi_computers',
-                                              "`is_deleted`='0' AND `is_template`='0'");
+      $allComputers = countElementsInTableForMyEntities('glpi_computers',
+         ['is_deleted' => '0', 'is_template' => '0']);
 
       $dataComputer = [];
       $dataComputer[] = [

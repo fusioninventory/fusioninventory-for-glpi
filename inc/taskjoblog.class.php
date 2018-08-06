@@ -684,7 +684,7 @@ function appear_array(id) {
     */
    static function getByUniqID($uuid) {
       $a_datas = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstates',
-                                      "`uniqid`='$uuid'",
+                                      ['uniqid' => $uuid],
                                       "1");
       foreach ($a_datas as $a_data) {
          return $a_data;

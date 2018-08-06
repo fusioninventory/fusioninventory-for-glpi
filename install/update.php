@@ -612,7 +612,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    if ($deploy_on_demand) {
       $task = new PluginFusioninventoryTask();
       foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_tasks',
-                                    "`name` LIKE '%[self-deploy]%'") as $tsk) {
+         ['name' => ['LIKE', '%[self-deploy]%']]) as $tsk) {
          $task->update(['id' => $tsk['id'], 'is_deploy_on_demand' => 1]);
       }
    }
@@ -1576,10 +1576,9 @@ function do_entities_migration($migration) {
    $a_table['oldkeys'] = [];
 
    migrateTablesFusionInventory($migration, $a_table);
-
    if (countElementsInTable($a_table['name']) == 0) {
       $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
-                                        "`type`='transfers_id_auto'");
+         ['type' => 'transfers_id_auto']);
       $transfers_id_auto = 0;
       if (count($a_configs) > 0) {
          $a_config = current($a_configs);
@@ -1587,7 +1586,7 @@ function do_entities_migration($migration) {
       }
 
       $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
-                                        "`type`='agent_base_url'");
+         ['type' => 'agent_base_url']);
       $agent_base_url = '';
       if (count($a_configs) > 0) {
          $a_config = current($a_configs);
@@ -1603,7 +1602,7 @@ function do_entities_migration($migration) {
       );
    } else if (countElementsInTable($a_table['name']) > 0) {
       $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
-                                        "`type`='agent_base_url'");
+         ['type' => 'agent_base_url']);
       $agent_base_url = '';
       if (count($a_configs) > 0) {
          $a_config = current($a_configs);
@@ -2792,7 +2791,8 @@ function do_computercomputer_migration($migration) {
                                                 "", 1));
          if (empty($a_pfcomputer)) {
             // Add
-            if (countElementsInTable("glpi_computers", "`id`='".$data['computers_id']."'") > 0) {
+            if (countElementsInTable("glpi_computers",
+                  ['id' => $data['computers_id']]) > 0) {
                $input = [];
                $input['computers_id'] = $data['computers_id'];
                $input['last_fusioninventory_update'] = $data['last_fusioninventory_update'];
@@ -5502,8 +5502,8 @@ function do_deploypackage_migration($migration) {
 
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/deploypackage.class.php");
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $installs = getAllDatasFromTable($order_table,
-              "`type`='0'");
+
+      $installs = getAllDatasFromTable($order_table, ['type' => '0']);
       foreach ($installs as $install) {
          $pfDeployPackage->getFromDB($install['plugin_fusioninventory_deploypackages_id']);
          $input = [
@@ -5513,12 +5513,13 @@ function do_deploypackage_migration($migration) {
          $pfDeployPackage->update($input);
       }
 
-      $uninstalls = getAllDatasFromTable($order_table,
-              "`type`='1'");
+      $uninstalls = getAllDatasFromTable($order_table, ['type' => '1']);
       foreach ($uninstalls as $uninstall) {
-         if (countElementsInTable($order_table, "`type`='0' "
-                 . " AND `plugin_fusioninventory_deploypackages_id`='".$uninstall['plugin_fusioninventory_deploypackages_id']."'"
-                 . " AND `json` != ''") > 0) {
+         if (countElementsInTable($order_table, [
+               'type'                                     => '0',
+               'plugin_fusioninventory_deploypackages_id' => $uninstall['plugin_fusioninventory_deploypackages_id'],
+               'json'                                     => ['!=', ''],
+            ]) > 0) {
             // have install and uninstall, so duplicate package
             $pfDeployPackage->getFromDB($uninstall['plugin_fusioninventory_deploypackages_id']);
             $input = $pfDeployPackage->fields;
@@ -6466,7 +6467,8 @@ function do_rule_migration($migration) {
       $pfSetup->initRules();
    }
    // If no rules, add them
-   if (countElementsInTable('glpi_rules', "`sub_type`='PluginFusioninventoryInventoryRuleImport'") == 0) {
+   if (countElementsInTable('glpi_rules',
+         ['sub_type' => 'PluginFusioninventoryInventoryRuleImport']) == 0) {
       $migration->displayMessage("Create rules");
       $pfSetup = new PluginFusioninventorySetup();
       $pfSetup->initRules();

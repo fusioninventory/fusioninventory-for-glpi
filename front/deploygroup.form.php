@@ -57,7 +57,7 @@ if (isset($_GET['plugin_fusioninventory_deploygroups_id'])) {
 if (isset($_GET['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(),
-                             "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'")) {
+                             ['plugin_fusioninventory_deploygroups_id' => $_GET['id']])) {
       $criteria  = ['criteria'     => $_GET['criteria'],
                          'metacriteria' => $_GET['metacriteria']];
       $values['fields_array'] = serialize($criteria);
@@ -65,7 +65,7 @@ if (isset($_GET['save'])) {
       $group_item->add($values);
    } else {
       $item = getAllDatasFromTable($group_item->getTable(),
-                                   "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'");
+                                   ['plugin_fusioninventory_deploygroups_id' => $_GET['id']]);
       $values                 = array_pop($item);
 
       $criteria = ['criteria'     => $_GET['criteria'],

@@ -349,7 +349,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $this->assertEquals('HP0BBBC4', $printer->fields['name'], 'Name must be updated');
 
       $a_printerextends = getAllDatasFromTable('glpi_plugin_fusioninventory_printers',
-         "`printers_id`='".$printers_id."'");
+         ['printers_id' => $printers_id]);
 
       $this->assertEquals('1', count($a_printerextends),
          'May have one printer extend line for this printer');
@@ -428,7 +428,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $this->assertEquals('HP0BBBC4new', $printer->fields['name'], 'Name must be updated');
 
       $a_printerextends = getAllDatasFromTable('glpi_plugin_fusioninventory_printers',
-         "`printers_id`='".$printers_id."'");
+         ['printers_id' => $printers_id]);
 
       $this->assertEquals('1', count($a_printerextends),
          'May have one printer extend line for this printer');

@@ -1242,7 +1242,7 @@ function new_subtype(id) {
 
       $a_taskjobs = getAllDatasFromTable(
               $this->getTable(),
-              "`plugin_fusioninventory_tasks_id`='".$tasks_id."'",
+              ['plugin_fusioninventory_tasks_id' => $tasks_id],
               false,
               '`ranking`');
       echo  "<div id='drag_taskjob_taskjobs'>";
