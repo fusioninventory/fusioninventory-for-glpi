@@ -23,8 +23,6 @@
   </filter>
   <testsuites>
     <testsuite name="Update">
-      <!-- First, install GLPI -->
-      <file>glpi/plugins/fusioninventory/phpunit/0_Install/GLPIInstallTest.php</file>
       <!-- Then, dump the GLPI install (for quicker setUp) -->
       <file>glpi/plugins/fusioninventory/phpunit/0_Install/SaveInstallTest.php</file>
       <!-- Finally, test update from various Fusioninventory version -->

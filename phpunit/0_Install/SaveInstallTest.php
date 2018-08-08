@@ -14,6 +14,7 @@ class SaveInstallTest extends PHPUnit_Framework_TestCase {
       }
 
       include_once (GLPI_ROOT . "/inc/based_config.php");
+      include_once (GLPI_ROOT . "/inc/define.php");
       include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
       include_once (GLPI_CONFIG_DIR . "/config_db.php");
       $DB = new DB();
