@@ -52,8 +52,11 @@ before_install:
  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
  - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
  - mysql -u root -e "FLUSH PRIVILEGES;"
- - echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > glpi/config/config_db.php
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
+ - pushd glpi
+ - php scripts/cliinstall.php --db=glpi --user=travis --pass=travis
+ - php scripts/cliupdate.php |grep -q "No migration needed." || (echo "scripts/cliupdate.php FAILED" && exit 1)
+ - popd
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
 
 before_script:
