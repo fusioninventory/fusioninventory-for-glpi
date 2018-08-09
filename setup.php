@@ -46,7 +46,10 @@
  */
 
 define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.3+1.1");
-
+// Minimal GLPI version, inclusive
+define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.4');
+// Maximum GLPI version, exclusive
+define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '9.5');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
@@ -485,8 +488,8 @@ function plugin_version_fusioninventory() {
            'homepage'       => 'https://github.com/fusioninventory/fusioninventory-for-glpi',
            'requirements'   => [
               'glpi' => [
-                 'min' => '9.4',
-                  'max' => '9.5',
+                  'min' => PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION,
+                  'max' => PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION,
                   'dev' => PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE == 0
                ],
                'php' => [
@@ -512,8 +515,8 @@ function plugin_fusioninventory_check_prerequisites() {
    global $DB;
 
    $version = rtrim(GLPI_VERSION, '-dev');
-   if (version_compare($version, '9.3', 'lt')) {
-      echo "This plugin requires GLPI 9.3";
+   if (version_compare($version, PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION, 'lt')) {
+      echo "This plugin requires GLPI " . PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION;
       return false;
    }
 
@@ -521,13 +524,16 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = [];
    }
 
-   if (version_compare(GLPI_VERSION, '9.4-dev', '!=')
-      && version_compare(GLPI_VERSION, '9.4', 'lt')
-      || version_compare(GLPI_VERSION, '9.5', 'ge')) {
+   if (version_compare(GLPI_VERSION, PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION.'-dev', '!=')
+      && version_compare(GLPI_VERSION, PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION, 'lt')
+      || version_compare(GLPI_VERSION, PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION, 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.4', '9.5');
+         echo Plugin::messageIncompatible('core', PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION, PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION);
       } else {
-         echo __('Your GLPI version not compatible, require >= 9.4 and < 9.5', 'fusioninventory');
+         // TRANS: %1$s is the minimum GLPI version inclusive, %2$s the maximum version exclusive
+         echo sprintf(__('Your GLPI version not compatible, require >= %1$s and < %2$s', 'fusioninventory'),
+         PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION,
+         PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION);
       }
       return false;
    }
