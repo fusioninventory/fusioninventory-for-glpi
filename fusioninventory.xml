@@ -17,6 +17,7 @@
       <short>
          <fr><![CDATA[FusionInventory est un projet libre dont les fonctionalités principales sont l'inventaire du matériel, le télédéploiement et la découverte réseau et complète la gestion de parc et le helpdesk de l'outil GLPI. "FusionInventory for GLPI" est composé d'une collection de plugins (extensions) qui dialoguent avec un agent installé sur les postes clients (FusionInventory-Agent)]]></fr>
          <en><![CDATA[FusionInventory is a free and open source project providing hardware, software inventory, software deployment and network discovery to the IT asset management and helpdesk software called GLPI. "FusionInventory for GLPI" is a collection of plugins communicating with some agents (FusionInventory-Agent), deployed on computers]]></en>
+         <cs><![CDATA[FusionInventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI. „FusionInventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (FusionInventory-Agent), nasazenými na počítačích]]></cs>
       </short>
       <long>
    <fr>
@@ -68,6 +69,30 @@
       4. Change history and reports for each network port.
       5. Printers cartridges' ink levels, daily page counters and reports.
       </en>
+      <cs>
+   FusionInventory je svobodný a opensource projekt, poskytující inventarizaci hardware a software, nasazování software a prozkoumávání sítě a to jako doplněk do software pro správu IT vybavení a technické podpory, zvaný GLPI.  
+   „FusionInventory pro GLPI“ je sadou zásuvných modulů komunikující s agenty (FusionInventory-Agent), nasazenými na počítačích
+   
+   - FusionInventory Core: poskytuje základní funkce:
+   
+      1. Komunikace s agenty pro inventarizaci a prozkoumávání sítě.
+      2. Správa úloh a plánování.
+      3. Probouzení po síti (WoL).
+      4. Centralizovaná pravidla pro import majetku do GLPI.
+      5. Správa neznámých zařízení (dočasná zóna, v GLPI, před skutečnou správou majetku).
+
+   - FusionInventory Inventory:
+      1. Inventura na počítačích (hardware, software, antivirus).
+      2. Zacházení s a aktualizace počítačů, které už jsou v GLPI.
+      
+   - FusionInventory SNMP:
+     
+      1. Prozkoumávání sítě, správa neznámých zařízení (pomocí zásuvného modulu FusionInventory core).
+      2. Vzdálená síťová zařízení a tiskárny (díky SNMP protokolu).
+      3. Získání informací o síťovém portu, VLAN sítích, propojení mezi síťovými porty přepínače a zařízeními, které už se nachází v GLPI (počítače, síťové tiskárny, síťová zařízení, atd.).
+      4. Historie změna a výkaz o každém ze síťových portů.
+      5. Stavy náplní v tiskárnách, denní čítače stránek a výkazy.
+      </cs>
       </long>
    </description>
    <homepage>http://fusioninventory.org/</homepage>
@@ -311,6 +336,7 @@
       </version>
    </versions>
    <langs>
+      <lang>cs_CZ</lang>
       <lang>fr_FR</lang>
       <lang>en_GB</lang>
       <lang>de_DE</lang>
@@ -352,6 +378,17 @@
             <tag>VMWare</tag>
             <tag>softwaredeployment</tag>
          </en>
+         <cs>
+            <tag>síť</tag>
+            <tag>SNMP</tag>
+            <tag>přepínače</tag>
+            <tag>tiskárny</tag>
+            <tag>inventury</tag>
+            <tag>udržovánípřehledu</tag>
+            <tag>Probouzeníposíti</tag>
+            <tag>VMWare</tag>
+            <tag>nasazenísoftware</tag>
+         </cs>
    </tags>
    <screenshots>
       <screenshot>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/screenshots/0.90-central.png</screenshot>
