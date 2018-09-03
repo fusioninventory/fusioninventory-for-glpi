@@ -33,33 +33,17 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
       }
 
       $sql_file = $glpisql === null ? "glpi-empty.sql" : "glpi-$glpisql-empty.sql";
-      $result = load_mysql_file(
-         $DBvars['dbuser'],
-         $DBvars['dbhost'],
-         $DBvars['dbdefault'],
-         $DBvars['dbpassword'],
-         GLPI_ROOT ."/install/mysql/$sql_file"
-      );
-
       $output = [];
       $returncode = 0;
       exec(
-         "php ".GLPI_ROOT. "/scripts/cliupdate.php --dev --force",
+         "php ".GLPI_ROOT. "/scripts/cliinstall.php --force --db={$DBvars['dbdefault']} --user={$DBvars['dbuser']} --pass={$DBvars['dbpassword']}",
          $output, $returncode
       );
       $this->assertEquals(0, $returncode,
-         "Error when update GLPI in CLI mode\n".
+         "Error when installing GLPI in CLI mode\n".
          implode("\n", $output)
       );
-
-      $this->assertEquals( 0, $result['returncode'],
-         "Failed to install GLPI database:\n".
-         implode("\n", $result['output'])
-      );
-
    }
-
-
 }
 
 
