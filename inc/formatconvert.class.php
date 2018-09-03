@@ -1416,11 +1416,23 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
                $array_tmp = $thisc->addValues($a_antiviruses,
                                              array(
-                                                'NAME'     => 'name',
-                                                'COMPANY'  => 'manufacturers_id',
-                                                'VERSION'  => 'antivirus_version',
-                                                'ENABLED'  => 'is_active',
-                                                'UPTODATE' => 'is_uptodate'));
+                                                'NAME'         => 'name',
+                                                'COMPANY'      => 'manufacturers_id',
+                                                'VERSION'      => 'antivirus_version',
+                                                'BASE_VERSION' => 'signature_version',
+                                                'ENABLED'      => 'is_active',
+                                                'UPTODATE'     => 'is_uptodate',
+                                                'EXPIRATION'   => 'date_expiration'));
+               //Check if the expiration date has the right format to be inserted in DB
+               if (isset($array_tmp['date_expiration'])) {
+                  $matches = array();
+                  preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_expiration'], $matches);
+                  if (count($matches) == 4) {
+                     $array_tmp['date_expiration'] = $matches[3]."-".$matches[1]."-".$matches[2];
+                  } else {
+                     unset($array_tmp['date_expiration']);
+                  }
+               }
                $a_inventory['antivirus'][] = $array_tmp;
             }
          }
