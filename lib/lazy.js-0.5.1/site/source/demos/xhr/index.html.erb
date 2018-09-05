@@ -1,0 +1,19 @@
+<% content_for(:head) do %>
+  <title>Lazy + HTTP</title>
+
+  <%= stylesheet_link_tag("demos/xhr") %>
+  <%= javascript_include_tag("lib/lazy.min") %>
+  <%= javascript_include_tag("demos/xhr") %>
+<% end %>
+
+<% content_for(:body) do %>
+  <p>
+    This demo uses <code>Lazy.makeHttpRequest</code> against
+    <a href="https://httpbin.org/">https://httpbin.org/drip</a> to show how
+    Lazy can turn an HTTP request into a sequence of chunks.
+  </p>
+
+  <div id="chunks"></div>
+
+  <p id="state">Iterating over drip response...</p>
+<% end %>
