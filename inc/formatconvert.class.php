@@ -1428,7 +1428,7 @@ class PluginFusioninventoryFormatconvert {
                   $matches = array();
                   preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_expiration'], $matches);
                   if (count($matches) == 4) {
-                     $array_tmp['date_expiration'] = $matches[3]."-".$matches[1]."-".$matches[2];
+                     $array_tmp['date_expiration'] = $matches[3]."-".$matches[2]."-".$matches[1];
                   } else {
                      unset($array_tmp['date_expiration']);
                   }
