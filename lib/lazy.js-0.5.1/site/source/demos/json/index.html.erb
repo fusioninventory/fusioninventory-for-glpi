@@ -1,0 +1,61 @@
+<% content_for(:head) do %>
+    <title>Lazy.js JSON Parsing Demo</title>
+    <%= stylesheet_link_tag("demos/json") %>
+    <%= javascript_include_tag("lib/lazy.min") %>
+    <%= javascript_include_tag("lib/lazy.json") %>
+    <%= javascript_include_tag("demos/json") %>
+<% end %>
+
+<% content_for(:body) do %>
+    <div id="input">
+        <header>
+            <h1>Lazy.js JSON Parsing Demo</h1>
+        </header>
+
+        <p>
+            Enter a big ol' blob of JSON data (arrays only) into the
+            <code>&lt;textarea&gt;</code> below and click <strong>Start</strong>.
+            <a href="http://danieltao.com/lazy.js/">Lazy.js</a> will parse as much
+            of the JSON as possible, asynchronously. <em>(Tip: try putting some
+            garbage in the middle to see how Lazy can parse the beginning even if
+            the overall string is invalid.)</em>
+        </p>
+
+        <p>
+            Click <strong>Cancel</strong> at any point to stop parsing.
+        </p>
+
+        <div>
+            <strong>Example valid JSON</strong>:<br />
+            <pre id="good-example-json"></pre>
+
+            <strong>Example <em>invalid</em> JSON</strong>:<br />
+            <pre id="bad-example-json"></pre>
+        </div>
+
+        <fieldset>
+            <legend>JSON</legend>
+            <textarea id="json"></textarea>
+        </fieldset>
+
+        <p>
+            Optionally, also transform the data:
+        </p>
+
+        <div>
+            <strong>Example</strong>:<br />
+            <pre>filter(function(data) { return typeof data === 'string'; })</pre>
+        </div>
+
+        <fieldset>
+            <legend>Transform</legend>
+            <textarea id="transform"></textarea>
+        </fieldset>
+
+        <button id="start">Start</button>
+        <button id="cancel">Cancel</button>
+    </div>
+
+    <div id="results"></div>
+    <div id="counter"></div>
+<% end %>

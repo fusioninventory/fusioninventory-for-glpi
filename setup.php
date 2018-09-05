@@ -291,7 +291,7 @@ function plugin_init_fusioninventory() {
          || script_endswith("iprange.form.php")) {
          array_push(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
-            "lib/lazy.js-0.4.0/lazy".($debug_mode?"":".min").".js",
+            "lib/lazy.js-0.5.1/lazy".($debug_mode?"":".min").".js",
             "lib/mustache.js-2.3.0/mustache".($debug_mode?"":".min").".js",
             "js/taskjobs".($debug_mode || !file_exists('js/taskjobs.min.js')?"":".min").".js"
          );
