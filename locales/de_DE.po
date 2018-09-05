@@ -54,6 +54,10 @@ msgstr "Anzahl Tage seit der letzten Inventarisierung"
 msgid "Last inventory"
 msgstr "Letzte Inventarisierung"
 
+#: inc/inventorycomputercomputer.class.php:295
+msgid "Last boot"
+msgstr "Letzter Systemstart"
+
 #: report/computer_last_inventory.php:69 setup.php:396
 msgid "Computers not inventoried since xx days"
 msgstr "Computer, welche seit xx Tagen nicht inventorisiert wurden"
@@ -579,7 +583,7 @@ msgstr "Informationen sammeln"
 #: inc/rulematchedlog.class.php:103 inc/rulematchedlog.class.php:111
 #: inc/rulematchedlog.class.php:117 inc/rulematchedlog.class.php:139
 msgid "Import information"
-msgstr "Omport-Information"
+msgstr "Import-Information"
 
 #: inc/rulematchedlog.class.php:249 inc/rulematchedlog.class.php:326
 msgid "Rule import logs"
