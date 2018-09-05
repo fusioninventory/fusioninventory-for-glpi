@@ -1,0 +1,63 @@
+<% content_for(:head) do %>
+    <title>Lazy.js ES6 Generators Demo</title>
+    <%= stylesheet_link_tag("lib/codemirror") %>
+    <%= stylesheet_link_tag("demos/generators") %>
+    <%= javascript_include_tag("lib/lazy.min") %>
+    <%= javascript_include_tag("lib/codemirror") %>
+    <%= javascript_include_tag("lib/codemirror/javascript") %>
+    <%= javascript_include_tag("lib/lemming") %>
+    <%= javascript_include_tag("demos/generators") %>
+<% end %>
+
+<% content_for(:body) do %>
+    <div>
+        <header>
+            <h1>Lazy.js ES6 Generators Demo</h1>
+        </header>
+
+        <p>
+            In the <code>&lt;textarea&gt;</code> on the left, define an ES6
+            generator. In the middle, you can wrap this generator using
+            <code>Lazy(generator)</code> and then <code>map</code>,
+            <code>filter</code>, etc. to your heart's content. The resulting
+            sequence will be evaluated and shown on the right.
+        </p>
+
+        <p class="important">
+            This demo requires a browser which supports
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">ES6 Generators</a>.
+        </p>
+
+        <p>
+            <small>Oh an by the way, in case you were wondering: this demo uses
+            <a href="https://github.com/dtao/lemming.js">lemming.js</a> to evaluate the code you
+            enter in the editors below. (And the editors use
+            <a href="http://codemirror.net">CodeMirror</a>.)</small>
+        </p>
+
+        <div id="workspace">
+            <div id="generator-wrapper">
+                <textarea id="generator">function generateRandoms(min, max) {
+  return function *randoms() {
+    while (true) {
+      yield min + Math.floor(Math.random() * (max - min));
+    };
+  };
+}
+</textarea>
+            </div>
+
+            <div id="sequence-wrapper">
+                <textarea id="sequence">// The numbers from 1-100 in random order
+Lazy(generateRandoms(1, 100))
+  .uniq()
+  .take(10);
+</textarea>
+            </div>
+
+            <div id="output-wrapper">
+                <textarea id="output"></textarea>
+            </div>
+        </div>
+    </div>
+<% end %>
