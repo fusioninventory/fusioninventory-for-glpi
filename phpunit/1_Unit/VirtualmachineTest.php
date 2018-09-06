@@ -48,6 +48,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
 
 
    function __construct() {
+      parent::__construct();
       $a_inventory = [
           'fusioninventorycomputer' => [
               'winowner'                        => 'test',

@@ -6,8 +6,9 @@ include_once (GLPI_ROOT . "/inc/based_config.php");
 include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
 include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
+use PHPUnit\Framework\TestCase;
 
-abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
+abstract class Common_TestCase extends TestCase {
 
 
    public function mark_incomplete($description = null) {

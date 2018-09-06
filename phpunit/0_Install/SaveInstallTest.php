@@ -1,6 +1,8 @@
 <?php
 
-class SaveInstallTest extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class SaveInstallTest extends TestCase {
 
 
    public function should_restore_install() {

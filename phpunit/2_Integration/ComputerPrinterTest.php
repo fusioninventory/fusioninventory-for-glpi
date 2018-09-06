@@ -48,6 +48,7 @@ class ComputerPrinter extends Common_TestCase {
 
 
    function __construct() {
+      parent::__construct();
       $this->a_computer1 = [
           "Computer" => [
               "name"   => "pc001",
