@@ -45,6 +45,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
    public $a_computer1_beforeformat = [];
 
    function __construct() {
+      parent::__construct();
       $this->a_computer1 = [
          "Computer" => [
             "name"   => "computer_simcard",

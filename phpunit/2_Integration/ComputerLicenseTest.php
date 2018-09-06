@@ -48,6 +48,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
     * Why do you define a constructor here while you can set this 2 variables up ahead ???
     */
    function __construct() {
+      parent::__construct();
       $this->a_computer1 = [
           "Computer" => [
               "name"   => "pc001",

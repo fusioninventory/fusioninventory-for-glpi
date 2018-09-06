@@ -45,6 +45,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
 
 
    function __construct() {
+      parent::__construct();
 
       $this->a_computer1_XML =
       "<REQUEST>

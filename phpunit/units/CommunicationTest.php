@@ -10,7 +10,9 @@ include_once (GLPI_ROOT . '/inc/toolbox.class.php');
 
 ob_start();
 
-class CommunicationTest extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class CommunicationTest extends TestCase {
 
    private $output = '<?xml version="1.0"?>
 <foo>

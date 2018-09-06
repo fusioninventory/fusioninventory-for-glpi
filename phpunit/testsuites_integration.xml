@@ -4,16 +4,12 @@
   bootstrap="bootstrap.php"
   processIsolation="false"
   backupGlobals="false"
-  strict="false"
   >
   <logging>
-    <log type="junit" target="../../../../build/logs/junit_integration.xml" logIncompleteSkipped="true" />
+    <log type="junit" target="../../../../build/logs/junit_integration.xml" />
   </logging>
   <!-- exclude relatively to ${basedir} -->
   <filter>
-    <blacklist>
-      <directory suffix=".php">glpi/*</directory>
-    </blacklist>
     <whitelist>
       <directory suffix=".php">glpi/plugins/fusioninventory/*</directory>
       <exclude>
@@ -23,7 +19,7 @@
   </filter>
   <testsuites>
     <testsuite name="Integration">
-      <directory suffix="Test.php">./2_Integration/</directory>
+      <directory suffix="Test.php">2_Integration/</directory>
     </testsuite>
   </testsuites>
 </phpunit>
