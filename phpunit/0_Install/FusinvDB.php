@@ -40,7 +40,9 @@
    ------------------------------------------------------------------------
  */
 
-class FusinvDB extends PHPUnit_Framework_Assert{
+use PHPUnit\Framework\Assert;
+
+class FusinvDB extends Assert{
 
 
    public function checkInstall($pluginname = '', $when = '') {
