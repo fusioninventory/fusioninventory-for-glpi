@@ -1451,7 +1451,7 @@ class PluginFusioninventoryFormatconvert {
                                                 'EXPIRATION'   => 'date_expiration']);
                //Check if the expiration date has the right format to be inserted in DB
                if (isset($array_tmp['date_expiration'])) {
-                  $matches = array();
+                  $matches = [];
                   preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_expiration'], $matches);
                   if (count($matches) == 4) {
                      $array_tmp['date_expiration'] = $matches[3]."-".$matches[2]."-".$matches[1];
