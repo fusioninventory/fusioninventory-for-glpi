@@ -1542,7 +1542,9 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                $names = json_decode($val);
                if ($names !== null && is_array($names)) {
                   $names = array_map(
-                     create_function('$a', 'return "\"".$a."\"";'),
+                     function ($a) {
+                        return "\"".$a."\"";
+                     },
                      $names
                   );
                   return $link." `$table`.`name` IN (".implode(',', $names) . ")";
