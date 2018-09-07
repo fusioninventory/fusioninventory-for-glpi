@@ -62,7 +62,7 @@ abstract class Common_TestCase extends TestCase {
 
       // Force profile in session to SuperAdmin
       $_SESSION['glpiprofiles'] = ['4' => ['entities' => 0]];
-      $_SESSION['glpi_plugin_fusioninventory_profile']['unmanaged'] = 'w';
+      $_SESSION['glpi_plugin_fusioninventory_profile']['unmanaged'] = ALLSTANDARDRIGHT;
       $_SESSION['glpiactiveentities'] = [0, 1];
       $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
       $_SESSION['glpilanguage'] = 'en_GB';
