@@ -169,7 +169,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $manufacturer     = new Manufacturer();
-      $manufacturers_id = $manufacturer->getFromDBByCrit(['name' => 'fusioninventory team']);
+      $manufacturer->getFromDBByCrit(['name' => 'fusioninventory team']);
+      $manufacturers_id = $manufacturer->fields['id'];
       $this->assertGreaterThan(0, $manufacturers_id);
 
       $a_reference = [];
@@ -184,7 +185,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'operatingsystems_id'   => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel',
-               'comp_key_noos'         => "fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0"
+               'comp_key_noos'         => "fusioninventory$$$$0.85+1.0$$$$".$manufacturers_id."$$$$0$$$$0",
+               'comment'               => ''
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -253,7 +255,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_reference = [];
       $a_reference['software']["glpi$$$$0.85$$$$".$manufacturer->getID()."$$$$0$$$$0"] = array(
                'name'                  => 'glpi',
-               'manufacturers_id'      => $manufacturer->getID(),
+               'manufacturers_id'      => (int)$manufacturer->getID(),
                'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -261,7 +263,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel',
-               'comp_key_noos'         => 'glpi$$$$0.85$$$$2$$$$0$$$$0'
+               'comp_key_noos'         => 'glpi$$$$0.85$$$$2$$$$0$$$$0',
+               'comment'               => ''
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -354,7 +357,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'devel',
-               'comp_key_noos' => 'glpi$$$$0.85$$$$2$$$$0$$$$0'
+               'comp_key_noos'         => 'glpi$$$$0.85$$$$2$$$$0$$$$0',
+               'comment'               => ''
             );
 
       $this->assertEquals($a_reference, $a_return);
@@ -410,7 +414,7 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
       $a_reference = [];
       $a_reference['software']["audacity 2.0.4$$$$2.0.4$$$$".$manufacturer->getID()."$$$$0$$$$0"] = array(
                'name'                  => 'Audacity 2.0.4',
-               'manufacturers_id'      => $manufacturer->getID(),
+               'manufacturers_id'      => (int)$manufacturer->getID(),
                'version'               => '2.0.4',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -419,14 +423,15 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'operatingsystems_id'   => 0,
                'date_install'          => '2013-10-16',
                '_system_category'      => 'application',
-               'comp_key_noos'         => 'audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0'
+               'comp_key_noos'         => 'audacity 2.0.4$$$$2.0.4$$$$3$$$$0$$$$0',
+               'comment'               => ''
             );
 
       $this->assertGreaterThan(0, $manufacturer->getFromDBByCrit(['name' => 'AutoIt Team']));
 
       $a_reference['software']["autoit v3.3.8.1$$$$$$$$".$manufacturer->getID()."$$$$0$$$$0"] = array(
                'name'                  => 'AutoIt v3.3.8.1',
-               'manufacturers_id'      => $manufacturer->getID(),
+               'manufacturers_id'      => (int)$manufacturer->getID(),
                'version'               => '',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
@@ -434,7 +439,8 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                'is_recursive'          => 0,
                'operatingsystems_id'   => 0,
                '_system_category'      => 'application',
-               'comp_key_noos'         => 'autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0'
+               'comp_key_noos'         => 'autoit v3.3.8.1$$$$$$$$4$$$$0$$$$0',
+               'comment'               => ''
       );
       $this->assertEquals($a_reference, $a_return);
    }
