@@ -1596,6 +1596,7 @@ class PluginFusioninventoryFormatconvert {
                                            'PUBLISHER'   => 'manufacturers_id',
                                            'NAME'        => 'name',
                                            'VERSION'     => 'version',
+                                        'COMMENTS'        => 'comment',
                                            'INSTALLDATE' => 'date_install',
                                            'SYSTEM_CATEGORY' => '_system_category']);
          if (!isset($array_tmp['name'])
