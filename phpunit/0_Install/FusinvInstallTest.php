@@ -95,9 +95,9 @@ class FusinvInstallTest extends Common_TestCase {
    function install($force = false) {
       $output     = [];
       $returncode = 0;
-      $command = "php -f ".FUSINV_ROOT. "/scripts/cli_install.php -- --as-user 'glpi'";
+      $command = "php -f ".FUSINV_ROOT. "/scripts/cli_install.php";
       if ($force) {
-         $command.= " --force-install";
+         $command.= " -- --as-user 'glpi' --force-install";
       }
       exec($command, $output, $returncode);
       $this->assertEquals(0, $returncode,
