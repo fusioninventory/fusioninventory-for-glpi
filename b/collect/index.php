@@ -49,7 +49,7 @@ ob_start();
 include ("../../../../inc/includes.php");
 ob_end_clean();
 
-$response = [];
+$response = new \stdClass();
 
 //Agent communication using REST protocol
 
@@ -102,7 +102,7 @@ switch (filter_input(INPUT_GET, "action")) {
                   ];
                   $pfTaskjoblog->add($a_input);
 
-                  if (count($order->jobs > 0)) {
+                  if (count($order->jobs) > 0) {
                      $response = $order;
                      // Inform agent we request POST method, agent will then submit result
                      // in POST request if it supports the method or it will continue with GET
@@ -132,7 +132,7 @@ switch (filter_input(INPUT_GET, "action")) {
          // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
          if (isset($_GET['method']) && $_GET['method'] == 'POST') {
              $a_values =  $_POST;
-             $response['token'] = Session::getNewCSRFToken();
+             $response->token = Session::getNewCSRFToken();
              unset($a_values['_glpi_csrf_token']);
          }
          $sid = isset($a_values['_sid'])?$a_values['_sid']:0;
@@ -218,8 +218,4 @@ switch (filter_input(INPUT_GET, "action")) {
          break;
 }
 
-if (count($response) > 0) {
-   echo json_encode($response);
-} else {
-   echo json_encode((object)[]);
-}
+echo json_encode($response);

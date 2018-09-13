@@ -286,6 +286,8 @@ class CollectsTest extends RestoreDatabase_TestCase {
 
       // Get jobs
       $result = file_get_contents("http://localhost:8088/plugins/fusioninventory/b/collect/index.php?action=getJobs&machineid=pc01");
+
+      $matches = [];
       preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
       $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_tm.'"},'
                                           . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":"'.$registry_fi.'"}],"postmethod":"POST","token":"'.$matches[1].'"}');
