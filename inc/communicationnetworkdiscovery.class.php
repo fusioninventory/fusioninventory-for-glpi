@@ -336,7 +336,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
-            $inputrulelog['method'] = 'netdiscovery';
+            $inputrulelog['method'] = 'networkdiscovery';
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
             unset($_SESSION['plugin_fusioninventory_rules_id']);
@@ -731,7 +731,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @return string
     */
    static function getMethod() {
-      return 'netdiscovery';
+      return 'networkdiscovery';
    }
 
 

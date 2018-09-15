@@ -2680,6 +2680,9 @@ function do_rulematchedlog_migration($migration) {
    $migration->addField($newTable,
                               "method",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+   $migration->addField($newTable,
+                           "criteria",
+                           'text COLLATE utf8_unicode_ci DEFAULT NULL');
    $migration->migrationOneTable($newTable);
    $DB->list_fields($newTable, false);
 }
