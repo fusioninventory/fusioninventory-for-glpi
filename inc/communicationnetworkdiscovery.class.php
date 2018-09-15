@@ -730,7 +730,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @return string
     */
    static function getMethod() {
-      return 'netdiscovery';
+      return 'networkdiscovery';
    }
 
 

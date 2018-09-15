@@ -340,6 +340,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
    `rules_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `criteria` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

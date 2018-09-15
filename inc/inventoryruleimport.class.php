@@ -954,6 +954,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                            if (!isset($params['return'])) {
                               $inputrulelog['items_id'] = $items_id;
                               $inputrulelog['itemtype'] = $itemtype;
+                              $critinput = $this->criteriaInput;
+                              if (isset($critinput['class'])) {
+                                 unset($critinput['class']);
+                              }
+                              $inputrulelog['criteria'] = exportArrayToDB($critinput);
                               $pfRulematchedlog->add($inputrulelog);
                               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                               $class->rulepassed($items_id, $itemtype, $this->criterias_results['found_port']);
@@ -1283,4 +1288,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       ksort($types);
       return $types;
    }
+
+   function prepareInputDataForProcess($input, $params) {
+      $this->criteriaInput = $input;
+      return $input;
+   }
+
 }

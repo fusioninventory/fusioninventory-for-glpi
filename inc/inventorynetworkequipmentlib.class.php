@@ -417,6 +417,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       // Entity?
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input_crit);
 
       // * Reload rules (required for unit tests)
       $rule->getCollectionPart();
@@ -461,6 +462,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       // Pass all MAC addresses in the import rules
       foreach ($a_portconnection as $ifmac) {
          $this->data_device = ['mac' => $ifmac];
+         $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize(['mac' => $ifmac]);
          $data = $rule->processAllRules(['mac' => $ifmac], [], ['class'=>$this]);
       }
       $list_all_ports_found = [];
@@ -716,6 +718,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          $itemtype = "PluginFusioninventoryUnmanaged";
       }
       $class = new $itemtype;
+      $dbu   = new DbUtils();
       if ($items_id == "0") {
          // create the device
          $input = $this->data_device;
@@ -727,6 +730,24 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
             $input['name'] = $manufacturer;
          }
          $items_id = $class->add($input);
+
+         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            $inputrulelog = [];
+            $inputrulelog['date'] = date('Y-m-d H:i:s');
+            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+               $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+            }
+            $inputrulelog['items_id'] = $items_id;
+            $inputrulelog['itemtype'] = $itemtype;
+            $inputrulelog['method'] = 'networkinventory';
+            $inputrulelog['criteria'] = $dbu->exportArrayToDB(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']));
+            $pfRulematchedlog->add($inputrulelog);
+            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+            unset($_SESSION['plugin_fusioninventory_rules_id']);
+         }
+
          // Create the network port
          $input = [
             'items_id' => $items_id,

@@ -1018,6 +1018,7 @@ class ImportRuleTest extends RestoreDatabase_TestCase {
       $pf->data_device = [
          "name" => "test01"
       ];
+      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize(["name" => "test01"]);
       $pf->rulepassed(0, "", 0);
 
       $this->assertEquals(1, $dbu->countElementsInTable('glpi_networkports'));
