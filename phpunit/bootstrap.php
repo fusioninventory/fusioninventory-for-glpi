@@ -18,6 +18,8 @@ if (!defined('FUSINV_ROOT')) {
    );
 }
 
+require FUSINV_ROOT . '/phpunit/vendor/autoload.php';
+
 $_SESSION['glpiprofiles'] = ['4' => ['entities' => 0]];
 
 $_SESSION['glpi_plugin_fusioninventory_profile']['unmanaged'] = 'w';
