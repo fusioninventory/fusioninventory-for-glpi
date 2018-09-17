@@ -1080,7 +1080,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'           => null,
           'serial'            => 'UBYVUTFYEIUI',
           'otherserial'       => null,
-          'size'              => '0',
+          'size'              => '0.00',
           'have_micro'        => '0',
           'have_speaker'      => '0',
           'have_subd'         => '0',

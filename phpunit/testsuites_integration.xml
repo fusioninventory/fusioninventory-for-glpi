@@ -4,6 +4,9 @@
   bootstrap="bootstrap.php"
   processIsolation="false"
   backupGlobals="false"
+  convertErrorsToExceptions="false"
+  convertNoticesToExceptions="false"
+  convertWarningsToExceptions="false"   
   >
   <logging>
     <log type="junit" target="../../../../build/logs/junit_integration.xml" />
