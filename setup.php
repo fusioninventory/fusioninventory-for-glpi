@@ -128,7 +128,8 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryTaskjobstate',
          [
             'addtabon' => [
-               'PluginFusioninventoryTask'
+               'PluginFusioninventoryTask',
+               'Computer',
             ]
          ]
       );
