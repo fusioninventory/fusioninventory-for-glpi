@@ -126,7 +126,17 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      return __("Job executions", "fusioninventory");
+      switch ($item->getType()) {
+
+         case 'Computer':
+            return __("Tasks / Groups", "fusioninventory");
+            break;
+
+         case 'PluginFusioninventoryTask':
+            return __("Job executions", "fusioninventory");
+            break;
+
+      }
    }
 
 
@@ -160,6 +170,12 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       if ($item->getType() == 'PluginFusioninventoryTask') {
          $item->showJobLogs();
          return true;
+      } else if ($item->getType() == 'Computer') {
+         $pfTaskJobState = new PluginFusioninventoryTaskjobstate();
+         $pfTaskJobState->showStatesForComputer($item->getID());
+         echo "<br>";
+         $pfDeployGroup = new PluginFusioninventoryDeployGroup();
+         $pfDeployGroup->showForComputer($item->getID());
       }
       return false;
    }
@@ -667,4 +683,113 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
+   /**
+    * Display the tasks where the computer is associated
+    *
+    * @param integer $computers_id
+    */
+   function showStatesForComputer($computers_id) {
+      global $DB;
+
+      $pfAgent      = new PluginFusioninventoryAgent();
+      $pfTask       = new PluginFusioninventoryTask();
+      $pfTaskjob    = new PluginFusioninventoryTaskjob();
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
+      // Get the agent of the computer
+      $agents_id = $pfAgent->getAgentWithComputerid($computers_id);
+
+      $tasks_id = [];
+
+      // Get tasks ids
+      $iterator = $DB->request([
+         'FROM'   => $this->getTable(),
+         'WHERE'  => [
+            'plugin_fusioninventory_agents_id' => $agents_id,
+         ],
+         'ORDER' => 'id DESC',
+      ]);
+      while ($data = $iterator->next()) {
+         $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
+         $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         if (!isset($tasks_id[$pfTask->fields['id']])) {
+            $tasks_id[$pfTask->fields['id']] = [
+               'is_active' => $pfTask->fields['is_active'],
+               'jobstates' => [],
+               'method'    => $pfTaskjob->fields['method'],
+               'name'      => $pfTask->fields['name'],
+            ];
+         }
+         // Limit to 5 last runs
+         if (count($tasks_id[$pfTask->fields['id']]['jobstates']) < 5) {
+            $tasks_id[$pfTask->fields['id']]['jobstates'][] = $data['id'];
+         }
+      }
+      echo "<table width='950' class='tab_cadre_fixe'>";
+
+      echo "<tr>";
+      echo "<th>";
+      echo __('Task');
+      echo "</th>";
+      echo "<th>";
+      echo __('Active');
+      echo "</th>";
+      echo "<th>";
+      echo __('Module method');
+      echo "</th>";
+      echo "<th>";
+      echo __('Date');
+      echo "</th>";
+      echo "<th>";
+      echo __('Status');
+      echo "</th>";
+      echo "</tr>";
+
+      $modules_methods = PluginFusioninventoryStaticmisc::getModulesMethods();
+      $link = Toolbox::getItemTypeFormURL("PluginFusioninventoryTask");
+      $stateColors = [
+         PluginFusioninventoryTaskjoblog::TASK_PREPARED => '#efefef',
+         PluginFusioninventoryTaskjoblog::TASK_RUNNING  => '#aaaaff',
+         PluginFusioninventoryTaskjoblog::TASK_STARTED  => '#aaaaff',
+         PluginFusioninventoryTaskjoblog::TASK_OK       => '#aaffaa',
+         PluginFusioninventoryTaskjoblog::TASK_ERROR    => '#ff0000',
+      ];
+
+      foreach ($tasks_id as $id=>$data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo "<a href='".$link."?id=".$id."'>".$data['name']."</a>";
+         echo "</td>";
+         echo "<td>";
+         echo Dropdown::getYesNo($data['is_active']);
+         echo "</td>";
+         echo "<td>";
+         echo $modules_methods[$data['method']];
+         echo "</td>";
+         echo "<td colspan='2'>";
+         echo "</td>";
+         echo "</tr>";
+
+         // Each taskjobstate
+         foreach ($data['jobstates'] as $jobstates_id) {
+            $logs = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`=".$jobstates_id, "id DESC", 1);
+            if (count($logs) > 0) {
+               $log = current($logs);
+               echo "<tr class='tab_bg_1'>";
+               echo "<td colspan='3'>";
+               echo "</td>";
+               echo "</td>";
+               echo "<td style='background-color: ".$stateColors[$log['state']]."'>";
+               echo Html::convDateTime($log['date']);
+               echo "</td>";
+               echo "<td style='background-color: ".$stateColors[$log['state']]."'>";
+               echo $pfTaskjoblog->getStateName($log['state']);
+               // status
+               echo "</td>";
+               echo "</tr>";
+            }
+         }
+      }
+      echo "</table>";
+   }
 }
