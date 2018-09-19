@@ -57,6 +57,9 @@ before_install:
  - php scripts/cliupdate.php |grep -q "No migration needed." || (echo "scripts/cliupdate.php FAILED" && exit 1)
  - popd
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
+ - pushd glpi/plugins/fusioninventory/phpunit/
+ - composer install
+ - popd
 
 before_script:
   - phpenv version-name | grep ^5.[34] && echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; true

@@ -343,14 +343,14 @@ class PluginFusioninventoryCommunication {
          $_SESSION["glpiname"] = $user->getField('name');
          $_SESSION['glpiactiveprofile'] = [];
          $_SESSION['glpiactiveprofile']['interface']  = 'central';
-         $_SESSION['glpiactiveprofile']['internet']   = 'w';
-         $_SESSION['glpiactiveprofile']['computer']   = 'w';
-         $_SESSION['glpiactiveprofile']['monitor']    = 'w';
-         $_SESSION['glpiactiveprofile']['printer']    = 'w';
-         $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
-         $_SESSION['glpiactiveprofile']['networking'] = 'w';
+         $_SESSION['glpiactiveprofile']['internet']   = ALLSTANDARDRIGHT;
+         $_SESSION['glpiactiveprofile']['computer']   = ALLSTANDARDRIGHT;
+         $_SESSION['glpiactiveprofile']['monitor']    = ALLSTANDARDRIGHT;
+         $_SESSION['glpiactiveprofile']['printer']    = ALLSTANDARDRIGHT;
+         $_SESSION['glpiactiveprofile']['peripheral'] = ALLSTANDARDRIGHT;
+         $_SESSION['glpiactiveprofile']['networking'] = ALLSTANDARDRIGHT;
 
-         $_SESSION["glpi_plugin_fusioninventory_profile"]['unmanaged'] = 'w';
+         $_SESSION["glpi_plugin_fusioninventory_profile"]['unmanaged'] = ALLSTANDARDRIGHT;
       }
 
       $communication  = new PluginFusioninventoryCommunication();
