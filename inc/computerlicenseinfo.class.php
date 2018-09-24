@@ -159,7 +159,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                           'name'                => $licenseInfo['name'],
                           'fullname'            => $licenseInfo['fullname'],
                           'serial'              => $licenseInfo['serial'],
-                          'license_id'          => $licenseInfo['id']
+                          'licenseid'           => $licenseInfo['id']
                          ];
                 $pfComputerLicenseInfo->dropdownSoftwareLicenses($params);
             }
@@ -209,7 +209,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                                  ['value' => $params['softwarelicenses_id']]);
          echo "&nbsp;";
          echo Html::submit(_sx('button', 'Associate'),
-                           ['name'  => "associate[".$params['license_id']."]='1'",
+                           ['name'  => "associate[".$params['licenseid']."]='1'",
                             'image' => $CFG_GLPI['root_doc'].'/pics/add_dark.png',
                             'class' => ''
                            ]);
