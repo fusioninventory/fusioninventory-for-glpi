@@ -363,7 +363,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          'operatingsystemarchitectures_id'   => '0',
          'operatingsystemkernelversions_id'  => '0',
          'license_number'                    => '',
-         'license_id'                        => '',
+         'licenseid'                         => '',
          'operatingsystemeditions_id'        => '0',
          'is_deleted'                        => '0',
          'is_dynamic'                        => '1',

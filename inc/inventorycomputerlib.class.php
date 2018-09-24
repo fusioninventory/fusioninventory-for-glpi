@@ -163,7 +163,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'operatingsystemversions_id'        => $pfos['operatingsystemversions_id'],
             'operatingsystemservicepacks_id'    => $pfos['operatingsystemservicepacks_id'],
             'operatingsystemeditions_id'        => $pfos['operatingsystemeditions_id'],
-            'license_id'                        => $pfos['licenseid'],
+            'licenseid'                         => $pfos['licenseid'],
             'license_number'                    => $pfos['license_number'],
             'is_dynamic'                        => 1,
             'entities_id'                       => $computer->fields['entities_id']
