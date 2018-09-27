@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the collect rules form.
+ */
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),

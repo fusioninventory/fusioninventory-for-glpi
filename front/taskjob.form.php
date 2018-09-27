@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the task job form.
+ */
 include ("../../../inc/includes.php");
 
 $pfTaskjob = new PluginFusioninventoryTaskjob();

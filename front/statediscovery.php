@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Display the network discovery state.
+ */
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],

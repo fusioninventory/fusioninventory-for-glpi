@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Send the inventory to user browser.
+ */
 include ("../../../inc/includes.php");
 
 //Session::checkRight('config', "w");

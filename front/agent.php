@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the agent search list.
+ */
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",

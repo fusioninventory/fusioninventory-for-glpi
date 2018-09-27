@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the collect form.
+ */
 include ("../../../inc/includes.php");
 
 Html::header(__('Collect management', 'fusioninventory'),

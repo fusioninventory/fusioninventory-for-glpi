@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Clean the unused deploy files.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

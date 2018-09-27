@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the computer entity lock configuration form.
+ */
 include ("../../../inc/includes.php");
 
 if (isset($_GET['id'])

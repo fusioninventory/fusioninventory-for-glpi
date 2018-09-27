@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the rule entity search list.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

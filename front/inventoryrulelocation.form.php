@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the computer rule location form.
+ */
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the collect WMI form.
+ */
 include ("../../../inc/includes.php");
 
 $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();

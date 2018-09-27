@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the switch (network equipment) extended information form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('networking', READ);

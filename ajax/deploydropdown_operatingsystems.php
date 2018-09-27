@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display an operating system dropdown for deploy.
+ */
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 

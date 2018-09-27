@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Keep compatibility with very old agent communication page.
+ */
 include ("../../../inc/includes.php");
 
 include_once(GLPI_ROOT."/plugins/fusioninventory/front/communication.php");

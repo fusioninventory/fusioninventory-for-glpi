@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display dropdown method types.
+ */
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdowntype.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the collect rules list.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

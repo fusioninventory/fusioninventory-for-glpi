@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the IP range form.
+ */
 include ("../../../inc/includes.php");
 
 $iprange = new PluginFusioninventoryIPRange();

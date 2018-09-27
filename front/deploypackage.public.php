@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the deploy package self-service form.
+ */
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 

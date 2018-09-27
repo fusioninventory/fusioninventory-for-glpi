@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the ESX credential form.
+ */
 include ("../../../inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredential();

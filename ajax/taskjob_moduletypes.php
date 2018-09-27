@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Called by ajax function and display task job module types.
+ */
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjob_moduletypes.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");

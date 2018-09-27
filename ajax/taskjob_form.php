@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Called by ajax function and display task job form.
+ */
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjob_form.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the task timeslot search list.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('plugin_fusioninventory_task', READ);

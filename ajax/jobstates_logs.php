@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display logs of task job states.
+ */
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "jobstates_logs.php")) {
    include ("../../../inc/includes.php");
    Session::checkCentralAccess();

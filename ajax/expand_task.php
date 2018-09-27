@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Called by ajax function and expand tasks.
+ */
 include ("../../../inc/includes.php");
 Session::checkCentralAccess();
 

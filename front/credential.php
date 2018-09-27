@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the ESX credential search list.
+ */
 include ("../../../inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredential();

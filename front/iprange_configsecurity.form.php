@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the IP range config security (SNMP authentication) form.
+ */
 include ("../../../inc/includes.php");
 
 $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();

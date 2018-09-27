@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the lock form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the deploy package import form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

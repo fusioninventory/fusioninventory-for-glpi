@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the collect file form.
+ */
 include ("../../../inc/includes.php");
 
 $pfCollect_File = new PluginFusioninventoryCollect_File();

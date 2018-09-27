@@ -25,6 +25,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
+
+/*
+ * Manage the collect registry form.
+ */
 include ("../../../inc/includes.php");
 
 $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();

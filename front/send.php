@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Securely send files to user browser.
+ */
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', realpath('../../..'));
 }

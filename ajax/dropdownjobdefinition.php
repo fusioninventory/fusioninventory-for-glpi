@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display dropdown task job definition.
+ */
 include ("../../../inc/includes.php");
 
 header("Content-Type: text/html; charset=UTF-8");

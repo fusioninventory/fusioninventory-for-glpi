@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the entity form.
+ */
 include ("../../../inc/includes.php");
 
 $pfEntity = new PluginFusioninventoryEntity();

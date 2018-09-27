@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the ESX server form.
+ */
 include ("../../../inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredentialIp();

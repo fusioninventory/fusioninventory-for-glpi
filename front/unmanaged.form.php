@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the unmanaged device form.
+ */
 include ("../../../inc/includes.php");
 
 $pfUnmanaged = new PluginFusioninventoryUnmanaged();

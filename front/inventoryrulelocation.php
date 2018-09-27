@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the computer rule location list.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

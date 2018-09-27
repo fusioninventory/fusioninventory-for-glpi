@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the setup / initialization of the plugin.
+ */
 define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.3+1.1");
 
 // Used for use config values in 'cache'

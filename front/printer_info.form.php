@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the printer information form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('plugin_fusioninventory_printer', READ);

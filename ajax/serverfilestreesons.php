@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display server file tree for deploy package.
+ */
 $AJAX_INCLUDE = 1;
 
 include ("../../../inc/includes.php");

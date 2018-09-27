@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display deploy user logged.
+ */
 include ("../../../inc/includes.php");
 
 $loggedin = [];

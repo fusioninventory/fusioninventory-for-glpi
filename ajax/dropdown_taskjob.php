@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * Called by ajax function and display dropdown task jobs.
+ */
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "dropdown_taskjob.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");

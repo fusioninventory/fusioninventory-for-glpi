@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Display the mail page of the plugin.
+ */
 include ("../../../inc/includes.php");
 
 if (PluginFusioninventoryMenu::canView()) {

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the REST communication for deploy module with the agent.
+ */
 ob_start();
 include ("../../../../inc/includes.php");
 ob_end_clean();

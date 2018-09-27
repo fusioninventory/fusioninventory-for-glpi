@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the configuration log fields form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('config', UPDATE);

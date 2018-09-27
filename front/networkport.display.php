@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Display the network port page.
+ */
 if (!defined('GLPI_ROOT')) {
    include ("../../../inc/includes.php");
 }

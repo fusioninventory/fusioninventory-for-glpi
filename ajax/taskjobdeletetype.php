@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Called by ajax function and delete task job type.
+ */
 if (strpos(filter_input(INPUT_SERVER, "PHP_SELF"), "taskjobdeletetype.php")) {
    include ("../../../inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the network port type form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('config', UPDATE);

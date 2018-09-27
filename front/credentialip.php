@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the ESX server search list.
+ */
 include ("../../../inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredentialIp();

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the general configuration form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('plugin_fusioninventory_configuration', READ);

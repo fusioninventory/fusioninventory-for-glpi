@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Display the printer log report page.
+ */
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 

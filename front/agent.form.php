@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the agent form.
+ */
 include ("../../../inc/includes.php");
 
 $agent = new PluginFusioninventoryAgent();

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Display the test rule page.
+ */
 if (!defined('GLPI_ROOT')) {
    include ("../../../inc/includes.php");
 }

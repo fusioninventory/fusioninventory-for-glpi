@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Display the network inventory menu.
+ */
 include ("../../../inc/includes.php");
 
 if (PluginFusioninventoryMenu::canView()) {

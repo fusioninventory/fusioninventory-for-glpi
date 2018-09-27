@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the computer license info form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkRight('license', UPDATE);

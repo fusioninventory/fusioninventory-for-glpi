@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the collect content form.
+ */
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the task form.
+ */
 include ("../../../inc/includes.php");
 
 $pfTask = new PluginFusioninventoryTask();

@@ -26,6 +26,9 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Manage the deploy package search list.
+ */
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 

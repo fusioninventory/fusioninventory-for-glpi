@@ -26,6 +26,10 @@
  * ---------------------------------------------------------------------
  */
 
+/*
+ * Mnage the index page of the plugin.
+ * It can be used in GLPI or by an URL defined in the agent to redirect to front/communication.php page
+ */
 include ("../../inc/includes.php");
 
 //Agent posting an inventory or asking for orders using REST
