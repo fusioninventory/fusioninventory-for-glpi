@@ -31,9 +31,6 @@ require_once("0_Install/FusinvDB.php");
 class FusinvInstallTest extends Common_TestCase {
 
 
-   /**
-    * @depends GLPIInstallTest::installDatabase
-    */
    public function testInstall() {
 
       global $DB;
@@ -60,9 +57,6 @@ class FusinvInstallTest extends Common_TestCase {
       $this->install();
    }
 
-   /**
-    * @depends GLPIInstallTest::installDatabase
-    */
    public function testForceInstall() {
       global $DB;
       $DB->connect();

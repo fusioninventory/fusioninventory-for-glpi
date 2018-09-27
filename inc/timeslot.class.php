@@ -156,17 +156,17 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    function getTimeslotEntries($timeslot_ids = [], $weekdays = null) {
 
       $condition = [
-         "`plugin_fusioninventory_timeslots_id` in ('".implode("','", $timeslot_ids)."')",
+         "plugin_fusioninventory_timeslots_id" => $timeslot_ids
       ];
       if (!is_null($weekdays)) {
-         $condition[] = "and `day` = '".$weekdays."'";
+         $condition['day'] = $weekdays;
       }
 
       $results = [];
 
       $timeslot_entries = getAllDatasFromTable(
          "glpi_plugin_fusioninventory_timeslotentries",
-         implode("\n", $condition),
+         $condition,
          false, ''
       );
 

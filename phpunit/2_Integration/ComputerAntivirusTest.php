@@ -32,6 +32,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
 
 
    function __construct() {
+      parent::__construct();
       $this->a_computer1 = [
           "Computer" => [
               "name"   => "pc001",
@@ -95,7 +96,7 @@ class ComputerAntivirusTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function Antiviruses() {
+   public function testAntiviruses() {
       global $DB;
 
       $DB->connect();

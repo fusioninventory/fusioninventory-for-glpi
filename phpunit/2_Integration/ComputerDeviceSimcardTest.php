@@ -31,6 +31,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
    public $a_computer1_beforeformat = [];
 
    function __construct() {
+      parent::__construct();
       $this->a_computer1 = [
          "Computer" => [
             "name"   => "computer_simcard",
@@ -145,7 +146,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function simcardTransformation() {
+   public function testSimcardTransformation() {
       $formatConvert = new PluginFusioninventoryFormatconvert();
 
       $input = [
@@ -192,7 +193,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function ImportSimcards() {
+   public function testImportSimcards() {
       $computers_id = $this->updateComputer($this->a_computer1);
 
       $this->assertEquals(
@@ -294,7 +295,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
     * Test to check that if the simcard is inserted in another asset, the relation
     * remains by the items_id changes
     */
-   public function sameSimcardOnAnotherAsset() {
+   public function testSameSimcardOnAnotherAsset() {
       $computers_id = $this->updateComputer($this->a_computer2);
 
       $pfItemDeviceSimcard = new Item_DeviceSimcard();

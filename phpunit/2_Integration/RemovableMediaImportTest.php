@@ -122,7 +122,8 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
    public function countDrivesWhenDisabled($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
-      $nb_drives_in_database = countElementsInTable("glpi_items_disks", "`itemtype`='Computer'");
+      $nb_drives_in_database = countElementsInTable("glpi_items_disks",
+         ['itemtype' => 'Computer']);
       $nb_expected_drives = $data['expected_results']['nb_drives_when_disabled'];
       $this->assertEquals(
             $nb_expected_drives,
@@ -139,7 +140,8 @@ class RemovableMediaImportTest extends RestoreDatabase_TestCase {
    public function countDrivesWhenEnabled($data) {
       $agent_name = $data['inventory']['AGENT']['name'];
       $computer_name = $data['inventory']['CONTENT']['HARDWARE']['NAME'];
-      $nb_drives_in_database = countElementsInTable("glpi_items_disks", "`itemtype`='Computer'");
+      $nb_drives_in_database = countElementsInTable("glpi_items_disks",
+         ['itemtype' => 'Computer']);
       $nb_expected_drives = $data['expected_results']['nb_drives_when_enabled'];
       $this->assertEquals(
             $nb_expected_drives,

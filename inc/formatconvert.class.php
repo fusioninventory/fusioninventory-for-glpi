@@ -1423,11 +1423,23 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
                $array_tmp = $thisc->addValues($a_antiviruses,
                                              [
-                                                'NAME'     => 'name',
-                                                'COMPANY'  => 'manufacturers_id',
-                                                'VERSION'  => 'antivirus_version',
-                                                'ENABLED'  => 'is_active',
-                                                'UPTODATE' => 'is_uptodate']);
+                                                'NAME'         => 'name',
+                                                'COMPANY'      => 'manufacturers_id',
+                                                'VERSION'      => 'antivirus_version',
+                                                'BASE_VERSION' => 'signature_version',
+                                                'ENABLED'      => 'is_active',
+                                                'UPTODATE'     => 'is_uptodate',
+                                                'EXPIRATION'   => 'date_expiration']);
+               //Check if the expiration date has the right format to be inserted in DB
+               if (isset($array_tmp['date_expiration'])) {
+                  $matches = [];
+                  preg_match("/^(\d{2})\/(\d{2})\/(\d{4})$/", $array_tmp['date_expiration'], $matches);
+                  if (count($matches) == 4) {
+                     $array_tmp['date_expiration'] = $matches[3]."-".$matches[2]."-".$matches[1];
+                  } else {
+                     unset($array_tmp['date_expiration']);
+                  }
+               }
                $a_inventory['antivirus'][] = $array_tmp;
             }
          }
@@ -1530,12 +1542,12 @@ class PluginFusioninventoryFormatconvert {
       $is_software_recursive = 0;
 
       //Count the number of software dictionnary rules
-      $nb_RuleDictionnarySoftware
-                                 = countElementsInTable("glpi_rules",
-                                                ['sub_type'  => 'RuleDictionnarySoftware',
-                                                 'is_active' => 1
-                                                ]
-                                 );
+      $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules",
+         [
+            'sub_type'  => 'RuleDictionnarySoftware',
+            'is_active' => 1,
+         ]
+      );
       //Configuration says that software can be created in the computer's entity
       if ($entities_id_software < 0) {
          $entities_id_software = $entities_id;
@@ -1565,6 +1577,7 @@ class PluginFusioninventoryFormatconvert {
                                            'PUBLISHER'   => 'manufacturers_id',
                                            'NAME'        => 'name',
                                            'VERSION'     => 'version',
+                                        'COMMENTS'        => 'comment',
                                            'INSTALLDATE' => 'date_install',
                                            'SYSTEM_CATEGORY' => '_system_category']);
          if (!isset($array_tmp['name'])
@@ -1744,7 +1757,7 @@ class PluginFusioninventoryFormatconvert {
       $data_collect = [];
 
       $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
-                                         "`computers_id`='".$computers_id."'");
+         ['computers_id' => $computers_id]);
 
       foreach ($data_registries as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
@@ -1759,7 +1772,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents',
-                                         "`computers_id`='".$computers_id."'");
+         ['computers_id' => $computers_id]);
 
       foreach ($data_wmis as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
@@ -1774,7 +1787,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents',
-                                         "`computers_id`='".$computers_id."'");
+         ['computers_id' => $computers_id]);
 
       foreach ($data_files as $data) {
          $a_split = explode("/", $data['pathfile']);

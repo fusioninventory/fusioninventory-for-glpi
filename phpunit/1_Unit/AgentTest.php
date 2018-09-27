@@ -181,7 +181,7 @@ class AgentTest extends RestoreDatabase_TestCase {
       //Disconnect the agent from the computer
       $pfAgent->disconnect(['computers_id' => 100, 'id' => $agent_id]);
       $count = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers',
-                                    "`computers_id`='100'");
+                                    ['computers_id' => '100']);
       $this->assertEquals(0, $count);
 
       //Check that computers_id has been set to 0

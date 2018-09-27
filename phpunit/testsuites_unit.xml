@@ -4,16 +4,15 @@
   bootstrap="bootstrap.php"
   processIsolation="false"
   backupGlobals="false"
-  strict="false"
+  convertErrorsToExceptions="false"
+  convertNoticesToExceptions="false"
+  convertWarningsToExceptions="false"   
   >
   <logging>
-    <log type="junit" target="../../../../build/logs/junit_unit.xml" logIncompleteSkipped="true" />
+    <log type="junit" target="../../../../build/logs/junit_unit.xml" />
   </logging>
   <!-- exclude relatively to ${basedir} -->
   <filter>
-    <blacklist>
-      <directory suffix=".php">glpi/*</directory>
-    </blacklist>
     <whitelist>
       <directory suffix=".php">glpi/plugins/fusioninventory/*</directory>
       <exclude>
@@ -24,8 +23,8 @@
   <testsuites>
     <testsuite name="Unit">
       <!-- directory tag (unlike the file tag) are walked relatively to this xml configuration files -->
-      <directory suffix="Test.php">./1_Unit/</directory>
-      <directory suffix="Test.php">./1_Unit/Tasks/</directory>
+      <directory suffix="Test.php">1_Unit/</directory>
+      <directory suffix="Test.php">1_Unit/Tasks/</directory>
     </testsuite>
   </testsuites>
 </phpunit>

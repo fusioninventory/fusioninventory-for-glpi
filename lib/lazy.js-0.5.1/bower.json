@@ -1,0 +1,11 @@
+{
+  "name": "lazy.js",
+  "main": "lazy.js",
+  "ignore": [
+    "**/.*",
+    "docs",
+    "lib",
+    "site",
+    "spec"
+  ]
+}

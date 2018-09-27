@@ -29,11 +29,6 @@
 /*
  * bootstrop.php needs to be loaded since tests are run in separate process
  */
-include_once('bootstrap.php');
-include_once('commonfunction.php');
-include_once (GLPI_ROOT . "/inc/based_config.php");
-include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
-include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
 include_once('0_Install/FusinvDB.php');
 
@@ -54,6 +49,11 @@ class UpdateTest extends RestoreDatabase_TestCase {
       if ($version == '') {
          return;
       }
+
+      // uninstall the plugin FusionInventory
+      $plugin = new Plugin();
+      $plugin->getFromDBByCrit(['directory' => 'fusioninventory']);
+      $plugin->uninstall($plugin->fields['id']);
 
       $query = "SHOW TABLES";
       $result = $DB->query($query);
@@ -125,11 +125,13 @@ class UpdateTest extends RestoreDatabase_TestCase {
          return;
       }
 
-      $cnt_old = countElementsInTable("glpi_rules", "`sub_type`='PluginFusinvinventoryRuleEntity'");
+      $cnt_old = countElementsInTable("glpi_rules",
+         ['sub_type' => 'PluginFusinvinventoryRuleEntity']);
 
       $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
 
-      $cnt_new = countElementsInTable("glpi_rules", "`sub_type`='PluginFusioninventoryInventoryRuleEntity'");
+      $cnt_new = countElementsInTable("glpi_rules",
+         ['sub_type' => 'PluginFusioninventoryInventoryRuleEntity']);
 
       $this->assertEquals($nbrules, $cnt_new, "May have ".$nbrules." entity rules");
 
@@ -141,7 +143,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
-                                        "`type`='states_id_default'");
+         ['type' => 'states_id_default']);
 
       $this->assertEquals(1, count($a_configs), "May have conf states_id_default");
 

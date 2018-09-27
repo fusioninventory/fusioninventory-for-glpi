@@ -114,7 +114,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                 ];
       $total = 0;
       foreach ($tables as $table) {
-         $total+= countElementsInTable($table, "`computers_id`='$computers_id'");
+         $total+= countElementsInTable($table, ['computers_id' => $computers_id]);
       }
       return $total;
    }

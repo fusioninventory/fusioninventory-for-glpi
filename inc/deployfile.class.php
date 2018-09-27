@@ -1008,7 +1008,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       $a_files = $this->find();
       foreach ($a_files as $data) {
          $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
-                                     '`json` LIKE \'%"'.$data['sha512'].'"%\'');
+            ['json' => ['LIKE', '%"' . $data['sha512'] . '"%']]);
          if ($cnt == 0) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>";
@@ -1028,11 +1028,10 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * Delete the files not used in packages
     */
    function deleteUnusedFiles() {
-
       $a_files = $this->find();
       foreach ($a_files as $data) {
          $cnt = countElementsInTable('glpi_plugin_fusioninventory_deploypackages',
-                                     '`json` LIKE \'%"'.$data['sha512'].'"%\'');
+            ['json' => ['LIKE' => '%"' . $data['sha512'] . '"%']]);
          if ($cnt == 0) {
             $this->delete($data);
             $manifest_filename = PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$data['sha512'];

@@ -25,8 +25,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * ---------------------------------------------------------------------
  */
-class SaveInstallTest extends PHPUnit_Framework_TestCase {
 
+use PHPUnit\Framework\TestCase;
+
+class SaveInstallTest extends TestCase {
 
    public function should_restore_install() {
       return false;
@@ -39,6 +41,7 @@ class SaveInstallTest extends PHPUnit_Framework_TestCase {
       }
 
       include_once (GLPI_ROOT . "/inc/based_config.php");
+      include_once (GLPI_ROOT . "/inc/define.php");
       include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
       include_once (GLPI_CONFIG_DIR . "/config_db.php");
       $DB = new DB();

@@ -766,8 +766,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_dataLink = getAllDatasFromTable("glpi_items_deviceprocessors",
-                                         "`itemtype`='Computer'
-                                            AND `items_id`='1'");
+         ['itemtype' => 'Computer', 'items_id' => '1']);
 
       $a_reference = [
           '1' => [
@@ -903,8 +902,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_dataLink = getAllDatasFromTable("glpi_items_devicememories",
-                                         "`itemtype`='Computer'
-                                            AND `items_id`='1'");
+         ['itemtype' => 'Computer', 'items_id' => '1']);
 
       $a_reference = [
           '1' => [
@@ -987,8 +985,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_dataLink = getAllDatasFromTable("glpi_networkports",
-                                         "`itemtype`='Computer'
-                                            AND `items_id`='1'");
+         ['itemtype' => 'Computer', 'items_id' => '1']);
 
       foreach ($a_dataLink as $id=>$data) {
          unset($data['date_mod']);
@@ -1046,8 +1043,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $this->assertEquals(1, count($a_dataMonit), "Must have 1 monitor created");
 
       $a_dataLink = getAllDatasFromTable("glpi_computers_items",
-                                         "`itemtype`='Monitor'
-                                            AND `computers_id`='1'");
+         ['itemtype' => 'Monitor', 'computers_id' => '1']);
 
       $this->assertEquals(1, count($a_dataLink), "Number of monitors not right");
 
@@ -1070,7 +1066,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'           => null,
           'serial'            => 'UBYVUTFYEIUI',
           'otherserial'       => null,
-          'size'              => '0',
+          'size'              => '0.00',
           'have_micro'        => '0',
           'have_speaker'      => '0',
           'have_subd'         => '0',
@@ -1109,8 +1105,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $a_dataLink = getAllDatasFromTable("glpi_computers_items",
-                                         "`itemtype`='Printer'
-                                            AND `computers_id`='1'");
+         ['itemtype' => 'Printer', 'computers_id' => '1']);
 
       $this->assertEquals(1, count($a_dataLink), "Number of printers not right");
 

@@ -26,6 +26,14 @@
  * ---------------------------------------------------------------------
  */
 
+// To prevent problem of execution time
+ini_set("max_execution_time", "0");
+ini_set("memory_limit", "-1");
+ini_set("session.use_cookies", "0");
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
+//set_error_handler('userErrorHandlerDebug');
+
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
 include ("./docopt.php");
@@ -69,9 +77,6 @@ Session::loadLanguage();
 // Only show errors
 $CFG_GLPI["debug_sql"]        = $CFG_GLPI["debug_vars"] = 0;
 $CFG_GLPI["use_log_in_files"] = 1;
-ini_set('display_errors', 'On');
-error_reporting(E_ALL | E_STRICT);
-//set_error_handler('userErrorHandlerDebug');
 
 $DB = new DB();
 if (!$DB->connected) {
@@ -83,6 +88,15 @@ if (!$DB->connected) {
 
 if (!$DB->tableExists("glpi_configs")) {
    die("GLPI not installed\n");
+}
+
+if (!is_null($args['--as-user'])) {
+   $user = new User();
+   $user->getFromDBbyName($args['--as-user']);
+   $auth = new Auth();
+   $auth->auth_succeded = true;
+   $auth->user = $user;
+   Session::init($auth);
 }
 
 $plugin = new Plugin();
@@ -111,10 +125,6 @@ if ($current_version == '0') {
 $migration->displayWarning("Current FusionInventory version: $current_version");
 $migration->displayWarning("Version to update: ".PLUGIN_FUSIONINVENTORY_VERSION);
 
-// To prevent problem of execution time
-ini_set("max_execution_time", "0");
-ini_set("memory_limit", "-1");
-ini_set("session.use_cookies", "0");
 $mess = '';
 if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
      AND $current_version!='0') {
@@ -140,15 +150,6 @@ if ($args['--force-upgrade']) {
    define('FORCE_UPGRADE', true);
 }
 
-
-if (!is_null($args['--as-user'])) {
-   $user = new User();
-   $user->getFromDBbyName($args['--as-user']);
-   $auth = new Auth();
-   $auth->auth_succeded = true;
-   $auth->user = $user;
-   Session::init($auth);
-}
 
 $plugin->getFromDBbyDir("fusioninventory");
 print("Installing Plugin...\n");

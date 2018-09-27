@@ -1,19 +1,18 @@
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/3.7/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.7/phpunit.xsd"
   bootstrap="bootstrap.php"
   processIsolation="false"
   backupGlobals="false"
-  strict="false"
+  convertErrorsToExceptions="false"
+  convertNoticesToExceptions="false"
+  convertWarningsToExceptions="false"   
   >
   <logging>
-    <log type="junit" target="../../../../build/logs/junit_update.xml" logIncompleteSkipped="true" />
+    <log type="junit" target="../../../../build/logs/junit_update.xml" />
   </logging>
   <!-- exclude relatively to ${basedir} -->
   <filter>
-    <blacklist>
-      <directory suffix=".php">glpi/*</directory>
-    </blacklist>
     <whitelist>
       <directory suffix=".php">glpi/plugins/fusioninventory/*</directory>
       <exclude>
@@ -23,12 +22,10 @@
   </filter>
   <testsuites>
     <testsuite name="Update">
-      <!-- First, install GLPI -->
-      <file>glpi/plugins/fusioninventory/phpunit/0_Install/GLPIInstallTest.php</file>
       <!-- Then, dump the GLPI install (for quicker setUp) -->
-      <file>glpi/plugins/fusioninventory/phpunit/0_Install/SaveInstallTest.php</file>
+      <file>./0_Install/SaveInstallTest.php</file>
       <!-- Finally, test update from various Fusioninventory version -->
-      <file>glpi/plugins/fusioninventory/phpunit/0_Install/FusinvUpdateTest.php</file>
+      <file>./0_Install/FusinvUpdateTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>

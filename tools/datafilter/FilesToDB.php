@@ -42,7 +42,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcivendors` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vendorid` (`vendorid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcidevices`;
@@ -55,7 +55,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`),
   KEY `plugin_fusioninventory_pcivendor_id` (`plugin_fusioninventory_pcivendor_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 ";
@@ -111,7 +111,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vendorid` (`vendorid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbdevices`;
@@ -124,7 +124,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`,`plugin_fusioninventory_usbvendor_id`),
   KEY `plugin_fusioninventory_usbvendor_id` (`plugin_fusioninventory_usbvendor_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 ";
@@ -178,7 +178,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `mac` (`mac`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ";
    $sql_insert_oui = "INSERT INTO `glpi_plugin_fusioninventory_ouis`

@@ -26,24 +26,23 @@
  * ---------------------------------------------------------------------
  */
 
-class GLPIlogs extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
 
+class GLPIlogs extends TestCase {
 
    public function testSQLlogs() {
 
       $filecontent = file_get_contents(GLPI_ROOT."/files/_log/sql-errors.log");
 
-      $this->assertEquals('', $filecontent, 'sql-errors.log not empty');
+      $this->assertEmpty($filecontent, 'sql-errors.log not empty: '.$filecontent);
       // Reinitialize file
       file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
    }
 
 
    public function testPHPlogs() {
-
       $filecontent = file_get_contents(GLPI_ROOT."/files/_log/php-errors.log");
-
-      $this->assertEquals('', $filecontent, 'php-errors.log not empty');
+      $this->assertEmpty($filecontent, 'php-errors.log not empty: '.$filecontent);
       // Reinitialize file
       file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
    }

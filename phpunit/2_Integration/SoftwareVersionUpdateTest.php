@@ -90,9 +90,11 @@ class SoftwareVersionUpdateTest extends RestoreDatabase_TestCase {
       $pfiComputerInv->import("computer1-2018-01-01", "", $a_inventory);
 
       //There must be only one version 2.4 for FusionInventory-Agent software
-      $this->assertEquals(1, countElementsInTable('glpi_softwareversions', "`softwares_id`='$softwares_id' AND `name`='2.4'"));
+      $this->assertEquals(1, countElementsInTable('glpi_softwareversions',
+         ['softwares_id' => $softwares_id, 'name' => '2.4']));
       //The computer is still linked to the software version
-      $this->assertEquals(1, countElementsInTable('glpi_computers_softwareversions', "`softwareversions_id`='$versions_id' AND `computers_id`='$computers_id'"));
+      $this->assertEquals(1, countElementsInTable('glpi_computers_softwareversions',
+         ['softwareversions_id' => $versions_id, 'computers_id' => $computers_id]));
 
       //We add OS infos to the inventory
       $a_inventory['CONTENT']['OPERATINGSYSTEM'] = [
@@ -108,9 +110,11 @@ class SoftwareVersionUpdateTest extends RestoreDatabase_TestCase {
       $pfiComputerInv->import("computer1-2018-01-01", "", $a_inventory);
 
       //There must be a second version 2.4 for FusionInventory-Agent software, with OS infos
-      $this->assertEquals(2, countElementsInTable('glpi_softwareversions', "`softwares_id`='$softwares_id' AND `name`='2.4'"));
+      $this->assertEquals(2, countElementsInTable('glpi_softwareversions',
+         ['softwares_id' => $softwares_id, 'name' => '2.4']));
       //The computer is still linked to the software version
-      $this->assertEquals(0, countElementsInTable('glpi_computers_softwareversions', "`softwareversions_id`='$versions_id' AND `computers_id`='$computers_id'"));
+      $this->assertEquals(0, countElementsInTable('glpi_computers_softwareversions',
+         ['softwareversions_id' => $versions_id, 'computers_id' => $computers_id]));
 
       //Load the software version
       $iterator = $DB->request('glpi_computers_softwareversions', ['computers_id' => $computers_id]);
@@ -124,12 +128,14 @@ class SoftwareVersionUpdateTest extends RestoreDatabase_TestCase {
       $this->assertGreaterThan(0, $version->fields['operatingsystems_id']);
 
       //Check that there's no installation for the old version
-      $this->assertEquals(0, countElementsInTable('glpi_computers_softwareversions', "`softwareversions_id`='$versions_id' AND `computers_id`='$computers_id'"));
+      $this->assertEquals(0, countElementsInTable('glpi_computers_softwareversions',
+         ['softwareversions_id' => $versions_id, 'computers_id' => $computers_id]));
 
       //Third import: a second one with an OS
       $pfiComputerInv->import("computer1-2018-01-01", "", $a_inventory);
       //There must be a second version 2.4 for FusionInventory-Agent software, with OS infos
-      $this->assertEquals(2, countElementsInTable('glpi_softwareversions', "`softwares_id`='$softwares_id' AND `name`='2.4'"));
+      $this->assertEquals(2, countElementsInTable('glpi_softwareversions',
+         ['softwares_id' => $softwares_id, 'name' => '2.4']));
 
    }
 }

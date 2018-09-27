@@ -56,7 +56,7 @@ class PluginFusioninventoryComputer extends Computer {
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {
          if ($plugin->isActivated('fields')) {
-            $options += [
+            $tab += [
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
             ];
@@ -144,10 +144,11 @@ class PluginFusioninventoryComputer extends Computer {
             foreach ($ids as $key) {
                if ($item->can($key, UPDATE)) {
                   if (!countElementsInTable($group_item->getTable(),
-                                            "`plugin_fusioninventory_deploygroups_id`='"
-                                                .$_POST['id']."'
-                                              AND `itemtype`='Computer'
-                                              AND `items_id`='$key'")) {
+                     [
+                        'plugin_fusioninventory_deploygroups_id' => $_POST['id'],
+                        'itemtype'                               => 'Computer',
+                        'items_id'                               => $key,
+                     ])) {
                      $group_item->add([
                         'plugin_fusioninventory_deploygroups_id'
                            => $_POST['id'],
