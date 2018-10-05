@@ -424,6 +424,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       $count = count($a_portconnection);
       $pfNetworkPort->loadNetworkport($networkports_id);
+
+      # Do not import MAC when Port is Aggregate
+      if (strpos($pfNetworkPort->getValue('ifdescr'),'Aggregation') !== false) {
+         return;
+      }
+
       if ($pfNetworkPort->getValue('trunk') != '1') {
          if ($count == '2') {
             // detect if phone IP is one of the 2 devices
