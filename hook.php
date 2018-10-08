@@ -1011,7 +1011,7 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
 
             // ** FusionInventory - switch
             case "glpi_plugin_fusioninventory_networkequipments.name" :
-               return "GROUP_CONCAT(glpi_networkequipments.name SEPARATOR '$$$$') AS ITEM_$num, ";
+               return "GROUP_CONCAT(DISTINCT glpi_networkequipments.name SEPARATOR '$$$$') AS ITEM_$num, ";
 
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networkports.id" :
