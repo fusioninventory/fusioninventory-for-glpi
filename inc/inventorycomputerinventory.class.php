@@ -401,7 +401,7 @@ class PluginFusioninventoryInventoryComputerInventory {
     * @param integer $items_id id of the item (0 = not exist in database)
     * @param string $itemtype
     */
-   function rulepassed($items_id, $itemtype) {
+   function rulepassed($items_id, $itemtype, $ports_id=0) {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
 
       PluginFusioninventoryToolbox::logIfExtradebug(

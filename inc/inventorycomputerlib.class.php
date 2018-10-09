@@ -1361,6 +1361,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                ? $arrays['serial']
                                : "";
          $data = $rule->processAllRules($input, [], ['class'=>$this, 'return' => true]);
+
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
                // add monitor
@@ -2950,5 +2951,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
       return $a_inventory;
+   }
+
+   // For monitors, printers... import
+   function rulepassed($items_id, $itemtype, $ports_id=0) {
+      return true;
    }
 }

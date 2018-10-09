@@ -54,6 +54,9 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninventoryInventoryCommon {
 
+   public $data_device = [];
+   public $found_ports = [];
+
 
    /**
     * Function to update NetworkEquipment
@@ -361,99 +364,146 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
    /**
     * Import LLDP connexions
     *
+    * List of fields we have :
+    *   - ifdescr
+    *   - logical_number
+    *   - sysdescr
+    *   - model
+    *   - ip
+    *   - mac
+    *   - name
+    *
     * @param array $a_lldp
     * @param integer $networkports_id
     */
    function importConnectionLLDP($a_lldp, $networkports_id) {
 
+      $this->found_ports = [];
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-
-      if ($a_lldp['ip'] == ''
-              && $a_lldp['name'] == ''
-              && $a_lldp['mac'] == '') {
-         return;
+      $this->data_device = $a_lldp;
+      // Prepare data to import rule
+      $input_crit = [];
+      if (!empty($a_lldp['ifdescr'])) {
+         $input_crit['ifdescr'] = $a_lldp['ifdescr'];
+      }
+      if (!empty($a_lldp['logical_number'])) {
+         $input_crit['ifnumber'] = $a_lldp['logical_number'];
+      }
+      /* not coded in rules
+      if (!empty($a_lldp['sysdescr'])) {
+         $input_crit['sysdescr'] = $a_lldp['sysdescr'];
+      }*/
+      if (!empty($a_lldp['mac'])) {
+         $input_crit['mac'] = [$a_lldp['mac']];
+      }
+      if (!empty($a_lldp['name'])) {
+         $input_crit['name'] = $a_lldp['name'];
+      }
+      if (!empty($a_lldp['model'])) {
+         $input_crit['model'] = $a_lldp['model'];
+      }
+      if (!empty($a_lldp['ip'])) {
+         $input_crit['ip'] = [$a_lldp['ip']];
       }
 
-      $portID = false;
-      if ($a_lldp['ip'] != '') {
-         $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_lldp['ip'],
-                                                         $a_lldp['ifdescr'],
-                                                         $a_lldp['sysdescr'],
-                                                         $a_lldp['name'],
-                                                         $a_lldp['model']);
-      } else {
-         if ($a_lldp['mac'] != '') {
-            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['mac'],
-                                                                       $a_lldp['logical_number'],
-                                                                       $a_lldp);
-         }
-      }
+      // Entity?
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
 
-      if ($portID
-              && $portID > 0) {
+      // * Reload rules (required for unit tests)
+      $rule->getCollectionPart();
+      $data = $rule->processAllRules($input_crit, [], ['class'=>$this]);
+      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
+                                                   $data);
+      $rule->getFromDB($data['_ruleid']);
+
+      if (count($this->found_ports)) {
+         $port_id = current(current($this->found_ports));
+
+         // We connect the 2 ports
          $wire = new NetworkPort_NetworkPort();
          $contact_id = $wire->getOppositeContact($networkports_id);
          if (!($contact_id
-                 AND $contact_id == $portID)) {
+                 AND $contact_id == $port_id)) {
             $pfNetworkPort->disconnectDB($networkports_id);
-            $pfNetworkPort->disconnectDB($portID);
+            $pfNetworkPort->disconnectDB($port_id);
+
             $wire->add(['networkports_id_1'=> $networkports_id,
-                             'networkports_id_2' => $portID]);
+                             'networkports_id_2' => $port_id]);
          }
       }
    }
 
 
    /**
-    * Import connexion with MAC address
+    * Import connection with MAC address
     *
     * @param array $a_portconnection
     * @param integer $networkports_id
     */
    function importConnectionMac($a_portconnection, $networkports_id) {
 
+      $this->found_ports = [];
       $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       $pfUnmanaged = new PluginFusioninventoryUnmanaged();
+      $rule = new PluginFusioninventoryInventoryRuleImportCollection();
 
-      $a_snmpports = current($pfNetworkPort->find("`networkports_id`='".$networkports_id."'",
-                                                  "",
-                                                  1));
-      $pfNetworkPort->getFromDB($a_snmpports['id']);
+      // Pass all MAC addresses in the import rules
+      foreach ($a_portconnection as $ifmac) {
+         $this->data_device = ['mac' => $ifmac];
+         $data = $rule->processAllRules(['mac' => $ifmac], [], ['class'=>$this]);
+      }
+      $list_all_ports_found = [];
+      foreach ($this->found_ports as $itemtype => $ids) {
+         foreach ($ids as $items_id) {
+            $list_all_ports_found[] = $items_id;
+         }
+      }
 
-      $count = count($a_portconnection);
+      if (count($list_all_ports_found) == 0) {
+         return;
+      }
+
       $pfNetworkPort->loadNetworkport($networkports_id);
-      if ($pfNetworkPort->getValue('trunk') != '1') {
-         if ($count == '2') {
-            // detect if phone IP is one of the 2 devices
+      if ($pfNetworkPort->getValue('trunk') == '1'
+            && count($list_all_ports_found) > 1) {
+         return;
+      }
+
+      // Try detect phone + computer on this port
+      if (count($list_all_ports_found) == 2) {
+         foreach ($this->found_ports as $itemtype => $ids) {
             $phonecase = 0;
             $macNotPhone_id = 0;
-            $macNotPhone = '';
             $phonePort_id = 0;
-            foreach ($a_portconnection as $ifmac) {
-               $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
-               $a_port = current($a_ports);
-               if ($a_port['itemtype'] == 'Phone') {
-                  // Connect phone on switch port and other (computer..) in this phone
-                  $phonePort_id = $a_port['id'];
+            if ($itemtype == "phone") {
+               // Connect phone on switch port and other (computer..) in this phone
+               foreach ($ids as $items_id) {
+                  $phonePort_id = current($items_id);
                   $phonecase++;
-               } else {
-                  $macNotPhone_id = $a_port['id'];
-                  $macNotPhone = $ifmac;
+               }
+            } else {
+               foreach ($ids as $items_id) {
+                  $macNotPhone_id = $items_id;
                }
             }
-            if ($phonecase == '1') {
-               $wire->add(['networkports_id_1'=> $networkports_id,
-                                'networkports_id_2' => $phonePort_id]);
-               $networkPort->getFromDB($phonePort_id);
+         }
+         if ($phonecase == 1) {
+            $wire->add(['networkports_id_1'=> $networkports_id,
+                             'networkports_id_2' => $phonePort_id]);
+            $networkPort->getFromDB($phonePort_id);
+            $portLink_id = 0;
+            if ($networkPort->fields['name'] == 'Link') {
+               $portLink_id = $networkPort->fields['id'];
+            } else {
+               // Perhaps the phone as another port named 'Link'
                $Phone = new Phone();
                $Phone->getFromDB($networkPort->fields['items_id']);
                $a_portsPhone = $networkPort->find("`items_id`='".$networkPort->fields['items_id']."'
                                                 AND `itemtype`='Phone'
                                                 AND `name`='Link'", '', 1);
-               $portLink_id = 0;
-               if (count($a_portsPhone) == '1') {
+               if (count($a_portsPhone) == 1) {
                   $a_portPhone = current($a_portsPhone);
                   $portLink_id = $a_portPhone['id'];
                } else {
@@ -465,137 +515,43 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                   $input['entities_id'] = $Phone->fields['entities_id'];
                   $portLink_id = $networkPort->add($input);
                }
-               $opposite_id = false;
-               if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
-                  if ($opposite_id != $macNotPhone_id) {
-                     $pfNetworkPort->disconnectDB($portLink_id); // disconnect this port
-                     $pfNetworkPort->disconnectDB($macNotPhone_id); // disconnect destination port
-                  }
-               }
-               if (!isset($macNotPhone_id)) {
-                  // Create unmanaged ports
-                  $unmanagedn_infos = [];
-                  $unmanagedn_infos["name"] = '';
-                  if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-                     $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
-                  }
-                  $newID = $pfUnmanaged->add($unmanagedn_infos);
-                  // Add networking_port
-                  $port_add = [];
-                  $port_add["items_id"] = $newID;
-                  $port_add["itemtype"] = 'PluginFusioninventoryUnmanaged';
-                  $port_add['mac'] = $macNotPhone;
-                  $port_add['instantiation_type'] = "NetworkPortEthernet";
-                  $macNotPhone_id = $networkPort->add($port_add);
-               }
-               $wire->add(['networkports_id_1'=> $portLink_id,
-                                'networkports_id_2' => $macNotPhone_id]);
-            } else {
-               $pfUnmanaged->hubNetwork($pfNetworkPort, $a_portconnection);
             }
-         } else if ($count > 1) { // MultipleMac
-            $pfUnmanaged->hubNetwork($pfNetworkPort, $a_portconnection);
-         } else { // One mac on port
-            foreach ($a_portconnection as $ifmac) { //Only 1 time
-               $a_ports = $networkPort->find("`mac`='".$ifmac."' AND `logical_number`='1'", "", 1);
-               if (count($a_ports) == 0) {
-                  $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
-               }
-               if (count($a_ports) > 0) {
-                  $a_port = current($a_ports);
-                  $hub = 0;
-                  $id = $networkPort->getContact($a_port['id']);
-                  if ($id AND $networkPort->getFromDB($id)) {
-                     if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
-                        $pfUnmanaged->getFromDB($networkPort->fields['items_id']);
-                        if ($pfUnmanaged->fields['hub'] == '1') {
-                           $hub = 1;
-                        }
-                     }
-                  }
-                  $direct_id = $networkPort->getContact($networkports_id);
-                  if ($id AND $id != $networkports_id
-                          AND $hub == '0') {
-
-                     $directconnect = 0;
-                     if (!$direct_id) {
-                        $directconnect = 1;
-                     } else {
-                        $networkPort->getFromDB($direct_id);
-                        if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
-                           // 1. Hub connected to this switch port
-                           $pfUnmanaged->connectPortToHub([$a_port],
-                                                              $networkPort->fields['items_id']);
-                        } else {
-                           // 2. direct connection
-                           $directconnect = 1;
-                        }
-                     }
-                     if ($directconnect == '1') {
-                        $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
-                        $pfNetworkPort->disconnectDB($a_port['id']); // disconnect destination port
-                        $wire->add(['networkports_id_1'=> $networkports_id,
-                                         'networkports_id_2' => $a_port['id']]);
-                     }
-                  } else if ($id and $hub == '1') {
-                     $directconnect = 0;
-                     if (!$direct_id) {
-                        $directconnect = 1;
-                     } else {
-                        $networkPort->getFromDB($direct_id);
-                        $ddirect = $networkPort->fields;
-                        $networkPort->getFromDB($id);
-                        if ($ddirect['items_id'] != $networkPort->fields['items_id']
-                                || $ddirect['itemtype'] != $networkPort->fields['itemtype']) {
-                           // The hub where this device is connected to is not connected
-                           // to this switch port
-                           if ($ddirect['itemtype'] == 'PluginFusioninventoryUnmanaged') {
-                              // b. We have a hub connected to the switch port
-                              $pfUnmanaged->connectPortToHub([$a_port],
-                                                                 $ddirect['items_id']);
-                           } else {
-                              // a. We have a direct connexion to another device
-                              // (on the switch port)
-                              $directconnect = 1;
-                           }
-                        }
-                     }
-                     if ($directconnect == '1') {
-                        $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
-                        $pfNetworkPort->disconnectDB($a_port['id']); // disconnect destination port
-                        $wire->add(['networkports_id_1'=> $networkports_id,
-                                         'networkports_id_2' => $a_port['id']]);
-                     }
-                  } else if (!$id) {
-                     // Not connected
-                     $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
-                     $wire->add(['networkports_id_1'=> $networkports_id,
-                                      'networkports_id_2' => $a_port['id']]);
-                  }
-               } else {
-                  // Create unmanaged device
-                  $pfUnmanaged = new PluginFusioninventoryUnmanaged();
-                  $input = [];
-                  $manufacturer =
-                     PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
-                  $manufacturer = Toolbox::addslashes_deep($manufacturer);
-                  $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
-                  $input['name'] = $manufacturer;
-                  if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-                     $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
-                  }
-                  $newID = $pfUnmanaged->add($input);
-                  $input['itemtype'] = "PluginFusioninventoryUnmanaged";
-                  $input['items_id'] = $newID;
-                  $input['mac'] = $ifmac;
-                  $input['instantiation_type'] = "NetworkPortEthernet";
-                  $newPortID = $networkPort->add($input);
-                  $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
-                  $wire->add(['networkports_id_1'=> $networkports_id,
-                                   'networkports_id_2' => $newPortID]);
+            $opposite_id = false;
+            if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
+               if ($opposite_id != $macNotPhone_id) {
+                  $pfNetworkPort->disconnectDB($portLink_id); // disconnect this port
+                  $pfNetworkPort->disconnectDB($macNotPhone_id); // disconnect destination port
                }
             }
+            $wire->add([
+               'networkports_id_1'=> $portLink_id,
+               'networkports_id_2' => $macNotPhone_id
+            ]);
+            return;
          }
+      }
+      if (count($list_all_ports_found) > 1) { // MultipleMac
+         // If we have minimum 1 device 'NetworkEquipment', we not manage these MAC addresses
+         if (isset($this->found_ports['NetworkEquipment'])) {
+            return;
+         }
+         // TODO update this function to pass the ports id found
+         $pfUnmanaged->hubNetwork($pfNetworkPort, $list_all_ports_found);
+      } else { // One mac on port
+         $networkPort->getFromDB(current($list_all_ports_found));
+         $id = $wire->getOppositeContact($networkPort->fields['id']);
+         if ($id && $id == $networkports_id) {
+            // yet connected
+            return;
+         }
+         $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
+         $pfNetworkPort->disconnectDB($networkPort->fields['id']); // disconnect destination port
+
+         $wire->add([
+            'networkports_id_1'=> $networkports_id,
+            'networkports_id_2' => $networkPort->fields['id']
+         ]);
+         return;
       }
    }
 
@@ -729,4 +685,114 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $input['networkports_id_list'] = $a_ports_db_tmp;
       $networkPortAggregate->update($input);
    }
+
+
+   /**
+    * After rule engine passed, update task (log) and create item if required
+    *
+    * @param integer $items_id id of the item (0 = not exist in database)
+    * @param string $itemtype
+    */
+   function rulepassed($items_id, $itemtype, $ports_id=0) {
+      PluginFusioninventoryToolbox::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "Rule passed : ".$items_id.", ".$itemtype."\n"
+      );
+      $NetworkPort = new NetworkPort();
+      if ($itemtype == "") {
+         $itemtype = "PluginFusioninventoryUnmanaged";
+      }
+      $class = new $itemtype;
+      if ($items_id == "0") {
+         // create the device
+         $input = $this->data_device;
+         if (!isset($input['name'])
+               && isset($input['mac'])) {
+            $manufacturer = PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($input['mac']);
+            $manufacturer = Toolbox::addslashes_deep($manufacturer);
+            $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
+            $input['name'] = $manufacturer;
+         }
+         $items_id = $class->add($input);
+         // Create the network port
+         $input = [
+            'items_id' => $items_id,
+            'itemtype' => $itemtype
+         ];
+         if (isset($this->data_device['ip'])) {
+            $input['_create_children'] = 1;
+            $input['NetworkName_name'] = '';
+            $input['NetworkName_fqdns_id'] = 0;
+            $input['NetworkName__ipaddresses'] = [
+               '-1' => $this->data_device['ip']
+            ];
+         }
+         if (isset($this->data_device['ifdescr'])
+               && !empty($this->data_device['ifdescr'])) {
+            $input['name'] = $this->data_device['ifdescr'];
+         }
+         if (!isset($input['name'])
+               && isset($this->data_device['mac'])) {
+            $manufacturer = PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($this->data_device['mac']);
+            $manufacturer = Toolbox::addslashes_deep($manufacturer);
+            $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
+            $input['name'] = $manufacturer;
+         }
+         if (isset($this->data_device['mac'])
+               && !empty($this->data_device['mac'])) {
+            $input['mac'] = $this->data_device['mac'];
+         }
+         $input['instantiation_type'] = 'NetworkPortEthernet';
+         $portID = $NetworkPort->add($input);
+         if (!isset($this->found_ports[$itemtype])) {
+            $this->found_ports[$itemtype] = [];
+         }
+         $this->found_ports[$itemtype][$portID] = $portID;
+      } else {
+        if ($ports_id > 0) {
+            if (!isset($this->found_ports[$itemtype])) {
+               $this->found_ports[$itemtype] = [];
+            }
+            $this->found_ports[$itemtype][$ports_id] = $ports_id;
+         } else {
+            // Add port
+            $input = [];
+            $input['items_id'] = $items_id;
+            $input['itemtype'] = $itemtype;
+            if (isset($this->data_device['ifdescr'])
+                  && !empty($this->data_device['ifdescr'])) {
+               $input['name'] = $this->data_device['ifdescr'];
+            }
+            if (isset($this->data_device['mac'])
+                  && !empty($this->data_device['mac'])) {
+               $input['mac'] = $this->data_device['mac'];
+            }
+            $input['instantiation_type'] = 'NetworkPortEthernet';
+            if (isset($this->data_device['ip'])
+                  && !empty($this->data_device['ip'])) {
+               $input['_create_children'] = 1;
+               $input['NetworkName_name'] = '';
+               $input['NetworkName_fqdns_id'] = 0;
+               $input['NetworkName__ipaddresses'] = [
+                  '-1' => $this->data_device['ip']
+               ];
+            }
+            $ports_id = $NetworkPort->add($input);
+            if (!isset($this->found_ports['PluginFusioninventoryUnmanaged'])) {
+               $this->found_ports['PluginFusioninventoryUnmanaged'] = [];
+            }
+            $this->found_ports['PluginFusioninventoryUnmanaged'][$ports_id] = $ports_id;
+         }
+      }
+   }
+
+   /**
+    * Get method name linked to this class
+    *
+    * @return string
+    */
+   static function getMethod() {
+      return PluginFusioninventoryCommunicationNetworkInventory::getMethod();
+   }
+
 }

@@ -438,7 +438,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @param string $itemtype itemtype of the device
     * @return string errors or empty string
     */
-   function rulepassed($items_id, $itemtype) {
+   function rulepassed($items_id, $itemtype, $ports_id=0) {
 
       $no_history = false;
 

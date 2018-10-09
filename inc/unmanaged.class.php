@@ -582,19 +582,19 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     * Manage a hub (many mac on a port mean you have a hub)
     *
     * @param object $pfNetworkport  Informations of the network port (switch port)
-    * @param array $a_mac
+    * @param array $ports_list list of ports found on the switch port
     */
-   function hubNetwork($pfNetworkport, $a_mac) {
+   function hubNetwork($pfNetworkport, $ports_list) {
 
       $nn = new NetworkPort_NetworkPort();
-      $Netport = new NetworkPort();
+      $networkPort = new NetworkPort();
       // Get port connected on switch port
       $hub_id = 0;
-      $ID = $nn->getOppositeContact($pfNetworkport->fields['networkports_id']);
+      $ID = $nn->getOppositeContact($pfNetworkport->getValue('networkports_id'));
       if ($ID) {
-         $Netport->getFromDB($ID);
-         if ($Netport->fields["itemtype"] == $this->getType()) {
-            $this->getFromDB($Netport->fields["items_id"]);
+         $networkPort->getFromDB($ID);
+         if ($networkPort->fields["itemtype"] == $this->getType()) {
+            $this->getFromDB($networkPort->fields["items_id"]);
             if ($this->fields["hub"] == "1") {
                // It's a hub connected, so will update connections
                //$this->releaseHub($this->fields['id'], $p_oPort);
@@ -602,28 +602,29 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             } else {
                // It's a direct connection, so disconnect and create a hub
                $this->disconnectDB($ID);
-               $hub_id = $this->createHub($pfNetworkport, $a_mac);
+               $hub_id = $this->createHub($pfNetworkport, $ports_list);
             }
          } else {
             // It's a direct connection, so disconnect and create a hub
             $this->disconnectDB($ID);
-            $hub_id = $this->createHub($pfNetworkport, $a_mac);
+            $hub_id = $this->createHub($pfNetworkport, $ports_list);
          }
       } else {
          // No connections found and create a hub
-         $hub_id = $this->createHub($pfNetworkport, $a_mac);
+         $hub_id = $this->createHub($pfNetworkport, $ports_list);
       }
-      // State : Now we have hub and it's id
+      // State : Now we have hub and the hubs id
 
       // Add source port id in comment of hub
-      $h_input = [];
-      $h_input['id'] = $hub_id;
-      $h_input['comment'] = "Port : ".$pfNetworkport->fields['networkports_id'];
+      $h_input = [
+         'id'      => $hub_id,
+         'comment' => "Port : ".$pfNetworkport->getValue('networkports_id'),
+      ];
       $this->update($h_input);
 
       // Get all ports connected to this hub
       $a_portglpi = [];
-      $a_ports = $Netport->find("`items_id`='".$hub_id."'
+      $a_ports = $networkPort->find("`items_id`='".$hub_id."'
           AND `itemtype`='".$this->getType()."'");
       foreach ($a_ports as $data) {
          $id = $nn->getOppositeContact($data['id']);
@@ -632,34 +633,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          }
       }
 
-      foreach ($a_mac as $ifmac) {
-         $a_ports = $Netport->find("`mac`='".$ifmac."'", "", 1);
-         if (count($a_ports) == "1") {
-            if (!$this->searchIfmacOnHub($a_ports, $a_portglpi)) {
-               // Connect port (port found in GLPI)
-               $this->connectPortToHub($a_ports, $hub_id);
-            }
-         } else if (count($a_ports) == "0") {
-            // Port don't exist
-            // Create unmanaged device
-            $input = [];
-            $a_manufacturer = [
-                0 => PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac)
-            ];
-            $a_manufacturer = PluginFusioninventoryFormatconvert::cleanArray($a_manufacturer);
-            $input['name'] = $a_manufacturer[0];
-            if (isset($_SESSION["plugin_fusioninventory_entity"])) {
-               $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
-            }
-            $unmanageds_id = $this->add($input);
-            $input = [];
-            $input["items_id"] = $unmanageds_id;
-            $input["itemtype"] = $this->getType();
-            $input["mac"] = $ifmac;
-            $input['instantiation_type'] = "NetworkPortEthernet";
-            $id_port = $Netport->add($input);
-            $Netport->getFromDB($id_port);
-            $this->connectPortToHub([$id_port => $Netport->fields], $hub_id);
+      foreach ($ports_list as $ports_id) {
+         if (!isset($a_portglpi[$ports_id])) {
+            // Connect port (port found in GLPI)
+            $this->connectPortToHub($ports_id, $hub_id);
          }
       }
    }
@@ -692,19 +669,17 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     * Connect a port to hub
     *
     * @global object $DB
-    * @param array $a_port datas of a port
+    * @param array $ports_id id of a port
     * @param integer $hub_id id of the hub (unmanaged device)
     * @return integer id of the port of the hub where port is connected
     */
-   function connectPortToHub($a_port, $hub_id) {
+   function connectPortToHub($ports_id, $hub_id) {
       global $DB;
 
-      $Netport = new NetworkPort();
+      $networkPort = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
 
-      $data = current($a_port);
-       //plugin_fusioninventory_addLogConnection("remove", $port_id);
-      $this->disconnectDB($data['id']);
+      $this->disconnectDB($ports_id);
       // Search free port
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
          LEFT JOIN `glpi_networkports_networkports`
@@ -724,13 +699,12 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          $input["items_id"] = $hub_id;
          $input["itemtype"] = $this->getType();
          $input['instantiation_type'] = "NetworkPortEthernet";
-         $freeport_id = $Netport->add($input);
+         $freeport_id = $networkPort->add($input);
       }
-      $this->disconnectDB($freeport_id);
-      $nn->add(['networkports_id_1'=> $data['id'],
-                     'networkports_id_2' => $freeport_id]);
-
-      //plugin_fusioninventory_addLogConnection("make", $port_id);
+      $nn->add([
+         'networkports_id_1'=> $ports_id,
+         'networkports_id_2' => $freeport_id
+      ]);
       return $freeport_id;
    }
 
@@ -758,82 +732,37 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
 
    /**
-    * Search if port yet connected to hub
-    *
-    * @param array $a_port datas of a port
-    * @param array $a_portglpi all ports connected to the hub
-    * @return false|integer id of the port of the hub where port is connected
-    */
-   function searchIfmacOnHub($a_port, $a_portglpi) {
-      $data = current($a_port);
-      if (isset($a_portglpi[$data['id']])) {
-         return $a_portglpi[$data['id']];
-      }
-      return false;
-   }
-
-
-   /**
     * Creation of a hub
     *
-    * @param object$pfNetworkport Informations of the network port
-    * @param array $a_mac
-    * @return integer id of the hub (unmanageddevice)
+    * @param object $pfNetworkport Informations of the network port
+    * @param array $ports_list liste of ports
+    * @return integer id of the hub (unmanaged device)
     */
-   function createHub($pfNetworkport, $a_mac) {
+   function createHub($pfNetworkport, $ports_list) {
 
-      $Netport = new NetworkPort();
+      $networkPort = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
-      //$pfAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
-      // Find in the mac connected to the if they are in hub without link port connected
-      foreach ($a_mac as $ifmac) {
-         $a_ports = $Netport->find("`mac`='".$ifmac."'");
-         foreach ($a_ports as $data) {
-            $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPortsID());
-            if ($ID) {
-               $Netport->getFromDB($ID);
-               if ($Netport->fields["itemtype"] == $this->getType()) {
-                  if ($this->fields["hub"] == "1") {
-                     $a_portLink = $Netport->find("`name`='Link'
-                        AND `items_id`='".$this->fields['id']."'
-                        AND `itemtype`='".$this->getType()."'");
-                     foreach ($a_portLink as $dataLink) {
-                        if (!$nn->getOppositeContact($dataLink['id'])) {
-                           // We have founded a hub orphelin
-                           $this->disconnectDB($pfNetworkport->fields['networkports_id']);
-                           $this->disconnectDB($dataLink['id']);
-                           $nn->add(['networkports_id_1'=>
-                                                $pfNetworkport->fields['networkports_id'],
-                                          'networkports_id_2' => $dataLink['id']]);
-                           $this->releaseHub($this->fields['id'], $pfNetworkport, $a_mac);
-                           return $this->fields['id'];
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      }
       // Not found, creation hub and link port
-      $input = [];
-      $input['hub'] = "1";
-      $input['name'] = "hub";
+      $input = [
+         'hub'  => 1,
+         'name' => 'hub',
+      ];
       if (isset($_SESSION["plugin_fusioninventory_entity"])) {
          $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
       }
       $hub_id = $this->add($input);
 
-      $input = [];
-      $input["items_id"] = $hub_id;
-      $input["itemtype"] = $this->getType();
-      $input["name"] = "Link";
-      $input['instantiation_type'] = "NetworkPortEthernet";
-      $port_id = $Netport->add($input);
-      $this->disconnectDB($pfNetworkport->fields['networkports_id']);
-      $this->disconnectDB($port_id);
-      $nn->add(['networkports_id_1'=> $pfNetworkport->fields['networkports_id'],
-                'networkports_id_2' => $port_id]);
+      $input = [
+         'items_id' => $hub_id,
+         'itemtype' => $this->getType(),
+         'name'     => "Link",
+         'instantiation_type' => 'NetworkPortEthernet'
+      ];
+      $ports_id = $networkPort->add($input);
+      $this->disconnectDB($pfNetworkport->getValue('networkports_id'));
+      $nn->add(['networkports_id_1'=> $pfNetworkport->getValue('networkports_id'),
+                'networkports_id_2' => $ports_id]);
       return $hub_id;
    }
 
