@@ -756,7 +756,10 @@ class PluginFusioninventoryToolbox {
          return $item->isDynamic()
             && countElementsInTable($table, [$fk => $item->getID()]);
       } else {
-         return 0;
+         // check if device has data in glpi_plugin_fusioninventory_rulematchedlogs table
+         return $item->isDynamic()
+            && countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+                                    ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]);
       }
    }
 

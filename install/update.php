@@ -6809,6 +6809,498 @@ function do_rule_migration($migration) {
          'type' => 'import_printer'
       ]
    );
+
+   // Add 8 rules for connexions from networkequipment in top of the list
+   $rule = new PluginFusioninventoryInventoryRuleImport();
+   if (countElementsInTable("glpi_rules", [
+      "name" => "Device update (by mac+ifnumber restricted port)",
+      "sub_type" => "PluginFusioninventoryInventoryRuleImport"
+      ]) == 0) {
+
+      $DB->query("UPDATE glpi_rules "
+            . "SET ranking = ranking + 8 "
+            . "WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
+
+      // Create rule for : Device update (by mac+ifnumber restricted port)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Device update (by mac+ifnumber restricted port)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 0,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifnumber",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifnumber",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "link_criteria_port",
+         'pattern'   => 1,
+         'condition' => 203
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Device update (by mac+ifnumber not restricted port)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Device update (by mac+ifnumber not restricted port)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 1,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifnumber",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifnumber",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Device update (by mac+ifnumber not restricted port)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Device update (by ip+ifdescr restricted port)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 2,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ip",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ip",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifdescr",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifdescr",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "link_criteria_port",
+         'pattern'   => 1,
+         'condition' => 203
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Device update (by mac+ifnumber not restricted port)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Device update (by ip+ifdescr not restricted port)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 3,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ip",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ip",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifdescr",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifdescr",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Device import (by mac+ifnumber)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Device import (by mac+ifnumber)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 4,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifnumber",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Device import (by ip+ifdescr)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Device import (by ip+ifdescr)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 5,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ip",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "ifdescr",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Update only mac address (mac on switch port)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Update only mac address (mac on switch port)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 6,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 10
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "only_these_criteria",
+         'pattern'   => 1,
+         'condition' => 204
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+
+      // Create rule for : Import only mac address (mac on switch port)
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $ruleimport     = new Rule();
+      $input = [
+         'name'     => 'Import only mac address (mac on switch port)',
+         'match'    => 'AND',
+         'sub_type' => 'PluginFusioninventoryInventoryRuleImport',
+         'is_active' => 1,
+         'ranking'  => 7,
+      ];
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "itemtype",
+         'pattern'   => 1,
+         'condition' => 9
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "mac",
+         'pattern'   => 1,
+         'condition' => 8
+      ];
+      $rulecriteria->add($input);
+
+      $input = [
+         'rules_id'  => $rule_id,
+         'criteria'  => "only_these_criteria",
+         'pattern'   => 1,
+         'condition' => 204
+      ];
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = [
+         'rules_id'    => $rule_id,
+         'action_type' => 'assign',
+         'field'       => '_fusion',
+         'value'       => '1'
+      ];
+      $ruleaction->add($input);
+   }
 }
 
 

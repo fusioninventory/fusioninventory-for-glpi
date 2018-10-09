@@ -235,7 +235,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
             return new PluginFusioninventoryPrinter();
 
          default:
-            Toolbox::logDebug("getFIItemClassInstance: there's no FI class for itemtype $itemtype");
+            // Toolbox::logDebug("getFIItemClassInstance: there's no FI class for itemtype $itemtype");
             return false;
       }
    }
