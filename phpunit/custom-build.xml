@@ -5,11 +5,11 @@
   <property name="tests.directory" value='${basedir}/glpi/plugins/fusioninventory/phpunit' />
   <target name="phpunit.unit.install" depends='plugin-fusioninventory.prepare' description="Run unit tests with PHPUnit">
    <antcall target="plugin-fusioninventory.phpunit.install"/>
- </target>
+  </target>
   <target name="phpunit.unit.custom" depends='plugin-fusioninventory.prepare' description="Run unit tests with PHPUnit">
    <phpunit.run type="custom" configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml'>
      <testfile>
-       <arg path='${tests.directory}/2_Integration/ComputerHistoryTest.php' />
+       <arg path='${tests.directory}/1_Unit/ComputerUpdateTest.php' />
      </testfile>
    </phpunit.run>
    <fail>

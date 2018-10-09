@@ -119,16 +119,14 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                break;
 
             case 'Computer':
-               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-               break;
-
+            case 'Monitor':
+            case 'NetworkEquipment':
+            case 'Peripheral':
+            case 'Phone':
             case 'Printer':
                $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
                break;
 
-            case 'NetworkEquipment':
-               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-               break;
             default:
                break;
 
@@ -224,7 +222,9 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
 
       $class = PluginFusioninventoryItem::getFIItemClassInstance($itemtype);
-      $class->showDownloadInventoryFile($items_id);
+      if ($class) {
+         $class->showDownloadInventoryFile($items_id);
+      }
 
       if (isset($_GET["start"])) {
          $start = $_GET["start"];

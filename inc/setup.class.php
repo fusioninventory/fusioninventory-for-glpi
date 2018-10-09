@@ -155,6 +155,253 @@ class PluginFusioninventorySetup {
       $rules = [];
 
       $rules[] = [
+         'name'      => 'Device update (by mac+ifnumber restricted port)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifnumber',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifnumber',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'link_criteria_port',
+               'condition' => 203,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Device update (by mac+ifnumber not restricted port)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifnumber',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifnumber',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Device update (by ip+ifdescr restricted port)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ip',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ip',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifdescr',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifdescr',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'link_criteria_port',
+               'condition' => 203,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Device update (by ip+ifdescr not restricted port)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ip',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ip',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifdescr',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifdescr',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Device import (by mac+ifnumber)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifnumber',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Device import (by ip+ifdescr)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ip',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'ifdescr',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Update only mac address (mac on switch port)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 10,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'only_these_criteria',
+               'condition' => 204,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
+         'name'      => 'Import only mac address (mac on switch port)',
+         'match'     => 'AND',
+         'is_active' => 1,
+         'criteria'  => [
+            [
+               'criteria'  => 'itemtype',
+               'condition' => 9,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'mac',
+               'condition' => 8,
+               'pattern'   => 1
+            ],
+            [
+               'criteria'  => 'only_these_criteria',
+               'condition' => 204,
+               'pattern'   => 1
+            ],
+         ],
+         'action'    => '_fusion1'
+      ];
+
+      $rules[] = [
          'name'      => 'Computer constraint (name)',
          'match'     => 'AND',
          'is_active' => 1,
