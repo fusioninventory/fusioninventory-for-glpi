@@ -714,9 +714,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     *
     * @param array $output
     * @param array $params
+    * @param array $input
     * @return array
     */
-   function executeActions($output, $params) {
+   function executeActions($output, $params, array $input = []) {
       if (isset($params['class'])) {
          $class = $params['class'];
       } else if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
