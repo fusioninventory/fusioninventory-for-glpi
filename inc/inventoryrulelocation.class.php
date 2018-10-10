@@ -115,9 +115,10 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
     *
     * @param array $output
     * @param array $params
+    * @param array $input
     * @return array
     */
-   function executeActions($output, $params) {
+   function executeActions($output, $params, array $input = []) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules-location",
