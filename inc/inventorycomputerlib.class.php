@@ -293,11 +293,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       }
 
       if (count($db_bios) == 0) {
-         if (isset($a_computerinventory['bios'])) {
+         if (isset($a_computerinventory['bios'])
+               && !empty($a_computerinventory['bios'])) {
             $this->addBios($a_computerinventory['bios'], $computers_id, $no_history);
          }
       } else {
-         if (isset($a_computerinventory['bios'])) {
+         if (isset($a_computerinventory['bios'])
+               && !empty($a_computerinventory['bios'])) {
             $arrayslower = array_map('strtolower', $a_computerinventory['bios']);
             foreach ($db_bios as $keydb => $arraydb) {
                if (isset($arrayslower['version']) && $arrayslower['version'] == $arraydb['version']) {
