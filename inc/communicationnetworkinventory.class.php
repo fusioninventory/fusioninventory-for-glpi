@@ -203,6 +203,26 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      $this->addtaskjoblog();
                   } else {
                      if (count($a_inventory) > 0) {
+                        if ($a_inventory['itemtype'] == 'NetworkEquipment') {
+                           // Detect if the device is a stacked switch
+                           $staked = $this->is_stacked_switch($a_inventory);
+                           if ($staked) {
+                              $devices = $this->split_stacked_switch($a_inventory);
+                              foreach ($devices as $device) {
+                                 $this->sendCriteria($device);
+                              }
+                              // So we had create the devices of the stack, no need continue to import the global stack
+                              return $errors;
+                           }
+                           $wirelesscontroller = $this->is_wireless_controller($a_inventory);
+                           if ($wirelesscontroller) {
+                              $accesspoints = $this->get_wireless_controller_access_points($a_inventory);
+                              foreach ($accesspoints as $device) {
+                                 $this->sendCriteria($device);
+                              }
+                              // we continue to manage / import / update the wireless controller
+                           }
+                        }
                         $errors .= $this->sendCriteria($a_inventory);
                         $nbDevices++;
                      }
@@ -558,5 +578,174 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
+   /**
+    * Detect if the device is a stacked switch.
+    * We use the level / dependencies of the components from root level
+    *
+    * case 1 :
+    *   * type stack
+    *     * type chassis with serial number (minimum of 2 chassis)
+    *
+    * case 2 :
+    *   * type chassis with serial number (minimum of 2 chassis)
+    *
+    */
+   function is_stacked_switch($a_inventory, $parent_index = 0) {
+      if (count($a_inventory['components']) == 0) {
+         return false;
+      }
+      $stack_chassis = 0;
+      foreach ($a_inventory['components'] as $component) {
+         if ($parent_index == 0
+               && !isset($component['parent_index'])
+               && $component['type'] == 'stack') {
+            $stack_chassis += $this->is_stacked_switch($a_inventory, $component['index']);
+         } else if ($component['type'] == 'chassis'
+               && isset($component['serial'])) {
+               $stack_chassis++;
+         }
+      }
+      if ($stack_chassis >= 2) {
+         return true;
+      }
+      return false;
+   }
+
+
+   /**
+    * We split stacked switches to manage them individually
+    *
+    * the ports field ifname has the number of the switch, for example:
+    *   - Gi1/0/1 (switch 1)
+    *   - Gi2/0/1 (swicth 2)
+    *
+    * @param type $a_inventory
+    */
+   function split_stacked_switch($a_inventory) {
+      $xml_devices = $this->get_stacked_switches_information($a_inventory);
+      ksort($xml_devices);
+      $devices = [];
+      // split the switch
+      // create new inventory for each switch
+      $portswitchid = 1;
+      $num = 0;
+      foreach ($xml_devices as $xml_device) {
+         $devices[$num] = [
+            'NetworkEquipment'                      => $a_inventory['NetworkEquipment'],
+            'itemtype'                              => 'NetworkEquipment',
+            'PluginFusioninventoryNetworkEquipment' => $a_inventory['PluginFusioninventoryNetworkEquipment'],
+            'firmwares'                             => $a_inventory['firmwares'],
+            'internalport'                          => $a_inventory['internalport'],
+            'networkport'                           => [],
+            'connection-lldp'                       => $a_inventory['connection-lldp'],
+            'connection-mac'                        => $a_inventory['connection-mac'],
+            'components'                            => []
+         ];
+
+         // Overwrite couple of information
+         $devices[$num]['firmwares'][0]['version'] = $xml_device['version'];
+         $devices[$num]['NetworkEquipment']['serial'] = $xml_device['serial'];
+         $devices[$num]['NetworkEquipment']['networkequipmentmodels_id'] = $xml_device['model'];
+         $devices[$num]['NetworkEquipment']['name'] .= " - ".$xml_device['name'];
+
+         // TODO: mettre les sous-composants ici
+
+         // ports
+         foreach ($a_inventory['networkport'] as $port) {
+            $matches = [];
+            preg_match('/([\w-]+)(\d+)\/(\d+)\/(\d+)/', $port['name'], $matches);
+            if (count($matches) == 5) {
+               if ($portswitchid != $matches[2]) {
+                  continue;
+               }
+               $devices[$num]['networkport'][] = $port;
+            } else {
+               // Generic port, so add in all devices
+               $devices[$num]['networkport'][] = $port;
+            }
+         }
+         $num++;
+         $portswitchid++;
+      }
+      return $devices;
+   }
+
+
+   function get_stacked_switches_information($a_inventory, $parent_index = 0) {
+      if (count($a_inventory['components']) == 0) {
+         return [];
+      }
+      $switches = [];
+      foreach ($a_inventory['components'] as $component) {
+         if ($parent_index == 0
+               && (!isset($component['parent_index'])
+                  || !empty($component['parent_index']))
+               && $component['type'] == 'stack') {
+            $switches += $this->get_stacked_switches_information($a_inventory, $component['index']);
+         } else if ($component['type'] == 'chassis'
+               && isset($component['serial'])) {
+            $switches[$component['index']] = $component;
+         }
+      }
+      return $switches;
+   }
+
+
+   function is_wireless_controller($a_inventory, $parent_index = 0) {
+      if (count($a_inventory['components']) == 0) {
+         return false;
+      }
+      $accesspoint = false;
+      foreach ($a_inventory['components'] as $component) {
+         if (!empty($component['ip'])
+               && !empty($component['mac'])) {
+            $accesspoint = true;
+            return $accesspoint;
+         }
+      }
+      return $accesspoint;
+   }
+
+   function get_wireless_controller_access_points($a_inventory) {
+      $accesspoints = [];
+      $num = 0;
+      foreach ($a_inventory['components'] as $component) {
+         if (!empty($component['ip'])
+               && !empty($component['mac'])) {
+            $accesspoints[$num] = [
+               'NetworkEquipment' => [
+                  'id'                        => 0,
+                  'locations_id'              => '',
+                  'mac'                       => $component['mac'],
+                  'manufacturers_id'          => '',
+                  'networkequipmentmodels_id' => $component['model'],
+                  'name'                      => $component['name'],
+                  'serial'                    => $component['serial'],
+                  'memory'                    => 0,
+                  'ram'                       => 0,
+                  'is_dynamic'                => 1
+               ],
+               'itemtype'  => 'NetworkEquipment',
+               'PluginFusioninventoryNetworkEquipment' => [
+                  'last_fusioninventory_update' => $a_inventory['PluginFusioninventoryNetworkEquipment']['last_fusioninventory_update']
+               ],
+               'firmwares' => [
+                  [
+                     'description'            => $component['comment'],
+                     'manufacturers_id'       => '',
+                     'name'                   => $component['model'],
+                     'devicefirmwaretypes_id' => 'device',
+                     'version'                => $component['version']
+                  ]
+               ],
+               'internalport' => [$component['ip']],
+               'networkport'  => [],
+               'components'   => []
+            ];
+            $num++;
+         }
+      }
+      return $accesspoints;
+   }
 }
 

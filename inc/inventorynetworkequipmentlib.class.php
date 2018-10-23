@@ -155,7 +155,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       //Import simcards
       $this->importSimcards('NetworkEquipment', $a_inventory, $items_id, $no_history);
-
    }
 
 
