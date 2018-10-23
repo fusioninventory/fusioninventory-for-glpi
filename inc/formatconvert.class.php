@@ -2293,6 +2293,33 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+      // * COMPONENTS
+      $a_inventory['components'] = [];
+      if (isset($array['COMPONENTS'])) {
+         foreach ($array['COMPONENTS']['COMPONENT'] as $a_component) {
+            $array_tmp = $thisc->addValues($a_component,
+                                           [
+                                              'INDEX'            => 'index',
+                                              'NAME'             => 'name',
+                                              'DESCRIPTION'      => 'comment',
+                                              'SERIAL'           => 'serial',
+                                              'MODEL'            => 'model',
+                                              'TYPE'             => 'type',
+                                              'FRU'              => 'fru',
+                                              'MANUFACTURER'     => 'manufacturers_id',
+                                              'FIRMWARE'         => 'firmware',
+                                              'REVISION'         => 'revision',
+                                              'VERSION'          => 'version',
+                                              'CONTAINEDININDEX' => 'parent_index',
+                                              'MAC'              => 'mac',
+                                              'IP'               => 'ip'
+                                           ]);
+            if (!isset($a_component['INDEX'])) {
+               continue;
+            }
+            $a_inventory['components'][$a_component['INDEX']] = $array_tmp;
+         }
+      }
       return $a_inventory;
    }
 
