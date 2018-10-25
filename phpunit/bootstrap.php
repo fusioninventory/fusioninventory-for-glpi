@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
-global $CFG_GLPI;
+global $CFG_GLPI, $GLPI_CACHE;
 
 include('./glpi/inc/includes.php');
 
