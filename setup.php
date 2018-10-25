@@ -59,7 +59,6 @@ define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.3+1.1 SNAPSHOT");
-include_once(GLPI_ROOT."/inc/includes.php");
 
 define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
