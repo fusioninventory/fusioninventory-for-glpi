@@ -38,6 +38,7 @@ matrix:
           packages:
             - ant
             - xsltproc
+    - php: 7.3
     - php: nightly
   allow_failures:
     - php: nightly
