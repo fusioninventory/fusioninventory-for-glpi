@@ -68,6 +68,10 @@ class FusinvInstallTest extends Common_TestCase {
                $DB->query("DROP TABLE ".$data[0]);
          }
       }
+
+      $query = "DELETE FROM `glpi_plugins` WHERE `directory`='fusioninventory'";
+      $DB->query($query);
+
       $this->install();
    }
 

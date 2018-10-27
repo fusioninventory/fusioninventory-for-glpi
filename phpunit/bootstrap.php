@@ -6,6 +6,7 @@ define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
 global $CFG_GLPI;
+global $GLPI_CACHE;
 
 include('./glpi/inc/includes.php');
 

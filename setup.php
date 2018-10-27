@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.3+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.4+1.0");
 // Minimal GLPI version, inclusive
 define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.4');
 // Maximum GLPI version, exclusive
@@ -58,7 +58,7 @@ $PF_ESXINVENTORY = false;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.3+1.1 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.4+1.0 SNAPSHOT");
 
 define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
@@ -548,6 +548,7 @@ function plugin_fusioninventory_check_prerequisites() {
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !$DB->tableExists("glpi_plugin_fusioninventory_configs")) {
+      echo __('plugin activated but table glpi_plugin_fusioninventory_configs is missing', 'fusioninventory');
       return false;
    }
 

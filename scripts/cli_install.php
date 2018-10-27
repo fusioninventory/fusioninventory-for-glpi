@@ -164,7 +164,7 @@ if ($args['--force-upgrade']) {
    define('FORCE_UPGRADE', true);
 }
 
-
+$plugin->init();
 $plugin->getFromDBbyDir("fusioninventory");
 print("Installing Plugin...\n");
 $plugin->install($plugin->fields['id']);
