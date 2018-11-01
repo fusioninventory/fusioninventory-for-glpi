@@ -216,6 +216,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          'datatype'  => 'integer',
       ];
 
+      $tab[] = [
+         'id'        => '15',
+         'table'     => $this->getTable(),
+         'field'     => 'computers_id',
+         'name'      => __('Computer id', 'fusioninventory'),
+         'datatype'  => 'integer',
+      ];
+
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
