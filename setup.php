@@ -47,7 +47,7 @@
 
 define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.3+1.2");
 // Minimal GLPI version, inclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.3');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.3.2');
 // Maximum GLPI version, exclusive
 define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '9.4');
 // Used for use config values in 'cache'
