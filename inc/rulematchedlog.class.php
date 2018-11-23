@@ -224,7 +224,9 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
 
       $class = PluginFusioninventoryItem::getFIItemClassInstance($itemtype);
-      $class->showDownloadInventoryFile($items_id);
+      if ($class) {
+         $class->showDownloadInventoryFile($items_id);
+      }
 
       if (isset($_GET["start"])) {
          $start = $_GET["start"];
