@@ -915,6 +915,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          "pluginFusioninventory-rules",
          "execute actions: ". count($this->actions) ."\n"
       );
+      $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
 
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
@@ -940,7 +941,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                            }
                            return $output;
                         } else {
-                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $output['action'] = self::LINK_RESULT_LINK;
                            return $output;
                         }
@@ -957,15 +957,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                               if (isset($class)
                                     && method_exists($class, 'rulepassed')) {
                                  if (!isset($params['return'])) {
-                                    $_SESSION['plugin_fusioninventory_rules_id'] =
-                                                   $this->fields['id'];
                                     $class->rulepassed("0", $itemtype);
                                  }
                                  $output['found_equipment'] = [0, $itemtype];
                                  return $output;
                               } else {
-                                 $_SESSION['plugin_fusioninventory_rules_id'] =
-                                         $this->fields['id'];
                                  $output['action'] = self::LINK_RESULT_CREATE;
                                  return $output;
                               }
@@ -977,13 +973,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                         if (isset($class)
                               && method_exists($class, 'rulepassed')) {
                            if (!isset($params['return'])) {
-                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                               $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
                            }
                            $output['found_equipment'] = [0, "PluginFusioninventoryUnmanaged"];
                            return $output;
                         } else {
-                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $output['action'] = self::LINK_RESULT_CREATE;
                            return $output;
                         }
@@ -994,7 +988,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      "pluginFusioninventory-rules",
                      "- action denied\n"
                   );
-                  $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                   $output['action'] = self::LINK_RESULT_DENIED;
                   return $output;
                }
@@ -1003,7 +996,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   "pluginFusioninventory-rules",
                   "- ignore import\n"
                );
-               $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                $output['action'] = self::LINK_RESULT_DENIED;
                return $output;
             } else {
@@ -1021,13 +1013,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                         if (isset($class)
                               && method_exists($class, 'rulepassed')) {
                            if (!isset($params['return'])) {
-                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                               $class->rulepassed("0", $itemtype);
                            }
                            $output['found_equipment'] = [0, $itemtype];
                            return $output;
                         } else {
-                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $output['action'] = self::LINK_RESULT_CREATE;
                            return $output;
                         }
@@ -1039,13 +1029,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   if (isset($class)
                         && method_exists($class, 'rulepassed')) {
                      if (!isset($params['return'])) {
-                        $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                         $class->rulepassed("0", "PluginFusioninventoryUnmanaged");
                      }
                      $output['found_equipment'] = [0, 'PluginFusioninventoryUnmanaged'];
                      return $output;
                   } else {
-                     $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                      $output['action'] = self::LINK_RESULT_CREATE;
                      return $output;
                   }
