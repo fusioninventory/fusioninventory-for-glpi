@@ -99,7 +99,7 @@ echo "Set version and official release"
 sed \
    -e 's/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1"/' \
    -e 's/ SNAPSHOT//' \
-   -i setup.php
+   -i '' setup.php
 
 echo "Minify stylesheets and javascripts"
 $INIT_PWD/vendor/bin/robo minify
