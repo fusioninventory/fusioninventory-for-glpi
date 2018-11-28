@@ -104,9 +104,14 @@ if (!$DB->tableExists("glpi_configs")) {
    die("GLPI not installed\n");
 }
 
+$user = new User();
 if (!is_null($args['--as-user'])) {
-   $user = new User();
    $user->getFromDBbyName($args['--as-user']);
+} else {
+   $user->getFromDBbyName('glpi');
+}
+
+if (!$user->isNewItem()) {
    $auth = new Auth();
    $auth->auth_succeded = true;
    $auth->user = $user;

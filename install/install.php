@@ -337,22 +337,15 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    /*
     * Define when install agent_base_url in glpi_plugin_fusioninventory_entities
     */
-   $full_url = filter_input(INPUT_SERVER, "PHP_SELF");
-   $https = filter_input(INPUT_SERVER, "HTTPS");
-   $http_host = filter_input(INPUT_SERVER, "HTTP_HOST");
-   if (!empty($full_url) && !strstr($full_url, 'cli_install.php')) {
-      if (!empty($https)) {
-         $agent_base_url = 'https://'.$http_host.$full_url;
-      } else {
-         $agent_base_url = 'http://'.$http_host.$full_url;
-      }
-      $agent_base_url = str_replace('/front/plugin.form.php', '', $agent_base_url);
-      $DB->update(
-         'glpi_plugin_fusioninventory_entities', [
-            'agent_base_url'  => $agent_base_url
-         ], [
-            'id'              => 1
-         ]
+   $iterator = $DB->request([
+      'SELECT' => 'value',
+      'FROM'   => Config::getTable(),
+      'WHERE'  => ['name' => 'url_base'],
+   ]);
+   if ($row = $iterator->next()) {
+      $DB->update('glpi_plugin_fusioninventory_entities',
+         ['agent_base_url' => rtrim($row['value'], '/')],
+         ['id' => 1]
       );
    }
 

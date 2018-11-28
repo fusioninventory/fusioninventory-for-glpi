@@ -173,7 +173,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             //OS exists, check for updates
             $same = true;
             foreach ($input_os as $key => $value) {
-               if ($ios->fields[$key] != $value) {
+               if (key_exists($key, $ios->fields) && $ios->fields[$key] != $value) {
                   $same = false;
                   break;
                }

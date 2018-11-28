@@ -9,6 +9,10 @@ global $CFG_GLPI;
 
 include('./glpi/inc/includes.php');
 
+Config::setConfigurationValues('core', [
+   'url_base' => 'http://localhost:8088'
+]);
+
 if (!defined('FUSINV_ROOT')) {
    define('FUSINV_ROOT', GLPI_ROOT . DIRECTORY_SEPARATOR . '/plugins/fusioninventory');
    set_include_path(
