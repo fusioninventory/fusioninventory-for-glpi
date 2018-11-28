@@ -3,14 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Anael Mobilia <contrib@anael.eu>, 2018
+# Walid Nouh, 2018
+# Johan Cwiklinski <jcwiklinski@teclib.com>, 2018
+# Mikael MASSON <mmasson@cyberprotect.fr>, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Johan Cwiklinski <jcwiklinski@teclib.com>, 2018\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
+"Last-Translator: Mikael MASSON <mmasson@cyberprotect.fr>, 2018\n"
 "Language-Team: French (France) (https://www.transifex.com/ddurieux/teams/797/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2007,7 +2013,7 @@ msgstr "Imprimantes"
 
 #: inc/menu.class.php:890 inc/menu.class.php:919
 msgid "Linked with a device"
-msgstr ""
+msgstr "Lié avec un matériel"
 
 #: inc/menu.class.php:895
 msgid "SNMP switch network ports not linked"
@@ -2023,7 +2029,7 @@ msgstr "Préparé et en attente"
 
 #: inc/menu.class.php:985
 msgid "Automatic inventory vs manually added"
-msgstr ""
+msgstr "Inventaire automatique vs ajout manuel"
 
 #: inc/menu.class.php:987
 msgid "Computer inventories in the last hours"
@@ -2039,11 +2045,11 @@ msgstr "Inventaire réseau par SNMP"
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr ""
+msgstr "Ports sur les équipements réseaux (inventaire remonté par SNMP)"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr ""
+msgstr "Ports sur tout les équipements réséaux"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
