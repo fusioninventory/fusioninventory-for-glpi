@@ -212,13 +212,9 @@ taskjobs.refresh_pinned_agents = function(chart_id) {
    $.each(chart.pinned_agents, function(agent_id, agent) {
 
       if (agent) {
-         var max_iteration = Math.min(agent.length, taskjobs.includeoldjobs);
-         if (max_iteration == -1) {
-            max_iteration = agent.length;
-         }
-         for (i=0; i< max_iteration; i++) {
+         for (i=0; i< agent.length; i++) {
             if (i > 0 && agent.length > 1 && agent[i].jobstate_id == agent[i-1].jobstate_id) {
-               break;
+               continue;
             }
 
             $.ajax( {
@@ -391,7 +387,7 @@ function agents_chart(chart_id) {
                         run.run +
                         "</th></tr>"
                      );
-                      $.each(run.logs, function( log_index, log) {
+                      $.each(run.logs, function(log_index, log) {
                         rows.push(
                            "<tr class='run log'>" +
                            "<td>" + log['log.date'] +"</td>"+

@@ -239,6 +239,14 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
          if ($canedit) {
             echo "</a>";
          }
+
+         if ($check['return'] === 'startnow') {
+            echo "<br />";
+            $warning = sprintf(__('Fusioninventory-Agent %1s or higher mandatory'), '2.4.2');
+            echo "<img src='".$CFG_GLPI['root_doc']."/pics/warning_min.png'>";
+            echo "<span class='red'><i>".$warning."</i></span>";
+         }
+
          echo "<br />";
          $type_values = $this->getLabelsAndTypes($check['type'], false);
          if (isset($type_values['path_label'])) {
@@ -563,6 +571,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    function getAllReturnValues() {
       return  ["error"   => __('abort job', 'fusioninventory'),
                "skip"    => __("skip job", 'fusioninventory'),
+               "startnow" => __("start job now", 'fusioninventory'),
                "info"    => __("report info", 'fusioninventory'),
                "warning" => __("report warning", 'fusioninventory')
               ];

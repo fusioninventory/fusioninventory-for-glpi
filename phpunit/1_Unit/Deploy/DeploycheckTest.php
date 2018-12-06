@@ -421,6 +421,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $values = $check->getAllReturnValues();
       $expected = ["error"    => __('abort job', 'fusioninventory'),
                    "skip"     => __("skip job", 'fusioninventory'),
+                   "startnow" => __("start job now", 'fusioninventory'),
                    "info"     => __("report info", 'fusioninventory'),
                    "warning"  => __("report warning", 'fusioninventory')
                ];
@@ -435,6 +436,7 @@ class DeploycheckTest extends RestoreDatabase_TestCase {
       $check = new PluginFusioninventoryDeployCheck();
       $this->assertEquals('abort job', $check->getValueForReturn('error'));
       $this->assertEquals('skip job', $check->getValueForReturn('skip'));
+      $this->assertEquals('start job now', $check->getValueForReturn('startnow'));
       $this->assertEquals('report info', $check->getValueForReturn('info'));
       $this->assertEquals('report warning', $check->getValueForReturn('warning'));
       $this->assertEquals('', $check->getValueForReturn('foo'));

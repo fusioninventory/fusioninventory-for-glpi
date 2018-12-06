@@ -79,6 +79,12 @@ else
   echo "$RELEASE has not been found in fusioninventory.xml. Exiting."
   exit 1;
 fi
+if grep --quiet $RELEASE js/footer.js; then
+  echo "$RELEASE found in js/footer.js, OK."
+else
+  echo "$RELEASE has not been found in js/footer.js. Exiting."
+  exit 1;
+fi
 
 echo "Check XML WF"
 if ! xmllint --noout fusioninventory.xml; then
@@ -93,7 +99,7 @@ echo "Set version and official release"
 sed \
    -e 's/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1"/' \
    -e 's/ SNAPSHOT//' \
-   -i setup.php
+   -i '' setup.php
 
 echo "Minify stylesheets and javascripts"
 $INIT_PWD/vendor/bin/robo minify
