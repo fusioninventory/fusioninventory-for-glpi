@@ -54,8 +54,8 @@ before_install:
  - mysql -u root -e "FLUSH PRIVILEGES;"
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
  - pushd glpi
- - php scripts/cliinstall.php --db=glpi --user=travis --pass=travis
- - php scripts/cliupdate.php |grep -q "No migration needed." || (echo "scripts/cliupdate.php FAILED" && exit 1)
+ - bin/console db:install --no-interaction --db-name=glpi --db-user=travis --db-password=travis
+ - bin/console db:update |grep -q "No migration needed." || (echo "db:update FAILED" && exit 1)
  - popd
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
  - pushd glpi/plugins/fusioninventory/phpunit/
