@@ -133,9 +133,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    function getMatchingItemsCount($itemtype) {
       $count = 0;
-      if ($itemtype == 'PluginFusionInventoryTaskjob') {
+      if ($itemtype == 'PluginFusionInventoryTaskjob'
+            && is_numeric($_GET['id'])) {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $data = $pfTaskjob->find("`actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'");
+         $data = $pfTaskjob->find(['actors' => ['LIKE', '%"PluginFusioninventoryDeployGroup":"'.$_GET['id'].'"%']]);
          $count = count($data);
       }
       return $count;
@@ -552,8 +553,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $results = [];
       if ($group->isStaticGroup()) {
          $staticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
-         foreach ($staticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'
-                                AND `itemtype`='Computer'") as $tmpgroup) {
+         foreach ($staticgroup->find(
+               ['plugin_fusioninventory_deploygroups_id' => $groups_id,
+                'itemtype'                               => 'Computer']) as $tmpgroup) {
             $results[$tmpgroup['items_id']] = $tmpgroup['items_id'];
          }
       } else {

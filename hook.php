@@ -389,7 +389,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
       if ($type == 'Computer') {
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $pfAgentmodule->find("`modulename`='".$field."'");
+         $a_modules = $pfAgentmodule->find(['modulename' => $field]);
          $data2 = current($a_modules);
          if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
             if (strstr($data['raw']["ITEM_".$num."_0"], '"'.$data['raw']["ITEM_".$num."_1"].'"')) {
@@ -404,7 +404,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
       } else {
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-         $a_modules = $pfAgentmodule->find("`modulename`='".$field."'");
+         $a_modules = $pfAgentmodule->find(['modulename' => $field]);
          foreach ($a_modules as $data2) {
             if ($table.".".$field == "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
                if (strstr($data['raw']["ITEM_".$num."_0"], '"'.$data['raw']['id'].'"')) {
@@ -863,6 +863,7 @@ function plugin_fusioninventory_install() {
 function plugin_fusioninventory_uninstall() {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
    return PluginFusioninventorySetup::uninstall();
 }
 
@@ -1628,7 +1629,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
          foreach ($a_agent_modules as $module) {
             if ($table.".".$field == 'glpi_plugin_fusioninventory_agentmodules.'.$module) {
                $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-               $a_modules = $pfAgentmodule->find("`modulename`='".$module."'");
+               $a_modules = $pfAgentmodule->find(['modulename' => $module]);
                $data = current($a_modules);
                if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
                   $a_exceptions = importArrayFromDB($data['exceptions']);
@@ -1912,7 +1913,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate;
          if ($agent_id = $pfAgent->getAgentWithComputerid($items_id)) {
             // count associated tasks to the agent
-            $states = $pfTaskjobstate->find("`plugin_fusioninventory_agents_id` = $agent_id", "", 1);
+            $states = $pfTaskjobstate->find(['plugin_fusioninventory_agents_id' => $agent_id], [], 1);
             if (count($states) > 0) {
                // Delete link between computer and agent fusion
                $pfAgent->update([
@@ -2111,8 +2112,9 @@ function plugin_item_purge_fusioninventory($parm) {
 
          // If hub have no port, delete it
          foreach (array_keys($a_hubs) as $unknowndevice_id) {
-            $a_networkports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnmanaged'
-               AND `items_id`='".$unknowndevice_id."' ");
+            $a_networkports = $NetworkPort->find(
+                  ['itemtype' => 'PluginFusioninventoryUnmanaged',
+                   'items_id' => $unknowndevice_id]);
             if (count($a_networkports) < 2) {
                $pfUnmanaged->delete(['id' => $unknowndevice_id], 1);
             } else if (count($a_networkports) == '2') {

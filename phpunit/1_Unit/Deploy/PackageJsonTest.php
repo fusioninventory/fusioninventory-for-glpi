@@ -94,13 +94,13 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
     */
    public function duplicate() {
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-      $packages        = $pfDeployPackage->find("`name`='test2'");
+      $packages        = $pfDeployPackage->find(['name' => 'test2']);
       $this->assertEquals(1, count($packages));
       $package = current($packages);
 
       $this->assertTrue($pfDeployPackage->duplicate($package['id']));
 
-      $packages = $pfDeployPackage->find("`name`='Copy of test2'");
+      $packages = $pfDeployPackage->find(['name' => 'Copy of test2']);
       $this->assertEquals(1, count($packages));
       $package = current($packages);
 

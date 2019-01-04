@@ -220,7 +220,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $networkport->getFromDB($networkports_id);
       $this->portDB = $networkport->fields;
 
-      $a_fusports = $this->find("`networkports_id`='".$networkports_id."'", "", 1);
+      $a_fusports = $this->find(['networkports_id' => $networkports_id], [], 1);
       if (count($a_fusports) > 0) {
          $a_fusport = current($a_fusports);
          foreach ($a_fusport as $key=>$value) {

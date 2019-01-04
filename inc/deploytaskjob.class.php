@@ -274,9 +274,9 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                   break;
 
                case 'Group':
-                  $like = "1";
+                  $like = [];
                   if (isset($params['query'])) {
-                     $like = "name LIKE '%".$DB->escape($params['query'])."'";
+                     $like += ['name' => ['LIKE', '%'.$DB->escape($params['query'])]];
                   }
                   $group = new Group;
                   $group_datas = $group->find($like);

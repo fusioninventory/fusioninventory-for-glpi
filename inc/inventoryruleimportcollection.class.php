@@ -193,24 +193,21 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       $need = 1+($retrieve_criteria?2:0)+($retrieve_action?4:0);
 
       //Select all the rules of a different type
-      $sql = $this->getRuleListQuery();
+      $criteria = $this->getRuleListCriteria();
+      $iterator = $DB->request($criteria);
 
-      $result = $DB->query($sql);
-      if ($result) {
-         $this->RuleList->list = [];
+      $this->RuleList->list = [];
+      while ($rule = $iterator->next()) {
+         //For each rule, get a Rule object with all the criterias and actions
+         $tempRule = $this->getRuleClass();
 
-         while ($rule = $DB->fetch_assoc($result)) {
-            //For each rule, get a Rule object with all the criterias and actions
-            $tempRule = $this->getRuleClass();
-
-            if ($tempRule->getRuleWithCriteriasAndActions($rule["id"], $retrieve_criteria,
-                                                          $retrieve_action)) {
-               //Add the object to the list of rules
-               $this->RuleList->list[] = $tempRule;
-            }
+         if ($tempRule->getRuleWithCriteriasAndActions($rule["id"], $retrieve_criteria,
+                                                       $retrieve_action)) {
+            //Add the object to the list of rules
+            $this->RuleList->list[] = $tempRule;
          }
-         $this->RuleList->load = $need;
       }
+      $this->RuleList->load = $need;
    }
 
 

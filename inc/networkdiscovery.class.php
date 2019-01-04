@@ -386,8 +386,8 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       }
       $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
       $a_auths = $pfIPRange_ConfigSecurity->find(
-              "`plugin_fusioninventory_ipranges_id`='".$pfIPRange->fields['id']."'",
-              "rank");
+            ['plugin_fusioninventory_ipranges_id' => $pfIPRange->fields['id']],
+            ['rank']);
       foreach ($a_auths as $dataAuth) {
          $pfToolbox->addAuth($sxml_option, $dataAuth['plugin_fusioninventory_configsecurities_id']);
       }

@@ -163,7 +163,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'operatingsystemversions_id'        => $pfos['operatingsystemversions_id'],
             'operatingsystemservicepacks_id'    => $pfos['operatingsystemservicepacks_id'],
             'operatingsystemeditions_id'        => $pfos['operatingsystemeditions_id'],
-            'license_id'                        => $pfos['licenseid'],
+            'licenseid'                         => $pfos['licenseid'],
             'license_number'                    => $pfos['license_number'],
             'is_dynamic'                        => 1,
             'entities_id'                       => $computer->fields['entities_id']
@@ -1712,8 +1712,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
-            $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
-               AND `itemtype`='PluginFusioninventoryUnmanaged'", "", 1);
+            $a_networkports = $networkPort->find(
+                  ['mac'      => $a_networkport['mac'],
+                   'itemtype' => 'PluginFusioninventoryUnmanaged'],
+                  [], 1);
             if (count($a_networkports) > 0) {
                $input = current($a_networkports);
                $unmanageds_id = $input['items_id'];
@@ -1808,7 +1810,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                                           'NetworkPortFiberchannel'])) {
 
                      $instance = new $instantiation_type;
-                     $portsinstance = $instance->find("`networkports_id`='".$keydb."'", '', 1);
+                     $portsinstance = $instance->find(['networkports_id' => $keydb], [], 1);
                      if (count($portsinstance) == 1) {
                         $portinstance = current($portsinstance);
                         $input = $portinstance;
@@ -1827,11 +1829,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      }
                      if (isset($inventory_networkports[$key]['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
-                                "`mac`='".$inventory_networkports[$key]['mac']."' "
-                                . " AND `itemtype`='Computer'"
-                                . " AND `items_id`='".$computers_id."'",
-                                '',
-                                1);
+                                ['mac'      => $inventory_networkports[$key]['mac'],
+                                 'itemtype' => 'Computer',
+                                 'items_id' => $computers_id],
+                                [], 1);
                         if (count($networkcards) == 1) {
                            $networkcard = current($networkcards);
                            $input['items_devicenetworkcards_id'] = $networkcard['id'];
@@ -1847,8 +1848,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                }
 
                // Get networkname
-               $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
-                                                    AND `itemtype`='NetworkPort'", "", 1));
+               $a_networknames_find = current($networkName->find(
+                     ['items_id' => $keydb,
+                      'itemtype' => 'NetworkPort'],
+                     [], 1));
                if (!isset($a_networknames_find['id'])) {
                   $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
                   $a_networkport['items_id'] = $computers_id;
@@ -1968,11 +1971,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      }
                      if (isset($a_networkport['mac'])) {
                         $networkcards = $item_DeviceNetworkCard->find(
-                                "`mac`='".$a_networkport['mac']."' "
-                                . " AND `itemtype`='Computer'"
-                                . " AND `items_id`='".$computers_id."'",
-                                '',
-                                1);
+                                ['mac'      => $a_networkport['mac'],
+                                 'itemtype' => 'Computer',
+                                 'items_id' => $computers_id],
+                                [], 1);
                         if (count($networkcards) == 1) {
                            $networkcard = current($networkcards);
                            $input['items_devicenetworkcards_id'] = $networkcard['id'];

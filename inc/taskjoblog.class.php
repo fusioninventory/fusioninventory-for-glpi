@@ -304,10 +304,9 @@ function appear_array(id) {
       $pfTaskjobstate->getFromDB($taskjobstates_id);
 
       $displayforceend = 0;
-      $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.
-                                   $pfTaskjobstate->fields['id'].'"',
-                               'id DESC',
-                               '1');
+      $a_history = $this->find(
+            ['plugin_fusioninventory_taskjobstates_id' => $pfTaskjobstate->fields['id']],
+            ['id DESC'], 1);
 
       echo "<tr class='tab_bg_1'>";
       echo "<td width='40' id='plusmoins".$pfTaskjobstate->fields["id"]."'><img src='".
@@ -399,8 +398,7 @@ function appear_array(id) {
       foreach ($DB->request($params) as $data) {
 
          $displayforceend = 0;
-         $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$data['id'].'"',
-                                  'id');
+         $a_history = $this->find(['plugin_fusioninventory_taskjobstates_id' => $data['id']], ['id']);
 
          if (strstr(exportArrayToDB($a_history), "Merged with ")) {
             $classname = $data['itemtype'];

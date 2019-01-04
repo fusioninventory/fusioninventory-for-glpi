@@ -120,7 +120,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    function showForm($entities_id, $options = []) {
       global $CFG_GLPI;
 
-      $a_configs = $this->find("`entities_id`='".$entities_id."'", "", 1);
+      $a_configs = $this->find(['entities_id' => $entities_id], [], 1);
       $id = 0;
       if (count($a_configs) == '1') {
          $a_config = current($a_configs);

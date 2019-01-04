@@ -113,7 +113,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       ];
       $itemDisk->add($a_cdisk);
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id]);
       $this->assertEquals(1, count($a_computerdisk), 'Right no dynamic added');
 
       $pfiComputerLib->updateComputer($a_computerinventory,
@@ -121,10 +121,10 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                                       false,
                                       1);
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id]);
       $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk');
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."' AND `is_dynamic`='1'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id, 'is_dynamic' => 1]);
       $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk and is dynamic');
    }
 
@@ -207,15 +207,13 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       ];
       $itemDisk->add($a_cdisk);
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id]);
       $this->assertEquals(2, count($a_computerdisk), 'May have dynamic + no dynamic computerdisk');
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'
-         AND `is_dynamic`='0'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id, 'is_dynamic' => 0]);
       $this->assertEquals(1, count($a_computerdisk), '(1)Not dynamic');
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'
-         AND `is_dynamic`='1'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id, 'is_dynamic' => 1]);
       $this->assertEquals(1, count($a_computerdisk), '(2)Dynamic');
 
       $pfiComputerLib->updateComputer($a_computerinventory,
@@ -223,14 +221,14 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
                                       false,
                                       1);
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id]);
       $this->assertEquals(2, count($a_computerdisk), 'May ALWAYS have dynamic '.
                                                      '+ no dynamic computerdisk');
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."' AND `is_dynamic`='0'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id, 'is_dynamic' => 0]);
       $this->assertEquals(1, count($a_computerdisk), '(3)Not dynamic');
 
-      $a_computerdisk = $itemDisk->find("`itemtype`='Computer' AND `items_id`='".$computers_id."' AND `is_dynamic`='1'");
+      $a_computerdisk = $itemDisk->find(['itemtype' => 'Computer', 'items_id' => $computers_id, 'is_dynamic' => 1]);
       $this->assertEquals(1, count($a_computerdisk), '(4)Dynamic');
    }
 
@@ -321,16 +319,14 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
-      $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
-         AND `itemtype`='Computer'");
+      $a_processors = $item_DeviceProcessor->find(['items_id' => $computers_id, 'itemtype' => 'Computer']);
       $this->assertEquals(2, count($a_processors), 'May have the 2 Processors');
 
       // Remove one processor from inventory
       unset($a_inventory['processor'][1]);
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
-      $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
-         AND `itemtype`='Computer'");
+      $a_processors = $item_DeviceProcessor->find(['items_id' => $computers_id, 'itemtype' => 'Computer']);
       $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after
                            deleted a processor from inventory');
    }

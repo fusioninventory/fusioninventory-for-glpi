@@ -260,7 +260,7 @@ class FusinvDB extends Assert{
        * Verify config fields added
        */
       $plugin = new Plugin();
-      $data = $plugin->find("directory='fusioninventory'");
+      $data = $plugin->find(['directory' => 'fusioninventory']);
       $plugins_id = 0;
       if (count($data)) {
          $fields = current($data);

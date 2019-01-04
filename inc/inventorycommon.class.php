@@ -150,7 +150,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
             $networkports_id = $networkPort->add($a_port, [], !$no_history);
             unset($a_port['id']);
             $a_pfnetworkport_DB = current($pfNetworkPort->find(
-                    "`networkports_id`='".$networkports_id."'", '', 1));
+                    ['networkports_id' => $networkports_id], [], 1));
             $a_port['id'] = $a_pfnetworkport_DB['id'];
             $pfNetworkPort->update($a_port);
          } else {
@@ -162,7 +162,7 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
 
             // Check if pfnetworkport exist.
             $a_pfnetworkport_DB = current($pfNetworkPort->find(
-                    "`networkports_id`='".$networkports_id."'", '', 1));
+                    ['networkports_id' => $networkports_id], [], 1));
             $a_port['networkports_id'] = $networkports_id;
             if (isset($a_pfnetworkport_DB['id'])) {
                $a_port['id'] = $a_pfnetworkport_DB['id'];

@@ -368,7 +368,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       $result         = true;
       $pfDynamicGroup = new self();
 
-      $groups = $pfDynamicGroup->find("`plugin_fusioninventory_deploygroups_id`='$source_deploygroups_id'");
+      $groups = $pfDynamicGroup->find(['plugin_fusioninventory_deploygroups_id' => $source_deploygroups_id]);
       foreach ($groups as $group) {
          unset($group['id']);
          $group['plugin_fusioninventory_deploygroups_id']

@@ -177,10 +177,10 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
           $this->assertEquals($csoftv_ids, array_keys($csv->find()));
           foreach ($software->find() as $soft) {
              if ($soft['name'] == 'Cisco WebEx Meetings') {
-                $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+                $csversion = current($csv->find(['softwareversions_id' => $soft['id']]));
                 $this->assertEquals($data_date[0], $csversion['date_install']);
                } else if ($soft['name'] == 'Adobe Systems Incorporated') {
-                  $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+                  $csversion = current($csv->find(['softwareversions_id' => $soft['id']]));
                   $this->assertEquals($data_date[1], $csversion['date_install']);
                }
             }
@@ -193,7 +193,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
          $this->assertEquals($csoftv_ids, array_keys($csv->find()));
          foreach ($software->find() as $soft) {
             if ($soft['name'] == 'Cisco WebEx Meetings') {
-               $csversion = current($csv->find("`softwareversions_id` = '".$soft['id']."'"));
+               $csversion = current($csv->find(['softwareversions_id' => $soft['id']]));
                $this->assertEquals('', $csversion['date_install']);
             }
          }

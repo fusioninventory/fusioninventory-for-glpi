@@ -155,9 +155,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
       PluginFusioninventoryLock::showLockIcon('Printer');
 
       $pfPrinter = new PluginFusioninventoryPrinter();
-      $a_printerextend = current($pfPrinter->find(
-                                              "`printers_id`='".$item->getID()."'",
-                                              "", 1));
+      $a_printerextend = current($pfPrinter->find(['printers_id' => $item->getID()], [], 1));
       if (empty($a_printerextend)) {
          return;
       }

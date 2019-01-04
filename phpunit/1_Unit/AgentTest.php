@@ -83,7 +83,7 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $pfAgent  = new PluginFusioninventoryAgent();
       $a_agents = $pfAgent->find(
-         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
+         ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27']
       );
 
       $this->assertEquals(1, count($a_agents), "Agent not found");
@@ -97,15 +97,13 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $pfAgent = new PluginFusioninventoryAgent();
       $agent = $pfAgent->find(
-         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'",
-         "",
-         1
-      );
+         ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27'],
+         [], 1);
       $this->assertEquals(1, count($agent));
       $current_agent = current($agent);
       $agent_id = $current_agent['id'];
 
-      $agent_from_asset = current($pfAgent->find("`computers_id` = '100'"));
+      $agent_from_asset = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals($agent_id, $agent_from_asset['id']);
 
@@ -118,7 +116,7 @@ class AgentTest extends RestoreDatabase_TestCase {
    public function newAgentCheckEntity() {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents = current($pfAgent->find("`computers_id`='100'"));
+      $a_agents = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals(1, $a_agents['entities_id']);
    }
@@ -143,7 +141,7 @@ class AgentTest extends RestoreDatabase_TestCase {
                                        0);
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents = current($pfAgent->find("`computers_id`='100'"));
+      $a_agents = current($pfAgent->find(['computers_id' => 100]));
 
       $this->assertEquals(0, $a_agents['entities_id']);
    }
@@ -186,7 +184,7 @@ class AgentTest extends RestoreDatabase_TestCase {
 
       $pfAgent  = new PluginFusioninventoryAgent();
       $agent    = $pfAgent->find(
-         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
+         ['device_id' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27']
       );
       $this->assertEquals(1, count($agent));
       $current_agent = current($agent);

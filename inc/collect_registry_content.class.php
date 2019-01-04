@@ -155,9 +155,8 @@ class PluginFusioninventoryCollect_Registry_Content
    function showForComputer($computers_id) {
       $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
       echo "<table class='tab_cadre_fixe'>";
-      $a_data = $this->find("`computers_id`='".$computers_id."'",
-                              "`plugin_fusioninventory_collects_registries_id`,
-                                 `key`");
+      $a_data = $this->find(['computers_id' => $computers_id],
+                            ['plugin_fusioninventory_collects_registries_id', 'key']);
       $previous_key = 0;
       foreach ($a_data as $data) {
          $pfCollect_Registry->getFromDB($data['plugin_fusioninventory_collects_registries_id']);
@@ -220,8 +219,8 @@ class PluginFusioninventoryCollect_Registry_Content
       echo "<th>".__('Data', 'fusioninventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find("`plugin_fusioninventory_collects_registries_id`='".$collects_registries_id."'",
-                              "`key`");
+      $a_data = $this->find(['plugin_fusioninventory_collects_registries_id' => $collects_registries_id],
+                            ['key']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
          echo '<td>';

@@ -92,7 +92,7 @@ if (($handle = fopen($file, "r")) !== false) {
       // Clean and check Entity field
       $entity = trim($data[1]);
       if ($entity != '') {
-         $db_entities = $db_entity->find("`completename`='".$entity."'", '', 1);
+         $db_entities = $db_entity->find(['completename' => $entity], [], 1);
          if (count($db_entities) > 0) {
             $found_entity = current($db_entities);
             $entity_id = $found_entity["id"];
@@ -145,7 +145,7 @@ if (($handle = fopen($file, "r")) !== false) {
       // Clean and check SNMP credentials field #2
       $snmp_auth = trim($data[4]);
       if ($snmp_auth != '') {
-          $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
+          $snmp_auths = $db_cfg_sec->find(['name' => $snmp_auth], [], 1);
           if (count($snmp_auths) > 0) {
               $snmp = current($snmp_auths);
               $snmp_auth = $snmp["id"];
@@ -162,7 +162,7 @@ if (($handle = fopen($file, "r")) !== false) {
       // Clean and check SNMP credentials field #3
       $snmp_auth = trim($data[5]);
       if ($snmp_auth != '') {
-          $snmp_auths = $db_cfg_sec->find("`name`='".$snmp_auth."'", '', 1);
+          $snmp_auths = $db_cfg_sec->find(['name' => $snmp_auth], [], 1);
           if (count($snmp_auths) > 0) {
               $snmp = current($snmp_auths);
               $snmp_auth = $snmp["id"];
@@ -189,7 +189,7 @@ if (($handle = fopen($file, "r")) !== false) {
       ];
 
       $ipranges_id = -1;
-      $ipranges = $db_ip_range->find("`name`='".$name."'", '', 1);
+      $ipranges = $db_ip_range->find(['name' => $name], [], 1);
       if (count($ipranges) > 0) {
          // Update an existing IP range
          $range = current($ipranges);
@@ -217,7 +217,7 @@ if (($handle = fopen($file, "r")) !== false) {
              'plugin_fusioninventory_configsecurities_id'    => $snmp_auth_id
          ];
          if ($ipranges_id != -1) {
-            $ipranges_snmp = $db_ip_range_snmp->find("`plugin_fusioninventory_ipranges_id`='".$ipranges_id."'");
+            $ipranges_snmp = $db_ip_range_snmp->find(['plugin_fusioninventory_ipranges_id' => $ipranges_id]);
             if (count($ipranges_snmp) > 0) {
                if ($snmp_auth_id == -1) {
                   echo "-> deleting an existing IP addresses range / SNMP credentials relation...";

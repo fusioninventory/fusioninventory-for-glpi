@@ -175,10 +175,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       // Get agregated ports
       $a_networkPortAggregates = current($networkPort->find(
-                    "`itemtype`='NetworkEquipment'
-                       AND `items_id`='".$networkequipments_id."'
-                       AND `instantiation_type`='NetworkPortAggregate'
-                       AND `logical_number` = '0'", '', 1));
+                    ['itemtype'           => 'NetworkEquipment',
+                     'items_id'           => $networkequipments_id,
+                     'instantiation_type' => 'NetworkPortAggregate',
+                     'logical_number'     => 0],
+                    [], 1));
       $a_ips_DB = [];
       if (isset($a_networkPortAggregates['id'])) {
          $a_networkPortAggregates['mac'] = $mac;
@@ -195,8 +196,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          $networkports_id = $networkPort->add($input);
       }
       // Get networkname
-      $a_networknames_find = current($networkName->find("`items_id`='".$networkports_id."'
-                                                         AND `itemtype`='NetworkPort'", "", 1));
+      $a_networknames_find = current($networkName->find(
+            ['items_id' => $networkports_id,
+             'itemtype' => 'NetworkPort'],
+            [], 1));
       if (isset($a_networknames_find['id'])) {
          $networknames_id = $a_networknames_find['id'];
          $a_networknames_find['name'] = $networkname_name;
@@ -208,8 +211,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          $input['name']     = $networkname_name;
          $networknames_id   = $networkName->add($input);
       }
-      $a_ips_fromDB = $iPAddress->find("`itemtype`='NetworkName'
-                                    AND `items_id`='".$networknames_id."'");
+      $a_ips_fromDB = $iPAddress->find(
+            ['itemtype' => 'NetworkName',
+             'items_id' => $networknames_id]);
       foreach ($a_ips_fromDB as $data) {
          $a_ips_DB[$data['id']] = $data['name'];
       }
@@ -242,7 +246,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
                   // Search in unmanaged device if device with IP (LLDP) is yet added, in this case,
                   // we get id of this unmanaged device
-                  $a_unmanageds = $pfUnmanaged->find("`ip`='".$ip."'", "", 1);
+                  $a_unmanageds = $pfUnmanaged->find(['ip' => $ip], [], 1);
                   if (count($a_unmanageds) > 0) {
                      $datas= current($a_unmanageds);
                      $this->unmanagedCDP = $datas['id'];
@@ -274,9 +278,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                  || isset($a_inventory['aggregate'][$a_port['logical_number']])
                  || $ifType == '') {
             $a_ports_DB = current($networkPort->find(
-                       "`itemtype`='NetworkEquipment'
-                          AND `items_id`='".$items_id."'
-                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
+                  ['itemtype'       => 'NetworkEquipment',
+                   'items_id'       => $items_id,
+                   'logical_number' => $a_port['logical_number']],
+                  [], 1));
             if (!isset($a_ports_DB['id'])) {
                // Add port
                if (isset($a_inventory['aggregate'])
@@ -290,7 +295,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                $networkports_id = $networkPort->add($a_port, [], $no_history);
                unset($a_port['id']);
                $a_pfnetworkport_DB = current($pfNetworkPort->find(
-                       "`networkports_id`='".$networkports_id."'", '', 1));
+                       ['networkports_id' => $networkports_id], [], 1));
                $a_port['id'] = $a_pfnetworkport_DB['id'];
                $a_port['lastup'] = date('Y-m-d H:i:s');
                $pfNetworkPort->update($a_port);
@@ -303,7 +308,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
                // Check if pfnetworkport exist.
                $a_pfnetworkport_DB = current($pfNetworkPort->find(
-                       "`networkports_id`='".$networkports_id."'", '', 1));
+                       ['networkports_id' => $networkports_id], [], 1));
                $a_port['networkports_id'] = $networkports_id;
                if (isset($a_pfnetworkport_DB['id'])) {
                   $a_port['id'] = $a_pfnetworkport_DB['id'];
@@ -346,9 +351,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          } else {
             // Delete the port
             $a_ports_DB = $networkPort->find(
-                       "`itemtype`='NetworkEquipment'
-                          AND `items_id`='".$items_id."'
-                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1);
+                  ['itemtype'       => 'NetworkEquipment',
+                   'items_id'       => $items_id,
+                   'logical_number' => $a_port['logical_number']],
+                  [], 1);
             if (count($a_ports_DB) > 0) {
                $networkPort->delete(current($a_ports_DB));
             }
@@ -417,9 +423,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       $pfUnmanaged = new PluginFusioninventoryUnmanaged();
 
-      $a_snmpports = current($pfNetworkPort->find("`networkports_id`='".$networkports_id."'",
-                                                  "",
-                                                  1));
+      $a_snmpports = current($pfNetworkPort->find(['networkports_id' => $networkports_id], [], 1));
       $pfNetworkPort->getFromDB($a_snmpports['id']);
 
       $count = count($a_portconnection);
@@ -432,7 +436,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
             $macNotPhone = '';
             $phonePort_id = 0;
             foreach ($a_portconnection as $ifmac) {
-               $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
+               $a_ports = $networkPort->find(['mac' => $ifmac], [], 1);
                $a_port = current($a_ports);
                if ($a_port['itemtype'] == 'Phone') {
                   // Connect phone on switch port and other (computer..) in this phone
@@ -449,9 +453,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                $networkPort->getFromDB($phonePort_id);
                $Phone = new Phone();
                $Phone->getFromDB($networkPort->fields['items_id']);
-               $a_portsPhone = $networkPort->find("`items_id`='".$networkPort->fields['items_id']."'
-                                                AND `itemtype`='Phone'
-                                                AND `name`='Link'", '', 1);
+               $a_portsPhone = $networkPort->find(
+                     ['items_id' => $networkPort->fields['items_id'],
+                      'itemtype' => 'Phone',
+                      'name'     => 'Link'],
+                     [], 1);
                $portLink_id = 0;
                if (count($a_portsPhone) == '1') {
                   $a_portPhone = current($a_portsPhone);
@@ -497,9 +503,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
             $pfUnmanaged->hubNetwork($pfNetworkPort, $a_portconnection);
          } else { // One mac on port
             foreach ($a_portconnection as $ifmac) { //Only 1 time
-               $a_ports = $networkPort->find("`mac`='".$ifmac."' AND `logical_number`='1'", "", 1);
+               $a_ports = $networkPort->find(['mac' => $ifmac, 'logical_number' => 1], [], 1);
                if (count($a_ports) == 0) {
-                  $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
+                  $a_ports = $networkPort->find(['mac' => $ifmac], [], 1);
                }
                if (count($a_ports) > 0) {
                   $a_port = current($a_ports);
@@ -665,8 +671,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $networkPort_Vlan = new NetworkPort_Vlan();
       $vlan = new Vlan();
 
-      $db_vlans = $vlan->find("`tag`='".$a_vlan['tag']."' AND `name`='".$a_vlan['name']."'",
-                             "", 1);
+      $db_vlans = $vlan->find(['tag' => $a_vlan['tag'], 'name' => $a_vlan['name']], [], 1);
       $vlans_id = 0;
       if (count($db_vlans) > 0) {
          $db_vlan = current($db_vlans);
@@ -697,7 +702,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $networkPort = new NetworkPort();
       $networkPortAggregate = new NetworkPortAggregate();
 
-      $a_aggregates = $networkPortAggregate->find("`networkports_id`='".$networkports_id."'", "", 1);
+      $a_aggregates = $networkPortAggregate->find(['networkports_id' => $networkports_id], [], 1);
 
       $input = [];
       if (count($a_aggregates) == 1) {
@@ -710,10 +715,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $a_ports_db_tmp = [];
       foreach ($a_ports as $logical_number) {
          $a_networkports_DB = current($networkPort->find(
-                    "`itemtype`='NetworkEquipment'
-                       AND `items_id`='".$networkequipments_id."'
-                       AND `instantiation_type`='NetworkPortEthernet'
-                       AND `logical_number` = '".$logical_number."'", '', 1));
+               ['itemtype'           => 'NetworkEquipment',
+                'items_id'           => $networkequipments_id,
+                'instantiation_type' => 'NetworkPortEthernet',
+                'logical_number'     => $logical_number],
+               [], 1));
          if (!isset($a_networkports_DB['id'])) {
             // Add port
             $a_port['instantiation_type'] = 'NetworkPortEthernet';

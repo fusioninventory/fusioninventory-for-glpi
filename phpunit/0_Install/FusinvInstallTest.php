@@ -100,14 +100,15 @@ class FusinvInstallTest extends Common_TestCase {
          $command.= " --force-install";
       }
       exec($command, $output, $returncode);
-      $this->assertEquals(0, $returncode,
-         "Error when installing plugin in CLI mode\n".
-         implode("\n", $output)
-      );
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
+
+      $this->assertEquals(0, $returncode,
+         "Error when installing plugin in CLI mode\n".
+         implode("\n", $output)."\n".$command."\n"
+      );
 
       $FusinvDBTest = new FusinvDB();
       $FusinvDBTest->checkInstall("fusioninventory", "install new version");

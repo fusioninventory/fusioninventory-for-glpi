@@ -291,9 +291,10 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $a_devicesubnet[$ip_subnet]['NetworkEquipment'][$items_id] = 1;
          }
          foreach ($a_Printer as $items_id) {
-            $a_ports = $NetworkPort->find("`itemtype`='Printer'
-                                          AND `items_id`='".$items_id."'
-                                          AND `ip`!='127.0.0.1'");
+            $a_ports = $NetworkPort->find(
+                  ['itemtype' => 'Printer',
+                   'items_id' => $items_id,
+                   ['ip']     => ['!=', '127.0.0.1']]);
             foreach ($a_ports as $a_port) {
                $a_ip = explode(".", $a_port['ip']);
                $ip_subnet = $a_ip[0].".".$a_ip[1].".".$a_ip[2].".";
@@ -606,11 +607,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          if ($jobstate->fields['itemtype'] == 'Printer') {
             $sxml_device->addAttribute('TYPE', 'PRINTER');
             $pfPrinter = new PluginFusioninventoryPrinter();
-            $a_extended = current($pfPrinter->find("`printers_id`='".$jobstate->fields['items_id']."'", '', 1));
+            $a_extended = current($pfPrinter->find(['printers_id' => $jobstate->fields['items_id']], [], 1));
          } else if ($jobstate->fields['itemtype'] == 'NetworkEquipment') {
             $sxml_device->addAttribute('TYPE', 'NETWORKING');
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $a_extended = current($pfNetworkEquipment->find("`networkequipments_id`='".$jobstate->fields['items_id']."'", '', 1));
+            $a_extended = current($pfNetworkEquipment->find(['networkequipments_id' => $jobstate->fields['items_id']], [], 1));
          }
          $sxml_device->addAttribute('ID', $jobstate->fields['items_id']);
 

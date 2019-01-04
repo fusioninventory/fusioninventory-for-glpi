@@ -221,7 +221,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $result        = true;
       $pfStaticGroup = new self();
 
-      $groups = $pfStaticGroup->find("`plugin_fusioninventory_deploygroups_id`='$source_deploygroups_id'");
+      $groups = $pfStaticGroup->find(['plugin_fusioninventory_deploygroups_id' => $source_deploygroups_id]);
       foreach ($groups as $group) {
          unset($group['id']);
          $group['plugin_fusioninventory_deploygroups_id']
