@@ -142,7 +142,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       }
 
       $id = $item->getID();
-      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
+      if (!$data = $this->find(['networkequipments_id' => $id], [], 1)) {
          // Add in database if not exist
          $input = [];
          $input['networkequipments_id'] = $id;
@@ -381,8 +381,9 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       $NetworkPort = new NetworkPort();
 
-      $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnmanaged'
-                                    AND `items_id`='".$items_id."'");
+      $a_ports = $NetworkPort->find(
+            ['itemtype' => 'PluginFusioninventoryUnmanaged',
+             'items_id' => $items_id]);
       echo "<table width='100%' class='tab_cadre' cellpadding='5'>";
       foreach ($a_ports as $a_port) {
          if ($a_port['name'] != "Link") {
@@ -860,11 +861,15 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                          $item->getLink());
                      $link2 = '';
                      // * GetIP
-                        $a_networknames = current($networkName->find("`itemtype`='NetworkPort'
-                                          AND `items_id`='".$opposite_port."'", "", 1));
+                        $a_networknames = current($networkName->find(
+                              ['itemtype' => 'NetworkPort',
+                               'items_id' => $opposite_port],
+                              [], 1));
                      if (isset($a_networknames['id'])) {
-                        $a_ipaddresses = current($iPAddress->find("`itemtype`='NetworkName'
-                                             AND `items_id`='".$a_networknames['id']."'", "", 1));
+                        $a_ipaddresses = current($iPAddress->find(
+                              ['itemtype' => 'NetworkName',
+                               'items_id' => $a_networknames['id']],
+                              [], 1));
                         $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
                                           $item->getLink());
                      }
@@ -1033,7 +1038,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
             case 17:
                echo "<td>";
                if ($networkPort->fields['instantiation_type'] == 'NetworkPortEthernet') {
-                  $npes = $networkPortEthernet->find("`networkports_id`='".$networkPort->fields['id']."'", '', 1);
+                  $npes = $networkPortEthernet->find(['networkports_id' => $networkPort->fields['id']], [], 1);
                   foreach ($npes as $npe) {
                      echo Dropdown::getDropdownName("glpi_netpoints", $npe["netpoints_id"]);
                   }

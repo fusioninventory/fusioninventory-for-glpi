@@ -313,7 +313,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       if ($id > 0) {
          $this->getFromDB($id);
-         $taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
+         $taskjobs = $pfTaskjob->find(['plugin_fusioninventory_tasks_id' => $id], ['id']);
       } else {
          $this->getEmpty();
          $new_item = true;
@@ -452,7 +452,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else if (isset($postvars["purge"])) {
          Session::checkRight('plugin_fusioninventory_task', PURGE);
          $pfTaskJob = new PluginFusioninventoryTaskjob();
-         $taskjobs = $pfTaskJob->find("`plugin_fusioninventory_tasks_id` = '".$postvars['id']."' ");
+         $taskjobs = $pfTaskJob->find(['plugin_fusioninventory_tasks_id' => $postvars['id']]);
          foreach ($taskjobs as $taskjob) {
             $pfTaskJob->delete($taskjob);
          }

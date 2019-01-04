@@ -85,9 +85,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       global $CFG_GLPI;
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$item->getID()."'",
-                                              "", 1));
+      $a_computerextend = current($pfInventoryComputerComputer->find(['computers_id' => $item->getID()], [], 1));
       if (empty($a_computerextend)) {
          return;
       }
@@ -188,7 +186,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
    static function showFormOS($item) {
       $pfComputer = new self();
       $a_computerextend = current(
-         $pfComputer->find("`computers_id`='".$item->fields['items_id']."'", "", 1)
+         $pfComputer->find(['computers_id' => $item->fields['items_id']], [], 1)
       );
       if (empty($a_computerextend)) {
          return;
@@ -327,8 +325,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$computers_id."'",
-                                              "", 1));
+                                              ['computers_id' => $computers_id], [], 1));
       if (empty($a_computerextend)) {
          return false;
       }

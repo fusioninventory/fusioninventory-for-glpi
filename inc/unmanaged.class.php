@@ -623,8 +623,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       // Get all ports connected to this hub
       $a_portglpi = [];
-      $a_ports = $Netport->find("`items_id`='".$hub_id."'
-          AND `itemtype`='".$this->getType()."'");
+      $a_ports = $Netport->find(
+            ['items_id' => $hub_id,
+             'itemtype' => $this->getType()]);
       foreach ($a_ports as $data) {
          $id = $nn->getOppositeContact($data['id']);
          if ($id) {
@@ -633,7 +634,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       }
 
       foreach ($a_mac as $ifmac) {
-         $a_ports = $Netport->find("`mac`='".$ifmac."'", "", 1);
+         $a_ports = $Netport->find(['mac' => $ifmac], [], 1);
          if (count($a_ports) == "1") {
             if (!$this->searchIfmacOnHub($a_ports, $a_portglpi)) {
                // Connect port (port found in GLPI)
@@ -675,9 +676,13 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $Netport = new NetworkPort();
 
-      $a_ports = $Netport->find("`items_id`='".$hub_id."'
-          AND `itemtype`='".$this->getType()."'
-          AND (`name` != 'Link' OR `name` IS NULL)");
+      $a_ports = $Netport->find(
+            ['items_id' => $hub_id,
+             'itemtype' => $this->getType(),
+             'OR' => [
+                'name' => ['!=', 'Link'],
+                'name' => null]
+             ]);
       foreach ($a_ports as $data) {
          if (!isset($a_portUsed[$data['id']])) {
             //plugin_fusioninventory_addLogConnection("remove", $port_id);
@@ -788,16 +793,17 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       // Find in the mac connected to the if they are in hub without link port connected
       foreach ($a_mac as $ifmac) {
-         $a_ports = $Netport->find("`mac`='".$ifmac."'");
+         $a_ports = $Netport->find(['mac' => $ifmac]);
          foreach ($a_ports as $data) {
             $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPortsID());
             if ($ID) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->getType()) {
                   if ($this->fields["hub"] == "1") {
-                     $a_portLink = $Netport->find("`name`='Link'
-                        AND `items_id`='".$this->fields['id']."'
-                        AND `itemtype`='".$this->getType()."'");
+                     $a_portLink = $Netport->find(
+                           ['name'     => 'Link',
+                            'items_id' => $this->fields['id'],
+                            'itemtype' => $this->getType()]);
                      foreach ($a_portLink as $dataLink) {
                         if (!$nn->getOppositeContact($dataLink['id'])) {
                            // We have founded a hub orphelin
@@ -857,8 +863,11 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       // get all ports of hub
       $releasePorts = [];
-      $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->getType()."' ".
-                                 "AND (`name` != 'Link' OR `name` IS NULL)");
+      $a_ports = $Netport->find(
+            ['items_id' => $hub_id,
+             'itemtype' => $this->getType(),
+             'OR' => ['name'  => ['!=', 'Link'],
+                      'name' => null]]);
       foreach (array_keys($a_ports) as $ports_id) {
          $id = $nn->getOppositeContact($ports_id);
          if ($id) {
@@ -895,8 +904,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       // Delete Networkports
       $NetworkPort = new NetworkPort();
-      $a_ports = $NetworkPort->find("`items_id`='".$parm->fields["id"]."'
-                     AND `itemtype`='PluginFusioninventoryUnmanaged'");
+      $a_ports = $NetworkPort->find(
+            ['items_id' => $parm->fields["id"],
+             'itemtype' => 'PluginFusioninventoryUnmanaged']);
       foreach ($a_ports as $a_port) {
          $NetworkPort->delete($a_port, 1);
       }
@@ -917,8 +927,9 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
 
       $NetworkPort = new NetworkPort();
 
-      $a_NetworkPorts = $NetworkPort->find("`items_id` = '".$items_id."'
-                      AND `itemtype` = 'PluginFusioninventoryUnmanaged'");
+      $a_NetworkPorts = $NetworkPort->find(
+            ['items_id' => $items_id,
+             'itemtype' => 'PluginFusioninventoryUnmanaged']);
 
       $this->getFromDB($items_id);
       $this->fields = Toolbox::addslashes_deep($this->fields);

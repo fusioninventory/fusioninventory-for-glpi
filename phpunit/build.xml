@@ -261,11 +261,11 @@
  <target name="phpunit.all" depends='prepare' description="Run every unit tests with PHPUnit">
 
   <sequential if:true="${clear.savepoint}">
-   <phpunit.run type='update'
-    configuration='${fusioninventory.directory}/phpunit/testsuites_update.xml'/>
-
    <phpunit.run type='install'
     configuration='${fusioninventory.directory}/phpunit/testsuites_install.xml' />
+
+   <phpunit.run type='update'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_update.xml'/>
 
   <!--
        No need to continue only if install fails since we need a good save.sql

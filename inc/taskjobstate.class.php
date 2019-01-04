@@ -676,7 +676,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @param uniqid taskjobstate's uniqid
    */
    function getFromDBByUniqID($uniqid) {
-      $result = $this->find("`uniqid`='$uniqid'", '', 1);
+      $result = $this->find(['uniqid' => $uniqid], [], 1);
       if (!empty($result)) {
          $this->fields = array_pop($result);
       }
@@ -772,7 +772,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
          // Each taskjobstate
          foreach ($data['jobstates'] as $jobstates_id) {
-            $logs = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`=".$jobstates_id, "id DESC", 1);
+            $logs = $pfTaskjoblog->find(['plugin_fusioninventory_taskjobstates_id' => $jobstates_id], ['id DESC'], 1);
             if (count($logs) > 0) {
                $log = current($logs);
                echo "<tr class='tab_bg_1'>";

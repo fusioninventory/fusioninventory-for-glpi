@@ -101,9 +101,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          $short_shas[] = "'".substr($sha512, 0, 6)."'";
       }
       // find corresponding file entries
-      $files = $this->find(
-         "shortsha512 IN (".implode(",", $short_shas).")"
-      );
+      $files = $this->find(['shortsha512' => $short_shas]);
       // do a quick mapping between database id and short shas
       $files_mapping = [];
       foreach ($files as $file) {
@@ -803,7 +801,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
 
       $file_present_in_db =
-         (!empty($this->find("shortsha512 = '$short_sha512'")));
+         (!empty($this->find(['shortsha512' => $short_sha512])));
 
       $new_entry = [
          'name'                   => $filename,
@@ -895,8 +893,9 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
       // try to find file in other packages
-      $rows = $pfDeployPackage->find("`json` LIKE '%".substr($sha512, 0, 6 )."%'
-                                  AND `json` LIKE '%$sha512%'" );
+      $rows = $pfDeployPackage->find(
+            ['json' => ['LIKE', '%'.substr($sha512, 0, 6 ).'%'],
+             'json' => ['LIKE', '%'.$sha512.'%']]);
 
       //file found in other packages, do not remove parts in repo
       if (count($rows) > 0) {

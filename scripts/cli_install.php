@@ -83,7 +83,6 @@ if (isset($args)) {
 include ("../../../inc/includes.php");
 
 // Init debug variable
-$_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
 $_SESSION['glpilanguage']  = "en_GB";
 
 Session::loadLanguage();
@@ -106,15 +105,21 @@ if (!$DB->tableExists("glpi_configs")) {
 
 if (!is_null($args['--as-user'])) {
    $user = new User();
-   $user->getFromDBbyName($args['--as-user']);
-   $auth = new Auth();
-   $auth->auth_succeded = true;
-   $auth->user = $user;
-   Session::init($auth);
+   if ($user->getFromDBbyName($args['--as-user'])) {
+      $auth = new Auth();
+      $auth->auth_succeded = true;
+      $auth->user = $user;
+      Session::init($auth);
+   } else {
+      die("User account not found\n");
+   }
+} else {
+   die("No user defined with --as-user\n");
 }
+print("Running...\n");
 
 $plugin = new Plugin();
-
+$plugin->init();
 
 require_once (GLPI_ROOT . "/plugins/fusioninventory/install/climigration.class.php");
 include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
@@ -123,7 +128,7 @@ $current_version = pluginFusioninventoryGetCurrentVersion();
 $migration = new CliMigration($current_version);
 
 if (!plugin_fusioninventory_check_prerequisites()) {
-   echo "\n";
+   echo "Function plugin_fusioninventory_check_prerequisites not exist\n";
    exit(1);
 }
 
@@ -163,7 +168,6 @@ if ($args['--force-install']) {
 if ($args['--force-upgrade']) {
    define('FORCE_UPGRADE', true);
 }
-
 
 $plugin->getFromDBbyDir("fusioninventory");
 print("Installing Plugin...\n");

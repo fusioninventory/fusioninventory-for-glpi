@@ -40,14 +40,14 @@ class TaskTest extends Common_TestCase {
       $pfTask    = new PluginFusioninventoryTask();
       $pfTaskJob = new PluginFusioninventoryTaskJob();
 
-      $data = $pfTask->find("`name`='MyTask'");
+      $data = $pfTask->find(['name' => 'MyTask']);
       $this->assertEquals(1, count($data));
       $tmp = current($data);
       $source_tasks_id = $tmp['id'];
 
       $this->assertTrue($pfTask->duplicate($source_tasks_id));
 
-      $data = $pfTask->find("`name`='Copy of MyTask'");
+      $data = $pfTask->find(['name' => 'Copy of MyTask']);
       $this->assertEquals(1, count($data));
       $tmp = current($data);
       $target_tasks_id = $tmp['id'];
@@ -55,7 +55,7 @@ class TaskTest extends Common_TestCase {
       $this->assertTrue($pfTask->getFromDB($target_tasks_id));
       $this->assertEquals(0, $pfTask->fields['is_active']);
 
-      $data = $pfTaskJob->find("`plugin_fusioninventory_tasks_id`='$target_tasks_id'");
+      $data = $pfTaskJob->find(['plugin_fusioninventory_tasks_id' => $target_tasks_id]);
       $this->assertEquals(1, count($data));
       $tmp = current($data);
       $target_taskjobs_id = $tmp['id'];
@@ -73,12 +73,12 @@ class TaskTest extends Common_TestCase {
       $pfTask    = new PluginFusioninventoryTask();
       $pfTaskJob = new PluginFusioninventoryTaskJob();
 
-      $data = $pfTask->find("`name`='Copy of MyTask'");
+      $data = $pfTask->find(['name' => 'Copy of MyTask']);
       $this->assertEquals(1, count($data));
       $tmp = current($data);
       $tasks_id = $tmp['id'];
 
-      $data = $pfTaskJob->find("`plugin_fusioninventory_tasks_id`='$tasks_id'");
+      $data = $pfTaskJob->find(['plugin_fusioninventory_tasks_id' => $tasks_id]);
       $this->assertEquals(1, count($data));
       $tmp = current($data);
       $taskjobs_id = $tmp['id'];

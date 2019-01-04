@@ -83,7 +83,7 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
    function showInformation($computers_id) {
 
       $pfRemoteManagement = new self();
-      $a_remotemanagement = $pfRemoteManagement->find("`computers_id`='".$computers_id."'");
+      $a_remotemanagement = $pfRemoteManagement->find(['computers_id' => $computers_id]);
 
       if (count($a_remotemanagement)) {
 

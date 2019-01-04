@@ -255,7 +255,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       // Check if cron GLPI running
       if (count($taskjobs) > 1) {
-         $message = __('Several jobs in the same task is not anymore supported because of unexpected side-effects. 
+         $message = __('Several jobs in the same task is not anymore supported because of unexpected side-effects.
          Please consider modifying this task to avoid unexpected results.', 'fusioninventory');
          Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
       }
@@ -296,10 +296,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    public function getTaskjobs($task_id) {
       // Find taskjobs tied to the selected task
       $taskjobs = $this->find(
-         "`plugin_fusioninventory_tasks_id` = '".$task_id."'".
-         " AND `rescheduled_taskjob_id` = '0' ",
-         "id"
-      );
+            ['plugin_fusioninventory_tasks_id' => $task_id,
+             'rescheduled_taskjob_id'          => 0],
+            ['id']);
       return $taskjobs;
    }
 
@@ -918,7 +917,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $mytaskjobstate->getFromDB($postvars['taskjobstates_id']);
          $jobstate = $mytaskjobstate->fields;
-         $a_taskjobstates = $mytaskjobstate->find("`uniqid`='".$mytaskjobstate->fields['uniqid']."'");
+         $a_taskjobstates = $mytaskjobstate->find(['uniqid' => $mytaskjobstate->fields['uniqid']]);
          foreach ($a_taskjobstates as $data) {
             if ($data['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
                $mytaskjobstate->changeStatusFinish($data['id'],

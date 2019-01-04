@@ -72,7 +72,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       $mapping_name=[];
 
       $id = $item->getID();
-      $a_cartridges = $this->find("`printers_id`='".$id."'");
+      $a_cartridges = $this->find(['printers_id' => $id]);
 
       $printer = new Printer();
       $printer->getFromDB($id);

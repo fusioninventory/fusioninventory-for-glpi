@@ -64,9 +64,9 @@ class PluginFusioninventoryModule extends CommonDBTM {
    static function getAll($p_inactive = false) {
       $plugin = new Plugin();
       if ($p_inactive) {
-         return $plugin->find("(`state` = '1' OR `state` = '4') AND `directory` LIKE 'fusinv%'");
+         return $plugin->find(['state' => [1, 4], 'directory' => ['LIKE', 'fusinv%']]);
       } else {
-         return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
+         return $plugin->find(['state' => 1, 'directory' => ['LIKE', 'fusinv%']]);
       }
    }
 
@@ -87,7 +87,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
          $index = array_search($p_name, $_SESSION['glpi_plugins']);
          if (!$index) {
             $plugin = new Plugin();
-            $data = $plugin->find("directory='".$p_name."'");
+            $data = $plugin->find(['directory' => $p_name]);
             if (count($data)) {
                $fields = current($data);
                $index = $fields['id'];

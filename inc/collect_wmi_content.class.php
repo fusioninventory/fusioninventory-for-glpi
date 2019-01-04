@@ -161,9 +161,8 @@ class PluginFusioninventoryCollect_Wmi_Content
       echo "<th>".__('Value', 'fusioninventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find("`computers_id`='".$computers_id."'",
-                              "`plugin_fusioninventory_collects_wmis_id`,
-                                 `property`");
+      $a_data = $this->find(['computers_id' => $computers_id],
+                            ['plugin_fusioninventory_collects_wmis_id', 'property']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
          echo '<td>';
@@ -210,8 +209,8 @@ class PluginFusioninventoryCollect_Wmi_Content
       echo "<th>".__('Value', 'fusioninventory')."</th>";
       echo "</tr>";
 
-      $a_data = $this->find("`plugin_fusioninventory_collects_wmis_id`='".$collects_wmis_id."'",
-                              "`property`");
+      $a_data = $this->find(['plugin_fusioninventory_collects_wmis_id' => $collects_wmis_id],
+                            ['property']);
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
          echo '<td>';

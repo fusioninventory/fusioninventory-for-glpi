@@ -146,7 +146,7 @@ class PluginFusioninventorySetup {
 
       if ($reset == 1) {
          $grule = new Rule();
-         $a_rules = $grule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
+         $a_rules = $grule->find(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
          foreach ($a_rules as $data) {
             $grule->delete($data);
          }
@@ -987,7 +987,7 @@ class PluginFusioninventorySetup {
     */
    function createFusionInventoryUser() {
       $user = new User();
-      $a_users = $user->find("`name`='Plugin_FusionInventory'");
+      $a_users = $user->find(['name' => 'Plugin_FusionInventory']);
       if (count($a_users) == '0') {
          $input = [];
          $input['name'] = 'Plugin_FusionInventory';

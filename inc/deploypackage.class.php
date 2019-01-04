@@ -749,7 +749,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       // Add files
       foreach ($a_files as $files_id=>$data) {
-         $a_pkgfiles = current($pfDeployFile->find("`sha512`='".$files_id."'", '', 1));
+         $a_pkgfiles = current($pfDeployFile->find(['sha512' => $files_id], [], 1));
          if (count($a_pkgfiles) > 0) {
             unset($a_pkgfiles['id']);
             $a_xml['files'][] = $a_pkgfiles;
@@ -811,7 +811,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $a_info = json_decode($json_string, true);
 
       // Find package with this uuid
-      $a_packages = $this->find("`uuid`='".$a_info['package']['uuid']."'");
+      $a_packages = $this->find(['uuid' => $a_info['package']['uuid']]);
       if (count($a_packages) == 0) {
          // Create it
          $_SESSION['tmp_clone_package'] = true;
@@ -885,7 +885,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo $split[0].".".$split[1];
          echo "</td>";
          echo "<td>";
-         $a_packages = current($this->find("`uuid`='".$split[0].".".$split[1]."'", '', 1));
+         $a_packages = current($this->find(['uuid' => $split[0].".".$split[1]], [], 1));
          if (count($a_packages) > 1) {
             $this->getFromDB($a_packages['id']);
             echo $this->getLink();
@@ -1646,14 +1646,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $pfDeployGroup = new PluginFusioninventoryDeployGroup();
       $my_packages   = []; //Store all installable packages
 
-      $query = "";
+      $query = [];
       if ($users_id) {
-         $query = "`users_id`='".$users_id."' AND ";
+         $query += ['users_id' => $users_id];
       }
       if ($computers_id) {
-         $query.= " `id`='$computers_id' AND ";
+         $query += ['id' => $computers_id];
       }
-      $query.= "`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")";
+      $query += ['entities_id' => $_SESSION['glpiactiveentities']];
 
       //Get all computers of the user
       $mycomputers = $computer->find($query);
@@ -1917,8 +1917,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $agents_id = $pfAgent->getAgentWithComputerid($computers_id);
 
       $last_job_state = [];
-      $taskjobstates  = current($pfTaskJobState->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'"
-              ." AND `plugin_fusioninventory_agents_id`='".$agents_id."'", '`id` DESC', 1));
+      $taskjobstates  = current($pfTaskJobState->find(
+            ['plugin_fusioninventory_taskjobs_id' => $taskjobs_id,
+             'plugin_fusioninventory_agents_id'   => $agents_id], ['id DESC'], 1));
       if ($taskjobstates) {
          $state = '';
 

@@ -134,16 +134,16 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
     */
    $migration->displayMessage("Clean rules from old installation of the plugin");
    $Rule = new Rule();
-   $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
+   $a_rules = $Rule->find(['sub_type' => 'PluginFusioninventoryInventoryRuleImport']);
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
-   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
+   $a_rules = $Rule->find(['sub_type' => 'PluginFusinvinventoryRuleEntity']);
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }
 
-   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleLocation'");
+   $a_rules = $Rule->find(['sub_type' => 'PluginFusinvinventoryRuleLocation']);
    foreach ($a_rules as $data) {
       $Rule->delete($data);
    }

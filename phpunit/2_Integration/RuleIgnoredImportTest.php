@@ -131,7 +131,7 @@ class RuleIgnoredImport extends Common_TestCase {
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');
 
-      $rule_values = $rule->find("`name`='Ignore import'");
+      $rule_values = $rule->find(['name' => 'Ignore import']);
       $this->assertEquals(1, count($rule_values), 'Ignore import rule not found');
       $rule_ignore = array_pop($rule_values);
 

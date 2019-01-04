@@ -418,15 +418,18 @@ class PluginFusioninventoryToolbox {
       $iPAddress   = new IPAddress();
 
       $a_ips = [];
-      $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."'
-                                       AND `items_id`='".$items_id."'
-                                          AND `instantiation_type` != 'NetworkPortLocal'");
+      $a_ports = $NetworkPort->find(
+            ['itemtype'           => $itemtype,
+             'items_id'           => $items_id,
+             'instantiation_type' => ['!=', 'NetworkPortLocal']]);
       foreach ($a_ports as $a_port) {
-         $a_networknames = $networkName->find("`itemtype`='NetworkPort'
-                                              AND `items_id`='".$a_port['id']."'");
+         $a_networknames = $networkName->find(
+               ['itemtype' => 'NetworkPort',
+                'items_id' => $a_port['id']]);
          foreach ($a_networknames as $a_networkname) {
-            $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-                                              AND `items_id`='".$a_networkname['id']."'");
+            $a_ipaddresses = $iPAddress->find(
+                  ['itemtype' => 'NetworkName',
+                   'items_id' => $a_networkname['id']]);
             foreach ($a_ipaddresses as $data) {
                if ($data['name'] != '127.0.0.1'
                        && $data['name'] != '::1') {

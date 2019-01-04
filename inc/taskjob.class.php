@@ -506,19 +506,18 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $nb_finished = 0;
       while ($dataJob = $DB->fetch_array($resultJob)) {
          $a_taskjobstateuniqs = $pfTaskjobstate->find(
-                           "`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'",
-                           'id DESC',
-                           1);
+               ['plugin_fusioninventory_taskjobs_id' => $dataJob['id']],
+               ['id DESC'], 1);
          $a_taskjobstateuniq = current($a_taskjobstateuniqs);
          $a_taskjobstate = $pfTaskjobstate->find(
-                           "`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
-                              AND `uniqid`='".$a_taskjobstateuniq['uniqid']."'");
+               ['plugin_fusioninventory_taskjobs_id' => $dataJob['id'],
+                'uniqid'                             => $a_taskjobstateuniq['uniqid']]);
          $taskjobstatefinished = 0;
 
          foreach ($a_taskjobstate as $statedata) {
             $a_joblog = $pfTaskjoblog->find(
-                           "`plugin_fusioninventory_taskjobstates_id`='".$statedata['id']."'
-                              AND (`state`='2' OR `state`='4' OR `state`='5')");
+                  ['plugin_fusioninventory_taskjobstates_id' => $statedata['id'],
+                   'state'                                   => [2, 4, 5]]);
             if (count($a_joblog) > 0) {
                $taskjobstatefinished++;
             }
@@ -633,11 +632,11 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
 
-      $a_taskjobstate = $pfTaskjobstate->find("`state`='0'
-                                               OR `state`='1'
-                                               OR `state`='2'
-                                               GROUP BY uniqid, plugin_fusioninventory_agents_id");
-      foreach ($a_taskjobstate as $data) {
+      $a_taskjobstate = $DB->request([
+         'FROM'    => 'glpi_plugin_fusioninventory_taskjobstates',
+         'WHERE'   => ['state' => [0, 1, 2]],
+         'GROUPBY' => ['uniqid', 'plugin_fusioninventory_agents_id']]);
+      while ($data = $a_taskjobstate->next()) {
          $sql = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
                ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
@@ -649,8 +648,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             $task = $DB->fetch_assoc($result);
             if ($task['communication'] == 'pull') {
                $has_recent_log_entries = $pfTaskjoblog->find(
-                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'",
-                       "id DESC", "1");
+                     ['plugin_fusioninventory_taskjobstates_id' => $data['id']],
+                     ['id DESC'], 1);
                $finish = false;
                if (count($has_recent_log_entries) == 1) {
                   $data2 = current($has_recent_log_entries);
@@ -666,10 +665,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                // No news from the agent since 4 hour. The agent is probably crached.
                //Let's cancel the task
                if ($finish) {
-                     $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                              AND `plugin_fusioninventory_agents_id`='".
-                                 $data['plugin_fusioninventory_agents_id']."'
-                              AND (`state`='2' OR `state`='1') ");
+                     $a_statustmp = $pfTaskjobstate->find(
+                           ['uniqid' => $data['uniqid'],
+                            'plugin_fusioninventory_agents_id' => $data['plugin_fusioninventory_agents_id'],
+                            'state'  => [1, 2]]);
                   foreach ($a_statustmp as $datatmp) {
                      $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                       0,
@@ -680,8 +679,9 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                }
             } else if ($task['communication'] == 'push') {
                $a_valid = $pfTaskjoblog->find(
-                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                          AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
+                     ['plugin_fusioninventory_taskjobstates_id' => $data['id'],
+                      'ADDTIME(date, "00:10:00")' => ['<',  'NOW()']],
+                     ['id DESC'], 1);
 
                if (count($a_valid) == '1') {
                   // Get agent status
@@ -692,10 +692,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
                      case 'waiting':
                         // token is bad and must force cancel task in server
-                        $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                 AND `plugin_fusioninventory_agents_id`='".
-                                    $data['plugin_fusioninventory_agents_id']."'
-                                 AND (`state`='2' OR `state`='1' OR `state`='0') ");
+                        $a_statetmp = $pfTaskjobstate->find(
+                              ['uniqid' => $data['uniqid'],
+                               'plugin_fusioninventory_agents_id' => $data['plugin_fusioninventory_agents_id'],
+                               'state'  => [0, 1, 2]]);
                         foreach ($a_statetmp as $datatmp) {
                            $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                                  0,
@@ -711,10 +711,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
                      case 'noanswer':
                         // agent crash or computer is shutdown and force cancel task in server
-                        $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                       AND `plugin_fusioninventory_agents_id`='".
-                                          $data['plugin_fusioninventory_agents_id']."'
-                                       AND (`state`='2' OR `state`='1') ");
+                        $a_statetmp = $pfTaskjobstate->find(
+                              ['uniqid' => $data['uniqid'],
+                               'plugin_fusioninventory_agents_id' => $data['plugin_fusioninventory_agents_id'],
+                               'state'  => [1, 2]]);
                         foreach ($a_statetmp as $datatmp) {
                            $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                                0,
@@ -723,8 +723,8 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                                                                "==agentcrashed==");
                         }
                         $a_valid4h = $pfTaskjoblog->find(
-                                "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'",
-                                "id DESC", "1");
+                              ['plugin_fusioninventory_taskjobstates_id' => $data['id']],
+                              ['id DESC'], 1);
                         $finish = false;
                         if (count($a_valid4h) == 1) {
                            $datajs = current($a_valid4h);
@@ -738,10 +738,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                         }
 
                         if ($finish) {
-                           $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                   AND `plugin_fusioninventory_agents_id`='".
-                                                      $data['plugin_fusioninventory_agents_id']."'
-                                                   AND `state`='0' ");
+                           $a_statetmp = $pfTaskjobstate->find(
+                                 ['uniqid' => $data['uniqid'],
+                                  'plugin_fusioninventory_agents_id' => $data['plugin_fusioninventory_agents_id'],
+                                  'state' => 0]);
                            foreach ($a_statetmp as $datatmp) {
                               $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                                   0,
@@ -839,10 +839,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       // all taskjobs
       $a_taskjobstates = $pfTaskjobstate->find(
-              "`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
+            ['plugin_fusioninventory_taskjobs_id' => $parm->fields["id"]]);
       foreach ($a_taskjobstates as $a_taskjobstate) {
          $a_taskjoblogs = $pfTaskjoblog->find(
-                 "`plugin_fusioninventory_taskjobstates_id`='".$a_taskjobstate['id']."'");
+               ['plugin_fusioninventory_taskjobstates_id' => $a_taskjobstate['id']]);
          foreach ($a_taskjoblogs as $a_taskjoblog) {
             $pfTaskjoblog->delete($a_taskjoblog, 1);
          }
@@ -858,7 +858,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $a_taskjobstates =
-         $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='". $this->fields["id"]."'");
+         $pfTaskjobstate->find(['plugin_fusioninventory_taskjobs_id' => $this->fields["id"]]);
 
       //TODO: in order to avoid too many atomic operations on DB, convert the
       //following into a massive prepared operation (ie. ids in one massive action)
@@ -884,7 +884,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTask = new PluginFusioninventoryTask();
 
-      $a_list = $pfTaskjob->find("`method`='".$method."'");
+      $a_list = $pfTaskjob->find(['method' => $method]);
 
       echo "<table class='tab_cadrehov' style='width:950px'>";
       echo "<tr class='tab_bg_1'>";
@@ -1372,7 +1372,7 @@ function new_subtype(id) {
    static function duplicate($source_tasks_id, $target_tasks_id) {
       $pfTaskJob = new self();
       $result    = true;
-      $taskjobs  = $pfTaskJob->find("`plugin_fusioninventory_tasks_id`='$source_tasks_id'");
+      $taskjobs  = $pfTaskJob->find(['plugin_fusioninventory_tasks_id' => $source_tasks_id]);
       foreach ($taskjobs as $taskjob) {
          $taskjob['plugin_fusioninventory_tasks_id'] = $target_tasks_id;
          unset($taskjob['id']);

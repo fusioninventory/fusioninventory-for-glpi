@@ -201,7 +201,7 @@ class UnmanagedManagedTest extends Common_TestCase {
 
       $networkPort = new NetworkPort();
 
-      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
+      $a_networkports = $networkPort->find(['mac' => 'cc:f9:54:a1:03:45']);
 
       $a_networkport = current($a_networkports);
       $networkports_id = $a_networkport['id'];
@@ -215,7 +215,7 @@ class UnmanagedManagedTest extends Common_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, false);
 
-      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
+      $a_networkports = $networkPort->find(['mac' => 'cc:f9:54:a1:03:45']);
 
       $this->assertEquals(1, count($a_networkports),
          "The MAC address cc:f9:54:a1:03:45 must be tied to only one port");

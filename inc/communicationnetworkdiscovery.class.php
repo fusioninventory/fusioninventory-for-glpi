@@ -582,12 +582,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    function updateNetworkInfo($arrayinventory, $itemtype, $items_id, $instanciation_type, $check_addresses) {
       $NetworkPort = new NetworkPort();
       $port = current($NetworkPort->find(
-           "`itemtype`='$itemtype' AND `items_id`='$items_id'".
-           " AND `instantiation_type`='$instanciation_type'",
-           "",
-           1
-         )
-      );
+           ['itemtype'           => $itemtype,
+            'items_id'           => $items_id,
+            'instantiation_type' => $instanciation_type],
+           [], 1));
       $port_id = 0;
       if (isset($port['id'])) {
          if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
@@ -615,10 +613,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
       $NetworkName = new NetworkName();
       $name = current($NetworkName->find(
-        "`itemtype`='NetworkPort' AND `items_id`='".$port_id."'",
-        "",
-        1)
-      );
+        ['itemtype' => 'NetworkPort', 'items_id' => $port_id], [], 1));
       $name_id = 0;
 
       if (isset($name['id'])) {
@@ -634,13 +629,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $IPAddress = new IPAddress();
 
          if ($check_addresses) {
-            $addresses = $IPAddress->find("`itemtype`='NetworkName'
-               AND `items_id`='".$name_id."'", '', 1);
+            $addresses = $IPAddress->find(
+                  ['itemtype' => 'NetworkName',
+                   'items_id' => $name_id],
+                  [], 1);
          } else {
             // Case of NetworkEquipment
-            $a_ips = $IPAddress->find("`itemtype`='NetworkName'
-               AND `items_id`='".$name_id."'
-               AND `name`='".$arrayinventory['IP']."'", '', 1);
+            $a_ips = $IPAddress->find(
+                  ['itemtype' => 'NetworkName',
+                   'items_id' => $name_id,
+                   'name'     => $arrayinventory['IP']],
+                  [], 1);
             if (count($a_ips) > 0) {
                $addresses = $a_ips;
             } else {
@@ -676,7 +675,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @return array
     */
    function initSpecificInfo($key_field, $id, $item) {
-      $instances = $item->find("`$key_field`='$id'");
+      $instances = $item->find([$key_field => $id]);
       $input = [];
       if (count($instances) > 0) {
          $input = Toolbox::addslashes_deep(current($instances));

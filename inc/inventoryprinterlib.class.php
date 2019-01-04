@@ -167,8 +167,10 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();
       //See if have an entry today
-      $a_entires = $pfPrinterLog->find("`printers_id`='".$printers_id."'
-         AND LEFT(`date`, 10)='".date("Y-m-d")."'", "", 1);
+      $a_entires = $pfPrinterLog->find(
+            ['printers_id' => $printers_id,
+             'date'        => ['LIKE', date("Y-m-d").' %']],
+            [], 1);
       if (count($a_entires) > 0) {
          return;
       }
@@ -209,7 +211,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_db = $pfPrinterCartridge->find("`printers_id`='".$printers_id."'");
+      $a_db = $pfPrinterCartridge->find(['printers_id' => $printers_id]);
       $a_dbcartridges = [];
       foreach ($a_db as $data) {
          $a_dbcartridges[$data['plugin_fusioninventory_mappings_id']] = $data;

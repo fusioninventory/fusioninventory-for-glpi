@@ -133,20 +133,23 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $computers_a_1 = [];
                $computers_a_2 = [];
 
-               //array_keys($group_users->find("groups_id = '$items_id'"));
                $members = $group_users->getGroupUsers($items_id);
 
                foreach ($members as $member) {
-                  $computers = $computer_object->find("users_id = '".$member['id']."' "
-                  . " AND `is_deleted`='0' AND `is_template`='0'");
+                  $computers = $computer_object->find(
+                        ['users_id'    => $member['id'],
+                         'is_deleted'  => 0,
+                         'is_template' => 0]);
                   foreach ($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
 
                //find computers directly associated with this group
-               $computers = $computer_object->find("groups_id = '$items_id' "
-                       . " AND `is_deleted`='0' AND `is_template`='0'");
+               $computers = $computer_object->find(
+                     ['groups_id'   => $items_id,
+                      'is_deleted'  => 0,
+                      'is_template' => 0]);
                foreach ($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
@@ -280,15 +283,11 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                   $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
                   $jobstates_running = $jobstate->find(
-                     implode(" ",
-                        [
-                           "    `itemtype` = 'PluginFusioninventoryDeployPackage'",
-                           "AND `items_id` = ".$package->fields['id'],
-                           "AND `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
-                           "AND `plugin_fusioninventory_agents_id` = " . $agents_id
-                        ]
-                     )
-                  );
+                        ['itemtype'                         => 'PluginFusioninventoryDeployPackage',
+                         'items_id'                         => $package->fields['id'],
+                         'state'                            => ['!=', PluginFusioninventoryTaskjobstate::FINISHED],
+                         'plugin_fusioninventory_agents_id' => $agents_id
+                        ]);
 
                   if (count($jobstates_running) == 0) {
                      // Push the agent, in the stack of agent to awake

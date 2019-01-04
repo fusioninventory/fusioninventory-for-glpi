@@ -273,8 +273,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $changestate = 0;
       //      foreach ($taskjobstates as $jobstate) {
          $data = $jobstate->fields;
-         $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".
-                                                $data['items_id']."' ");
+         $a_networkPort = $NetworkPort->find(['itemtype' => 'Computer', 'items_id' => $data['items_id']]);
          $computerip = 0;
       foreach ($a_networkPort as $datanetwork) {
          //if ($datanetwork['ip'] != "127.0.0.1") {
@@ -343,7 +342,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $nb_agentsMax = ceil($nb_computers / $nb_computerByAgentMin);
 
       // Get ids of operating systems which can make real wakeonlan
-      $a_os = $OperatingSystem->find(" `name` LIKE '%Linux%' ");
+      $a_os = $OperatingSystem->find(['name' => ['LIKE', '%Linux%']]);
       $osfind = '(';
       $i = 0;
       foreach ($a_os as $os_id=>$data) {

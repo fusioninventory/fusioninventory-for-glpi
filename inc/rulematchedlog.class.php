@@ -352,7 +352,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $allData = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'", "`date` DESC");
+      $allData = $this->find(['plugin_fusioninventory_agents_id' => $agents_id], ['date DESC']);
       foreach ($allData as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";

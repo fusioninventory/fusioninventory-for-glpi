@@ -572,7 +572,7 @@ class CronTaskTest extends RestoreDatabase_TestCase {
       $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
 
       //Find the on demand task
-      $tasks = $pfTask->find("`name`='ondemand'");
+      $tasks = $pfTask->find(['name' => 'ondemand']);
       $this->assertEquals(1, count($tasks));
 
       $task     = current($tasks);

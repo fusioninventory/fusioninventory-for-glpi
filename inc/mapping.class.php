@@ -64,7 +64,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
     * @return array|false mapping fields or FALSE
     */
    function get($p_itemtype, $p_name) {
-      $data = $this->find("`itemtype`='".$p_itemtype."' AND `name`='".$p_name."'", "", 1);
+      $data = $this->find(['itemtype' => $p_itemtype, 'name' => $p_name], [], 1);
       $mapping = current($data);
       if (isset($mapping['id'])) {
          return $mapping;

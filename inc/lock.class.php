@@ -81,8 +81,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    static function countForLock(CommonGLPI $item) {
       $pfLock = new self();
-      $a_data = current($pfLock->find("`tablename`='".$item->getTable()."'
-         AND `items_id`='".$item->getID()."'", "", 1));
+      $a_data = current($pfLock->find(
+            ['tablename' => $item->getTable(),
+             'items_id'  => $item->getID()],
+            [], 1));
       if (!is_array($a_data) || count($a_data) == 0) {
          return 0;
       }
@@ -499,7 +501,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          if (count($fieldsToLock)) {       // there are still locks
             $fieldsToLock=array_values($fieldsToLock);
 
-            $a_lines = $pfLock->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
+            $a_lines = $pfLock->find(['tablename' => $p_table, 'items_id' => $p_items_id]);
             $a_line = current($a_lines);
             $pfLock->getFromDB($a_line['id']);
             $input = [];
@@ -507,7 +509,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $input['tablefields'] = exportArrayToDB($fieldsToLock);
             $pfLock->update($input);
          } else {                            // no locks any more
-            $a_lines = $pfLock->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
+            $a_lines = $pfLock->find(['tablename' => $p_table, 'items_id' => $p_items_id]);
             $a_line = current($a_lines);
             $pfLock->getFromDB($a_line['id']);
             $pfLock->delete($pfLock->fields);
@@ -560,7 +562,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $tableName = getTableForItemType($p_itemtype);
       $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
       if ($DB->numrows($result)) {
-         $a_lines = $pfl->find("`tablename`='".$tableName."' AND `items_id`='".$p_items_id."'");
+         $a_lines = $pfl->find(['tablename' => $tableName, 'items_id' => $p_items_id]);
          $a_line = current($a_lines);
          $pfl->getFromDB($a_line['id']);
          if ($massiveaction == 'addLock') {
@@ -626,7 +628,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
             $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
 
-            $a_lines = $pfl->find("`tablename`='".$tableName."' AND `items_id`='".$p_items_id."'");
+            $a_lines = $pfl->find(['tablename' => $tableName, 'items_id' => $p_items_id]);
             $a_line = current($a_lines);
             $pfl->getFromDB($a_line['id']);
             $pfl->fields['tablefields'] = exportArrayToDB($p_fieldsToLock);
@@ -835,7 +837,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       if ($item_extend->getType() != 'PluginFusioninventoryLock') {
          // Get device info + field 'serialized_inventory'
-         $a_lists = $item_extend->find("`".getForeignKeyFieldForItemType($itemtype)."`='".$items_id."'", "", 1);
+         $a_lists = $item_extend->find([getForeignKeyFieldForItemType($itemtype) => $items_id], [], 1);
          if (count($a_lists) == 1) {
             $a_list = current($a_lists);
             if (!empty($a_list['serialized_inventory'])) {

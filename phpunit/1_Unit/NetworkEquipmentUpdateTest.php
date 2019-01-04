@@ -275,7 +275,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-      $a_networkequipment = current($pfNetworkEquipment->find("`networkequipments_id`='1'", "", 1));
+      $a_networkequipment = current($pfNetworkEquipment->find(['networkequipments_id' => 1], [], 1));
       unset($a_networkequipment['last_fusioninventory_update']);
       $a_reference = [
           'id'                                          => '1',
@@ -309,10 +309,11 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();
 
-      $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortAggregate'
-         AND `itemtype`='NetworkEquipment'
-         AND `items_id`='1'
-         AND `logical_number`='0'");
+      $a_networkports = $networkPort->find(
+            ['instantiation_type' => 'NetworkPortAggregate',
+             'itemtype'           => 'NetworkEquipment',
+             'items_id'           => 1,
+             'logical_number'     => 0]);
 
       $this->assertEquals(1, count($a_networkports), 'Number internal ports');
 
@@ -320,10 +321,14 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertEquals('6c:50:4d:39:59:80', $a_networkport['mac']);
 
       // May have 3 IP
-      $a_networkname = current($networkName->find("`items_id`='".$a_networkport['id']."'
-                                                         AND `itemtype`='NetworkPort'", "", 1));
-      $a_ips_fromDB = $iPAddress->find("`itemtype`='NetworkName'
-                                     AND `items_id`='".$a_networkname['id']."'", "`name`");
+      $a_networkname = current($networkName->find(
+            ['items_id' => $a_networkport['id'],
+             'itemtype' => 'NetworkPort'],
+            [], 1));
+      $a_ips_fromDB = $iPAddress->find(
+            ['itemtype' => 'NetworkName',
+             'items_id' => $a_networkname['id']],
+            ['name']);
       $a_ips = [];
       foreach ($a_ips_fromDB as $data) {
          $a_ips[] = $data['name'];
@@ -343,8 +348,9 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $networkPort = new NetworkPort();
 
-      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:35'
-         AND `itemtype`='PluginFusioninventoryUnmanaged'");
+      $a_networkports = $networkPort->find(
+            ['mac'      => 'cc:f9:54:a1:03:35',
+             'itemtype' => 'PluginFusioninventoryUnmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
 
@@ -367,7 +373,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
       $pfUnmanaged = new PluginFusioninventoryUnmanaged();
 
-      $a_networkports = $networkPort->find("`logical_number`='10001'");
+      $a_networkports = $networkPort->find(['logical_number' => 10001]);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport 10001 may be 1');
 
@@ -379,8 +385,9 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $this->assertEquals(0, $pfUnmanaged->fields['hub'], 'May not be a hub');
 
-      $a_networkports = $networkPort->find("`items_id`='".$pfUnmanaged->fields['id']."'
-         AND `itemtype`='PluginFusioninventoryUnmanaged'");
+      $a_networkports = $networkPort->find(
+            ['items_id' => $pfUnmanaged->fields['id'],
+             'itemtype' => 'PluginFusioninventoryUnmanaged']);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
    }
@@ -397,13 +404,13 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $networkPort = new NetworkPort();
       $networkPortAggregate = new NetworkPortAggregate();
 
-      $a_networkports = $networkPort->find("`logical_number`='5005'");
+      $a_networkports = $networkPort->find(['logical_number' => 5005]);
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport 5005 may be 1');
 
       $a_networkport= current($a_networkports);
 
-      $a_aggregate = current($networkPortAggregate->find("`networkports_id`='".$a_networkport['id']."'", '', 1));
+      $a_aggregate = current($networkPortAggregate->find(['networkports_id' => $a_networkport['id']], [], 1));
 
       $a_ports = importArrayFromDB($a_aggregate['networkports_id_list']);
 
@@ -421,10 +428,11 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $networkPort = new NetworkPort();
 
-      $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortEthernet'
-         AND `itemtype`='NetworkEquipment'
-         AND `items_id`='1'
-         AND `name`='Fa0/2'");
+      $a_networkports = $networkPort->find(
+            ['instantiation_type' => 'NetworkPortEthernet',
+             'itemtype'           => 'NetworkEquipment',
+             'items_id'           => 1,
+             'name'               => 'Fa0/2']);
 
       $this->assertEquals(1, count($a_networkports),
          'Networkport 10002 of switch must have only 1 port'
@@ -446,7 +454,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $DB->connect();
 
       $networkPort = new NetworkPort();
-      $a_networkports = $networkPort->find("`itemtype`='NetworkEquipment'");
+      $a_networkports = $networkPort->find(['itemtype' => 'NetworkEquipment']);
 
       $this->assertEquals(4, count($a_networkports), 'Number of networkport must be 4');
 
