@@ -215,9 +215,7 @@ function unregisterInvalidManifests($logger, $dryrun, $invalid_manifests) {
 
    foreach ($invalid_manifests as $manifest) {
       $short_sha512 = substr($manifest, 0, 6);
-      $data = $pfDeployFile->find(
-         "shortsha512 = '". $short_sha512 ."'"
-      );
+      $data = $pfDeployFile->find(['shortsha512' => $short_sha512]);
       foreach ($data as $config) {
          $pfDeployFile->getFromDB($config['id']);
          $logger->info("Unregister file " . $pfDeployFile->fields['name']);

@@ -90,7 +90,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
                                       'is_recursive' => 1
                                      ]);
       //Add the location to the mirror
-      $tmp            = $pfDeploymirror->find("`name`='Mirror 1'");
+      $tmp            = $pfDeploymirror->find(['name' => 'Mirror 1']);
       $this->assertTrue($pfDeploymirror->getFromDB(1));
       $input          = ['id'           => $pfDeploymirror->fields['id'],
                          'locations_id' => $locations_id
@@ -111,7 +111,7 @@ class DeploymirrorTest extends RestoreDatabase_TestCase {
     */
    public function testDeleteMirror() {
       $pfDeploymirror = new PluginFusioninventoryDeployMirror();
-      $tmp = $pfDeploymirror->find("`name`='Mirror 1'");
+      $tmp = $pfDeploymirror->find(['name' => 'Mirror 1']);
       $mirror = current($tmp);
       $this->assertTrue($pfDeploymirror->delete(['id' => $mirror['id']]));
    }

@@ -121,7 +121,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $ong = [];
       $i = 1;
-      $fields = $pfInventoryComputerCriteria->find("");
+      $fields = $pfInventoryComputerCriteria->find();
       foreach ($fields as $data) {
          $ong[$i] = $data['name'];
          $i++;
@@ -175,13 +175,13 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    function cleanBlacklist($a_computerinventory) {
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
-      $fields = $pfInventoryComputerCriteria->find("");
+      $fields = $pfInventoryComputerCriteria->find();
       foreach ($fields as $id=>$data) {
 
          switch ($data['comment']) {
 
             case 'ssn':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['serial']))
@@ -212,7 +212,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'uuid':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['uuid']))
@@ -224,7 +224,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'macAddress':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($a_computerinventory['networkport'])) {
@@ -240,7 +240,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'winProdKey':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id']['license_number']))
@@ -252,7 +252,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'smodel':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['computermodels_id']))
@@ -281,7 +281,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                break;
 
             case 'storagesSerial':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                //                  if (isset($arrayinventory['CONTENT']['STORAGES'])) {
@@ -296,7 +296,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'drivesSerial':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                //                  if (isset($arrayinventory['CONTENT']['DRIVES'])) {
@@ -311,7 +311,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'assetTag':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                //               foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                //                  if ((isset($arrayinventory['CONTENT']['BIOS']['ASSETTAG']))
@@ -323,7 +323,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'manufacturer':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($a_computerinventory['Computer']['manufacturers_id']))
@@ -368,7 +368,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
               break;
 
             case 'IP':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
+               $a_blacklist = $this->find(['plugin_fusioninventory_criterium_id' => $id]);
 
                foreach ($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($a_computerinventory['networkport'])) {

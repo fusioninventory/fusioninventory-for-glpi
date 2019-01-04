@@ -273,7 +273,7 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
          'Item Simcard data'
       );
 
-      $simcards            = $pfItemDeviceSimcard->find("`serial`='22344406000051565613'");
+      $simcards            = $pfItemDeviceSimcard->find(['serial' => '22344406000051565613']);
       $this->assertGreaterThan(0, $pfItemDeviceSimcard->getFromDBByCrit(['serial' => '22344406000051565613']));
 
       $a_ref = [

@@ -383,10 +383,12 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          $type = str_replace("-", "", $type);
       }
 
-      $a_ports = $this->find("(`number`='".$type."'
-         OR `name`='".$type."'
-         OR `othername`='".$type."')
-         AND `import`='1'");
+      $a_ports = $this->find(
+            ['OR' =>
+               ['number'    => $type,
+                'name'      => $type,
+                'othername' => $type],
+             'import' => 1]);
       if (count($a_ports) > 0) {
          return true;
       }
@@ -400,8 +402,8 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
     */
    function showNetworkporttype() {
 
-      $a_notimports = $this->find("`import` = '0'");
-      $a_imports = $this->find("`import` = '1'");
+      $a_notimports = $this->find(['import' => 0]);
+      $a_imports = $this->find(['import' => 1]);
 
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
 

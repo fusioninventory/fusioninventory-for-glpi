@@ -296,7 +296,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          return $PF_CONFIG[$name];
       }
 
-      $config = current($this->find("`type`='".$name."'"));
+      $config = current($this->find(['type' => $name]));
       if (isset($config['value'])) {
          return $config['value'];
       }
@@ -895,7 +895,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       global $PF_CONFIG;
 
       // retrieve current config
-      $config = current($this->find("`type`='".$name."'"));
+      $config = current($this->find(['type' => $name]));
 
       // set in db
       if (isset($config['id'])) {

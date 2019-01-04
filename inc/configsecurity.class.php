@@ -340,7 +340,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
             }
             $fk = getForeignKeyFieldForItemType($itemtype);
             foreach ($ids as $key) {
-               $found = $equipement->find("`$fk`='".$key."'");
+               $found = $equipement->find([$fk => $key]);
                $input = [];
                if (count($found) > 0) {
                   $current = current($found);

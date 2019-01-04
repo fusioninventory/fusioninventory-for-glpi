@@ -363,7 +363,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          'operatingsystemarchitectures_id'   => '0',
          'operatingsystemkernelversions_id'  => '0',
          'license_number'                    => '',
-         'license_id'                        => '',
+         'licenseid'                         => '',
          'operatingsystemeditions_id'        => '0',
          'is_deleted'                        => '0',
          'is_dynamic'                        => '1',
@@ -387,7 +387,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $pfiComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computer = current($pfiComputerComputer->find("`computers_id`='1'", "", 1));
+      $a_computer = current($pfiComputerComputer->find(['computers_id' => 1], [], 1));
       unset($a_computer['last_fusioninventory_update']);
       $serialized_inventory = $a_computer['serialized_inventory'];
       unset($a_computer['serialized_inventory']);
@@ -1271,14 +1271,14 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
-      $a_software = $software->find("`name`='acrobat_Reader_9.2'");
+      $a_software = $software->find(['name' => 'acrobat_Reader_9.2']);
       $this->assertEquals(1, count($a_software), "First computer added");
 
       $a_inventory['Computer']['name'] = "pcJ2";
       $a_inventory['Computer']['serial'] = "XB63J7J2";
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, false);
 
-      $a_software = $software->find("`name`='acrobat_Reader_9.2'");
+      $a_software = $software->find(['name' => 'acrobat_Reader_9.2']);
       $this->assertEquals(1, count($a_software), "Second computer added");
    }
 

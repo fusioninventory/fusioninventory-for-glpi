@@ -593,7 +593,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function importToken($arrayinventory) {
 
       if (isset($arrayinventory['DEVICEID'])) {
-         $a_agent = $this->find("`device_id`='".$arrayinventory['DEVICEID']."'", "", "1");
+         $a_agent = $this->find(['device_id' => $arrayinventory['DEVICEID']], [], 1);
          if (empty($a_agent)) {
             $a_input = [];
             if (isset($arrayinventory['TOKEN'])) {
@@ -649,7 +649,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    function getAgentWithComputerid($computers_id) {
 
-      $agent = $this->find("`computers_id`='".$computers_id."'", "", 1);
+      $agent = $this->find(['computers_id' => $computers_id], [], 1);
       if (count($agent) == 1) {
          $data = current($agent);
          $this->getFromDB($data['id']);
@@ -670,8 +670,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (count($computer_ids) == 0) {
          return [];
       }
-      $agents = $this->find(
-              "`computers_id` in ('".implode("','", $computer_ids)."')");
+      $agents = $this->find(['computers_id' => $computer_ids]);
       return $agents;
    }
 
@@ -704,7 +703,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    function setAgentWithComputerid($computers_id, $device_id, $entities_id) {
 
-      $a_agent = $this->find("`computers_id`='".$computers_id."'", "", 1);
+      $a_agent = $this->find(['computers_id' => $computers_id], [], 1);
       // Is this computer already linked to an agent?
       $agent = array_shift($a_agent);
       if (is_array($agent)) {
@@ -728,7 +727,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          //         }
          $oldAgents = $this->find(
             // the same device_id but linked on the wrong computer
-            "(`device_id`='".$device_id."' AND `computers_id`<>'".$computers_id."')");
+            ['device_id' => $device_id, 'computers_id' => ['!=', $computers_id]]);
          foreach ($oldAgents as $oldAgent) {
             $input = [];
             $input['id']            = $agent['id'];

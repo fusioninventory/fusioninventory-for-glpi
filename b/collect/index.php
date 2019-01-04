@@ -118,8 +118,10 @@ switch (filter_input(INPUT_GET, "action")) {
    case 'setAnswer':
       // example
       // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
-      $jobstate = current($pfTaskjobstate->find("`uniqid`='".filter_input(INPUT_GET, "uuid")."'
-         AND `state`!='".PluginFusioninventoryTaskjobstate::FINISHED."'", '', 1));
+      $jobstate = current($pfTaskjobstate->find(
+            ['uniqid' => filter_input(INPUT_GET, 'uuid'),
+             'state'  => ['!=', PluginFusioninventoryTaskjobstate::FINISHED]],
+            [], 1));
 
       if (isset($jobstate['plugin_fusioninventory_agents_id'])) {
 
@@ -209,8 +211,10 @@ switch (filter_input(INPUT_GET, "action")) {
 
 
    case 'jobsDone':
-      $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
-            AND `state`!='".PluginFusioninventoryTaskjobstate::FINISHED."'", '', 1));
+      $jobstate = current($pfTaskjobstate->find(
+            ['uniqid' => $_GET['uuid'],
+             'state'  => ['!=', PluginFusioninventoryTaskjobstate::FINISHED]],
+            [], 1));
       $pfTaskjobstate->changeStatusFinish($jobstate['id'],
                                      $jobstate['items_id'],
                                      $jobstate['itemtype']);

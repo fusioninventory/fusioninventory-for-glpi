@@ -149,10 +149,9 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          $start_date = "";
          $end_date = "";
          $nb_errors = 0;
-         $a_taskjobstates = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'");
+         $a_taskjobstates = $pfTaskjobstate->find(['uniqid' => $data['uniqid']]);
          foreach ($a_taskjobstates as $datastate) {
-            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
-                                                   $datastate['id']."'");
+            $a_taskjoblog = $pfTaskjoblog->find(['plugin_fusioninventory_taskjobstates_id' => $datastate['id']]);
             foreach ($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
                   $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);

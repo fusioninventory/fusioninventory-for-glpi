@@ -249,7 +249,7 @@ class RuleImportTest extends Common_TestCase {
       $this->assertEquals(0, count($a_printers), 'May have only one Printer');
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $a_logs = $pfTaskjoblog->find("`comment` LIKE '%importdenied%'", '`id` DESC', 1);
+      $a_logs = $pfTaskjoblog->find(['comment' => ['LIKE', '%importdenied%']], ['id DESC'], 1);
       $a_log = current($a_logs);
       $this->assertEquals('==importdenied== [serial]:E8J596100A, '.
               '[mac]:00:80:77:d9:51:c3, [ip]:10.36.4.29, [model]:Printer0442, '.

@@ -52,8 +52,6 @@ if (count($args['<device_ids>']) == 0) {
    $randid = rand(0, count($agents));
    $device_ids = [$agents[$randid]['device_id']];
 } else {
-   //$agents = $agent->find("device_id in ('".implode("','", $args['<device_ids>'])."')");
-   //$device_ids[] = $agent_data['device_id'];
    $device_ids = $args['<device_ids>'];
 }
 

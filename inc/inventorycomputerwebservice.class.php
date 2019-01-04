@@ -101,8 +101,8 @@ class PluginFusioninventoryInventoryComputerWebservice {
       }
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
-                                              "`computers_id`='".$params['computers_id']."'",
-                                              "", 1));
+                                              ['computers_id' => $params['computers_id']],
+                                              [], 1));
       if (empty($a_computerextend)) {
          return $response;
       }

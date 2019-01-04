@@ -145,15 +145,15 @@ class DeleteTest extends RestoreDatabase_TestCase {
       $this->assertEquals(true, $return);
 
       //check deletion of job
-      $jobs_found = $pfTaskjob->find("id = ".self::$taskjobs_id);
+      $jobs_found = $pfTaskjob->find(['id' => self::$taskjobs_id]);
       $this->assertEquals([], $jobs_found);
 
       //check deletion of state
-      $states_found = $pfTaskjobState->find("id = ".self::$taskjobstates_id);
+      $states_found = $pfTaskjobState->find(['id' => self::$taskjobstates_id]);
       $this->assertEquals([], $states_found);
 
       //check deletion of log
-      $logs_found = $pfTaskjoblog->find("id = ".self::$taskjobstates_id);
+      $logs_found = $pfTaskjoblog->find(['id' => self::$taskjobstates_id]);
       $this->assertEquals([], $logs_found);
    }
 

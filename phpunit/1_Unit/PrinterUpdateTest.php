@@ -107,7 +107,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id, 1);
 
-      // To be sure not have 2 sme informations
+      // To be sure not have 2 same information
       $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id, 0);
 
    }
@@ -186,7 +186,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $pfPrinter = new PluginFusioninventoryPrinter();
-      $a_printer = current($pfPrinter->find("`printers_id`='1'", "", 1));
+      $a_printer = current($pfPrinter->find(['printers_id' => 1], [], 1));
       unset($a_printer['last_fusioninventory_update']);
       $a_reference = [
          'id'                                           => '1',
@@ -212,9 +212,9 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfPrinterLog = new PluginFusioninventoryPrinterLog();
 
-      $a_pages = $pfPrinterLog->find("`printers_id`='1'");
+      $a_pages = $pfPrinterLog->find(['printers_id' => 1]);
 
-      $this->assertEquals(1, count($a_pages));
+      $this->assertEquals(1, count($a_pages), print_r($a_pages, true));
 
    }
 
@@ -229,9 +229,10 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1'
-         AND `plugin_fusioninventory_mappings_id`='63'
-         AND `state`='60'");
+      $a_cartridge = $pfPrinterCartridge->find(
+            ['printers_id'                        => 1,
+             'plugin_fusioninventory_mappings_id' => 63,
+             'state'                              => 60]);
 
       $this->assertEquals(1, count($a_cartridge));
    }
@@ -247,9 +248,10 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1'
-         AND `plugin_fusioninventory_mappings_id`='71'
-         AND `state`='40'");
+      $a_cartridge = $pfPrinterCartridge->find(
+            ['printers_id'                        => 1,
+             'plugin_fusioninventory_mappings_id' => 71,
+             'state'                              => 40]);
 
       $this->assertEquals(1, count($a_cartridge));
    }
@@ -265,9 +267,10 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1'
-         AND `plugin_fusioninventory_mappings_id`='79'
-         AND `state`='80'");
+      $a_cartridge = $pfPrinterCartridge->find(
+            ['printers_id'                        => 1,
+             'plugin_fusioninventory_mappings_id' => 79,
+             'state'                              => 80]);
 
       $this->assertEquals(1, count($a_cartridge));
    }
@@ -283,9 +286,10 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1'
-         AND `plugin_fusioninventory_mappings_id`='75'
-         AND `state`='100'");
+      $a_cartridge = $pfPrinterCartridge->find(
+            ['printers_id'                        => 1,
+             'plugin_fusioninventory_mappings_id' => 75,
+             'state'                              => 100]);
 
       $this->assertEquals(1, count($a_cartridge));
    }
@@ -301,7 +305,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
 
-      $a_cartridge = $pfPrinterCartridge->find("");
+      $a_cartridge = $pfPrinterCartridge->find();
 
       $this->assertEquals(4, count($a_cartridge));
    }
@@ -362,7 +366,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       // Check mac
       $networkPort = new NetworkPort();
-      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
       $this->assertEquals('1', count($a_ports),
          'May have one network port');
       $a_port = current($a_ports);
@@ -370,13 +374,15 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'Mac address');
 
       // check ip
-      $a_networknames = $networkName->find("`itemtype`='NetworkPort'
-         AND `items_id`='".$a_port['id']."'");
+      $a_networknames = $networkName->find(
+            ['itemtype' => 'NetworkPort',
+             'items_id' => $a_port['id']]);
       $this->assertEquals('1', count($a_networknames),
          'May have one networkname');
       $a_networkname = current($a_networknames);
-      $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-         AND `items_id`='".$a_networkname['id']."'");
+      $a_ipaddresses = $iPAddress->find(
+            ['itemtype' => 'NetworkName',
+             'items_id' => $a_networkname['id']]);
       $this->assertEquals('1', count($a_ipaddresses),
          'May have one IP address');
       $a_ipaddress = current($a_ipaddresses);
@@ -415,7 +421,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       ];
 
       $printer = new Printer();
-      $a_printers = $printer->find("`serial`='MY89AQG0V9050N'");
+      $a_printers = $printer->find(['serial' => 'MY89AQG0V9050N']);
       $a_printer = current($a_printers);
       $printers_id = $a_printer['id'];
       $printer->getFromDB($printers_id);
@@ -441,7 +447,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       // Check mac
       $networkPort = new NetworkPort();
-      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
       $this->assertEquals('1', count($a_ports),
          'May have one network port');
       $a_port = current($a_ports);
@@ -449,13 +455,15 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'Mac address');
 
       // check ip
-      $a_networknames = $networkName->find("`itemtype`='NetworkPort'
-         AND `items_id`='".$a_port['id']."'");
+      $a_networknames = $networkName->find(
+            ['itemtype' => 'NetworkPort',
+             'items_id' => $a_port['id']]);
       $this->assertEquals('1', count($a_networknames),
          'May have one networkname');
       $a_networkname = current($a_networknames);
-      $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-         AND `items_id`='".$a_networkname['id']."'");
+      $a_ipaddresses = $iPAddress->find(
+            ['itemtype' => 'NetworkName',
+             'items_id' => $a_networkname['id']]);
       $this->assertEquals('1', count($a_ipaddresses),
          'May have one IP address');
       $a_ipaddress = current($a_ipaddresses);
@@ -506,7 +514,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
 
       // Check mac
       $networkPort = new NetworkPort();
-      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
       $this->assertEquals('1', count($a_ports),
          'May have one network port');
       $a_port = current($a_ports);
@@ -546,7 +554,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $pfCNetworkInventory = new PluginFusioninventoryCommunicationNetworkInventory();
       $pfCNetworkInventory->importDevice('Printer', $printers_id, $a_inventory, 0);
 
-      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $a_ports = $networkPort->find(['itemtype' => 'Printer', 'items_id' => $printers_id]);
       $this->assertEquals('1', count($a_ports), 'Should have only one port');
 
       $a_port = current($a_ports);

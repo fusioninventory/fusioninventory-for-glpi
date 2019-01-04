@@ -164,11 +164,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $i = 5200;
 
       $pfCollect = new PluginFusioninventoryCollect();
-      foreach ($pfCollect->find(getEntitiesRestrictRequest("", $pfCollect->getTable(), '', '', true), 'id ASC') as $collect) {
+      foreach ($pfCollect->find(getEntitiesRestrictCriteria($pfCollect->getTable(), '', '', true), ['id ASC']) as $collect) {
 
          //registries
          $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-         $registries = $pfCollect_Registry->find('plugin_fusioninventory_collects_id = ' . $collect['id'], 'id ASC');
+         $registries = $pfCollect_Registry->find(['plugin_fusioninventory_collects_id' => $collect['id']], ['id ASC']);
          foreach ($registries as $registry) {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_registries_contents';
             $tab[$i]['field']         = 'value';
@@ -186,7 +186,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
          //WMIs
          $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-         $wmis = $pfCollect_Wmi->find('plugin_fusioninventory_collects_id  = ' . $collect['id'], 'id ASC');
+         $wmis = $pfCollect_Wmi->find(['plugin_fusioninventory_collects_id'  => $collect['id']], ['id ASC']);
          foreach ($wmis as $wmi) {
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_wmis_contents';
             $tab[$i]['field']         = 'value';
@@ -204,7 +204,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
          //Files
          $pfCollect_File = new PluginFusioninventoryCollect_File();
-         $files = $pfCollect_File->find('plugin_fusioninventory_collects_id = ' . $collect['id'], 'id ASC');
+         $files = $pfCollect_File->find(['plugin_fusioninventory_collects_id' => $collect['id']], ['id ASC']);
          foreach ($files as $file) {
 
             $tab[$i]['table']         = 'glpi_plugin_fusioninventory_collects_files_contents';
@@ -335,18 +335,17 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                $computers_a_1 = [];
                $computers_a_2 = [];
 
-               //array_keys($group_users->find("groups_id = '$items_id'"));
                $members = $group_users->getGroupUsers($items_id);
 
                foreach ($members as $member) {
-                  $computers = $computer_object->find("users_id = '${member['id']}'");
+                  $computers = $computer_object->find(['users_id' => $member['id']]);
                   foreach ($computers as $computer) {
                      $computers_a_1[] = $computer['id'];
                   }
                }
 
                //find computers directly associated with this group
-               $computers = $computer_object->find("groups_id = '$items_id'");
+               $computers = $computer_object->find(['groups_id' => $items_id]);
                foreach ($computers as $computer) {
                   $computers_a_2[] = $computer['id'];
                }
@@ -446,8 +445,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      // get all registry
                      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
                      $a_registries = $pfCollect_Registry->find(
-                             "`plugin_fusioninventory_collects_id`='".
-                             $pfCollect->fields['id']."'");
+                             ['plugin_fusioninventory_collects_id' => $pfCollect->fields['id']]);
                      foreach ($a_registries as $data_r) {
                         $uniqid= uniqid();
                         $c_input['state'] = 0;
@@ -477,8 +475,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      // get all wmi
                      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
                      $a_wmies = $pfCollect_Wmi->find(
-                             "`plugin_fusioninventory_collects_id`='".
-                             $pfCollect->fields['id']."'");
+                             ['plugin_fusioninventory_collects_id' => $pfCollect->fields['id']]);
                      foreach ($a_wmies as $data_r) {
                         $uniqid= uniqid();
                         $c_input['state'] = 0;
@@ -508,8 +505,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      // find files
                      $pfCollect_File = new PluginFusioninventoryCollect_File();
                      $a_files = $pfCollect_File->find(
-                             "`plugin_fusioninventory_collects_id`='".
-                             $pfCollect->fields['id']."'");
+                             ['plugin_fusioninventory_collects_id' => $pfCollect->fields['id']]);
                      foreach ($a_files as $data_r) {
                         $uniqid= uniqid();
                         $c_input['state'] = 0;
@@ -562,7 +558,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $output = [];
 
       $this->getFromDB($taskjobstate->fields['items_id']);
-      $sql_where = "plugin_fusioninventory_collects_id =".$this->fields['id'];
+      $sql_where = ['plugin_fusioninventory_collects_id' => $this->fields['id']];
 
       switch ($this->fields['type']) {
 

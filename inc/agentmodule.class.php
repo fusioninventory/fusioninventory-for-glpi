@@ -306,7 +306,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @return array information of module activation
     */
    function getActivationExceptions($module_name) {
-      $a_modules = $this->find("`modulename`='".$module_name."'", "", 1);
+      $a_modules = $this->find(['modulename' => $module_name], [], 1);
       return current($a_modules);
    }
 
@@ -326,23 +326,23 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       $agentModule = $this->getActivationExceptions($module_name);
 
-      $where = "";
+      $where = [];
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
          if (count($a_agentList) > 0) {
-            $where = " `id` IN (";
+            $ips = [];
             $i = 0;
-            $sep  = '';
             foreach ($a_agentList as $agent_id) {
                if ($i> 0) {
-                  $sep  = ', ';
+                  $ips[] = $agent_id;
                }
-               $where .= $sep.$agent_id;
                $i++;
             }
-            $where .= ") ";
+            if (count($ips) > 0) {
+               $where = ['id' => $ips];
+            }
             if (isset($_SESSION['glpiactiveentities_string'])) {
-               $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
+               $where += getEntitiesRestrictCriteria($pfAgent->getTable());
             }
          } else {
             return [];
@@ -350,19 +350,19 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
          if (count($a_agentList) > 0) {
-            $where = " `id` NOT IN (";
+            $ips = [];
             $i = 0;
-            $sep  = '';
             foreach ($a_agentList as $agent_id) {
                if ($i> 0) {
-                  $sep  = ', ';
+                  $ips[] = $agent_id;
                }
-               $where .= $sep.$agent_id;
                $i++;
             }
-            $where .= ") ";
+            if (count($ips) > 0) {
+               $where = ['id' => ['NOT' => $ips]];
+            }
             if (isset($_SESSION['glpiactiveentities_string'])) {
-               $where .= getEntitiesRestrictRequest("AND", $pfAgent->getTable());
+               $where += getEntitiesRestrictCriteria($pfAgent->getTable());
             }
          }
       }

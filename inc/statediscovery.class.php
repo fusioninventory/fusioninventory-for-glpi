@@ -69,8 +69,9 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
     * @param integer $agent_id
     */
    function updateState($p_number, $a_input, $agent_id) {
-      $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
-                              AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
+      $data = $this->find(
+            ['plugin_fusioninventory_taskjob_id' => $p_number,
+             'plugin_fusioninventory_agents_id'  => $agent_id]);
       if (count($data) == "0") {
          $input = [];
          $input['plugin_fusioninventory_taskjob_id'] = $p_number;
@@ -117,8 +118,9 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
     * @param integer $agent_id
     */
    function endState($p_number, $date_end, $agent_id) {
-      $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
-                              AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
+      $data = $this->find(
+            ['plugin_fusioninventory_taskjob_id' => $p_number,
+             'plugin_fusioninventory_agents_id'  => $agent_id]);
       foreach ($data as $input) {
          $input['end_time'] = $date_end;
          $this->update($input);
@@ -207,10 +209,9 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          $notimporteddevices= 0;
          $updateddevices = 0;
          $createddevices = 0;
-         $a_taskjobstates = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'");
+         $a_taskjobstates = $pfTaskjobstate->find(['uniqid' => $data['uniqid']]);
          foreach ($a_taskjobstates as $datastate) {
-            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
-                                                   $datastate['id']."'");
+            $a_taskjoblog = $pfTaskjoblog->find(['plugin_fusioninventory_taskjobstates_id' => $datastate['id']]);
             foreach ($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
                   $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);

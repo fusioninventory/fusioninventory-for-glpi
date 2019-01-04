@@ -62,7 +62,7 @@ class PackageSelfDeployTest extends RestoreDatabase_TestCase {
                      ]);
       $pfAgent->add(['computers_id'=> 1, 'entities_id' => 0]);
       $pfDeployGroup->add(['name' => 'all', 'type' => 'DYNAMIC']);
-      $a_profile = current($profile->find("`interface`='helpdesk'", '', 1));
+      $a_profile = current($profile->find(['interface' => 'helpdesk'], [], 1));
 
       $_SESSION['glpiID']                    = $users_id;
       $_SESSION['glpiname']                  = 'David';
