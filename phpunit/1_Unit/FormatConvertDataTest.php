@@ -123,13 +123,44 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
+      // create a computer's model dictionnay to test import with manufacturer
+      $rule = new RuleDictionnaryComputerModel;
+      $rules_id = $rule->add([
+         'sub_type'  => 'RuleDictionnaryComputerModel',
+         'name'      => 'test import with manufacturer',
+         'is_active' => 1,
+         'match'     => 'AND'
+      ]);
+      $ruleacriteria = new RuleCriteria;
+      $ruleaaction   = new RuleAction;
+      $ruleacriteria->add([
+         'rules_id'  => $rules_id,
+         'criteria'  => 'name',
+         'condition' => Rule::PATTERN_CONTAIN,
+         'pattern'   => 'XPS 13',
+      ]);
+      $ruleacriteria->add([
+         'rules_id'  => $rules_id,
+         'criteria'  => 'manufacturer',
+         'condition' => Rule::PATTERN_CONTAIN,
+         'pattern'   => 'Dell',
+      ]);
+      $ruleaaction->add([
+         'rules_id'    => $rules_id,
+         'action_type' => 'assign',
+         'field'       => 'name',
+         'value'       => 'Modified by dictionary',
+      ]);
+
       $a_inventory['software'] = [];
       $a_inventory['Computer'] = [
-          'name'                             => 'pc',
-          'users_id'                         => 0,
-          'operatingsystems_id'              => 'freebsd',
-          'operatingsystemversions_id'       => '9.1-RELEASE'
-          ];
+         'name'                       => 'pc',
+         'users_id'                   => 0,
+         'operatingsystems_id'        => 'freebsd',
+         'operatingsystemversions_id' => '9.1-RELEASE',
+         'manufacturers_id'           => 'Dell Inc.',
+         'computermodels_id'          => 'XPS 13 9350'
+      ];
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -137,13 +168,19 @@ class FormatConvertDataTest extends RestoreDatabase_TestCase {
 
       $a_reference['software'] = [];
       $a_reference['Computer'] = [
-          'name'                             => 'pc',
-          'users_id'                         => 0,
-          'operatingsystems_id'              => 1,
-          'operatingsystemversions_id'       => 1
-          ];
+         'name'                       => 'pc',
+         'users_id'                   => 0,
+         'operatingsystems_id'        => 1,
+         'operatingsystemversions_id' => 1,
+         'manufacturers_id'           => 1,
+         'computermodels_id'          => 1
+      ];
 
-       $this->assertEquals($a_reference, $a_inventory);
+      $this->assertEquals($a_reference, $a_inventory);
+
+      $computer_model = new ComputerModel;
+      $computer_model->getFromDB(1);
+      $this->assertEquals($computer_model->fields['name'], "Modified by dictionary");
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
