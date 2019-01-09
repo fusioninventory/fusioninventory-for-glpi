@@ -1929,6 +1929,13 @@ class PluginFusioninventoryFormatconvert {
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
                                                              $items_id);
 
+      // save raw manufacture name before its replacement by id for importing model
+      // (we need manufacturers name in when importing model in dictionary)
+      $manufacture_name = "";
+      if (isset($array['manufacturers_id'])) {
+         $manufacture_name = $array['manufacturers_id'];
+      }
+
       foreach ($array as $key=>$value) {
          if (!is_int($key)
                  && ($key == "software"
@@ -1966,6 +1973,12 @@ class PluginFusioninventoryFormatconvert {
                      }
                      if ($key == "locations_id") {
                         $array[$key] = Dropdown::importExternal('Location', $value, $entities_id);
+                     } else if ($key == "computermodels_id") {
+                        // computer model need manufacturer relation for dictionary import
+                        // see CommonDCModelDropdown::$additional_fields_for_dictionnary
+                        $array[$key] = Dropdown::importExternal('ComputerModel', $value, $entities_id, [
+                           'manufacturer' => $manufacture_name
+                        ]);
                      } else if (isset($this->foreignkey_itemtype[$key])) {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key], $value, $entities_id);
                      } else if (isForeignKeyField($key)
