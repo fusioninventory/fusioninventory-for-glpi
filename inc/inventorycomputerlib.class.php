@@ -529,8 +529,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
                foreach ($db_harddrives as $keydb => $arraydb) {
                   if ($arrayslower['serial'] == $arraydb['serial']) {
-                     if ($arraydb['capacity'] == 0
-                             AND $arrayslower['capacity'] > 0) {
+                     if ($arrayslower['capacity'] > 0
+                         && $arraydb['capacity'] != $arrayslower['capacity']) {
                         $input = [
                            'id'       => $keydb,
                            'capacity' => $arrayslower['capacity']
