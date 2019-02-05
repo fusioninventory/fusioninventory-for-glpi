@@ -1,7 +1,6 @@
 <?php
 /**
  * Command-line interface parser that will make you smile.
- *
  * - http://docopt.org
  * - Repository and issue-tracker: https://github.com/docopt/docopt.php
  * - Licensed under terms of MIT license (see LICENSE-MIT)
