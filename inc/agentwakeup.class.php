@@ -166,7 +166,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                ]
             ],
             'WHERE'     => [
-               'glpi_plugin_fusioninventory_tasks.id'             => $taks['id'],
+               'glpi_plugin_fusioninventory_tasks.id'             => $task['id'],
                'glpi_plugin_fusioninventory_taskjobs.id'          => 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_taskjobs_id',
                'glpi_plugin_fusioninventory_taskjobstates.state'  => PluginFusioninventoryTaskjobstate::PREPARED
             ],
