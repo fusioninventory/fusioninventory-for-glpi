@@ -979,10 +979,14 @@ class PluginFusioninventoryFormatconvert {
                if ($pfConfig->getValue('import_volume') == 1) {
                   $array_tmp = $thisc->addValues($a_drives,
                                                  [
-                                                    'VOLUMN'      => 'device',
-                                                    'FILESYSTEM'  => 'filesystems_id',
-                                                    'TOTAL'       => 'totalsize',
-                                                    'FREE'        => 'freesize']);
+                                                    'VOLUMN'         => 'device',
+                                                    'FILESYSTEM'     => 'filesystems_id',
+                                                    'TOTAL'          => 'totalsize',
+                                                    'FREE'           => 'freesize',
+                                                    'ENCRYPT_NAME'   => 'encryption_tool',
+                                                    'ENCRYPT_ALGO'   => 'encryption_algorithm',
+                                                    'ENCRYPT_STATUS' => 'encryption_status',
+                                                    'ENCRYPT_TYPE'   => 'encryption_type']);
                   if ((isset($a_drives['LABEL'])) AND (!empty($a_drives['LABEL']))) {
                      $array_tmp['name'] = $a_drives['LABEL'];
                   } else if (((!isset($a_drives['VOLUMN']))
