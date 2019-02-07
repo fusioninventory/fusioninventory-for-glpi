@@ -1079,6 +1079,26 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   }
                   $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];
                   $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
+                  $disk = $a_computerinventory['computerdisk'][$key];
+
+                  // Safecheck until GLPI X
+                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES'))
+                  {
+                     // Encryption status
+                     if ($disk['encryption_status'] == "Yes") {
+                        $input['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_YES;
+                     } else if ($disk['encryption_status'] == "Partially") {
+                        $input['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_PARTIALLY;
+                     } else {
+                        $input['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_NO;
+                     }
+
+                     // Encryption details
+                     $input['encryption_tool'] = $disk['encryption_tool'];
+                     $input['encryption_algorithm'] = $disk['encryption_algorithm'];
+                     $input['encryption_type'] = $disk['encrypt_type'];
+                  }
+
                   $input['_no_history'] = true;
                   $itemDisk->update($input, false);
                   unset($simpleitemdisk[$key]);
@@ -1101,6 +1121,19 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $a_itemdisk['items_id']  = $computers_id;
                   $a_itemdisk['itemtype']  = 'Computer';
                   $a_itemdisk['is_dynamic']    = 1;
+
+                  // Safecheck until GLPI X
+                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES'))
+                  {
+                     //Encryption status
+                     if ($a_itemdisk['encryption_status'] == "Yes") {
+                        $a_itemdisk['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_YES;
+                     } else if ($a_itemdisk['encryption_status'] == "Partially") {
+                        $a_itemdisk['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_PARTIALLY;
+                     } else {
+                        $a_itemdisk['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_NO;
+                     }
+                  }
                   $a_itemdisk['_no_history']   = $no_history;
                   $itemDisk->add($a_itemdisk, [], !$no_history);
                }
