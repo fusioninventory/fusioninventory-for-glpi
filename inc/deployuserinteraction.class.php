@@ -288,7 +288,7 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
       }
       if ($canedit) {
          echo "<tr><th>";
-         Html::checkAllAsCheckbox("userinteractionsList$rand", mt_rand());
+         echo Html::getCheckAllAsCheckbox("userinteractionsList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
