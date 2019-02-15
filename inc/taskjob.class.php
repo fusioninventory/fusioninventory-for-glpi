@@ -1302,7 +1302,7 @@ function new_subtype(id) {
          $i++;
       }
       echo "<tr><th>";
-      Html::checkAllAsCheckbox("taskjobsList$rand", mt_rand());
+      echo Html::getCheckAllAsCheckbox("taskjobsList$rand", mt_rand());
       echo "</th><th colspan='3' class='mark'></th></tr>";
       echo "</table>";
       echo "</div>";

@@ -281,7 +281,7 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       }
       if ($canedit) {
          echo "<tr><th>";
-         Html::checkAllAsCheckbox("checksList$rand", mt_rand());
+         echo Html::getCheckAllAsCheckbox("checksList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";
