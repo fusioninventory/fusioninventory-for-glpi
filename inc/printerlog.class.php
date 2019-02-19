@@ -793,7 +793,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
             echo "</table><br/>";
          } else {
-            if (count($input > 0)) {
+            if (count($input) > 0) {
                $split = explode(' > ', $name);
                $a_graph[] = [
                    'key'    => $split[count($split) - 1],
