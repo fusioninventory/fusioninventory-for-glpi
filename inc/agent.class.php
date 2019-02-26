@@ -794,7 +794,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo Html::scriptBlock("$(function() {
          var waiting = false;
 
-         var refresh_status = function(display_refresh = true) {
+         var refresh_status = function(display_refresh) {
+            var display_refresh = (typeof display_refresh !== 'undefined') ? display_refresh : true;
             $('#agent_status').html('$load_anim');
             $('#refresh_status').hide();
             $('#force_inventory_button').hide();
