@@ -586,6 +586,9 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          case 131:
             return __('Number of printed monochrome pages', 'fusioninventory');
 
+         case 133:
+            return __('Matte black cartridge', 'fusioninventory');
+
          case 134:
             return __('Black cartridge', 'fusioninventory');
 
@@ -780,6 +783,48 @@ class PluginFusioninventoryMapping extends CommonDBTM {
 
          case 198:
             return __('Paper roll in centimeters', 'fusioninventory');
+
+         case 199:
+            return __('Transfer kit Max', 'fusioninventory');
+
+         case 200:
+            return __('Transfer kit used', 'fusioninventory');
+
+         case 201:
+            return __('Transfer kit remaining', 'fusioninventory');
+
+         case 202:
+            return __('Fuser kit', 'fusioninventory');
+
+         case 203:
+            return __('Fuser kit max', 'fusioninventory');
+
+         case 204:
+            return __('Fuser kit used', 'fusioninventory');
+
+         case 205:
+            return __('Fuser kit remaining', 'fusioninventory');
+
+         case 206:
+            return __('Gloss Enhancer ink cartridge', 'fusioninventory');
+
+         case 207:
+            return __('Blue ink cartridge', 'fusioninventory');
+
+         case 208:
+            return __('Green ink cartridge', 'fusioninventory');
+
+         case 209:
+            return __('Red ink cartridge', 'fusioninventory');
+
+         case 210:
+            return __('Chromatic Red ink cartridge', 'fusioninventory');
+
+         case 211:
+            return __('Light grey ink cartridge', 'fusioninventory');
+
+         case 212:
+            return __('Transfer kit', 'fusioninventory');
 
          case 1423:
             return __('Total number of printed pages (print)', 'fusioninventory');
