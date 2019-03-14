@@ -7860,6 +7860,14 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['locale']      = 196;
    $a_input['shortlocale'] = 196;
    $pfMapping->set($a_input);
+  $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgegray';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 196;
+   $a_input['shortlocale'] = 196;
+   $pfMapping->set($a_input);
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
@@ -7872,7 +7880,25 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgegraylight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 197;
+   $a_input['shortlocale'] = 197;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
    $a_input['name']        = 'cartridgelightgrey';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 197;
+   $a_input['shortlocale'] = 197;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgelightgray';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 197;
