@@ -8678,7 +8678,7 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Maintenance kit Remaining'] = 'maintenancekitremaining';
 
    $constantsfield['Kit de transfert'] = 'transferkit';
-   $constantsfield['Maintenance kit'] = 'transferkit';
+   $constantsfield['Transfer kit'] = 'transferkit';
    $constantsfield['Transfermodul'] = 'transferkit';
 
    $constantsfield['Kit de transfert Max'] = 'transferkitmax';
