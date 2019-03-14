@@ -804,7 +804,22 @@ class PluginFusioninventoryMapping extends CommonDBTM {
 
          case 205:
             return __('Fuser kit remaining', 'fusioninventory');
-            
+
+         case 206:
+            return __('Gloss Enhancer ink cartridge', 'fusioninventory');
+
+         case 207:
+            return __('Blue ink cartridge', 'fusioninventory');
+
+         case 208:
+            return __('Green ink cartridge', 'fusioninventory');
+
+         case 209:
+            return __('Red ink cartridge', 'fusioninventory');
+
+         case 210:
+            return __('Chromatic Red ink cartridge', 'fusioninventory');
+   
          case 1423:
             return __('Total number of printed pages (print)', 'fusioninventory');
 
