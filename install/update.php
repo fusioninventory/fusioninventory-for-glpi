@@ -7866,8 +7866,8 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['name']        = 'cartridgegreylight';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
-   $a_input['locale']      = 141;
-   $a_input['shortlocale'] = 141;
+   $a_input['locale']      = 197;
+   $a_input['shortlocale'] = 197;
    $pfMapping->set($a_input);
 
    $a_input = [];
@@ -7875,8 +7875,8 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['name']        = 'cartridgelightgrey';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
-   $a_input['locale']      = 141;
-   $a_input['shortlocale'] = 141;
+   $a_input['locale']      = 197;
+   $a_input['shortlocale'] = 197;
    $pfMapping->set($a_input);
 
    $a_input = [];
@@ -7920,22 +7920,13 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['name']        = 'transferkit';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
-   $a_input['locale']      = 197;
-   $a_input['shortlocale'] = 197;
-   $pfMapping->set($a_input);
-
-   $a_input = [];
-   $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'transferkitmax';
-   $a_input['table']       = '';
-   $a_input['tablefield']  = '';
    $a_input['locale']      = 198;
    $a_input['shortlocale'] = 198;
    $pfMapping->set($a_input);
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'transferkitused';
+   $a_input['name']        = 'transferkitmax';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 199;
@@ -7944,7 +7935,7 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'transferkitremaining';
+   $a_input['name']        = 'transferkitused';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 200;
@@ -7953,7 +7944,7 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'fuserkit';
+   $a_input['name']        = 'transferkitremaining';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 201;
@@ -7962,7 +7953,7 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'fuserkitmax';
+   $a_input['name']        = 'fuserkit';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 202;
@@ -7971,7 +7962,7 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'fuserkitused';
+   $a_input['name']        = 'fuserkitmax';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 203;
@@ -7980,11 +7971,20 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
-   $a_input['name']        = 'fuserkitremaining';
+   $a_input['name']        = 'fuserkitused';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 204;
    $a_input['shortlocale'] = 204;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'fuserkitremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 205;
+   $a_input['shortlocale'] = 205;
    $pfMapping->set($a_input);
 
    $a_input = [];
