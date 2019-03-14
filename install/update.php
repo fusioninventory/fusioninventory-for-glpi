@@ -7907,6 +7907,51 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeglossenhancer';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 206;
+   $a_input['shortlocale'] = 206;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeblue';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 207;
+   $a_input['shortlocale'] = 207;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgegreen';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 208;
+   $a_input['shortlocale'] = 208;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgered';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 209;
+   $a_input['shortlocale'] = 209;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgechromaticred';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 210;
+   $a_input['shortlocale'] = 210;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
    $a_input['name']        = 'maintenancekit';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
@@ -8684,11 +8729,31 @@ function update213to220_ConvertField($migration) {
 
    $constantsfield['Cartouche grise'] = 'cartridgegrey';
    $constantsfield['Grey ink cartridge'] = 'cartridgegrey';
-   $constantsfield['Grey ink cartridge'] = 'cartridgegrey';
+   $constantsfield['Grau Kartusche'] = 'cartridgegrey';
 
-   $constantsfield['Cartouche grise'] = 'cartridgegreylight';
-   $constantsfield['Grey ink cartridge'] = 'cartridgegreylight';
-   $constantsfield['Grey ink cartridge'] = 'cartridgegreylight';
+   $constantsfield['Cartouche grise clair'] = 'cartridgegreylight';
+   $constantsfield['Light Grey ink cartridge'] = 'cartridgegreylight';
+   $constantsfield['Leichtes Grau Kartusche'] = 'cartridgegreylight';
+
+   $constantsfield['Cartouche le amplificateur de brillance'] = 'cartridgeglossenhancer';
+   $constantsfield['Gloss Enhancer ink cartridge'] = 'cartridgeglossenhancer';
+   $constantsfield['Gloss Enhancer Kartusche'] = 'cartridgeglossenhancer';
+
+   $constantsfield['Cartouche bleu'] = 'cartridgeblue';
+   $constantsfield['Blue ink cartridge'] = 'cartridgeblue';
+   $constantsfield['Kartusche blau'] = 'cartridgeblue';
+   
+   $constantsfield['Cartouche vert'] = 'cartridgegreen';
+   $constantsfield['green ink cartridge'] = 'cartridgegreen';
+   $constantsfield['Kartusche grün'] = 'cartridgegreen';
+
+   $constantsfield['Cartouche rouge'] = 'cartridgered';
+   $constantsfield['Red ink cartridge'] = 'cartridgered';
+   $constantsfield['Kartusche rot'] = 'cartridgered';
+
+   $constantsfield['Cartouche rouge chromatique'] = 'cartridgechromaticred';
+   $constantsfield['Chromatic red ink cartridge'] = 'cartridgechromaticred';
+   $constantsfield['Kartusche chromatische rot'] = 'cartridgechromaticred';
 
    $constantsfield['Kit de maintenance'] = 'maintenancekit';
    $constantsfield['Maintenance kit'] = 'maintenancekit';
