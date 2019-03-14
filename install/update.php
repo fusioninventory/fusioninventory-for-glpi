@@ -7755,6 +7755,24 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeblackmatte';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 133;
+   $a_input['shortlocale'] = 133;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgematteblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 133;
+   $a_input['shortlocale'] = 133;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
    $a_input['name']        = 'cartridgeblackphoto';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
@@ -7762,6 +7780,15 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['shortlocale'] = 135;
    $pfMapping->set($a_input);
 
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgephotoblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 135;
+   $a_input['shortlocale'] = 135;
+
+   $pfMapping->set($a_input);
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
    $a_input['name']        = 'cartridgecyan';
@@ -7774,6 +7801,15 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
    $a_input['name']        = 'cartridgecyanlight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 139;
+   $a_input['shortlocale'] = 139;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgelightcyan';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
    $a_input['locale']      = 139;
@@ -7800,6 +7836,15 @@ function pluginFusioninventoryUpdatemapping() {
 
    $a_input = [];
    $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgelightmagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 140;
+   $a_input['shortlocale'] = 140;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
    $a_input['name']        = 'cartridgeyellow';
    $a_input['table']       = '';
    $a_input['tablefield']  = '';
@@ -7814,6 +7859,24 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['tablefield']  = '';
    $a_input['locale']      = 196;
    $a_input['shortlocale'] = 196;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgegreylight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 141;
+   $a_input['shortlocale'] = 141;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgelightgrey';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 141;
+   $a_input['shortlocale'] = 141;
    $pfMapping->set($a_input);
 
    $a_input = [];
@@ -7850,6 +7913,78 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['tablefield']  = '';
    $a_input['locale']      = 195;
    $a_input['shortlocale'] = 195;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'transferkit';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 197;
+   $a_input['shortlocale'] = 197;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'transferkitmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 198;
+   $a_input['shortlocale'] = 198;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'transferkitused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 199;
+   $a_input['shortlocale'] = 199;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'transferkitremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 200;
+   $a_input['shortlocale'] = 200;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'fuserkit';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 201;
+   $a_input['shortlocale'] = 201;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'fuserkitmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 202;
+   $a_input['shortlocale'] = 202;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'fuserkitused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 203;
+   $a_input['shortlocale'] = 203;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'fuserkitremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 204;
+   $a_input['shortlocale'] = 204;
    $pfMapping->set($a_input);
 
    $a_input = [];
@@ -8493,6 +8628,10 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Black ink cartridge'] = 'cartridgeblack';
    $constantsfield['Schwarze Kartusche'] = 'cartridgeblack';
 
+   $constantsfield['Cartouche noir'] = 'cartridgeblackmatte';
+   $constantsfield['Black ink cartridge'] = 'cartridgeblackmatte';
+   $constantsfield['Schwarze Kartusche'] = 'cartridgeblackmatte';
+
    $constantsfield['Cartouche noir photo'] = 'cartridgeblackphoto';
    $constantsfield['Photo black ink cartridge'] = 'cartridgeblackphoto';
    $constantsfield['Photoschwarz Kartusche'] = 'cartridgeblackphoto';
@@ -8521,6 +8660,10 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Grey ink cartridge'] = 'cartridgegrey';
    $constantsfield['Grey ink cartridge'] = 'cartridgegrey';
 
+   $constantsfield['Cartouche grise'] = 'cartridgegreylight';
+   $constantsfield['Grey ink cartridge'] = 'cartridgegreylight';
+   $constantsfield['Grey ink cartridge'] = 'cartridgegreylight';
+
    $constantsfield['Kit de maintenance'] = 'maintenancekit';
    $constantsfield['Maintenance kit'] = 'maintenancekit';
    $constantsfield['Wartungsmodul'] = 'maintenancekit';
@@ -8529,10 +8672,36 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Maintenance kit Max'] = 'maintenancekitmax';
 
    $constantsfield['Kit de maintenance Utilisé'] = 'maintenancekitused';
-   $constantsfield['Maintenance kit Utilisé'] = 'maintenancekitused';
+   $constantsfield['Maintenance kit Used'] = 'maintenancekitused';
 
    $constantsfield['Kit de maintenance Restant'] = 'maintenancekitremaining';
-   $constantsfield['Maintenance kit Restant'] = 'maintenancekitremaining';
+   $constantsfield['Maintenance kit Remaining'] = 'maintenancekitremaining';
+
+   $constantsfield['Kit de transfert'] = 'transferkit';
+   $constantsfield['Maintenance kit'] = 'transferkit';
+   $constantsfield['Transfermodul'] = 'transferkit';
+
+   $constantsfield['Kit de transfert Max'] = 'transferkitmax';
+   $constantsfield['Transfer kit Max'] = 'transferkitmax';
+
+   $constantsfield['Kit de transfert Utilisé'] = 'transferkitused';
+   $constantsfield['Transfer kit Used'] = 'transferkitused';
+
+   $constantsfield['Kit de transfert Restant'] = 'transferkitremaining';
+   $constantsfield['Transfer kit Remaining'] = 'transferkitremaining';
+
+   $constantsfield['Kit de fusion'] = 'fuserkit';
+   $constantsfield['Fuser kit'] = 'fuserkit';
+   $constantsfield['fixiereinheitmodul'] = 'fuserkit';
+
+   $constantsfield['Kit de fusion Max'] = 'fuserkitmax';
+   $constantsfield['fusion kit Max'] = 'fuserkitmax';
+
+   $constantsfield['Kit de fusion Utilisé'] = 'fuserkitused';
+   $constantsfield['Fuser kit used'] = 'fuserkitused';
+
+   $constantsfield['Kit de fusion Restant'] = 'fuserkitremaining';
+   $constantsfield['Fuser kit remaining'] = 'fuserkitremaining';
 
    $constantsfield['Tambour Noir'] = 'drumblack';
    $constantsfield['Black drum'] = 'drumblack';
