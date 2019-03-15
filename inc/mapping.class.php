@@ -775,6 +775,12 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          case 196:
             return __('Grey ink cartridge', 'fusioninventory');
 
+         case 197:
+            return __('Paper roll in inches', 'fusioninventory');
+
+         case 198:
+            return __('Paper roll in centimeters', 'fusioninventory');
+
          case 1423:
             return __('Total number of printed pages (print)', 'fusioninventory');
 
