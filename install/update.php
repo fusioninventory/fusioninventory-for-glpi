@@ -8179,6 +8179,23 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['locale']      = 407;
    $pfMapping->set($a_input);
 
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'paperrollinches';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 197;
+   $a_input['shortlocale'] = 197;
+   $pfMapping->set($a_input);
+
+   $a_input = [];
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'paperrollcentimeters';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 198;
+   $a_input['shortlocale'] = 198;
+   $pfMapping->set($a_input);
 }
 
 
