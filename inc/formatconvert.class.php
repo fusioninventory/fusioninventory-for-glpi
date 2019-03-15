@@ -2365,6 +2365,18 @@ class PluginFusioninventoryFormatconvert {
          $pfMapping = new PluginFusioninventoryMapping();
 
          foreach ($array['CARTRIDGES'] as $name => $value) {
+            // Special case for paper roll
+            if (is_array($value)) {
+               if ($name == 'PAPERROLL') {
+                  $plugin_fusioninventory_mappings = $pfMapping->get("Printer", 'paperrollinches');
+                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value['INCHES'];
+
+                  $plugin_fusioninventory_mappings = $pfMapping->get("Printer", 'paperrollcentimeters');
+                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value['CENTIMETERS'];
+               }
+               continue;
+            }
+
             $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
             if ($plugin_fusioninventory_mappings) {
                if (strstr($value, 'pages')) { // 30pages

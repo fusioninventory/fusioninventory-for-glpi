@@ -1351,6 +1351,8 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Printer','drumyellowmax','','',187,187),
           ('Printer','drumyellowused','','',188,188),
           ('Printer','drumyellowremaining','','',189,189),
+          ('Printer','paperrollinches','','',197,197),
+          ('Printer','paperrollcentimeters','','',198,198),
 -- Printers : Counter pages
           ('Printer','pagecountertotalpages','glpi_plugin_fusioninventory_printerlogs',
              'pages_total',28,128),
