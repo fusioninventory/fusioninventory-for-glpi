@@ -518,7 +518,8 @@ class PluginFusioninventoryToolbox {
     * @param string $itemtype
     */
    static function sendXML($items_id, $itemtype) {
-      if (call_user_func([$itemtype, 'canView'])) {
+      if (preg_match("/^([a-zA-Z]+)\/(\d+)\/(\d+)\.xml$/", $items_id)
+         && call_user_func([$itemtype, 'canView'])) {
          $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
          echo $xml;
       } else {
