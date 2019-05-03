@@ -181,7 +181,7 @@ class PluginFusioninventoryCollectRule extends Rule {
                default:
                   //plugins actions
                   $executeaction = clone $this;
-                  $output = $executeaction->executePluginsActions($action, $output, $params);
+                  $output = $executeaction->executePluginsActions($action, $output, $params, $input);
                   break;
 
             }

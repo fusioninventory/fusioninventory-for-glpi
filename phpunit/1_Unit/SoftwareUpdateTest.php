@@ -162,8 +162,11 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
                 'PUBLISHER' => 'fusioninventory team',
                 'NAME'      => 'fusioninventory',
                 'VERSION'   => '0.85+1.0',
-                'SYSTEM_CATEGORY' => 'devel'
+                'SYSTEM_CATEGORY' => 'devel',
+                'OPERATIONG_SYSTEM' => 0
             ];
+
+      $a_software['Computer']['device_id'] = 0;
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
