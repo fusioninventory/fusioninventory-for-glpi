@@ -150,6 +150,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['serial']['name'] = __('Assets to import', 'fusioninventory').' : '.
                                        __('Serial number');
 
+       $criterias['otherserial']['name'] = __('Assets to import', 'fusioninventory').' : '.
+                                           __('Inventory number');
+
       //      $criterias['hdserial']['name']        = __('Assets to import', 'fusioninventory').' : '.
       //                   __('Hard disk serial number');
 
@@ -408,7 +411,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $continue          = true;
       $entityRestrict    = false;
       $nb_crit_find      = 0;
-      $global_criteria   = ['model', 'mac', 'ip', 'serial', 'hdserial',
+      $global_criteria   = ['model', 'mac', 'ip', 'serial', 'otherserial', 'hdserial',
                             'partitionserial', 'uuid', 'device_id',
                             'mskey', 'name', 'itemtype', 'domains_id',
                             'entityrestrict', 'oscomment'
@@ -568,7 +571,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                } else {
                   $sql_where_temp = " AND `[typetable]`.`serial`='".$input["serial"]."'";
                }
+               $sql_where .= $sql_where_temp;
+               break;
 
+            case 'otherserial':
+               if ($criteria->fields['condition'] == self::PATTERN_IS_EMPTY) {
+                  $sql_where_temp = " AND (`[typetable]`.`otherserial`=''
+                                       OR `[typetable]`.`otherserial` IS NULL) ";
+               } else {
+                  $sql_where_temp = " AND (`[typetable]`.`otherserial`='".$input['otherserial']."') ";
+               }
                $sql_where .= $sql_where_temp;
                break;
 

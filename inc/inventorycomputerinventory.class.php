@@ -204,6 +204,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['serial']))) {
          $input['serial'] = $a_computerinventory['Computer']['serial'];
       }
+      if ((isset($a_computerinventory['Computer']['otherserial']))
+                 AND (!empty($a_computerinventory['Computer']['otherserial']))) {
+         $input['otherserial'] = $a_computerinventory['Computer']['otherserial'];
+      }
       if ((isset($a_computerinventory['Computer']['uuid']))
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
          $input['uuid'] = $a_computerinventory['Computer']['uuid'];
