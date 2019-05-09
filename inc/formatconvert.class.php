@@ -126,7 +126,7 @@ class PluginFusioninventoryFormatconvert {
          if (isset($datainventory['CONTENT'])
               && isset($datainventory['CONTENT']['BIOS'])
               && !is_array($datainventory['CONTENT']['BIOS'])) {
-         unset($datainventory['CONTENT']['BIOS']);
+            unset($datainventory['CONTENT']['BIOS']);
          }
          if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])) {
             foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data) {
@@ -142,10 +142,10 @@ class PluginFusioninventoryFormatconvert {
          // Hack for Network discovery and inventory
          if (isset($datainventory['CONTENT']['DEVICE'])
               AND !is_array($datainventory['CONTENT']['DEVICE'])) {
-         $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
+            $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
          } else if (isset($datainventory['CONTENT']['DEVICE'])
               AND !is_int(key($datainventory['CONTENT']['DEVICE']))) {
-         $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
+            $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
          }
          if (isset($datainventory['CONTENT']['DEVICE'])) {
             foreach ($datainventory['CONTENT']['DEVICE'] as $num=>$data) {
