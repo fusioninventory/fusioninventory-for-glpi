@@ -1119,7 +1119,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function ComputerHook_addinventoryinfos () {
+   public function ComputerHook_addinventoryinfos() {
       global $DB, $PLUGIN_HOOKS;
 
       $DB->connect();
@@ -1138,7 +1138,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'Fedora release 23 (Twenty Three)';
          return $params;
       };
-      $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['tests'] = $callable;
+      $PLUGIN_HOOKS['fusioninventory_addinventoryinfos']['fusioninventory'] = $callable;
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return        = $pfFormatconvert->computerInventoryTransformation($a_computer);

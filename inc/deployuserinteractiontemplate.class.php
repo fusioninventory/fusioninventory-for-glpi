@@ -186,32 +186,24 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     * @return array
     */
    static function getButtons($interaction_type = '') {
-       $interactions =  [ self::ALERT_WTS =>
-                           [ self::WTS_BUTTON_OK_SYNC
-                                 => __('OK', 'fusioninventory'),
-                             self::WTS_BUTTON_OK_ASYNC
-                                 => __('OK (asynchronous)', 'fusioninventory'),
-                             self::WTS_BUTTON_OK_CANCEL
-                                 => __('OK - Cancel', 'fusioninventory'),
-                             self::WTS_BUTTON_YES_NO
-                                 => __('Yes - No', 'fusioninventory'),
-                             self::WTS_BUTTON_ABORT_RETRY_IGNORE
-                                 => __('OK - Abort - Retry', 'fusioninventory'),
-                             self::WTS_BUTTON_RETRY_CANCEL
-                                 => __('Retry - Cancel', 'fusioninventory'),
-                             self::WTS_BUTTON_ABORT_RETRY_IGNORE
-                                 => __('Abort - Retry - Ignore', 'fusioninventory'),
-                             self::WTS_BUTTON_CANCEL_TRY_CONTINUE
-                                 => __('Cancel - Try - Continue', 'fusioninventory'),
-                             self::WTS_BUTTON_YES_NO_CANCEL
-                                 => __('Yes - No - Cancel', 'fusioninventory')
-                           ]
-                       ];
-       if (isset($interactions[$interaction_type])) {
-          return $interactions[$interaction_type];
-         } else {
-            return false;
-         }
+      $interactions = [
+         self::ALERT_WTS => [
+            self::WTS_BUTTON_OK_SYNC             => __('OK', 'fusioninventory'),
+            self::WTS_BUTTON_OK_ASYNC            => __('OK (asynchronous)', 'fusioninventory'),
+            self::WTS_BUTTON_OK_CANCEL           => __('OK - Cancel', 'fusioninventory'),
+            self::WTS_BUTTON_YES_NO              => __('Yes - No', 'fusioninventory'),
+            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('OK - Abort - Retry', 'fusioninventory'),
+            self::WTS_BUTTON_RETRY_CANCEL        => __('Retry - Cancel', 'fusioninventory'),
+            self::WTS_BUTTON_ABORT_RETRY_IGNORE  => __('Abort - Retry - Ignore', 'fusioninventory'),
+            self::WTS_BUTTON_CANCEL_TRY_CONTINUE => __('Cancel - Try - Continue', 'fusioninventory'),
+            self::WTS_BUTTON_YES_NO_CANCEL       => __('Yes - No - Cancel', 'fusioninventory')
+         ]
+      ];
+      if (isset($interactions[$interaction_type])) {
+         return $interactions[$interaction_type];
+      } else {
+         return false;
+      }
    }
 
 
@@ -237,19 +229,20 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
     * @return array
     */
    static function getIcons($interaction_type = self::ALERT_WTS) {
-       $icons = [ self::ALERT_WTS =>
-                           [ self::WTS_ICON_NONE     => __('None'),
-                             self::WTS_ICON_WARNING  => __('Warning'),
-                             self::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
-                             self::WTS_ICON_ERROR    => __('Error'),
-                             self::WTS_ICON_QUESTION => __('Question', 'fusioninventory')
-                           ]
-                       ];
-       if (isset($icons[$interaction_type])) {
-          return $icons[$interaction_type];
-         } else {
-            return false;
-         }
+      $icons = [
+         self::ALERT_WTS => [
+            self::WTS_ICON_NONE     => __('None'),
+            self::WTS_ICON_WARNING  => __('Warning'),
+            self::WTS_ICON_INFO     => _n('Information', 'Informations', 1),
+            self::WTS_ICON_ERROR    => __('Error'),
+            self::WTS_ICON_QUESTION => __('Question', 'fusioninventory')
+         ]
+      ];
+      if (isset($icons[$interaction_type])) {
+         return $icons[$interaction_type];
+      } else {
+         return false;
+      }
    }
 
 
