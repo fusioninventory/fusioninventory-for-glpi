@@ -1082,8 +1082,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $disk = $a_computerinventory['computerdisk'][$key];
 
                   // Safecheck until GLPI X
-                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES'))
-                  {
+                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES')) {
                      // Encryption status
                      if ($disk['encryption_status'] == "Yes") {
                         $input['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_YES;
@@ -1123,8 +1122,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $a_itemdisk['is_dynamic']    = 1;
 
                   // Safecheck until GLPI X
-                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES'))
-                  {
+                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES')) {
                      //Encryption status
                      if ($a_itemdisk['encryption_status'] == "Yes") {
                         $a_itemdisk['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_YES;
