@@ -274,16 +274,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
                $name = $class->getTypeName();
             }
             echo "<td>".$name."</td>";
-            // Current value of GLPI
             if ($p_items_id != '0') {
+               // Current value of GLPI
                echo "<td ".$css_glpi_value.">".$val."</td>";
+               // Value of last inventory
+               echo "<td>";
+               if (isset($serialized[$key_source])) {
+                  echo  $this->getValueForKey($serialized[$key_source], $key);
+               }
+               echo "</td>";
             }
-            // Value of last inventory
-            echo "<td>";
-            if (isset($serialized[$key_source])) {
-               echo  $this->getValueForKey($serialized[$key_source], $key);
-            }
-            echo "</td>";
             echo "<td align='center'>";
             Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
                                      'checked' => $checked]);
@@ -293,43 +293,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       if ($p_items_id == '0') {
-         foreach ($item->fields as $key=>$val) {
-            $name = "";
-            $key_source = $key;
-            if (!in_array($key, $a_exclude)) {
-               // Get name of field
-               $num = Search::getOptionNumber($p_itemtype, $key);
-               if (isset($options[$num]['name'])) {
-                  $name = $options[$num]['name'];
-               } else {
-                  // Get name by search in linkfields
-                  foreach ($options as $opt) {
-                     if (isset($opt['linkfield']) && $opt['linkfield'] == $key) {
-                        $name = $opt['name'];
-                        break;
-                     }
-                  }
-               }
-               $css_glpi_value = '';
-               // Get value of field
-               $val = $this->getValueForKey($val, $key);
-               echo "<tr class='tab_bg_1'>";
-               $table = getTableNameForForeignKeyField($key);
-               if ($name == "" && $table != "") {
-                  $linkItemtype = getItemTypeForTable($table);
-                  $class = new $linkItemtype();
-                  $name = $class->getTypeName();
-               }
-               echo "<td>".$name."</td>";
-               echo "<td align='center'>";
-               Html::showCheckbox(['name'    => "lockfield_fusioninventory[$key_source]",
-                                        'checked' => $checked]);
-               echo "</td>";
-               echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
-                       $key_source."]' ></td>";
-               echo "</tr>";
-            }
-         }
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
          echo "<th colspan='2'>".__('Job', 'fusioninventory')."</th>";
@@ -553,9 +516,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $p_items_id Line id.
     * @param string $p_fieldsToLock Array of fields to lock.
     * @param string $massiveaction
+    *
+    * @return boolean
     */
    static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock, $massiveaction = '') {
       global $DB;
+
+      $success = false;
 
       $pfl = new PluginFusioninventoryLock();
 
@@ -573,7 +540,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                }
             }
             $pfl->fields['tablefields'] = exportArrayToDB($a_lockfieldsDB);
-            $pfl->update($pfl->fields);
+            $success = $pfl->update($pfl->fields);
          } else if ($massiveaction == 'deleteLock') {
             $a_lockfieldsDB = importArrayFromDB($pfl->fields['tablefields']);
             foreach ($p_fieldsToLock as $fieldtoadd) {
@@ -583,13 +550,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
                }
             }
             $pfl->fields['tablefields'] = exportArrayToDB($a_lockfieldsDB);
-            $pfl->update($pfl->fields);
+            $success = $pfl->update($pfl->fields);
          } else {
             if (count($p_fieldsToLock)) {       // old locks --> new locks
                $pfl->fields['tablefields'] = exportArrayToDB($p_fieldsToLock);
-               $pfl->update($pfl->fields);
+               $success = $pfl->update($pfl->fields);
             } else {                            // old locks --> no locks any more
-               $pfl->delete($pfl->fields);
+               $success = $pfl->delete($pfl->fields);
             }
          }
       } else if (count($p_fieldsToLock)) {    // no locks --> new locks
@@ -597,8 +564,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $input['tablename']     = $tableName;
          $input['items_id']      = $p_items_id;
          $input['tablefields']   = exportArrayToDB($p_fieldsToLock);
-         $pfl->add($input);
+         $success = (bool) $pfl->add($input);
       }
+
+      return $success;
    }
 
 
