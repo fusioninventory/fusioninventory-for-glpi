@@ -2,7 +2,7 @@ language: php
 
 env:
   global:
-    - GLPI=master
+    - GLPI=9.5/bugfixes
     - DB=mysql
 
 cache:
