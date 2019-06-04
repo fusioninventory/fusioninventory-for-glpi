@@ -654,7 +654,7 @@ function appear_array(id) {
               "plugin_fusioninventory_agents_id";
       $result=$DB->query($query);
       if ($result) {
-         while ($datajob=$DB->fetch_array($result)) {
+         while ($datajob=$DB->fetchArray($result)) {
             $finishState[$datajob['state']]++;
          }
       }
@@ -681,7 +681,7 @@ function appear_array(id) {
     * @return array with data of table glpi_plugin_fusioninventory_taskjobstates
     */
    static function getByUniqID($uuid) {
-      $a_datas = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobstates',
+      $a_datas = getAllDataFromTable('glpi_plugin_fusioninventory_taskjobstates',
                                       ['uniqid' => $uuid],
                                       "1");
       foreach ($a_datas as $a_data) {

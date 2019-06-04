@@ -112,7 +112,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                      ]
                   );
                   $stmt = $DB->prepare($delete);
-                  while ($data=$DB->fetch_array($result)) {
+                  while ($data=$DB->fetchArray($result)) {
                      $stmt->bind_param('s', $data['id']);
                      $stmt->execute();
                   }
@@ -140,7 +140,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                 LIMIT 1;";
       $result = $DB->query($query);
       if ($result) {
-         $fields = $DB->fetch_row($result);
+         $fields = $DB->fetchRow($result);
          if ($fields) {
             $this->fields = $fields;
             return $this->fields['0'];
@@ -198,7 +198,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                 ORDER BY `itemtype`, `name`;";
       $result=$DB->query($query);
       if ($result) {
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
             echo $mapping->getTranslation($data);

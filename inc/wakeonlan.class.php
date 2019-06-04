@@ -103,7 +103,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
-                     while ($row = $DB->fetch_assoc($res)) {
+                     while ($row = $DB->fetchAssoc($res)) {
                         $a_computers_to_wake[] = $row['items_id'];
                      }
                      break;
@@ -114,7 +114,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
                      $res = $DB->query($query);
-                     $row = $DB->fetch_assoc($res);
+                     $row = $DB->fetchAssoc($res);
 
                      if (isset($_GET)) {
                         $get_tmp = $_GET;
@@ -140,7 +140,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      $result = $pfSearch->constructSQL('Computer',
                                                        $_GET);
                      $_SESSION['glpilist_limit'] = $glpilist_limit;
-                     while ($data=$DB->fetch_array($result)) {
+                     while ($data=$DB->fetchArray($result)) {
                         $a_computers_to_wake[] = $data['id'];
                      }
                      if (count($get_tmp) > 0) {
@@ -191,7 +191,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                   AND `mac`!='' ";
             $result = $DB->query($sql);
             if ($result) {
-               while ($data=$DB->fetch_array($result)) {
+               while ($data=$DB->fetchArray($result)) {
                   $subnet = $data['subnet'];
                }
             }
@@ -400,7 +400,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                ".$osfind."
                ".$where." ";
          if ($result = $DB->query($query)) {
-            while ($data=$DB->fetch_array($result)) {
+            while ($data=$DB->fetchArray($result)) {
                if ($communication == 'push') {
                   if ($pfTaskjob->isAgentAlive(1, $data['a_id'])) {
                      if (!in_array($a_agentList, $data['a_id'])) {

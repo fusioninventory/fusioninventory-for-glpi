@@ -133,7 +133,7 @@ class TaskDeployDynamicGroup extends Common_TestCase {
       ];
       $pfTask->add($input);
 
-      $a_plugins = current(getAllDatasFromTable('glpi_plugins', ['directory' => 'fusioninventory']));
+      $a_plugins = current(getAllDataFromTable('glpi_plugins', ['directory' => 'fusioninventory']));
 
       $input = [
          'plugin_fusioninventory_tasks_id' => 1,
@@ -150,7 +150,7 @@ class TaskDeployDynamicGroup extends Common_TestCase {
       // Force task prepation
       $pfTask->forceRunning();
 
-      $a_jobstates = getAllDatasFromTable("glpi_plugin_fusioninventory_taskjobstates");
+      $a_jobstates = getAllDataFromTable("glpi_plugin_fusioninventory_taskjobstates");
       foreach ($a_jobstates as $num=>$data) {
          unset($data['uniqid']);
          $a_jobstates[$num] = $data;

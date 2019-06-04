@@ -95,7 +95,7 @@ if ($searchText != $CFG_GLPI["ajax_wildcard"]
 echo "<option value='0'>".Dropdown::EMPTY_VALUE."</option>";
 
 if ($DB->numrows($result)) {
-   while ($data = $DB->fetch_array($result)) {
+   while ($data = $DB->fetchArray($result)) {
       $output = $data['name'];
 
       if (empty($output) || $_SESSION['glpiis_ids_visible']) {

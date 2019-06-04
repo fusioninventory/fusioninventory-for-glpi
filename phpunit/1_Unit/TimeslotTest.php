@@ -127,7 +127,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'end'          => '79200'
           ]
       ];
-      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $db = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 3 entries");
 
       $GLPIlog = new GLPIlogs();
@@ -189,7 +189,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'end'          => '79200'
           ]
       ];
-      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $db = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
 
       $GLPIlog = new GLPIlogs();
@@ -251,7 +251,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'end'          => '30'
           ]
       ];
-      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $db = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
 
       $GLPIlog = new GLPIlogs();
@@ -295,7 +295,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'end'          => '79215'
           ]
       ];
-      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $db = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 2 entries ".print_r($db, true));
 
       $GLPIlog = new GLPIlogs();
@@ -357,7 +357,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'end'          => '36000'
           ]
       ];
-      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $db = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 4 entries ".print_r($db, true));
 
       $GLPIlog = new GLPIlogs();
@@ -419,7 +419,7 @@ class TimeslotTest extends RestoreDatabase_TestCase {
               'end'          => '36000'
           ]
       ];
-      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $db = getAllDataFromTable('glpi_plugin_fusioninventory_timeslotentries');
       $this->assertEquals($references, $db, "May have 4 entries ".print_r($db, true));
 
       $GLPIlog = new GLPIlogs();

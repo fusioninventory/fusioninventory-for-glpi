@@ -695,7 +695,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $result_glpi = $DB->query($sql_glpi);
 
             if ($DB->numrows($result_glpi) > 0) {
-               while ($data=$DB->fetch_array($result_glpi)) {
+               while ($data=$DB->fetchArray($result_glpi)) {
                   $found = 1;
                   $this->criterias_results['found_equipment'][$itemtype][] = $data['id'];
                }

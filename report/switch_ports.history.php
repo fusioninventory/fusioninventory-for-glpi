@@ -73,7 +73,7 @@ $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.
 
 $result=$DB->query($query);
       $selected = '';
-while ($data=$DB->fetch_array($result)) {
+while ($data=$DB->fetchArray($result)) {
 
    if (($data['id'] == $FK_port)) {
       $selected = $data['id'];

@@ -466,7 +466,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       $result=$DB->query($query);
       if ($result) {
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections

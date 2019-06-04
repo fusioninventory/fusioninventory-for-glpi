@@ -73,7 +73,7 @@ class PluginFusioninventoryCollect_Wmi_Content
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginFusioninventoryCollect') {
             if ($item->fields['type'] == 'wmi') {
-               $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis',
+               $a_colregs = getAllDataFromTable('glpi_plugin_fusioninventory_collects_wmis',
                                                  "`plugin_fusioninventory_collects_id`='".$item->getID()."'");
                if (count($a_colregs) == 0) {
                   return '';
@@ -108,7 +108,7 @@ class PluginFusioninventoryCollect_Wmi_Content
                   AND `plugin_fusioninventory_collects_wmis_id` =
                   '".$collects_wmis_id."'";
       $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $wmi_id = $data['id'];
          unset($data['id']);
          $data1 = Toolbox::addslashes_deep($data);

@@ -998,7 +998,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     * @return array|false agent information if found, otherwise false
     */
    static function getByDeviceID($device_id) {
-      $agents = getAllDatasFromTable(
+      $agents = getAllDataFromTable(
          'glpi_plugin_fusioninventory_agents',
          [
             'device_id' => $device_id,

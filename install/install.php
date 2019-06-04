@@ -226,7 +226,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
          WHERE `itemtype`='PluginFusioninventoryUnmanaged'
             AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL ";
    $result=$DB->query($sql);
-   while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetchArray($result)) {
       $networkPort->delete(['id'=>$data['nid']], 1);
    }
 

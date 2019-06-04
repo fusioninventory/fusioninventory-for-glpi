@@ -331,7 +331,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $result=$DB->query($query);
       if ($result) {
          $i = 0;
-         while ($data=$DB->fetch_assoc($result)) {
+         while ($data=$DB->fetchAssoc($result)) {
             $data['date'] = Html::convDateTime($data['date']);
             $datas["$i"] = $data;
             $i++;
@@ -358,7 +358,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                 WHERE `printers_id` = '".$printers_id."';";
       $result = $DB->query($query);
       if ($result) {
-         $fields = $DB->fetch_assoc($result);
+         $fields = $DB->fetchAssoc($result);
          if ($fields) {
             $output = [];
             $output['num_days'] =
@@ -719,7 +719,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                $pages = [];
                $data = [];
                $date = '';
-               while ($data = $DB->fetch_assoc($result)) {
+               while ($data = $DB->fetchAssoc($result)) {
                   switch ($timeUnit) {
 
                      case 'day':

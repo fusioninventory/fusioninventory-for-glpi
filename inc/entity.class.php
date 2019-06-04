@@ -233,7 +233,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) != 0) {
-            $data = $DB->fetch_assoc($result);
+            $data = $DB->fetchAssoc($result);
             return $data[$name];
          }
       }
@@ -265,7 +265,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          LIMIT 1";
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
-         $data = $DB->fetch_assoc($result);
+         $data = $DB->fetchAssoc($result);
          return $data[$name];
       }
       return $this->getValueAncestor($name, $entities_id);

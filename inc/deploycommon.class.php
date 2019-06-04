@@ -173,7 +173,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
-                     while ($row = $DB->fetch_assoc($res)) {
+                     while ($row = $DB->fetchAssoc($res)) {
                         $computers[] = $row['items_id'];
                      }
                      break;
@@ -194,7 +194,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      WHERE groups_id = '$items_id' $where
                      LIMIT 1";
                      $res = $DB->query($query);
-                     $row = $DB->fetch_assoc($res);
+                     $row = $DB->fetchAssoc($res);
                      //No dynamic groups have been found : break
                      if ($DB->numrows($res) == 0) {
                         break;
@@ -223,7 +223,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      $_SESSION['glpilist_limit'] = 999999999;
                      $result                     = $pfSearch->constructSQL('Computer', $_GET);
                      $_SESSION['glpilist_limit'] = $glpilist_limit;
-                     while ($data=$DB->fetch_array($result)) {
+                     while ($data=$DB->fetchArray($result)) {
                         $computers[] = $data['id'];
                      }
                      if (count($get_tmp) > 0) {

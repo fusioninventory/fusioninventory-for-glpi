@@ -196,11 +196,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
     */
    function formDeleteEntry($timeslots_id) {
 
-      $dbentries = getAllDatasFromTable(
-                     'glpi_plugin_fusioninventory_timeslotentries',
-                     ['plugin_fusioninventory_timeslots_id' => $timeslots_id],
-                     '',
-                     ['day', 'begin ASC']);
+      $dbentries = getAllDataFromTable(
+         'glpi_plugin_fusioninventory_timeslotentries', [
+            'WHERE'  => ['plugin_fusioninventory_timeslots_id' => $timeslots_id],
+            'ORER'   => ['day', 'begin ASC']
+         ]
+      );
 
       $options = [];
       $ID      = key($dbentries);
@@ -261,14 +262,15 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       ];
 
       for ($day=1; $day <= 7; $day++) {
-         $dbentries = getAllDatasFromTable(
-                        'glpi_plugin_fusioninventory_timeslotentries',
-                        [
-                           'plugin_fusioninventory_timeslots_id' => $timeslots_id,
-                           'day'                                 => $day,
-                        ],
-                        '',
-                        '`begin` ASC');
+         $dbentries = getAllDataFromTable(
+            'glpi_plugin_fusioninventory_timeslotentries', [
+               'WHERE'  => [
+                  'plugin_fusioninventory_timeslots_id' => $timeslots_id,
+                  'day'                                 => $day,
+               ],
+               'ORDER'  => 'begin ASC'
+            ]
+         );
          foreach ($dbentries as $entries) {
             $dates[$daysofweek[$day]][] = [
                 'start' => $entries['begin'],
@@ -306,14 +308,15 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          }
 
          // now get from DB
-         $dbentries = getAllDatasFromTable(
-                        'glpi_plugin_fusioninventory_timeslotentries',
-                        [
-                           'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
-                           'day'                                 => $day,
-                        ],
-                        '',
-                        '`begin` ASC');
+         $dbentries = getAllDataFromTable(
+            'glpi_plugin_fusioninventory_timeslotentries', [
+               'WHERE'  => [
+                  'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+                  'day'                                 => $day,
+               ],
+               'ORDER'  => 'begin ASC'
+            ]
+         );
 
          $rangeToUpdate = $dbentries;
          $rangeToAdd = [];

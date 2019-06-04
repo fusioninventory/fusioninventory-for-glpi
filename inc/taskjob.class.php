@@ -484,7 +484,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                  WHERE `id`='".$tasks_id."'
                  LIMIT 1";
       $result = $DB->query($query);
-      $data   = $DB->fetch_assoc($result);
+      $data   = $DB->fetchAssoc($result);
       $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'],
                                                    $data['periodicity_count']);
 
@@ -504,7 +504,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $finished    = 2;
       $resultJob   = $DB->query($queryJob);
       $nb_finished = 0;
-      while ($dataJob = $DB->fetch_array($resultJob)) {
+      while ($dataJob = $DB->fetchArray($resultJob)) {
          $a_taskjobstateuniqs = $pfTaskjobstate->find(
                ['plugin_fusioninventory_taskjobs_id' => $dataJob['id']],
                ['id DESC'], 1);
@@ -645,7 +645,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             LIMIT 1 ";
          $result = $DB->query($sql);
          if ($DB->numrows($result) != 0) {
-            $task = $DB->fetch_assoc($result);
+            $task = $DB->fetchAssoc($result);
             if ($task['communication'] == 'pull') {
                $has_recent_log_entries = $pfTaskjoblog->find(
                      ['plugin_fusioninventory_taskjobstates_id' => $data['id']],
@@ -771,7 +771,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             AND glpi_plugin_fusioninventory_taskjobstates.state <3) = 0
             AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
       $result=$DB->query($sql);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
       }
    }
@@ -1240,7 +1240,7 @@ function new_subtype(id) {
       echo "<div id='taskjobs_block'></div>";
       Html::closeForm();
 
-      $a_taskjobs = getAllDatasFromTable(
+      $a_taskjobs = getAllDataFromTable(
               $this->getTable(),
               ['plugin_fusioninventory_tasks_id' => $tasks_id],
               false,

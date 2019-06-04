@@ -230,13 +230,13 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          AND `instantiation_type`='NetworkPortAggregate'
       ORDER BY logical_number ";
       $result = $DB->query($query);
-      while ($data = $DB->fetch_array($result)) {
+      while ($data = $DB->fetchArray($result)) {
          $query_ag = "SELECT * FROM `glpi_networkportaggregates`
             WHERE `networkports_id`='".$data['id']."'
             LIMIT 1";
          $result_ag = $DB->query($query_ag);
          if ($DB->numrows($result_ag) > 0) {
-            $data_ag = $DB->fetch_assoc($result_ag);
+            $data_ag = $DB->fetchAssoc($result_ag);
             $a_ports = importArrayFromDB($data_ag['networkports_id_list']);
             foreach ($a_ports as $port_id) {
                $a_aggregated_ports[$port_id] = $port_id;
@@ -283,7 +283,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
       if ($result) {
          $aDescr = []; $aResult = [];
-         while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetchArray($result)) {
             $aDescr[]  = $data['ifdescr'];
             $aResult[] = $data;
          }
@@ -298,7 +298,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                   LIMIT 1";
                $result_ag = $DB->query($query_ag);
                if ($DB->numrows($result_ag) > 0) {
-                  $data_ag = $DB->fetch_assoc($result_ag);
+                  $data_ag = $DB->fetchAssoc($result_ag);
                   $a_ports = importArrayFromDB($data_ag['networkports_id_list']);
                   foreach ($a_ports as $port_id) {
                      $query_agp = "
@@ -314,7 +314,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                      LIMIT 1 ";
                      $result_agp = $DB->query($query_agp);
                      if ($DB->numrows($result_agp) > 0) {
-                        $data_agp = $DB->fetch_assoc($result_agp);
+                        $data_agp = $DB->fetchAssoc($result_agp);
                         $this->showNetworkPortDetail($data_agp, $monitoring, true);
                      }
                   }
@@ -911,7 +911,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                    LIMIT 1";
                            $result_devicephone = $DB->query($query_devicephone);
                            if ($DB->numrows($result_devicephone) > 0) {
-                              $data_devicephone = $DB->fetch_assoc($result_devicephone);
+                              $data_devicephone = $DB->fetchAssoc($result_devicephone);
                               $computer_ports_id = $nw->getOppositeContact($data_devicephone["id"]);
                               if ($computer_ports_id) {
                                  $networkport = new NetworkPort();
@@ -987,7 +987,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                $result_vlan = $DB->query($query_vlan);
                if ($DB->numrows($result_vlan) > 0) {
                   echo "<table cellpadding='0' cellspacing='0'>";
-                  while ($line = $DB->fetch_array($result_vlan)) {
+                  while ($line = $DB->fetchArray($result_vlan)) {
                      $used[] = $line["vlans_id"];
                      $vlan = new Vlan();
                      $vlan->getFromDB($line["vlans_id"]);

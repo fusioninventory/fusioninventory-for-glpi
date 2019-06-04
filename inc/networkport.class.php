@@ -283,7 +283,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                 FROM `glpi_networkports`
                 WHERE `id`='".$id."';";
       if (($result = $DB->query($query))) {
-         $data = $DB->fetch_array($result);
+         $data = $DB->fetchArray($result);
          $array["items_id"] = $data["items_id"];
          $array["itemtype"] = $data["itemtype"];
       }
@@ -293,7 +293,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                    WHERE `id`='".$array["itemtype"]."'
                    LIMIT 0, 1;";
          if (($result = $DB->query($query))) {
-            $data = $DB->fetch_array($result);
+            $data = $DB->fetchArray($result);
             $array["name"] = $data["name"];
          }
       }
@@ -387,7 +387,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                        LIMIT 1";
          $resultManagement = $DB->query($queryManagement);
          if ($DB->numrows($resultManagement) == 1) {
-            $dataManagement = $DB->fetch_assoc($resultManagement);
+            $dataManagement = $DB->fetchAssoc($resultManagement);
             // Seach a port have this ifdescr for this same networkequipment
             $queryPort = "SELECT `glpi_networkports`.`id`
                           FROM `glpi_plugin_fusioninventory_networkports`
@@ -401,12 +401,12 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                           LIMIT 1";
             $resultPort = $DB->query($queryPort);
             if ($DB->numrows($resultPort) == 1) {
-               $dataPort = $DB->fetch_assoc($resultPort);
+               $dataPort = $DB->fetchAssoc($resultPort);
                $PortID = $dataPort["id"];
             }
          }
       } else {
-         $dataPort = $DB->fetch_assoc($resultPort);
+         $dataPort = $DB->fetchAssoc($resultPort);
          $PortID = $dataPort['id'];
       }
 
@@ -430,7 +430,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                           LIMIT 1";
             $resultPort = $DB->query($queryPort);
             if ($DB->numrows($resultPort) == 1) {
-               $dataPort = $DB->fetch_assoc($resultPort);
+               $dataPort = $DB->fetchAssoc($resultPort);
                if (isset($dataPort['id'])) {
                   $PortID = $dataPort["id"];
                }
@@ -444,7 +444,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
-            $data = $DB->fetch_assoc($result);
+            $data = $DB->fetchAssoc($result);
             // Search port and add if required
             $query1 = "SELECT *
                 FROM `glpi_networkports`
@@ -454,7 +454,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                 LIMIT 1";
             $result1 = $DB->query($query1);
             if ($DB->numrows($result1) == "1") {
-               $data1 = $DB->fetch_assoc($result1);
+               $data1 = $DB->fetchAssoc($result1);
                $PortID = $data1['id'];
             } else {
                // Add port
@@ -496,7 +496,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
              LIMIT 1";
          $result0 = $DB->query($query0);
          if ($DB->numrows($result0) == 1) {
-            $data0 = $DB->fetch_assoc($result0);
+            $data0 = $DB->fetchAssoc($result0);
             // Search port and add if required
             $query1 = "SELECT *
                 FROM `glpi_networkports`
@@ -506,7 +506,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                 LIMIT 1";
             $result1 = $DB->query($query1);
             if ($DB->numrows($result1) == "1") {
-               $data1 = $DB->fetch_assoc($result1);
+               $data1 = $DB->fetchAssoc($result1);
                $PortID = $data1['id'];
             } else {
                // Add port
@@ -596,7 +596,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          LIMIT 1";
       $resultPort = $DB->query($queryPort);
       if ($DB->numrows($resultPort) == "1") {
-         $dataPort = $DB->fetch_assoc($resultPort);
+         $dataPort = $DB->fetchAssoc($resultPort);
          $PortID = $dataPort['id'];
       }
 
@@ -615,7 +615,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                AND `logical_number`='".$ifnumber."'
             LIMIT 1";
          $resultPort = $DB->query($queryPort);
-         $dataPort = $DB->fetch_assoc($resultPort);
+         $dataPort = $DB->fetchAssoc($resultPort);
          if ($DB->numrows($resultPort) == "1") {
             $PortID = $dataPort['networkports_id'];
          }
@@ -634,7 +634,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                   AND `mac`='".$sysmac."')
             LIMIT 1";
          $resultPort = $DB->query($queryPort);
-         $dataPort = $DB->fetch_assoc($resultPort);
+         $dataPort = $DB->fetchAssoc($resultPort);
          if (isset($dataPort['id'])) {
             $PortID = $dataPort['id'];
          }
@@ -651,7 +651,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
              LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
-            $data = $DB->fetch_assoc($result);
+            $data = $DB->fetchAssoc($result);
             return $data['id'];
          }
          // Add unmanaged device because not find device

@@ -559,7 +559,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $unmanaged_infos = [];
       $result=$DB->query($query);
       if ($result) {
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $unmanaged_infos["name"] = '';
             $newID=$this->add($unmanaged_infos);
 
@@ -721,7 +721,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $result = $DB->query($query);
       $freeport_id = 0;
       if ($DB->numrows($result) == 1) {
-         $freeport = $DB->fetch_assoc($result);
+         $freeport = $DB->fetchAssoc($result);
          $freeport_id = $freeport['id'];
       } else {
          // Create port
@@ -966,7 +966,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             $result = $DB->query($query);
             $data = [];
             if ($DB->numrows($result) > 0) {
-               $data = $DB->fetch_assoc($result);
+               $data = $DB->fetchAssoc($result);
             }
             $data['sysdescr'] = $this->fields['sysdescr'];
             $data['plugin_fusioninventory_configsecurities_id'] =
@@ -1015,7 +1015,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             $result = $DB->query($query);
             $data = [];
             if ($DB->numrows($result) > 0) {
-               $data = $DB->fetch_assoc($result);
+               $data = $DB->fetchAssoc($result);
             }
 
             $data['sysdescr'] = $this->fields['sysdescr'];

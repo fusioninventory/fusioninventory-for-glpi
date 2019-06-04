@@ -123,7 +123,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
     * @test
     */
    public function NewNetworkEquipmentHasPorts() {
-      $networkports = getAllDatasFromTable('glpi_networkports');
+      $networkports = getAllDataFromTable('glpi_networkports');
 
       foreach ($networkports as $id=>$data) {
          unset($data['date_mod']);
@@ -142,7 +142,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
     * @test
     */
    public function NewNetworkEquipmentHasIpAdresses() {
-      $ipaddresses = getAllDatasFromTable('glpi_ipaddresses');
+      $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
 
       $this->assertEquals($this->ipaddresses_reference,
                           $ipaddresses,
@@ -176,7 +176,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
     * @test
     */
    public function UpdatedNetworkEquipmentHasPorts() {
-      $networkports = getAllDatasFromTable('glpi_networkports');
+      $networkports = getAllDataFromTable('glpi_networkports');
 
       foreach ($networkports as $id=>$data) {
          unset($data['date_mod']);
@@ -194,7 +194,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
     * @test
     */
    public function UpdateNetworkEquipmentHasIpAdresses() {
-      $ipaddresses = getAllDatasFromTable('glpi_ipaddresses');
+      $ipaddresses = getAllDataFromTable('glpi_ipaddresses');
 
       $this->assertEquals(
          $this->ipaddresses_reference,

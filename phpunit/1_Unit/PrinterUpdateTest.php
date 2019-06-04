@@ -352,7 +352,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $printer->getFromDB($printers_id);
       $this->assertEquals('HP0BBBC4', $printer->fields['name'], 'Name must be updated');
 
-      $a_printerextends = getAllDatasFromTable('glpi_plugin_fusioninventory_printers',
+      $a_printerextends = getAllDataFromTable('glpi_plugin_fusioninventory_printers',
          ['printers_id' => $printers_id]);
 
       $this->assertEquals('1', count($a_printerextends),
@@ -433,7 +433,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $printer->getFromDB($printers_id);
       $this->assertEquals('HP0BBBC4new', $printer->fields['name'], 'Name must be updated');
 
-      $a_printerextends = getAllDatasFromTable('glpi_plugin_fusioninventory_printers',
+      $a_printerextends = getAllDataFromTable('glpi_plugin_fusioninventory_printers',
          ['printers_id' => $printers_id]);
 
       $this->assertEquals('1', count($a_printerextends),

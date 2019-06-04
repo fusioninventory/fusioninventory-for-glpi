@@ -67,7 +67,7 @@ abstract class Common_TestCase extends TestCase {
       $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
       $_SESSION['glpilanguage'] = 'en_GB';
 
-      include (GLPI_ROOT . "/inc/based_config.php");
+      include_once (GLPI_ROOT . "/inc/based_config.php");
       include_once (GLPI_ROOT . "/inc/config.php");
       include_once(GLPI_CONFIG_DIR . "/config_db.php");
       include_once (GLPI_ROOT . "/inc/define.php");

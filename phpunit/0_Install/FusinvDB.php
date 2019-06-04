@@ -84,7 +84,7 @@ class FusinvDB extends Assert{
       // SHOW TABLES;
       $query = "SHOW TABLES";
       $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          if ((strstr($data[0], "tracker")
                 OR strstr($data[0], 'fusioninventory')
                 OR strstr($data[0], 'fusinvinventory')
@@ -106,7 +106,7 @@ class FusinvDB extends Assert{
       foreach ($a_tables as $table) {
          $query = "SHOW CREATE TABLE ".$table;
          $result = $DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $a_lines = explode("\n", $data['Create Table']);
 
             foreach ($a_lines as $line) {
@@ -233,7 +233,7 @@ class FusinvDB extends Assert{
        */
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`";
       $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          $snmprangeip = 0;
          if (strstr($data['targets'], "PluginFusinvsnmpIPRange")) {
             $snmprangeip = 1;
@@ -300,7 +300,7 @@ class FusinvDB extends Assert{
          WHERE `type`='version'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
-      $data = $DB->fetch_assoc($result);
+      $data = $DB->fetchAssoc($result);
       $this->assertEquals($data['value'], PLUGIN_FUSIONINVENTORY_VERSION, "Field 'version' not with right version");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
