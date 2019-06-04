@@ -1,8 +1,10 @@
 language: php
+sudo: required
+dist: trusty
 
 env:
   global:
-    - GLPI=master
+    - GLPI=9.5/bugfixes
     - DB=mysql
 
 cache:
@@ -53,12 +55,10 @@ before_install:
  - cd glpi
  - composer install --no-dev -o
  - cd ..
- - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
- - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
- - mysql -u root -e "FLUSH PRIVILEGES;"
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
  - pushd glpi
- - bin/console db:install --no-interaction --db-name=glpi --db-user=travis --db-password=travis
+ - mysql -u root -e 'create database glpi;'
+ - bin/console db:install --no-interaction --db-name=glpi --db-user=root
  - bin/console db:update |grep -q "No migration needed." || (echo "db:update FAILED" && exit 1)
  - popd
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml composer
@@ -76,4 +76,4 @@ script:
  - composer install
  - mysql -u root -e 'select version();'
  - ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
- - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then cd glpi/plugins/fusioninventory && composer install && php vendor/bin/robo --no-interaction code:cs; fi
+ - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.3" ]]; then cd glpi/plugins/fusioninventory && composer install && php vendor/bin/robo --no-interaction code:cs; fi

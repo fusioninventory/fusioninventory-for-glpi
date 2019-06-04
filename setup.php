@@ -45,11 +45,11 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.4.0+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.5.0+1.0");
 // Minimal GLPI version, inclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.4');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.5');
 // Maximum GLPI version, exclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '9.5');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '9.6');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
