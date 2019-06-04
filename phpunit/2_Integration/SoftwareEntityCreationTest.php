@@ -284,7 +284,7 @@ class SoftwareEntityCreationTest extends Common_TestCase {
          $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
 
          $nbSoftwares = countElementsInTable("glpi_softwares");
-         $softs = getAllDatasFromTable("glpi_softwares");
+         $softs = getAllDataFromTable("glpi_softwares");
          $this->assertEquals(2, $nbSoftwares, 'Nb softwares '.print_r($softs, true));
 
          $software->getFromDB(2);

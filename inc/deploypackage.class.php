@@ -403,7 +403,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $nb   = $DB->numrows($res);
       $json = [];
       $i    = 0;
-      while ($row = $DB->fetch_assoc($res)) {
+      while ($row = $DB->fetchAssoc($res)) {
          $json['packages'][$i]['package_id'] = $row['id'];
          $json['packages'][$i]['package_name'] = $row['name'];
          $i++;
@@ -1999,7 +1999,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $result = $DB->query($query);
       $a_packages = [];
       if ($DB->numrows($result) > 0) {
-         while ($data = $DB->fetch_assoc($result)) {
+         while ($data = $DB->fetchAssoc($result)) {
             $a_packages[$data['id']] = $data;
          }
          return $a_packages;

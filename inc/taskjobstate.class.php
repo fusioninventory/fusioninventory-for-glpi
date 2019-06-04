@@ -658,7 +658,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             ]
          );
          $stmt = $DB->prepare($delete);
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $pfTaskjobstate->getFromDB($data['plugin_fusioninventory_taskjobstates_id']);
             $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
 

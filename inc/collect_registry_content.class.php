@@ -72,7 +72,7 @@ class PluginFusioninventoryCollect_Registry_Content
       if ($item->getID() > 0) {
          if (get_class($item) == 'PluginFusioninventoryCollect') {
             if ($item->fields['type'] == 'registry') {
-               $a_colregs = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries',
+               $a_colregs = getAllDataFromTable('glpi_plugin_fusioninventory_collects_registries',
                                                  ['plugin_fusioninventory_collects_id' => $item->getID()]);
                if (count($a_colregs) == 0) {
                   return '';
@@ -108,7 +108,7 @@ class PluginFusioninventoryCollect_Registry_Content
                   AND `plugin_fusioninventory_collects_registries_id` =
                   '".$collects_registries_id."'";
       $result = $DB->query($query);
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $idtmp = $data['id'];
          unset($data['id']);
          $data1 = Toolbox::addslashes_deep($data);

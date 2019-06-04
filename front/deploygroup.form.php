@@ -64,7 +64,7 @@ if (isset($_GET['save'])) {
       $values['plugin_fusioninventory_deploygroups_id'] = $_GET['id'];
       $group_item->add($values);
    } else {
-      $item = getAllDatasFromTable($group_item->getTable(),
+      $item = getAllDataFromTable($group_item->getTable(),
                                    ['plugin_fusioninventory_deploygroups_id' => $_GET['id']]);
       $values                 = array_pop($item);
 

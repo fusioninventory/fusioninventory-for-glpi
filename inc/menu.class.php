@@ -795,7 +795,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                AND fi_comp.`id` IS NOT NULL
                                $restrict_entity";
       $res_fi_computers = $DB->query($query_fi_computers);
-      if ($data_fi_computers = $DB->fetch_assoc($res_fi_computers)) {
+      if ($data_fi_computers = $DB->fetchAssoc($res_fi_computers)) {
          $fusionComputers = $data_fi_computers['nb_computers'];
       }
 
@@ -827,7 +827,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                AND fi_net.`id` IS NOT NULL
                                $restrict_entity";
       $res_fi_net = $DB->query($query_fi_net);
-      if ($data_fi_net = $DB->fetch_assoc($res_fi_net)) {
+      if ($data_fi_net = $DB->fetchAssoc($res_fi_net)) {
          $networkequipment = $data_fi_net['nb_net'];
       }
 
@@ -842,7 +842,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                AND fi_printer.`id` IS NOT NULL
                                $restrict_entity";
       $res_fi_printers = $DB->query($query_fi_printers);
-      if ($data_fi_printers = $DB->fetch_assoc($res_fi_printers)) {
+      if ($data_fi_printers = $DB->fetchAssoc($res_fi_printers)) {
          $printer = $data_fi_printers['nb_printers'];
       }
 
@@ -869,7 +869,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                AND fi_networkports.`id` IS NOT NULL
                                $restrict_entity";
       $res_fi_networkports = $DB->query($query_fi_networkports);
-      if ($data_fi_networkports = $DB->fetch_assoc($res_fi_networkports)) {
+      if ($data_fi_networkports = $DB->fetchAssoc($res_fi_networkports)) {
          $allSwitchesPortSNMP = $data_fi_networkports['nb_networkports'];
       }
 
@@ -910,7 +910,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                and fi_networkports.`id` IS NOT NULL
                                $restrict_entity";
       $res_fi_networkports = $DB->query($query_fi_networkports);
-      if ($data_fi_networkports = $DB->fetch_assoc($res_fi_networkports)) {
+      if ($data_fi_networkports = $DB->fetchAssoc($res_fi_networkports)) {
          $networkPortsConnected = $data_fi_networkports['nb_networkports'];
       }
 
@@ -938,7 +938,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                 GROUP BY `plugin_fusioninventory_tasks_id`";
       $result = $DB->query($query);
       $a_tasks = [];
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          $a_tasks[] = $data['plugin_fusioninventory_tasks_id'];
       }
       $pfTask = new PluginFusioninventoryTask();

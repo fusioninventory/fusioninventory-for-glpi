@@ -82,7 +82,7 @@ class PluginFusioninventorySetup {
       }
 
       $result = $DB->query("SHOW TABLES;");
-      while ($data = $DB->fetch_array($result)) {
+      while ($data = $DB->fetchArray($result)) {
          if ((strstr($data[0], "glpi_plugin_fusioninventory_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvinventory_"))

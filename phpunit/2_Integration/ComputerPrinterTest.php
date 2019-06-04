@@ -321,7 +321,7 @@ class ComputerPrinter extends Common_TestCase {
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
 
-      $a_printers = getAllDatasFromTable("glpi_printers");
+      $a_printers = getAllDataFromTable("glpi_printers");
 
       $this->assertEquals(0, countElementsInTable('glpi_printers'),
               'Printer p2 may be ignored ('.print_r($a_printers, true).')');

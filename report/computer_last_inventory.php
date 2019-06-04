@@ -133,7 +133,7 @@ echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Status')."</th>";
 echo "</tr>";
 
-while ($data=$DB->fetch_array($result)) {
+while ($data=$DB->fetchArray($result)) {
    echo "<tr class='tab_bg_1'>";
    echo "<td>";
    $computer->getFromDB($data['computers_id']);

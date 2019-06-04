@@ -693,7 +693,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                      ORDER BY date asc
                      LIMIT 1";
                   $result = $DB->query($query);
-                  while ($data2 = $DB->fetch_array($result)) {
+                  while ($data2 = $DB->fetchArray($result)) {
                      $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
                   }
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
@@ -704,7 +704,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                      ORDER BY date desc
                      LIMIT 1";
                   $result = $DB->query($query);
-                  while ($data2 = $DB->fetch_array($result)) {
+                  while ($data2 = $DB->fetchArray($result)) {
                      $_SESSION['glpi_plugin_fusioninventory_history_end'] = $data2;
                   }
                }

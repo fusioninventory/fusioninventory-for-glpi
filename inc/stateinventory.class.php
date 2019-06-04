@@ -133,7 +133,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          ORDER BY `uniqid` DESC
          LIMIT ".intval($start).", " . intval($_SESSION['glpilist_limit']);
       $result=$DB->query($sql);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";
          $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);

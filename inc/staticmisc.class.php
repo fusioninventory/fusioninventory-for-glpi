@@ -266,7 +266,7 @@ class PluginFusioninventoryStaticmisc {
       $agents = [];
       //$agents['.1'] = __('All');
 
-      while ($data = $DB->fetch_array($results)) {
+      while ($data = $DB->fetchArray($results)) {
          $agents[$data['id']] = $data['name'];
       }
       if (!empty($agents)) {
@@ -313,7 +313,7 @@ class PluginFusioninventoryStaticmisc {
 
       $results = $DB->query($query);
       $credentialips = [];
-      while ($data = $DB->fetch_array($results)) {
+      while ($data = $DB->fetchArray($results)) {
          $credentialips[$data['id']] = $data['name'];
       }
       return Dropdown::showFromArray('actionselectiontoadd', $credentialips);

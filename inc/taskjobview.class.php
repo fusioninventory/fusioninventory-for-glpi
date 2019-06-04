@@ -427,7 +427,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                           GROUP BY agents.`id`, agents.`computers_id`";
          $res_filter = $DB->query($query_filter);
          $filter_id = [];
-         while ($data_filter = $DB->fetch_assoc($res_filter)) {
+         while ($data_filter = $DB->fetchAssoc($res_filter)) {
             if ($itemtype == 'Computer') {
                $filter_id[] =  $data_filter['computers_id'];
             } else {

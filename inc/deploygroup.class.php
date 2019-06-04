@@ -183,7 +183,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             ORDER BY glpi_plugin_fusioninventory_tasks.name";
          $res = $DB->query($query);
 
-         while ($row = $DB->fetch_assoc($res)) {
+         while ($row = $DB->fetchAssoc($res)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>";
             echo "<a href='".$link."?id=".$row['id']."'>".$row['tname']."</a>";

@@ -73,7 +73,7 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
       $result = $DB->query($query);
    }
 
-   $data = $DB->fetch_assoc($result);
+   $data = $DB->fetchAssoc($result);
    $_POST['id'] = $data['id'];
 
    $plugin_fusioninventory_printer->update($_POST);

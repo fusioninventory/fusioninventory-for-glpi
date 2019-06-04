@@ -366,7 +366,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
-                     while ($row = $DB->fetch_assoc($res)) {
+                     while ($row = $DB->fetchAssoc($res)) {
                         $computers[] = $row['items_id'];
                      }
                      break;
@@ -377,7 +377,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
                      $res = $DB->query($query);
-                     $row = $DB->fetch_assoc($res);
+                     $row = $DB->fetchAssoc($res);
 
                      if (isset($_GET)) {
                         $get_tmp = $_GET;
@@ -403,7 +403,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      $result = $pfSearch->constructSQL('Computer',
                                                        $_GET);
                      $_SESSION['glpilist_limit'] = $glpilist_limit;
-                     while ($data=$DB->fetch_array($result)) {
+                     while ($data=$DB->fetchArray($result)) {
                         $computers[] = $data['id'];
                      }
                      if (count($get_tmp) > 0) {

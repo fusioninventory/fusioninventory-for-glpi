@@ -103,7 +103,7 @@ if (isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
       echo "</th>";
       echo "</tr>";
 
-   while ($data = $DB->fetch_array($result)) {
+   while ($data = $DB->fetchArray($result)) {
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       $networkport->getFromDB($data['id']);

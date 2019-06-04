@@ -91,7 +91,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
        * We will count total number of devices to query
        */
       // get all snmpauth
-      $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
+      $a_snmpauth = getAllDataFromTable("glpi_plugin_fusioninventory_configsecurities");
 
       // get items_id by type
       $a_iprange = [];
@@ -131,7 +131,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                        AND `glpi_ipaddresses`.`name`!=''
                   LIMIT 1";
                $result=$DB->query($query);
-               while ($data=$DB->fetch_array($result)) {
+               while ($data=$DB->fetchArray($result)) {
                   if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
                      $input = [];
                      $input['TYPE'] = 'NETWORKING';
@@ -166,7 +166,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                         AND `glpi_ipaddresses`.`name`!=''
                   LIMIT 1";
                $result=$DB->query($query);
-               while ($data=$DB->fetch_array($result)) {
+               while ($data=$DB->fetchArray($result)) {
                   if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
                      $input = [];
                      $input['TYPE'] = 'PRINTER';
@@ -217,7 +217,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
          $query .= " GROUP BY `glpi_networkequipments`.`id`";
          $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
                $input = [];
                $input['TYPE'] = 'NETWORKING';
@@ -259,7 +259,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                       AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
          $query .= " GROUP BY `glpi_printers`.`id`";
          $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
                $input = [];
                $input['TYPE'] = 'PRINTER';
@@ -708,7 +708,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       Toolbox::logInFile('NET', $query);
       $result = $DB->query($query);
       if ($result) {
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             if ($communication == 'push') {
                if ($pfTaskjob->isAgentAlive("1", $data['a_id'])) {
                   if (!in_array($a_agentList, $data['a_id'])) {
@@ -746,7 +746,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfIPRange = new PluginFusioninventoryIPRange();
 
       // get all snmpauth
-      $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
+      $a_snmpauth = getAllDataFromTable("glpi_plugin_fusioninventory_configsecurities");
 
       $pfIPRange->getFromDB($ipranges_id);
       // Search NetworkEquipment
@@ -782,7 +782,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                       AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
       $query .= " GROUP BY `glpi_networkequipments`.`id`";
       $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
             $devicesList[] = [
                'NetworkEquipment' => $data['gID']
@@ -821,7 +821,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                    AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
       $query .= " GROUP BY `glpi_printers`.`id`";
       $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
             $devicesList[] = [
                'Printer' => $data['gID']

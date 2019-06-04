@@ -449,7 +449,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     */
    static function getModules() {
       $a_modules = [];
-      $a_data = getAllDatasFromTable(PluginFusioninventoryAgentmodule::getTable());
+      $a_data = getAllDataFromTable(PluginFusioninventoryAgentmodule::getTable());
       foreach ($a_data as $data) {
          $a_modules[] = $data['modulename'];
       }

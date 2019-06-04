@@ -162,7 +162,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
        do_deploypackage_migration($migration);
 
        // Check order right now
-       $packages = getAllDatasFromTable('glpi_plugin_fusioninventory_deploypackages');
+       $packages = getAllDataFromTable('glpi_plugin_fusioninventory_deploypackages');
        $this->assertEquals(2, count($packages));
        $jsons = [];
        $names = [];

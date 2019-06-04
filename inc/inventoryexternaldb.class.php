@@ -88,7 +88,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
             LIMIT 1";
       $resultSelect = $DB->query($query_select);
       if ($DB->numrows($resultSelect) > 0) {
-         $data = $DB->fetch_assoc($resultSelect);
+         $data = $DB->fetchAssoc($resultSelect);
          $a_return['name'] = html_entity_decode($data['name']);
          $a_return['manufacturer'] = html_entity_decode($data['manufacturer']);
       }
@@ -117,7 +117,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
         LIMIT 1";
       $resultSelect = $DB->query($query_select);
       if ($DB->numrows($resultSelect) > 0) {
-         $data = $DB->fetch_assoc($resultSelect);
+         $data = $DB->fetchAssoc($resultSelect);
          $vendors_id = $data['id'];
          $vendors_name = html_entity_decode($data['name']);
 
@@ -127,7 +127,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
            LIMIT 1";
          $resultSelectd = $DB->query($query_selectd);
          if ($DB->numrows($resultSelectd) > 0) {
-            $data = $DB->fetch_assoc($resultSelectd);
+            $data = $DB->fetchAssoc($resultSelectd);
             $devices_name = html_entity_decode($data['name']);
          }
       }
@@ -154,7 +154,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
            LIMIT 1";
          $resultSelect = $DB->query($query_select);
          if ($DB->numrows($resultSelect) == 1) {
-            $data = $DB->fetch_assoc($resultSelect);
+            $data = $DB->fetchAssoc($resultSelect);
             return $data['name'];
          }
       }

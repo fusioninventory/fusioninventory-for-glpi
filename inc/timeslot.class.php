@@ -186,7 +186,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       $results = [];
 
-      $timeslot_entries = getAllDatasFromTable(
+      $timeslot_entries = getAllDataFromTable(
          "glpi_plugin_fusioninventory_timeslotentries",
          $condition,
          false, ''

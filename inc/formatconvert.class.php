@@ -1779,7 +1779,7 @@ class PluginFusioninventoryFormatconvert {
       // Get data from rules / collect registry, wmi, find files
       $data_collect = [];
 
-      $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
+      $data_registries = getAllDataFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
          ['computers_id' => $computers_id]);
 
       foreach ($data_registries as $data) {
@@ -1794,7 +1794,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-      $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents',
+      $data_wmis = getAllDataFromTable('glpi_plugin_fusioninventory_collects_wmis_contents',
          ['computers_id' => $computers_id]);
 
       foreach ($data_wmis as $data) {
@@ -1809,7 +1809,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-      $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents',
+      $data_files = getAllDataFromTable('glpi_plugin_fusioninventory_collects_files_contents',
          ['computers_id' => $computers_id]);
 
       foreach ($data_files as $data) {

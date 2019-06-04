@@ -164,7 +164,7 @@ echo "<th>".__('Status')."</th>";
 echo "</tr>";
 
 if ($result=$DB->query($query)) {
-   while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetchArray($result)) {
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       if ($data['network_id'] > 0) {

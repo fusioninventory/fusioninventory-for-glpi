@@ -71,7 +71,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
 
       $query = "SHOW TABLES";
       $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          if (strstr($data[0], "tracker")
                  OR strstr($data[0], "fusi")) {
             $DB->query("DROP TABLE ".$data[0]);
@@ -156,7 +156,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
       global $DB;
       $DB->connect();
 
-      $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+      $a_configs = getAllDataFromTable('glpi_plugin_fusioninventory_configs',
          ['type' => 'states_id_default']);
 
       $this->assertEquals(1, count($a_configs), "May have conf states_id_default");

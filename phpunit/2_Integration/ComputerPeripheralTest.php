@@ -213,7 +213,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
           ]
       ];
 
-      $a_db_peripherals = getAllDatasFromTable('glpi_peripherals');
+      $a_db_peripherals = getAllDataFromTable('glpi_peripherals');
       foreach ($a_db_peripherals as $id=>$data) {
          $data_temp = [
               'name'                => $data['name'],
@@ -237,13 +237,13 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
          ORDER BY `id` DESC LIMIT 1";
 
       $result = $DB->query($query);
-      $data = $DB->fetch_assoc($result);
+      $data = $DB->fetchAssoc($result);
       $last_id = $data['id'];
       $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
 
-      $data = getAllDatasFromTable('glpi_logs', ['id' => ['>', $last_id]]);
+      $data = getAllDataFromTable('glpi_logs', ['id' => ['>', $last_id]]);
       $this->assertEquals([], $data, 'On update peripherals, may not have new lines in glpi_logs');
 
    }

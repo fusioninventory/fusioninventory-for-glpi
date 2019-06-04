@@ -121,7 +121,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
          switch (get_class($item)) {
             case 'PluginFusioninventoryCollect':
                if ($item->fields['type'] == $this->type) {
-                  $a_colfiles = getAllDatasFromTable($collect::getTable(),
+                  $a_colfiles = getAllDataFromTable($collect::getTable(),
                      ['plugin_fusioninventory_collects_id' => $item->getID()]);
                   if (count($a_colfiles) == 0) {
                      return '';

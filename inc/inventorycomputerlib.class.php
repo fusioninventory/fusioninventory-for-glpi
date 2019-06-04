@@ -1082,7 +1082,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $disk = $a_computerinventory['computerdisk'][$key];
 
                   // Safecheck until GLPI X
-                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES')) {
+                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES') && isset($a_itemdisk['encryption_status'])) {
                      // Encryption status
                      if ($disk['encryption_status'] == "Yes") {
                         $input['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_YES;
@@ -1122,7 +1122,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $a_itemdisk['is_dynamic']    = 1;
 
                   // Safecheck until GLPI X
-                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES')) {
+                  if (defined('Item_Disk::ENCRYPTION_STATUS_YES') && isset($a_itemdisk['encryption_status'])) {
                      //Encryption status
                      if ($a_itemdisk['encryption_status'] == "Yes") {
                         $a_itemdisk['encryption_status'] = Item_Disk::ENCRYPTION_STATUS_YES;
@@ -1671,7 +1671,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       //                "`glpi_plugin_fusioninventory_inventorycomputerstorages`
       //                WHERE `computers_id` = '$computers_id'";
       //            $result = $DB->query($query);
-      //            while ($data = $DB->fetch_assoc($result)) {
+      //            while ($data = $DB->fetchAssoc($result)) {
       //               $idtmp = $data['id'];
       //               unset($data['id']);
       //               $data = Toolbox::addslashes_deep($data);
@@ -2284,7 +2284,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $sql     = "SELECT max( id ) AS max FROM `glpi_softwares`";
       $result  = $DB->query($sql);
-      $data    = $DB->fetch_assoc($result);
+      $data    = $DB->fetchAssoc($result);
       $lastid  = $data['max'];
       $whereid.= " AND `id` <= '".$lastid."'";
       if ($nbSoft == 0) {
@@ -2339,7 +2339,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwareversions`";
       $result = $DB->query($sql);
-      $data = $DB->fetch_assoc($result);
+      $data = $DB->fetchAssoc($result);
       $lastid = $data['max'];
       $whereid .= " AND `id` <= '".$lastid."'";
 
@@ -2350,7 +2350,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $sql = "SELECT `id`, `name`, `softwares_id`, `operatingsystems_id` FROM `glpi_softwareversions`
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']."$$$$".$data['operatingsystems_id']] = $data['id'];
       }
 

@@ -347,7 +347,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       global $DB;
 
       $ids  = false;
-      $data = getAllDatasFromTable(self::getTable(),
+      $data = getAllDataFromTable(self::getTable(),
          ['plugin_fusioninventory_deploygroups_id' => $group->getID()]);
       if (count($data)) {
          $first = array_shift($data);

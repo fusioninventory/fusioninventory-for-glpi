@@ -47,7 +47,7 @@ WHERE
 
 ";
 $result = $DB->query($sql);
-while ($host=$DB->fetch_array($result)) {
+while ($host=$DB->fetchArray($result)) {
 
    $filePath = sprintf("%s/%s-%s.walk", $outputDir, $host['ip'], preg_replace('/[^a-zA-Z0-9,_-]/', '_', $host['sysdescr']));
 

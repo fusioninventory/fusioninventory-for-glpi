@@ -535,7 +535,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                 WHERE `tablename`='".$p_table."'
                       AND `tablefields` LIKE '%".$p_fieldToDel."%';";
       $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          // TODO improve the lock deletion by transmiting the old locked fields to the
          // deletion function
          PluginFusioninventoryLock::deleteInLockArray($p_table, $data['items_id'], $p_fieldToDel);
@@ -623,7 +623,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
       if ($DB->numrows($result)) {
-         $row = $DB->fetch_assoc($result);
+         $row = $DB->fetchAssoc($result);
          $lockedFields = importArrayFromDB($row['tablefields']);
          if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
             $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
@@ -680,11 +680,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function getLockFields($p_table, $p_items_id) {
       global $DB;
 
-      $db_lock = $DB->fetch_assoc(PluginFusioninventoryLock::getLock($p_table, $p_items_id));
+      $db_lock = $DB->fetchAssoc(PluginFusioninventoryLock::getLock($p_table, $p_items_id));
       $lock_fields = $db_lock["tablefields"];
       $lock = importArrayFromDB($lock_fields);
       if ($p_items_id != 0) {
-         $db_lock = $DB->fetch_assoc(PluginFusioninventoryLock::getLock($p_table, 0));
+         $db_lock = $DB->fetchAssoc(PluginFusioninventoryLock::getLock($p_table, 0));
          $lock_fields = $db_lock["tablefields"];
          $lockItemtype = importArrayFromDB($lock_fields);
          $lock = array_merge($lock, $lockItemtype);
@@ -799,7 +799,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($DB->tableExists('glpi_ocslinks')) {
          $sql = "SELECT * FROM `glpi_ocslinks`";
          $result=$DB->query($sql);
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $a_ocslocks = importArrayFromDB($data['computer_update']);
             $a_fields = [];
             foreach ($a_ocslocks as $field) {

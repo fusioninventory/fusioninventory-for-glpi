@@ -167,13 +167,13 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(2,
                           count($a_networkports),
@@ -244,13 +244,13 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(2,
                           count($a_networkports),
@@ -307,13 +307,13 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(2,
                           count($a_networkports),
@@ -411,13 +411,13 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(3,
                           count($a_networkports),
@@ -503,19 +503,19 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(3,
                           count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, true).')');
 
-      $a_unknowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unmanageds');
+      $a_unknowns = getAllDataFromTable('glpi_plugin_fusioninventory_unmanageds');
 
       $this->assertEquals(1,
                           count($a_unknowns),
@@ -592,13 +592,13 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(2,
                           count($a_networkports),
@@ -674,13 +674,13 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
-      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      $a_portslinks = getAllDataFromTable('glpi_networkports_networkports');
 
       $this->assertEquals(1,
                           count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
-      $a_networkports = getAllDatasFromTable('glpi_networkports');
+      $a_networkports = getAllDataFromTable('glpi_networkports');
 
       $this->assertEquals(2,
                           count($a_networkports),

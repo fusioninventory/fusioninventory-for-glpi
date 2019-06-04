@@ -611,7 +611,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    //we've now introduced a boolean to easily check for it
    if ($deploy_on_demand) {
       $task = new PluginFusioninventoryTask();
-      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_tasks',
+      foreach (getAllDataFromTable('glpi_plugin_fusioninventory_tasks',
          ['name' => ['LIKE', '%[self-deploy]%']]) as $tsk) {
          $task->update(['id' => $tsk['id'], 'is_deploy_on_demand' => 1]);
       }
@@ -996,7 +996,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    if ($DB->tableExists('glpi_plugin_fusioninventory_inventorycomputerantiviruses')) {
       //Antivirus migration from FI table to GLPi core table
       $antivirus = new ComputerAntivirus();
-      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
+      foreach (getAllDataFromTable('glpi_plugin_fusioninventory_inventorycomputerantiviruses') as $ant) {
          unset($ant['id']);
          $ant['is_dynamic'] = 1;
          if (isset($ant['uptodate'])) {
@@ -1577,7 +1577,7 @@ function do_entities_migration($migration) {
 
    migrateTablesFusionInventory($migration, $a_table);
    if (countElementsInTable($a_table['name']) == 0) {
-      $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+      $a_configs = getAllDataFromTable('glpi_plugin_fusioninventory_configs',
          ['type' => 'transfers_id_auto']);
       $transfers_id_auto = 0;
       if (count($a_configs) > 0) {
@@ -1585,7 +1585,7 @@ function do_entities_migration($migration) {
          $transfers_id_auto = $a_config['value'];
       }
 
-      $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+      $a_configs = getAllDataFromTable('glpi_plugin_fusioninventory_configs',
          ['type' => 'agent_base_url']);
       $agent_base_url = '';
       if (count($a_configs) > 0) {
@@ -1601,7 +1601,7 @@ function do_entities_migration($migration) {
          ]
       );
    } else if (countElementsInTable($a_table['name']) > 0) {
-      $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+      $a_configs = getAllDataFromTable('glpi_plugin_fusioninventory_configs',
          ['type' => 'agent_base_url']);
       $agent_base_url = '';
       if (count($a_configs) > 0) {
@@ -1986,7 +1986,7 @@ function do_profile_migration($migration) {
          HAVING cnt >1
          ORDER BY cnt";
       $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchArray($result)) {
          //DB::delete() not yet supports limit nor order
          $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
                WHERE `type`='".$data['type']."'
@@ -2373,7 +2373,7 @@ function do_blacklist_migration($migration) {
    $a_table['oldkeys'] = [];
 
    migrateTablesFusionInventory($migration, $a_table);
-   $DB->list_fields($a_table['name'], false);
+   $DB->listFields($a_table['name'], false);
 
    /*
    *  Udpate criteria for blacklist
@@ -2681,7 +2681,7 @@ function do_rulematchedlog_migration($migration) {
                               "method",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 }
 
 
@@ -2857,7 +2857,7 @@ function do_biosascomponentmigration() {
 
       $deviceBios = new DeviceFirmware();
       $item_DeviceBios  = new Item_DeviceFirmware();
-      while ($data = $DB->fetch_array($result)) {
+      while ($data = $DB->fetchArray($result)) {
          $key = md5($data['bios_date'] . $data['bios_version']. $data['bios_manufacturers_id']);
          if (!isset($bioses[$key])) {
             //look for an existing BIOS in the database
@@ -3032,7 +3032,7 @@ function do_configlogfield_migration($migration) {
    $migration->addKey($newTable,
                         "plugin_fusioninventory_mappings_id");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    $configLogField = new PluginFusioninventoryConfigLogField();
    $configLogField->initConfig();
@@ -3129,7 +3129,7 @@ function do_networkport_migration($migration) {
    $migration->addKey($newTable,
                         "date_mod");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * Table glpi_plugin_fusioninventory_networkporttypes
@@ -3178,7 +3178,7 @@ function do_networkport_migration($migration) {
                         "import",
                         "tinyint(1) NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * glpi_plugin_fusioninventory_networkports
@@ -3335,7 +3335,7 @@ function do_networkport_migration($migration) {
    $migration->addKey($newTable,
                         "networkports_id");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * Table glpi_plugin_fusioninventory_networkportlogs
@@ -3552,7 +3552,7 @@ function do_networkport_migration($migration) {
    $migration->addKey($newTable,
                         "date_mod");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * Update networports to convert itemtype 5153 to PluginFusioninventoryUnknownDevice
@@ -3603,7 +3603,7 @@ function do_networkport_migration($migration) {
                               ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
    $result=$DB->query($query_select);
-   while ($data=$DB->fetch_array($result)) {
+   while ($data=$DB->fetchArray($result)) {
       $DB->delete(
          'glpi_plugin_fusioninventory_networkports', [
             'id'  => $data['id']
@@ -3799,7 +3799,7 @@ function do_printer_migration($migration) {
    $migration->addKey($newTable,
                         "printers_id");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * Table glpi_plugin_fusioninventory_printerlogs
@@ -3934,7 +3934,7 @@ function do_printer_migration($migration) {
                         ["printers_id", "date"],
                         "printers_id");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     *  glpi_plugin_fusioninventory_printercartridges
@@ -4033,7 +4033,7 @@ function do_printer_migration($migration) {
    $migration->addKey($newTable,
                         "cartridges_id");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * Clean for printer more informations again in DB when printer is purged
@@ -4367,7 +4367,7 @@ function do_networkequipment_migration($migration) {
    $migration->addKey($newTable,
                         "networkequipments_id");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    /*
     * glpi_plugin_fusioninventory_networkequipmentips
@@ -4429,7 +4429,7 @@ function do_networkequipment_migration($migration) {
       $migration->addKey($newTable,
                            "networkequipments_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->listFields($newTable, false);
    }
 
    /*
@@ -4729,7 +4729,7 @@ function do_configsecurity_migration($migration) {
    $migration->addKey($newTable,
                         "is_deleted");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 
    changeDisplayPreference("5152", "PluginFusioninventoryConfigSecurity");
 
@@ -4848,7 +4848,7 @@ function do_statediscovery_migration($migration) {
                            "nb_import",
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->listFields($newTable, false);
 }
 
 
@@ -4970,7 +4970,7 @@ function do_computerarch_migration($migration) {
 
       //Arches migration from FI table to GLPi core table
       $arches = new OperatingSystemArchitecture();
-      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computerarches') as $arch) {
+      foreach (getAllDataFromTable('glpi_plugin_fusioninventory_computerarches') as $arch) {
          //check if arch already exists in core
          if ($arches->getFromDBByCrit(['name' => $DB->escape($arch['name'])])) {
             $new_id = $arches->fields['id'];
@@ -5011,7 +5011,7 @@ function do_operatingsystemedition_migration($migration) {
    if ($DB->tableExists('glpi_plugin_fusioninventory_computeroperatingsystemeditions')) {
       //OS editions migration from FI table to GLPi core table
       $ose = new OperatingSystemEdition();
-      foreach (getAllDatasFromTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions') as $edition) {
+      foreach (getAllDataFromTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions') as $edition) {
          //check if arch already exists in core
          if ($ose->getFromDBByCrit(['name' => $DB->escape($edition['name'])])) {
             $new_id = $ose->fields['id'];
@@ -5400,7 +5400,7 @@ function do_deployfile_migration($migration) {
                   ]
                );
                $stmt = $DB->prepare($update);
-               while ($data = $DB->fetch_array($result)) {
+               while ($data = $DB->fetchArray($result)) {
                   $stmt->bind_param(
                      'sss',
                      $data['entities_id'],
@@ -5509,7 +5509,7 @@ function do_deploypackage_migration($migration) {
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/deploypackage.class.php");
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
-      $installs = getAllDatasFromTable($order_table, ['type' => '0']);
+      $installs = getAllDataFromTable($order_table, ['type' => '0']);
       foreach ($installs as $install) {
          $pfDeployPackage->getFromDB($install['plugin_fusioninventory_deploypackages_id']);
          $input = [
@@ -5519,7 +5519,7 @@ function do_deploypackage_migration($migration) {
          $pfDeployPackage->update($input);
       }
 
-      $uninstalls = getAllDatasFromTable($order_table, ['type' => '1']);
+      $uninstalls = getAllDataFromTable($order_table, ['type' => '1']);
       foreach ($uninstalls as $uninstall) {
          if (countElementsInTable($order_table, [
                'type'                                     => '0',
@@ -6990,7 +6990,7 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       OR `itemtype` = '".$olditemtype."')
       group by `users_id`, `num`";
    $result = $DB->query($query);
-   while ($data = $DB->fetch_array($result)) {
+   while ($data = $DB->fetchArray($result)) {
       if ($data['cnt'] > 1) {
          $ids = explode(' ', $data['id']);
          array_shift($ids);
@@ -8733,7 +8733,7 @@ function update213to220_ConvertField($migration) {
          $nb = $DB->numrows($result);
          $i = 0;
          $migration->displayMessage("$i / $nb");
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $i++;
 
             // Search port from mac address
@@ -8810,7 +8810,7 @@ function update213to220_ConvertField($migration) {
          $nb = $DB->numrows($result);
          $i = 0;
          $migration->displayMessage("$i / $nb");
-         while ($data=$DB->fetch_array($result)) {
+         while ($data=$DB->fetchArray($result)) {
             $i++;
 
             // Search port from mac address
@@ -8957,7 +8957,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
    }
    $migration->migrationOneTable($a_table['name']);
 
-   $DB->list_fields($a_table['name'], false);
+   $DB->listFields($a_table['name'], false);
 }
 
 
@@ -9005,7 +9005,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                ORDER BY ranking ASC";
             $c_res = $DB->query($c_query);
             $c_i = 0;
-            while ($c_datas = $DB->fetch_assoc($c_res)) {
+            while ($c_datas = $DB->fetchAssoc($c_res)) {
                foreach ($c_datas as $c_key => $c_value) {
                   //specific case for filesytem sizes, convert to bytes
                   if (!empty($c_value)
@@ -9030,7 +9030,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "FROM glpi_plugin_fusinvdeploy_files ".
                "WHERE plugin_fusinvdeploy_orders_id = $order_id";
             $f_res = $DB->query($f_query);
-            while ($f_datas = $DB->fetch_assoc($f_res)) {
+            while ($f_datas = $DB->fetchAssoc($f_res)) {
 
                //jump to next entry if sha512 is empty
                // This kind of entries could happen sometimes on upload errors
@@ -9075,7 +9075,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                ORDER BY ranking ASC";
             $a_res = $DB->query($a_query);
             $a_i = 0;
-            while ($a_datas = $DB->fetch_assoc($a_res)) {
+            while ($a_datas = $DB->fetchAssoc($a_res)) {
 
                //get type
                $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
@@ -9091,7 +9091,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                   FROM $a_table
                   WHERE id = ".$a_datas['items_id'];
                $at_res = $DB->query($at_query);
-               while ($at_datas = $DB->fetch_assoc($at_res)) {
+               while ($at_datas = $DB->fetchAssoc($at_res)) {
                   foreach ($at_datas as $at_key => $at_value) {
                      //we don't store the id field of action itemtype table in json
                      if ($at_key == "id") {
@@ -9113,7 +9113,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                         FROM glpi_plugin_fusinvdeploy_actions_commandstatus
                         WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
                      $ret_cmd_res = $DB->query($ret_cmd_query);
-                     while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
+                     while ($res_cmd_datas = $DB->fetchAssoc($ret_cmd_res)) {
                         // Skip empty retchecks type:
                         // This surely means they have been drop at some point but entry has not been
                         // removed from database.
@@ -9187,7 +9187,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
                'w+'
             );
-            while ($fp_datas = $DB->fetch_assoc($fp_res)) {
+            while ($fp_datas = $DB->fetchAssoc($fp_res)) {
                if ($fp_datas['file_hash'] === $sha) {
                   fwrite($fhandle, $fp_datas['filepart_hash']."\n");
                }
@@ -9213,7 +9213,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "  files.`shortsha512` != \"\""
             ], " \n");
          $f_res = $DB->query($f_query);
-         while ($f_datas = $DB->fetch_assoc($f_res)) {
+         while ($f_datas = $DB->fetchAssoc($f_res)) {
             $entry = [
                "id"        => $f_datas["id"],
                "name"      => $f_datas["name"],

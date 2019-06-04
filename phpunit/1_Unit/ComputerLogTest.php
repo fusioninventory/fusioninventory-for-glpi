@@ -259,7 +259,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($this->a_inventory, 1, true);
 
-      $a_logs = getAllDatasFromTable('glpi_logs');
+      $a_logs = getAllDataFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
          unset($data['date_mod']);
          unset($data['date_creation']);
@@ -363,7 +363,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       // Update a second time and must not have any new lines in glpi_logs
       $pfiComputerLib->updateComputer($this->a_inventory, 1, false);
 
-      $a_logs = getAllDatasFromTable('glpi_logs');
+      $a_logs = getAllDataFromTable('glpi_logs');
       $a_reference = [];
 
       $this->assertEquals($a_reference, $a_logs, "Log may be empty at second update ".print_r($a_logs, true));
@@ -378,7 +378,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $DB->query('TRUNCATE `glpi_logs`');
       $pfiComputerLib->updateComputer($this->a_inventory, 1, false);
 
-      $a_logs = getAllDatasFromTable('glpi_logs');
+      $a_logs = getAllDataFromTable('glpi_logs');
       foreach ($a_logs as $id=>$data) {
          unset($data['date_mod']);
          unset($data['date_creation']);
