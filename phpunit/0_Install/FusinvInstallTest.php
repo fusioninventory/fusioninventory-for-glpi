@@ -41,6 +41,7 @@
  */
 
 require_once("0_Install/FusinvDB.php");
+require_once __DIR__ . "/../../inc/config.class.php";
 
 class FusinvInstallTest extends Common_TestCase {
 
