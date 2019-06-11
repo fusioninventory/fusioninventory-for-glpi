@@ -826,7 +826,9 @@ function plugin_fusioninventory_install() {
    ini_set("max_execution_time", "0");
 
    if (basename(filter_input(INPUT_SERVER, "SCRIPT_NAME")) != "cli_install.php") {
-      Html::header(__('Setup'), filter_input(INPUT_SERVER, "PHP_SELF"), "config", "plugins");
+      if (!isCommandLine()) {
+         Html::header(__('Setup'), filter_input(INPUT_SERVER, "PHP_SELF"), "config", "plugins");
+      }
       $migrationname = 'Migration';
    } else {
       $migrationname = 'CliMigration';
