@@ -815,4 +815,22 @@ class PluginFusioninventoryToolbox {
       }
       return ($output?$output:$input);
    }
+
+   /**
+    * set inventory number, depending on options defined in configuration
+    */
+   static function setInventoryNumber($itemtype, $value, $entities_id = -1) {
+      if (!in_array($itemtype, ['Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer'])) {
+         return $value;
+      }
+
+      $dbutils = new DbUtils();
+      $config = new PluginFusioninventoryConfig();
+
+      $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
+
+      $new_value = $dbutils->autoName($autonum, 'otherserial', true, $itemtype, $entities_id);
+
+      return $new_value;
+   }
 }

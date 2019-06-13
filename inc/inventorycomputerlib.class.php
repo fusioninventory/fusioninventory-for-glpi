@@ -194,6 +194,15 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       // * Computer
       $db_computer = $computer->fields;
+      // manage auto inventory number
+      if ($computer->fields['otherserial'] == ''
+         && (!isset($a_computerinventory['Computer']['otherserial'])
+            || $a_computerinventory['Computer']['otherserial'] == '')) {
+
+         $a_computerinventory['Computer']['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+            'Computer', '', $computer->fields['entities_id']);
+      }
+
       $computerName = $computer->fields['name'];
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                          $db_computer, $a_lockable);
@@ -1396,6 +1405,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add monitor
                $arrays['entities_id'] = $entities_id;
+               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+                  'Monitor', '', $entities_id);
                $a_monitors[] = $monitor->add($arrays);
             } else {
                $a_monitors[] = $data['found_equipment'][0];
@@ -1490,7 +1501,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add printer
                $arrays['entities_id'] = $entities_id;
-
+               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+                  'Printer', '', $entities_id);
                $a_printers[] = $printer->add($arrays);
             } else {
                $a_printers[] = $data['found_equipment'][0];
@@ -1583,7 +1595,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add peripheral
                $arrays['entities_id'] = $entities_id;
-
+               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+                  'Peripheral', '', $entities_id);
                $a_peripherals[] = $peripheral->add($arrays);
             } else {
                $a_peripherals[] = $data['found_equipment'][0];
