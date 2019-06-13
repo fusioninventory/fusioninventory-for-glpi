@@ -108,6 +108,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       //Add the location if needed (play rule locations engine)
       $input = PluginFusioninventoryToolbox::addLocation($input);
 
+      // Manage inventory number
+      $input['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+         'NetworkEquipment', '', $networkEquipment->fields['entities_id']);
+
       $networkEquipment->update($input, !$no_history);
 
       $this->internalPorts($a_inventory['internalport'],
