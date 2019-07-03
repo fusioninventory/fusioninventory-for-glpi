@@ -1352,7 +1352,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<table class='tab_cadre_fixe'>";
       foreach ($my_packages as $computers_id => $data) {
-
          $package_to_install = [];
          $computer->getFromDB($computers_id);
          echo "<tr>";
@@ -1561,7 +1560,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             echo "</td>";
             echo "</tr>";
          }
-      }
+      
 
       if (count($package_to_install)) {
 
@@ -1604,6 +1603,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
       }
+   }
       echo "</table>"; // .tab_cadre_fixe
       Html::closeForm();
    }
@@ -1802,6 +1802,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $tasks_id = $data['plugin_fusioninventory_tasks_id'];
          }
       } else {
+
          // case 2: if not exist, create a new task + taskjob
          $this->getFromDB($packages_id);
 

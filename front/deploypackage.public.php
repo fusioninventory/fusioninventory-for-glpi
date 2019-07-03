@@ -53,7 +53,6 @@ $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
    $computers_id = false;
-
    foreach ($_POST as $key => $data) {
       if (strstr($key, 'deploypackages_')) {
          $computers_id = str_replace('deploypackages_', '', $key);
@@ -89,7 +88,6 @@ if (isset($_POST['prepareinstall'])) {
 } else {
    Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
                 "pluginfusioninventorymenu", "deploypackage");
-
    $pfDeployPackage->showPackageForMe($_SESSION['glpiID']);
    Html::footer();
 }
