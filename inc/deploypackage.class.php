@@ -1561,7 +1561,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             echo "</td>";
             echo "</tr>";
          }
-      }
 
       if (count($package_to_install)) {
 
@@ -1604,6 +1603,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
       }
+   }
       echo "</table>"; // .tab_cadre_fixe
       Html::closeForm();
    }
