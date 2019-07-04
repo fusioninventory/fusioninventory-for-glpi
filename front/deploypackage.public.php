@@ -1,5 +1,4 @@
 <?php
-
 /**
  * FusionInventory
  *
@@ -43,14 +42,11 @@
  * @link      https://github.com/fusioninventory/fusioninventory-for-glpi
  *
  */
-
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
-
 Html::helpHeader(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
                  "pluginfusioninventorymenu", "deploypackage");
 $pfDeployPackage = new PluginFusioninventoryDeployPackage();
-
 if (isset($_POST['prepareinstall'])) {
    $computers_id = false;
    foreach ($_POST as $key => $data) {
@@ -61,7 +57,6 @@ if (isset($_POST['prepareinstall'])) {
          }
       }
    }
-
    //Try to wakeup the agent to perform the deployment task
    //If it's a local wakeup, local call to the agent RPC service
    switch ($_POST['wakeup_type']) {
@@ -83,7 +78,6 @@ if (isset($_POST['prepareinstall'])) {
       default:
          break;
    }
-
    Html::back();
 } else {
    Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
