@@ -13,6 +13,7 @@ matrix:
   include:
     - php: 5.6
       addons:
+        mariadb: 10.2
         apt:
           packages:
             - ant
@@ -27,25 +28,28 @@ matrix:
     - php: 7.1
       env: CS=true
       addons:
-        mariadb: 10.1
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: 7.2
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: 7.3
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: nightly
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
@@ -59,7 +63,8 @@ before_install:
  - cd glpi
  - composer install --no-dev -o
  - cd ..
- - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
+ - mysql -u root -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY 'travis';"
+ - mysql -u root -e "CREATE DATABASE glpi;"
  - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
  - mysql -u root -e "FLUSH PRIVILEGES;"
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
