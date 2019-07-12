@@ -1561,48 +1561,48 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             echo "</td>";
             echo "</tr>";
          }
-      }
 
-      if (count($package_to_install)) {
+         if (count($package_to_install)) {
 
-         $p['name']     = 'deploypackages_'.$computers_id;
-         $p['display']  = true;
-         $p['multiple'] = true;
-         $p['size']     = 3;
-         $p['width']    = 950;
+            $p['name']     = 'deploypackages_'.$computers_id;
+            $p['display']  = true;
+            $p['multiple'] = true;
+            $p['size']     = 3;
+            $p['width']    = 950;
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Select packages you want install', 'fusioninventory');
-         echo "<br/>";
-         Dropdown::showFromArray($p['name'], $package_to_install, $p);
-         echo "</td>";
-         echo "</tr>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo __('Select packages you want install', 'fusioninventory');
+            echo "<br/>";
+            Dropdown::showFromArray($p['name'], $package_to_install, $p);
+            echo "</td>";
+            echo "</tr>";
 
-         echo "<tr>";
-         echo "<th colspan='2'>";
-         echo Html::submit(__('Prepare for install', 'fusioninventory'),
-                           ['name' => 'prepareinstall']);
-         echo "&nbsp;";
-         if (!$self_service) {
-            $options = ['local'  => __("I'm on this computer: local wakeup", 'fusioninventory'),
-                        'remote' => __("I'm not on this computer: wakeup from the server", 'fusioninventory'),
-                        'none'   => __("Don't wakeup", 'fusioninventory')
-                       ];
-            Dropdown::showFromArray('wakeup_type', $options,
-                                    ['value' => 'remote']);
+            echo "<tr>";
+            echo "<th colspan='2'>";
+            echo Html::submit(__('Prepare for install', 'fusioninventory'),
+                              ['name' => 'prepareinstall']);
+            echo "&nbsp;";
+            if (!$self_service) {
+               $options = ['local'  => __("I'm on this computer: local wakeup", 'fusioninventory'),
+                           'remote' => __("I'm not on this computer: wakeup from the server", 'fusioninventory'),
+                           'none'   => __("Don't wakeup", 'fusioninventory')
+                        ];
+               Dropdown::showFromArray('wakeup_type', $options,
+                                       ['value' => 'remote']);
+            } else {
+               echo Html::hidden('wakeup_type', ['value' => 'local']);
+            }
+            echo Html::hidden('self_service', ['value' => $self_service]);
+            echo "</th>";
+            echo "</tr>";
          } else {
-            echo Html::hidden('wakeup_type', ['value' => 'local']);
+            echo "<tr>";
+            echo "<th colspan='2'>";
+            echo __('No packages available to install', 'fusioninventory');
+            echo "</th>";
+            echo "</tr>";
          }
-         echo Html::hidden('self_service', ['value' => $self_service]);
-         echo "</th>";
-         echo "</tr>";
-      } else {
-         echo "<tr>";
-         echo "<th colspan='2'>";
-         echo __('No packages available to install', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
       }
       echo "</table>"; // .tab_cadre_fixe
       Html::closeForm();
