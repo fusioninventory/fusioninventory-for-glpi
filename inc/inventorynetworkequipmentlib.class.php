@@ -618,13 +618,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $networkPort_Vlan = new NetworkPort_Vlan();
 
       $db_vlans = [];
-      $query = "SELECT `glpi_networkports_vlans`.`id`, `glpi_vlans`.`name`, `glpi_vlans`.`tag`
+      $query = "SELECT `glpi_networkports_vlans`.`id`, `glpi_vlans`.`name`, `glpi_vlans`.`tag`, `glpi_networkports_vlans`.`tagged`
                 FROM `glpi_networkports_vlans`
                 LEFT JOIN `glpi_vlans`
                   ON `vlans_id`=`glpi_vlans`.`id`
                 WHERE `networkports_id` = '$networkports_id'";
       foreach ($DB->request($query) as $data) {
-         $db_vlans[$data['name']."$$$$".$data['tag']] = $data['id'];
+         $db_vlans[$data['id']] = $data;
       }
 
       if (count($db_vlans) == 0) {
@@ -634,7 +634,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       } else {
          foreach ($a_vlans as $key => $arrays) {
             foreach ($db_vlans as $keydb => $arraydb) {
-               if ($arrays['name']."$$$$".$arrays['tag'] == $keydb) {
+               if ($arrays['name'] == $arraydb['name'] && $arrays['tag'] == $arraydb['tag'] && $arrays['tagged'] == $arraydb['tagged']) {
                   unset($a_vlans[$key]);
                   unset($db_vlans[$keydb]);
                   break;
@@ -645,7 +645,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          if (count($a_vlans) || count($db_vlans)) {
             if (count($db_vlans) != 0) {
                // Delete vlan in DB
-               foreach ($db_vlans as $id) {
+               foreach (array_keys($db_vlans) as $id) {
                   $networkPort_Vlan->delete(['id'=>$id]);
                }
             }
@@ -685,6 +685,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $input = [];
       $input['networkports_id'] = $networkports_id;
       $input['vlans_id'] = $vlans_id;
+      $input['tagged'] = $a_vlan['tagged'];
       $networkPort_Vlan->add($input);
    }
 
