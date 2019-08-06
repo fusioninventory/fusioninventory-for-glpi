@@ -1901,7 +1901,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
-         'nbcores', 'nbthreads', 'frequency'];
+         'nbcores', 'nbthreads', 'frequency', 'tagged'];
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
@@ -2277,7 +2277,8 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp = $thisc->addValues($a_vlan,
                                                  [
                                                     'NAME'   => 'name',
-                                                    'NUMBER' => 'tag']);
+                                                    'NUMBER' => 'tag',
+                                                    'TAGGED' => 'tagged']);
                   if (isset($array_tmp['tag'])) {
                      $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
                   }
