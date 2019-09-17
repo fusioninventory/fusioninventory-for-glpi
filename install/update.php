@@ -966,10 +966,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    ]);
    if (count($iterator)) {
       $update = $DB->buildUpdate(
-         'glpi_computers_softwareversions', [
+         'glpi_items_softwareversions', [
             'entities_id'  => new \QueryParam()
          ], [
-            'computers_id' => new \QueryParam(),
+            'itemtype'     => 'Computer',
+            'items_id'     => new \QueryParam(),
             'is_dynamic'   => 1,
             'entities_id'  => 0
          ]

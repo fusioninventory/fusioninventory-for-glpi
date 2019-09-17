@@ -2380,17 +2380,17 @@ function plugin_fusioninventory_postshowtab($params) {
   * @return void
   */
 function plugin_fusioninventory_preshowtab($params) {
+   global $CFG_GLPI;
+
    if (isset($params['item']) && is_object($params['item'])) {
       $item = $params['item'];
-      switch ($item->getType()) {
-         case 'Computer':
-            switch (Session::getActiveTab('Computer')) {
-               case 'Computer_SoftwareVersion$1':
-                  $license = new PluginFusioninventoryComputerLicenseInfo();
-                  $license->showForm($item->getID());
-                  break;
-            }
-            break;
+      if (in_array($item->getType(), $CFG_GLPI['software_types'])) {
+         switch (Session::getActiveTab($item->getType())) {
+            case 'Item_SoftwareVersion$1':
+               $license = new PluginFusioninventoryComputerLicenseInfo();
+               $license->showForm($item->getID());
+               break;
+         }
       }
    }
 }

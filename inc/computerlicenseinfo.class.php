@@ -228,17 +228,17 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    function associate($params) {
 
       if (isset($params['computers_id']) && is_array($params['associate'])) {
-         $computer_slicense = new Computer_SoftwareLicense();
+         $computer_slicense = new Item_SoftwareLicense();
          $pfLicenseInfo = new self();
 
          foreach ($params['associate'] as $key => $value) {
             $computer_slicense->add([
-                                      'computers_id'        => $params['computers_id'],
-                                      'softwarelicenses_id' => $params['softwarelicenses_id'],
-                                      'is_deleted'          => 0,
-                                      'is_dynamic'          => 1
-                                     ]
-            );
+               'itemtype'              => 'Computer',
+               'items_id'              => $params['computers_id'],
+               'softwarelicenses_id'   => $params['softwarelicenses_id'],
+               'is_deleted'            => 0,
+               'is_dynamic'            => 1
+            ]);
 
             $pfLicenseInfo->update([
                                     'id'                  => $key,
@@ -258,13 +258,14 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
       if (isset($params['computers_id']) && is_array($params['dissociate'])) {
          $pfLicenseInfo     = new self();
-         $computer_slicense = new Computer_SoftwareLicense();
+         $computer_slicense = new Item_SoftwareLicense();
 
          foreach ($params['dissociate'] as $key => $value) {
             $pfLicenseInfo->getFromDB($key);
             $computer_slicense->deleteByCriteria([
-               'computers_id'        => $params['computers_id'],
-               'softwarelicenses_id' => $pfLicenseInfo->fields['softwarelicenses_id']], true);
+               'itemtype'              => 'Computer',
+               'items_id'              => $params['computers_id'],
+               'softwarelicenses_id'   => $pfLicenseInfo->fields['softwarelicenses_id']], true);
 
             $pfLicenseInfo->update(['id'                  => $key,
                                     'softwarelicenses_id' => 0]);
@@ -291,7 +292,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     *
     * @param integer $computers_id
     */
-   static function cleanLicense(Computer_SoftwareLicense $license) {
+   static function cleanLicense(Item_SoftwareLicense $license) {
       $licenses = getAllDataFromTable('glpi_plugin_fusioninventory_computerlicenseinfos',
          [
             'softwarelicenses_id' => $license->fields['softwarelicenses_id'],

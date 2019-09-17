@@ -157,7 +157,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       ];
       $pfici = new PluginFusioninventoryInventoryComputerInventory();
       $software = new Software();
-      $csv = new Computer_SoftwareVersion();
+      $csv = new Item_SoftwareVersion();
 
       // first create without install_date
       $pfici->sendCriteria('TESTAAAA', $arrayinventory);
@@ -246,7 +246,7 @@ class SoftwareVersionAddTest extends RestoreDatabase_TestCase {
       $pfici = new PluginFusioninventoryInventoryComputerInventory();
       $software = new Software();
       $softwareVersion = new SoftwareVersion();
-      $csv = new Computer_SoftwareVersion();
+      $csv = new Item_SoftwareVersion();
 
       $soft_ids = array_keys($software->find());
 

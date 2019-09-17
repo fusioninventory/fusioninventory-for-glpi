@@ -250,8 +250,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'version'                => 110,
                     'manufacturers_id'       => 1,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'operatingsystems_id'    => 0
                 ],
             'imagemagick$$$$6.8.0.7_1$$$$2$$$$0$$$$0' => [
@@ -259,8 +259,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'operatingsystems_id'    => 0
                 ],
             'orbit2$$$$2.14.19$$$$3$$$$0$$$$0' => [
@@ -268,8 +268,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'operatingsystems_id'    => 0,
                     'date_install'           => '2016-07-20'
                 ]
@@ -645,16 +645,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      $computer_SoftwareVersion = new Computer_SoftwareVersion();
+      $computer_SoftwareVersion = new Item_SoftwareVersion();
 
       $computer_SoftwareVersion->getFromDB(1);
 
       $a_reference = [
-          'id'                   => '1',
-          'computers_id'         => '1',
+         'id'                    => '1',
+         'itemtype'              => 'Computer',
+          'items_id'             => '1',
           'softwareversions_id'  => '1',
-          'is_deleted_computer'  => '0',
-          'is_template_computer' => '0',
+          'is_deleted_item'  => '0',
+          'is_template_item' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
@@ -674,16 +675,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      $computer_SoftwareVersion = new Computer_SoftwareVersion();
+      $computer_SoftwareVersion = new Item_SoftwareVersion();
 
       $computer_SoftwareVersion->getFromDB(2);
 
       $a_reference = [
-          'id'                   => '2',
-          'computers_id'         => '1',
+         'id'                   => '2',
+         'itemtype'              => 'Computer',
+          'items_id'             => '1',
           'softwareversions_id'  => '2',
-          'is_deleted_computer'  => '0',
-          'is_template_computer' => '0',
+          'is_deleted_item'  => '0',
+          'is_template_item' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
@@ -703,16 +705,17 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
-      $computer_SoftwareVersion = new Computer_SoftwareVersion();
+      $computer_SoftwareVersion = new Item_SoftwareVersion();
 
       $computer_SoftwareVersion->getFromDB(3);
 
       $a_reference = [
-          'id'                   => '3',
-          'computers_id'         => '1',
+         'id'                   => '3',
+         'itemtype'              => 'Computer',
+          'items_id'             => '1',
           'softwareversions_id'  => '3',
-          'is_deleted_computer'  => '0',
-          'is_template_computer' => '0',
+          'is_deleted_item'  => '0',
+          'is_template_item' => '0',
           'entities_id'          => '0',
           'is_deleted'           => '0',
           'is_dynamic'           => '1',
@@ -1248,8 +1251,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'version'                => '1.0.0.0',
                     'manufacturers_id'       => 192,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'operatingsystems_id'    => 0
                 ]
           ];

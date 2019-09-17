@@ -96,7 +96,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
    function __construct() {
       $this->software                = new Software();
       $this->softwareVersion         = new SoftwareVersion();
-      $this->computerSoftwareVersion = new Computer_SoftwareVersion();
+      $this->computerSoftwareVersion = new Item_SoftwareVersion();
       $this->softcatrule             = new RuleSoftwareCategoryCollection();
       $this->computer                = new Computer();
    }
@@ -1093,9 +1093,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      }
 
                      // Encryption details
-                     $input['encryption_tool'] = $disk['encryption_tool'];
-                     $input['encryption_algorithm'] = $disk['encryption_algorithm'];
-                     $input['encryption_type'] = $disk['encrypt_type'];
+                     $input['encryption_tool'] = $disk['encryption_tool'] ??  null;
+                     $input['encryption_algorithm'] = $disk['encryption_algorithm'] ?? null;
+                     $input['encryption_type'] = $disk['encrypt_type'] ?? null;
                   }
 
                   $input['_no_history'] = true;
@@ -2402,8 +2402,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       global $DB;
 
       $insert_query = $DB->buildInsert(
-         'glpi_computers_softwareversions', [
-            'computers_id'          => new \QueryParam(),
+         'glpi_items_softwareversions', [
+            'itemtype'              => 'Computer',
+            'items_id'              => new \QueryParam(),
             'softwareversions_id'   => new \QueryParam(),
             'is_dynamic'            => new \QueryParam(),
             'entities_id'           => new \QueryParam(),
@@ -2415,7 +2416,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       foreach ($a_input as $input) {
          $stmt->bind_param(
             'sssss',
-            $input['computers_id'],
+            $input['items_id'],
             $input['softwareversions_id'],
             $input['is_dynamic'],
             $input['entities_id'],
@@ -2443,11 +2444,12 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
 
       $this->softwareVersion->getFromDB($softwareversions_id);
-      $a_software['computers_id']         = $computers_id;
+      $a_software['itemtype']             = 'Computer';
+      $a_software['items_id']             = $computers_id;
       $a_software['softwareversions_id']  = $softwareversions_id;
       $a_software['is_dynamic']           = 1;
-      $a_software['is_template_computer'] = false;
-      $a_software['is_deleted_computer']  = false;
+      $a_software['is_template_item'] = false;
+      $a_software['is_deleted_item']  = false;
       $a_software['_no_history']          = true;
       $a_software['entities_id']          = $computers_id['entities_id'];
 
@@ -2588,7 +2590,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $a_tables = [
          'glpi_computers_items',
-         'glpi_computers_softwareversions',
          'glpi_computervirtualmachines'
       ];
       foreach ($a_tables as $table) {
@@ -2600,6 +2601,15 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             ]
          );
       }
+
+      $DB->update(
+         'glpi_items_softwareversions', [
+            'is_dynamic' => 1
+         ], [
+            'itemtype'  => 'Computer',
+            'items_id'  => $computers_id
+         ]
+      );
 
       $a_tables = ["glpi_networkports", "glpi_items_devicecases", "glpi_items_devicecontrols",
                    "glpi_items_devicedrives", "glpi_items_devicegraphiccards",
@@ -2656,22 +2666,22 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       //- at computer first inventory
       //- during the first inventory after an OS upgrade/change
       if ($no_history === false) {
-         $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
+         $query = "SELECT `glpi_items_softwareversions`.`id` as sid,
                     `glpi_softwares`.`name`,
                     `glpi_softwareversions`.`name` AS version,
                     `glpi_softwares`.`manufacturers_id`,
                     `glpi_softwareversions`.`entities_id`,
                     `glpi_softwareversions`.`operatingsystems_id`,
-                    `glpi_computers_softwareversions`.`is_template_computer`,
-                    `glpi_computers_softwareversions`.`is_deleted_computer`
-             FROM `glpi_computers_softwareversions`
+                    `glpi_items_softwareversions`.`is_template_item`,
+                    `glpi_items_softwareversions`.`is_deleted_item`
+             FROM `glpi_items_softwareversions`
              LEFT JOIN `glpi_softwareversions`
-                  ON (`glpi_computers_softwareversions`.`softwareversions_id`
+                  ON (`glpi_items_softwareversions`.`softwareversions_id`
                         = `glpi_softwareversions`.`id`)
              LEFT JOIN `glpi_softwares`
                   ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
-             WHERE `glpi_computers_softwareversions`.`computers_id` = '$computers_id'
-               AND `glpi_computers_softwareversions`.`is_dynamic`='1'";
+             WHERE `glpi_items_softwareversions`.`items_id` = '$computers_id'
+               AND glpi_items_softwareversions.itemtype = 'Computer' AND `glpi_items_softwareversions`.`is_dynamic`='1'";
          foreach ($DB->request($query) as $data) {
             $idtmp = $data['sid'];
             unset($data['sid']);
@@ -2771,7 +2781,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
                .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
             $a_tmp = [
-                'computers_id'        => $computers_id,
+               'itemtype'             => 'Computer',
+                'items_id'        => $computers_id,
                 'softwareversions_id' => $softwareversions_id,
                 'is_dynamic'          => 1,
                 'entities_id'         => $computer->fields['entities_id'],
@@ -2869,7 +2880,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   }
                }
                $DB->delete(
-                  'glpi_computers_softwareversions', [
+                  'glpi_items_softwareversions', [
                   'id' => $db_software
                   ]
                );
@@ -2920,7 +2931,8 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                   $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']];
                   $a_tmp = [
-                     'computers_id'        => $computers_id,
+                     'itemtype'            => 'Computer',
+                     'items_id'            => $computers_id,
                      'softwareversions_id' => $softwareversions_id,
                      'is_dynamic'          => 1,
                      'entities_id'         => $computer->fields['entities_id'],
