@@ -1701,10 +1701,10 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['version'] = "";
                   }
                   //This is a realy computer, not a template
-                  $array_tmp['is_template_computer'] = 0;
+                  $array_tmp['is_template_item'] = 0;
 
                   //The computer is not deleted
-                  $array_tmp['is_deleted_computer']  = 0;
+                  $array_tmp['is_deleted_item']  = 0;
 
                   //Store if the software is recursive or not
                   $array_tmp['is_recursive']         = $is_software_recursive;

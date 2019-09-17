@@ -215,8 +215,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'version'                => 110,
                     'manufacturers_id'       => 1,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
                 ],
@@ -225,8 +225,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
                 ],
@@ -235,8 +235,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
                     'entities_id'            => 0,
-                    'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
+                    'is_template_item'   => 0,
+                    'is_deleted_item'    => 0,
                     'is_dynamic'             => 1,
                     'operatingsystems_id'    => 0
                 ]
