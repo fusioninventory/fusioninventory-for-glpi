@@ -396,6 +396,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
 
+      $pfConfig = new PluginFusioninventoryConfig();
+
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          $input
@@ -568,6 +570,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      OR `[typetable]`.`serial`='".$serial2."')";
                   $_SESSION["plugin_fusioninventory_serialHP"] = $serial2;
 
+               // Support partial match for monitor serial
+               } else if (isset($input['itemtype'])
+                       AND $input['itemtype'] == 'Monitor'
+                       AND $pfConfig->getValue('import_monitor_on_partial_sn') == 1) {
+                  $sql_where_temp = " AND `[typetable]`.`serial` LIKE '%".$input["serial"]."%'";
                } else {
                   $sql_where_temp = " AND `[typetable]`.`serial`='".$input["serial"]."'";
                }
