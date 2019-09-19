@@ -573,7 +573,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                // Support partial match for monitor serial
                } else if (isset($input['itemtype'])
                        AND $input['itemtype'] == 'Monitor'
-                       AND $pfConfig->getValue('import_monitor_on_partial_sn') == 1) {
+                       AND $pfConfig->getValue('import_monitor_on_partial_sn') == 1
+                       AND strlen($input["serial"]) >= 4) {
                   $sql_where_temp = " AND `[typetable]`.`serial` LIKE '%".$input["serial"]."%'";
                } else {
                   $sql_where_temp = " AND `[typetable]`.`serial`='".$input["serial"]."'";
