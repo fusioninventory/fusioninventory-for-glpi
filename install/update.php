@@ -863,6 +863,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       'import_registry'                => 1,
       'import_process'                 => 1,
       'import_vm'                      => 1,
+      'import_monitor_on_partial_sn'   => 0,
       'component_processor'            => 1,
       'component_memory'               => 1,
       'component_harddrive'            => 1,
