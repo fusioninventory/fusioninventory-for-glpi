@@ -2005,7 +2005,7 @@ class PluginFusioninventoryFormatconvert {
                         }
                      }
                   }
-               } else {
+               } else if (in_array($itemtype, ['Computer', 'NetworkEquipment', 'Printer'])) {
                   unset($array[$key]);
                }
             }
