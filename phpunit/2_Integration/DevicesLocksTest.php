@@ -380,4 +380,133 @@ class DevicesLocks extends RestoreDatabase_TestCase {
    }
 
 
+   /**
+    * @test
+    */
+   public function testLockMonitor() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $pfCommunication  = new PluginFusioninventoryCommunication();
+      $GLPIlog = new GLPIlogs();
+      $monitor = new Monitor();
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $manufacturer = new Manufacturer();
+      $pfLock = new PluginFusioninventoryLock();
+
+      $computer_xml =
+      '<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2017-02-01 06:27:09</LOGDATE>
+    </ACCESSLOG>
+    <BIOS>
+      <ASSETTAG/>  <BDATE>03/01/2016</BDATE>
+      <BMANUFACTURER>Dell Inc.</BMANUFACTURER>
+      <BVERSION>1.3.3</BVERSION>
+      <MMANUFACTURER>Dell Inc.</MMANUFACTURER>
+      <MMODEL>07TYC2</MMODEL>
+      <MSN>/5BTGP72/CN12963646012E/</MSN>
+      <SKUNUMBER>0704</SKUNUMBER>
+      <SMANUFACTURER>Dell Inc.</SMANUFACTURER>
+      <SMODEL>XPS 13 9350</SMODEL>
+      <SSN>5BTGP72</SSN>
+    </BIOS>
+    <HARDWARE>
+      <ARCHNAME>x86_64-linux-gnu-thread-multi</ARCHNAME>
+      <CHASSIS_TYPE>Laptop</CHASSIS_TYPE>
+      <CHECKSUM>70383</CHECKSUM>
+      <DATELASTLOGGEDUSER>Mon Jan 30 16:49</DATELASTLOGGEDUSER>
+      <DEFAULTGATEWAY>172.28.213.1</DEFAULTGATEWAY>
+      <DNS>172.28.200.20/127.0.0.1</DNS>
+      <ETIME>3</ETIME>
+      <IPADDR>172.28.213.147/172.28.213.114/172.17.0.1</IPADDR>
+      <LASTLOGGEDUSER>adelauna</LASTLOGGEDUSER>
+      <MEMORY>7830</MEMORY>
+      <NAME>LU002</NAME>
+      <OSCOMMENTS>#201611260431 SMP Sat Nov 26 09:33:21 UTC 2016</OSCOMMENTS>
+      <OSNAME>Ubuntu 16.04.1 LTS</OSNAME>
+      <OSVERSION>4.8.11-040811-generic</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2300</PROCESSORS>
+      <PROCESSORT>Intel(R) Core(TM) i5-6200U CPU @ 2.30GHz</PROCESSORT>
+      <SWAP>8035</SWAP>
+      <USERID>adelaunay</USERID>
+      <UUID>4C4C4544-0042-5410-8047-B5C04F503732</UUID>
+      <VMSYSTEM>Physical</VMSYSTEM>
+      <WINPRODID>ID-1000010001</WINPRODID>
+      <WORKGROUP>ad.teclib.infra/luisant.chartres.workgroup.teclib.infra</WORKGROUP>
+    </HARDWARE>
+    <MONITORS>
+      <BASE64>AP///////wAQrFVAUzIyNQ0UAQMKLBl47u6Vo1RMmSYPUFSlSwBxT4GAqcABAQEBAQEBAQEBMCpAyGCEZDAYUBMAu/kQAAAeAAAA/wBQMTI1UjAzVTUyMlMKAAAA/ABERUxMIFAyMDEwSAogAAAA/QA4TB5TEAAKICAgICAgAOc=</BASE64>
+      <CAPTION>DELL P2010H</CAPTION>
+      <DESCRIPTION>13/2010</DESCRIPTION>
+      <MANUFACTURER>Dell Inc.</MANUFACTURER>
+      <NAME>Dell P2010H (Analog)</NAME>
+      <PORT>VGA</PORT>
+      <SERIAL>P125R03U243P</SERIAL>
+      <TYPE>Dell P2010H (Analog)</TYPE>
+    </MONITORS>
+  </CONTENT>
+  <DEVICEID>LU002-2016-05-12-10-04-59</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>';
+
+      $pfCommunication->handleOCSCommunication($computer_xml, '', 'glpi');
+
+      $this->assertEquals(countElementsInTable('glpi_monitors'), 1, 'The monitor has not been created :/');
+
+      // Check logs
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      // Check computer and monitor have id 1
+      $this->assertEquals(countElementsInTable('glpi_monitors', ['id' => 1]), 1, 'The monitor has not id 1 :/');
+      $this->assertEquals(countElementsInTable('glpi_computers', ['id' => 1]), 1, 'The computer has not id 1 :/');
+
+      $monitor->update([
+         'id' => 1,
+         'name' => 'another name',
+         'serial' => 'XXXX-1-XXXX'
+      ]);
+
+      // Test replaceids and lock may not delete fields if in lock
+      $a_inventory = [
+         "Computer" => [
+            "name"   => "LU002",
+            "serial" => "5BTGP72"
+          ],
+          'monitor'        => [
+              [
+                  'name'    => 'DELL P2010H',
+                  'manufacturers_id'=> "Dell Inc.",
+                  'serial'  => 'P125R03U243P',
+                  'is_dynamic' => 1
+              ]
+          ],
+      ];
+      $manufacturers_id = $manufacturer->getFromDBByCrit(['name' => 'Dell Inc.']);
+      $a_computerinventory = $pfFormatconvert->replaceids($a_inventory, 'Computer', 1);
+      $reference = [
+         "Computer" => [
+            "name"   => "LU002",
+            "serial" => "5BTGP72"
+          ],
+          'monitor'        => [
+              [
+                  'name'    => 'DELL P2010H',
+                  'manufacturers_id'=> $manufacturer->getID(),
+                  'serial'  => 'P125R03U243P',
+                  'is_dynamic' => 1
+              ]
+          ],
+      ];
+      $this->assertEquals($a_computerinventory, $reference, 'Replaceid with lock must not delete fields');
+   }
 }

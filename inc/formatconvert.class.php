@@ -1930,6 +1930,7 @@ class PluginFusioninventoryFormatconvert {
     */
    function replaceids($array, $itemtype, $items_id, $level = 0) {
       global $CFG_GLPI;
+
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
                                                              $items_id);
 
@@ -2005,8 +2006,6 @@ class PluginFusioninventoryFormatconvert {
                         }
                      }
                   }
-               } else {
-                  unset($array[$key]);
                }
             }
          }
