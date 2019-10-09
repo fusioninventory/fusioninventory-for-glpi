@@ -58,7 +58,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
       $sopt[5150]['field']     = 'last_fusioninventory_update';
-      $sopt[5150]['linkfield'] = 'id';
       $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
          __('Last inventory', 'fusioninventory');
       $sopt[5150]['datatype']  = 'datetime';
@@ -1219,11 +1218,11 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   ON (`glpi_computers`.`id`=`glpi_plugin_fusioninventory_agents`.`computers_id`) ";
                 break;
 
-            case 'glpi_plugin_fusioninventory_inventorycomputercomputers.id':
+           case 'glpi_plugin_fusioninventory_inventorycomputercomputers.plugin_fusioninventory_inventorycomputercomputers_id':
                return " LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputercomputers`
-                    AS glpi_plugin_fusioninventory_inventorycomputercomputers_id
+                    AS glpi_plugin_fusioninventory_inventorycomputercomputers
                     ON (`glpi_computers`.`id` = ".
-                    "`glpi_plugin_fusioninventory_inventorycomputercomputers_id`.".
+                    "`glpi_plugin_fusioninventory_inventorycomputercomputers`.".
                     "`computers_id` ) ";
 
             // ** FusionInventory - switch
