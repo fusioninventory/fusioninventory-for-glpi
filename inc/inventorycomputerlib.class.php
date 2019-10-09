@@ -1008,7 +1008,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'FROM'   => 'glpi_computers',
                      'WHERE'  => [
                         'RAW' => [
-                           'LOWER(uuid)'  => self::getUUIDRestrictCriteria($fields['uuid'])
+                           'LOWER(uuid)'  => ComputerVirtualMachine::getUUIDRestrictCriteria($fields['uuid'])
                         ]
                      ],
                      'LIMIT'  => 1
