@@ -374,7 +374,7 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
             'PARAM' => [
                '@attributes' => [
                   'THREADS_QUERY' => 1,
-                  'TIMEOUT'       => 0,
+                  'TIMEOUT'       => 15,
                   'PID'           => 1
                ]
             ],
