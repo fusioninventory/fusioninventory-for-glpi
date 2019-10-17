@@ -488,7 +488,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $this->fields["timeout_networkdiscovery"],
-             'min' => 0,
+             'toadd' => [ __('General setup') ],
+             'min' => 1,
              'max' => 60]
          );
       echo "</td>";
@@ -519,7 +520,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkinventory", [
              'value' => $this->fields["timeout_networkinventory"],
-             'min' => 0,
+             'toadd' => [ __('General setup') ],
+             'min' => 1,
              'max' => 60]
       );
       echo "</td>";
