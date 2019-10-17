@@ -327,6 +327,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfIPRange = new PluginFusioninventoryIPRange();
       $pfToolbox = new PluginFusioninventoryToolbox();
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $pfAgent->getFromDB($jobstate->fields['plugin_fusioninventory_agents_id']);
 
@@ -334,11 +335,23 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
 
       $sxml_param = $sxml_option->addChild('PARAM');
-      $sxml_param->addAttribute('THREADS_DISCOVERY',
-         $pfAgent->fields["threads_networkdiscovery"]);
-      $sxml_param->addAttribute('TIMEOUT',
-         $pfAgent->fields["timeout_networkdiscovery"]);
-      $sxml_param->addAttribute('PID', $jobstate->fields['id']);
+      // Use general config when threads number is set to 0 on the agent
+      if ($pfAgent->fields["threads_networkdiscovery"] == 0) {
+         $sxml_param->addAttribute('THREADS_DISCOVERY',
+            $pfConfig->getValue('threads_networkdiscovery'));
+      } else {
+         $sxml_param->addAttribute('THREADS_DISCOVERY',
+            $pfAgent->fields["threads_networkdiscovery"]);
+      }
+      // Use general config when timeout is set to 0 on the agent
+      if ($pfAgent->fields["timeout_networkdiscovery"] == 0) {
+         $sxml_param->addAttribute('TIMEOUT',
+            $pfConfig->getValue('timeout_networkdiscovery'));
+      } else {
+         $sxml_param->addAttribute('TIMEOUT',
+            $pfAgent->fields["timeout_networkdiscovery"]);
+      }
+       $sxml_param->addAttribute('PID', $jobstate->fields['id']);
 
       $changestate = 0;
       $taskjobstatedatas = $jobstate->fields;
