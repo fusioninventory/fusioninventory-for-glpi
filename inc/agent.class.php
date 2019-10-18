@@ -609,8 +609,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent'] = filter_input(INPUT_SERVER, "HTTP_USER_AGENT");
             // Set default number of threads for network tasks to 0 to follow general setup
-            $a_input['threads_networkdiscovery1'] = 0;
-            $a_input['threads_networkinventory1'] = 0;
+            $a_input['threads_networkdiscovery'] = 0;
+            $a_input['threads_networkinventory'] = 0;
             $agents_id = $this->add($a_input);
             if ($agents_id) {
                return $agents_id;
