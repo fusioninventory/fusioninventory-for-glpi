@@ -1163,8 +1163,8 @@ class PluginFusioninventoryFormatconvert {
                }
                $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
                if (!empty($dataArray[1])
-                       AND empty($a_peripherals['productname'])) {
-                  $a_peripherals['productname'] = $dataArray[1];
+                       AND empty($array_tmp['productname'])) {
+                  $array_tmp['productname'] = $dataArray[1];
                }
             }
 

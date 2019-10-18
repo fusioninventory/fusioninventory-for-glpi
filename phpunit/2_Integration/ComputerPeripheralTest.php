@@ -200,7 +200,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_dynamic'          => '1'
           ],
           3 => [
-              'name' => 'Périphérique d’entrée USB',
+              'name' => 'Sensor Hub',
               'id'                  => '3',
               'serial'              => 'STM32_EMOTION2',
               'peripheraltypes_id'  => '0',
