@@ -373,7 +373,7 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
             'NAME' => 'SNMPQUERY',
             'PARAM' => [
                '@attributes' => [
-                  'THREADS_QUERY' => 1,
+                  'THREADS_QUERY' => 10,
                   'TIMEOUT'       => 15,
                   'PID'           => 1
                ]
