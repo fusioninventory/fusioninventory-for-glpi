@@ -302,6 +302,7 @@ class NetworkInventoryTest extends RestoreDatabase_TestCase {
           'version'     => '{"INVENTORY":"v2.3.11"}',
           'device_id'   => 'computer1',
           'useragent'   => 'FusionInventory-Agent_v2.3.11',
+          'threads_networkinventory' => 0,
           'computers_id'=> $computers_id
       ];
       $pfAgent->add($input);
