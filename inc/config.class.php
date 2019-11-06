@@ -451,7 +451,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "la";
       echo "<th colspan=4 >".__('Automatic inventory number', 'fusioninventory')."<i class='fa fa-magic' title='".__s('You can define an autofill template')."'></i></th>";
       echo "</tr>";
 
