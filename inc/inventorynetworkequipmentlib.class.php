@@ -112,8 +112,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       $input = PluginFusioninventoryToolbox::addLocation($input);
 
       // Manage inventory number
-      $input['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
-         'NetworkEquipment', '', $networkEquipment->fields['entities_id']);
+      if ($networkEquipment->fields['otherserial'] == ''
+         && (!isset($input['otherserial'])
+            || $input['otherserial'] == '')) {
+
+         $input['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+            'NetworkEquipment', '', $networkEquipment->fields['entities_id']);
+      }
 
       $networkEquipment->update($input, !$no_history);
 
