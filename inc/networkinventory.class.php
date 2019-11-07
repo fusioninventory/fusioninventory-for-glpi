@@ -595,7 +595,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $sxml_option->addChild('NAME', 'SNMPQUERY');
          $sxml_param = $sxml_option->addChild('PARAM');
          // Use general config when threads number is set to 0 on the agent
-         if ($pfAgent->fields["threads_networkinventory"]<1) {
+         if ($pfAgent->fields["threads_networkinventory"] == 0) {
             $sxml_param->addAttribute('THREADS_QUERY',
                $pfConfig->getValue('threads_networkinventory'));
          } else {
@@ -603,7 +603,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $pfAgent->fields["threads_networkinventory"]);
          }
          // Use general config when timeout is set to 0 on the agent
-         if ($pfAgent->fields["timeout_networkinventory"]<1) {
+         if ($pfAgent->fields["timeout_networkinventory"] == 0) {
             $sxml_param->addAttribute('TIMEOUT',
                $pfConfig->getValue('timeout_networkinventory'));
          } else {

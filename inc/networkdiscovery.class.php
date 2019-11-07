@@ -336,7 +336,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
       $sxml_param = $sxml_option->addChild('PARAM');
       // Use general config when threads number is set to 0 on the agent
-      if ($pfAgent->fields["threads_networkdiscovery"]<1) {
+      if ($pfAgent->fields["threads_networkdiscovery"] == 0) {
          $sxml_param->addAttribute('THREADS_DISCOVERY',
             $pfConfig->getValue('threads_networkdiscovery'));
       } else {
@@ -344,7 +344,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             $pfAgent->fields["threads_networkdiscovery"]);
       }
       // Use general config when timeout is set to 0 on the agent
-      if ($pfAgent->fields["timeout_networkdiscovery"]<1) {
+      if ($pfAgent->fields["timeout_networkdiscovery"] == 0) {
          $sxml_param->addAttribute('TIMEOUT',
             $pfConfig->getValue('timeout_networkdiscovery'));
       } else {
