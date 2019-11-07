@@ -165,10 +165,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
       $buffer = fgets($ouiFile, 4096);
 
       $stack = [];
-      if (preg_match("/^\s{2}(\S+)\s*\(hex\)\t{2}(.+)/i", $buffer, $stack)) {
+      if (preg_match("/^(\S+)\s*\(hex\)\t{2}(.+)/i", $buffer, $stack)) {
          $OUI = $stack[1];
          $OUI = strtr($OUI, "-", ":");
-         $organization = $stack[2];
+         $organization = trim($stack[2]);
          $d++;
          $sql_insert_oui .= "\n(".$d.", '".$OUI."', '".addslashes(htmlentities($organization))."'),";
       }
