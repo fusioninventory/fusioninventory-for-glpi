@@ -194,6 +194,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5182]['datatype']  = 'datetime';
       $sopt[5182]['massiveaction'] = false;
 
+      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
+
    }
 
    if ($itemtype == 'Computer') {
@@ -210,8 +212,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['linkfield'] = '';
       $sopt[5193]['name'] = __('FusInv', 'fusioninventory')." - ".__('Switch ports');
       $sopt[5193]['forcegroupby'] = '1';
-
-      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
 
       $sopt[5197]['table']         = 'glpi_plugin_fusioninventory_agents';
       $sopt[5197]['field']         = 'last_contact';

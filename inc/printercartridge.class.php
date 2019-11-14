@@ -129,6 +129,10 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
             $a_cartridge['state'] = $a_cartridge['state'] * -1;
             echo $a_cartridge['state'];
             echo ' '.__('remaining pages', 'fusioninventory');
+         } else if ($mapping->fields['name'] == 'paperrollinches') {
+            echo $a_cartridge['state']." inches";
+         } else if ($mapping->fields['name'] == 'paperrollcentimeters') {
+            echo $a_cartridge['state']." centimeters";
          } else {
             PluginFusioninventoryDisplay::bar($a_cartridge['state']);
          }

@@ -118,6 +118,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    public $method = '';
 
 
+   static $rightname = 'plugin_fusioninventory_task';
+
    /**
     * Get the tab name used for item
     *

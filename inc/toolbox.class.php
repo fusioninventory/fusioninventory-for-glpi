@@ -756,7 +756,10 @@ class PluginFusioninventoryToolbox {
          return $item->isDynamic()
             && countElementsInTable($table, [$fk => $item->getID()]);
       } else {
-         return 0;
+         // check if device has data in glpi_plugin_fusioninventory_rulematchedlogs table
+         return $item->isDynamic()
+            && countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+                                    ['itemtype' => $item->getType(), 'items_id' => $item->fields['id']]);
       }
    }
 
@@ -814,5 +817,23 @@ class PluginFusioninventoryToolbox {
          }
       }
       return ($output?$output:$input);
+   }
+
+   /**
+    * set inventory number, depending on options defined in configuration
+    */
+   static function setInventoryNumber($itemtype, $value, $entities_id = -1) {
+      if (!in_array($itemtype, ['Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer'])) {
+         return $value;
+      }
+
+      $dbutils = new DbUtils();
+      $config = new PluginFusioninventoryConfig();
+
+      $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
+
+      $new_value = $dbutils->autoName($autonum, 'otherserial', true, $itemtype, $entities_id);
+
+      return $new_value;
    }
 }

@@ -471,6 +471,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $this->fields["threads_networkdiscovery"],
+             'toadd' => [ __('General setup') ],
              'min' => 1,
              'max' => 400]
          );
@@ -488,7 +489,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $this->fields["timeout_networkdiscovery"],
-             'min' => 0,
+             'toadd' => [ __('General setup') ],
+             'min' => 1,
              'max' => 60]
          );
       echo "</td>";
@@ -504,6 +506,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkinventory", [
              'value' => $this->fields["threads_networkinventory"],
+             'toadd' => [ __('General setup') ],
              'min' => 1,
              'max' => 400]
       );
@@ -519,7 +522,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkinventory", [
              'value' => $this->fields["timeout_networkinventory"],
-             'min' => 0,
+             'toadd' => [ __('General setup') ],
+             'min' => 1,
              'max' => 60]
       );
       echo "</td>";
@@ -604,6 +608,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent'] = filter_input(INPUT_SERVER, "HTTP_USER_AGENT");
+            // Set default number of threads for network tasks to 0 to follow general setup
+            $a_input['threads_networkdiscovery'] = 0;
+            $a_input['threads_networkinventory'] = 0;
             $agents_id = $this->add($a_input);
             if ($agents_id) {
                return $agents_id;

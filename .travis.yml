@@ -13,6 +13,7 @@ cache:
 
 matrix:
   include:
+        mariadb: 10.2
     - php: 7.0
       addons:
         mariadb: 10.2
@@ -23,13 +24,14 @@ matrix:
     - php: 7.1
       env: CS=true
       addons:
-        mariadb: 10.1
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: 7.2
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
@@ -40,11 +42,13 @@ matrix:
           packages:
             - ant
             - xsltproc
+            - xsltproc
     - php: nightly
       addons:
         apt:
           packages:
             - ant
+            - xsltproc
             - xsltproc
   allow_failures:
     - php: nightly

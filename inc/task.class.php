@@ -589,6 +589,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
          if ($result['job']['method'] == 'networkinventory') {
+            $newtargets = [];
             $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
             foreach ($targets as $keyt=>$target) {
                $item_type = key($target);
@@ -597,9 +598,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   unset($targets[$keyt]);
                   // In this case get devices of this iprange
                   $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
-                  $targets = array_merge($targets, $deviceList);
+                  $newtargets = array_merge($newtargets, $deviceList);
                }
             }
+            $targets = array_merge($targets, $newtargets);
          }
 
          $limit = 0;
@@ -1058,6 +1060,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // ***** special case for IPRanges of networkinventory ***** //
 
          if ($result['job.method'] == 'networkinventory') {
+            $newtargets = [];
             $pfNetworkinventory = new PluginFusioninventoryNetworkinventory();
             foreach ($targets as $keyt=>$target) {
                $item_type = key($target);
@@ -1066,9 +1069,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   unset($targets[$keyt]);
                   // In this case get devices of this iprange
                   $deviceList = $pfNetworkinventory->getDevicesOfIPRange($items_id);
-                  $targets    = array_merge($targets, $deviceList);
+                  $newtargets = array_merge($newtargets, $deviceList);
                }
             }
+            $targets = array_merge($targets, $newtargets);
          }
 
          // ***** loop on each target of the job ***** //
