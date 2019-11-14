@@ -553,8 +553,18 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
 
       $where = " WHERE `printers_id` IN(".$printersIds.")";
-      if ($begin!='' || $end!='') {
-         $where .= " AND " .getDateRequest("`date`", $begin, $end);
+      if (!empty($begin) || !empty($end)) {
+         $where_date = '';
+         if (!empty($begin)) {
+            $where_date .= "`date` >= '$begin'";
+         }
+         if (!empty($begin) && !empty($end)) {
+            $where_date .= ' AND ';
+         }
+         if (!empty($end)) {
+            $where_date .= "`date` <= ADDDATE('$end' , INTERVAL 1 DAY)";
+         }
+         $where .= "AND ($where_date)";
       }
       $group = '';
       switch ($timeUnit) {
