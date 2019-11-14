@@ -937,4 +937,25 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
 
+   function rawSearchOptions() {
+
+      $tab = [];
+
+      $tab[] = [
+         'id'           => 'common',
+         'name'         => __('Characteristics')
+      ];
+
+      $tab[] = [
+         'id'           => '1',
+         'table'        => $this->getTable(),
+         'field'        => 'name',
+         'name'         => __('Name'),
+         'datatype'     => 'itemlink',
+         'autocomplete' => true,
+      ];
+
+      return $tab;
+   }
+
 }
