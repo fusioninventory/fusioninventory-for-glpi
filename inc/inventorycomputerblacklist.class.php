@@ -89,10 +89,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => '1',
-         'table'     => $this->getTable(),
-         'field'     => 'value',
-         'name'      => __('blacklisted value', 'fusioninventory'),
+         'id'           => '1',
+         'table'        => $this->getTable(),
+         'field'        => 'value',
+         'name'         => __('blacklisted value', 'fusioninventory'),
+         'autocomplete' => true,
       ];
 
       $tab[] = [

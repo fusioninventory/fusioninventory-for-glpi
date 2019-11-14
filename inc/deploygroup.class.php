@@ -394,6 +394,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'massiveaction' => false,
+         'autocomplete'  => true,
       ];
 
       $tab[] = [

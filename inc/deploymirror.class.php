@@ -301,6 +301,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_type' => $this->getType(),
+         'autocomplete'  => true,
       ];
 
       $tab[] = [
@@ -312,11 +313,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => '2',
-         'table'     => $this->getTable(),
-         'field'     => 'url',
-         'name'      => __('Mirror server address', 'fusioninventory'),
-         'datatype'  => 'string',
+         'id'           => '2',
+         'table'        => $this->getTable(),
+         'field'        => 'url',
+         'name'         => __('Mirror server address', 'fusioninventory'),
+         'datatype'     => 'string',
+         'autocomplete' => true,
       ];
 
       $tab[] = [
