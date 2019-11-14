@@ -170,18 +170,21 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
       $a_inventory['vlans'] = [
           '10001' => [
               '281' => [
-                  'name' => 'printer',
-                  'tag'  => 281
+                  'name'   => 'printer',
+                  'tag'    => 281,
+                  'tagged' => 1
               ]
           ],
           '10002' => [
               '281' => [
-                  'name' => 'printer',
-                  'tag'  => 281
+                  'name'   => 'printer',
+                  'tag'    => 281,
+                  'tagged' => 1
               ],
               '280' => [
-                  'name' => 'admin',
-                  'tag'  => 280
+                  'name'   => 'admin',
+                  'tag'    => 280,
+                  'tagged' => 1
               ]
           ]
       ];

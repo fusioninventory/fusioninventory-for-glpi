@@ -157,6 +157,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $input['reprepare_job']         = 0;
 
+      // options for inventory number
+      $input['auto_inventory_number_computer']         = '';
+      $input['auto_inventory_number_monitor']          = '';
+      $input['auto_inventory_number_networkequipment'] = '';
+      $input['auto_inventory_number_peripheral']       = '';
+      $input['auto_inventory_number_phone']            = '';
+      $input['auto_inventory_number_printer']          = '';
+
       if (!$getOnly) {
          $this->addValues($input);
       }
@@ -440,7 +448,43 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          'entity' => $_SESSION['glpiactive_entity']]);
       echo "</span>";
       echo "</td>";
+      echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan=4 >".__('Automatic inventory number', 'fusioninventory')."<i class='fa fa-magic' title='".__s('You can define an autofill template')."'></i></th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Computer')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
+      echo "</td>";
+      echo "<td>".__('Monitor')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Network equpment')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_networkequipment' value='".$this->getValue('auto_inventory_number_networkequipment')."'/>";
+      echo "</td>";
+      echo "<td>".__('Peripheral')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Phone')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
+      echo "</td>";
+      echo "<td>".__('Printer')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
+      echo "</td>";
       echo "</tr>";
 
       $options['candel'] = false;

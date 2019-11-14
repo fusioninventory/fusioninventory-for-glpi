@@ -178,10 +178,13 @@ function plugin_init_fusioninventory() {
               ['rulecollections_types'=>true]);
       $Plugin->registerClass('PluginFusioninventoryRulematchedlog',
               ['addtabon' => ['Computer',
-                                        'PluginFusioninventoryAgent',
-                                        'PluginFusioninventoryUnmanaged',
-                                        'Printer',
-                                        'NetworkEquipment']]);
+                              'Monitor',
+                              'NetworkEquipment',
+                              'Peripheral',
+                              'Phone',
+                              'PluginFusioninventoryAgent',
+                              'PluginFusioninventoryUnmanaged',
+                              'Printer']]);
 
       //Classes for rulesengine
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleImport');

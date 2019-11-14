@@ -1,6 +1,6 @@
 language: php
 sudo: required
-dist: trusty
+dist: xenial
 
 env:
   global:
@@ -23,25 +23,28 @@ matrix:
     - php: 7.1
       env: CS=true
       addons:
-        mariadb: 10.1
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: 7.2
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: 7.3
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
             - xsltproc
     - php: nightly
       addons:
+        mariadb: 10.3
         apt:
           packages:
             - ant
@@ -56,9 +59,9 @@ before_install:
  - nvm install --lts=dubnium # update node to dubnium LTS version (node v10.x + npm v6.4.1)
  - bin/console dependencies install --ci
  - cd ..
+ - mysql -u root -e "CREATE DATABASE glpi;"
  - mv -f fusioninventory-for-glpi glpi/plugins/fusioninventory
  - pushd glpi
- - mysql -u root -e 'create database glpi;'
  - bin/console db:install --no-interaction --db-name=glpi --db-user=root
  - bin/console db:update |grep -q "No migration needed." || (echo "db:update FAILED" && exit 1)
  - popd

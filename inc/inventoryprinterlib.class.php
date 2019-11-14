@@ -101,6 +101,16 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
       }
       //Add the location if needed (play rule locations engine)
       $input = PluginFusioninventoryToolbox::addLocation($input);
+
+      // manage auto inventory number
+      if ($printer->fields['otherserial'] == ''
+         && (!isset($input['otherserial'])
+            || $input['otherserial'] == '')) {
+
+         $input['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+            'Printer', '', $printer->fields['entities_id']);
+      }
+
       $printer->update($input, !$no_history);
 
       $db_printer = [];

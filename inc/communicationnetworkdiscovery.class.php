@@ -271,7 +271,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $inputdb['uuid'] = $input['uuid'];
          }
          $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-         $inputdb['method'] = 'netdiscovery';
+         $inputdb['method'] = 'networkdiscovery';
          $pfIgnoredimport->add($inputdb);
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
@@ -283,12 +283,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
              && isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
-            $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
+            $this->rulepassed(0, $input['itemtype'], 0, $input['entities_id']);
          } else if (isset($input['itemtype'])
                 AND !isset($data['action'])) {
-            $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
+            $this->rulepassed(0, $input['itemtype'], 0, $input['entities_id']);
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnmanaged", $input['entities_id']);
+            $this->rulepassed(0, "PluginFusioninventoryUnmanaged", 0, $input['entities_id']);
          }
       }
    }
@@ -301,7 +301,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @param string $itemtype
     * @param integer $entities_id
     */
-   function rulepassed($items_id, $itemtype, $entities_id = 0) {
+   function rulepassed($items_id, $itemtype, $ports_id = 0, $entities_id = 0) {
 
       PluginFusioninventoryLogger::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -336,7 +336,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
-            $inputrulelog['method'] = 'netdiscovery';
+            $inputrulelog['method'] = 'networkdiscovery';
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
             unset($_SESSION['plugin_fusioninventory_rules_id']);
@@ -730,7 +730,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @return string
     */
    static function getMethod() {
-      return 'netdiscovery';
+      return 'networkdiscovery';
    }
 
 

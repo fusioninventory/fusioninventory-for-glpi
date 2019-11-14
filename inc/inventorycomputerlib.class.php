@@ -194,6 +194,15 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       // * Computer
       $db_computer = $computer->fields;
+      // manage auto inventory number
+      if ($computer->fields['otherserial'] == ''
+         && (!isset($a_computerinventory['Computer']['otherserial'])
+            || $a_computerinventory['Computer']['otherserial'] == '')) {
+
+         $a_computerinventory['Computer']['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+            'Computer', '', $computer->fields['entities_id']);
+      }
+
       $computerName = $computer->fields['name'];
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                          $db_computer, $a_lockable);
@@ -1008,7 +1017,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      'FROM'   => 'glpi_computers',
                      'WHERE'  => [
                         'RAW' => [
-                           'LOWER(uuid)'  => self::getUUIDRestrictCriteria($fields['uuid'])
+                           'LOWER(uuid)'  => ComputerVirtualMachine::getUUIDRestrictCriteria($a_vm['uuid'])
                         ]
                      ],
                      'LIMIT'  => 1
@@ -1392,13 +1401,32 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                                ? $arrays['serial']
                                : "";
          $data = $rule->processAllRules($input, [], ['class'=>$this, 'return' => true]);
+
          if (isset($data['found_equipment'])) {
             if ($data['found_equipment'][0] == 0) {
                // add monitor
                $arrays['entities_id'] = $entities_id;
+               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+                  'Monitor', '', $entities_id);
                $a_monitors[] = $monitor->add($arrays);
             } else {
                $a_monitors[] = $data['found_equipment'][0];
+            }
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = [];
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] =
+                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = end($a_monitors);
+               $inputrulelog['itemtype'] = "Monitor";
+               $inputrulelog['method'] = 'inventory';
+               $pfRulematchedlog->add($inputrulelog, [], false);
+               $pfRulematchedlog->cleanOlddata(end($a_monitors), "Monitor");
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
             }
          }
       }
@@ -1490,11 +1518,29 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add printer
                $arrays['entities_id'] = $entities_id;
-
+               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+                  'Printer', '', $entities_id);
                $a_printers[] = $printer->add($arrays);
             } else {
                $a_printers[] = $data['found_equipment'][0];
             }
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = [];
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] =
+                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = end($a_printers);
+               $inputrulelog['itemtype'] = "Printer";
+               $inputrulelog['method'] = 'inventory';
+               $pfRulematchedlog->add($inputrulelog, [], false);
+               $pfRulematchedlog->cleanOlddata(end($a_printers), "Printer");
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
+            }
+
          }
       }
       $db_printers = [];
@@ -1583,10 +1629,27 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if ($data['found_equipment'][0] == 0) {
                // add peripheral
                $arrays['entities_id'] = $entities_id;
-
+               $arrays['otherserial'] = PluginFusioninventoryToolbox::setInventoryNumber(
+                  'Peripheral', '', $entities_id);
                $a_peripherals[] = $peripheral->add($arrays);
             } else {
                $a_peripherals[] = $data['found_equipment'][0];
+            }
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = [];
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] =
+                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = end($a_peripherals);
+               $inputrulelog['itemtype'] = "Peripheral";
+               $inputrulelog['method'] = 'inventory';
+               $pfRulematchedlog->add($inputrulelog, [], false);
+               $pfRulematchedlog->cleanOlddata(end($a_peripherals), "Peripheral");
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
             }
          }
       }
@@ -2995,5 +3058,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
       return $a_inventory;
+   }
+
+   // For monitors, printers... import
+   function rulepassed($items_id, $itemtype, $ports_id = 0) {
+      return true;
    }
 }
