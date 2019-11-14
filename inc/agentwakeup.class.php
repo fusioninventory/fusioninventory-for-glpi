@@ -104,10 +104,10 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       $tasks       = [];
       //Get the maximum number of agent to wakeup,
       //as allowed in the general configuration
-      $config      = new PluginFusioninventoryConfig();
+      $config = new PluginFusioninventoryConfig();
+      $agent  = new PluginFusioninventoryAgent();
+
       $maxWakeUp   = $config->getValue('wakeup_agent_max');
-      $counter     = 0;
-      $continue    = true;
 
       //Get all active timeslots
       $timeslot = new PluginFusioninventoryTimeslot();
@@ -143,62 +143,59 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                continue;
             }
          }
+         $maxWakeUpTask = $task['wakeup_agent_counter'];
+         if ($maxWakeUp < $maxWakeUpTask) {
+            $maxWakeUpTask = $maxWakeUp;
+         }
+
+         //Store task ID
+         if (!in_array($task['id'], $tasks)) {
+            $tasks[] = $task['id'];
+         }
 
          //For each task, get a number of taskjobs at the PREPARED state
          //(the maximum is defined in wakeup_agent_counter)
          $iterator2 = $DB->request([
             'SELECT'    => [
                'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id',
-               'glpi_plugin_fusioninventory_tasks.id AS taskID',
-               'glpi_plugin_fusioninventory_tasks.wakeup_agent_time',
-               'glpi_plugin_fusioninventory_tasks.last_agent_wakeup'
             ],
             'FROM'      => [
-               'glpi_plugin_fusioninventory_taskjobstates',
-               'glpi_plugin_fusioninventory_taskjobs'
+               'glpi_plugin_fusioninventory_taskjobstates'
             ],
             'LEFT JOIN' => [
-               'glpi_plugin_fusioninventory_tasks' => [
+               'glpi_plugin_fusioninventory_taskjobs' => [
                   'FKEY' => [
-                     'glpi_plugin_fusioninventory_tasks'    => 'id',
-                     'glpi_plugin_fusioninventory_taskjobs' => 'plugin_fusioninventory_tasks_id'
+                     'glpi_plugin_fusioninventory_taskjobs'    => 'id',
+                     'glpi_plugin_fusioninventory_taskjobstates' => 'plugin_fusioninventory_taskjobs_id'
                   ]
                ]
             ],
             'WHERE'     => [
-               'glpi_plugin_fusioninventory_tasks.id'             => $task['id'],
-               'glpi_plugin_fusioninventory_taskjobs.id'          => 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_taskjobs_id',
+               'glpi_plugin_fusioninventory_taskjobs.plugin_fusioninventory_tasks_id' => $task['id'],
                'glpi_plugin_fusioninventory_taskjobstates.state'  => PluginFusioninventoryTaskjobstate::PREPARED
             ],
             'ORDER'     => 'glpi_plugin_fusioninventory_taskjobstates.id',
             'START'     => 0,
-            'LIMIT'     => $task['wakeup_agent_counter']
          ]);
+         $counter = 0;
+
          while ($state = $iterator2->next()) {
             $agents_id = $state['plugin_fusioninventory_agents_id'];
-            //Check if agent is already added to the list of agents to wake up
-            if (!isset($wakeupArray[$agents_id])) {
-               //This agent must be woken up
-               $wakeupArray[$agents_id] = $agents_id;
+            if (isset($wakeupArray[$agents_id])) {
                $counter++;
-            }
-            //Store task ID
-            if (!in_array($state['taskID'], $tasks)) {
-               $tasks[] = $state['taskID'];
+            } else {
+               $agent->getFromDB($agents_id);
+               $statusAgent = $agent->getStatus();
+               if ($statusAgent['message'] == 'waiting') {
+                  $wakeupArray[$agents_id] = $agents_id;
+                  $counter++;
+               }
             }
 
-            //Do not process more than the maximum number of wakeup allowed in the configuration
-            if ($counter >= $maxWakeUp) {
-               if (PluginFusioninventoryConfig::isExtradebugActive()) {
-                  Toolbox::logDebug(__("Maximum number of agent wakeup reached", 'fusioninventory').":".$maxWakeUp);
-               }
-               $continue = false;
+            // check if max number of agent reached for this task
+            if ($counter >= $maxWakeUpTask) {
                break;
             }
-         }
-         //We've reached the maximum number of agents to wake up !
-         if (!$continue) {
-            break;
          }
       }
 
@@ -214,9 +211,8 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
             ]
          );
 
-         $agent  = new PluginFusioninventoryAgent();
          //Try to wake up agents one by one
-         foreach (array_keys($wakeupArray) as $ID) {
+         foreach ($wakeupArray as $ID) {
             $agent->getFromDB($ID);
             if ($agent->wakeUp()) {
                $wokeup++;
