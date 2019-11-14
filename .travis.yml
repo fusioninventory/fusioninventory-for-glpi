@@ -41,6 +41,12 @@ matrix:
           packages:
             - ant
             - xsltproc
+    - php: 7.4snapshot
+      addons:
+        apt:
+          packages:
+            - ant
+            - xsltproc
     - php: nightly
       addons:
         apt:
@@ -49,6 +55,7 @@ matrix:
             - xsltproc
   allow_failures:
     - php: nightly
+    - php: 7.4snapshot
 
 before_install:
  - cd ..
