@@ -335,6 +335,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_link' => $this->getType(),
+         'autocomplete'  => true,
       ];
 
       $tab[] = [

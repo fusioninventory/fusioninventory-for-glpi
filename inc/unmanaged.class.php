@@ -136,6 +136,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_type' => $this->getType(),
+         'autocomplete'  => true,
       ];
 
       $tab[] = [
@@ -155,24 +156,27 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'        => '4',
-         'table'     => $this->getTable(),
-         'field'     => 'serial',
-         'name'      => __('Serial Number'),
+         'id'           => '4',
+         'table'        => $this->getTable(),
+         'field'        => 'serial',
+         'name'         => __('Serial Number'),
+         'autocomplete' => true,
       ];
 
       $tab[] = [
-         'id'        => '5',
-         'table'     => $this->getTable(),
-         'field'     => 'otherserial',
-         'name'      => __('Inventory number'),
+         'id'           => '5',
+         'table'        => $this->getTable(),
+         'field'        => 'otherserial',
+         'name'         => __('Inventory number'),
+         'autocomplete' => true,
       ];
 
       $tab[] = [
-         'id'        => '6',
-         'table'     => $this->getTable(),
-         'field'     => 'contact',
-         'name'      => __('Contact'),
+         'id'           => '6',
+         'table'        => $this->getTable(),
+         'field'        => 'contact',
+         'name'         => __('Contact'),
+         'autocomplete' => true,
       ];
 
       $tab[] = [
@@ -240,6 +244,14 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
          'linkfield' => 'plugin_fusioninventory_configsecurities_id',
          'name'      => __('SNMP credentials', 'fusioninventory'),
          'datatype'  => 'dropdown',
+      ];
+
+      $tab[] = [
+         'id'           => '18',
+         'table'        => $this->getTable(),
+         'field'        => 'ip',
+         'name'         => __('IP'),
+         'autocomplete' => true,
       ];
 
       return $tab;
