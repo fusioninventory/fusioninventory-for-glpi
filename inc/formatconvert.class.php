@@ -222,8 +222,7 @@ class PluginFusioninventoryFormatconvert {
     */
    static function cleanArray($data) {
       foreach ($data as $key=>$value) {
-         //if (is_array($value)) {
-         if ((array)$value === $value) {
+         if (is_array($value)) {
             if (count($value) == 0) {
                $value = '';
             } else {
@@ -1885,8 +1884,7 @@ class PluginFusioninventoryFormatconvert {
     */
    static function addValues($array, $a_key) {
       $a_return = [];
-      //if (!is_array($array)) {
-      if ((array)$array !== $array) {
+      if (!is_array($array)) {
          return $a_return;
       }
       foreach ($array as $key=>$value) {
@@ -1949,8 +1947,7 @@ class PluginFusioninventoryFormatconvert {
             // do nothing
             $coding_std = true;
          } else {
-            //if (is_array($value)) {
-            if ((array)$value === $value) {
+            if (is_array($value)) {
                $new_itemtype = $itemtype;
                if ($level == 0) {
                   $new_itemtype = $key;
