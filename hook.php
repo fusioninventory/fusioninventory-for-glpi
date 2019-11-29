@@ -1220,7 +1220,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   ON (`glpi_computers`.`id`=`glpi_plugin_fusioninventory_agents`.`computers_id`) ";
                 break;
 
-           case 'glpi_plugin_fusioninventory_inventorycomputercomputers.plugin_fusioninventory_inventorycomputercomputers_id':
+            case 'glpi_plugin_fusioninventory_inventorycomputercomputers.plugin_fusioninventory_inventorycomputercomputers_id':
                return " LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputercomputers`
                     AS glpi_plugin_fusioninventory_inventorycomputercomputers
                     ON (`glpi_computers`.`id` = ".
