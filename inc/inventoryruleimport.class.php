@@ -555,7 +555,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $where_entity = "";
       if (isset($input['entities_id'])) {
          if (is_array($input['entities_id'])) {
-            $where_entity .= implode($input['entities_id'], ', ');
+            $where_entity .= implode(',', $input['entities_id']);
          } else {
             $where_entity .= $input['entities_id'];
          }
