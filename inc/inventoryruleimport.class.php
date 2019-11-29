@@ -78,7 +78,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     *
     * @var type
     */
-   public $right = 'rule_import';
+   static $rightname = 'rule_import';
 
    /**
     * Set these rules can be sorted
