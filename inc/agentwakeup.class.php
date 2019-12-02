@@ -112,13 +112,13 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       //Get all active timeslots
       $timeslot = new PluginFusioninventoryTimeslot();
       $timeslots = $timeslot->getCurrentActiveTimeslots();
-      $query_timeslot = [];
+      $query_timeslots = [
+         'plugin_fusioninventory_timeslots_exec_id'   => 0
+      ];
       if (!empty($timeslots)) {
-         $query_timeslot = [
-            'OR'  => [
-               'plugin_fusioninventory_timeslots_exec_id' => $timeslots
-            ]
-         ];
+         array_push($query_timeslots, [
+            'plugin_fusioninventory_timeslots_exec_id' => $timeslots
+         ]);
       }
       //Get all active task requiring an agent wakeup
       //Check all tasks without timeslot or task with a current active timeslot
@@ -130,8 +130,8 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
             'wakeup_agent_time'     => ['>', 0],
             'is_active'             => 1,
             [
-               'plugin_fusioninventory_timeslots_exec_id'   => 0
-            ] + $query_timeslot
+               'OR'   => $query_timeslots
+            ]
          ]
       ]);
 
