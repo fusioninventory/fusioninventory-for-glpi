@@ -10010,7 +10010,9 @@ INSERT INTO `glpi_plugin_fusioninventory_ouis`
 (9998, '00:03:25', 'Arima Computer Corp.'),
 (9999, '00:03:1F', 'Condev Ltd.'),
 (10000, '00:02:9F', 'L-3 Communication Aviation Recorders'),
-(10001, '00:03:1B', 'Cellvision Systems, Inc.'),
+(10001, '00:03:1B', 'Cellvision Systems, Inc.');
+INSERT INTO `glpi_plugin_fusioninventory_ouis`
+               (`id`, `mac`, `name`) VALUES 
 (10002, '00:03:1C', 'Svenska Hardvarufabriken AB'),
 (10003, '00:01:A8', 'Welltech Computer Co., Ltd.'),
 (10004, '00:03:0C', 'Telesoft Technologies Ltd.'),
@@ -20011,7 +20013,9 @@ INSERT INTO `glpi_plugin_fusioninventory_ouis`
 (19999, '00:15:7A', 'Telefin S.p.A.'),
 (20000, '00:15:C3', 'Ruf Telematik AG'),
 (20001, '00:15:E6', 'MOBILE TECHNIKA Inc.'),
-(20002, '00:15:DB', 'Canesta Inc.'),
+(20002, '00:15:DB', 'Canesta Inc.');
+INSERT INTO `glpi_plugin_fusioninventory_ouis`
+               (`id`, `mac`, `name`) VALUES 
 (20003, '00:15:8D', 'Jennic Ltd'),
 (20004, '00:15:84', 'Schenck Process GmbH'),
 (20005, '00:15:CC', 'UQUEST, LTD.'),
