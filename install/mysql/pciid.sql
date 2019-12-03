@@ -12248,7 +12248,9 @@ INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
 (9998, '0400', 'Datacenter Technologies QDF2432 PCI Express Root Port', '1641'),
 (9999, '0401', 'Datacenter Technologies QDF2400 PCI Express Root Port', '1641'),
 (10000, '2280', 'USB 2.0', '1642'),
-(10001, '1110', 'ARC-1110 4-Port PCI-X to SATA RAID Controller', '1645'),
+(10001, '1110', 'ARC-1110 4-Port PCI-X to SATA RAID Controller', '1645');
+INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
+               (`id`, `deviceid`, `name`, `plugin_fusioninventory_pcivendor_id`) VALUES 
 (10002, '1120', 'ARC-1120 8-Port PCI-X to SATA RAID Controller', '1645'),
 (10003, '1130', 'ARC-1130 12-Port PCI-X to SATA RAID Controller', '1645'),
 (10004, '1160', 'ARC-1160 16-Port PCI-X to SATA RAID Controller', '1645'),
