@@ -13340,7 +13340,9 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (9998, '0001', 'Rosetta Token V1', '988'),
 (9999, '0002', 'Rosetta Token V2', '988'),
 (10000, '0003', 'Rosetta Token V3', '988'),
-(10001, '0a00', 'Lynks Interface', '988'),
+(10001, '0a00', 'Lynks Interface', '988');
+INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
+               (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES 
 (10002, '0002', 'USB-RS232 Bridge', '989'),
 (10003, '0100', 'Interface ADSL', '989'),
 (10004, '0101', 'Interface ADSL', '989'),
