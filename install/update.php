@@ -5123,7 +5123,7 @@ function do_computeroperatingsystem_migration($migration) {
          ];
 
          $computer = new Computer();
-         $computer->getFromDB($row['computers_id']);
+         $computer->getFromDB($row['cid']);
 
          $input = $search + [
             'operatingsystemversions_id'        => $row['operatingsystemversions_id'],
