@@ -1,9 +1,8 @@
 <?php
-
 /**
  * FusionInventory
  *
- * Copyright (C) 2010-2016 by the FusionInventory Development Team.
+ * Copyright (C) 2010-2020 by the FusionInventory Development Team.
  *
  * http://www.fusioninventory.org/
  * https://github.com/fusioninventory/fusioninventory-for-glpi
@@ -30,13 +29,13 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the IP range search list.
+ * This file is used to manage the redirection to the documentation page.
  *
  * ------------------------------------------------------------------------
  *
  * @package   FusionInventory
- * @author    David Durieux
- * @copyright Copyright (c) 2010-2016 FusionInventory team
+ * @author    Stanislas Kita
+ * @copyright Copyright (c) 2010-2020 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version
  *            http://www.gnu.org/licenses/agpl-3.0-standalone.html
  * @link      http://www.fusioninventory.org/
@@ -46,15 +45,19 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "admin",
-             "pluginfusioninventorymenu", "iprange");
-
 Session::checkRight('plugin_fusioninventory_iprange', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
-PluginFusioninventoryIPRange::titleList();
+$ID = null;
+if (isset($_GET['id'])) {
+   $ID = $_GET['id'];
+}
 
-Search::show('PluginFusioninventoryIPRange');
-
-Html::footer();
+if (PluginFusioninventoryIPRange::exportAsYaml($ID)) {
+   $filename = "fusioninventory_ip_conf.yaml";
+   $path = GLPI_TMP_DIR."/fusioninventory_ip_conf.yaml";
+   Toolbox::sendFile($path, $filename);
+} else {
+   Session::addMessageAfterRedirect("No data to export", false, INFO);
+   Html::back();
+}
 
