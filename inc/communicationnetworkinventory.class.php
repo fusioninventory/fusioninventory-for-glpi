@@ -98,6 +98,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $this->agent = $pfAgent->infoByKey($p_DEVICEID);
       $this->arrayinventory = $arrayinventory;
 
+      if (!isset($a_CONTENT['PROCESSNUMBER'])) {
+         $a_CONTENT['PROCESSNUMBER'] = 1;
+      }
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
       if ((!isset($a_CONTENT['AGENT']['START'])) AND (!isset($a_CONTENT['AGENT']['END']))) {
           $nb_devices = 0;

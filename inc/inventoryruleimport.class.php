@@ -871,17 +871,19 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             );
             $result_glpi = $DB->query($sql_glpi);
 
-            if ($DB->numrows($result_glpi) > 0) {
-               while ($data=$DB->fetch_array($result_glpi)) {
-                  $found = 1;
-                  $this->criterias_results['found_equipment'][$itemtype][] = $data['id'];
-                  $this->criterias_results['found_port'] = 0;
-                  foreach ($data as $alias=>$value) {
-                     if (strstr($alias, "portid")
-                           && !is_null($value)
-                           && is_numeric($value)
-                           && $value > 0) {
-                        $this->criterias_results['found_port'] = $value;
+            if ($result_glpi) {
+               if ($DB->numrows($result_glpi) > 0) {
+                  while ($data=$DB->fetch_array($result_glpi)) {
+                     $found = 1;
+                     $this->criterias_results['found_equipment'][$itemtype][] = $data['id'];
+                     $this->criterias_results['found_port'] = 0;
+                     foreach ($data as $alias=>$value) {
+                        if (strstr($alias, "portid")
+                              && !is_null($value)
+                              && is_numeric($value)
+                              && $value > 0) {
+                           $this->criterias_results['found_port'] = $value;
+                        }
                      }
                   }
                }
