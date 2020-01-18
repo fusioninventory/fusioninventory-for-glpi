@@ -460,7 +460,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function dropdownGroupType($name = 'type', $value = 'STATIC') {
       $group = new self();
       return Dropdown::showFromArray($name, $group->grouptypes,
-                                     ['value'=>$value]);
+                                     ['value'=>$value, 'display'=>false]);
    }
 
 
