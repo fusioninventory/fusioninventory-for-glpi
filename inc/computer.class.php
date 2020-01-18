@@ -60,31 +60,28 @@ class PluginFusioninventoryComputer extends Computer {
     */
    static $rightname = "plugin_fusioninventory_group";
 
-
-   /**
-    * Get search function for the class
-    *
-    * @return array
-    */
-   function getSearchOptionsNew() {
-      // Start with the base Glpi computer items
+   function rawSearchOptions() {
       $computer = new Computer();
-      $options  = $computer->getSearchOptionsNew();
+      $options  = $computer->rawSearchOptions();
 
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {
          if ($plugin->isActivated('fields')) {
-            $tab += [
+            include_once(GLPI_ROOT . "/plugins/fields/hook.php");
+            $options['fields_plugin'] = [
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
             ];
-            $options += PluginFieldsContainer::getAddSearchOptions('Computer');
+            $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
+            foreach ($fieldsoptions as $id=>$data) {
+               $data['id'] = $id;
+               $options[$id] = $data;
+            }
          }
       }
 
       return $options;
    }
-
 
    /**
     * Get the massive actions for this object
