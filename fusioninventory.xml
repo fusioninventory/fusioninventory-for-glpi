@@ -105,6 +105,18 @@
    </authors>
    <versions>
       <version>
+         <num>9.4.0+2.4</num>
+         <compatibility>9.4</compatibility>
+      </version>
+      <version>
+         <num>9.4.0+2.3</num>
+         <compatibility>9.4</compatibility>
+      </version>
+      <version>
+         <num>9.4.0+2.2</num>
+         <compatibility>9.4</compatibility>
+      </version>
+      <version>
          <num>9.4.0+2.1</num>
          <compatibility>9.4</compatibility>
       </version>
