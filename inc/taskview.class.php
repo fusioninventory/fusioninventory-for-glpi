@@ -109,7 +109,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       );
 
       // display export button
-      echo "<i class='openExportDialog pointer fa fa-lg fa-floppy-o'
+      echo "<i class='openExportDialog pointer fa fa-lg fa-save'
                title='"._sx('button', 'Export')."'></i>";
 
       // Add a manual refresh button
