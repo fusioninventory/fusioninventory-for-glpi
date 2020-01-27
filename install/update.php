@@ -9976,8 +9976,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
    if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
       $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
       if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
-         $f_query =
-            implode([
+         $f_query = implode(
+            " \n",
+               [
                "SELECT  files.`id`, files.`name`,",
                "        files.`filesize`, files.`mimetype`,",
                "        files.`sha512`, files.`shortsha512`,",
@@ -9986,7 +9987,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "FROM glpi_plugin_fusinvdeploy_files as files",
                "WHERE",
                "  files.`shortsha512` != \"\""
-            ], " \n");
+            ]
+         );
          $f_res = $DB->query($f_query);
          while ($f_datas = $DB->fetchAssoc($f_res)) {
             $entry = [
