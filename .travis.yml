@@ -46,8 +46,10 @@ matrix:
 
 before_install:
  - cd ..
- - git clone --depth=10 -b $GLPI git://github.com/glpi-project/glpi.git glpi
+# - git clone --depth=10 -b $GLPI git://github.com/glpi-project/glpi.git glpi
+ - git clone git://github.com/glpi-project/glpi.git glpi
  - cd glpi
+ - git checkout 821c056a6cb1b21bad83510d86c5df119e79187e
  - nvm install --lts=dubnium # update node to dubnium LTS version (node v10.x + npm v6.4.1)
  - bin/console dependencies install --composer-options="--prefer-dist --no-progress"
  - cd ..
