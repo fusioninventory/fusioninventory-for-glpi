@@ -147,7 +147,7 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'have_wifi'            => 0,
          'have_ethernet'        => 1,
          'comment'              => null,
-         // TODO Use glpi_domains_items 'domains_id'           => '0',
+         'domains_id'           => '0',// TODO Use glpi_domains_items
          'networks_id'          => 0,
          'printertypes_id'      => 0,
          'is_global'            => 0,

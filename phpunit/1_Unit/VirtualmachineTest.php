@@ -86,7 +86,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'mydomain.local',
+          'domains_id'                       => 'mydomain.local',// TODO Use glpi_domains_items
           'os_licenseid'                     => '',
           'os_license_number'                => '',
           'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',

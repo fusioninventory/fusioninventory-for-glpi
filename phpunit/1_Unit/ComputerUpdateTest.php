@@ -110,7 +110,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'name'                             => 'pc',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'mydomain.local',
+          'domains_id'                       => 'mydomain.local',// TODO Use glpi_domains_items
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7D',
@@ -327,7 +327,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'                          => null,
           'autoupdatesystems_id'             => 0,
           'locations_id'                     => 0,
-          // TODO Use glpi_domains_items 'domains_id'                       => 1,
+          'domains_id'                       => 1,// TODO Use glpi_domains_items
           'networks_id'                      => 0,
           'computermodels_id'                => 0,
           'computertypes_id'                 => 1,
@@ -1153,7 +1153,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'              => null,
           'memory_size'          => null,
           'locations_id'         => 0,
-          // TODO Use glpi_domains_items 'domains_id'           => 0,
+          'domains_id'           => 0,// TODO Use glpi_domains_items
           'networks_id'          => 0,
           'printertypes_id'      => 0,
           'printermodels_id'     => 0,
@@ -1237,7 +1237,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'mydomain.local',
+          'domains_id'                       => 'mydomain.local',// TODO Use glpi_domains_items
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7J1',

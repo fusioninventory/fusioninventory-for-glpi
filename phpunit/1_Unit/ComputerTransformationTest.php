@@ -144,7 +144,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'name'                             => 'pc',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'mydomain.local',
+          'domains_id'                       => 'mydomain.local', // TODO Use glpi_domains_items
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -230,7 +230,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'name'                             => 'pc',
           'users_id'                         => 0,
           'uuid'                             => '',
-          // TODO Use glpi_domains_items 'domains_id'                       => '',
+          'domains_id'                       => '',// TODO Use glpi_domains_items
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -332,7 +332,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
           'uuid'                             => '',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'WORKGROUP',
+          'domains_id'                       => 'WORKGROUP',// TODO Use glpi_domains_items
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -1044,7 +1044,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
           'uuid'                             => '',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'WORKGROUP',
+          'domains_id'                       => 'WORKGROUP',// TODO Use glpi_domains_items
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => '',
@@ -1372,7 +1372,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
           'uuid'                             => '',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'WORKGROUP',
+          'domains_id'                       => 'WORKGROUP', // TODO Use glpi_domains_items
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
@@ -1488,7 +1488,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
           'uuid'                             => '',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'WORKGROUP',
+          'domains_id'                       => 'WORKGROUP',// TODO Use glpi_domains_items
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',
@@ -1998,7 +1998,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
           'uuid'                             => '',
-          // TODO Use glpi_domains_items 'domains_id'                       => 'WORKGROUP',
+          'domains_id'                       => 'WORKGROUP',// TODO Use glpi_domains_items
           'manufacturers_id'                 => 'Dell Inc.',
           'computermodels_id'                => 'Dell DXP051',
           'serial'                           => '6PkkD1K',

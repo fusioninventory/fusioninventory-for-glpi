@@ -172,7 +172,7 @@ class UnmanagedManagedTest extends Common_TestCase {
          'operatingsystems_id'              => 1,
          'operatingsystemversions_id'       => 1,
          'uuid'                             => 1,
-         // TODO Use glpi_domains_items 'domains_id'                       => 1,
+         'domains_id'                       => 1,// TODO Use glpi_domains_items
          'os_licenseid'                     => '',
          'os_license_number'                => '',
          'operatingsystemservicepacks_id'   => 1,

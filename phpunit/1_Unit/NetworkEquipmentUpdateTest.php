@@ -250,7 +250,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
           'groups_id_tech'       => 0,
           'comment'              => null,
           'locations_id'         => 3,
-          // TODO Use glpi_domains_items 'domains_id'           => 0,
+          'domains_id'           => 0,// TODO Use glpi_domains_items
           'networks_id'          => 0,
           'networkequipmenttypes_id' => 0,
           'networkequipmentmodels_id' => 3,
