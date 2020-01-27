@@ -479,7 +479,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       if (isset($params['retchecks_type'])
               && !empty($params['retchecks_type'])) {
          foreach ($params['retchecks_type'] as $index => $type) {
-            if ($type !== '0') {
+            if ($type != '0') {
                $tmp['retChecks'][] = [
                   'type'  => $type,
                   'values' => [$params['retchecks_value'][$index]]
@@ -520,7 +520,7 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
          foreach ($params['retchecks_type'] as $index => $type) {
             //if type == '0', this means nothing is selected
-            if ($type !== '0') {
+            if ($type != '0') {
                $tmp['retChecks'][] = [
                   'type'  => $type,
                   'values' => [$params['retchecks_value'][$index]]
