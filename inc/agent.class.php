@@ -1043,6 +1043,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                ":".$port);
 
             $domain = new Domain();
+            // TODO Use glpi_domains_items
             if ($computer->fields['domains_id'] != 0) {
                $domain->getFromDB($computer->fields['domains_id']);
                array_push($url_addresses, "http://".

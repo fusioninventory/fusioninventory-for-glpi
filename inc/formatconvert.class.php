@@ -296,7 +296,7 @@ class PluginFusioninventoryFormatconvert {
                                         'NAME'           => 'name',
                                         'WINPRODID'      => 'licenseid',
                                         'WINPRODKEY'     => 'license_number',
-                                        'WORKGROUP'      => 'domains_id',
+                                        'WORKGROUP'      => 'domains_id', // TODO Use glpi_domains_items
                                         'UUID'           => 'uuid',
                                         'LASTLOGGEDUSER' => 'users_id',
                                         'manufacturers_id' => 'manufacturers_id',

@@ -114,7 +114,7 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $opt[$i]['xmlSection']       = 'HARDWARE';
       $opt[$i]['xmlSectionChild']  = 'WORKGROUP';
       $opt[$i]['glpiItemtype']     = 'Computer';
-      $opt[$i]['glpiField']        = 'domains_id';
+      $opt[$i]['glpiField']        = 'domains_id';// TODO Use glpi_domains_items
 
       $i++;
       $opt[$i]['xmlSection']       = 'HARDWARE';

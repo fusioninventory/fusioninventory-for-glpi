@@ -430,6 +430,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             if (isset($arrayinventory['WORKGROUP'])) {
                $domain = new Domain();
+               // TODO Use glpi_domains_items
                if (!in_array('domains_id', $a_lockable)) {
                   $input['domains_id'] = $domain->import(
                             ['name' => $arrayinventory['WORKGROUP'],

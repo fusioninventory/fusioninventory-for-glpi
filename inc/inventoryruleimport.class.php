@@ -204,6 +204,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                     Rule::PATTERN_DOES_NOT_EXISTS,
                                  ],
          ],
+         // TODO Use glpi_domains_items
          'domains_id' => [
             'table'           => 'glpi_domains',
             'field'           => 'name',
@@ -473,7 +474,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $nb_crit_find      = 0;
       $global_criteria   = ['model', 'mac', 'ip', 'serial', 'otherserial', 'hdserial',
                             'partitionserial', 'uuid', 'device_id',
-                            'mskey', 'name', 'itemtype', 'domains_id',
+                            'mskey', 'name', 'itemtype', 'domains_id',// TODO Use glpi_domains_items
                             'entityrestrict', 'oscomment', 'ifnumber',
                             'ifdescr', 'link_criteria_port',
                             'only_these_criteria'
@@ -789,6 +790,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case 'domains_id':
+               // TODO Use glpi_domains_items
                $sql_from_domain .= " LEFT JOIN `glpi_domains`
                                  ON `glpi_domains`.`id` = ".
                                      "`[typetable]`.`domains_id` ";

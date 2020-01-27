@@ -267,6 +267,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['computermodels_id']))) {
          $input['model'] = $a_computerinventory['Computer']['computermodels_id'];
       }
+      // TODO Use glpi_domains_items
       if ((isset($a_computerinventory['Computer']['domains_id']))
                  AND (!empty($a_computerinventory['Computer']['domains_id']))) {
          $input['domains_id'] = $a_computerinventory['Computer']['domains_id'];
@@ -287,6 +288,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       // * entity rules
       $inputent = $input;
+      // TODO Use glpi_domains_items
       if ((isset($a_computerinventory['Computer']['domains_id']))
                     AND (!empty($a_computerinventory['Computer']['domains_id']))) {
          $inputent['domain'] = $a_computerinventory['Computer']['domains_id'];
@@ -351,6 +353,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $inputdb['date'] = date("Y-m-d H:i:s");
          $inputdb['itemtype'] = "Computer";
 
+         // TODO Use glpi_domains_items
          if ((isset($a_computerinventory['Computer']['domains_id']))
                     AND (!empty($a_computerinventory['Computer']['domains_id']))) {
                $inputdb['domain'] = $a_computerinventory['Computer']['domains_id'];
@@ -632,6 +635,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['name'] = $a_computerinventory['Computer']['name'];
          }
          $input['item_type'] = "Computer";
+         // TODO Use glpi_domains_items
          if (isset($a_computerinventory['Computer']['domains_id'])) {
             $input['domain'] = $a_computerinventory['Computer']['domains_id'];
          }
