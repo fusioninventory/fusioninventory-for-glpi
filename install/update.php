@@ -3409,8 +3409,8 @@ function do_networkport_migration($migration) {
                   'glpi_plugin_fusinvsnmp_networkportconnectionlogs', [
                      'date_mod'                    => $input['date'],
                      'creation'                    => $input['creation'],
-                     'networkports_id_source'      => $data['FK_port_source'],
-                     'networkports_id_destination' => $data['FK_port_destination']
+                     'networkports_id_source'      => $input['FK_port_source'],
+                     'networkports_id_destination' => $input['FK_port_destination']
                   ]
                );
             }
@@ -4454,7 +4454,7 @@ function do_networkequipment_migration($migration) {
                'FROM'   => 'glpi_plugin_fusioninventory_networkequipmentips',
                'WHERE'  => ['networkequipments_id' => $data['networkequipments_id']]
             ]);
-            while ($dataIP = $iterator->next()) {
+            while ($dataIP = $iterator2->next()) {
                $oldtableip[$dataIP['ip']] = $dataIP['ip'];
             }
 
@@ -4585,7 +4585,7 @@ function do_networkequipment_migration($migration) {
       if (!isset($a_check[$data['num']])) {
          $DB->delete(
             'glpi_displaypreferences', [
-               'id' => $date['id']
+               'id' => $data['id']
             ]
          );
       }
