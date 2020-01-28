@@ -5,8 +5,6 @@ error_reporting(E_ALL);
 define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
-define('GLPI_FORCE_NATIVE_SQL_TYPES', false);
-
 global $CFG_GLPI;
 
 include('./glpi/inc/includes.php');
