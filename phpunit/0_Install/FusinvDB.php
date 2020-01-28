@@ -131,6 +131,13 @@ class FusinvDB extends Assert{
                         ],
                         trim($s_type[0])
                      );
+                     // Keeping DATETIME from old DB is considered as OK as DATETIME to TIMESTAMP
+                     // migration should be done using dedicated GLPI command
+                     $s_type[0] = preg_replace(
+                        ['/^datetime DEFAULT NULL$/',   '/^datetime NOT NULL(.*)$/'],
+                        ['timestamp NULL DEFAULT NULL', 'timestamp NOT NULL$1'],
+                        $s_type[0]
+                     );
                      //Mariadb 10.2 will return current_timestamp()
                      //while older retuns CURRENT_TIMESTAMP...
                      $s_type[0] = preg_replace(
