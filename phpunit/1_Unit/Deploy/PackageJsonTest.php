@@ -127,7 +127,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
             `comment` text COLLATE utf8_unicode_ci,
             `entities_id` int(11) NOT NULL,
             `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-            `date_mod` datetime DEFAULT NULL,
+            `date_mod` timestamp NULL DEFAULT NULL,
             `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
             PRIMARY KEY (`id`)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
@@ -144,7 +144,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       $query = "CREATE TABLE `glpi_plugin_fusioninventory_deployorders` (
         `id` int(11) NOT NULL,
         `type` int(11) NOT NULL,
-        `create_date` datetime NOT NULL,
+        `create_date` timestamp NOT NULL,
         `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL,
         `json` longtext COLLATE utf8_unicode_ci,
         PRIMARY KEY (`id`)
