@@ -199,7 +199,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       $dbentries = getAllDataFromTable(
          'glpi_plugin_fusioninventory_timeslotentries', [
             'WHERE'  => ['plugin_fusioninventory_timeslots_id' => $timeslots_id],
-            'ORER'   => ['day', 'begin ASC']
+            'ORDER'  => ['day', 'begin ASC']
          ]
       );
 
