@@ -364,7 +364,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Type')."&nbsp;:</td>";
       echo "<td align='center'>";
-      self::dropdownGroupType('type', $this->fields['type']);
+      echo self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
 
