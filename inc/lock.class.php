@@ -708,6 +708,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param object $item
     */
    static function deleteLock($item) {
+      global $DB;
+
       if ($item->fields['items_id'] == 0) {
          return;
       }
@@ -730,6 +732,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
          }
       }
+
+      // load general lock configuration
+      $db_lock = $DB->fetch_assoc(PluginFusioninventoryLock::getLock($item->fields['tablename'], 0));
+      $lock_fields = $db_lock["tablefields"];
+      $lockItemtype = importArrayFromDB($lock_fields);
+      $a_fieldList = array_unique(array_merge($a_fieldList, $lockItemtype));
 
       //delete all lock case (no more lock)
       if (!isset($item->updates)) {
