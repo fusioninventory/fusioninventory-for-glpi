@@ -648,22 +648,28 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             // Cancel agents prepared but not in $agent_ids (like computer
             // not in dynamic group)
-            $jobstates_tocancel = $jobstate->find(
-                  ['itemtype' => $item_type,
-                   'items_id' => $item_id,
-                   'plugin_fusioninventory_taskjobs_id' => $job_id,
-                   'NOT'      => [
-                      'state' => [
-                         PluginFusioninventoryTaskjobstate::FINISHED,
-                         PluginFusioninventoryTaskjobstate::IN_ERROR,
-                         PluginFusioninventoryTaskjobstate::CANCELLED,
-                      ]],
-                   'NOT' => [
-                     'plugin_fusioninventory_agents_id' => array_keys($agent_ids)]
-                   ]);
-            foreach ($jobstates_tocancel as $jobstate_tocancel) {
-               $jobstate->getFromDB($jobstate_tocancel['id']);
-               $jobstate->cancel(__('Device no longer defined in definition of job', 'fusioninventory'));
+            $iterator = $DB->request([
+               'SELECT' => ['id', 'plugin_fusioninventory_agents_id'],
+               'FROM' => 'glpi_plugin_fusioninventory_taskjobstates',
+               'WHERE' => [
+                  'itemtype' => $item_type,
+                  'items_id' => $item_id,
+                  'plugin_fusioninventory_taskjobs_id' => $job_id,
+                  'NOT'      => [
+                     'state' => [
+                        PluginFusioninventoryTaskjobstate::FINISHED,
+                        PluginFusioninventoryTaskjobstate::IN_ERROR,
+                        PluginFusioninventoryTaskjobstate::CANCELLED,
+                     ]
+                  ]
+               ]
+            ]);
+            $agent_ids_keys = array_keys($agent_ids);
+            while ($jobstate_tocancel = $iterator->next()) {
+               if (!in_array($jobstate_tocancel['plugin_fusioninventory_agents_id'], $agent_ids_keys)) {
+                  $jobstate->getFromDB($jobstate_tocancel['id']);
+                  $jobstate->cancel(__('Device no longer defined in definition of job', 'fusioninventory'));
+               }
             }
 
             foreach ($agent_ids as $agent_id => $agent_not_running) {
