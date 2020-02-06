@@ -860,7 +860,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $pfLock = new self();
          $a_locks = $pfLock->getLockFields(getTableForItemType($itemtype), $_GET['id']);
          foreach ($a_locks as $field) {
-            $js = '$("input[name='.$field.']").closest("td").prev().toggleClass("lockfield", true);';
+            $js = '$("[name='.$field.']").closest("td").prev().toggleClass("lockfield", true);';
             echo Html::scriptBlock($js);
          }
       }
