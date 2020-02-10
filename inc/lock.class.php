@@ -734,10 +734,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       // load general lock configuration
-      $db_lock = $DB->fetch_assoc(PluginFusioninventoryLock::getLock($item->fields['tablename'], 0));
-      $lock_fields = $db_lock["tablefields"];
-      $lockItemtype = importArrayFromDB($lock_fields);
-      $a_fieldList = array_unique(array_merge($a_fieldList, $lockItemtype));
+      $generalLocks = PluginFusioninventoryLock::getLockFields($item->fields['tablename'], 0);
+      $a_fieldList = array_unique(array_merge($a_fieldList, $generalLocks));
 
       //delete all lock case (no more lock)
       if (!isset($item->updates)) {
