@@ -145,8 +145,6 @@ function plugin_init_fusioninventory() {
               ['addtabon' => 'PluginFusioninventoryIPRange']);
       $Plugin->registerClass('PluginFusioninventoryCredential');
       $Plugin->registerClass('PluginFusioninventoryTimeslot');
-      $Plugin->registerClass('PluginFusioninventoryLock',
-              ['addtabon' => ['Computer', 'Printer', 'NetworkEquipment']]);
 
       $Plugin->registerClass('PluginFusioninventoryInventoryComputerComputer',
               ['addtabon' => ['Computer']]);
