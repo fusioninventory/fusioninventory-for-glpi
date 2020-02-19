@@ -195,7 +195,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $history = FALSE;
          }
          $input['_no_history'] = $no_history;
-         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+         if (!in_array('states_id', $a_lockable)) {
+             PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+         }
          $computer->update($input, !$no_history);
 
       $this->computer = $computer;
