@@ -429,12 +429,21 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
 
             if (isset($arrayinventory['WORKGROUP'])) {
-               $domain = new Domain();
+               $ditem = new Domain_Item();
                if (!in_array('domains_id', $a_lockable)) {
-                  $input['domains_id'] = $domain->import(
-                            ['name' => $arrayinventory['WORKGROUP'],
-                                  'entities_id' => $item->fields['entities_id']]
-                          );
+                  $domain = new Domain();
+                  $domains_id = $domain->import([
+                     'name' => $arrayinventory['WORKGROUP'],
+                     'entities_id' => $item->fields['entities_id']
+                  ]);
+                  $dinput = [
+                     'itemtype'     => 'Computer',
+                     'items_id'     => $item->fields['id'],
+                     'domains_id'   => $domains_id
+                  ];
+                  if (!$ditem->getFromDBByCrit($dinput)) {
+                     $ditem->add($dinput);
+                  }
                }
             }
             $item->update($input);
