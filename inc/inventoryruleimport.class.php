@@ -782,9 +782,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case 'domains_id':
+               $sql_from_domain .= " LEFT JOIN `glpi_domains_items`
+                                 ON `glpi_domains_items`.`items_id` = `[typetable]`.`id` AND `glpi_domains_items`.`itemtype` = '{$input['itemtype']}'";
                $sql_from_domain .= " LEFT JOIN `glpi_domains`
                                  ON `glpi_domains`.`id` = ".
-                                     "`[typetable]`.`domains_id` ";
+                                     "`glpi_domains_items`.`domains_id` ";
                $sql_where_domain .= " AND `glpi_domains`.`name` = '".
                                     $input["domains_id"]."'";
                break;

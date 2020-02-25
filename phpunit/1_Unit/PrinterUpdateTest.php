@@ -147,7 +147,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'have_wifi'            => '0',
          'have_ethernet'        => '1',
          'comment'              => null,
-         'domains_id'           => '0',
          'networks_id'          => '0',
          'printertypes_id'      => '0',
          'is_global'            => '0',

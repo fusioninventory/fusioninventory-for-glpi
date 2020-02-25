@@ -110,7 +110,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'name'                             => 'pc',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'domains_id'                       => 'mydomain.local',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7D',
@@ -327,7 +326,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'                          => null,
           'autoupdatesystems_id'             => '0',
           'locations_id'                     => '0',
-          'domains_id'                       => '1',
           'networks_id'                      => '0',
           'computermodels_id'                => '0',
           'computertypes_id'                 => '1',
@@ -346,12 +344,24 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $computer->fields);
 
+      //check if operating system has been created
       $ios = new Item_OperatingSystem();
       $this->assertEquals(1, $ios->countForItem($computer));
-      $ios->getFromDBByCrit([
-         'itemtype' => 'Computer',
-         'items_id' => $computer->getID()
-      ]);
+      $this->assertTrue(
+         $ios->getFromDBByCrit([
+            'itemtype' => 'Computer',
+            'items_id' => $computer->getID()
+         ])
+      );
+
+      //check if domain relation has been created
+      $ditem = new Domain_Item();
+      $this->assertTrue(
+         $ditem->getFromDBByCrit([
+            'itemtype' => 'Computer',
+            'items_id' => $computer->getID()
+         ])
+      );
 
       $a_reference = [
          'id'                                => '1',
@@ -1153,7 +1163,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'              => null,
           'memory_size'          => null,
           'locations_id'         => '0',
-          'domains_id'           => '0',
           'networks_id'          => '0',
           'printertypes_id'      => '0',
           'printermodels_id'     => '0',
@@ -1237,7 +1246,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'domains_id'                       => 'mydomain.local',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7J1',

@@ -250,7 +250,6 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
           'groups_id_tech'       => '0',
           'comment'              => null,
           'locations_id'         => '3',
-          'domains_id'           => '0',
           'networks_id'          => '0',
           'networkequipmenttypes_id' => '0',
           'networkequipmentmodels_id' => '3',
