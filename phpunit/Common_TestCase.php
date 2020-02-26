@@ -13,8 +13,8 @@ abstract class Common_TestCase extends TestCase {
 
    public static function restore_database() {
 
-      self::drop_database();
-      self::load_mysql_file('./save.sql');
+      /*self::drop_database();
+      self::load_mysql_file('./save.sql');*/
    }
 
 
@@ -77,6 +77,7 @@ abstract class Common_TestCase extends TestCase {
 
       $plugin = new Plugin();
       $DB->connect();
+      $DB->beginTransaction();
       $plugin->checkStates(true);
       $plugin->init();
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
@@ -108,9 +109,13 @@ abstract class Common_TestCase extends TestCase {
 
 
    protected function tearDown() {
+       global $DB;
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
+
+      $DB->rollback();
    }
 
 
