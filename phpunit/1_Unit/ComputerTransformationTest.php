@@ -280,6 +280,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           'SERVICE_PACK'   => 'Service Pack 3',
           'ARCH'           => '32 bits'];
 
+      $PF_CONFIG['manage_osname'] = '0';
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
