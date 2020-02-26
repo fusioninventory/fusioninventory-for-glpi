@@ -77,12 +77,12 @@ abstract class Common_TestCase extends TestCase {
 
       $plugin = new Plugin();
       $DB->connect();
-      $DB->beginTransaction();
       $plugin->checkStates(true);
       $plugin->init();
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
+      $DB->beginTransaction();
 
       file_put_contents(GLPI_ROOT."/files/_log/sql-errors.log", '');
       file_put_contents(GLPI_ROOT."/files/_log/php-errors.log", '');
