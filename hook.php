@@ -2409,8 +2409,8 @@ function plugin_fusioninventory_dynamicReport($params) {
             $data = Search::prepareDatasForSearch($params["item_type"], $params);
             $data['itemtype'] = 'Computer';
             Search::constructSQL($data);
-            Search::constructDatas($data);
-            Search::displayDatas($data);
+            Search::constructData($data);
+            Search::displayData($data);
 
             return true;
          }
