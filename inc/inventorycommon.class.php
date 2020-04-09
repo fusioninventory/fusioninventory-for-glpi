@@ -94,12 +94,20 @@ class PluginFusioninventoryInventoryCommon extends CommonDBTM {
          $input = [
             'itemtype'           => $itemtype,
             'items_id'           => $items_id,
-            'devicefirmwares_id' => $fid
          ];
-         //Check if firmware relation with equipment
-         $relation->getFromDBByCrit($input);
-         if ($relation->isNewItem()) {
+         //Check if firmware relation with equipment already exist
+         if ($relation->getFromDBByCrit($input)) {
+            //if firmware id != between XML and DB update it relation
+            if($fid != $relation->fields['devicefirmwares_id']){
+               $relation->fields['devicefirmwares_id'] = $fid;
+               $relation->fields['is_dynamic'] = 1;
+               $relation->fields['entities_id'] = $_SESSION['glpiactive_entity'];
+               $relation->update($relation->fields);
+            }
+         } else {
+            //create link
             $input = $input + [
+               'devicefirmwares_id' => $fid,
                'is_dynamic'   => 1,
                'entities_id'  => $_SESSION['glpiactive_entity']
             ];
