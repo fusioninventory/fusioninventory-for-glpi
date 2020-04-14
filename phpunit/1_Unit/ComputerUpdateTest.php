@@ -354,15 +354,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
          ])
       );
 
-      //check if domain relation has been created
-      $ditem = new Domain_Item();
-      $this->assertTrue(
-         $ditem->getFromDBByCrit([
-            'itemtype' => 'Computer',
-            'items_id' => $computer->getID()
-         ])
-      );
-
       $a_reference = [
          'id'                                => 1,
          'items_id'                          => 1,

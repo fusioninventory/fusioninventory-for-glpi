@@ -961,10 +961,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerOperatingSystemOCSType() {
-      global $DB;
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1258,10 +1259,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerBiosVirtual() {
-      global $DB;
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1373,10 +1375,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerBiosPhysical() {
-      global $DB;
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1871,10 +1874,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    function ComputerBiosAssettag_filled() {
-      global $DB;
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
