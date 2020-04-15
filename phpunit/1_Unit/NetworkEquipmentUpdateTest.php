@@ -382,7 +382,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $a_networkport= current($a_networkports);
       $opposites_id = $networkPort_NetworkPort->getOppositeContact($a_networkport['id']);
 
-      $networkPort->getFromDB($opposites_id);
+      $this->assertTrue($networkPort->getFromDB($opposites_id), 'Cannot load opposite');
       $pfUnmanaged->getFromDB($networkPort->fields['items_id']);
 
       $this->assertEquals(0, $pfUnmanaged->fields['hub'], 'May not be a hub');
@@ -416,7 +416,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
 
       $a_ports = importArrayFromDB($a_aggregate['networkports_id_list']);
 
-      $this->assertEquals(['2', '4'], $a_ports, 'aggregate ports');
+      $this->assertEquals([2, 4], $a_ports, 'aggregate ports');
    }
 
 
