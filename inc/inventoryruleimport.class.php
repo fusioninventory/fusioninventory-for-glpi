@@ -545,7 +545,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
 
       // Build the request to check if the machine exists in GLPI
-      $where_entity = "";
+      $where_entity = "";//FIXME: not used
       if (isset($input['entities_id'])) {
          if (is_array($input['entities_id'])) {
             $where_entity .= implode(',', $input['entities_id']);
