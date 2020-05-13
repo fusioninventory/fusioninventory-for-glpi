@@ -251,7 +251,6 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
              'operatingsystems_id'              => 0,
              'operatingsystemversions_id'       => 0,
              'uuid'                             => '68405E00-E5BE-11DF-801C-B05981261220',
-             'domains_id'                       => 0,
              'manufacturers_id'                 => 0,
              'computermodels_id'                => 0,
              'serial'                           => 'XB63J7DH',

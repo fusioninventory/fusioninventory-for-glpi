@@ -49,8 +49,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerGeneral() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -162,8 +160,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerUsers() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -247,8 +243,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     */
    public function ComputerOperatingSystem() {
       global $DB, $PF_CONFIG;
-
-      $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
@@ -967,12 +961,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerOperatingSystemOCSType() {
-      global $DB;
-
-      $DB->connect();
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1061,8 +1054,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerProcessor() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -1122,8 +1113,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerHook_addinventoryinfos() {
       global $DB, $PLUGIN_HOOKS;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -1157,8 +1146,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     */
    public function ComputerMonitor() {
       global $DB;
-
-      $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
@@ -1223,8 +1210,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerLicenses() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -1274,12 +1259,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerBiosVirtual() {
-      global $DB;
-
-      $DB->connect();
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1391,12 +1375,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    public function ComputerBiosPhysical() {
-      global $DB;
-
-      $DB->connect();
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [
@@ -1509,8 +1492,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerCDROM() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -1566,8 +1547,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     */
    public function ComputerNetworkport() {
       global $DB;
-
-      $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
@@ -1701,8 +1680,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerNetworkportOldFormat() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -1770,8 +1747,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     */
    public function ComputerBattery() {
       global $DB;
-
-      $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
@@ -1854,8 +1829,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    public function ComputerRemotemgmt() {
       global $DB;
 
-      $DB->connect();
-
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
@@ -1901,12 +1874,11 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
     * @test
     */
    function ComputerBiosAssettag_filled() {
-      global $DB;
-
-      $DB->connect();
+      global $DB, $PF_CONFIG;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+      $PF_CONFIG['manage_osname'] = '0';
 
       $a_computer = [];
       $a_computer['HARDWARE'] = [

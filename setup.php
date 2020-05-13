@@ -548,12 +548,6 @@ function plugin_fusioninventory_check_prerequisites() {
       }
    }
 
-   $plugin = new Plugin();
-   if ($plugin->isActivated("fusioninventory")
-           && !$DB->tableExists("glpi_plugin_fusioninventory_configs")) {
-      return false;
-   }
-
    $a_plugins = ['fusinvinventory', 'fusinvsnmp', 'fusinvdeploy'];
    foreach ($a_plugins as $pluginname) {
       if (file_exists(GLPI_ROOT.'/plugins/'.$pluginname)) {

@@ -110,7 +110,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'name'                             => 'pc',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'domains_id'                       => 'mydomain.local',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7D',
@@ -316,59 +315,61 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       unset($computer->fields['date_creation']);
       $a_reference = [
           'name'                             => 'pc',
-          'id'                               => '1',
-          'entities_id'                      => '0',
+          'id'                               => 1,
+          'entities_id'                      => 0,
           'serial'                           => 'XB63J7D',
           'otherserial'                      => null,
           'contact'                          => 'ddurieux',
           'contact_num'                      => null,
-          'users_id_tech'                    => '0',
-          'groups_id_tech'                   => '0',
+          'users_id_tech'                    => 0,
+          'groups_id_tech'                   => 0,
           'comment'                          => null,
-          'autoupdatesystems_id'             => '0',
-          'locations_id'                     => '0',
-          'domains_id'                       => '1',
-          'networks_id'                      => '0',
-          'computermodels_id'                => '0',
-          'computertypes_id'                 => '1',
-          'is_template'                      => '0',
+          'autoupdatesystems_id'             => 0,
+          'locations_id'                     => 0,
+          'networks_id'                      => 0,
+          'computermodels_id'                => 0,
+          'computertypes_id'                 => 1,
+          'is_template'                      => 0,
           'template_name'                    => null,
-          'manufacturers_id'                 => '0',
-          'is_deleted'                       => '0',
-          'is_dynamic'                       => '1',
-          'users_id'                         => '0',
-          'groups_id'                        => '0',
-          'states_id'                        => '0',
+          'manufacturers_id'                 => 0,
+          'is_deleted'                       => 0,
+          'is_dynamic'                       => 1,
+          'users_id'                         => 0,
+          'groups_id'                        => 0,
+          'states_id'                        => 0,
           'ticket_tco'                       => '0.0000',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'is_recursive'                     => '0'
+          'is_recursive'                     => 0
       ];
 
       $this->assertEquals($a_reference, $computer->fields);
 
+      //check if operating system has been created
       $ios = new Item_OperatingSystem();
       $this->assertEquals(1, $ios->countForItem($computer));
-      $ios->getFromDBByCrit([
-         'itemtype' => 'Computer',
-         'items_id' => $computer->getID()
-      ]);
+      $this->assertTrue(
+         $ios->getFromDBByCrit([
+            'itemtype' => 'Computer',
+            'items_id' => $computer->getID()
+         ])
+      );
 
       $a_reference = [
-         'id'                                => '1',
-         'items_id'                          => '1',
+         'id'                                => 1,
+         'items_id'                          => 1,
          'itemtype'                          => 'Computer',
-         'operatingsystems_id'               => '1',
-         'operatingsystemversions_id'        => '1',
-         'operatingsystemservicepacks_id'    => '1',
-         'operatingsystemarchitectures_id'   => '0',
-         'operatingsystemkernelversions_id'  => '0',
+         'operatingsystems_id'               => 1,
+         'operatingsystemversions_id'        => 1,
+         'operatingsystemservicepacks_id'    => 1,
+         'operatingsystemarchitectures_id'   => 0,
+         'operatingsystemkernelversions_id'  => 0,
          'license_number'                    => '',
          'licenseid'                         => '',
-         'operatingsystemeditions_id'        => '0',
-         'is_deleted'                        => '0',
-         'is_dynamic'                        => '1',
-         'entities_id'                       => '0',
-         'is_recursive'                      => '0'
+         'operatingsystemeditions_id'        => 0,
+         'is_deleted'                        => 0,
+         'is_dynamic'                        => 1,
+         'entities_id'                       => 0,
+         'is_recursive'                      => 0
       ];
 
       unset($ios->fields['date_mod']);
@@ -823,22 +824,22 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'states_id'             => '0'
                  ],
           '3' => [
-                     'id' => '3',
-                     'items_id'              => '1',
+                     'id' => 3,
+                     'items_id'              => 1,
                      'itemtype'              => 'Computer',
-                     'deviceprocessors_id'   => '1',
+                     'deviceprocessors_id'   => 1,
                      'frequency'             => '2405',
                      'serial'                => '',
-                     'is_deleted'            => '0',
-                     'is_dynamic'            => '1',
-                     'nbcores'               => '4',
-                     'nbthreads'             => '4',
-                     'entities_id'           => '0',
-                     'is_recursive'          => '0',
+                     'is_deleted'            => 0,
+                     'is_dynamic'            => 1,
+                     'nbcores'               => 4,
+                     'nbthreads'             => 4,
+                     'entities_id'           => 0,
+                     'is_recursive'          => 0,
                      'busID'                 => null,
                      'otherserial'           => null,
-                     'locations_id'          => '0',
-                     'states_id'             => '0'
+                     'locations_id'          => 0,
+                     'states_id'             => 0
                  ],
           '4' => [
                      'id' => '4',
@@ -1012,13 +1013,13 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $a_reference = [
           '1' => [
-                     'id'                    => '1',
-                     'items_id'              => '1',
+                     'id'                    => 1,
+                     'items_id'              => 1,
                      'itemtype'              => 'Computer',
-                     'is_deleted'            => '0',
-                     'is_dynamic'            => '1',
-                     'entities_id'           => '0',
-                     'is_recursive'          => '0',
+                     'is_deleted'            => 0,
+                     'is_dynamic'            => 1,
+                     'entities_id'           => 0,
+                     'is_recursive'          => 0,
                      'logical_number'        => '1',
                      'name'                  => 'em0',
                      'instantiation_type'    => 'NetworkPortEthernet',
@@ -1027,14 +1028,14 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
                  ],
           '2' => [
-                     'id'                    => '2',
-                     'items_id'              => '1',
+                     'id'                    => 2,
+                     'items_id'              => 1,
                      'itemtype'              => 'Computer',
-                     'is_deleted'            => '0',
-                     'is_dynamic'            => '1',
-                     'entities_id'           => '0',
-                     'is_recursive'          => '0',
-                     'logical_number'        => '0',
+                     'is_deleted'            => 0,
+                     'is_dynamic'            => 1,
+                     'entities_id'           => 0,
+                     'is_recursive'          => 0,
+                     'logical_number'        => 0,
                      'name'                  => 'lo0',
                      'instantiation_type'    => 'NetworkPortLocal',
                      'mac'                   => '',
@@ -1153,7 +1154,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'              => null,
           'memory_size'          => null,
           'locations_id'         => '0',
-          'domains_id'           => '0',
           'networks_id'          => '0',
           'printertypes_id'      => '0',
           'printermodels_id'     => '0',
@@ -1237,7 +1237,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'domains_id'                       => 'mydomain.local',
           'manufacturers_id'                 => '',
           'computermodels_id'                => '',
           'serial'                           => 'XB63J7J1',

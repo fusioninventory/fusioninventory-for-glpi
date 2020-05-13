@@ -57,9 +57,11 @@ class RuleImportTest extends Common_TestCase {
    function changeRulesForPrinterRules() {
       global $DB;
 
-      $DB->query("UPDATE `glpi_rules`
-         SET `is_active`='0'
-         WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
+      $DB->update(
+          'glpi_rules',
+          ['is_active' => 0],
+          ['sub_type' => 'PluginFusioninventoryInventoryRuleImport']
+      );
 
       $rule = new Rule();
       // Add a rule test check model
