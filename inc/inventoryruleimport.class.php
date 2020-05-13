@@ -876,6 +876,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                               && is_numeric($value)
                               && $value > 0) {
                            $this->criterias_results['found_port'] = $value;
+                        }
                      }
                   }
                }
