@@ -72,10 +72,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
     * @return boolean
     */
    function showForm() {
-      global $CFG_GLPI;
-
-      $target = $CFG_GLPI['root_doc'].
-                  '/plugins/fusioninventory/front/inventorycomputerimportxml.php';
+      $target = Plugin::getWebDir('fusioninventory').'/front/inventorycomputerimportxml.php';
 
       echo "<form action='".$target."' method='post' enctype='multipart/form-data'>";
 

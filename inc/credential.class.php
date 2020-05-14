@@ -365,7 +365,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                                            ['value' => $p['itemtype']]);
       $ajparams = ['itemtype' => '__VALUE__',
                         'id'       => $p['id']];
-      $url       = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownCredentials.php";
+      $url       = Plugin::getWebDir('fusioninventory')."/ajax/dropdownCredentials.php";
       Ajax::updateItemOnSelectEvent("dropdown_plugin_fusioninventory_credentials_id$rand",
                                   "span_credentials", $url, $ajparams);
 

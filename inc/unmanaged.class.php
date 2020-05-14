@@ -290,12 +290,10 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      global $CFG_GLPI;
-
       if ($tabnum == 1) {
          $pfUnmanaged = new self();
-         $pfUnmanaged->importForm($CFG_GLPI['root_doc'] .
-               '/plugins/fusioninventory/front/unmanaged.form.php?id='.$item->fields["id"],
+         $pfUnmanaged->importForm(Plugin::getWebDir('fusioninventory') .
+               '/front/unmanaged.form.php?id='.$item->fields["id"],
                                    $item->fields["id"]);
          return true;
       }

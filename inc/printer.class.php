@@ -109,24 +109,21 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      global $CFG_GLPI;
+      $fi_path = Plugin::getWebDir('fusioninventory');
 
       if ($item->getID() > 0) {
          $pfPrinter = new PluginFusioninventoryPrinter();
          $pfPrinter->showForm($item,
-                     ['target' => $CFG_GLPI['root_doc'].
-                        '/plugins/fusioninventory/front/printer_info.form.php']);
+                     ['target' => $fi_path.'/front/printer_info.form.php']);
          echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
          $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
          $pfPrinterCartridge->showForm($item,
-                     ['target' => $CFG_GLPI['root_doc'].
-                                          '/plugins/fusioninventory/front/printer_info.form.php']);
+                     ['target' => $fi_path.'/front/printer_info.form.php']);
 
          $pfPrinterLog = new PluginFusioninventoryPrinterLog();
          $pfPrinterLog->showGraph($item->getID(),
-                     ['target' => $CFG_GLPI['root_doc'].
-                                          '/plugins/fusioninventory/front/printer_info.form.php']);
+                     ['target' => $fi_path.'/front/printer_info.form.php']);
          return true;
       }
       return false;

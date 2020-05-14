@@ -208,16 +208,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @param integer $agents_id id of the agent
     */
    function showFormAgentException($agents_id) {
-      global $CFG_GLPI;
-
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->getFromDB($agents_id);
       $canedit = $pfAgent->can($agents_id, UPDATE);
 
       echo "<br/>";
       if ($canedit) {
-         echo "<form name='form_ic' method='post' action='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/front/agentmodule.form.php'>";
+         echo "<form name='form_ic' method='post' action='".Plugin::getWebDir('fusioninventory').
+               "/front/agentmodule.form.php'>";
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
@@ -408,6 +406,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @return string the URL generated
     */
    static function getUrlForModule($modulename, $entities_id = -1) {
+      $fi_dir = '/'.Plugin::getWebDir('fusioninventory', false);
+
       // Get current entity URL if it exists ...
       $pfEntity = new PluginFusioninventoryEntity();
       $baseUrl = $pfEntity->getValue('agent_base_url', $entities_id);
@@ -418,8 +418,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          );
 
          if ($baseUrl != 'N/A') {
-            return $baseUrl.'/plugins/fusioninventory/b/'.
-                    strtolower($modulename).'/';
+            return $baseUrl.$fi_dir.'/b/'.strtolower($modulename).'/';
          }
       }
 
@@ -437,8 +436,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       // Construct the path to the JSON back from the agent_base_url.
       // agent_base_url is the initial URL used by the agent
-      return $pfEntity->getValue('agent_base_url', $entities_id).'/plugins/fusioninventory/b/'.
-              strtolower($modulename).'/';
+      return $pfEntity->getValue('agent_base_url', $entities_id).$fi_dir.'/b/'.strtolower($modulename).'/';
    }
 
 

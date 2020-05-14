@@ -157,7 +157,7 @@ class PackageJsonTest extends RestoreDatabase_TestCase {
       $DB->query($query);
 
        // run migration packages
-       require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+       require_once (PLUGIN_FUSIONINVENTORY_DIR . "/install/update.php");
        $migration = new Migration('9.1');
        do_deploypackage_migration($migration);
 

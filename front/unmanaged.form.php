@@ -111,7 +111,7 @@ if (isset ($_POST["add"])) {
    if ($Import == "0") {
       Html::back();
    } else {
-      Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/unmanaged.php");
+      Html::redirect(Plugin::getWebDir('fusioninventory')."/front/unmanaged.php");
    }
 }
 

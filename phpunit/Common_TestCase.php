@@ -78,7 +78,7 @@ abstract class Common_TestCase extends TestCase {
       $plugin = new Plugin();
       $plugin->checkStates(true);
       $plugin->init(true);
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+      require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/module.class.php");
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
 

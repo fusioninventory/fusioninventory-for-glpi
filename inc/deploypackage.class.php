@@ -547,7 +547,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       foreach ($subtypes as $subtype => $label) {
          echo "<tr>";
          echo "<th id='th_title_{$subtype}_$rand'>";
-         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
+         echo "<img src='".Plugin::getWebDir('fusioninventory')."/pics/$subtype.png' />";
          echo "&nbsp;".__($label, 'fusioninventory');
          if ($canedit) {
             $this->plusButtonSubtype($this->getID(), $subtype, $rand);
@@ -1345,7 +1345,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $joblogs_labels = PluginFusioninventoryTaskjoblog::dropdownStateValues();
 
       // Display for each computer, list of packages you can deploy
-      $url = $CFG_GLPI['root_doc']."/plugins/fusioninventory";
+      $url = Plugin::getWebDir('fusioninventory');
       echo "<form name='onetimedeploy_form' id='onetimedeploy_form'
              method='POST'
              action='$url/front/deploypackage.public.php'
@@ -1465,8 +1465,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $('#cancel_run_$taskjob_id').click(function(event){
                         event.preventDefault();
                         $.ajax({
-                           url: '".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/ajax/cancel_job.php',
+                           url: '".$url."/ajax/cancel_job.php',
                            data: {
                               'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
                               'agent_id':    ".$package_info['agent_id']."
@@ -1480,8 +1479,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $('#restart_run_$taskjob_id').click(function(event){
                         event.preventDefault();
                         $.ajax({
-                           url: '".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/ajax/restart_job.php',
+                           url: '".$url."/ajax/restart_job.php',
                            data: {
                               'jobstate_id': ".$package_info['last_taskjobstate']['id'].",
                               'agent_id':    ".$package_info['agent_id']."
@@ -1497,8 +1495,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                         fa.addClass('fa-spin fa-spinner')
                           .removeClass('fa-refresh');
                         $.ajax({
-                           url: '".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/ajax/jobstates_logs.php',
+                           url: '".$url."/ajax/jobstates_logs.php',
                            data: {
                               'id': ".$package_info['last_taskjobstate']['id'].",
                               'last_date': '2999-01-01 00:00:00' // force a future date

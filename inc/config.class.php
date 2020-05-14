@@ -844,7 +844,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
       $pfConfigLogField->showForm([
-          'target'=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configlogfield.form.php"]
+          'target'=>Plugin::getWebDir('fusioninventory')."/front/configlogfield.form.php"]
           );
 
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();

@@ -44,7 +44,7 @@
  *
  */
 
-include_once( GLPI_ROOT . "/plugins/fusioninventory/install/update.tasks.php" );
+include_once( PLUGIN_FUSIONINVENTORY_DIR . "/install/update.tasks.php" );
 
 
 /**
@@ -56,7 +56,7 @@ include_once( GLPI_ROOT . "/plugins/fusioninventory/install/update.tasks.php" );
 function pluginFusioninventoryGetCurrentVersion() {
    global $DB;
 
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+   require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/module.class.php");
 
    if ((!$DB->tableExists("glpi_plugin_tracker_config")) &&
       (!$DB->tableExists("glpi_plugin_fusioninventory_config")) &&
@@ -246,15 +246,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    ini_set("memory_limit", "-1");
 
    // load abstract classes before
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/deploypackageitem.class.php';
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/commonview.class.php';
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskview.class.php';
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/taskjobview.class.php';
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/item.class.php';
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/collectcommon.class.php';
-   require_once GLPI_ROOT.'/plugins/fusioninventory/inc/collectcontentcommon.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/deploypackageitem.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/commonview.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/taskview.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/taskjobview.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/item.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/collectcommon.class.php';
+   require_once PLUGIN_FUSIONINVENTORY_DIR.'/inc/collectcontentcommon.class.php';
 
-   foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
+   foreach (glob(PLUGIN_FUSIONINVENTORY_DIR.'/inc/*.php') as $file) {
       require_once($file);
    }
 
@@ -621,7 +621,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
        * Update pci and usb ids and oui
        */
    foreach (['usbid.sql', 'pciid.sql', 'oui.sql'] as $sql) {
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/$sql";
+      $DB_file = PLUGIN_FUSIONINVENTORY_DIR ."/install/mysql/$sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
@@ -1026,7 +1026,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    // Add computer otherserial lock for version before 9.1+1.0 because we put
    // BIOS/assettag as computer.otherserial in 9.1+1.0.
    if ($current_version < 9.1) {
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/lock.class.php");
+      require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/lock.class.php");
       PluginFusioninventoryLock::addLocks('Computer', 0, ['otherserial']);
    }
 
@@ -2786,7 +2786,7 @@ function do_computercomputer_migration($migration) {
    migrateTablesFusionInventory($migration, $a_table);
 
    // Migrate libserialization
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
+   require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/inventorycomputercomputer.class.php");
    $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
    if ($DB->tableExists('glpi_plugin_fusinvinventory_libserialization')) {
       $iterator = $DB->request(['FROM' => 'glpi_plugin_fusinvinventory_libserialization']);
@@ -2950,7 +2950,7 @@ function do_computerstat_migration($migration) {
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerstat.class.php");
+      require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
       PluginFusioninventoryInventoryComputerStat::init();
    }
 }
@@ -5511,7 +5511,7 @@ function do_deploypackage_migration($migration) {
    if ($DB->tableExists($order_table)
            and $DB->fieldExists($order_table, 'type', false)) {
 
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/deploypackage.class.php");
+      require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/deploypackage.class.php");
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
       $installs = getAllDataFromTable($order_table, ['type' => '0']);

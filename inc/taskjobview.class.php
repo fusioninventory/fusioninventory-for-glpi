@@ -527,7 +527,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       $pfTask = $this->getTask();
 
       echo "<form method='post' name='form_taskjob' action='".
-            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/taskjob.form.php''>";
+            Plugin::getWebDir('fusioninventory')."/front/taskjob.form.php''>";
 
       if (!$new_item) {
          echo "<input type='hidden' name='id' value='".$id."' />";
@@ -870,7 +870,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             $add_redirect = "&edit_job=$jobs_id#taskjobs_form";
          }
 
-         Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id=".
+         Html::redirect(Plugin::getWebDir('fusioninventory')."/front/task.form.php?id=".
                                  $postvars['plugin_fusioninventory_tasks_id'].$add_redirect);
       } else if (isset($postvars["delete"])) {
          // * delete taskjob

@@ -141,7 +141,7 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
          Ajax::updateItemOnEvent(
             "dropdown_".$type_field.$rand,
             "show_".$this->shortname."_value$rand",
-            $CFG_GLPI["root_doc"]."/plugins/fusioninventory".
+            Plugin::getWebDir('fusioninventory').
             "/ajax/deploy_displaytypevalue.php",
             $params,
             ["change", "load"]

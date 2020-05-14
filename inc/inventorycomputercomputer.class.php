@@ -230,7 +230,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
     * @return true
     */
    static function showComputerInfo($item) {
-      global $CFG_GLPI;
+      $fi_path = Plugin::getWebDir('fusioninventory');
 
       // Manage locks pictures
       PluginFusioninventoryLock::showLockIcon('Computer');
@@ -277,11 +277,11 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
          } else {
             if ($a_computerextend['is_entitylocked'] == 1) {
                echo __('No, locked manually', 'fusioninventory');
-               echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+               echo " [ <a href='".$fi_path."/front/computerentitylock.form.php?id=".
                      $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
             } else {
                echo __('Yes');
-               echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+               echo " [ <a href='".$fi_path."/front/computerentitylock.form.php?id=".
                      $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
             }
          }
