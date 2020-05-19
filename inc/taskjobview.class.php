@@ -406,7 +406,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       }
 
       // filter actor list with active agent and with current module active
-      $condition = "";
+      $condition = [];
       if ($moduletype == "actors"
           && in_array($itemtype, ["Computer", "PluginFusioninventoryAgent"])) {
          // remove install suffix from deploy
@@ -438,9 +438,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          // if we found prepare condition for dropdown
          // else prepare a false condition for dropdown
          if (count($filter_id)) {
-            $condition = "`id` IN(".implode(',', $filter_id).")";
+            $condition = ['id' => $filter_id];
          } else {
-            $condition = "1 = 0";
+            $condition = ['0'];
          }
       }
 
@@ -466,8 +466,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                  data-itemtype_name='$itemtype_name'
                  data-dropdown_rand_id='$dropdown_rand_id'>
                <input type='button' class=submit
-                      value='".__('Add')." $title'
-               </input>
+                      value='".__('Add')." $title' />
             </div>";
    }
 
@@ -618,8 +617,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo "</span>";
          echo "</div>";
 
-         echo "<div id='taskjob_moduletypes_dropdown' />";
-         echo "<div id='taskjob_moduleitems_dropdown' />";
+         echo "<div id='taskjob_moduletypes_dropdown'></div>";
+         echo "<div id='taskjob_moduleitems_dropdown'></div>";
          echo "</div>";
       }
 
