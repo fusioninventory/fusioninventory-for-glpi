@@ -217,7 +217,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       Ajax::updateItemOnEvent(
               'dropdown_'.ucfirst($myname).'Type'.$rand,
               "show_".ucfirst($myname)."List".$taskjobs_id,
-              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",
+              Plugin::getWebDir('fusioninventory')."/ajax/dropdowntypelist.php",
               $params);
 
       return $rand;
@@ -324,8 +324,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                       'taskjobs_id'=>$taskjobs_id];
       Ajax::updateItemOnEvent([$iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id],
                               "Additem_$rand",
-                              $CFG_GLPI["root_doc"].
-                                 "/plugins/fusioninventory/ajax/taskjobaddtype.php",
+                              Plugin::getWebDir('fusioninventory')."/ajax/taskjobaddtype.php",
                               $params,
                               ["click"],
                               "-1",
@@ -377,8 +376,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             ];
       Ajax::updateItemOnSelectEvent('dropdown_ActionType'.$rand,
                                     "show_ActionList",
-                                    $CFG_GLPI["root_doc"].
-                                       "/plugins/fusioninventory/ajax/dropdownactionlist.php",
+                                    Plugin::getWebDir('fusioninventory')."/ajax/dropdownactionlist.php",
                                     $params);
 
       return $rand;
@@ -435,8 +433,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                     'actiontypeid'     => $actiontypeid];
 
       Ajax::updateItemOnEvent('addAObject', 'show_ActionListEmpty',
-                              $CFG_GLPI["root_doc"].
-                                 "/plugins/fusioninventory/ajax/dropdownactionselection.php",
+                              Plugin::getWebDir('fusioninventory')."/ajax/dropdownactionselection.php",
                               $params, ["click"]);
 
    }
@@ -1009,8 +1006,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
       Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                $CFG_GLPI["root_doc"].
-                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
+                                Plugin::getWebDir('fusioninventory')."/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
    }
@@ -1046,8 +1042,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
       Ajax::updateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                $CFG_GLPI["root_doc"].
-                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
+                                Plugin::getWebDir('fusioninventory')."/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
    }
@@ -1212,7 +1207,6 @@ function new_subtype(id) {
 
       echo "<tr>";
       echo "<th id='th_title_taskjob_$rand'>";
-      //echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
       echo "&nbsp;".$this->getTypeName();
 
       echo "&nbsp;";

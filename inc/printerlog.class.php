@@ -573,7 +573,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
 
       echo "<form method='post' name='snmp_form' id='snmp_form' action='".
-              $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/printer_info.form.php'>";
+              Plugin::getWebDir('fusioninventory')."/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping();
       $maps = $mapping->find(['itemtype' => 'Printer']);

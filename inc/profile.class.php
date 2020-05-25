@@ -451,7 +451,7 @@ class PluginFusioninventoryProfile extends Profile {
     * @param integer $profiles_id id of profile
     */
    static function createFirstAccess($profiles_id) {
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
+      include_once(PLUGIN_FUSIONINVENTORY_DIR."/inc/profile.class.php");
       $profile = new self();
       foreach ($profile->getAllRights() as $right) {
          self::addDefaultProfileInfos($profiles_id,

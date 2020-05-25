@@ -485,8 +485,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                foreach ($list as $numtmp => $vartmp) {
                   $NetworkPort->getDeviceData($vartmp, 'PluginFusioninventoryUnmanaged');
 
-                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/";
-                  $out .= "plugins/fusioninventory/front/unmanaged.form.php?id=".$vartmp.
+                  $out .= "<a href=\"".Plugin::getWebDir('fusioninventory');
+                  $out .= "/front/unmanaged.form.php?id=".$vartmp.
                              "\">";
                   $out .= $NetworkPort->device_name;
                   if ($CFG_GLPI["view_ID"]) {
@@ -742,7 +742,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             case 'glpi_rules.id':
                $rule = new Rule();
                if ($rule->getFromDB($data['raw']["ITEM_$num"])) {
-                  $out = "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleimport.form.php?id=";
+                  $out = "<a href='".Plugin::getWebDir('fusioninventory')."/front/inventoryruleimport.form.php?id=";
                   $out .= $data['raw']["ITEM_$num"]."'>".$rule->fields['name']."</a>";
                   return $out;
                }
@@ -833,7 +833,7 @@ function plugin_fusioninventory_install() {
       $migrationname = 'CliMigration';
    }
 
-   require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+   require_once (PLUGIN_FUSIONINVENTORY_DIR . "/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion();
 
    if (!defined('FORCE_INSTALL')
@@ -849,7 +849,7 @@ function plugin_fusioninventory_install() {
       //       pass in upgrade to be sure all OK
       pluginFusioninventoryUpdate($version_detected, $migrationname);
    } else {
-      require_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
+      require_once (PLUGIN_FUSIONINVENTORY_DIR . "/install/install.php");
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migrationname);
    }
    return true;
@@ -862,9 +862,9 @@ function plugin_fusioninventory_install() {
  * @return boolean
  */
 function plugin_fusioninventory_uninstall() {
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
+   require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/setup.class.php");
+   require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/profile.class.php");
+   require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/inventoryruleimport.class.php");
    return PluginFusioninventorySetup::uninstall();
 }
 

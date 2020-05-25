@@ -49,9 +49,9 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/taskjobview.class.php");
-include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/taskview.class.php");
-include_once(GLPI_ROOT . "/plugins/fusioninventory/inc/task.class.php");
+include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/taskjobview.class.php");
+include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/taskview.class.php");
+include_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/task.class.php");
 
 /**
  * Manage the deploy task.
