@@ -2854,7 +2854,7 @@ function do_biosascomponentmigration() {
                   LEFT JOIN glpi_manufacturers
                      ON glpi_plugin_fusioninventory_inventorycomputercomputers.bios_manufacturers_id = glpi_manufacturers.id
                      WHERE
-                        bios_date IS NOT NULL AND bios_date != ''
+                        bios_date IS NOT NULL AND bios_date != '0000-00-00'
                         OR bios_version IS NOT NULL AND bios_version != ''
                         OR bios_manufacturers_id != 0";
       $result = $DB->query($query);
