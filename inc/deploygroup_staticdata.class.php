@@ -186,7 +186,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     */
    static function showResults() {
       if (isset($_SESSION['glpisearch']['PluginFusioninventoryComputer'])
-              && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['show_results'])) {
+              && isset($_SESSION['glpisearch']['PluginFusioninventoryComputer']['id'])) {
          $computers_params = $_SESSION['glpisearch']['PluginFusioninventoryComputer'];
       }
       $computers_params['metacriteria'] = [];
@@ -207,6 +207,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       PluginFusioninventorySearch::constructDatas($data);
 
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
+      
       Search::displayData($data);
    }
 
