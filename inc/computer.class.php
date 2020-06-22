@@ -72,7 +72,9 @@ class PluginFusioninventoryComputer extends Computer {
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
             ];
-            $fieldsoptions =  plugin_fields_getAddSearchOptions('Computer');
+            // $fieldsoptions = plugin_fields_getAddSearchOptions('Computer');
+            // Hack because cron not have profile
+            $fieldsoptions = $this->pluginFieldsGetAddSearchOptions('Computer');
             foreach ($fieldsoptions as $id=>$data) {
                $data['id'] = $id;
                $options[$id] = $data;
@@ -212,5 +214,118 @@ class PluginFusioninventoryComputer extends Computer {
       return parent::showMassiveActionsSubForm($ma);
    }
 
+   /**
+    * Hack of PluginFieldsContainer::getAddSearchOptions
+    * I remove part of SQL restrict on profile
+    * when cron run, the offical function return nothing because not have profile
+    */
+   function pluginFieldsGetAddSearchOptions($itemtype, $containers_id = false) {
+      global $DB;
+
+      $opt = [];
+
+      $i = 76665;
+
+      $query = "SELECT DISTINCT fields.id, fields.name, fields.label, fields.type, fields.is_readonly,
+            containers.name as container_name, containers.label as container_label,
+            containers.itemtypes, containers.id as container_id, fields.id as field_id
+         FROM glpi_plugin_fields_containers containers
+         INNER JOIN glpi_plugin_fields_fields fields
+            ON containers.id = fields.plugin_fields_containers_id
+            AND containers.is_active = 1
+         WHERE containers.itemtypes LIKE '%$itemtype%'
+            AND fields.type != 'header'
+            ORDER BY fields.id ASC";
+      $res = $DB->query($query);
+      while ($data = $DB->fetch_assoc($res)) {
+
+         if ($containers_id !== false) {
+            // Filter by container (don't filter by SQL for have $i value with few containers for a itemtype)
+            if ($data['container_id'] != $containers_id) {
+               $i++;
+               continue;
+            }
+         }
+
+         $tablename = "glpi_plugin_fields_".strtolower($itemtype.
+                        getPlural(preg_replace('/s$/', '', $data['container_name'])));
+
+         //get translations
+         $container = [
+            'itemtype' => PluginFieldsContainer::getType(),
+            'id'       => $data['container_id'],
+            'label'    => $data['container_label']
+         ];
+         $data['container_label'] = PluginFieldsLabelTranslation::getLabelFor($container);
+
+         $field = [
+            'itemtype' => PluginFieldsField::getType(),
+            'id'       => $data['field_id'],
+            'label'    => $data['label']
+         ];
+         $data['label'] = PluginFieldsLabelTranslation::getLabelFor($field);
+
+         $opt[$i]['table']         = $tablename;
+         $opt[$i]['field']         = $data['name'];
+         $opt[$i]['name']          = $data['container_label']." - ".$data['label'];
+         $opt[$i]['linkfield']     = $data['name'];
+         $opt[$i]['joinparams']['jointype'] = "itemtype_item";
+         $opt[$i]['pfields_type']  = $data['type'];
+         if ($data['is_readonly']) {
+             $opt[$i]['massiveaction'] = false;
+         }
+
+         if ($data['type'] === "dropdown") {
+            $opt[$i]['table']      = 'glpi_plugin_fields_'.$data['name'].'dropdowns';
+            $opt[$i]['field']      = 'completename';
+            $opt[$i]['linkfield']  = "plugin_fields_".$data['name']."dropdowns_id";
+
+            $opt[$i]['forcegroupby'] = true;
+
+            $opt[$i]['joinparams']['jointype'] = "";
+            $opt[$i]['joinparams']['beforejoin']['table'] = $tablename;
+            $opt[$i]['joinparams']['beforejoin']['joinparams']['jointype'] = "itemtype_item";
+         }
+
+         if ($data['type'] === "dropdownuser") {
+            $opt[$i]['table']      = 'glpi_users';
+            $opt[$i]['field']      = 'name';
+            $opt[$i]['linkfield']  = $data['name'];
+            $opt[$i]['right'] = 'all';
+
+            $opt[$i]['forcegroupby'] = true;
+
+            $opt[$i]['joinparams']['jointype'] = "";
+            $opt[$i]['joinparams']['beforejoin']['table'] = $tablename;
+            $opt[$i]['joinparams']['beforejoin']['joinparams']['jointype'] = "itemtype_item";
+         }
+
+         switch ($data['type']) {
+            case 'dropdown':
+            case 'dropdownuser':
+               $opt[$i]['datatype'] = "dropdown";
+               break;
+            case 'yesno':
+               $opt[$i]['datatype'] = "bool";
+               break;
+            case 'textarea':
+               $opt[$i]['datatype'] = "text";
+               break;
+            case 'number':
+               $opt[$i]['datatype'] = "number";
+               break;
+            case 'date':
+            case 'datetime':
+               $opt[$i]['datatype'] = $data['type'];
+               break;
+            default:
+               $opt[$i]['datatype'] = "string";
+         }
+
+         $i++;
+      }
+
+      return $opt;
+   }
 
 }
