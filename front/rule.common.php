@@ -172,6 +172,8 @@ if (isset($_GET["action"])) {
    exit();
 }
 
+$fi_path = Plugin::getWebDir('fusioninventory');
+
 Html::header(_n('Rule', 'Rules', 2), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
              $rulecollection->menu_option);
 
@@ -181,7 +183,7 @@ if ($rulecollection->showInheritedTab()) {
              'title'  => __('Rules applied', 'fusioninventory').' : '.
                              Dropdown::getDropdownName('glpi_entities',
                                                        $_SESSION['glpiactive_entity']),
-             'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
+             'url'    => $fi_path."/ajax/rules.tabs.php",
              'params' => "target=".$_SERVER['PHP_SELF']."&glpi_tab=1&inherited=1&itemtype=".
                               get_class($rulecollection)];
 }
@@ -193,7 +195,7 @@ if ($rulecollection->isRuleRecursive()) {
                Dropdown::getDropdownName('glpi_entities', $_SESSION['glpiactive_entity']);
 }
    $tabs[1] = ['title'  => $title,
-                   'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
+                   'url'    => $fi_path."/ajax/rules.tabs.php",
                    'params' => "target=".$_SERVER['PHP_SELF']."&glpi_tab=0&inherited=0&itemtype=".
                                  get_class($rulecollection)];
 
@@ -201,7 +203,7 @@ if ($rulecollection->isRuleRecursive()) {
       $tabs[2] = [
                   'title'  => __('Rules applicable in the sub-entities'),
 
-                  'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
+                  'url'    => $fi_path."/ajax/rules.tabs.php",
                   'params' => "target=".$_SERVER['PHP_SELF'].
                                     "&glpi_tab=2&inherited=0&childrens=1&itemtype=".
                                     get_class($rulecollection)];

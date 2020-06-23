@@ -115,7 +115,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
-         $url = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_inventory.php";
+         $url = Plugin::getWebDir('fusioninventory')."/front/send_inventory.php";
          $url.= "?itemtype=".get_class($this)
             ."&function=sendXML&items_id=".$file_shortname."&filename=".$filename;
          echo "<a href='$url' target='_blank'>";

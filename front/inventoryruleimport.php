@@ -62,8 +62,8 @@ if (isset($_GET['resetrules'])) {
    Html::back();
 }
 
-echo "<center><a href='".$CFG_GLPI['root_doc'] .
-         "/plugins/fusioninventory/front/inventoryruleimport.php?resetrules=1' class='vsubmit'>";
+echo "<center><a href='". Plugin::getWebDir('fusioninventory') .
+         "/front/inventoryruleimport.php?resetrules=1' class='vsubmit'>";
 echo __('Reset import rules (define only default rules)', 'fusioninventory');
 echo "</a></center><br/>";
 

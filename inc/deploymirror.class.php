@@ -258,7 +258,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
                     'id'           => $id
                    ];
          Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
-                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
+                 Plugin::getWebDir('fusioninventory')."/ajax/dropdownlocation.php", $params);
 
          echo "<div id='displaydropdownlocation'>";
          // Location option

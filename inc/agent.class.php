@@ -435,7 +435,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo Html::hidden('computers_id',
                            ['value' => $this->fields["computers_id"]]);
          echo "&nbsp;<a class='pointer' onclick='submitGetLink(\"".
-               $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agent.form.php\", ".
+               Plugin::getWebDir('fusioninventory')."/front/agent.form.php\", ".
                "{\"disconnect\": \"disconnect\",
                  \"computers_id\": ".$this->fields['computers_id'].",
                  \"id\": ".$this->fields['id'].",
@@ -789,7 +789,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 
       $agent_id = $this->fields['id'];
-      $fi_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory";
+      $fi_path = Plugin::getWebDir('fusioninventory');
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";

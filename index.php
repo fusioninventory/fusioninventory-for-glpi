@@ -63,7 +63,7 @@ if ((!empty($action)
    Html::header(__('FusionInventory', 'fusioninventory'), filter_input(INPUT_SERVER, "PHP_SELF"), "plugins",
                 "fusioninventory");
 
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/menu.php");
+   Html::redirect(Plugin::getWebDir('fusioninventory')."/front/menu.php");
    Html::footer();
 }
 

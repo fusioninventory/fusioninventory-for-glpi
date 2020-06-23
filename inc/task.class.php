@@ -1922,8 +1922,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
-                        'url'             => $CFG_GLPI["root_doc"].
-                                                "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
+                        'url'             => Plugin::getWebDir('fusioninventory')."/ajax/dropdown_taskjob.php"
                   ]
             ]);
             echo "</td>";
@@ -1962,8 +1961,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "taskjob$rand",
-                        'url'             => $CFG_GLPI["root_doc"].
-                                                "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
+                        'url'             => Plugin::getWebDir('fusioninventory')."/ajax/dropdown_taskjob.php"
                   ]
             ]);
             echo "</td>";

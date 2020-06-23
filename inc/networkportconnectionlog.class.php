@@ -64,6 +64,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
    function showForm($input = []) {
       global $DB, $CFG_GLPI;
 
+      $fi_path = Plugin::getWebDir('fusioninventory');
+
       $NetworkPort = new NetworkPort();
 
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -72,8 +74,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "<th>";
       echo __('PID', 'fusioninventory');
 
-      echo " <a href='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/front/agentprocess.form.php'>(".__('All').")</a>";
+      echo " <a href='".$fi_path."/front/agentprocess.form.php'>(".__('All').")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -121,8 +122,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".$CFG_GLPI['root_doc'].
-                    "/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".
+            echo "<a href='".$fi_path."/front/agentprocess.form.php?h_process_number=".
                     $data['plugin_fusioninventory_agentprocesses_id']."'>".
             $data['plugin_fusioninventory_agentprocesses_id']."</a>";
             echo "</td>";
@@ -150,11 +150,9 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
             echo "<td>";
             if ($data['creation'] == '1') {
-               echo "<img src='".$CFG_GLPI['root_doc'].
-                       "/plugins/fusioninventory/pics/connection_ok.png'/>";
+               echo "<img src='".$fi_path."/pics/connection_ok.png'/>";
             } else {
-               echo "<img src='".$CFG_GLPI['root_doc'].
-                       "/plugins/fusioninventory/pics/connection_notok.png'/>";
+               echo "<img src='".$fi_path."/pics/connection_notok.png'/>";
             }
             echo "</td>";
 

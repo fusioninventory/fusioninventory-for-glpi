@@ -55,6 +55,8 @@ $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
 $PF_ESXINVENTORY = false;
 
+define('PLUGIN_FUSIONINVENTORY_DIR', __DIR__);
+
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
@@ -261,7 +263,7 @@ function plugin_init_fusioninventory() {
        */
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = [];
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = [];
-      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "plugins/fusioninventory") != false
+      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), Plugin::getWebDir('fusioninventory', false)) != false
           || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false
           || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
@@ -445,7 +447,7 @@ function plugin_init_fusioninventory() {
       }
 
    } else { // plugin not active, need $moduleId for uninstall check
-      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');
+      include_once(PLUGIN_FUSIONINVENTORY_DIR.'/inc/module.class.php');
       $moduleId = PluginFusioninventoryModule::getModuleId('fusioninventory');
    }
 
@@ -595,7 +597,7 @@ function plugin_fusioninventory_footer($baseroot) {
       echo "<td class='right'>";
       echo "<a href='http://fusioninventory.org/'>";
       echo "<span class='copyright'>FusionInventory ".PLUGIN_FUSIONINVENTORY_VERSION." | copyleft ".
-           "<img src='".$baseroot."/plugins/fusioninventory/pics/copyleft.png'/> "
+           "<img src='".$baseroot."/".Plugin::getWebDir('fusioninventory', false)."/pics/copyleft.png'/> "
               . " 2010-2016 by FusionInventory Team".
            "</span>";
       echo "</a>";

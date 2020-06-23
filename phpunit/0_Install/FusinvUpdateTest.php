@@ -81,7 +81,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
          WHERE `itemtype` LIKE 'PluginFus%'";
       $DB->query($query);
 
-      $sqlfile = GLPI_ROOT ."/plugins/fusioninventory/phpunit/0_Install/mysql/i-".$version.".sql";
+      $sqlfile = PLUGIN_FUSIONINVENTORY_DIR ."/phpunit/0_Install/mysql/i-".$version.".sql";
       // Load specific FusionInventory version in database
       $result = load_mysql_file(
          $DB->dbuser,

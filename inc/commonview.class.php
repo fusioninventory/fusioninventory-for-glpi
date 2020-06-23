@@ -91,11 +91,14 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    public function __construct() {
       global $CFG_GLPI;
       parent::__construct();
+
+      $fi_path = Plugin::getWebDir('fusioninventory');
+
       $this->base_urls = [
-         'fi.base'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory",
-         'fi.ajax'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/ajax",
-         'fi.front'  => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front",
-         'fi.pics'   => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/pics",
+         'fi.base'   => $fi_path,
+         'fi.ajax'   => $fi_path . "/ajax",
+         'fi.front'  => $fi_path . "/front",
+         'fi.pics'   => $fi_path . "/pics",
          'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
       ];
    }

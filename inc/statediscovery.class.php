@@ -161,8 +161,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      Html::printPager($start, $number, $CFG_GLPI['root_doc'].
-              "/plugins/fusioninventory/front/statediscovery.php", '');
+      Html::printPager($start, $number, Plugin::getWebDir('fusioninventory')."/front/statediscovery.php", '');
 
       echo "<table class='tab_cadre_fixe'>";
 

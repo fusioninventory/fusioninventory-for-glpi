@@ -251,7 +251,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
     * @param string $state (all or each state : running, finished, nostarted)
     */
    function stateTaskjobItem($items_id, $itemtype, $state = 'all') {
-      global $DB, $CFG_GLPI;
+      global $DB;
+
+      $fi_path = Plugin::getWebDir('fusioninventory');
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon         = "";
@@ -265,15 +267,13 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          case 'running':
             $fields['state'] = ['NOT', $self::FINISHED];
             $title = __('Running tasks', 'fusioninventory');
-            $icon  = "<img src='".$CFG_GLPI['root_doc'].
-                     "/plugins/fusioninventory/pics/task_running.png'/>";
+            $icon  = "<img src='".$fi_path."/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $fields['state'] = $self::FINISHED;
             $title = __('Finished tasks', 'fusioninventory');
-            $icon  = "<img src='".$CFG_GLPI['root_doc'].
-                      "/plugins/fusioninventory/pics/task_finished.png'/>";
+            $icon  = "<img src='".$fi_path."/pics/task_finished.png'/>";
             break;
 
          case 'all':

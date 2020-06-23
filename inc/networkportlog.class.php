@@ -470,7 +470,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
-               $imgfolder = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics";
+               $imgfolder = Plugin::getWebDir('fusioninventory')."/pics";
                if ($data['field'] == '1') {
                   $text .= "<td align='center'><img src='".$imgfolder."/connection_ok.png'/></td>";
                } else {

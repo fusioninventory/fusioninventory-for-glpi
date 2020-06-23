@@ -149,7 +149,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
             $data['associatedFiles'][$sha512]['p2p-retention-duration'];
 
          // start new line
-         $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
+         $pics_path = Plugin::getWebDir('fusioninventory')."/pics/";
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          if ($canedit) {
             echo "<td class='control'>";
@@ -158,7 +158,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
          }
          echo "<td class='filename'>";
          if (!empty($file_mimetype)
-                 && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/extensions/$file_mimetype.png")) {
+                 && file_exists(PLUGIN_FUSIONINVENTORY_DIR."/pics/extensions/$file_mimetype.png")) {
             echo "<img src='".$pics_path."extensions/$file_mimetype.png' />";
          } else {
             echo "<img src='".$pics_path."extensions/documents.png' />";
@@ -257,7 +257,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @return boolean
     */
    function displayAjaxValues($config, $request_data, $rand, $mode) {
-      global $CFG_GLPI;
+      $fi_path = Plugin::getWebDir('fusioninventory');
 
       $pfDeployPackage = new PluginFusioninventoryDeployPackage();
 
@@ -307,7 +307,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
                echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
                   "' onclick='fileModal$rand.dialog(\"open\");' />";
                Ajax::createModalWindow("fileModal$rand",
-                        $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/deployfilemodal.php",
+                        $fi_path."/ajax/deployfilemodal.php",
                         ['title' => __('Select the file on server', 'fusioninventory'),
                         'extraparams' => [
                            'rand' => $rand
@@ -326,7 +326,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       echo "<tr>";
       echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
-         "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/uncompress.png' /></th>";
+         "src='".$fi_path."/pics/uncompress.png' /></th>";
       echo "<td>";
       Html::showCheckbox(['name' => 'uncompress', 'checked' => $uncompress]);
       echo "</td>";
@@ -334,8 +334,8 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
 
       echo "<tr>";
       echo "<th>".__("P2P", 'fusioninventory').
-              "<img style='float:right' src='".$CFG_GLPI["root_doc"].
-              "/plugins/fusioninventory//pics/p2p.png' /></th>";
+              "<img style='float:right' src='".$fi_path.
+              "/pics/p2p.png' /></th>";
       echo "<td>";
       Html::showCheckbox(['name' => 'p2p', 'checked' => $p2p]);
       echo "</td>";
@@ -363,11 +363,9 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     * @param string $rand unique element id used to identify/update an element
     */
    static function showServerFileTree($rand) {
-      global $CFG_GLPI;
-
       echo "<script type='text/javascript'>";
       echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
-         dataUrl:'".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/serverfilestreesons.php'
+         dataUrl:'".Plugin::getWebDir('fusioninventory')."/ajax/serverfilestreesons.php'
       });";
 
       echo "var Tree_Category$rand = new Ext.tree.TreePanel({

@@ -843,7 +843,7 @@ table.runs td.comment {
 }
 */
 .lockfield {
-   background-image: url('../../../plugins/fusioninventory/pics/lock.png');
+   background-image: url('../pics/lock.png');
    background-repeat: no-repeat;
    background-position: right;
 }

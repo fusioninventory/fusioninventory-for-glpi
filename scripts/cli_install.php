@@ -122,8 +122,8 @@ $plugin = new Plugin();
 $plugin->checkPluginState('fusioninventory');
 $plugin->init();
 
-require_once (GLPI_ROOT . "/plugins/fusioninventory/install/climigration.class.php");
-include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+require_once (PLUGIN_FUSIONINVENTORY_DIR . "/install/climigration.class.php");
+include (PLUGIN_FUSIONINVENTORY_DIR . "/install/update.php");
 $current_version = pluginFusioninventoryGetCurrentVersion();
 
 $migration = new CliMigration($current_version);
