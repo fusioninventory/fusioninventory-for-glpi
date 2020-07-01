@@ -264,7 +264,9 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
          'pin2'               => '',
          'puk'                => '',
          'puk2'               => '',
-         'msin'               => "204043721717241"
+         'msin'               => "204043721717241",
+         'users_id'           => '0',
+         'groups_id'          => 0
       ];
 
       $this->assertEquals(
@@ -294,7 +296,9 @@ class ComputerDeviceSimcardTest extends RestoreDatabase_TestCase {
          'pin2'               => '',
          'puk'                => '',
          'puk2'               => '',
-         'msin'               => "126543721717241"
+         'msin'               => "126543721717241",
+         'users_id'           => '0',
+         'groups_id'          => 0
       ];
 
       $this->assertEquals(
