@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Walid Nouh, 2018
+# Kaya Zeren <kayazeren@gmail.com>, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2018\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/ddurieux/teams/797/tr_TR/)\n"
 "MIME-Version: 1.0\n"
