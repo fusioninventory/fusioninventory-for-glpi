@@ -98,7 +98,7 @@
    <homepage>http://fusioninventory.org/</homepage>
    <download>https://github.com/fusioninventory/fusioninventory-for-glpi/releases</download>
    <issues>https://github.com/fusioninventory/fusioninventory-for-glpi/issues</issues>
-   <readme>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/README.asciidoc</readme>
+   <readme>https://raw.githubusercontent.com/fusioninventory/fusioninventory-for-glpi/master/README.md</readme>
    <authors>
       <author>David DURIEUX</author>
       <author>FusionInventory team</author>
