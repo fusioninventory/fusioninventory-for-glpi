@@ -3,14 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Walid Nouh, 2018
+# Jacek Maciol <jmaciol@rabawyzna.pl>, 2018
+# Piotr Adamcio <p.adamcio@gmail.com>, 2019
+# Daniel Pisarek <dpisarek.przychodnia@gmail.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Jacek Maciol <jmaciol@rabawyzna.pl>, 2018\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
+"Last-Translator: Daniel Pisarek <dpisarek.przychodnia@gmail.com>, 2020\n"
 "Language-Team: Polish (Poland) (https://www.transifex.com/ddurieux/teams/797/pl_PL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -262,7 +268,7 @@ msgstr "Nie znaleziono ścieżki"
 
 #: install/update.php:943 install/install.php:302
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
+msgstr "Usuń agentów nie połączonych z serwerem od \"xxx\" dni."
 
 #: install/install.php:305
 msgid "Wake agents ups"
@@ -416,21 +422,23 @@ msgstr "Komunikacja z agentem niemożliwa"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "Import CSV"
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
 msgstr ""
+"Importuj listę komputerów z pliku CSV (pierwsza kolumna musi zawierać ID "
+"komputera)"
 
 #: inc/deploygroup_staticdata.class.php:296
 msgid "Computers imported successfully from CSV file"
-msgstr ""
+msgstr "Zaimportowano pomyślnie komputery z pliku CSV"
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
-msgstr ""
+msgstr "Nie można odczytać pliku CSV"
 
 #: inc/taskview.class.php:78
 msgid "Include old jobs"
@@ -531,7 +539,7 @@ msgstr "Liczba agentów do uruchomienia"
 
 #: inc/taskview.class.php:413
 msgid "Force start"
-msgstr "Typ komunikacji"
+msgstr "Wymuś start"
 
 #: inc/timeslotentry.class.php:78
 msgid "Time slot entry"
@@ -553,10 +561,10 @@ msgstr "Czas zakończenia"
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
 msgid_plural "Found entries"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Znaleziony wpis"
+msgstr[1] "Znalezione wpisy"
+msgstr[2] "Znalezione wpisy"
+msgstr[3] "Znalezione wpisy"
 
 #: inc/collect_registry.class.php:82 inc/collect_registry.class.php:99
 msgid "Hive"
@@ -633,7 +641,7 @@ msgstr "Informacje SNMP"
 
 #: inc/item.class.php:186
 msgid "SNMP authentication"
-msgstr ""
+msgstr "uwierzytelnienie SNMP"
 
 #: inc/item.class.php:299
 msgid "sec(s)"
@@ -707,10 +715,10 @@ msgstr "Zakończ teraz"
 #: inc/collect_file.class.php:65
 msgid "Found file"
 msgid_plural "Found files"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Znaleziony plik"
+msgstr[1] "Znalezione pliki"
+msgstr[2] "Znalezione pliki"
+msgstr[3] "Znalezione pliki"
 
 #: inc/collect_file.class.php:72 inc/collect_file.class.php:117
 msgid "Limit"
@@ -853,7 +861,7 @@ msgstr "Rozszerzony Debug"
 
 #: inc/config.class.php:374
 msgid "Re-prepare successful jobs"
-msgstr ""
+msgstr "Ponownie przygotuj pomyślne zadania"
 
 #: inc/config.class.php:382
 msgid "Maximum number of agents to wake up in a task"
@@ -1180,7 +1188,7 @@ msgstr "Wykorzystanie pamięci (%)"
 
 #: inc/networkequipment.class.php:1118
 msgid "No data available"
-msgstr ""
+msgstr "Brak dostępnych danych"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -1587,26 +1595,28 @@ msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
 msgstr ""
+"Musisz wybrać zadanie i pakiet, aby przygotować zadanie z pakietem do "
+"wdrożenia."
 
 #: inc/task.class.php:2088
 msgid "Deployment job, package: "
-msgstr ""
+msgstr "Wdrożono zadanie, pakiet:"
 
 #: inc/task.class.php:2103
 msgid "Updated a deployment job, package: "
-msgstr ""
+msgstr "Zaktualizowano zadanie wdrożenia, pakiet:"
 
 #: inc/task.class.php:2104 inc/task.class.php:2136
 msgid ", actors: "
-msgstr ""
+msgstr ", wykonawcy:"
 
 #: inc/task.class.php:2127
 msgid "The selected task already has a deployment job for another package: "
-msgstr ""
+msgstr "Wybrane zadanie ma już zadanie wdrażania dla innego pakietu:"
 
 #: inc/task.class.php:2135
 msgid "Created a deployment job, package: "
-msgstr ""
+msgstr "Utworzono zadanie wdrożenia, pakiet:"
 
 #: inc/deploypackageitem.class.php:323 inc/deploypackage.class.php:982
 msgid "The modified JSON contained a syntax error :"
@@ -2002,15 +2012,15 @@ msgstr "Inne komputery"
 
 #: inc/menu.class.php:851
 msgid "Network equipments"
-msgstr ""
+msgstr "Sprzęt sieciowy"
 
 #: inc/menu.class.php:856
 msgid "Printers"
-msgstr ""
+msgstr "Drukarki"
 
 #: inc/menu.class.php:890 inc/menu.class.php:919
 msgid "Linked with a device"
-msgstr ""
+msgstr "Połączony z urządzeniem"
 
 #: inc/menu.class.php:895
 msgid "SNMP switch network ports not linked"
@@ -2018,35 +2028,35 @@ msgstr "Porty sieciowe switcha nie połączone SNMP"
 
 #: inc/menu.class.php:924
 msgid "Not linked"
-msgstr ""
+msgstr "Nie połączony"
 
 #: inc/menu.class.php:951
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Przygotowane i oczekujące"
 
 #: inc/menu.class.php:985
 msgid "Automatic inventory vs manually added"
-msgstr ""
+msgstr "Automatyczna inwentaryzacja a ręcznie dodane"
 
 #: inc/menu.class.php:987
 msgid "Computer inventories in the last hours"
-msgstr ""
+msgstr "Inwentaryzacje komputerów w ciągu ostatnich godzin"
 
 #: inc/menu.class.php:988
 msgid "Deployment"
-msgstr ""
+msgstr "Rozmieszczanie"
 
 #: inc/menu.class.php:989
 msgid "Network inventory by SNMP"
-msgstr ""
+msgstr "Inwentaryzacja sieci - SNMP"
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr ""
+msgstr "Porty w urządzeniach sieciowych (zinwentaryzowane przez SNMP)"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr ""
+msgstr "Porty we wszystkich urządzeniach sieciowych"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
@@ -2201,10 +2211,10 @@ msgstr "Agent zatrzymany/uszkodzony"
 #: inc/collect_wmi.class.php:65
 msgid "Found WMI"
 msgid_plural "Found WMIs"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Znalezione WMI"
+msgstr[1] "Znalezione WMI"
+msgstr[2] "Znalezione WMI"
+msgstr[3] "Znalezione WMI"
 
 #: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
 msgid "Properties"
@@ -2397,6 +2407,8 @@ msgid ""
 "Several jobs in the same task is not anymore supported because of unexpected side-effects. \n"
 "         Please consider modifying this task to avoid unexpected results."
 msgstr ""
+"Kilka czynności w tym zadaniu nie jest już obsługiwanych z powodu nieoczekiwanych efektów ubocznych.\n"
+"Rozważ modyfikowanie tego zadania, aby uniknąć nieoczekiwanych wyników."
 
 #: inc/taskjobview.class.php:355
 msgid "Actor Type"
@@ -3420,7 +3432,7 @@ msgstr "Jendostka"
 
 #: inc/deploycheck.class.php:537
 msgid "If not successful"
-msgstr ""
+msgstr "Jeśli zakończono niepomyślnie"
 
 #: inc/iprange.class.php:93
 msgid "Communication mode"

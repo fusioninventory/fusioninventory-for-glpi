@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Walid Nouh, 2018
+# Markku Vepsä, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
 "Last-Translator: Markku Vepsä, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/ddurieux/teams/797/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -91,8 +95,8 @@ msgstr "Tuomattomien laitteiden lukumäärä sillä tyyppiä ei oltu määritett
 #: inc/menu.class.php:471 inc/deployuserinteractiontemplate.class.php:151
 msgid "User interaction template"
 msgid_plural "User interaction templates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Käyttäjän vuorovaikutusmalli"
+msgstr[1] "Käyttäjän vuorovaikutusmallit"
 
 #: front/inventorycomputerimportxml.php:73
 msgid "Can't read zip file!"
@@ -164,7 +168,7 @@ msgstr "Koko"
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:89
 #: inc/deployuserinteractiontemplate.class.php:164
 msgid "Windows system alert (WTS)"
-msgstr ""
+msgstr "Windowsin järjestelmähälytys (WTS)"
 
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:159
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:170
@@ -195,11 +199,11 @@ msgstr "ohita työ"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:424 inc/deploycheck.class.php:566
 msgid "report info"
-msgstr ""
+msgstr "raportti tiedoista"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:425 inc/deploycheck.class.php:567
 msgid "report warning"
-msgstr ""
+msgstr "raportti varoituksista"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:70 inc/deployaction.class.php:84
 msgid "Command"
@@ -261,6 +265,8 @@ msgstr "Polkua ei löydy"
 #: install/update.php:943 install/install.php:302
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
 msgstr ""
+"Poista agentit, jotka eivät ole olleet yhteydessä palvelimeen sitten "
+"(päivää)"
 
 #: install/install.php:305
 msgid "Wake agents ups"
@@ -400,7 +406,7 @@ msgstr "agenttiin ei saada yhteyttä"
 #: ajax/remote_status.php:75
 #, php-format
 msgid "Available on %1$s"
-msgstr ""
+msgstr "Saatavilla %1$s"
 
 #: ajax/remote_status.php:95
 msgid "The agent is running"
@@ -419,10 +425,12 @@ msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
 msgstr ""
+"Tuo tietokoneet CSV-tiedostosta (ensimmäisessä sarakkeessa on oltava "
+"tietokoneen tunnus)"
 
 #: inc/deploygroup_staticdata.class.php:296
 msgid "Computers imported successfully from CSV file"
-msgstr ""
+msgstr "Tietokoneet tuotu onnistuneesti CSV-tiedostosta"
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
@@ -497,7 +505,7 @@ msgstr "Valmistele uudestaan kohde/toimijapari, jos edellinen ajo onnistui"
 
 #: inc/taskview.class.php:336
 msgid "This is an on demand deployment task"
-msgstr "Tämä on kysyntään perustuva asennus"
+msgstr "Tämä on pyyntöön perustuva käyttöönottotehtävä"
 
 #: inc/taskview.class.php:348 inc/task.class.php:112
 msgid "Schedule start"
@@ -547,8 +555,8 @@ msgstr "Päättymisaika"
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
 msgid_plural "Found entries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Löydetty merkintä"
+msgstr[1] "Löydetyt merkinnät"
 
 #: inc/collect_registry.class.php:82 inc/collect_registry.class.php:99
 msgid "Hive"
@@ -717,7 +725,7 @@ msgstr "Rekursiivinen"
 
 #: inc/collect_file.class.php:75 inc/collect_file.class.php:151
 msgid "Regex"
-msgstr "Säännönmukainen lauseke"
+msgstr "Säännöllinen lauseke"
 
 #: inc/collect_file.class.php:77 inc/collect_file.class.php:173
 msgid "Checksum SHA512"
@@ -841,7 +849,7 @@ msgstr "Extra-debug"
 
 #: inc/config.class.php:374
 msgid "Re-prepare successful jobs"
-msgstr ""
+msgstr "Uudelleenvalmistele onnistuneet työt"
 
 #: inc/config.class.php:382
 msgid "Maximum number of agents to wake up in a task"
@@ -936,7 +944,7 @@ msgstr "Käytä tätä GLPI-palvelinta peilipalvelimena"
 
 #: inc/config.class.php:836
 msgid "Match mirrors to agents"
-msgstr ""
+msgstr "Sovita peilipalvelimet agenteille"
 
 #: inc/config.class.php:839
 msgid "with location"
@@ -953,6 +961,8 @@ msgstr "molemmilla"
 #: inc/config.class.php:850
 msgid "Delete successful on demand tasks after (in days)"
 msgstr ""
+"Poista onnistuneet pyyntöön perustuvat käyttöönottotehtävät jälkeen "
+"(päivissä)"
 
 #: inc/printercartridge.class.php:97
 msgid "Cartridge(s)"
@@ -1393,7 +1403,7 @@ msgstr "tämän komennon paluuarvot talletettu "
 
 #: inc/deployaction.class.php:304 inc/deployaction.class.php:360
 msgid "Action label"
-msgstr ""
+msgstr "Toiminnon tunniste"
 
 #: inc/deployaction.class.php:316
 msgid "From"
@@ -1417,7 +1427,7 @@ msgstr "Tarkistusten suoritus"
 
 #: inc/deployaction.class.php:437
 msgid "Number of output lines to retrieve"
-msgstr ""
+msgstr "Haettavien tulostusrivien määrä"
 
 #: inc/collectcommon.class.php:156
 msgid "Windows registry associated"
@@ -1531,7 +1541,7 @@ msgstr "Tehtävän hallinta"
 
 #: inc/task.class.php:161
 msgid "deploy on demand task"
-msgstr ""
+msgstr "käyttöönota pyyntöön perustuva tehtävä"
 
 #: inc/task.class.php:366
 msgid ""
@@ -1574,27 +1584,27 @@ msgstr "Paketti"
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
-msgstr ""
+msgstr "Täytyy valita tehtävä ja paketti käyttöönotto tehtävän kohdennukseen."
 
 #: inc/task.class.php:2088
 msgid "Deployment job, package: "
-msgstr ""
+msgstr "Käyttönottotyö, paketti:"
 
 #: inc/task.class.php:2103
 msgid "Updated a deployment job, package: "
-msgstr ""
+msgstr "Päivitetty käyttöönottotyö, paketti:"
 
 #: inc/task.class.php:2104 inc/task.class.php:2136
 msgid ", actors: "
-msgstr ""
+msgstr ", toimijat:"
 
 #: inc/task.class.php:2127
 msgid "The selected task already has a deployment job for another package: "
-msgstr ""
+msgstr "Valitulla tehtävällä on jo käyttöönottotyö toiselle paketille:"
 
 #: inc/task.class.php:2135
 msgid "Created a deployment job, package: "
-msgstr ""
+msgstr "Luotu käyttöönottotyö, paketti:"
 
 #: inc/deploypackageitem.class.php:323 inc/deploypackage.class.php:982
 msgid "The modified JSON contained a syntax error :"
@@ -1726,7 +1736,7 @@ msgstr "Ohjelmiston käyttöönotto"
 
 #: inc/profile.class.php:231 inc/profile.class.php:331
 msgid "Deploy packages on demand"
-msgstr "Pakettien jakelu tarvittaessa"
+msgstr "Pakettien jakelu pyynnöstä"
 
 #: inc/profile.class.php:298
 msgid "Fields blacklist"
@@ -2018,7 +2028,7 @@ msgstr "Tietokone inventaariot viimeisten tuntien aikana"
 
 #: inc/menu.class.php:988
 msgid "Deployment"
-msgstr ""
+msgstr "Käyttöönotto"
 
 #: inc/menu.class.php:989
 msgid "Network inventory by SNMP"
@@ -2026,7 +2036,7 @@ msgstr "Verkon inventaario SNMP avulla"
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr ""
+msgstr "Verkkolaitteiden portit (SNMP-inventointi)"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
@@ -2052,7 +2062,7 @@ msgstr[1] "Seuraavat tehtävät suoritetaan tällä paketilla"
 
 #: inc/deploypackage.class.php:383 inc/deploypackage.class.php:499
 msgid "Enable deploy on demand for the following group"
-msgstr ""
+msgstr "Ota käyttöön käyttöönotto pyynnöstä seuraavalle ryhmälle"
 
 #: inc/deploypackage.class.php:521
 msgid "Audits"
@@ -2068,7 +2078,7 @@ msgstr "Käyttäjän vuorovaikutus"
 
 #: inc/deploypackage.class.php:668
 msgid "JSON package representation"
-msgstr ""
+msgstr "JSON-paketin esitys"
 
 #: inc/deploypackage.class.php:786
 msgid "Package exported in"
@@ -2081,8 +2091,8 @@ msgstr "Tuotavat paketit"
 #: inc/deploypackage.class.php:1014 inc/deploypackage.class.php:1019
 msgid "Target for deploy on demand"
 msgid_plural "Targets for deploy on demand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Pyydetyn käyttöönoton kohde"
+msgstr[1] "Pyydetyn käyttöönoton kohteet"
 
 #: inc/deploypackage.class.php:1100
 msgid "Add a target for self-service"
@@ -2111,11 +2121,11 @@ msgstr "Valmistele asennus"
 
 #: inc/deploypackage.class.php:1590
 msgid "I'm on this computer: local wakeup"
-msgstr ""
+msgstr "Olen tällä tietokoneella: paikallinen herätys"
 
 #: inc/deploypackage.class.php:1591
 msgid "I'm not on this computer: wakeup from the server"
-msgstr ""
+msgstr "En ole tällä tietokoneella: herätys palvelimelta"
 
 #: inc/deploypackage.class.php:1592
 msgid "Don't wakeup"
@@ -2238,7 +2248,7 @@ msgstr "Toimintojen epäonnistuessa"
 
 #: inc/deployuserinteraction.class.php:214
 msgid "Interaction label"
-msgstr ""
+msgstr "Vuorovaikutuksen tunniste"
 
 #: inc/deployuserinteraction.class.php:418
 #, php-format
@@ -2261,7 +2271,7 @@ msgstr "Agentille lähetetty virheellinen tapahtuma"
 
 #: inc/deployuserinteraction.class.php:452
 msgid "Alert displayed, no input required"
-msgstr ""
+msgstr "Hälytys näytetty, syötettä ei vaadita"
 
 #: inc/deployuserinteraction.class.php:458
 msgid "Retry"
@@ -2277,7 +2287,7 @@ msgstr "Sivuuta"
 
 #: inc/deployuserinteraction.class.php:473
 msgid "Alert duration exceeded"
-msgstr ""
+msgstr "Hälytyksen kesto ylittyi"
 
 #: inc/deployuserinteraction.class.php:476
 msgid "No user connected"
@@ -2373,6 +2383,8 @@ msgid ""
 "Several jobs in the same task is not anymore supported because of unexpected side-effects. \n"
 "         Please consider modifying this task to avoid unexpected results."
 msgstr ""
+"Useita töitä samassa tehtävässä ei tueta enää sivuvaikutusen takia.\n"
+"Harkitse tehtävän muokkaamista odottamattomien tulosten välttämiseksi."
 
 #: inc/taskjobview.class.php:355
 msgid "Actor Type"
@@ -3276,7 +3288,7 @@ msgstr "Suurikokoisten tulosteiden kokonaismäärä"
 
 #: inc/inventoryrulelocation.class.php:194
 msgid "Assets"
-msgstr ""
+msgstr "Omaisuus"
 
 #: inc/deploycheck.class.php:70
 msgid "Registry value exists"
@@ -3344,15 +3356,15 @@ msgstr "jatka"
 
 #: inc/deploycheck.class.php:137
 msgid "passed"
-msgstr ""
+msgstr "läpäissyt"
 
 #: inc/deploycheck.class.php:139
 msgid "otherwise"
-msgstr ""
+msgstr "muuten"
 
 #: inc/deploycheck.class.php:301 inc/deploycheck.class.php:453
 msgid "Audit label"
-msgstr ""
+msgstr "Auditoinnin tunniste"
 
 #: inc/deploycheck.class.php:340
 msgid "Path to the key"
@@ -3381,7 +3393,7 @@ msgstr "Yksikkö"
 
 #: inc/deploycheck.class.php:537
 msgid "If not successful"
-msgstr ""
+msgstr "Jos ei ole onnistunut"
 
 #: inc/iprange.class.php:93
 msgid "Communication mode"
@@ -3517,7 +3529,7 @@ msgstr "jos tyhjä niin käytä porttia, joka on asetettu yleisissä asetuksissa
 
 #: inc/agent.class.php:853
 msgid "not yet requested, refresh?"
-msgstr ""
+msgstr "ei ole vielä pyydetty, päivitä?"
 
 #: inc/agent.class.php:860
 msgid "Force inventory"
@@ -3587,7 +3599,7 @@ msgstr "Vuorovaikutustyyppi"
 
 #: inc/deployuserinteractiontemplate.class.php:441
 msgid "Alert icon"
-msgstr ""
+msgstr "Hälytyskuvake"
 
 #: inc/deployuserinteractiontemplate.class.php:448
 msgid "Retry job after"
@@ -3599,7 +3611,7 @@ msgstr "Uudelleenyritysten enimmäismäärä"
 
 #: inc/deployuserinteractiontemplate.class.php:465
 msgid "Alert display timeout"
-msgstr ""
+msgstr "Hälytysnäytön aikakatkaisu"
 
 #: inc/deployuserinteractiontemplate.class.php:558
 msgid "Button ok"
@@ -3643,7 +3655,7 @@ msgstr "Ei aktiivista istuntoa"
 
 #: inc/deployuserinteractiontemplate.class.php:568
 msgid "Alert timeout exceeded"
-msgstr ""
+msgstr "Hälytyksen aikaraja ylittyi"
 
 #: inc/deployuserinteractiontemplate.class.php:569
 msgid "Several active sessions"

@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Walid Nouh, 2018
+# Javier Pascolini <javier.pascolini@gmail.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Walid Nouh, 2018\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
+"Last-Translator: Javier Pascolini <javier.pascolini@gmail.com>, 2020\n"
 "Language-Team: Spanish (Argentina) (https://www.transifex.com/ddurieux/teams/797/es_AR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +64,7 @@ msgstr "Ordenadores no inventariados desde hace n días"
 
 #: report/computer_last_inventory.php:75
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "Numero de días (mínimo) desde el ultimo inventario"
 
 #: front/deploygroup.php:51 inc/deploytaskjob.class.php:226
 #: inc/profile.class.php:414 inc/menu.class.php:256
@@ -164,18 +168,18 @@ msgstr "Tamaño"
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:89
 #: inc/deployuserinteractiontemplate.class.php:164
 msgid "Windows system alert (WTS)"
-msgstr ""
+msgstr "Alerta de sistema de Windows (WTS)"
 
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:159
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:170
 #: inc/deployuserinteractiontemplate.class.php:245
 msgid "Question"
-msgstr ""
+msgstr "Pregunta"
 
 #: phpunit/1_Unit/Deploy/DeployUserinteractionTemplateTest.php:182
 #: inc/deployuserinteractiontemplate.class.php:278
 msgid "Retry job later"
-msgstr ""
+msgstr "Reintentar tarea después"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:67 inc/deploycheck.class.php:69
 msgid "Registry key exists"
@@ -187,19 +191,19 @@ msgstr "El espacio libre es mayor de"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:422 inc/deploycheck.class.php:564
 msgid "abort job"
-msgstr ""
+msgstr "Abortar tarea"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:423 inc/deploycheck.class.php:565
 msgid "skip job"
-msgstr ""
+msgstr "Saltar tarea"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:424 inc/deploycheck.class.php:566
 msgid "report info"
-msgstr ""
+msgstr "Información de Reporte"
 
 #: phpunit/1_Unit/Deploy/DeploycheckTest.php:425 inc/deploycheck.class.php:567
 msgid "report warning"
-msgstr ""
+msgstr "Alerta de Reporte"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:70 inc/deployaction.class.php:84
 msgid "Command"
@@ -215,27 +219,27 @@ msgstr "Copiar"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:76 inc/deployaction.class.php:87
 msgid "Delete directory"
-msgstr ""
+msgstr "Borrar directorio"
 
 #: phpunit/1_Unit/Deploy/DeployactionTest.php:78 inc/deployaction.class.php:88
 msgid "Create directory"
-msgstr ""
+msgstr "Crear directorio"
 
 #: b/deploy/index.php:85
 msgid "Deploy module has been disabled for this agent"
-msgstr ""
+msgstr "El modulo de despliegue ha sido deshabilitado para este agente"
 
 #: b/deploy/index.php:156
 msgid "Checks"
-msgstr ""
+msgstr "Verificar"
 
 #: b/deploy/index.php:157
 msgid "Files download"
-msgstr ""
+msgstr "Descargar archivo"
 
 #: b/deploy/index.php:158
 msgid "Files preparation"
-msgstr ""
+msgstr "Preparación de archivos"
 
 #: b/deploy/index.php:159 inc/deploypackage.class.php:523
 msgid "Actions"
@@ -243,27 +247,27 @@ msgstr "Acciones"
 
 #: b/deploy/index.php:278
 msgid "User canceled the job"
-msgstr ""
+msgstr "El usuario cancelo la tarea"
 
 #: b/deploy/index.php:280
 msgid "User postponed the job"
-msgstr ""
+msgstr "El usuario pospuso la tarea"
 
 #: b/collect/index.php:81
 msgid "Collect module has been disabled for this agent"
-msgstr ""
+msgstr "El modulo colector ha sido deshabilitado para este agente"
 
 #: b/collect/index.php:199
 msgid "Path not found"
-msgstr ""
+msgstr "Ruta no encontrada"
 
 #: install/update.php:943 install/install.php:302
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
+msgstr "Borrar agentes que no se han conectado al servidor desde \"xxx días."
 
 #: install/install.php:305
 msgid "Wake agents ups"
-msgstr ""
+msgstr "Despertar agentes"
 
 #: hook.php:62 hook.php:197 hook.php:204 hook.php:213 hook.php:232
 #: hook.php:239 hook.php:245 hook.php:254 hook.php:271 hook.php:280
@@ -339,15 +343,15 @@ msgstr "Grupo estático"
 
 #: hook.php:168 inc/inventorycomputercomputer.class.php:217
 msgid "HostID"
-msgstr ""
+msgstr "HostID"
 
 #: hook.php:174
 msgid "License serial number"
-msgstr ""
+msgstr "Numero de serie de la licencia"
 
 #: hook.php:180
 msgid "License full name"
-msgstr ""
+msgstr "Nombre completo de la licencia"
 
 #: hook.php:214 inc/agent.class.php:124 inc/agent.class.php:261
 #: inc/agent.class.php:494 inc/agent.class.php:1175
@@ -362,7 +366,7 @@ msgstr "URL base de agente"
 #: inc/iprange.class.php:166 inc/unmanaged.class.php:241
 #: inc/unmanaged.class.php:494 inc/iprange_configsecurity.class.php:206
 msgid "SNMP credentials"
-msgstr ""
+msgstr "Credenciales SNMP"
 
 #: hook.php:262 hook.php:296 inc/item.class.php:165
 #: inc/unmanaged.class.php:232 inc/unmanaged.class.php:484
@@ -390,16 +394,16 @@ msgstr "Agregar a grupo estático"
 
 #: hook.php:882 inc/unmanaged.class.php:325
 msgid "Assign SNMP credentials"
-msgstr ""
+msgstr "Asignar credenciales SNMP"
 
 #: ajax/remote_status.php:69
 msgid "cannot contact the agent"
-msgstr ""
+msgstr "No se puede contactar con el agente"
 
 #: ajax/remote_status.php:75
 #, php-format
 msgid "Available on %1$s"
-msgstr ""
+msgstr "Disponible en %1$s"
 
 #: ajax/remote_status.php:95
 msgid "The agent is running"
@@ -411,29 +415,32 @@ msgstr "¡Imposible comunicar con el agente!"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "Importar CSV"
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
 msgstr ""
+"Importar una lista de computadoras desde un archivo CSV (la primera columna "
+"debe contener el ID de computadora)"
 
 #: inc/deploygroup_staticdata.class.php:296
 msgid "Computers imported successfully from CSV file"
 msgstr ""
+"Las computadoras fueron importadas satisfactoriamente desde el archivo CSV"
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
-msgstr ""
+msgstr "Imposible leer el archivo CSV"
 
 #: inc/taskview.class.php:78
 msgid "Include old jobs"
-msgstr ""
+msgstr "Incluir tareas antiguas"
 
 #: inc/taskview.class.php:96
 msgid "refresh interval"
-msgstr ""
+msgstr "Intervalo de actualización"
 
 #: inc/taskview.class.php:99
 msgid "Off"
@@ -453,22 +460,22 @@ msgstr "Mostrar/Ocultar detalle"
 
 #: inc/taskview.class.php:200 inc/deploypackage.class.php:1295
 msgid "Not done yet"
-msgstr ""
+msgstr "Aún no realizado"
 
 #: inc/taskview.class.php:201 inc/menu.class.php:966
 #: inc/deploypackage.class.php:1296
 msgid "In error"
-msgstr ""
+msgstr "En error"
 
 #: inc/taskview.class.php:202 inc/menu.class.php:961
 #: inc/deploypackage.class.php:1297
 msgid "Successful"
-msgstr ""
+msgstr "Correcto"
 
 #: inc/taskview.class.php:203 inc/menu.class.php:956
 #: inc/deploypackage.class.php:1298
 msgid "Running"
-msgstr ""
+msgstr "Ejecutándose"
 
 #: inc/taskview.class.php:204 inc/stateinventory.class.php:182
 #: inc/statediscovery.class.php:244 inc/deploypackage.class.php:1299
@@ -479,24 +486,25 @@ msgstr "Preparado"
 
 #: inc/taskview.class.php:205 inc/taskjobstate.class.php:146
 msgid "Postponed"
-msgstr ""
+msgstr "Pospuesto"
 
 #: inc/taskview.class.php:206 inc/deploypackage.class.php:1300
 #: inc/taskjobstate.class.php:145
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #: inc/taskview.class.php:264
 msgid "Task execution states"
-msgstr ""
+msgstr "Estado de ejecución de la tarea"
 
 #: inc/taskview.class.php:332 inc/task.class.php:152
 msgid "Re-prepare a target-actor if previous run is successful"
 msgstr ""
+"Volver a preparar el actor objetivo si la ejecución previa es correcta"
 
 #: inc/taskview.class.php:336
 msgid "This is an on demand deployment task"
-msgstr ""
+msgstr "Esta es tarea de despliegue a demanda"
 
 #: inc/taskview.class.php:348 inc/task.class.php:112
 msgid "Schedule start"
@@ -508,19 +516,19 @@ msgstr "Finaliza programación"
 
 #: inc/taskview.class.php:356
 msgid "Preparation timeslot"
-msgstr ""
+msgstr "Intervalo de tiempo de preparación"
 
 #: inc/taskview.class.php:364
 msgid "Execution timeslot"
-msgstr ""
+msgstr "Intervalo de tiempo de ejecución"
 
 #: inc/taskview.class.php:370
 msgid "Agent wakeup interval (in minutes)"
-msgstr ""
+msgstr "Intervalo de activación del agente (en minutos)"
 
 #: inc/taskview.class.php:377
 msgid "Number of agents to wake up"
-msgstr ""
+msgstr "Numero de agentes para activarse"
 
 #: inc/taskview.class.php:413
 msgid "Force start"
@@ -528,7 +536,7 @@ msgstr "Forzar comienzo"
 
 #: inc/timeslotentry.class.php:78
 msgid "Time slot entry"
-msgstr ""
+msgstr "Intervalo de tiempo de entrada"
 
 #: inc/timeslotentry.class.php:93 inc/timeslot.class.php:79
 #: inc/timeslot.class.php:94 inc/menu.class.php:305
@@ -537,11 +545,11 @@ msgstr "Intervalo de tiempo"
 
 #: inc/timeslotentry.class.php:145
 msgid "Start time"
-msgstr ""
+msgstr "Hora de inicio"
 
 #: inc/timeslotentry.class.php:171
 msgid "End time"
-msgstr ""
+msgstr "Hora de fin"
 
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
@@ -570,7 +578,7 @@ msgstr "valor en lista negra"
 #: inc/computerremotemanagement.class.php:73
 #: inc/computerremotemanagement.class.php:91
 msgid "Remote management"
-msgstr ""
+msgstr "Administración remota"
 
 #: inc/collect.class.php:72 inc/staticmisc.class.php:674
 msgid "Collect information"
@@ -588,7 +596,7 @@ msgstr "Regla de importación de registros"
 #: inc/rulematchedlog.class.php:260 inc/rulematchedlog.class.php:337
 #: inc/ignoredimportdevice.class.php:105
 msgid "Rule name"
-msgstr ""
+msgstr "Nombre de la regla"
 
 #: inc/rulematchedlog.class.php:264 inc/stateinventory.class.php:116
 #: inc/statediscovery.class.php:170 inc/ignoredimportdevice.class.php:90
@@ -616,7 +624,7 @@ msgstr "Protocolo de cifrado para datos"
 
 #: inc/item.class.php:122
 msgid "Download inventory file"
-msgstr ""
+msgstr "Descargar el archivo de inventario"
 
 #: inc/item.class.php:158
 msgid "SNMP information"
@@ -624,7 +632,7 @@ msgstr "Información SNMP"
 
 #: inc/item.class.php:186
 msgid "SNMP authentication"
-msgstr ""
+msgstr "Autentificación SNMP"
 
 #: inc/item.class.php:299
 msgid "sec(s)"
@@ -643,7 +651,7 @@ msgstr "Fecha de ejecución"
 
 #: inc/taskjob.class.php:894
 msgid "Periodicity"
-msgstr ""
+msgstr "Periodicidad"
 
 #: inc/taskjob.class.php:895 inc/taskjob.class.php:1264
 #: inc/taskjoblog.class.php:451
@@ -652,7 +660,7 @@ msgstr "Definición"
 
 #: inc/taskjob.class.php:896 inc/taskjob.class.php:1281
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: inc/taskjob.class.php:914 inc/deployfile.class.php:186
 #: inc/deployfile.class.php:348

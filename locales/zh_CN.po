@@ -3,14 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# CyanVesper <SharpNight93@gmail.com>, 2018
+# 南 孔, 2019
+# liAnGjiA <liangjia@qq.com>, 2019
+# fhuang1984 <168546@163.com>, 2019
+# LI guan <tinging@msn.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: 杜哥 <liangjia@qq.com>, 2018\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
+"Last-Translator: LI guan <tinging@msn.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/ddurieux/teams/797/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +52,7 @@ msgstr "聚合资产盘点"
 
 #: report/not_queried_recently.php:70 setup.php:392
 msgid "Number of days since last inventory"
-msgstr ""
+msgstr "距上次资产盘点已过去天数"
 
 #: report/not_queried_recently.php:156 report/computer_last_inventory.php:130
 #: hook.php:63 hook.php:255 hook.php:281 inc/item.class.php:176
@@ -56,11 +63,11 @@ msgstr "上次资产盘点"
 
 #: report/computer_last_inventory.php:69 setup.php:396
 msgid "Computers not inventoried since xx days"
-msgstr ""
+msgstr "已有 xx 天未进行资产盘点的计算机"
 
 #: report/computer_last_inventory.php:75
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "距上次资产盘点已过去天数(最小值)"
 
 #: front/deploygroup.php:51 inc/deploytaskjob.class.php:226
 #: inc/profile.class.php:414 inc/menu.class.php:256
@@ -77,15 +84,15 @@ msgstr "本地规则"
 
 #: front/unmanaged.form.php:86
 msgid "restoration of the item"
-msgstr ""
+msgstr "项目恢复"
 
 #: front/unmanaged.form.php:107 inc/unmanaged.class.php:367
 msgid "Number of imported devices"
-msgstr ""
+msgstr "已导入设备数"
 
 #: front/unmanaged.form.php:109 inc/unmanaged.class.php:368
 msgid "Number of devices not imported because type not defined"
-msgstr ""
+msgstr "因未定义类型而未导入的设备数"
 
 #: front/deployuserinteractiontemplate.php:50 inc/profile.class.php:325
 #: inc/menu.class.php:471 inc/deployuserinteractiontemplate.class.php:151
@@ -107,7 +114,7 @@ msgstr "重置导入规则 (仅定义默认规则)"
 
 #: front/configlogfield.form.php:51 front/config.form.php:52
 msgid "Features"
-msgstr ""
+msgstr "特性"
 
 #: front/popup.php:68
 msgid "Cache informations"
@@ -120,12 +127,12 @@ msgstr "网络端口显示选项"
 #: front/printerlogreport.php:101 inc/stateinventory.class.php:118
 #: inc/statediscovery.class.php:172
 msgid "Starting date"
-msgstr ""
+msgstr "起始日期"
 
 #: front/printerlogreport.php:109 inc/stateinventory.class.php:119
 #: inc/statediscovery.class.php:173
 msgid "Ending date"
-msgstr ""
+msgstr "截止日期"
 
 #: front/collect.form.php:49
 msgid "Collect management"
@@ -258,7 +265,7 @@ msgstr "找不到路径"
 
 #: install/update.php:943 install/install.php:302
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
+msgstr "删除自“xxx”天以来未连接服务器的代理。"
 
 #: install/install.php:305
 msgid "Wake agents ups"
@@ -409,21 +416,21 @@ msgstr "无法与该智能代理端通信！"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "CSV导入"
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
-msgstr ""
+msgstr "从CSV文件导入计算机列表（第一列必须包含计算机ID）"
 
 #: inc/deploygroup_staticdata.class.php:296
 msgid "Computers imported successfully from CSV file"
-msgstr ""
+msgstr "已成功从CSV文件导入计算机"
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
-msgstr ""
+msgstr "无法读取csv文件"
 
 #: inc/taskview.class.php:78
 msgid "Include old jobs"
@@ -534,11 +541,11 @@ msgstr ""
 
 #: inc/timeslotentry.class.php:145
 msgid "Start time"
-msgstr ""
+msgstr "起始时间"
 
 #: inc/timeslotentry.class.php:171
 msgid "End time"
-msgstr ""
+msgstr "截止时间"
 
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
@@ -575,16 +582,16 @@ msgstr "收集信息"
 #: inc/rulematchedlog.class.php:103 inc/rulematchedlog.class.php:111
 #: inc/rulematchedlog.class.php:117 inc/rulematchedlog.class.php:139
 msgid "Import information"
-msgstr ""
+msgstr "导入信息"
 
 #: inc/rulematchedlog.class.php:249 inc/rulematchedlog.class.php:326
 msgid "Rule import logs"
-msgstr ""
+msgstr "规则导入日志"
 
 #: inc/rulematchedlog.class.php:260 inc/rulematchedlog.class.php:337
 #: inc/ignoredimportdevice.class.php:105
 msgid "Rule name"
-msgstr ""
+msgstr "规则名称"
 
 #: inc/rulematchedlog.class.php:264 inc/stateinventory.class.php:116
 #: inc/statediscovery.class.php:170 inc/ignoredimportdevice.class.php:90
@@ -592,7 +599,7 @@ msgstr ""
 #: inc/taskjoblog.class.php:429 inc/taskjobstate.class.php:298
 #: inc/agent.class.php:78 inc/agent.class.php:93 inc/agent.class.php:1153
 msgid "Agent"
-msgstr ""
+msgstr "代理"
 
 #: inc/configsecurity.class.php:105
 msgid "SNMP version"
@@ -620,7 +627,7 @@ msgstr "SNMP 信息"
 
 #: inc/item.class.php:186
 msgid "SNMP authentication"
-msgstr ""
+msgstr "SNMP 认证"
 
 #: inc/item.class.php:299
 msgid "sec(s)"
@@ -631,7 +638,7 @@ msgstr "秒(s)"
 #: inc/taskjoblog.class.php:199 inc/unmanaged.class.php:265
 #: inc/taskjobstate.class.php:297
 msgid "Job"
-msgstr ""
+msgstr "作业"
 
 #: inc/taskjob.class.php:893
 msgid "Scheduled date"
@@ -644,7 +651,7 @@ msgstr ""
 #: inc/taskjob.class.php:895 inc/taskjob.class.php:1264
 #: inc/taskjoblog.class.php:451
 msgid "Definition"
-msgstr ""
+msgstr "定义"
 
 #: inc/taskjob.class.php:896 inc/taskjob.class.php:1281
 msgid "Action"
@@ -694,7 +701,7 @@ msgstr ""
 #: inc/collect_file.class.php:65
 msgid "Found file"
 msgid_plural "Found files"
-msgstr[0] ""
+msgstr[0] "找到文件"
 
 #: inc/collect_file.class.php:72 inc/collect_file.class.php:117
 msgid "Limit"
@@ -778,11 +785,11 @@ msgstr ""
 
 #: inc/lock.class.php:337
 msgid "Add locks"
-msgstr ""
+msgstr "添加锁定"
 
 #: inc/lock.class.php:343
 msgid "Delete locks"
-msgstr ""
+msgstr "删除锁定"
 
 #: inc/printer.class.php:97 inc/networkequipment.class.php:76
 msgid "FusionInventory SNMP"
@@ -790,7 +797,7 @@ msgstr "聚合资产盘点 SNMP"
 
 #: inc/computerlicenseinfo.class.php:112
 msgid "Trial"
-msgstr ""
+msgstr "试用"
 
 #: inc/computerlicenseinfo.class.php:113
 msgid "OEM"
@@ -798,7 +805,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:119
 msgid "Option"
-msgstr ""
+msgstr "选项"
 
 #: inc/config.class.php:243 inc/staticmisc.class.php:79
 msgid "Computer Inventory"
@@ -806,27 +813,27 @@ msgstr "计算机资产盘点"
 
 #: inc/config.class.php:244
 msgid "Network Inventory"
-msgstr ""
+msgstr "网络资产盘点"
 
 #: inc/config.class.php:245 inc/menu.class.php:456
 msgid "Package management"
-msgstr ""
+msgstr "程序包管理"
 
 #: inc/config.class.php:333
 msgid "SSL-only for agent"
-msgstr ""
+msgstr "仅SSL适用于代理"
 
 #: inc/config.class.php:337
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "盘点频率（以小时为单位）"
 
 #: inc/config.class.php:350
 msgid "Delete tasks logs after"
-msgstr ""
+msgstr "之后删除任务日志"
 
 #: inc/config.class.php:362 inc/agent.class.php:215 inc/agent.class.php:531
 msgid "Agent port"
-msgstr ""
+msgstr "代理端口"
 
 #: inc/config.class.php:369
 msgid "Extra-debug"
@@ -834,23 +841,23 @@ msgstr ""
 
 #: inc/config.class.php:374
 msgid "Re-prepare successful jobs"
-msgstr ""
+msgstr "重新准备成功的工作"
 
 #: inc/config.class.php:382
 msgid "Maximum number of agents to wake up in a task"
-msgstr ""
+msgstr "任务中要唤醒的代理的最大数目"
 
 #: inc/config.class.php:395
 msgid "Update agents"
-msgstr ""
+msgstr "更新代理"
 
 #: inc/config.class.php:397
 msgid "Update agents not have contacted server since (in days)"
-msgstr ""
+msgstr "更新代理自（以天为单位）以来未联系服务器"
 
 #: inc/config.class.php:432 inc/config.class.php:462
 msgid "Change the status"
-msgstr ""
+msgstr "变更状态"
 
 #: inc/config.class.php:465
 msgid "Clean agents"
@@ -872,11 +879,11 @@ msgstr "默认状态"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "基于虚拟机信息创建计算机（仅当虚拟机没有清单代理时！）"
 
 #: inc/config.class.php:589
 msgid "Manage operating system name:"
-msgstr ""
+msgstr "管理操作系统名称："
 
 #: inc/config.class.php:649
 msgid "Virtual network card"
@@ -884,7 +891,7 @@ msgstr ""
 
 #: inc/config.class.php:667
 msgid "Network drives"
-msgstr ""
+msgstr "网络驱动器"
 
 #: inc/config.class.php:696
 msgid "Removable medias"
@@ -893,7 +900,7 @@ msgstr[0] "可移动媒体"
 
 #: inc/config.class.php:737
 msgid "Network options"
-msgstr ""
+msgstr "网络选项"
 
 #: inc/config.class.php:750 inc/config.class.php:760
 #: inc/stateinventory.class.php:122 inc/statediscovery.class.php:175
@@ -960,7 +967,7 @@ msgstr "BIOS版本"
 
 #: inc/inventorycomputercomputer.class.php:261
 msgid "Public contact address"
-msgstr "公用联系地址"
+msgstr "IP地址"
 
 #: inc/inventorycomputercomputer.class.php:274
 msgid "Automatic entity transfer"
@@ -1156,7 +1163,7 @@ msgstr "内存使用率 (百分比格式 %)"
 
 #: inc/networkequipment.class.php:1118
 msgid "No data available"
-msgstr ""
+msgstr "无可用数据"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -1164,7 +1171,7 @@ msgstr ""
 
 #: inc/deploygroup.class.php:99
 msgid "Dynamic group"
-msgstr ""
+msgstr "动态组"
 
 #: inc/deploygroup.class.php:111
 msgid "FusionInventory group"
@@ -1172,12 +1179,12 @@ msgstr ""
 
 #: inc/deploygroup.class.php:329
 msgid "Add group"
-msgstr ""
+msgstr "添加组"
 
 #: inc/agentmodule.class.php:74 inc/agentmodule.class.php:76
 #: inc/configuration.class.php:77
 msgid "Agents modules"
-msgstr ""
+msgstr "代理模块"
 
 #: inc/agentmodule.class.php:121
 msgid "Activation (by default)"
@@ -1224,11 +1231,11 @@ msgstr ""
 
 #: inc/deployfile.class.php:302
 msgid "filename"
-msgstr ""
+msgstr "文件名"
 
 #: inc/deployfile.class.php:309
 msgid "Choose"
-msgstr ""
+msgstr "选择"
 
 #: inc/deployfile.class.php:313
 msgid "Select the file on server"
@@ -1240,7 +1247,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:338
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:615
 msgid "Transfer error: the file size is too big"
@@ -1268,7 +1275,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:664 inc/deployfile.class.php:720
 msgid "File saved!"
-msgstr ""
+msgstr "文件已保存!"
 
 #: inc/deployfile.class.php:667 inc/deployfile.class.php:723
 msgid "Failed to copy file"
@@ -1276,11 +1283,11 @@ msgstr ""
 
 #: inc/deployfile.class.php:671 inc/deployfile.class.php:727
 msgid "File missing"
-msgstr ""
+msgstr "文件丢失"
 
 #: inc/deployfile.class.php:1007
 msgid "Max file size"
-msgstr ""
+msgstr "最大文件尺寸"
 
 #: inc/deployfile.class.php:1008
 msgid "Mio"
@@ -1288,7 +1295,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:1020
 msgid "Unused file"
-msgstr ""
+msgstr "未使用文件"
 
 #: inc/collect_wmi_content.class.php:158 inc/collect_wmi.class.php:71
 msgid "Moniker"
@@ -1297,11 +1304,11 @@ msgstr ""
 #: inc/collect_wmi_content.class.php:159 inc/collect_wmi.class.php:72
 #: inc/collect_wmi.class.php:96
 msgid "Class"
-msgstr ""
+msgstr "类"
 
 #: inc/collect_wmi_content.class.php:160 inc/collect_wmi_content.class.php:209
 msgid "Property"
-msgstr ""
+msgstr "属性"
 
 #: inc/collect_wmi_content.class.php:161 inc/collect_wmi_content.class.php:210
 #: inc/collect_registry_content.class.php:173
@@ -1309,7 +1316,7 @@ msgstr ""
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
 #: inc/deploycheck.class.php:402
 msgid "Value"
-msgstr ""
+msgstr "值"
 
 #: inc/deploytask.class.php:125
 msgid "Order list"
@@ -1325,7 +1332,7 @@ msgstr ""
 
 #: inc/deploytask.class.php:235
 msgid "This task is active. delete denied"
-msgstr ""
+msgstr "此任务处于活动状态。拒绝删除。"
 
 #: inc/ignoredimportdevice.class.php:75 inc/profile.class.php:306
 msgid "Equipment ignored on import"
@@ -1333,27 +1340,27 @@ msgstr "导入时忽略的设备"
 
 #: inc/communicationnetworkdiscovery.class.php:123
 msgid "Processed:"
-msgstr ""
+msgstr "已处理:"
 
 #: inc/communicationnetworkdiscovery.class.php:124
 msgid "Created:"
-msgstr ""
+msgstr "已创建:"
 
 #: inc/communicationnetworkdiscovery.class.php:125
 msgid " Updated:"
-msgstr ""
+msgstr "已更新:"
 
 #: inc/commonview.class.php:293
 msgid "Warning:"
-msgstr ""
+msgstr "警告:"
 
 #: inc/commonview.class.php:298
 msgid "Error:"
-msgstr ""
+msgstr "错误:"
 
 #: inc/inventorycomputerlib.class.php:2010
 msgid "Internal battery"
-msgstr ""
+msgstr "内部电池"
 
 #: inc/deployaction.class.php:69
 msgid "Return code is equal to"
@@ -1502,7 +1509,7 @@ msgstr ""
 #: inc/inventoryruleimportcollection.class.php:149
 #: inc/inventoryruleimport.class.php:1047
 msgid "Device created"
-msgstr ""
+msgstr "设备已创建"
 
 #: inc/inventoryruleimportcollection.class.php:154
 #: inc/taskjoblog.class.php:773 inc/inventoryruleimport.class.php:1052
@@ -1511,7 +1518,7 @@ msgstr ""
 
 #: inc/credentialip.class.php:95
 msgid "Remote device inventory"
-msgstr ""
+msgstr "远程设备清单"
 
 #: inc/task.class.php:70 inc/menu.class.php:280
 msgid "Task management"
@@ -1534,7 +1541,7 @@ msgstr ""
 
 #: inc/task.class.php:396
 msgid "This job can not be executed anymore due to the task's schedule."
-msgstr ""
+msgstr "由于任务日程安排，无法执行此作业。"
 
 #: inc/task.class.php:427
 msgid "This job can not be executed anymore due to the task's timeslot."
@@ -1564,11 +1571,11 @@ msgstr ""
 
 #: inc/task.class.php:2088
 msgid "Deployment job, package: "
-msgstr ""
+msgstr "部署作业、包："
 
 #: inc/task.class.php:2103
 msgid "Updated a deployment job, package: "
-msgstr ""
+msgstr "更新了部署作业、包:"
 
 #: inc/task.class.php:2104 inc/task.class.php:2136
 msgid ", actors: "
@@ -1576,11 +1583,11 @@ msgstr ""
 
 #: inc/task.class.php:2127
 msgid "The selected task already has a deployment job for another package: "
-msgstr ""
+msgstr "所选任务已有另一个包的部署作业："
 
 #: inc/task.class.php:2135
 msgid "Created a deployment job, package: "
-msgstr ""
+msgstr "新建部署作业、包："
 
 #: inc/deploypackageitem.class.php:323 inc/deploypackage.class.php:982
 msgid "The modified JSON contained a syntax error :"
@@ -1774,7 +1781,7 @@ msgstr "计算机信息"
 #: inc/menu.class.php:163 inc/menu.class.php:172
 #: inc/deploypackage.class.php:158
 msgid "Import"
-msgstr ""
+msgstr "导入"
 
 #: inc/menu.class.php:167
 msgid "Clean unused files"
@@ -1792,7 +1799,7 @@ msgstr ""
 
 #: inc/menu.class.php:229
 msgid "documentation"
-msgstr ""
+msgstr "文档"
 
 #: inc/menu.class.php:250
 msgid "Agents management"
@@ -1804,7 +1811,7 @@ msgstr ""
 
 #: inc/menu.class.php:284
 msgid "Monitoring / Logs"
-msgstr ""
+msgstr "监控 / 日志"
 
 #: inc/menu.class.php:291
 msgid "Import agent XML file"
@@ -1812,11 +1819,11 @@ msgstr ""
 
 #: inc/menu.class.php:311
 msgid "Tasks"
-msgstr ""
+msgstr "任务"
 
 #: inc/menu.class.php:331
 msgid "Asset skipped during import"
-msgstr ""
+msgstr "导入期间跳过的资产 "
 
 #: inc/menu.class.php:339
 msgid "Computer entity rules"
@@ -1829,15 +1836,15 @@ msgstr "定位规则"
 
 #: inc/menu.class.php:368
 msgid "Rules"
-msgstr ""
+msgstr "规则"
 
 #: inc/menu.class.php:418
 msgid "Discovery status"
-msgstr ""
+msgstr "发现状态"
 
 #: inc/menu.class.php:426
 msgid "Network inventory status"
-msgstr ""
+msgstr "网络资产状态"
 
 #: inc/menu.class.php:436
 msgid "SNMP models creation"
@@ -1849,11 +1856,11 @@ msgstr ""
 
 #: inc/menu.class.php:490
 msgid "Computer inv."
-msgstr ""
+msgstr "计算机资产"
 
 #: inc/menu.class.php:496
 msgid "SNMP inv."
-msgstr ""
+msgstr "SNMP资产"
 
 #: inc/menu.class.php:502
 msgid "Guide"
@@ -1861,7 +1868,7 @@ msgstr "向导"
 
 #: inc/menu.class.php:530 inc/menu.class.php:601
 msgid "Statistics"
-msgstr ""
+msgstr "统计"
 
 #: inc/menu.class.php:530
 msgid "Number of computer inventories of last hours"
@@ -1902,13 +1909,13 @@ msgstr ""
 
 #: inc/menu.class.php:632
 msgid "Configure SNMP credentials"
-msgstr ""
+msgstr "配置SNMP证书"
 
 #: inc/menu.class.php:637
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
-msgstr ""
+msgstr "定义导入规则：合并和创建新设备（注意：计算机资产盘点规则相同）"
 
 #: inc/menu.class.php:642
 msgid "`Network Discovery`, used to discover the devices on the network"
@@ -1933,7 +1940,7 @@ msgstr ""
 
 #: inc/menu.class.php:667
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
-msgstr ""
+msgstr "“网络资源盘点”，用于完成对发现的设备的资源盘点"
 
 #: inc/menu.class.php:672
 msgid "Define an agent allowed to inventory the network by SNMP"
@@ -1955,15 +1962,15 @@ msgstr "其它计算机"
 
 #: inc/menu.class.php:851
 msgid "Network equipments"
-msgstr ""
+msgstr "网络设备"
 
 #: inc/menu.class.php:856
 msgid "Printers"
-msgstr ""
+msgstr "打印机"
 
 #: inc/menu.class.php:890 inc/menu.class.php:919
 msgid "Linked with a device"
-msgstr ""
+msgstr "与设备连接"
 
 #: inc/menu.class.php:895
 msgid "SNMP switch network ports not linked"
@@ -1971,23 +1978,23 @@ msgstr ""
 
 #: inc/menu.class.php:924
 msgid "Not linked"
-msgstr ""
+msgstr "未连接"
 
 #: inc/menu.class.php:951
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "准备就绪"
 
 #: inc/menu.class.php:985
 msgid "Automatic inventory vs manually added"
-msgstr ""
+msgstr "自动库存 vs 手动添加"
 
 #: inc/menu.class.php:987
 msgid "Computer inventories in the last hours"
-msgstr ""
+msgstr "过去几个小时的计算机库存"
 
 #: inc/menu.class.php:988
 msgid "Deployment"
-msgstr ""
+msgstr "部署"
 
 #: inc/menu.class.php:989
 msgid "Network inventory by SNMP"
@@ -1995,11 +2002,11 @@ msgstr ""
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr ""
+msgstr "网络设备端口（由SNMP发现）"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr ""
+msgstr "所有网络设备端口"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
@@ -2007,7 +2014,7 @@ msgstr ""
 
 #: inc/deploypackage.class.php:161
 msgid "Export"
-msgstr ""
+msgstr "导出"
 
 #: inc/deploypackage.class.php:277
 msgid "Modification Denied"
@@ -2028,7 +2035,7 @@ msgstr ""
 
 #: inc/deploypackage.class.php:522
 msgid "Files"
-msgstr ""
+msgstr "文件"
 
 #: inc/deploypackage.class.php:524
 msgid "User interactions"
@@ -2057,16 +2064,16 @@ msgstr ""
 
 #: inc/deploypackage.class.php:1415
 msgid "Restart job"
-msgstr ""
+msgstr "重启作业"
 
 #: inc/deploypackage.class.php:1424
 #: inc/deployuserinteractiontemplate.class.php:279
 msgid "Cancel job"
-msgstr ""
+msgstr "取消作业"
 
 #: inc/deploypackage.class.php:1431
 msgid "refresh job"
-msgstr ""
+msgstr "刷新作业"
 
 #: inc/deploypackage.class.php:1578
 msgid "Select packages you want install"
@@ -2074,7 +2081,7 @@ msgstr ""
 
 #: inc/deploypackage.class.php:1586
 msgid "Prepare for install"
-msgstr ""
+msgstr "准备安装"
 
 #: inc/deploypackage.class.php:1590
 msgid "I'm on this computer: local wakeup"
@@ -2099,7 +2106,7 @@ msgstr ""
 
 #: inc/taskjoblog.class.php:113 inc/taskjoblog.class.php:582
 msgid "Info"
-msgstr ""
+msgstr "信息"
 
 #: inc/taskjoblog.class.php:413
 msgid "Process number"
@@ -2123,7 +2130,7 @@ msgstr ""
 
 #: inc/taskjoblog.class.php:767
 msgid "Add the item"
-msgstr ""
+msgstr "添加项目"
 
 #: inc/taskjoblog.class.php:768
 msgid "Update the item"
@@ -2135,11 +2142,11 @@ msgstr ""
 
 #: inc/taskjoblog.class.php:770
 msgid "Detail"
-msgstr ""
+msgstr "详情"
 
 #: inc/taskjoblog.class.php:771
 msgid "Agent communication error, impossible to start agent"
-msgstr ""
+msgstr "代理通信错误，无法启动代理"
 
 #: inc/taskjoblog.class.php:772
 msgid "Agent stopped/crashed"
@@ -2148,7 +2155,7 @@ msgstr ""
 #: inc/collect_wmi.class.php:65
 msgid "Found WMI"
 msgid_plural "Found WMIs"
-msgstr[0] ""
+msgstr[0] "发现 WMIs"
 
 #: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
 msgid "Properties"
@@ -2183,11 +2190,11 @@ msgstr[0] ""
 
 #: inc/deployuserinteraction.class.php:109
 msgid "Before download"
-msgstr ""
+msgstr "下载前"
 
 #: inc/deployuserinteraction.class.php:110
 msgid "After download"
-msgstr ""
+msgstr "下载后"
 
 #: inc/deployuserinteraction.class.php:111
 msgid "After actions"
@@ -2195,7 +2202,7 @@ msgstr ""
 
 #: inc/deployuserinteraction.class.php:112
 msgid "On download failure"
-msgstr ""
+msgstr "下载失败"
 
 #: inc/deployuserinteraction.class.php:113
 msgid "On actions failure"
@@ -2250,7 +2257,7 @@ msgstr "无已连接用户"
 
 #: inc/deployuserinteraction.class.php:479
 msgid "Multiple users connected"
-msgstr ""
+msgstr "多个用户已连接"
 
 #: inc/collect_registry_content.class.php:83
 msgid "Windows registry content"
@@ -2259,7 +2266,7 @@ msgstr ""
 #: inc/collect_registry_content.class.php:174
 #: inc/collect_registry_content.class.php:220
 msgid "Data"
-msgstr ""
+msgstr "数据"
 
 #: inc/inventoryruleimport.class.php:119 inc/inventoryruleimport.class.php:144
 #: inc/inventoryruleimport.class.php:146 inc/inventoryruleimport.class.php:148
@@ -2301,7 +2308,7 @@ msgstr ""
 
 #: inc/inventoryruleimport.class.php:236
 msgid "Link"
-msgstr ""
+msgstr "连接"
 
 #: inc/inventoryruleimport.class.php:237
 msgid "Import denied (no log)"
@@ -2331,7 +2338,7 @@ msgstr ""
 
 #: inc/taskjobview.class.php:193
 msgid "Add a job"
-msgstr ""
+msgstr "添加作业"
 
 #: inc/taskjobview.class.php:258
 msgid ""
@@ -2353,7 +2360,7 @@ msgstr ""
 
 #: inc/taskjobview.class.php:404
 msgid "Target Item"
-msgstr ""
+msgstr "目标项"
 
 #: inc/taskjobview.class.php:553 inc/taskjobview.class.php:556
 msgid "New action"
@@ -2365,7 +2372,7 @@ msgstr ""
 
 #: inc/taskjobview.class.php:603 inc/taskjobview.class.php:633
 msgid "Targets"
-msgstr ""
+msgstr "目标"
 
 #: inc/taskjobview.class.php:608
 msgid "The items that should be applied for this job."
@@ -2381,7 +2388,7 @@ msgstr ""
 
 #: inc/taskjobview.class.php:641 inc/taskjobview.class.php:663
 msgid "Clear list"
-msgstr ""
+msgstr "清除列表"
 
 #: inc/taskjobview.class.php:646 inc/taskjobview.class.php:668
 msgid "Delete selected items"
@@ -2405,7 +2412,7 @@ msgstr ""
 
 #: inc/networkport.class.php:142
 msgid "Number of bytes received / Number of bytes sent"
-msgstr ""
+msgstr "接收字节数 / 发送字节数"
 
 #: inc/networkport.class.php:149
 msgid "Number of input errors / Number of errors in reception"
@@ -2473,7 +2480,7 @@ msgstr ""
 
 #: inc/mapping.class.php:171
 msgid "networking > port > name"
-msgstr ""
+msgstr "网络 > 端口 > 名称 "
 
 #: inc/mapping.class.php:174
 msgid "networking > model"
@@ -2493,7 +2500,7 @@ msgstr ""
 
 #: inc/mapping.class.php:186
 msgid "networking > total memory"
-msgstr ""
+msgstr "网络系统 > 总内存"
 
 #: inc/mapping.class.php:189
 msgid "networking > free memory"
@@ -2529,7 +2536,7 @@ msgstr ""
 
 #: inc/mapping.class.php:213
 msgid "printer > meter > number of printed color pages"
-msgstr ""
+msgstr "打印机 > 计数 > 彩色打印页数"
 
 #: inc/mapping.class.php:216
 msgid "printer > meter > number of printed monochrome pages"
@@ -2541,7 +2548,7 @@ msgstr ""
 
 #: inc/mapping.class.php:222
 msgid "printer > consumables > black cartridge (%)"
-msgstr ""
+msgstr "打印机 > 耗材 > 黑色墨盒"
 
 #: inc/mapping.class.php:225
 msgid "printer > consumables > photo black cartridge (%)"
@@ -2633,7 +2640,7 @@ msgstr ""
 
 #: inc/mapping.class.php:291
 msgid "printer > port > name"
-msgstr ""
+msgstr "打印机 > 端口 > 名称"
 
 #: inc/mapping.class.php:294
 msgid "printer > port > MAC address"
@@ -2685,7 +2692,7 @@ msgstr ""
 
 #: inc/mapping.class.php:330
 msgid "printer > consumables > light magenta cartridge (remaining ink)"
-msgstr ""
+msgstr "打印机 > 耗材 > 浅品红色墨盒（剩余墨量）"
 
 #: inc/mapping.class.php:333
 msgid "printer > consumables > photoconductor (max ink)"
@@ -2785,7 +2792,7 @@ msgstr ""
 
 #: inc/mapping.class.php:405
 msgid "printer > consumables > cleaning module (max ink)"
-msgstr ""
+msgstr "打印机 > 耗材 > 清洁模块（最大墨量） "
 
 #: inc/mapping.class.php:408
 msgid "printer > consumables > cleaning module (remaining ink)"
@@ -2801,7 +2808,7 @@ msgstr ""
 
 #: inc/mapping.class.php:417
 msgid "printer > consumables > maintenance kit (remaining)"
-msgstr ""
+msgstr "打印机 > 耗材 > 维修套件（剩余） "
 
 #: inc/mapping.class.php:420
 msgid "printer > consumables > maintenance kit (%)"
@@ -2853,7 +2860,7 @@ msgstr ""
 
 #: inc/mapping.class.php:456
 msgid "networking > MAC address filters (dot1dTpFdbAddress)"
-msgstr ""
+msgstr "网络 > MAC地址过滤器 (dot1dTpFdbAddress)"
 
 #: inc/mapping.class.php:459
 msgid "networking > Physical addresses in memory (ipNetToMediaPhysAddress)"
@@ -2873,7 +2880,7 @@ msgstr ""
 
 #: inc/mapping.class.php:474
 msgid "printer > Inventory number"
-msgstr ""
+msgstr "打印机 > 库存编号"
 
 #: inc/mapping.class.php:477
 msgid "networking > Inventory number"
@@ -2913,7 +2920,7 @@ msgstr ""
 
 #: inc/mapping.class.php:504
 msgid "printer > meter > number of printed color pages (copy)"
-msgstr ""
+msgstr "打印机 > 计数 > 彩色打印（复印）页数 "
 
 #: inc/mapping.class.php:507
 msgid "printer > meter > total number of printed pages (fax)"
@@ -2985,7 +2992,7 @@ msgstr ""
 
 #: inc/mapping.class.php:600
 msgid "Yellow cartridge"
-msgstr ""
+msgstr "黄色墨盒"
 
 #: inc/mapping.class.php:603
 msgid "Magenta cartridge"
@@ -3045,15 +3052,15 @@ msgstr ""
 
 #: inc/mapping.class.php:645
 msgid "Four"
-msgstr ""
+msgstr "4"
 
 #: inc/mapping.class.php:648
 msgid "Cleaning module"
-msgstr ""
+msgstr "清洁模块"
 
 #: inc/mapping.class.php:657
 msgid "Maintenance kit"
-msgstr ""
+msgstr "维修套件"
 
 #: inc/mapping.class.php:660
 msgid "Black toner"
@@ -3217,11 +3224,11 @@ msgstr ""
 
 #: inc/mapping.class.php:801
 msgid "Total number of large printed pages"
-msgstr ""
+msgstr "大型印刷品总页数"
 
 #: inc/inventoryrulelocation.class.php:194
 msgid "Assets"
-msgstr ""
+msgstr "资产"
 
 #: inc/deploycheck.class.php:70
 msgid "Registry value exists"
@@ -3281,7 +3288,7 @@ msgstr ""
 
 #: inc/deploycheck.class.php:88
 msgid "Directory is missing"
-msgstr ""
+msgstr "目录缺失"
 
 #: inc/deploycheck.class.php:135
 msgid "continue"
@@ -3293,40 +3300,40 @@ msgstr ""
 
 #: inc/deploycheck.class.php:139
 msgid "otherwise"
-msgstr ""
+msgstr "否则"
 
 #: inc/deploycheck.class.php:301 inc/deploycheck.class.php:453
 msgid "Audit label"
-msgstr ""
+msgstr "审核标签"
 
 #: inc/deploycheck.class.php:340
 msgid "Path to the key"
-msgstr ""
+msgstr "键的路径"
 
 #: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
 #: inc/deploycheck.class.php:367
 msgid "Path to the value"
-msgstr ""
+msgstr "值的路径"
 
 #: inc/deploycheck.class.php:368
 msgid "Type of value"
-msgstr ""
+msgstr "值的类型"
 
 #: inc/deploycheck.class.php:381
 msgid "Directory"
-msgstr ""
+msgstr "目录"
 
 #: inc/deploycheck.class.php:401
 msgid "Disk or directory"
-msgstr ""
+msgstr "磁盘或目录"
 
 #: inc/deploycheck.class.php:513
 msgid "Unit"
-msgstr ""
+msgstr "单位"
 
 #: inc/deploycheck.class.php:537
 msgid "If not successful"
-msgstr ""
+msgstr "如果不成功"
 
 #: inc/iprange.class.php:93
 msgid "Communication mode"
@@ -3352,7 +3359,7 @@ msgstr "错误的IP"
 
 #: inc/collect_file_content.class.php:108
 msgid "Path/file"
-msgstr ""
+msgstr "路径/文件"
 
 #: inc/unmanaged.class.php:78 inc/unmanaged.class.php:129
 msgid "Unmanaged device"
@@ -3360,7 +3367,7 @@ msgstr ""
 
 #: inc/unmanaged.class.php:182 inc/unmanaged.class.php:460
 msgid "Network hub"
-msgstr ""
+msgstr "集线器"
 
 #: inc/unmanaged.class.php:448
 msgid "Approved devices"
@@ -3376,7 +3383,7 @@ msgstr ""
 
 #: inc/iprange_configsecurity.class.php:209
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: inc/iprange_configsecurity.class.php:212
 msgid "By order of priority"
@@ -3384,7 +3391,7 @@ msgstr ""
 
 #: inc/taskjobstate.class.php:129
 msgid "Job executions"
-msgstr ""
+msgstr "作业执行"
 
 #: inc/taskjobstate.class.php:141
 msgid "Server has sent data to the agent"
@@ -3396,15 +3403,15 @@ msgstr ""
 
 #: inc/taskjobstate.class.php:143
 msgid "Finished"
-msgstr ""
+msgstr "已完成"
 
 #: inc/taskjobstate.class.php:144
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #: inc/taskjobstate.class.php:249
 msgid "Running tasks"
-msgstr ""
+msgstr "正在运行任务"
 
 #: inc/taskjobstate.class.php:587
 #, php-format
@@ -3446,11 +3453,11 @@ msgstr ""
 
 #: inc/agent.class.php:132 inc/agent.class.php:454
 msgid "locked"
-msgstr ""
+msgstr "锁定"
 
 #: inc/agent.class.php:149 inc/agent.class.php:427
 msgid "Computer link"
-msgstr ""
+msgstr "计算机关联"
 
 #: inc/agent.class.php:532
 msgid "if empty use port configured in general options"
@@ -3495,7 +3502,7 @@ msgstr ""
 
 #: inc/deployuserinteractiontemplate.class.php:199
 msgid "OK - Abort - Retry"
-msgstr ""
+msgstr "确定 - 中止 - 重试"
 
 #: inc/deployuserinteractiontemplate.class.php:201
 msgid "Retry - Cancel"
@@ -3535,11 +3542,11 @@ msgstr ""
 
 #: inc/deployuserinteractiontemplate.class.php:453
 msgid "Maximum number of retry allowed"
-msgstr ""
+msgstr "允许的最大重试次数"
 
 #: inc/deployuserinteractiontemplate.class.php:465
 msgid "Alert display timeout"
-msgstr ""
+msgstr "警报显示超时"
 
 #: inc/deployuserinteractiontemplate.class.php:558
 msgid "Button ok"
@@ -3567,49 +3574,49 @@ msgstr ""
 
 #: inc/deployuserinteractiontemplate.class.php:564
 msgid "Button cancel"
-msgstr ""
+msgstr "取消按钮"
 
 #: inc/deployuserinteractiontemplate.class.php:565
 msgid "Button abort"
-msgstr ""
+msgstr "中止按钮"
 
 #: inc/deployuserinteractiontemplate.class.php:566
 msgid "Button ignore"
-msgstr ""
+msgstr "忽略按钮"
 
 #: inc/deployuserinteractiontemplate.class.php:567
 msgid "No active session"
-msgstr ""
+msgstr "没有活动的会话"
 
 #: inc/deployuserinteractiontemplate.class.php:568
 msgid "Alert timeout exceeded"
-msgstr ""
+msgstr "超出警报超时"
 
 #: inc/deployuserinteractiontemplate.class.php:569
 msgid "Several active sessions"
-msgstr ""
+msgstr "几个活跃的会话"
 
 #: inc/deployuserinteractiontemplate.class.php:677
 msgid "Behaviors"
-msgstr ""
+msgstr "行为"
 
 #: setup.php:388
 msgid "Switch ports history"
-msgstr ""
+msgstr "交换机端口历史"
 
 #: setup.php:390
 msgid "Unused switch ports"
-msgstr ""
+msgstr "未使用的交换机端口"
 
 #: setup.php:530
 msgid "Your GLPI version not compatible, require >= 9.2 and < 9.3"
-msgstr ""
+msgstr "您当前的 GLPI 版本不被兼容, 版本要求 >= 9。2 并且 < 9.3"
 
 #: setup.php:536
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "需要fileinfo扩展（PHP）..."
 
 #: setup.php:549
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "请删除 glpi/plugins/ 目录的%s文件夹"

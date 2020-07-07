@@ -3,14 +3,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Walid Nouh, 2018
+# João Nobrega <nobrega@brturbo.com.br>, 2018
+# kedson silva <kedson.42@gmail.com>, 2018
+# Arthur Ramos Schaefer <arthur.r.schaefer@gmail.com>, 2018
+# Wanderlei Hüttel <wanderlei.huttel@gmail.com>, 2018
+# Helvio Pichamone Candido Jr. <helvio@multiconecta.com.br>, 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Wanderlei Hüttel <wanderlei.huttel@gmail.com>, 2018\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
+"Last-Translator: Helvio Pichamone Candido Jr. <helvio@multiconecta.com.br>, 2019\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/ddurieux/teams/797/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -510,11 +518,11 @@ msgstr "Agendar o término"
 
 #: inc/taskview.class.php:356
 msgid "Preparation timeslot"
-msgstr "Preparação do período de tempo "
+msgstr "Intervalo de preparação"
 
 #: inc/taskview.class.php:364
 msgid "Execution timeslot"
-msgstr "Execução do período de tempo "
+msgstr "Intervalo de execução"
 
 #: inc/taskview.class.php:370
 msgid "Agent wakeup interval (in minutes)"
@@ -918,7 +926,7 @@ msgstr "Número de threads"
 #: inc/agentmodule.class.php:250 inc/agent.class.php:206
 #: inc/agent.class.php:502 inc/agent.class.php:517
 msgid "Network inventory (SNMP)"
-msgstr "Descoberta de rede (SNMP)"
+msgstr "Inventário de rede (SNMP)"
 
 #: inc/config.class.php:772 inc/config.class.php:781 inc/agent.class.php:485
 #: inc/agent.class.php:516
