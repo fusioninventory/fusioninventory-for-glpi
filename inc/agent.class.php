@@ -1042,7 +1042,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             array_push($url_addresses, "http://".$computer->fields["name"].
                ":".$port);
 
-            $ditem = new DomainItem();
+            $ditem = new Domain_Item();
             if ($ditem->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computer->fields['id']])) {
                $domain = new Domain();
                $domain->getFromDB($ditem->fields['domains_id']);
