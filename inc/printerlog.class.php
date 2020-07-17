@@ -554,7 +554,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $where = " WHERE `printers_id` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
-         $where .= " AND " .getDateRequest("`date`", $begin, $end);
+         $where .= " AND " .self::getDateRequest("`date`", $begin, $end);
       }
       $group = '';
       switch ($timeUnit) {
@@ -832,6 +832,19 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
    }
 
+   public static function getDateRequest($field, $begin, $end) {
+      $sql = '';
+      if (!empty($begin)) {
+         $sql .= " $field >= '$begin' ";
+      }
 
+      if (!empty($end)) {
+         if (!empty($sql)) {
+            $sql .= " AND ";
+         }
+         $sql .= " $field <= ADDDATE('$end' , INTERVAL 1 DAY) ";
+      }
+      return " (".$sql.") ";
+   }
 }
 
