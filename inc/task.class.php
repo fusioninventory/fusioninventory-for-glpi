@@ -1918,7 +1918,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $rand = mt_rand();
             Dropdown::show('PluginFusioninventoryTask', [
                   'name'      => "tasks_id",
-                  'condition' => "is_active = 0",
+                  'condition' => ['is_active' => 0],
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
