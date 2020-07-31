@@ -1489,7 +1489,7 @@ function plugin_fusioninventory_addOrderBy($type, $id, $order, $key = 0) {
  * @return string
  */
 function plugin_fusioninventory_addDefaultWhere($type) {
-   if ($type == 'PluginFusioninventoryTaskjob') {
+   if ($type == 'PluginFusioninventoryTaskjob' && !isAPI()) {
       return " ( select count(*) FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE plugin_fusioninventory_taskjobs_id= `glpi_plugin_fusioninventory_taskjobs`.`id`
          AND `state`!='3' )";
