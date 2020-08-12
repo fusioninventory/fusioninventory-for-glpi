@@ -67,7 +67,12 @@ class PluginFusioninventoryComputer extends Computer {
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {
          if ($plugin->isActivated('fields')) {
-            include_once(GLPI_ROOT . "/plugins/fields/hook.php");
+            // Check if Fields plugin is installed in marketplace or plugins folder
+            if (file_exists(GLPI_ROOT . "/marketplace/fields/hook.php")) {
+               include_once(GLPI_ROOT . "/marketplace/fields/hook.php");
+            } else {
+               include_once(GLPI_ROOT . "/plugins/fields/hook.php");
+            }
             $options['fields_plugin'] = [
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
