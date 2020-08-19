@@ -648,27 +648,33 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $retentiontime  = $config->getValue('delete_task');
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-      $sql = "SELECT *
-              FROM `glpi_plugin_fusioninventory_taskjoblogs`
-              WHERE  `date` < date_add(now(), interval -".$retentiontime." day)
-              GROUP BY `plugin_fusioninventory_taskjobstates_id`";
+      // Search for states to delete
+      $sql = "SELECT id, plugin_fusioninventory_agents_id, plugin_fusioninventory_taskjobs_id FROM `glpi_plugin_fusioninventory_taskjobstates`
+              WHERE id IN (SELECT DISTINCT `plugin_fusioninventory_taskjobstates_id` FROM `glpi_plugin_fusioninventory_taskjoblogs`
+              WHERE  `date` < date_add(now(), interval -".$retentiontime." day))
+              ORDER BY plugin_fusioninventory_agents_id,plugin_fusioninventory_taskjobs_id,id DESC";
       $result=$DB->query($sql);
+      $states = [];
+      // only delete states if there's more than one except the last to avoid re-deploy
       if ($result) {
-         $delete = $DB->buildDelete(
-            'glpi_plugin_fusioninventory_taskjoblogs', [
-               'plugin_fusioninventory_taskjobstates_id' => new \Queryparam()
-            ]
-         );
-         $stmt = $DB->prepare($delete);
+         // group by taskjob and agent id
          while ($data=$DB->fetchArray($result)) {
-            $pfTaskjobstate->getFromDB($data['plugin_fusioninventory_taskjobstates_id']);
-            $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
-
-            $stmt->bind_param('s', $data['plugin_fusioninventory_taskjobstates_id']);
-            $stmt->execute();
+            $states[$data['plugin_fusioninventory_taskjobs_id'].'_'.$data['plugin_fusioninventory_agents_id']][] = $data['id'];
          }
-         mysqli_stmt_close($stmt);
+         foreach ($states as $key => $states_id){
+            if (count($states_id) > 1) {
+               $sql = "DELETE FROM `glpi_plugin_fusioninventory_taskjobstates`
+                       WHERE id IN (".implode(',', array_slice($states_id, 1)).")
+                      ";
+               $DB->query($sql);
+            }
+         }
       }
+      // Delete orphan logs
+      $sql = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`
+              WHERE `plugin_fusioninventory_taskjobstates_id` NOT IN (SELECT `id` FROM `glpi_plugin_fusioninventory_taskjobstates`)";
+      $DB->query($sql);
+
    }
 
 
