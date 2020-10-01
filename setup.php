@@ -89,7 +89,7 @@ function script_endswith($scriptname) {
  * @global array $CFG_GLPI
  */
 function plugin_init_fusioninventory() {
-   global $PLUGIN_HOOKS, $CFG_GLPI;
+   global $PLUGIN_HOOKS, $CFG_GLPI, $_UGET;
 
    $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
@@ -421,7 +421,7 @@ function plugin_init_fusioninventory() {
                     && filter_input(INPUT_GET, "_itemtype") == 'NetworkEquipment') {
 
                if (filter_input(INPUT_GET, "_glpi_tab") == 'NetworkPort$1') {
-                  $_GET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
+                  $_UGET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
                } else if (filter_input(INPUT_GET, "_glpi_tab") == 'PluginFusioninventoryNetworkEquipment$1') {
                   $_GET['displaysnmpinfo'] = 1;
                }
