@@ -176,7 +176,8 @@ switch (filter_input(INPUT_GET, "action")) {
          }
 
          if (!isset($pfCollect_subO)) {
-            die("collect type not found");
+            // return anyway the next CSRF token to client
+            break;
          }
 
          if ($add_value) {
