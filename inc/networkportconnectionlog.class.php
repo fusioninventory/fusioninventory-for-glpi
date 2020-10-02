@@ -78,12 +78,12 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
-      echo __('Date');
+      echo _n('Date', 'Dates', 1);
 
       echo "</th>";
 
       echo "<th>";
-      echo __('Item');
+      echo _n('Item', 'Items', 1);
 
       echo "</th>";
 
@@ -93,7 +93,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
-      echo __('Item');
+      echo _n('Item', 'Items', 1);
 
       echo "</th>";
 

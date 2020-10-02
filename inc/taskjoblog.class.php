@@ -213,7 +213,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          'id'            => '5',
          'table'         => $this->getTable(),
          'field'         => 'date',
-         'name'          => __('Date'),
+         'name'          => _n('Date', 'Dates', 1),
          'datatype'      => 'datetime',
          'massiveaction' => false,
       ];
@@ -406,7 +406,7 @@ function appear_array(id) {
             $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".
                          __('Process number', 'fusioninventory')."&nbsp;: ".$data['id']."</th>";
             $text .= "<th>";
-            $text .= __('Date');
+            $text .= _n('Date', 'Dates', 1);
 
             $text .= "</th>";
             $text .= "<th>";

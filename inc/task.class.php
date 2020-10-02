@@ -126,7 +126,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
-         'name'      => __('Entity'),
+         'name'      => Entity::getTypeName(1),
          'datatype'  => 'dropdown',
       ];
 

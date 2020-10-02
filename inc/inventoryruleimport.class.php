@@ -190,7 +190,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          ],
          'osname' => [
             'name'            => __('Asset', 'fusioninventory').' > '.
-                                 __('Operating system'),
+                                 OperatingSystem::getTypeName(1),
          ],
          'itemtype' => [
             'name'            => __('Asset', 'fusioninventory').' > '.
@@ -219,7 +219,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          ],
          'oscomment' => [
             'name'            => __('Asset', 'fusioninventory').' > '.
-                                 __('Operating system').'/'.__('Comments'),
+                                 OperatingSystem::getTypeName(1).'/'.__('Comments'),
             'allow_condition' => [
                                     Rule::PATTERN_IS,
                                     Rule::PATTERN_IS_NOT,

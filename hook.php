@@ -66,8 +66,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
       $sopt[5157]['field']     = 'operatingsystem_installationdate';
-      $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".
-                                    strtolower(__('Date')).")";
+      $sopt[5157]['name']      = OperatingSystem::getTypeName(1)." - ".__('Installation')." (".
+                                    strtolower(_n('Date', 'Dates', 1)).")";
       $sopt[5157]['joinparams']  = ['jointype' => 'child'];
       $sopt[5157]['datatype']  = 'date';
       $sopt[5157]['massiveaction'] = false;
@@ -97,7 +97,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
       $sopt[5163]['field']     = 'oscomment';
-      $sopt[5163]['name']      = __('Operating system').'/'.__('Comments');
+      $sopt[5163]['name']      = OperatingSystem::getTypeName(1).'/'.__('Comments');
       $sopt[5163]['joinparams']  = ['jointype' => 'child'];
       $sopt[5163]['massiveaction'] = false;
 

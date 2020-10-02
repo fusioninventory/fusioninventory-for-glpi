@@ -111,7 +111,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       if ($a_computerextend['bios_manufacturers_id'] > 0) {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
+         echo '<td>'.Manufacturer::getTypeName(1).'&nbsp;:</td>';
          echo '<td>';
          echo Dropdown::getDropdownName("glpi_manufacturers",
                                         $a_computerextend['bios_manufacturers_id']);
@@ -121,8 +121,8 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
 
       if ($a_computerextend['operatingsystem_installationdate'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo "<td>".__('Operating system')." - ".__('Installation')." (".
-                 strtolower(__('Date')).")</td>";
+         echo "<td>".OperatingSystem::getTypeName(1)." - ".__('Installation')." (".
+                 strtolower(_n('Date', 'Dates', 1)).")</td>";
          echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
          echo '</tr>';
       }

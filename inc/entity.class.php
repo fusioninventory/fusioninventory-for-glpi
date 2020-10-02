@@ -68,7 +68,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Entity');
+      return Entity::getTypeName(1);
    }
 
 
