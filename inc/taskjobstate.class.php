@@ -315,7 +315,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<th>".__('Job', 'fusioninventory')."</th>";
          echo "<th>".__('Agent', 'fusioninventory')."</th>";
          echo "<th>";
-         echo __('Date');
+         echo _n('Date', 'Dates', 1);
          echo "</th>";
          echo "<th>";
          echo __('Status');
@@ -740,7 +740,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       echo __('Module method');
       echo "</th>";
       echo "<th>";
-      echo __('Date');
+      echo _n('Date', 'Dates', 1);
       echo "</th>";
       echo "<th>";
       echo __('Status');

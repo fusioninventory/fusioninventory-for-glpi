@@ -365,7 +365,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          'id'       => '80',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
-         'name'     => __('Entity'),
+         'name'     => Entity::getTypeName(1),
          'datatype' => 'dropdown',
       ];
 
@@ -1203,7 +1203,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   Html::showMassiveActionCheckBox('PluginFusioninventoryDeployPackage_Entity', $data["id"]);
                   echo "</td>";
                }
-               echo "<td>".__('Entity')."</td>";
+               echo "<td>".Entity::getTypeName(1)."</td>";
                echo "<td>";
                $names      = Dropdown::getDropdownName('glpi_entities', $data['entities_id'], 1);
                $entityname = sprintf(__('%1$s %2$s'), $names["name"],

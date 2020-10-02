@@ -246,7 +246,7 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['computermodels_id']['table'] = 'glpi_computermodels';
       $actions['computermodels_id']['force_actions'] = ['assign', 'regex_result'];
 
-      $actions['operatingsystems_id']['name']  = __('Operating system');
+      $actions['operatingsystems_id']['name']  = OperatingSystem::getTypeName(1);
       $actions['operatingsystems_id']['type']  = 'dropdown';
       $actions['operatingsystems_id']['table'] = 'glpi_operatingsystems';
       $actions['operatingsystems_id']['force_actions'] = ['assign', 'regex_result'];

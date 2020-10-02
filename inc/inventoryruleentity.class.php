@@ -206,7 +206,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias['serial']['name']      = __('Serial number');
 
       $criterias['oscomment']['field']     = 'name';
-      $criterias['oscomment']['name']      = __('Operating system').'/'.__('Comments');
+      $criterias['oscomment']['name']      = OperatingSystem::getTypeName(1).'/'.__('Comments');
 
       return $criterias;
    }
@@ -220,7 +220,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    function getActions() {
 
       $actions = [];
-      $actions['entities_id']['name']  = __('Entity');
+      $actions['entities_id']['name']  = Entity::getTypeName(1);
 
       $actions['entities_id']['type']  = 'dropdown';
       $actions['entities_id']['table'] = 'glpi_entities';

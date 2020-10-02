@@ -220,7 +220,7 @@ class PluginFusioninventoryInventoryRuleLocation extends Rule {
       $criterias['serial']['name']      = __('Serial number');
 
       $criterias['oscomment']['field']     = 'name';
-      $criterias['oscomment']['name']      = __('Operating system').'/'.__('Comments');
+      $criterias['oscomment']['name']      = OperatingSystem::getTypeName(1).'/'.__('Comments');
 
       return $criterias;
    }
