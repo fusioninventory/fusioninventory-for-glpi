@@ -158,7 +158,7 @@ switch (filter_input(INPUT_GET, "action")) {
                break;
 
             case 'file':
-               if (!empty($a_values['path']) && !empty($a_values['size'])) {
+               if (!empty($a_values['path']) && isset($a_values['size'])) {
                   // update files content
                   $params = [
                      'machineid' => $pfAgent->fields['device_id'],
@@ -176,7 +176,8 @@ switch (filter_input(INPUT_GET, "action")) {
          }
 
          if (!isset($pfCollect_subO)) {
-            die("collect type not found");
+            // return anyway the next CSRF token to client
+            break;
          }
 
          if ($add_value) {
