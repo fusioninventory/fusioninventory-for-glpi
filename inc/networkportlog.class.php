@@ -456,12 +456,12 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th>".__('Connection')."</th>";
-      $text .= "<th>".__('Item')."</th>";
+      $text .= "<th>"._n('Item', 'Items', 1)."</th>";
       $text .= "<th>".__('Field')."</th>";
       $text .= "<th></th>";
       $text .= "<th></th>";
       $text .= "<th></th>";
-      $text .= "<th>".__('Date')."</th>";
+      $text .= "<th>"._n('Date', 'Dates', 1)."</th>";
       $text .= "</tr>";
 
       $result=$DB->query($query);

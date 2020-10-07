@@ -140,7 +140,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
-         'name'      => __('Entity'),
+         'name'      => Entity::getTypeName(1),
          'datatype'  => 'dropdown',
       ];
 
@@ -301,7 +301,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       if (Session::isMultiEntitiesMode()) {
-         echo "<td align='center' colspan='2'>".__('Entity')."</td>";
+         echo "<td align='center' colspan='2'>".Entity::getTypeName(1)."</td>";
          echo "<td align='center' colspan='2'>";
          Dropdown::show('Entity',
                         ['name'=>'entities_id',

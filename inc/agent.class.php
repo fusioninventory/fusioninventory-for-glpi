@@ -106,7 +106,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
-         'name'     => __('Entity'),
+         'name'     => Entity::getTypeName(1),
          'datatype' => 'dropdown',
       ];
 
@@ -157,7 +157,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          'id'            => '8',
          'table'         => $this->getTable(),
          'field'         => 'version',
-         'name'          => __('Version'),
+         'name'          => _n('Version', 'Versions', 1),
          'datatype'      => 'text',
          'massiveaction' => false,
       ];
@@ -457,7 +457,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showYesNo('lock', $this->fields["lock"]);
       echo "</td>";
-      echo "<td>".__('Version')."&nbsp:</td>";
+      echo "<td>"._n('Version', 'Versions', 1)."&nbsp:</td>";
       echo "<td align='center'>";
       $a_versions = importArrayFromDB($this->fields["version"]);
       foreach ($a_versions as $module => $version) {

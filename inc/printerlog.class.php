@@ -152,7 +152,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          'table'     => 'glpi_manufacturers',
          'field'     => 'name',
          'linkfield' => 'manufacturers_id',
-         'name'      => __('Manufacturer'),
+         'name'      => Manufacturer::getTypeName(1),
       ];
 
       $joinparams = [
@@ -432,7 +432,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
-      echo "<th>".__('Date')." :</th>";
+      echo "<th>"._n('Date', 'Dates', 1)." :</th>";
       echo "<th>".__('Meter', 'fusioninventory')." :</th></tr>";
 
       for ($i=0; $i<$limit; $i++) {
