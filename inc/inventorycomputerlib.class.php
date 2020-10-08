@@ -1362,7 +1362,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      }
 
                      if ($update === true) {
-                        $item_DeviceMemory->update($input);
+                        $item_DeviceBattery->update($input);
                      }
 
                      unset($a_computerinventory['batteries'][$key]);
