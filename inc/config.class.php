@@ -466,7 +466,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Network equipment')."</td>";
+      echo "<td>".__('Network equipment', 'fusioninventory')."</td>";
       echo "<td>";
       echo "<input type='text' name='auto_inventory_number_networkequipment' value='".$this->getValue('auto_inventory_number_networkequipment')."'/>";
       echo "</td>";
@@ -1013,4 +1013,3 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 }
-
