@@ -48,7 +48,7 @@
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
-
+use Symfony\Component\Yaml\Yaml;
 /**
  * Manage the IP ranges for network discovery and network inventory.
  */
@@ -101,6 +101,10 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       return __('IP Ranges', 'fusioninventory');
    }
 
+   static function titleList() {
+      echo "<div class='center'><a class='vsubmit' href='export.php'><i class='pointer fa fa-refresh'></i>&nbsp;".
+            __("Export to YAML", "fields")."</a></div><br>";
+   }
 
    /**
     * Get comments of the object
@@ -223,6 +227,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     * @return true
     */
    function showForm($id, $options = []) {
+
+      echo "<div class='center'><a class='vsubmit' href='export.php?id=".$id."'><i class='pointer fa fa-refresh'></i>&nbsp;".
+      __("Export to YAML", "fields")."</a></div><br>";
 
       $this->initForm($id, $options);
       $this->showFormHeader($options);
@@ -396,6 +403,78 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       return $actions;
    }
 
+   /**
+    * Function to export IP range to YAML
+    * @param int|null $container_id
+    * @return boolean success or not
+    */
+   static function exportAsYaml($container_id = null) {
+      $yaml_conf = [];
+      $credentials_found = [];
 
+      $where = [];
+      if ($container_id != null) {
+         $where["id"] = $container_id;
+      }
+
+      //step 1 list all snmp credential
+      $configSecurity = new PluginFusioninventoryConfigSecurity();
+      $credentials    = $configSecurity->find();
+
+      foreach ($credentials as $credential) {
+         $tmp_configsecurity = [];
+         $configSecurity->getFromDB($credential['id']);
+         if (!$configSecurity->fields['is_deleted']) {
+            $tmp_configsecurity['id']              = (int) $configSecurity->fields['id'];
+            $tmp_configsecurity['name']            = $configSecurity->fields['name'];
+            $tmp_configsecurity['snmpversion']     = 'v'.$configSecurity->getSNMPVersion($configSecurity->fields['snmpversion']);
+            $tmp_configsecurity['community']       = $configSecurity->fields['community'];
+            $tmp_configsecurity['username']        = $configSecurity->fields['username'];
+            $tmp_configsecurity['authentication']  = $configSecurity->getSNMPAuthProtocol($configSecurity->fields['authentication']);
+            $tmp_configsecurity['auth_passphrase'] = $configSecurity->fields['auth_passphrase'];
+            $tmp_configsecurity['encryption']      = $configSecurity->getSNMPEncryption($configSecurity->fields['encryption']);
+            $tmp_configsecurity['priv_passphrase'] = $configSecurity->fields['priv_passphrase'];
+            $yaml_conf["credentials"][$configSecurity->fields['name']."-".$configSecurity->fields['id']] = $tmp_configsecurity;
+            $credentials_found[$configSecurity->fields['id']] = $configSecurity->fields['name']."-".$configSecurity->fields['id'];
+         }
+      }
+
+      //step 2 list all ip
+
+      $ip_obj = new PluginFusioninventoryIPRange();
+      $ips    = $ip_obj->find($where);
+      foreach ($ips as $ip) {
+
+         $tmp_ip = [];
+         $tmp_ip['id']        = (int) $ip['id'];
+         $tmp_ip['name']      = $ip['name'];
+         $tmp_ip['ip_start']  = $ip['ip_start'];
+         $tmp_ip['ip_end']    = $ip['ip_end'];
+
+         //retrieve SNMP Community for given IP
+         $tmp_snmp = [];
+         $a_data = getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
+         ['plugin_fusioninventory_ipranges_id' => $ip['id']], false, '`rank`');
+
+         foreach ($a_data as  $value) {
+            $tmp_configsecurity = [];
+            if (isset($credentials_found[$value['plugin_fusioninventory_configsecurities_id']])) {
+               $tmp_snmp[] = $credentials_found[$value['plugin_fusioninventory_configsecurities_id']];
+            }
+         }
+         if (count($tmp_snmp)) {
+            $tmp_ip['credentials'] = $tmp_snmp;
+         }
+         $yaml_conf['ip_range'][(string) $ip['name']."-".$ip['id']]    = $tmp_ip;
+      }
+
+      if (count($yaml_conf)) {
+         $dump = Yaml::dump($yaml_conf, 10);
+         $filename = GLPI_TMP_DIR."/fusioninventory_ip_conf.yaml";
+         file_put_contents($filename, $dump);
+         return true;
+      }
+
+      return false;
+   }
 }
-
