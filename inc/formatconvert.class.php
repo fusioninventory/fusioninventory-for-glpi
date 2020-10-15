@@ -1510,6 +1510,11 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      // * CUSTOM
+      if (isset($array['CUSTOM'])) {
+         $a_inventory['custom'] = array_change_key_case($array['CUSTOM'], CASE_LOWER);
+      }
+
       $plugin_params = [
          'inventory' => $a_inventory,
          'source'    => $array
@@ -2317,6 +2322,12 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['components'][$a_component['INDEX']] = $array_tmp;
          }
       }
+
+      // * CUSTOM
+      if (isset($array['CUSTOM'])) {
+         $a_inventory['custom'] = array_change_key_case($array['CUSTOM'], CASE_LOWER);
+      }
+
       return $a_inventory;
    }
 
@@ -2411,6 +2422,11 @@ class PluginFusioninventoryFormatconvert {
                                            'FAXTOTAL'    => 'pages_total_fax'
                                          ]);
          $a_inventory['pagecounters'] = $array_tmp;
+      }
+
+      // * CUSTOM
+      if (isset($array['CUSTOM'])) {
+         $a_inventory['custom'] = array_change_key_case($array['CUSTOM'], CASE_LOWER);
       }
 
       return $a_inventory;
