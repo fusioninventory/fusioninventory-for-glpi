@@ -658,7 +658,8 @@ class PluginFusioninventoryFormatconvert {
                      'DATE'         => 'manufacturing_date',
                      'CAPACITY'     => 'capacity',
                      'CHEMISTRY'    => 'devicebatterytypes_id',
-                     'VOLTAGE'      => 'voltage'
+                     'VOLTAGE'      => 'voltage',
+                     'REAL_CAPACITY'=> 'real_capacity',
                   ]
                );
 

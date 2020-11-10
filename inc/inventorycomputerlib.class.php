@@ -1342,28 +1342,11 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      && isset($arraydb['serial'])
                      && $arrayslower['serial'] == $arraydb['serial']
                   ) {
-                     $update = false;
-                     if ($arraydb['capacity'] == 0
-                              && $arrayslower['capacity'] > 0) {
-                        $input = [
-                           'id'       => $keydb,
-                           'capacity' => $arrayslower['capacity']
-                        ];
-                        $update = true;
-                     }
-
-                     if ($arraydb['voltage'] == 0
-                              && $arrayslower['voltage'] > 0) {
-                        $input = [
-                           'id'        => $keydb,
-                           'voltage'   => $arrayslower['voltage']
-                        ];
-                        $update = true;
-                     }
-
-                     if ($update === true) {
-                        $item_DeviceMemory->update($input);
-                     }
+                     $input = [
+                        'id' => $keydb,
+                        'real_capacity' => $arrayslower['real_capacity'],
+                     ];
+                     $item_DeviceBattery->update($input);
 
                      unset($a_computerinventory['batteries'][$key]);
                      unset($db_batteries[$keydb]);
@@ -2301,12 +2284,18 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $data['designation'] = __('Internal battery', 'fusioninventory');
       }
 
+      $data['capacity']           = $data['capacity'];
+      $data['voltage']            = $data['voltage'];
       $batteries_id = $deviceBattery->import($data);
+      if (!isset($data['real_capacity'])) {
+         $data['real_capacity'] = '0';
+      }
       $data['devicebatteries_id'] = $batteries_id;
       $data['itemtype']           = 'Computer';
       $data['items_id']           = $computers_id;
       $data['is_dynamic']         = 1;
       $data['_no_history']        = $no_history;
+      $data['real_capacity']      = $data['real_capacity'];
       $item_DeviceBattery->add($data, [], !$no_history);
    }
 

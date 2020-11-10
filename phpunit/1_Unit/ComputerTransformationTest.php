@@ -1777,7 +1777,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
             'NAME'         => 'THE BATTERY',
             'SERIAL'       => '0E52B',
             'MANUFACTURER' => 'MANU',
-            'VOLTAGE'      => '14000'
+            'VOLTAGE'      => '14000',
+            'REAL_CAPACITY'=> '10357',
          ]
       ];
 
@@ -1792,7 +1793,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
          'devicebatterytypes_id' => 'Li-ION',
          'manufacturers_id'      => 'MANU',
          'voltage'               => '14000',
-         'serial'                => '0E52B'
+         'serial'                => '0E52B',
+         'real_capacity'         => '10357',
       ];
 
       $this->assertEquals($a_reference, $a_return['batteries']);
@@ -1815,7 +1817,8 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
          'devicebatterytypes_id' => 'Li-ION',
          'manufacturers_id'      => 'OTHER MANU',
          'voltage'               => '',
-         'serial'                => '00000000'
+         'serial'                => '00000000',
+         'real_capacity'         => ''
       ];
 
       $this->assertEquals($a_reference, $a_return['batteries']);

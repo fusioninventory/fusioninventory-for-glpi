@@ -82,7 +82,8 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
                'devicebatterytypes_id' => 'Li-ION',
                'manufacturers_id'      => 'MANU',
                'voltage'               => '14000',
-               'serial'                => '0E52B'
+               'serial'                => '0E52B',
+               'real_capacity'         => '31478',
             ]
          ],
          'remote_mgmt'    => [],
@@ -100,7 +101,8 @@ class ComputerDeviceBatteryTest extends RestoreDatabase_TestCase {
                'NAME'         => 'THE BATTERY',
                'SERIAL'       => '0E52B',
                'MANUFACTURER' => 'MANU',
-               'VOLTAGE'      => '14000'
+               'VOLTAGE'      => '14000',
+               'REAL_CAPACITY'=> '31478'
             ]
       ];
    }
