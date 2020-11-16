@@ -205,8 +205,7 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryNetworkPortLog',
               ['addtabon' => ['NetworkPort']]);
       $Plugin->registerClass('PluginFusinvsnmpAgentconfig');
-      $Plugin->registerClass('PluginFusioninventoryNetworkPort',
-              ['classname'=>'glpi_networkports']);
+      $Plugin->registerClass('PluginFusioninventoryNetworkPort');
       $Plugin->registerClass('PluginFusioninventoryStateDiscovery');
       $Plugin->registerClass('PluginFusioninventoryPrinterLogReport');
       $Plugin->registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
