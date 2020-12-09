@@ -298,13 +298,16 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30]);
    CronTask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
                         ['mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
-                              'comment'=> Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'fusioninventory'))]);
+                        'comment'=> Toolbox::addslashes_deep(__('Delete agents that have not contacted the server since "xxx" days.', 'fusioninventory'))]);
    CronTask::Register('PluginFusioninventoryAgentWakeup', 'wakeupAgents', 120,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                              'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'fusioninventory'))]);
+                           'comment'=> Toolbox::addslashes_deep(__('Wake agents ups', 'fusioninventory'))]);
    CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                         'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
+   CronTask::Register('PluginFusioninventoryQueuedinventory', 'queuedinventory', 300,
+                        ['state' => 0, 'mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30, 'param' => 10,
+                        'comment' => Toolbox::addslashes_deep(__('Manage inventories in queue'))]);
 
    /*
     * Create rules
