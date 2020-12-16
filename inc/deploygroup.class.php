@@ -227,7 +227,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       switch ($ma->getAction()) {
          case 'add_to_static_group':
             Dropdown::show('PluginFusioninventoryDeployGroup',
-                            ['condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"]);
+                            ['condition' => ['type' => PluginFusioninventoryDeployGroup::STATIC_GROUP]]);
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
          case 'duplicate':
