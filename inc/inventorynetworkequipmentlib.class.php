@@ -285,9 +285,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
       foreach ($a_inventory['networkport'] as $a_port) {
 
          $ifType = $a_port['iftype'];
-         if ($pfNetworkporttype->isImportType($ifType)
+         if (($pfNetworkporttype->isImportType($ifType)
                  || isset($a_inventory['aggregate'][$a_port['logical_number']])
-                 || $ifType == '') {
+                 || $ifType == ''
+                 )
+               && (!isset($a_port['ifstatus'])
+                     || $a_port['ifstatus'] != 6)) {
             $a_ports_DB = current($networkPort->find(
                   ['itemtype'       => 'NetworkEquipment',
                    'items_id'       => $items_id,
