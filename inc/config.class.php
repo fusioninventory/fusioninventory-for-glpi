@@ -165,6 +165,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['auto_inventory_number_phone']            = '';
       $input['auto_inventory_number_printer']          = '';
 
+      $input['import_crontask']      = 1;
+
       if (!$getOnly) {
          $this->addValues($input);
       }
@@ -641,6 +643,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_monitor_on_partial_sn", $pfConfig->getValue('import_monitor_on_partial_sn'));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo __('Import cron tasks', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_crontask", $pfConfig->getValue('import_crontask'));
       echo "</td>";
       echo "</tr>";
 

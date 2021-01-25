@@ -1932,7 +1932,8 @@ function plugin_pre_item_purge_fusioninventory($parm) {
             'PluginFusioninventoryComputerLicenseInfo',
             'PluginFusioninventoryCollect_File_Content',
             'PluginFusioninventoryCollect_Registry_Content',
-            'PluginFusioninventoryCollect_Wmi_Content'
+            'PluginFusioninventoryCollect_Wmi_Content',
+            'PluginFusioninventoryCronTask'
          ];
          foreach ($clean as $obj) {
             $obj::cleanComputer($items_id);

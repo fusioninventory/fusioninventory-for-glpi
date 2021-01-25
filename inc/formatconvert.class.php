@@ -279,7 +279,8 @@ class PluginFusioninventoryFormatconvert {
          'printer'                 => [],
          'peripheral'              => [],
          'storage'                 => [],
-         'remote_mgmt'             => []
+         'remote_mgmt'             => [],
+         'crontasks'               => []
       ];
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
@@ -673,6 +674,33 @@ class PluginFusioninventoryFormatconvert {
                   }
                }
                $a_inventory['batteries'][] = $a_battery;
+            }
+         }
+      }
+
+       // * CRONTASKS
+       $a_inventory['crontasks'] = [];
+      if ($pfConfig->getValue('import_crontask') == 1) {
+         if (isset($array['CRONTASKS'])) {
+            foreach ($array['CRONTASKS'] as $a_crontasks) {
+                   $a_crontask = $thisc->addValues($a_crontasks,
+                       [
+                           'NAME'               => 'name',
+                           'DESCRIPTION'        => 'comment',
+                           'COMMAND'            => 'command',
+                           'EXECUTION_MONTH'    => 'execution_month',
+                           'EXECUTION_DAY'      => 'execution_day',
+                           'EXECUTION_HOUR'     => 'execution_hour',
+                           'EXECUTION_MINUTE'   => 'execution_minute',
+                           'EXECUTION_WEEKDAY'  => 'execution_weekday',
+                           'USER_EXECUTION'     => 'user_execution',
+                           'STORAGE'            => 'storage',
+                           'USER_STORAGE'       => 'user_storage',
+                           'STATUS'             => 'status',
+                       ]
+                   );
+
+                   $a_inventory['crontasks'][] = $a_crontask;
             }
          }
       }

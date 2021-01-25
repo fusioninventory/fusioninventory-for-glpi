@@ -218,6 +218,9 @@ function plugin_init_fusioninventory() {
               ['addtabon' => ['PluginFusioninventoryDeployGroup']]);
       $Plugin->registerClass('PluginFusioninventoryDeployPackage',
               ['addtabon' => ['Computer']]);
+      // Crontasks
+      $Plugin->registerClass('PluginFusioninventoryCronTask',
+              ['addtabon' => ['Computer']]);
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
@@ -364,8 +367,12 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
+      $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = [];
       if (Session::haveRight('plugin_fusioninventory_unmanaged', READ)) {
-         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnmanaged';
+         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'][] = 'PluginFusioninventoryUnmanaged';
+      }
+      if (Session::haveRight('plugin_fusioninventory_crontask', READ)) {
+         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'][] = 'PluginFusioninventoryCronTask';
       }
       if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['admin'] = 'PluginFusioninventoryMenu';
