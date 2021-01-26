@@ -967,7 +967,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                               if (isset($critinput['class'])) {
                                  unset($critinput['class']);
                               }
-                              $inputrulelog['criteria'] = exportArrayToDB($critinput);
+                              $inputrulelog['criteria'] = exportArrayToDB(\Toolbox::addslashes_deep($critinput));
                               $pfRulematchedlog->add($inputrulelog);
                               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                               $class->rulepassed($items_id, $itemtype, $this->criterias_results['found_port']);
