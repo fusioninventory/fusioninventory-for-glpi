@@ -11,7 +11,6 @@
 
 namespace Docopt;
 
-
 /**
  * Return true if all cased characters in the string are uppercase and there is
  * at least one cased character, false otherwise.
@@ -1068,12 +1067,12 @@ function extras($help, $version, $options, $doc) {
       }
    }
    if ($help && $ofound) {
-      ExitException::$usage = null;
-      throw new ExitException($doc, 0);
+      \ExitException::$usage = null;
+      throw new \ExitException($doc, 0);
    }
    if ($version && $vfound) {
-      ExitException::$usage = null;
-      throw new ExitException($version, 0);
+      \ExitException::$usage = null;
+      throw new \ExitException($version, 0);
    }
 }
 
@@ -1116,10 +1115,10 @@ class Handler
              $argv = array_slice($_SERVER['argv'], 1);
          }
 
-         ExitException::$usage = printable_usage($doc);
+         \ExitException::$usage = printable_usage($doc);
          $options = parse_defaults($doc);
 
-         $formalUse = formal_usage(ExitException::$usage);
+         $formalUse = formal_usage(\ExitException::$usage);
          $pattern = parse_pattern($formalUse, $options);
          $argv = parse_argv(new TokenStream($argv, 'ExitException'), $options, $this->optionsFirst);
          foreach ($pattern->flat('AnyOptions') as $ao) {
@@ -1140,15 +1139,15 @@ class Handler
             }
             return new Response($return);
          }
-         throw new ExitException();
-      } catch (ExitException $ex) {
+         throw new \ExitException();
+      } catch (\ExitException $ex) {
          $this->handleExit($ex);
          return new Response(null, $ex->status, $ex->getMessage());
       }
    }
 
 
-   function handleExit(ExitException $ex) {
+   function handleExit(\ExitException $ex) {
       if ($this->exit) {
          echo $ex->getMessage().PHP_EOL;
          exit($ex->status);
