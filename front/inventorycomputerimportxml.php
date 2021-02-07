@@ -65,7 +65,8 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
    ini_set("max_execution_time", "0");
 
    if (preg_match('/\.zip/i', $_FILES['importfile']['name'])) {
-      $zip = zip_open($_FILES['importfile']['tmp_name']);
+      $zip = new ZipArchive;
+      $zip->open($_FILES['importfile']['tmp_name']);
 
       if (!$zip) {
          error_log("Zip failure");
@@ -74,21 +75,16 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
             ERROR
          );
       } else {
-         error_log("Zip ok");
-         while ($zip_entry = zip_read($zip)) {
-            if (zip_entry_open($zip, $zip_entry, "r")) {
-               $xml= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-               error_log("toto");
-               error_log($xml);
-               if (!empty($xml)) {
-                  $_SESSION['glpi_fusionionventory_nolock'] = true;
-                  $pfCommunication->handleOCSCommunication('', $xml);
-                  unset($_SESSION['glpi_fusionionventory_nolock']);
-               }
-               zip_entry_close($zip_entry);
+         for ($n = 0; $n < $zip->numFiles; $n++) {
+            $filename = $zip->getNameIndex($n);
+            $xml = $zip->getFromName($zip->getNameIndex($n));
+            if (!empty($xml)) {
+               $_SESSION['glpi_fusionionventory_nolock'] = true;
+               $pfCommunication->handleOCSCommunication('', $xml);
+               unset($_SESSION['glpi_fusionionventory_nolock']);
             }
          }
-         zip_close($zip);
+         $zip->close();
       }
    } else if (preg_match('/\.(ocs|xml)/i', $_FILES['importfile']['name'])) {
 

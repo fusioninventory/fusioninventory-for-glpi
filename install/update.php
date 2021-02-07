@@ -9987,7 +9987,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "FROM glpi_plugin_fusinvdeploy_files as files",
                "WHERE",
                "  files.`shortsha512` != \"\""
-            ]
+               ]
          );
          $f_res = $DB->query($f_query);
          while ($f_datas = $DB->fetchAssoc($f_res)) {
