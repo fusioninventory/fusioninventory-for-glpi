@@ -2103,7 +2103,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $data['itemtype']             = 'Computer';
       $data['items_id']             = $computers_id;
 
-
       $type_id = $fwTypes->getID();
       $bios_id = $deviceBios->import($data);
 
@@ -2114,7 +2113,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             $item_DeviceBios->fields['devicefirmwares_id']   = $bios_id;
             $item_DeviceBios->fields['devicefirmwaretypes_id'] = $type_id;
             $item_DeviceBios->fields['is_dynamic']           = 1;
-            $item_DeviceBios->update($item_DeviceBios->fields,$no_history);
+            $item_DeviceBios->update($item_DeviceBios->fields, $no_history);
          }
       } else {
          $data['_no_history']          = $no_history;
