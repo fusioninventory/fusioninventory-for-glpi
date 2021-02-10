@@ -223,7 +223,9 @@ class PluginFusioninventoryCommunicationRest {
 
       //No need to continue since the requested agent doesn't exists in database
       if ($agent === false) {
-         self::sendError();
+         if ($p['sendheaders']) {
+            self::sendError();
+         }
          return;
       }
 
@@ -303,6 +305,4 @@ class PluginFusioninventoryCommunicationRest {
          PluginFusioninventoryCommunicationRest::sendError();
       }
    }
-
-
 }

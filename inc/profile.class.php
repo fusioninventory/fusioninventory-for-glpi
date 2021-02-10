@@ -145,9 +145,9 @@ class PluginFusioninventoryProfile extends Profile {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfProfile = new self();
       if ($item->fields['interface'] == 'central') {
-         $pfProfile->showForm($item->getID());
+         $pfProfile->showForm($item->fields['id']);
       } else {
-         $pfProfile->showFormSelf($item->getID());
+         $pfProfile->showFormSelf($item->fields['id']);
       }
       return true;
    }
@@ -157,11 +157,13 @@ class PluginFusioninventoryProfile extends Profile {
     * Display form
     *
     * @param integer $profiles_id
-    * @param boolean $openform
-    * @param boolean $closeform
-    * @return true
+    * @param array $options
+    * @return boolean
     */
-   function showForm($profiles_id = 0, $openform = true, $closeform = true) {
+   function showForm($profiles_id, $options = []) {
+
+      $openform = true;
+      $closeform = true;
 
       echo "<div class='firstbloc'>";
       if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
@@ -570,7 +572,4 @@ class PluginFusioninventoryProfile extends Profile {
          $profile->update($dataprofile);
       }
    }
-
-
 }
-

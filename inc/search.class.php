@@ -45,7 +45,6 @@
  *
  */
 
-
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -194,7 +193,7 @@ class PluginFusioninventorySearch extends CommonDBTM {
       if (isset($_GET['display_type'])) {
          $output_type = $_GET['display_type'];
          // Limit to 10 element
-         if ($_GET['display_type']==GLOBAL_SEARCH) {
+         if ($_GET['display_type'] == GLOBAL_SEARCH) {
             $LIST_LIMIT = GLOBAL_SEARCH_DISPLAY_COUNT;
          }
       }
@@ -833,6 +832,4 @@ class PluginFusioninventorySearch extends CommonDBTM {
          return false;
       }
    }
-
-
 }

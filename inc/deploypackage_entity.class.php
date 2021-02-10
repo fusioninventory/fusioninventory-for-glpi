@@ -117,7 +117,4 @@ class PluginFusioninventoryDeployPackage_Entity extends CommonDBRelation {
       }
       return $ent;
    }
-
-
 }
-

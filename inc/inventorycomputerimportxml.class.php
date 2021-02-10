@@ -107,7 +107,4 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       Html::closeForm();
       return true;
    }
-
-
 }
-

@@ -100,7 +100,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
       $pfCollectContent = new $class();
       switch (get_class($item)) {
          case 'PluginFusioninventoryCollect':
-            $pfCollectContent->showForCollect($item->getID());
+            $pfCollectContent->showForCollect($item->fields['id']);
             break;
       }
       return true;
@@ -115,14 +115,14 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getID() > 0) {
+      if ($item->fields['id'] > 0) {
          $class   = $this->collect_itemtype;
          $collect = $this->getCollectClass();
          switch (get_class($item)) {
             case 'PluginFusioninventoryCollect':
                if ($item->fields['type'] == $this->type) {
                   $a_colfiles = getAllDataFromTable($collect::getTable(),
-                     ['plugin_fusioninventory_collects_id' => $item->getID()]);
+                     ['plugin_fusioninventory_collects_id' => $item->fields['id']]);
                   if (count($a_colfiles) == 0) {
                      return '';
                   }
@@ -172,5 +172,9 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
       while ($data = $iterator->next()) {
          $this->showContent($data['id']);
       }
+   }
+
+   function showContent($id) {
+
    }
 }

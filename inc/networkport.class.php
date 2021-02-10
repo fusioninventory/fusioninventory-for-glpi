@@ -358,7 +358,4 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
       return $is_multiple;
    }
-
-
 }
-

@@ -54,6 +54,15 @@ if (isset($_POST["sub_type"])) {
 } else if (isset($_GET["sub_type"])) {
    $sub_type = $_GET["sub_type"];
 }
+$sub_type = str_replace('FusionInventory', '', $sub_type);
+
+if (isset($_POST["condition"])) {
+   $condition = $_POST["condition"];
+} else if (isset($_GET["condition"])) {
+   $condition = $_GET["condition"];
+} else {
+   $condition = 0;
+}
 
 $rulecollection = RuleCollection::getClassByType($sub_type);
 if ($rulecollection->isRuleRecursive()) {
@@ -67,9 +76,9 @@ if (!strpos($_SERVER['PHP_SELF'], "popup")) {
 
 // Need for RuleEngines
 foreach ($_POST as $key => $val) {
-   $_POST[$key] = stripslashes($_POST[$key]);
+   $_POST[$key] = stripslashes($val);
 }
-$input = $rulecollection->showRulesEnginePreviewCriteriasForm($_SERVER['PHP_SELF'], $_POST);
+$input = $rulecollection->showRulesEnginePreviewCriteriasForm($_SERVER['PHP_SELF'], $_POST, $condition);
 
 if (isset($_POST["test_all_rules"])) {
    //Unset values that must not be processed by the rule
@@ -77,7 +86,7 @@ if (isset($_POST["test_all_rules"])) {
    unset($_POST["test_all_rules"]);
 
    echo "<br>";
-   $rulecollection->showRulesEnginePreviewResultsForm($_SERVER['PHP_SELF'], $_POST);
+   $rulecollection->showRulesEnginePreviewResultsForm($_SERVER['PHP_SELF'], $_POST, $condition);
 }
 
 if (!strpos($_SERVER['PHP_SELF'], "popup")) {

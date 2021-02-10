@@ -3,3 +3,4 @@ vendor/
 composer.lock
 .gh_token
 .idea
+tests/files

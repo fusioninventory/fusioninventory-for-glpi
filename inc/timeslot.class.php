@@ -291,7 +291,4 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       }
       return true;
    }
-
-
 }
-

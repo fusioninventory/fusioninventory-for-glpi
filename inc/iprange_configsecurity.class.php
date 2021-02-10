@@ -105,7 +105,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getID() > 0) {
+      if ($item->fields['id'] > 0) {
          return __('Associated SNMP credentials', 'fusioninventory');
       }
       return '';
@@ -237,7 +237,4 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       echo "</div>";
       return true;
    }
-
-
 }
-

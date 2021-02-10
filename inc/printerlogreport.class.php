@@ -83,7 +83,4 @@ class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
       }
       return $tab;
    }
-
-
 }
-

@@ -95,7 +95,4 @@ class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
    function prepareInputDataForProcess($input, $params) {
       return $input;
    }
-
-
 }
-

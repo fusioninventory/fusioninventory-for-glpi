@@ -340,7 +340,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
                   break;
 
                case 'PluginFusioninventoryUnmanaged':
-                  $equipement = new PluginFusinvsnmpUnmanaged();
+                  $equipement = new PluginFusioninventoryUnmanaged();
                   break;
 
             }

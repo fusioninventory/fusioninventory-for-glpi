@@ -81,8 +81,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     * @return string name of the tab
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      if ($item->getID() > 0) {
-         $index = self::getNumberOfCollectsForAComputer($item->getID());
+      if ($item->fields['id'] > 0) {
+         $index = self::getNumberOfCollectsForAComputer($item->fields['id']);
          $nb    = 0;
          if ($index > 0) {
             if ($_SESSION['glpishow_count_on_tabs']) {
@@ -105,7 +105,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $id = $item->getID();
+      $id = $item->fields['id'];
       if ($item->getType() == 'Computer'
          && $pfComputer->hasAutomaticInventory($id)) {
          foreach (['PluginFusioninventoryCollect_File_Content',
@@ -418,7 +418,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      }
 
                      $pfSearch = new PluginFusioninventorySearch();
-                     Search::manageGetValues('Computer');
                      $glpilist_limit = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
                      $result = $pfSearch->constructSQL('Computer',
@@ -669,5 +668,225 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-}
+   function communication($action, $machineId, $uuid) {
+      $response = new \stdClass();
 
+      if (empty($action)) {
+         return $response;
+      }
+
+      $pfAgent        = new PluginFusioninventoryAgent();
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
+
+      switch ($action) {
+
+         case 'getJobs':
+            if (empty($machineId)) {
+               return $response;
+            }
+            $pfAgentModule  = new PluginFusioninventoryAgentmodule();
+            $pfTask         = new PluginFusioninventoryTask();
+
+            $agent = $pfAgent->infoByKey(Toolbox::addslashes_deep($machineId));
+            if (isset($agent['id'])) {
+               $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+                  $agent['id'],
+                  ['collect']
+               );
+               $order = new \stdClass();
+               $order->jobs = [];
+
+               foreach ($taskjobstates as $taskjobstate) {
+                  if (!$pfAgentModule->isAgentCanDo("Collect", $agent['id'])) {
+                     $taskjobstate->cancel(
+                        __("Collect module has been disabled for this agent", 'fusioninventory')
+                     );
+                  } else {
+                     $out = $this->run($taskjobstate, $agent);
+                     if (count($out) > 0) {
+                        $order->jobs = array_merge($order->jobs, $out);
+                     }
+
+                     // change status of state table row
+                     $pfTaskjobstate->changeStatus(
+                           $taskjobstate->fields['id'],
+                           PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                     );
+
+                     $a_input = [
+                           'plugin_fusioninventory_taskjobstates_id'    => $taskjobstate->fields['id'],
+                           'items_id'                                   => $agent['id'],
+                           'itemtype'                                   => 'PluginFusioninventoryAgent',
+                           'date'                                       => date("Y-m-d H:i:s"),
+                           'comment'                                    => '',
+                           'state'                                      => PluginFusioninventoryTaskjoblog::TASK_STARTED
+                     ];
+                     $pfTaskjoblog->add($a_input);
+
+                     if (count($order->jobs) > 0) {
+                        $response = $order;
+                        // Inform agent we request POST method, agent will then submit result
+                        // in POST request if it supports the method or it will continue with GET
+                        $response->postmethod = 'POST';
+                        $response->token = Session::getNewCSRFToken();
+                     }
+                  }
+               }
+            }
+            break;
+
+         case 'setAnswer':
+            // example
+            // ?action=setAnswer&InformationSource=0x00000000&BIOSVersion=VirtualBox&SystemManufacturer=innotek%20GmbH&uuid=fepjhoug56743h&SystemProductName=VirtualBox&BIOSReleaseDate=12%2F01%2F2006
+            if (empty($uuid)) {
+               return $response;
+            }
+            $jobstate = current($pfTaskjobstate->find(
+               [
+                  'uniqid' => $uuid,
+                  'state'  => ['!=', PluginFusioninventoryTaskjobstate::FINISHED]
+               ],
+               [],
+               1)
+            );
+
+            if (isset($jobstate['plugin_fusioninventory_agents_id'])) {
+
+               $add_value = true;
+
+               $pfAgent->getFromDB($jobstate['plugin_fusioninventory_agents_id']);
+               $computers_id = $pfAgent->fields['computers_id'];
+
+               $a_values = $_GET;
+               // Check agent uses POST method to use the right submitted values. Also renew token to support CSRF for next post.
+               if (isset($_GET['method']) && $_GET['method'] == 'POST') {
+                  $a_values = $_POST;
+                  $response->token = Session::getNewCSRFToken();
+                  unset($a_values['_glpi_csrf_token']);
+               }
+               $sid = isset($a_values['_sid'])?$a_values['_sid']:0;
+               $cpt = isset($a_values['_cpt'])?$a_values['_cpt']:0;
+               unset($a_values['action']);
+               unset($a_values['uuid']);
+               unset($a_values['_cpt']);
+               unset($a_values['_sid']);
+
+               $this->getFromDB($jobstate['items_id']);
+
+               switch ($this->fields['type']) {
+                  case 'registry':
+                     // update registry content
+                     $pfCollect_subO = new PluginFusioninventoryCollect_Registry_Content();
+                     break;
+
+                  case 'wmi':
+                     // update wmi content
+                     $pfCollect_subO = new PluginFusioninventoryCollect_Wmi_Content();
+                     break;
+
+                  case 'file':
+                     if (!empty($a_values['path']) && isset($a_values['size'])) {
+                        // update files content
+                        $params = [
+                           'machineid' => $pfAgent->fields['device_id'],
+                           'uuid'      => $uuid,
+                           'code'      => 'running',
+                           'msg'       => "file ".$a_values['path']." | size ".$a_values['size']
+                        ];
+                        if (isset($a_values['sendheaders'])) {
+                           $params['sendheaders'] = $a_values['sendheaders'];
+                        }
+                        PluginFusioninventoryCommunicationRest::updateLog($params);
+                        $pfCollect_subO = new PluginFusioninventoryCollect_File_Content();
+                        $a_values = [$sid => $a_values];
+                     } else {
+                        $add_value = false;
+                     }
+                     break;
+               }
+
+               if (!isset($pfCollect_subO)) {
+                  // return anyway the next CSRF token to client
+                  break;
+               }
+
+               if ($add_value) {
+                  // add collected informations to computer
+                  $pfCollect_subO->updateComputer(
+                     $computers_id,
+                     $a_values,
+                     $sid
+                  );
+               }
+
+               // change status of state table row
+               $pfTaskjobstate->changeStatus($jobstate['id'],
+                        PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+
+               // add logs to job
+               if (count($a_values)) {
+                  $flag    = PluginFusioninventoryTaskjoblog::TASK_INFO;
+                  $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
+               } else {
+                  $flag    = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+                  $message = __('Path not found', 'fusioninventory');
+               }
+                  $pfTaskjoblog->addTaskjoblog($jobstate['id'],
+                                             $jobstate['items_id'],
+                                             $jobstate['itemtype'],
+                                             $flag,
+                                             $message);
+            }
+            break;
+
+         case 'jobsDone':
+            $jobstate = current($pfTaskjobstate->find(
+               [
+                  'uniqid' => $uuid,
+                  'state'  => ['!=', PluginFusioninventoryTaskjobstate::FINISHED]
+               ],
+               [],
+               1)
+            );
+            $pfTaskjobstate->changeStatusFinish(
+               $jobstate['id'],
+               $jobstate['items_id'],
+               $jobstate['itemtype']
+            );
+
+               break;
+      }
+      return $response;
+   }
+
+
+   /**
+    * After purge item, delete collect data
+    */
+   function post_purgeItem() {
+
+      // Delete all registry
+      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+      $items = $pfCollect_Registry->find(['plugin_fusioninventory_collects_id' => $this->fields['id']]);
+      foreach ($items as $item) {
+         $pfCollect_Registry->delete(['id' => $item['id']], true);
+      }
+
+      // Delete all WMI
+      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+      $items = $pfCollect_Wmi->find(['plugin_fusioninventory_collects_id' => $this->fields['id']]);
+      foreach ($items as $item) {
+         $pfCollect_Wmi->delete(['id' => $item['id']], true);
+      }
+
+      // Delete all File
+      $pfCollect_File = new PluginFusioninventoryCollect_File();
+      $items = $pfCollect_File->find(['plugin_fusioninventory_collects_id' => $this->fields['id']]);
+      foreach ($items as $item) {
+         $pfCollect_File->delete(['id' => $item['id']], true);
+      }
+      parent::post_deleteItem();
+   }
+
+}

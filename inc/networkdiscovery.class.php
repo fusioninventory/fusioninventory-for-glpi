@@ -406,7 +406,4 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       }
       return $this->message;
    }
-
-
 }
-

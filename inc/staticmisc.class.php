@@ -779,7 +779,4 @@ class PluginFusioninventoryStaticmisc {
          "remote" => PluginFusioninventoryAgentmodule::getUrlForModule('Collect', $entities_id)
       ];
    }
-
-
 }
-

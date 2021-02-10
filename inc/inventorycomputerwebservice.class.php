@@ -108,7 +108,4 @@ class PluginFusioninventoryInventoryComputerWebservice {
       }
       return $a_computerextend;
    }
-
-
 }
-

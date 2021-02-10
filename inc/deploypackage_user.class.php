@@ -117,7 +117,4 @@ class PluginFusioninventoryDeployPackage_User extends CommonDBRelation {
       }
       return $users;
    }
-
-
 }
-

@@ -64,7 +64,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getID() > 0) {
+      if ($item->fields['id'] > 0) {
          return __('FusionInventory historical', 'fusioninventory');
       }
       return '';
@@ -81,7 +81,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $pfNetworkPortLog = new self();
-      echo $pfNetworkPortLog->showHistory($item->getID());
+      echo $pfNetworkPortLog->showHistory($item->fields['id']);
       return true;
    }
 
@@ -137,7 +137,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 
-      $options="";
+      $options = [];
 
       $mapping = new PluginFusioninventoryMapping;
       $maps = $mapping->find();

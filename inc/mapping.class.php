@@ -853,7 +853,4 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
       return $mapping['name'];
    }
-
-
 }
-

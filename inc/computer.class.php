@@ -151,8 +151,7 @@ class PluginFusioninventoryComputer extends Computer {
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
-                                                       array $ids) {
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
 
       $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
       switch ($ma->getAction()) {
@@ -212,6 +211,4 @@ class PluginFusioninventoryComputer extends Computer {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
-
-
 }

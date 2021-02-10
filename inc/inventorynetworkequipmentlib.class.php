@@ -177,7 +177,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
 
    /**
-    * IMport internal ports (so internal IP, management IP)
+    * Import internal ports (so internal IP, management IP)
     *
     * @param array $a_ips
     * @param integer $networkequipments_id
@@ -300,7 +300,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                    'logical_number' => $a_port['logical_number']],
                   [], 1));
             if (!isset($a_ports_DB['id'])) {
-               // Add port
+               // Add port because not exists
                if (isset($a_inventory['aggregate'])
                        && isset($a_inventory['aggregate'][$a_port['logical_number']])) {
                   $a_port['instantiation_type'] = 'NetworkPortAggregate';
@@ -310,7 +310,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                $a_port['items_id'] = $items_id;
                $a_port['itemtype'] = 'NetworkEquipment';
                $networkports_id = $networkPort->add($a_port, [], $no_history);
-               unset($a_port['id']);
                $a_pfnetworkport_DB = current($pfNetworkPort->find(
                        ['networkports_id' => $networkports_id], [], 1));
                $a_port['id'] = $a_pfnetworkport_DB['id'];
@@ -787,12 +786,15 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                && !empty($this->data_device['mac'])) {
             $input['mac'] = $this->data_device['mac'];
          }
-         $input['instantiation_type'] = 'NetworkPortEthernet';
-         $portID = $NetworkPort->add($input);
-         if (!isset($this->found_ports[$itemtype])) {
-            $this->found_ports[$itemtype] = [];
+         if (count($input) > 2) {
+            // so have network elements
+            $input['instantiation_type'] = 'NetworkPortEthernet';
+            $portID = $NetworkPort->add($input);
+            if (!isset($this->found_ports[$itemtype])) {
+               $this->found_ports[$itemtype] = [];
+            }
+            $this->found_ports[$itemtype][$portID] = $portID;
          }
-         $this->found_ports[$itemtype][$portID] = $portID;
       } else {
          if ($ports_id > 0) {
             if (!isset($this->found_ports[$itemtype])) {

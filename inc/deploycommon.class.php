@@ -368,7 +368,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       );
       foreach ($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
-         $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
+         $manifest = PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$hash;
          $order_files[$hash]['multiparts'] = [];
          if (file_exists($manifest)) {
             $handle = fopen($manifest, "r");

@@ -188,7 +188,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          $stmt->bind_param(
             'ssssssssssss',
             $tasks_id,
-            "job_$tasks_id_$i",
+            "job_".$tasks_id."_".$i,
             'NOW()',
             '0',
             $plugins_id,

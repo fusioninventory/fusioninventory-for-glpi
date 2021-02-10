@@ -111,7 +111,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryItem {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       $fi_path = Plugin::getWebDir('fusioninventory');
 
-      if ($item->getID() > 0) {
+      if ($item->fields['id'] > 0) {
          $pfPrinter = new PluginFusioninventoryPrinter();
          $pfPrinter->showForm($item,
                      ['target' => $fi_path.'/front/printer_info.form.php']);

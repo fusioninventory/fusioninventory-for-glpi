@@ -53,8 +53,6 @@ Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "ad
 
 Session::checkRight('plugin_fusioninventory_task', READ);
 
-
-
 $pfTaskjob->submitForm($_POST);
 
 /**

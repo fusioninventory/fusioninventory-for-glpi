@@ -197,7 +197,4 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
    }
-
-
 }
-

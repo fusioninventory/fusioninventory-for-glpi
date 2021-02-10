@@ -999,6 +999,4 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       });");
       echo "</div>";
    }
-
-
 }

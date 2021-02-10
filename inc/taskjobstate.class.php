@@ -174,10 +174,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          return true;
       } else if ($item->getType() == 'Computer') {
          $pfTaskJobState = new PluginFusioninventoryTaskjobstate();
-         $pfTaskJobState->showStatesForComputer($item->getID());
+         $pfTaskJobState->showStatesForComputer($item->fields['id']);
          echo "<br>";
          $pfDeployGroup = new PluginFusioninventoryDeployGroup();
-         $pfDeployGroup->showForComputer($item->getID());
+         $pfDeployGroup->showForComputer($item->fields['id']);
       }
       return false;
    }
@@ -265,13 +265,13 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       switch ($state) {
 
          case 'running':
-            $fields['state'] = ['NOT', $self::FINISHED];
+            $fields['state'] = ['NOT', self::FINISHED];
             $title = __('Running tasks', 'fusioninventory');
             $icon  = "<img src='".$fi_path."/pics/task_running.png'/>";
             break;
 
          case 'finished':
-            $fields['state'] = $self::FINISHED;
+            $fields['state'] = self::FINISHED;
             $title = __('Finished tasks', 'fusioninventory');
             $icon  = "<img src='".$fi_path."/pics/task_finished.png'/>";
             break;

@@ -69,6 +69,8 @@ define("PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR",
 define("PLUGIN_FUSIONINVENTORY_XML_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/");
 
+// include_once GLPI_ROOT .'/plugins/fusioninventory/vendor/autoload.php';
+
 
 /**
  * Check if the script name finish by
@@ -335,30 +337,33 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = [
             'Plugin' => 'plugin_pre_item_update_fusioninventory'
           ];
-      $PLUGIN_HOOKS['item_update']['fusioninventory'] =
-                              ['Computer'         => 'plugin_item_update_fusioninventory',
-                                    'NetworkEquipment' => 'plugin_item_update_fusioninventory',
-                                    'Printer'          => 'plugin_item_update_fusioninventory',
-                                    'Monitor'          => 'plugin_item_update_fusioninventory',
-                                    'Peripheral'       => 'plugin_item_update_fusioninventory',
-                                    'Phone'            => 'plugin_item_update_fusioninventory',
-                                    'NetworkPort'      => 'plugin_item_update_fusioninventory',
-                                    'PluginFusioninventoryLock' => ['PluginFusioninventoryLock', 'deleteLock']];
+      $PLUGIN_HOOKS['item_update']['fusioninventory'] = [
+         'Computer'         => 'plugin_item_update_fusioninventory',
+         'NetworkEquipment' => 'plugin_item_update_fusioninventory',
+         'Printer'          => 'plugin_item_update_fusioninventory',
+         'Monitor'          => 'plugin_item_update_fusioninventory',
+         'Peripheral'       => 'plugin_item_update_fusioninventory',
+         'Phone'            => 'plugin_item_update_fusioninventory',
+         'NetworkPort'      => 'plugin_item_update_fusioninventory',
+         'PluginFusioninventoryLock' => ['PluginFusioninventoryLock', 'deleteLock']
+      ];
 
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = [
-            'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
-            'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
-            'PluginFusioninventoryLock'=> ['PluginFusioninventoryLock', 'deleteLock']
-          ];
-      $p = ['NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
-                 'PluginFusioninventoryTask'          => ['PluginFusioninventoryTask',
-                                                               'purgeTask'],
-                 'PluginFusioninventoryTaskjob'       => ['PluginFusioninventoryTaskjob',
-                                                               'purgeTaskjob'],
-                 'PluginFusioninventoryUnmanaged' => ['PluginFusioninventoryUnmanaged',
-                                                               'purgeUnmanaged'],
-                 'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
-                 'Printer'                            => 'plugin_item_purge_fusinvsnmp'];
+         'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
+         'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
+         'PluginFusioninventoryLock'=> ['PluginFusioninventoryLock', 'deleteLock']
+         ];
+      $p = [
+         'NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
+         'PluginFusioninventoryTask'          => ['PluginFusioninventoryTask', 'purgeTask'],
+         'PluginFusioninventoryTaskjob'       => ['PluginFusioninventoryTaskjob', 'purgeTaskjob'],
+         'PluginFusioninventoryUnmanaged'     => ['PluginFusioninventoryUnmanaged', 'purgeUnmanagedDevice'],
+         'NetworkEquipment'                   => 'plugin_item_purge_fusioninventory',
+         'Printer'                            => 'plugin_item_purge_fusioninventory',
+         'PluginFusioninventoryTimeslot'      => 'plugin_item_purge_fusioninventory',
+         'Entity'                             => 'plugin_item_purge_fusioninventory',
+         'PluginFusioninventoryDeployPackage' => 'plugin_item_purge_fusioninventory'
+      ];
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
@@ -465,7 +470,7 @@ function plugin_init_fusioninventory() {
       }
    }
 
-   // Add unmanaged devices in list of devices with networport
+   // Add unmanaged devices in list of devices with networkport
    //$CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnmanaged";
    $CFG_GLPI["networkport_types"][] = "PluginFusioninventoryUnmanaged";
 

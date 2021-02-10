@@ -246,6 +246,4 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
          }
       }
    }
-
-
 }

@@ -201,7 +201,4 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       $output.="</div>";
       return $output;
    }
-
-
 }
-

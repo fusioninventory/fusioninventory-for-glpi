@@ -105,7 +105,4 @@ class PluginFusioninventoryCollect_Wmi extends PluginFusioninventoryCollectCommo
       echo "<input type='text' name='properties' value='' size='50' />";
       echo "</td>";
    }
-
-
 }
-

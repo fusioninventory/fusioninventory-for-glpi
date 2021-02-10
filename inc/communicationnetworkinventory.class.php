@@ -752,4 +752,3 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       return $accesspoints;
    }
 }
-

@@ -536,6 +536,4 @@ class PluginFusioninventoryDeployAction extends PluginFusioninventoryDeployPacka
       $this->updateOrderJson($params['id'],
                              $this->prepareDataToSave($params, $entry));
    }
-
-
 }

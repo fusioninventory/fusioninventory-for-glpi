@@ -444,5 +444,12 @@ class PluginFusioninventoryDeployPackageItem extends CommonDBTM {
       }
    }
 
+   function displayAjaxValues($config, $request_data, $rand, $mode) {
+      return true;
+   }
+
+   function getTypes() {
+       return [];
+   }
 
 }

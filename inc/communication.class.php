@@ -58,7 +58,7 @@ class PluginFusioninventoryCommunication {
    /**
     * Define message variable
     *
-    * @var null
+    * @var SimpleXMLElement
     */
    protected $message;
 
@@ -487,7 +487,4 @@ class PluginFusioninventoryCommunication {
          }
       }
    }
-
-
 }
-

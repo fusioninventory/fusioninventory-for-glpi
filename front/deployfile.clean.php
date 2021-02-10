@@ -69,6 +69,4 @@ echo "<center>";
 echo "<a href='".$_SERVER['PHP_SELF']."?delete=1' class='vsubmit'>Delete unused files</a>";
 echo "</center>";
 
-
 Html::footer();
-

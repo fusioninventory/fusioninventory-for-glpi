@@ -177,7 +177,4 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
       $order['password'] = $credential->fields['password'];
       return $order;
    }
-
-
 }
-

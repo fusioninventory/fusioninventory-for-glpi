@@ -409,7 +409,4 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
          }
       }
    }
-
-
 }
-

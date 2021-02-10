@@ -74,7 +74,7 @@ class PluginFusioninventoryFormatconvert {
     * Convert XML into php array
     *
     * @global string $PLUGIN_FUSIONINVENTORY_XML
-    * @param string $xml
+    * @param object $xml
     * @return array
     */
    static function XMLtoArray($xml) {
@@ -1596,11 +1596,11 @@ class PluginFusioninventoryFormatconvert {
          //Store the raw values in the array
          $array_tmp = $this->addValues($a_softwares,
                                         [
-                                           'PUBLISHER'   => 'manufacturers_id',
-                                           'NAME'        => 'name',
-                                           'VERSION'     => 'version',
-                                        'COMMENTS'        => 'comment',
-                                           'INSTALLDATE' => 'date_install',
+                                           'PUBLISHER'       => 'manufacturers_id',
+                                           'NAME'            => 'name',
+                                           'VERSION'         => 'version',
+                                           'COMMENTS'        => 'comment',
+                                           'INSTALLDATE'     => 'date_install',
                                            'SYSTEM_CATEGORY' => '_system_category']);
          if (!isset($array_tmp['name'])
                  || $array_tmp['name'] == '') {

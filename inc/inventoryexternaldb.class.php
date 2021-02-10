@@ -160,7 +160,4 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
       }
       return "";
    }
-
-
 }
-

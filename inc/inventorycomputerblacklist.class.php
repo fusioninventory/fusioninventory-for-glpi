@@ -397,7 +397,4 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       }
       return $a_computerinventory;
    }
-
-
 }
-

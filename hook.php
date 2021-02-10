@@ -44,7 +44,6 @@
  *
  */
 
-
 /**
  * Add search options for GLPI objects
  *
@@ -318,7 +317,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
  * @return string
  */
 function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
-   global $CFG_GLPI;
+   global $CFG_GLPI, $DB;
 
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
@@ -687,8 +686,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
                      WHERE `printers_id`='".$data['raw']['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
-                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end'].
-                           " 23:59:59'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
                      ORDER BY date asc
                      LIMIT 1";
                   $result = $DB->query($query);
@@ -698,8 +696,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
                      WHERE `printers_id`='".$data['raw']['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
-                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end'].
-                           " 23:59:59'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
                      ORDER BY date desc
                      LIMIT 1";
                   $result = $DB->query($query);
@@ -2057,6 +2054,7 @@ function plugin_item_add_fusioninventory($parm) {
  * @return object
  */
 function plugin_item_purge_fusioninventory($parm) {
+   global $DB;
 
    switch (get_class($parm)) {
 
@@ -2199,10 +2197,48 @@ function plugin_item_purge_fusioninventory($parm) {
          );
          break;
 
-      case 'PluginFusioninventoryUnmanaged' :
+      case 'PluginFusioninventoryTimeslot';
+         $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+         $dbentries = getAllDataFromTable(
+            'glpi_plugin_fusioninventory_timeslotentries', [
+               'WHERE'  => [
+                  'plugin_fusioninventory_timeslots_id' => $parm->fields['id']
+               ]
+            ]
+         );
+         foreach ($dbentries as $data) {
+            $pfTimeslotEntry->delete(['id' => $data['id']], true);
+         }
+         break;
+
+      case 'Entity':
          $DB->delete(
-            'glpi_plugin_fusinvsnmp_unmanageds', [
-               'plugin_fusioninventory_unmanageds_id' => $parm->fields['id']
+            'glpi_plugin_fusioninventory_entities', [
+               'entities_id' => $parm->fields['id']
+            ]
+         );
+         break;
+
+      case 'PluginFusioninventoryDeployPackage':
+         // Delete all linked items
+         $DB->delete(
+            'glpi_plugin_fusioninventory_deploypackages_entities', [
+               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            ]
+         );
+         $DB->delete(
+            'glpi_plugin_fusioninventory_deploypackages_groups', [
+               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            ]
+         );
+         $DB->delete(
+            'glpi_plugin_fusioninventory_deploypackages_profiles', [
+               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
+            ]
+         );
+         $DB->delete(
+            'glpi_plugin_fusioninventory_deploypackages_users', [
+               'plugin_fusioninventory_deploypackages_id' => $parm->fields['id']
             ]
          );
          break;
