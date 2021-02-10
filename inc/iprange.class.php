@@ -395,7 +395,4 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $actions;
    }
-
-
 }
-

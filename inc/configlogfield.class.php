@@ -252,7 +252,4 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          }
       }
    }
-
-
 }
-

@@ -145,7 +145,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $computers_id);
 
-         // Manage operating system
+      // Manage operating system
       if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
          $ios = new Item_OperatingSystem();
          $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
@@ -203,7 +203,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'Computer', '', $computer->fields['entities_id']);
       }
 
-      $computerName = $computer->fields['name'];
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                          $db_computer, $a_lockable);
       $a_computerinventory['Computer'] = $a_ret[0];
@@ -950,8 +949,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $a_field = ['name', 'uuid', 'virtualmachinesystems_id'];
                foreach ($a_field as $field) {
                   if (isset($a_computervirtualmachine[$field])) {
-                     $simplecomputervirtualmachine[$key][$field] =
-                                 $a_computervirtualmachine[$field];
+                     $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
                   }
                }
             }
@@ -1459,16 +1457,16 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          unset($data['link_id']);
          $db_monitors[$idtmp] = $data['id'];
       }
-
       if (count($db_monitors) == 0) {
          foreach ($a_monitors as $monitors_id) {
-            $input = [];
-            $input['computers_id']   = $computers_id;
-            $input['itemtype']       = 'Monitor';
-            $input['items_id']       = $monitors_id;
-            $input['is_dynamic']     = 1;
-            $input['_no_history']    = $no_history;
-            $computer_Item->add($input, [], !$no_history);
+            $input = [
+               'computers_id' => $computers_id,
+               'itemtype'     => 'Monitor',
+               'items_id'     => $monitors_id,
+               'is_dynamic'   => 1,
+               '_no_history'  => $no_history
+            ];
+            $this->computerItemAdd($input, $no_history);
          }
       } else {
          // Check all fields from source:
@@ -1497,7 +1495,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $input['items_id']       = $monitors_id;
                   $input['is_dynamic']     = 1;
                   $input['_no_history']    = $no_history;
-                  $computer_Item->add($input, [], !$no_history);
+                  $this->computerItemAdd($input, $no_history);
                }
             }
          }
@@ -1580,7 +1578,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             $input['items_id']       = $printers_id;
             $input['is_dynamic']     = 1;
             $input['_no_history']    = $no_history;
-            $computer_Item->add($input, [], !$no_history);
+            $this->computerItemAdd($input, $no_history);
          }
       } else {
          // Check all fields from source:
@@ -1608,7 +1606,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $input['items_id']       = $printers_id;
                   $input['is_dynamic']     = 1;
                   $input['_no_history']    = $no_history;
-                  $computer_Item->add($input, [], !$no_history);
+                  $this->computerItemAdd($input, $no_history);
                }
             }
          }
@@ -1691,7 +1689,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             $input['items_id']       = $peripherals_id;
             $input['is_dynamic']     = 1;
             $input['_no_history']    = $no_history;
-            $computer_Item->add($input, [], !$no_history);
+            $this->computerItemAdd($input, $no_history);
          }
       } else {
          // Check all fields from source:
@@ -1720,7 +1718,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                   $input['items_id']       = $peripherals_id;
                   $input['is_dynamic']     = 1;
                   $input['_no_history']    = $no_history;
-                  $computer_Item->add($input, [], !$no_history);
+                  $this->computerItemAdd($input, $no_history);
                }
             }
          }
@@ -1824,30 +1822,28 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             }
          }
       }
-      // end get port from unknwon device
+      // end get port from unknown device
 
       $db_networkport = [];
-      if ($no_history === false) {
-         $iterator = $DB->request([
-            'SELECT' => ['id', 'name', 'mac', 'instantiation_type', 'logical_number'],
-            'FROM'   => 'glpi_networkports',
-            'WHERE'  => [
-               'items_id'     => $computers_id,
-               'itemtype'     => 'Computer',
-               'is_dynamic'   => 1
-            ]
-         ]);
-         while ($data = $iterator->next()) {
-            $idtmp = $data['id'];
-            unset($data['id']);
-            if (is_null($data['mac'])) {
-               $data['mac'] = '';
-            }
-            if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
-               $data['name'] = Toolbox::addslashes_deep($data['name']);
-            }
-            $db_networkport[$idtmp] = array_map('strtolower', $data);
+      $iterator = $DB->request([
+         'SELECT' => ['id', 'name', 'mac', 'instantiation_type', 'logical_number'],
+         'FROM'   => 'glpi_networkports',
+         'WHERE'  => [
+            'items_id'     => $computers_id,
+            'itemtype'     => 'Computer',
+            'is_dynamic'   => 1
+         ]
+      ]);
+      while ($data = $iterator->next()) {
+         $idtmp = $data['id'];
+         unset($data['id']);
+         if (is_null($data['mac'])) {
+            $data['mac'] = '';
          }
+         if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
+            $data['name'] = Toolbox::addslashes_deep($data['name']);
+         }
+         $db_networkport[$idtmp] = array_map('strtolower', $data);
       }
       $simplenetworkport = [];
       foreach ($inventory_networkports as $key=>$a_networkport) {
@@ -2228,7 +2224,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $deviceNetworkCard            = new DeviceNetworkCard();
 
-      $networkcards_id = $deviceNetworkCard->import($data);
+      $networkcards_id = $deviceNetworkCard->add($data);
       $data['devicenetworkcards_id']   = $networkcards_id;
       $data['itemtype']                = 'Computer';
       $data['items_id']                = $computers_id;
@@ -2440,9 +2436,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
     *
     * @param array $a_software
     * @param integer $softwares_id
+    * @param boolean $no_history
     */
-   function addSoftwareVersion($a_software, $softwares_id) {
-
+   function addSoftwareVersion($a_software, $softwares_id, $no_history) {
       $options = [];
       $options['disable_unicity_check'] = true;
 
@@ -2831,7 +2827,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             if (!isset($this->softVersionList[strtolower($a_software['version'])
             .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
             .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']])) {
-               $this->addSoftwareVersion($a_software, $softwares_id);
+               $this->addSoftwareVersion($a_software, $softwares_id, $no_history);
             }
          }
          $dbLock->releaseLock('softwareversions');
@@ -2844,13 +2840,13 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$softwares_id
                .PluginFusioninventoryFormatconvert::FI_SOFTWARE_SEPARATOR.$a_software['operatingsystems_id']];
             $a_tmp = [
-               'itemtype'             => 'Computer',
-                'items_id'        => $computers_id,
-                'softwareversions_id' => $softwareversions_id,
-                'is_dynamic'          => 1,
-                'entities_id'         => $computer->fields['entities_id'],
-                'date_install'        => null
-                ];
+               'itemtype'            => 'Computer',
+               'items_id'            => $computers_id,
+               'softwareversions_id' => $softwareversions_id,
+               'is_dynamic'          => 1,
+               'entities_id'         => $computer->fields['entities_id'],
+               'date_install'        => null
+            ];
             //By default date_install is null: if an install date is provided,
             //we set it
             if (isset($a_software['date_install'])) {
@@ -2896,9 +2892,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                }
             }
          }
-
       } else {
-
          //It's not the first inventory, or not an OS change/upgrade
 
          //Do software migration first if needed
@@ -2978,7 +2972,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                foreach ($a_inventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
                   if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id."$$$$".$a_software['operatingsystems_id']])) {
-                     $this->addSoftwareVersion($a_software, $softwares_id);
+                     $this->addSoftwareVersion($a_software, $softwares_id, $no_history);
                   }
                }
                $dbLock->releaseLock('softwareversions');
@@ -3063,5 +3057,23 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
    // For monitors, printers... import
    function rulepassed($items_id, $itemtype, $ports_id = 0) {
       return true;
+   }
+
+   /**
+    * Manage attach a device (monitor, printer....) to computer
+    */
+   function computerItemAdd($input, $no_history) {
+      $computer_Item = new Computer_Item();
+
+      // Check if the device is yet connected to another computer
+
+      $computer_Item->getFromDBByCrit([
+         'itemtype' => $input['itemtype'],
+         'items_id' => $input['items_id']
+      ]);
+      if (isset($computer_Item->fields['id'])) {
+         $computer_Item->delete(['id' => $computer_Item->fields['id']], true);
+      }
+      $computer_Item->add($input, [], !$no_history);
    }
 }

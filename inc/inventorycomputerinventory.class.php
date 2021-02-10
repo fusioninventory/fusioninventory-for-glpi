@@ -497,6 +497,24 @@ class PluginFusioninventoryInventoryComputerInventory {
             $no_history = true;
             $setdynamic = 0;
             $_SESSION['glpi_fusionionventory_nolock'] = true;
+
+            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+               $inputrulelog = [];
+               $inputrulelog['date'] = date('Y-m-d H:i:s');
+               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+                  $inputrulelog['plugin_fusioninventory_agents_id'] =
+                                 $_SESSION['plugin_fusioninventory_agents_id'];
+               }
+               $inputrulelog['items_id'] = $items_id;
+               $inputrulelog['itemtype'] = $itemtype;
+               $inputrulelog['method'] = 'inventory';
+               $pfRulematchedlog->add($inputrulelog, [], false);
+               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+               unset($_SESSION['plugin_fusioninventory_rules_id']);
+            }
+
          }
          if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
                $a_computerinventory['Computer']['locations_id'] =
@@ -533,23 +551,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          //$start = microtime(TRUE);
 
          PluginFusioninventoryInventoryComputerStat::increment();
-
-         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-            $inputrulelog = [];
-            $inputrulelog['date'] = date('Y-m-d H:i:s');
-            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] =
-                              $_SESSION['plugin_fusioninventory_agents_id'];
-            }
-            $inputrulelog['items_id'] = $items_id;
-            $inputrulelog['itemtype'] = $itemtype;
-            $inputrulelog['method'] = 'inventory';
-            $pfRulematchedlog->add($inputrulelog, [], false);
-            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-            unset($_SESSION['plugin_fusioninventory_rules_id']);
-         }
 
          $pfInventoryComputerLib->updateComputer(
                  $a_computerinventory,
@@ -661,6 +662,4 @@ class PluginFusioninventoryInventoryComputerInventory {
    function fillArrayInventory($data) {
       $this->arrayinventory = $data;
    }
-
-
 }

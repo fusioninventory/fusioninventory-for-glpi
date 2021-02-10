@@ -460,7 +460,4 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
       Html::closeForm();
    }
-
-
 }
-

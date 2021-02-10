@@ -1060,7 +1060,4 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
       $networkPort= new NetworkPort();
       $networkPort->cleanDBonItemDelete($this->getType(), $this->fields['id']);
    }
-
-
 }
-

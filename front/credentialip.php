@@ -49,4 +49,3 @@ include ("../../../inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredentialIp();
 include (GLPI_ROOT . "/front/dropdown.common.php");
-

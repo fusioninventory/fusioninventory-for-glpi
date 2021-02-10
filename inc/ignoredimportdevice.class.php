@@ -203,6 +203,4 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       return ['sort'  => 3,
                    'order' => 'DESC'];
    }
-
-
 }

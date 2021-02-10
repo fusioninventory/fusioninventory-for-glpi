@@ -566,7 +566,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
     * When agent contact server, this function send datas to agent
     *
     * @param object $jobstate PluginFusioninventoryTaskjobstate instance
-    * @return string
+    * @return SimpleXMLElement
     */
    function run($jobstate) {
 
@@ -843,7 +843,4 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
       return $devicesList;
    }
-
-
 }
-

@@ -772,7 +772,4 @@ function appear_array(id) {
       }
       return str_replace(",[", "<br/>[", $comment);
    }
-
 }
-
-

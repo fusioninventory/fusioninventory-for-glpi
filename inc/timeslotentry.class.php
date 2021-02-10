@@ -318,119 +318,104 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
             ]
          );
 
-         $rangeToUpdate = $dbentries;
-         $rangeToAdd = [];
+         $inThePeriod = false;
+         $afterPeriod = false;
+         $updateEntries = [];
+         $deleteEntries = [];
+         $addEntries = [];
 
          foreach ($dbentries as $entries) {
-            // the entry if before this db entry
-            if ($range['lasthours'] < $entries['begin']) {
-               break;
-            }
-            //the entry is more after end of this db entry
-            if ($range['beginhours'] > $entries['end']) {
+            if ($afterPeriod) {
                continue;
             }
 
-            // The entry is in this db entry
-            if ($range['beginhours'] >= $entries['begin']
-                    && $range['lasthours'] <= $entries['end']) {
-               unset($range['beginhours']);
-               break;
+            if ($inThePeriod) {
+               // So we need manage the end
+               if ($range['lasthours'] < $entries['begin']) {
+                  $addEntries[] = [
+                     'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+                     'day'   => $day,
+                     'begin' => $range['beginhours'],
+                     'end'   => $range['lasthours']
+                  ];
+                  $inThePeriod = false;
+                  $afterPeriod = true;
+                  continue;
+               } else if ($range['lasthours'] > $entries['end']) {
+                  $deleteEntries[] = $entries;
+                  continue;
+               } else {
+                  $entries['begin'] = $range['beginhours'];
+                  $updateEntries[] = $entries;
+                  $inThePeriod = false;
+                  $afterPeriod = true;
+                  continue;
+               }
+            } else if (($range['lasthours'] < $entries['begin'])) {
+               // We add
+               $this->add([
+                  'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+                  'day'   => $day,
+                  'begin' => $range['beginhours'],
+                  'end'   => $range['lasthours']
+               ]);
+               continue 2;
+            } else if ($range['beginhours'] > $entries['end']) {
+               // Not manage, hop to next entry
+               continue;
             }
 
             if ($range['beginhours'] < $entries['begin']) {
-               $rangeToUpdate[$entries['id']]['begin'] = $range['beginhours'];
-               if ($range['lasthours'] < $entries['end']) {
-                  unset($range['beginhours']);
-                  break;
+               $inThePeriod = true;
+
+               if ($range['lasthours'] <= $entries['end']) {
+                  $entries['begin'] = $range['beginhours'];
+                  $updateEntries[] = $entries;
+                  $inThePeriod = false;
+                  $afterPeriod = true;
                } else {
-                  $range['beginhours'] = $entries['end'];
+                  $deleteEntries[] = $entries;
                }
-            } else if ($range['beginhours'] > $entries['begin']) {
-               if ($range['lasthours'] > $entries['end']) {
-                  $range['beginhours'] = $entries['end'];
+            } else if ($range['beginhours'] < $entries['end']) {
+               $inThePeriod = true;
+               $range['beginhours'] = $entries['begin'];
+
+               if ($range['lasthours'] <= $entries['end']) {
+                  $entries['begin'] = $range['beginhours'];
+                  $updateEntries[] = $entries;
+                  $inThePeriod = false;
+                  $afterPeriod = true;
+               } else {
+                  $deleteEntries[] = $entries;
                }
             }
          }
-
-         if (isset($range['beginhours'])
-                 && $range['beginhours'] != $range['lasthours']) {
-            $rangeToAdd = [[
-                'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
-                'day'   => $day,
-                'begin' => $range['beginhours'],
-                'end'   => $range['lasthours']
-            ]];
+         if (count($dbentries) == 0) {
+            $addEntries[] = [
+               'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+               'day'   => $day,
+               'begin' => $range['beginhours'],
+               'end'   => $range['lasthours']
+            ];
+         } else if ($inThePeriod || (count($updateEntries) == 0 && count($deleteEntries) == 0 & count($addEntries) == 0)) {
+            $addEntries[] = [
+               'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
+               'day'   => $day,
+               'begin' => $range['beginhours'],
+               'end'   => $range['lasthours']
+            ];
          }
 
-         $periods = [];
-         foreach ($rangeToUpdate as $dbToUpdate) {
-            $periods[$dbToUpdate['begin']] = $dbToUpdate;
+         foreach ($updateEntries as $entry) {
+            $this->update($entry);
          }
-         foreach ($rangeToAdd as $dbToAdd) {
-            $periods[$dbToAdd['begin']] = $dbToAdd;
+         foreach ($deleteEntries as $entry) {
+            $this->delete(['id' => $entry['id']]);
          }
-         ksort($periods);
-         $periods = $this->mergePeriods($periods);
-
-         foreach ($dbentries as $dbentry) {
-            if (count($periods) > 0) {
-               $input = array_pop($periods);
-               $input['id'] = $dbentry['id'];
-               $input['day'] = $day;
-               $this->update($input);
-            } else {
-               $this->delete($dbentry);
-            }
-         }
-         if (count($periods) > 0) {
-            foreach ($periods as $period) {
-               $input = $period;
-               if (isset($input['id'])) {
-                  unset($input['id']);
-               }
-               $this->add($input);
-            }
+         foreach ($addEntries as $entry) {
+            $this->add($entry);
          }
       }
    }
-
-
-   /**
-    * Merge 2 periods when 2 entries have a same time part
-    *
-    * @param array $periods
-    * @return array
-    */
-   function mergePeriods($periods) {
-
-      $update = false;
-      $previouskey = 0;
-      $first = true;
-      foreach ($periods as $key=>$period) {
-         if ($first) {
-            $first = false;
-            $previouskey = $key;
-         } else {
-            if ($period['begin'] <= $periods[$previouskey]['end']
-                    || $period['begin'] == ($periods[$previouskey]['end'] + 15)) {
-
-               if ($period['end'] > $periods[$previouskey]['end']) {
-                  $periods[$previouskey]['end'] = $period['end'];
-               }
-               unset($periods[$key]);
-               $update = true;
-            } else {
-               $previouskey = $key;
-            }
-         }
-      }
-      if ($update) {
-         $periods = $this->mergePeriods($periods);
-      }
-      return $periods;
-   }
-
 
 }
-

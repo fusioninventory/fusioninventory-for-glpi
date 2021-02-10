@@ -49,3 +49,65 @@ jobs:
         php_version: 7.4
     - name: Lint
       run: php vendor/bin/robo --no-interaction code:cs
+
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.3', '7.4', '8.0']
+    name: phpunit (${{ matrix.php-versions }})
+    env:
+      extensions: zip, hash, fileinfo, mysqli, gd, bz2
+      key: cache-v1
+    steps:
+    - uses: ankane/setup-mariadb@v1
+      with:
+        mariadb-version: 10.5
+    - uses: actions/checkout@v1
+    - name: Setup cache environment
+      id: extcache
+      uses: shivammathur/cache-extensions@v1
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: ${{ env.extensions }}
+        key: ${{ env.key }}
+
+    - name: Cache extensions
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.extcache.outputs.dir }}
+        key: ${{ steps.extcache.outputs.key }}
+        restore-keys: ${{ steps.extcache.outputs.key }}
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: ${{ env.extensions }}
+
+    - name: Cache Composer dependencies
+      uses: actions/cache@v2
+      with:
+        path: /tmp/composer-cache
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
+    - uses: php-actions/composer@v5
+      with:
+        php_version: 7.4
+    - name: Get GLPI
+      run: wget https://github.com/glpi-project/glpi/releases/download/9.5.3/glpi-9.5.3.tgz
+    - name: Uncompress GLPI
+      run: tar zxvf glpi-9.5.3.tgz
+    - name: Copy Plugin FusionInventory
+      run: rsync -avr --exclude='glpi' ./* glpi/plugins/fusioninventory/
+    - name: Create the database
+      run: mysqladmin create glpi
+    - name: Check php dependencies
+      run: cd glpi && php bin/console glpi:system:check_requirements
+    - name: Install GLPI
+      run: cd glpi && mkdir tests && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
+    - name: Install plugin FusionInventory
+      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
+    - name: Activate plugin FusionInventory
+      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory
+    - name: run tests
+      run: cd glpi/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/

@@ -194,7 +194,4 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
    }
-
-
 }
-

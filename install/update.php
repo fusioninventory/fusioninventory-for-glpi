@@ -46,7 +46,6 @@
 
 include_once( PLUGIN_FUSIONINVENTORY_DIR . "/install/update.tasks.php" );
 
-
 /**
  * Get the current version of the plugin
  *
@@ -1030,7 +1029,50 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       PluginFusioninventoryLock::addLocks('Computer', 0, ['otherserial']);
    }
 
-   //Migrate search params for dynamic groups
+   // ********* Clean orphan data ********************************************** //
+
+   // Clean timeslotentries
+   $query = "SELECT glpi_plugin_fusioninventory_timeslotentries.id
+            FROM glpi_plugin_fusioninventory_timeslotentries
+            LEFT JOIN glpi_plugin_fusioninventory_timeslots
+               ON glpi_plugin_fusioninventory_timeslotentries.plugin_fusioninventory_timeslots_id = glpi_plugin_fusioninventory_timeslots.id
+            WHERE glpi_plugin_fusioninventory_timeslots.id IS NULL";
+   $result = $DB->query($query);
+   while ($data = $DB->fetchArray($result)) {
+      $DB->query('DELETE FROM glpi_plugin_fusioninventory_timeslotentries WHERE id='.$data['id']);
+   }
+
+   // Clean entities
+   $query = "SELECT glpi_plugin_fusioninventory_entities.id
+            FROM glpi_plugin_fusioninventory_entities
+            LEFT JOIN glpi_entities
+               ON glpi_plugin_fusioninventory_entities.entities_id = glpi_entities.id
+            WHERE glpi_entities.id IS NULL";
+   $result = $DB->query($query);
+   while ($data = $DB->fetchArray($result)) {
+      $DB->query('DELETE FROM glpi_plugin_fusioninventory_entities WHERE id='.$data['id']);
+   }
+
+   // Clean packages
+   $tables = [
+      'glpi_plugin_fusioninventory_deploypackages_entities',
+      'glpi_plugin_fusioninventory_deploypackages_groups',
+      'glpi_plugin_fusioninventory_deploypackages_profiles',
+      'glpi_plugin_fusioninventory_deploypackages_users'
+   ];
+   foreach ($tables as $table) {
+      $query = "SELECT ".$table.".id
+               FROM ".$table."
+               LEFT JOIN glpi_plugin_fusioninventory_deploypackages
+                  ON ".$table.".plugin_fusioninventory_deploypackages_id = glpi_plugin_fusioninventory_deploypackages.id
+               WHERE glpi_plugin_fusioninventory_deploypackages.id IS NULL";
+      $result = $DB->query($query);
+      while ($data = $DB->fetchArray($result)) {
+         $DB->query('DELETE FROM '.$table.' WHERE id='.$data['id']);
+      }
+   }
+
+   // Migrate search params for dynamic groups
    doDynamicDataSearchParamsMigration();
 }
 
@@ -1723,6 +1765,7 @@ function do_iprange_migration($migration) {
  * @param object $migration
  */
 function do_locks_migration($migration) {
+   global $DB;
 
    /*
     * Table glpi_plugin_fusioninventory_locks
@@ -1754,6 +1797,35 @@ function do_locks_migration($migration) {
    $a_table['oldkeys'] = [];
 
    migrateTablesFusionInventory($migration, $a_table);
+
+   // Deduplicate entries
+
+   $iterator = $DB->request([
+      'SELECT'  => [
+         'tablename',
+         'COUNT' => ['tablename as cpt'],
+         'items_id'
+      ],
+      'FROM'    => 'glpi_plugin_fusioninventory_locks',
+      'GROUPBY' => [
+         'tablename',
+         'items_id'
+      ],
+      'HAVING' => [
+         'cpt' => ['>', 1]
+      ]
+   ]);
+   while ($data = $iterator->next()) {
+      $DB->query("DELETE FROM glpi_plugin_fusioninventory_locks ".
+      "WHERE `tablename`='".$data['tablename']."' AND `items_id`='".$data['items_id']."' ".
+      "ORDER BY ID desc LIMIT ".($data['cpt'] - 1));
+   }
+
+   // add unique key
+   $a_table['keys'][] = ['field' => ["tablename", "items_id"],
+                         'name' => 'unicity', 'type' => 'UNIQUE'];
+   migrateTablesFusionInventory($migration, $a_table);
+
 }
 
 

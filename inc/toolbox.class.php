@@ -312,6 +312,9 @@ class PluginFusioninventoryToolbox {
       if (empty($folder)) {
          $folder = '0';
       }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory")) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory");
+      }
       if (!file_exists(PLUGIN_FUSIONINVENTORY_XML_DIR)) {
          mkdir(PLUGIN_FUSIONINVENTORY_XML_DIR);
       }
@@ -686,7 +689,7 @@ class PluginFusioninventoryToolbox {
     *
     * @param string|array $function
     * @param array $args
-    * @return string the normaly returned value from executed callable
+    * @return array the normaly returned value from executed callable
     */
    function executeAsFusioninventoryUser($function, array $args = []) {
 
@@ -831,6 +834,8 @@ class PluginFusioninventoryToolbox {
       $config = new PluginFusioninventoryConfig();
 
       $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
+      $autonum = str_replace('<', '&lt;', $autonum);
+      $autonum = str_replace('>', '&gt;', $autonum);
 
       $new_value = $dbutils->autoName($autonum, 'otherserial', true, $itemtype, $entities_id);
 

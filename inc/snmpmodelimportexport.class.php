@@ -113,7 +113,4 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          }
       }
    }
-
-
 }
-

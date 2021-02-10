@@ -479,6 +479,4 @@ class PluginFusioninventoryDeployUserinteraction extends PluginFusioninventoryDe
             return __('Multiple users connected', 'fusioninventory');
       }
    }
-
-
 }

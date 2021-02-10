@@ -88,7 +88,8 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      if ($item->getID() > 0) {
+
+      if ($item->fields['id'] > 0) {
          $pfNetworkEquipment = new self();
          $options = [
             'target' => Plugin::getWebDir('fusioninventory').'/front/switch_info.form.php'

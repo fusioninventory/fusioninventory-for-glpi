@@ -179,7 +179,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * Purge elements linked to task when delete it
     *
     * @global object $DB
-    * @param array $param
+    * @param object $param
     */
    static function purgeTask($param) {
       global $DB;
@@ -1331,14 +1331,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'jobs_id'  => $job_id,
                   'task_id'  => $task_id,
                   'target_id'=> $target_id
-               ];
-            } else {
-               $targets[$target_id]['agents'][$agent_id][] = [
-                  'agent_id'      => $agent_id,
-                  'link'          => Computer::getFormURLWithID($result['agent.computers_id']),
-                  'numstate'      => $result['state'],
-                  'state'         => $agent_state,
-                  'target_id'     => $target_id
                ];
             }
          }

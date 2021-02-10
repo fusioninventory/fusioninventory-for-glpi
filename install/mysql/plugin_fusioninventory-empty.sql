@@ -86,7 +86,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_locks` (
    `tablefields` text DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `tablename` (`tablename`),
-   KEY `items_id` (`items_id`)
+   KEY `items_id` (`items_id`),
+   UNIQUE KEY `unicity` (`tablename`,`items_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 

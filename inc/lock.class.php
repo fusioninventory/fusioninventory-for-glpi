@@ -83,7 +83,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $pfLock = new self();
       $a_data = current($pfLock->find(
             ['tablename' => $item->getTable(),
-             'items_id'  => $item->getID()],
+             'items_id'  => $item->fields['id']],
             [], 1));
       if (!is_array($a_data) || count($a_data) == 0) {
          return 0;
@@ -101,7 +101,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      $items_id = $item->getID();
+      $items_id = $item->fields['id'];
       $itemtype = $item->getType();
 
       switch ($itemtype) {
@@ -163,13 +163,13 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "</table>";
          return true;
       }
-      if ($item->getID() < 1) {
+      if ($item->fields['id'] < 1) {
          $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
                            $item->getType());
       } else {
          $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
-                              $item->getID(),
-                           $item->getType(), $item->getID());
+                              $item->fields['id'],
+                           $item->getType(), $item->fields['id']);
       }
       return true;
    }
@@ -514,7 +514,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @global object $DB
     * @param string $p_itemtype Table id.
     * @param integer $p_items_id Line id.
-    * @param string $p_fieldsToLock Array of fields to lock.
+    * @param array $p_fieldsToLock Array of fields to lock.
     * @param string $massiveaction
     *
     * @return boolean
@@ -579,7 +579,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @global object $DB
     * @param string $p_itemtype Table id.
     * @param integer $p_items_id Line id.
-    * @param string $p_fieldsToLock Array of fields to lock.
+    * @param array $p_fieldsToLock Array of fields to lock.
     */
    static function addLocks($p_itemtype, $p_items_id, $p_fieldsToLock) {
       global $DB;
@@ -972,7 +972,4 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return true;
    }
-
-
 }
-

@@ -53,9 +53,6 @@ Session::checkRight('plugin_fusioninventory_task', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$pfTask = new PluginFusioninventoryTask();
-$pfTask->menuTasksLogs();
-
 Search::show('PluginFusioninventoryTaskjoblog');
 
 Html::footer();

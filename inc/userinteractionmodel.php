@@ -63,6 +63,4 @@ class PluginFusioninventoryUserinteractionModel extends CommonDBTM {
    static function getTypeName($nb = 0) {
       return _n('User interaction', 'User interactions', 'fusioninventory');
    }
-
-
 }

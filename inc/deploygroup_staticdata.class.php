@@ -108,7 +108,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          $count = countElementsInTable(getTableForItemType(__CLASS__),
             [
                'itemtype'                               => 'Computer',
-               'plugin_fusioninventory_deploygroups_id' => $item->getID(),
+               'plugin_fusioninventory_deploygroups_id' => $item->fields['id'],
             ]);
          if ($_SESSION['glpishow_count_on_tabs']) {
             $tabs[2] = self::createTabEntry(_n('Associated item', 'Associated items', $count), $count);

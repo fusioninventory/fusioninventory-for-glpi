@@ -428,7 +428,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
     * Get criteria by criteria name
     *
     * @param string $critname
-    * @return string
+    * @return array
     */
    function getCriteriaByID($critname) {
       $criteria = [];
@@ -576,7 +576,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       } else {
          foreach ($CFG_GLPI["state_types"] as $itemtype) {
             if (class_exists($itemtype)
-               && ($itemtype != 'SoftwareLicense' && $itemtype != 'Certificate')) {
+               && ($itemtype != 'SoftwareLicense'
+               && $itemtype != 'Certificate'
+               && $itemtype != 'Appliance'
+               && $itemtype != 'Line'
+               && $itemtype != 'Cluster'
+               && $itemtype != 'Contract'
+               && $itemtype != 'SoftwareVersion'
+               )) {
                $itemtypeselected[] = $itemtype;
             }
          }
@@ -817,6 +824,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $sql_from_temp .= $sql_from_domain;
             $sql_where_temp .= $sql_where_domain;
          } else if ($itemtype == 'PluginFusioninventoryUnmanaged') {
+            $itemtype = 'PluginFusioninventoryUnmanaged';
             $sql_from_temp .= $sql_from_domain;
             $sql_where_temp .= $sql_where_domain;
          }
@@ -835,7 +843,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             }
          }
 
-         $item = new $itemtype();
+         $item = new $itemtype;
          $sql_glpi = "SELECT `[typetable]`.`id`";
          if ($select_networkport) {
             if ($linkCriteriaPort) {
@@ -905,7 +913,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       } else if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])
             && !empty($_SESSION['plugin_fusioninventory_classrulepassed'])) {
          $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
-         $class = new $classname();
+         if ($classname == "PluginFusioninventoryCommunicationNetworkInventory") {
+            $class = new PluginFusioninventoryCommunicationNetworkInventory();
+         } else {
+            $class = new $classname();
+         }
       }
 
       $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
@@ -1290,5 +1302,4 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $this->criteriaInput = $input;
       return $input;
    }
-
 }

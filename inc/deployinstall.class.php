@@ -102,7 +102,4 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
       }
       return false;
    }
-
-
 }
-

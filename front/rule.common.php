@@ -93,7 +93,6 @@ if (isset($_GET["action"])) {
 
       case "activate_rule" :
          if (isset($_POST["item"])) {
-            $rule = new PluginFusioninventoryRule();
             foreach ($_POST["item"] as $key => $val) {
                if ($val == 1) {
                   $input = [];

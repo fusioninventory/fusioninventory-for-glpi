@@ -99,35 +99,6 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
    /**
-    * Get name of this rule class
-    *
-    * @return string
-    */
-   function getRuleClassName() {
-      $rule_class = [];
-      if (preg_match('/(.*)Collection/', get_class($this), $rule_class)) {
-         return $rule_class[1];
-      }
-      return "";
-   }
-
-
-   /**
-    * Get an instance of the class to manipulate rule of this collection
-    *
-    * @return null|object
-    */
-   function getRuleClass() {
-      $name = $this->getRuleClassName();
-      if ($name !=  '') {
-         return new $name();
-      } else {
-         return null;
-      }
-   }
-
-
-   /**
     * Make some changes before process review result
     *
     * @param array $output
@@ -210,6 +181,14 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       $this->RuleList->load = $need;
    }
 
+   function getRuleClassName() {
 
+      if (preg_match('/(.*)Collection/', get_class($this), $rule_class)) {
+         if (debug_backtrace()[1]['function'] == 'getRuleListCriteria') {
+            $rule_class[1] = str_replace('\\', '\\\\\\', $rule_class[1]);
+         }
+         return $rule_class[1];
+      }
+      return "";
+   }
 }
-

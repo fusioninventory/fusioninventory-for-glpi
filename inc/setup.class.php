@@ -142,7 +142,8 @@ class PluginFusioninventorySetup {
     * @param integer $reset
     * @return boolean
     */
-   function initRules($reset = 0) {
+   function initRules($reset = 0, $onlyActive = false) {
+      global $DB;
 
       if ($reset == 1) {
          $grule = new Rule();
@@ -1187,6 +1188,10 @@ class PluginFusioninventorySetup {
 
       $ranking = 0;
       foreach ($rules as $rule) {
+         if ($onlyActive && $rule['is_active'] == 0) {
+            continue;
+         }
+
          $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
          $input = [];
          $input['is_active'] = $rule['is_active'];
@@ -1246,7 +1251,4 @@ class PluginFusioninventorySetup {
          return $user['id'];
       }
    }
-
-
 }
-

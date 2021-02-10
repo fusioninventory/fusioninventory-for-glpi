@@ -116,7 +116,4 @@ class PluginFusioninventoryModule extends CommonDBTM {
          return false;
       }
    }
-
-
 }
-

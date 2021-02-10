@@ -143,7 +143,4 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
       echo "</div>";
       return true;
    }
-
-
 }
-

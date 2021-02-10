@@ -497,13 +497,14 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       switch ($params['filestype']) {
 
          case 'Server':
-            $this->uploadFileFromServer($params);
+            return $this->uploadFileFromServer($params);
             break;
 
          default:
-            $this->uploadFileFromComputer($params);
+            return $this->uploadFileFromComputer($params);
 
       }
+      return false;
    }
 
 
@@ -901,6 +902,9 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
 
       //get sha512 parts in manifest
+      if (!file_exists(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512)) {
+         return true;
+      }
       $multiparts = file(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
 
       //parse all files part
@@ -927,7 +931,9 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
 
       //remove manifest
-      unlink(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
+      if (file_exists(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512)) {
+         unlink(PLUGIN_FUSIONINVENTORY_MANIFESTS_DIR.$sha512);
+      }
 
       return true;
    }
@@ -1063,12 +1069,9 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
                   }
                   fclose($handle);
                }
-
                unlink($manifest_filename);
             }
          }
       }
    }
-
-
 }

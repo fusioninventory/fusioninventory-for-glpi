@@ -153,7 +153,4 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
       }
       return $a_counters;
    }
-
-
 }
-

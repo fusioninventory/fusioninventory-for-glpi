@@ -209,5 +209,17 @@ class PluginFusioninventoryCollect_File extends PluginFusioninventoryCollectComm
    }
 
 
+   /**
+    * After purge item, delete collect files
+    */
+   function post_purgeItem() {
+      // Delete all File
+      $pfCollectFileContent = new PluginFusioninventoryCollect_File_Content();
+      $items = $pfCollectFileContent->find(['plugin_fusioninventory_collects_files_id' => $this->fields['id']]);
+      foreach ($items as $item) {
+         $pfCollectFileContent->delete(['id' => $item['id']], true);
+      }
+      parent::post_deleteItem();
+   }
 }
 

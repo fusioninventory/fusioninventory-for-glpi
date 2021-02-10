@@ -54,4 +54,3 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerCriteria extends CommonDBTM {
 
 }
-

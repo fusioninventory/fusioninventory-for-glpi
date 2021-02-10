@@ -253,7 +253,4 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       echo "<td>".$display_date.$interval['s']."s</td>";
    }
-
-
 }
-

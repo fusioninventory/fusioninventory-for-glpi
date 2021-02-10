@@ -170,15 +170,16 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
    * @return an array of registry values types
    */
    function getRegistryTypes() {
-      return ['REG_SZ'                  => 'REG_SZ',
-              'REG_DWORD'               => 'REG_DWORD',
-              'REG_BINARY'              => 'REG_BINARY',
-              'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
-              'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
-              'REG_LINK'                => 'REG_LINK',
-              'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
-              'REG_NONE'                => 'REG_NONE'
-             ];
+      return [
+         'REG_SZ'                  => 'REG_SZ',
+         'REG_DWORD'               => 'REG_DWORD',
+         'REG_BINARY'              => 'REG_BINARY',
+         'REG_EXPAND_SZ'           => 'REG_EXPAND_SZ',
+         'REG_MULTI_SZ'            => 'REG_MULTI_SZ',
+         'REG_LINK'                => 'REG_LINK',
+         'REG_DWORD_BIG_ENDIAN'    => 'REG_DWORD_BIG_ENDIAN',
+         'REG_NONE'                => 'REG_NONE'
+      ];
    }
 
 

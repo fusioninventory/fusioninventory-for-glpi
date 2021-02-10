@@ -80,7 +80,4 @@ class PluginFusioninventoryLogger {
       }
       self::logIfExtradebug($file, $message);
    }
-
-
 }
-

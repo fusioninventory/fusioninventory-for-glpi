@@ -78,7 +78,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       $tab_names = [];
-      if ($item->getID() > 0 and $this->can('task', READ)) {
+      if ($item->fields['id'] > 0 and $this->can('task', READ)) {
          return __('Jobs configuration', 'fusioninventory');
       }
       return '';
@@ -97,12 +97,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       $pfTaskJob = new PluginFusioninventoryTaskjob();
 
-      if ($item->getID() > 0) {
+      if ($item->fields['id'] > 0) {
          if ($item->getType() == 'PluginFusioninventoryTask') {
             echo "<div id='taskjobs_form'>";
             echo "</div>";
             echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
-            $pfTaskJob->showListForTask($item->getID());
+            $pfTaskJob->showListForTask($item->fields['id']);
             echo "</div>";
             return true;
          }

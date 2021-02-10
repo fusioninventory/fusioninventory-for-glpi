@@ -388,7 +388,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       // display stats
       $stats = $this->stats($printers_id);
       if ($stats) {
-         $this->initForm($id, $options);
+         $this->initForm($printers_id, $options);
          $this->showFormHeader($options);
 
          echo "<tr class='tab_bg_1'>";
@@ -847,4 +847,3 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       return " (".$sql.") ";
    }
 }
-

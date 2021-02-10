@@ -129,11 +129,11 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
       if ($item->getType() == __CLASS__) {
          switch ($tabnum) {
             case 1 :
-               $item->showForm($item->getID());
+               $item->showForm($item->fields['id']);
                break;
 
             case 2 :
-               $item->showBehaviors($item->getID());
+               $item->showBehaviors($item->fields['id']);
                break;
          }
       }
@@ -721,6 +721,4 @@ class PluginFusioninventoryDeployUserinteractionTemplate extends CommonDropdown 
    public function getValues() {
       return json_decode($this->fields['json'], true);
    }
-
-
 }

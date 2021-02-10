@@ -290,7 +290,4 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       }
       echo "</table>";
    }
-
-
 }
-

@@ -331,6 +331,4 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       }
       return $a_computerextend['is_entitylocked'];
    }
-
-
 }
