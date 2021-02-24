@@ -1882,6 +1882,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $actions = [];
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'transfert'] = __('Transfer');
       $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'duplicate'] = _sx('button', 'Duplicate');
+      $actions[__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'forcestart'] = __('Force start', 'fusioninventory');
       return $actions;
    }
 
@@ -1901,6 +1902,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          case "transfert":
             Dropdown::show('Entity');
+            echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
+            return true;
+         
+         case "forcestart":
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
 
@@ -2017,6 +2022,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   }
                }
             }
+            break;
+
+         case "forcestart":
+               foreach ($ids as $key) {
+                  if ($pfTask->getFromDB($key)) {
+                     if ($pfTask->fields['is_active']) {
+                        $pfTask->forceRunning();
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                     } else {
+                        // KO
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                        $ma->addMessage(sprintf(__('Task %1$s is disabled, force runnig aborted',
+                        'fusioninventory'), $pfTask->getLink()));
+                     }
+                  }
+               }
             break;
 
          case "transfert" :
