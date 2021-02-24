@@ -1904,7 +1904,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             Dropdown::show('Entity');
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
-         
+
          case "forcestart":
             echo Html::submit(_x('button', 'Post'), ['name' => 'massiveaction']);
             return true;
@@ -2025,19 +2025,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             break;
 
          case "forcestart":
-               foreach ($ids as $key) {
-                  if ($pfTask->getFromDB($key)) {
-                     if ($pfTask->fields['is_active']) {
-                        $pfTask->forceRunning();
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
-                     } else {
-                        // KO
-                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
-                        $ma->addMessage(sprintf(__('Task %1$s is disabled, force runnig aborted',
+            foreach ($ids as $key) {
+               if ($pfTask->getFromDB($key)) {
+                  if ($pfTask->fields['is_active']) {
+                     $pfTask->forceRunning();
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                  } else {
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                     $ma->addMessage(sprintf(__('Task %1$s is disabled, force runnig aborted',
                         'fusioninventory'), $pfTask->getLink()));
-                     }
                   }
                }
+            }
             break;
 
          case "transfert" :
