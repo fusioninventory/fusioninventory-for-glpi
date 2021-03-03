@@ -105,6 +105,10 @@
    </authors>
    <versions>
       <version>
+         <num>9.5+2.0</num>
+         <compatibility>9.5</compatibility>
+      </version>
+      <version>
          <num>9.5.0+1.0</num>
          <compatibility>9.5</compatibility>
       </version>
