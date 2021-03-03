@@ -226,7 +226,15 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       if ($cronTask->fields['lastrun'] == ''
               OR strtotime($cronTask->fields['lastrun']) < strtotime("-3 day")) {
          $message = __('GLPI cron not running, see ', 'fusioninventory');
-         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html'>".__('documentation', 'fusioninventory')."</a>";
+         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+      }
+
+      // Check if plugin right updated (because security problems)
+      $fi_path = Plugin::getPhpDir('fusioninventory');
+      if (file_exists($fi_path."/ajax/deploydropdown_operatingsystems.php")) {
+         $message = __('SECURITY PROBLEM, see `2.1 Update` section to update correctly the plugin on ', 'fusioninventory');
+         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/installation.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
          Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
       }
 

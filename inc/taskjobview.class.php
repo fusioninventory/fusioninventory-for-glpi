@@ -405,6 +405,10 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       }
 
+      if (!preg_match("/^[a-zA-Z]+$/", $method)) {
+         $method = '';
+      }
+
       // filter actor list with active agent and with current module active
       $condition = "";
       if ($moduletype == "actors"
