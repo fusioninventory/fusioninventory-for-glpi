@@ -221,7 +221,7 @@ class ComputerPeripheralTest extends TestCase {
             'is_recursive'        => 0
          ],
          [
-            'name' => 'H5321 gw Mobile Broadband Driver',
+            'name' => 'H5321 gw Mobile Broadband Module',
             'serial'              => '187A047919938CM0',
             'peripheraltypes_id'  => 0,
             'peripheralmodels_id' => 0,
