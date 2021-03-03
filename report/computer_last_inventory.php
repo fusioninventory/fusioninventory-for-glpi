@@ -60,6 +60,9 @@ if ($nbdays == '') {
 }
 
 $state = filter_input(INPUT_GET, "state");
+if (!is_numeric($state)) {
+   $state = 0;
+}
 
 echo "<form action='".filter_input(INPUT_SERVER, "PHP_SELF")."' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
