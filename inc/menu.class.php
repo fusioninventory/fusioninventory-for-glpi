@@ -162,16 +162,16 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       // Add icon for import package
       $img = Html::image($fi_full_path . "/pics/menu_import.png",
                                       ['alt' => __('Import', 'fusioninventory')]);
-      $options['deploypackage']['links'][$img] = $fi_rel_path . '/front/deploypackage.import.php';
+      $options['deploypackage']['links'][$img] = $fi_full_path . '/front/deploypackage.import.php';
       // Add icon for clean unused deploy files
       $img = Html::image($fi_full_path . "/pics/menu_cleanfiles.png",
                                       ['alt' => __('Clean unused files', 'fusioninventory')]);
-      $options['deploypackage']['links'][$img] = $fi_rel_path . '/front/deployfile.clean.php';
+      $options['deploypackage']['links'][$img] = $fi_full_path . '/front/deployfile.clean.php';
 
       // Add icon for documentation
       $img = Html::image($fi_full_path . "/pics/books.png",
                                       ['alt' => __('Import', 'fusioninventory')]);
-      $options['menu']['links'][$img] = $fi_rel_path . '/front/documentation.php';
+      $options['menu']['links'][$img] = $fi_full_path . '/front/documentation.php';
 
       $options['agent'] = [
            'title' => PluginFusioninventoryAgent::getTypeName(),
