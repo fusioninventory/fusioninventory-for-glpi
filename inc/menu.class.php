@@ -234,8 +234,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       // Check if plugin right updated (because security problems)
-      $fi_path = Plugin::getPhpDir('fusioninventory');
-      if (file_exists($fi_path."/ajax/deploydropdown_operatingsystems.php")) {
+      $fi_php_path = Plugin::getPhpDir('fusioninventory');
+      if (file_exists($fi_php_path."/ajax/deploydropdown_operatingsystems.php")) {
          $message = __('SECURITY PROBLEM, see `2.1 Update` section to update correctly the plugin on ', 'fusioninventory');
          $message .= " <a href='http://fusioninventory.org/documentation/fi4g/installation.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
          Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
