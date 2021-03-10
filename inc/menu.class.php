@@ -112,6 +112,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
     */
    static function getAdditionalMenuOptions() {
       global $CFG_GLPI;
+      $fi_full_path = Plugin::getWebDir('fusioninventory');
 
       $elements = [
           'iprange'                    => 'PluginFusioninventoryIPRange',
