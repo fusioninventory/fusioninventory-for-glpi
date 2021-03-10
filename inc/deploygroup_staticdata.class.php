@@ -171,12 +171,13 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
 
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+      $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
       PluginFusioninventorySearch::constructDatas($data);
-
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
+      $data['itemtype'] = 'PluginFusioninventoryComputer';
       Search::displayData($data);
    }
 
@@ -201,12 +202,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
       $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
       $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
+
+      $data['itemtype'] = 'Computer';
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
       PluginFusioninventorySearch::constructDatas($data);
-
       $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], false);
+      $data['itemtype'] = 'PluginFusioninventoryComputer';
       Search::displayData($data);
    }
 

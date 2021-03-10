@@ -128,7 +128,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       $params['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($_GET['id'], true);
 
-      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $params);
+      $data = Search::prepareDatasForSearch('Computer', $params);
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
@@ -236,7 +236,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     * @param array $forcedisplay
     */
    static function showList($itemtype, $params, $forcedisplay) {
-      $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
+      $data = Search::prepareDatasForSearch('Computer', $params, $forcedisplay);
       Search::constructSQL($data);
 
       // Use our specific constructDatas function rather than Glpi function
@@ -264,7 +264,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
     * @return array
     */
    static function getDatas($itemtype, $params, array $forcedisplay = []) {
-      $data = Search::prepareDatasForSearch($itemtype, $params, $forcedisplay);
+      $data = Search::prepareDatasForSearch('Computer', $params, $forcedisplay);
       Search::constructSQL($data);
       Search::constructData($data);
 
@@ -300,7 +300,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             ['2']
          );
 
-         $results = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params, ['2']);
+         $results = Search::prepareDatasForSearch('Computer', $search_params, ['2']);
          Search::constructSQL($results);
 
          // Use our specific constructDatas function rather than Glpi function
