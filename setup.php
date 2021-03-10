@@ -450,6 +450,9 @@ function plugin_init_fusioninventory() {
          }
       }
 
+      // Hack for use meta in group search engine
+      $CFG_GLPI['PluginFusioninventoryComputer_types'] = $CFG_GLPI['link_types'];
+
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(PLUGIN_FUSIONINVENTORY_DIR.'/inc/module.class.php');
       $moduleId = PluginFusioninventoryModule::getModuleId('fusioninventory');
