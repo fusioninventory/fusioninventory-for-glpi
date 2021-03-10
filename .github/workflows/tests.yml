@@ -57,7 +57,7 @@ jobs:
         php-versions: ['7.3', '7.4', '8.0']
     name: phpunit (${{ matrix.php-versions }})
     env:
-      extensions: zip, hash, fileinfo, mysqli, gd, bz2
+      extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
       key: cache-v1
     steps:
     - uses: ankane/setup-mariadb@v1
