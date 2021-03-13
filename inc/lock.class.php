@@ -108,9 +108,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
          case 'PluginFusioninventoryConfig':
             return PluginFusioninventoryLock::getTypeName(2);
 
-         case 'Computer':
-            return '';
-
          case 'NetworkEquipment':
             $itemtype = 'networking';
 
