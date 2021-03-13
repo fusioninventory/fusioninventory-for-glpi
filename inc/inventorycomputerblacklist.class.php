@@ -102,7 +102,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
          'field'         => 'name',
          'linkfield'     => 'plugin_fusioninventory_criterium_id',
          'name'          => __('Type'),
-         'datatype'      => 'itemlink',
+         'datatype'      => 'dropdown',
          'itemlink_type' => 'PluginFusioninventoryInventoryComputerCriteria',
       ];
 
