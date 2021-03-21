@@ -329,6 +329,9 @@ class PluginFusioninventoryDeployCheck extends PluginFusioninventoryDeployPackag
       foreach ($type_values as $key => $value) {
          $values[$key] = $value;
       }
+      if ($type == 'freespaceGreater' && !is_numeric($values['value'])) {
+         $values['value'] = 0;
+      }
       return $values;
    }
 
