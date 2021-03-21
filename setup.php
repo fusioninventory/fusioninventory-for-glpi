@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.4+2.5");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.4+2.6");
 // Minimal GLPI version, inclusive
 define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.4');
 // Maximum GLPI version, exclusive
