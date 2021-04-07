@@ -101,6 +101,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       global $DB;
 
       $wakeupArray = [];
+      $unavailableAgents = [];
       $tasks       = [];
       //Get the maximum number of agent to wakeup,
       //as allowed in the general configuration
@@ -181,7 +182,9 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
 
          while ($state = $iterator2->next()) {
             $agents_id = $state['plugin_fusioninventory_agents_id'];
-            if (isset($wakeupArray[$agents_id])) {
+            if (isset($unavailableAgents[$agents_id])) {
+               continue;
+            } else if (isset($wakeupArray[$agents_id])) {
                $counter++;
             } else {
                $agent->getFromDB($agents_id);
@@ -189,6 +192,9 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                if ($statusAgent['message'] == 'waiting') {
                   $wakeupArray[$agents_id] = $agents_id;
                   $counter++;
+               } else {
+                  $unavailableAgents[$agents_id] = $agents_id;
+                  continue;
                }
             }
 
