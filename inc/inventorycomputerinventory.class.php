@@ -327,7 +327,12 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       //Add the location if needed (play rule locations engine)
       $output = [];
-      $output = PluginFusioninventoryToolbox::addLocation($input, $output);
+      $inputloc = $input;
+      if ((isset($a_computerinventory['Computer']['domains_id']))
+          AND (!empty($a_computerinventory['Computer']['domains_id']))) {
+          $inputloc['domain'] = $a_computerinventory['Computer']['domains_id'];
+      }
+      $output = PluginFusioninventoryToolbox::addLocation($inputloc, $output);
       if (isset($output['locations_id'])) {
          $_SESSION['plugin_fusioninventory_locations_id'] =
                $output['locations_id'];
