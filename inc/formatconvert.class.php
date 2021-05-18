@@ -1317,10 +1317,11 @@ class PluginFusioninventoryFormatconvert {
                      'SELECT' => ['id'],
                      'FROM'   => 'glpi_users',
                      'WHERE'  => [
-                        'name'   => $array_tmp['login']
+                        ['name'   => ['LIKE' , $array_tmp['login'].'%']]
                      ] + $where_add,
                      'LIMIT'  => 1
                   ]);
+
                   if ($row = $iterator->next()) {
                      $a_inventory['Computer']['users_id'] = $row['id'];
                   }
@@ -1842,7 +1843,7 @@ class PluginFusioninventoryFormatconvert {
          if (isset($data['user'])) {
             $query = "SELECT `id`
                       FROM `glpi_users`
-                      WHERE `name` = '" . $data['user'] . "'
+                      WHERE `name` LIKE '" . $data['user'] . "%'
                       LIMIT 1";
             $result = $DB->query($query);
             if ($DB->numrows($result) == 1) {
