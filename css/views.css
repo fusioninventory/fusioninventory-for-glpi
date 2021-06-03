@@ -923,6 +923,10 @@ table.runs td.comment {
    cursor: pointer;
 }
 
+#agent_status {
+    margin-left: 5px;
+}
+
 #force_inventory_button {
    position: relative;
    padding: 2px 5px 2px 15px;
@@ -932,10 +936,16 @@ table.runs td.comment {
    cursor: pointer;
 }
 
+#force_inventory_button .fas {
+    margin-right: 5px;
+    top: 4px;
+}
+
 #force_inventory_button:hover {
    border: 1px solid #CC7D7D;
 }
 
+/*
 #force_inventory_button:before {
    position: absolute;
    content: '\f0e7';
@@ -944,6 +954,7 @@ table.runs td.comment {
    left: 5px;
    top: 4px;
 }
+ */
 
 #force_inventory_button:hover:before {
    color: #CC7D7D;
