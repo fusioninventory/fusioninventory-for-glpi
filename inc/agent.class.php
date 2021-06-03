@@ -852,6 +852,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          };
 
          $(document)
+            .ready(function() {
+                refresh_status();
+            })
             .on('click', '#refresh_status', function() {
                refresh_status();
             })
@@ -859,14 +862,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                force_inventory();
             });
       });");
+      echo "<span id='refresh_status'><i class='fas fa-sync'></i></span>";
       echo "<span id='agent_status'>".
            __("not yet requested, refresh?", 'fusioninventory').
            "</span>";
-      echo "<span id='refresh_status'><i class='fas fa-sync'></i></span>";
       echo "</td>";
 
       echo "<td colspan='2'>";
-      echo "<span id='force_inventory_button'>".
+      echo "<span id='force_inventory_button'><i class='fas fa-bolt'></i>".
            __('Force inventory', 'fusioninventory').
            "</span>";
       echo "</td>";
