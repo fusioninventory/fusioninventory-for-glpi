@@ -1437,7 +1437,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                               title='".__("refresh job", 'fusioninventory')."'
                               class='btn'
                               id='refresh_run_$taskjob_id'>
-                              <i class='fa fa-refresh fa-fx'></i></a>";
+                              <i class='fa fa-sync fa-fx'></i></a>";
 
                      echo "</div>"; // .buttons
 
@@ -1500,7 +1500,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $('#refresh_run_$taskjob_id i').click(function() {
                         var fa = $(this);
                         fa.addClass('fa-spin fa-spinner')
-                          .removeClass('fa-refresh');
+                          .removeClass('fa-sync');
                         $.ajax({
                            url: '".$url."/ajax/jobstates_logs.php',
                            data: {
@@ -1549,7 +1549,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                            complete: function() {
                               setTimeout(function() {
                                  fa.removeClass('fa-spin fa-spinner')
-                                   .addClass('fa-refresh');
+                                   .addClass('fa-sync');
                               }, 300);
                            }
                         });
