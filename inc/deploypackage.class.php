@@ -1529,7 +1529,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                  });
 
                                  var class_to_apply = '';
-                                 switch (data.logs[0]['log.state']) {
+                                 switch (data.logs[0]['log.state'] + '') {
                                     case '".PluginFusioninventoryTaskjoblog::TASK_RUNNING."':
                                        class_to_apply = 'agents_running';
                                        break;
