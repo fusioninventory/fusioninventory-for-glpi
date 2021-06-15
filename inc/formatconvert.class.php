@@ -1317,7 +1317,7 @@ class PluginFusioninventoryFormatconvert {
                      'SELECT' => ['id'],
                      'FROM'   => 'glpi_users',
                      'WHERE'  => [
-                        ['name'   => ['LIKE' , $array_tmp['login'].'%']]
+                        ['name'   => ['LIKE' , $array_tmp['login'].'@%']]
                      ] + $where_add,
                      'LIMIT'  => 1
                   ]);
