@@ -380,7 +380,10 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'],
           ['itemtype'  => 'PluginFusioninventoryLock',
                 'label'     => __('Lock', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_lock']
+                'field'     => 'plugin_fusioninventory_lock'],
+          ['itemtype'  => 'PluginFusioninventoryQueuedinventory',
+                'label'     => __('Inventory queue', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_queuedinventory']
       ];
       return $rights;
    }
@@ -402,7 +405,7 @@ class PluginFusioninventoryProfile extends Profile {
           ['rights'    => [READ => __('Read')],
                 'label'     => __('Agent remote control', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'],
-          ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
+                ['rights'    => [READ => __('Read'), UPDATE => __('Update')],
                 'itemtype'  => 'PluginFusioninventoryConfig',
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'],

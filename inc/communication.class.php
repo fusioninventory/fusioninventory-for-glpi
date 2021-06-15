@@ -169,7 +169,7 @@ class PluginFusioninventoryCommunication {
     * @param object $arrayinventory SimpleXMLElement
     * @return boolean
     */
-   function import($arrayinventory) {
+   function import($arrayinventory, $xml, $is_cron = false) {
 
       $pfAgent = new PluginFusioninventoryAgent();
 
@@ -195,6 +195,7 @@ class PluginFusioninventoryCommunication {
       } else {
          $agent = ['id' => $_SESSION['plugin_fusioninventory_agents_id']];
       }
+
       if ($xmltag == "PROLOG") {
          return false;
       }
@@ -224,9 +225,53 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
-         $errors.=$moduleCommunication->import($this->message['DEVICEID'],
-                 $this->message['CONTENT'],
-                 $arrayinventory);
+
+         $config = new PluginFusioninventoryConfig();
+         // if mode is direct or if call from cron -> import XML
+         if ($config->getValue('inventory_mode') == PluginFusioninventoryConfig::INVENTORY_DIRECT_MODE
+            || $is_cron) {
+
+            $errors.=$moduleCommunication->import($this->message['DEVICEID'],
+            $this->message['CONTENT'],
+            $arrayinventory);
+
+         } else {
+
+            $queued = new PluginFusioninventoryQueuedinventory();
+            //if a row pending exist in DB, update it with new inventory
+            if ($queued->getFromDBByCrit([
+               'plugin_fusioninventory_agents_id' => $agent['id'],
+               'inventory_status' => PluginFusioninventoryQueuedinventory::STATUS_PENDING,
+            ])) {
+               $queued->fields['date_creation'] = $_SESSION["glpi_currenttime"];
+               $queued->fields['xml_content'] = Toolbox::addslashes_deep($xml);
+               $queued->update($queued->fields);
+            } else {
+
+               //count all row with status pending
+               $count = countElementsInTable(PluginFusioninventoryQueuedinventory::getTable(),
+               ['inventory_status' => PluginFusioninventoryQueuedinventory::STATUS_PENDING ]);
+
+               //if quto is not exceeded or if it illimited add inventory to queued
+               if ($count < $config->getValue('queued_max') || $config->getValue('queued_max') == 0) {
+                  $queued_data = [
+                     'name'                              => Rule::getUuid(),
+                     'plugin_fusioninventory_agents_id'  => $agent['id'],
+                     'inventory_status'                  => PluginFusioninventoryQueuedinventory::STATUS_PENDING,
+                     'date_creation'                     => $_SESSION["glpi_currenttime"],
+                     'xml_content'                       => Toolbox::addslashes_deep($xml)
+                  ];
+                  $queued->add($queued_data);
+               } else {
+                  PluginFusioninventoryToolbox::logIfExtradebug(
+                     'pluginFusioninventory-communication',
+                     __("Can't add XML to queued, quota defined (".$count.") exceeded", 'fusioninventory')."\n"
+                  );
+                  $errors.=__("Can't add XML to queued, quota defined (".$count.") exceeded", 'fusioninventory')."\n";
+               }
+            }
+         }
+
       } else {
          $errors.=__('Unattended element in', 'fusioninventory').' QUERY : *'.$xmltag."*\n";
       }
@@ -458,7 +503,7 @@ class PluginFusioninventoryCommunication {
       $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
 
-      if (!$communication->import($arrayinventory)) {
+      if (!$communication->import($arrayinventory, $xml)) {
 
          if ($deviceid != '') {
 
