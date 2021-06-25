@@ -752,7 +752,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
             $inputrulelog['method'] = 'networkinventory';
-            $inputrulelog['criteria'] = $dbu->exportArrayToDB(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']));
+            $inputrulelog['criteria'] = $dbu->exportArrayToDB(Toolbox::addslashes_deep(unserialize($_SESSION['plugin_fusinvsnmp_datacriteria'])));
             $pfRulematchedlog->add($inputrulelog);
             $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
             unset($_SESSION['plugin_fusioninventory_rules_id']);
