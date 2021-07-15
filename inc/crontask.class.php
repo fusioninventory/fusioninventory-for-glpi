@@ -194,13 +194,21 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         $tab[] = [
             'id'        => '5',
             'table'     => $this->getTable(),
+            'field'     => 'last_execution',
+            'name'      => __('Last execution'),
+            'datatype'  => 'datetime',
+        ];
+
+        $tab[] = [
+            'id'        => '6',
+            'table'     => $this->getTable(),
             'field'     => 'command',
             'name'      => __('Command'),
             'datatype'  => 'text',
         ];
 
         $tab[] = [
-            'id'        => '6',
+            'id'        => '7',
             'table'     => $this->getTable(),
             'field'     => 'execution_minute',
             'name'      => __('Minute'),
@@ -208,7 +216,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '7',
+            'id'        => '8',
             'table'     => $this->getTable(),
             'field'     => 'execution_hour',
             'name'      => __('Hour'),
@@ -216,7 +224,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '8',
+            'id'        => '9',
             'table'     => $this->getTable(),
             'field'     => 'execution_day',
             'name'      => __('Day'),
@@ -224,7 +232,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '9',
+            'id'        => '10',
             'table'     => $this->getTable(),
             'field'     => 'execution_month',
             'name'      => __('Month'),
@@ -232,7 +240,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '10',
+            'id'        => '11',
             'table'     => $this->getTable(),
             'field'     => 'execution_weekday',
             'name'      => __('Week day'),
@@ -240,7 +248,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '11',
+            'id'        => '12',
             'table'     => $this->getTable(),
             'field'     => 'storage',
             'name'      => __('Storage'),
@@ -248,7 +256,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '12',
+            'id'        => '13',
             'table'     => $this->getTable(),
             'field'     => 'user_storage',
             'name'      => __('Storage user'),
@@ -256,11 +264,19 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         ];
 
         $tab[] = [
-            'id'        => '12',
+            'id'        => '14',
             'table'     => 'glpi_computers',
             'field'     => 'name',
             'name'      => __('Computer'),
             'datatype'  => 'dropdown',
+        ];
+
+        $tab[] = [
+            'id'        => '15',
+            'table'     => $this->getTable(),
+            'field'     => 'creation_date',
+            'name'      => __('Creation date'),
+            'datatype'  => 'datetime',
         ];
 
         return $tab;
@@ -329,12 +345,14 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
             $header = "<tr><th>".__('Name')."</th>";
             $header .= "<th>".__('Enabled')."</th>";
             $header .= "<th>".__('Execution user')."</th>";
+            $header .= "<th>".__('Last execution')."</th>";
             $header .= "<th>".__('Minute')."</th>";
             $header .= "<th>".__('Hour')."</th>";
             $header .= "<th>".__('Day')."</th>";
             $header .= "<th>".__('Month')."</th>";
             $header .= "<th>".__('Week day')."</th>";
             $header .= "<th>".__('Storage')."</th>";
+            $header .= "<th>".__('Creation date')."</th>";
             $header .= "</tr>";
             echo $header;
 
@@ -345,12 +363,14 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
                 echo "<td>".$crontask->getLink()."</td><td>";
                 echo Dropdown::getYesNo($data['status']);
                 echo "</td><td>".$data['user_execution']."</td>";
+                echo "</td><td>".$data['last_execution']."</td>";
                 echo "<td>".$data['execution_minute']."</td>";
                 echo "<td>".$data['execution_hour']."</td>";
                 echo "<td>".$data['execution_day']."</td>";
                 echo "<td>".$data['execution_month']."</td>";
                 echo "<td>".$data['execution_weekday']."</td>";
                 echo "<td>".$data['storage']."</td>";
+                echo "<td>".$data['creation_date']."</td>";
                 echo "</tr>";
                 Session::addToNavigateListItems(__CLASS__, $data['id']);
             }
@@ -423,8 +443,13 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
         echo "<td>";
         Html::autocompletionTextField($this, "execution_weekday");
         echo "</td></tr>";
+        echo "<tr><td>".__('Creation date')."</td>";
+        echo "<td>";
+        Html::showDateTimeField("creation_date", ['value' => $this->fields['creation_date'], 'timestep' => 1]);
+        echo "</td><td>".__('Last execution')."</td>";
+        echo "<td>";
+        Html::showDateTimeField("last_execution", ['value' => $this->fields['last_execution'], 'timestep' => 1]);
         echo "</td></tr>";
-
         echo "<tr><td>".__('Comments') . "</td>";
         echo "<td class='middle'>";
         echo "<textarea cols='50' rows='4' name='comment' >".$this->fields["comment"]."</textarea>";
