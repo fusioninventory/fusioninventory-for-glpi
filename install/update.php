@@ -5475,6 +5475,14 @@ function do_deploypackage_migration($migration) {
                'type' => 'longtext DEFAULT NULL',
                'value' => null
       ],
+      'icon' =>  [
+               'type' => 'varchar(255) DEFAULT NULL',
+               'value' => null
+      ],
+      'style' =>  [
+               'type' => 'varchar(10) DEFAULT NULL',
+               'value' => null
+      ],
       'plugin_fusioninventory_deploygroups_id' => [
                'type'    => 'integer',
                'value'   => null
