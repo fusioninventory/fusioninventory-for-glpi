@@ -475,6 +475,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return true
     */
    function showForm($ID, $options = []) {
+      global $CFG_GLPI;
+
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
       //Add redips_clone element before displaying tabs
@@ -500,6 +502,44 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</td>";
 
       echo "<td colspan='2'></td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td>";
+      echo __('Current icon', 'fusioninventory') . ' : ';
+      echo "</td>";
+      echo "<td colspan='3'>";
+      echo "<i class='" . $this->fields['style'] . " fa-" . $this->fields['icon'] . " fa-4x'>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td style='width: 15%;'>";
+      echo __('Style', 'fusioninventory') . ' : ';
+      echo "</td>";
+      echo "<td style='width: 15%;'>";
+      $elements = [
+         Dropdown::EMPTY_VALUE => Dropdown::EMPTY_VALUE,
+         'fas' => __('Solid', 'fusioninventory'),
+         'fab' => __('Brands', 'fusioninventory')
+      ];
+      $options = [];
+      $rand = Dropdown::showFromArray('style', $elements, $options);
+
+      echo "</td>";
+      echo "<td style='width: 20%;'>";
+      echo __('Choose an icon for this Store service', 'fusioninventory') . ' :';
+      echo "</td>";
+      echo "<td style='width: 50%;'>";
+
+      $params = ['style' => '__VALUE__'];
+
+      Ajax::updateItemOnSelectEvent("dropdown_style$rand", "show_icons$rand",
+         $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/ajax/dropdownIcon.php", $params);
+
+      echo "<div id='show_icons$rand'>&nbsp;</div>\n";
+
+      echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
