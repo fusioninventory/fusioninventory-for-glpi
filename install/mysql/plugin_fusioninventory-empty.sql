@@ -656,6 +656,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
   `date_mod` datetime DEFAULT NULL,
   `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `json` longtext DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `style` varchar(10) DEFAULT NULL,
   `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
