@@ -797,7 +797,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                            'machineid' => $pfAgent->fields['device_id'],
                            'uuid'      => $uuid,
                            'code'      => 'running',
-                           'msg'       => "$name: file ".$a_values['path']." | size ".$a_values['size']
+                           'msg'       => (isset($name) ? "$name: file " : "file ").$a_values['path']." | size ".$a_values['size']
                         ];
                         if (isset($a_values['sendheaders'])) {
                            $params['sendheaders'] = $a_values['sendheaders'];
