@@ -786,13 +786,18 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      break;
 
                   case 'file':
+                     if ($sid) {
+                        $pfCollect_File = new PluginFusioninventoryCollect_File();
+                        $job = current($pfCollect_File->find(['id' => $sid]));
+                        $name = $job['name'];
+                     }
                      if (!empty($a_values['path']) && isset($a_values['size'])) {
                         // update files content
                         $params = [
                            'machineid' => $pfAgent->fields['device_id'],
                            'uuid'      => $uuid,
                            'code'      => 'running',
-                           'msg'       => "file ".$a_values['path']." | size ".$a_values['size']
+                           'msg'       => "$name: file ".$a_values['path']." | size ".$a_values['size']
                         ];
                         if (isset($a_values['sendheaders'])) {
                            $params['sendheaders'] = $a_values['sendheaders'];
@@ -806,12 +811,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      break;
                }
 
-               if (!isset($pfCollect_subO)) {
-                  // return anyway the next CSRF token to client
-                  break;
-               }
-
-               if ($add_value) {
+               if ($add_value && isset($pfCollect_subO)) {
                   // add collected informations to computer
                   $pfCollect_subO->updateComputer(
                      $computers_id,
@@ -820,23 +820,26 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                   );
                }
 
-               // change status of state table row
-               $pfTaskjobstate->changeStatus($jobstate['id'],
-                        PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+               // change status of state table row unless still in error
+               if ($jobstate['state'] != PluginFusioninventoryTaskjobstate::IN_ERROR) {
+                  $pfTaskjobstate->changeStatus($jobstate['id'],
+                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+               }
 
                // add logs to job
-               if (count($a_values)) {
+               if ($add_value && count($a_values)) {
                   $flag    = PluginFusioninventoryTaskjoblog::TASK_INFO;
                   $message = json_encode($a_values, JSON_UNESCAPED_SLASHES);
-               } else {
-                  $flag    = PluginFusioninventoryTaskjoblog::TASK_ERROR;
-                  $message = __('Path not found', 'fusioninventory');
-               }
                   $pfTaskjoblog->addTaskjoblog($jobstate['id'],
                                              $jobstate['items_id'],
                                              $jobstate['itemtype'],
                                              $flag,
-                                             $message);
+                                             isset($name) ? "$name: $message" : $message);
+               } else {
+                  // Can only happen on file collect
+                  $message = __('Path not found', 'fusioninventory');
+                  $pfTaskjobstate->fail(isset($name) ? "$name: $message" : $message);
+               }
             }
             break;
 
@@ -852,10 +855,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfTaskjobstate->changeStatusFinish(
                $jobstate['id'],
                $jobstate['items_id'],
-               $jobstate['itemtype']
+               $jobstate['itemtype'],
+               $jobstate['state'] == PluginFusioninventoryTaskjobstate::IN_ERROR ? "1" : "",
             );
 
-               break;
+            break;
       }
       return $response;
    }
