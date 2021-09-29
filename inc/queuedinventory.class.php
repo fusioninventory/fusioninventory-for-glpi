@@ -374,7 +374,7 @@ class PluginFusioninventoryQueuedinventory extends PluginFusioninventoryCommonVi
                   self::STATUS_CANCELED   => self::getStatus(self::STATUS_CANCELED),
                   self::STATUS_ERROR      => self::getStatus(self::STATUS_ERROR) ];
       $options['display'] = false;
-      return Dropdown::showFromArray('inventory_status', $values, $options);
+      return Dropdown::showFromArray($options['name'], $values, $options);
    }
 
    /**
