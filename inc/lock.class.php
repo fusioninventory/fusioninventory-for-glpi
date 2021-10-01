@@ -763,7 +763,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
       $_SESSION['glpi_fusionionventory_nolock'] = true;
-      $item_device->update($item_device->fields);
+      $item_device->update(Toolbox::addslashes_deep($item_device->fields));
       unset($_SESSION['glpi_fusionionventory_nolock']);
    }
 
