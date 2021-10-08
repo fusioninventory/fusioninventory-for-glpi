@@ -102,10 +102,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
       }
 
+      $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
+      $errors .= $pfImportExport->import_netdiscovery($a_CONTENT, $p_DEVICEID);
+
       if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
          if ($pfTaskjobstate->fields['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
-            $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
-            $errors .= $pfImportExport->import_netdiscovery($a_CONTENT, $p_DEVICEID);
             if (isset($a_CONTENT['AGENT']['END'])) {
                $messages = [
                    'Total Found' => 0,
