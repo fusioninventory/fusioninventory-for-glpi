@@ -408,7 +408,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                            [
                             'value' => $this->getValue('queued_max'),
                             'min' => 0,
-                            'max' => 10000,
+                            'max' => 50000,
                             'step' => 10,
                            ]
          );
