@@ -260,6 +260,14 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
          'datatype' => 'dropdown',
       ];
 
+      $tab[] = [
+         'id'        => '13',
+         'table'     => $this->getTable(),
+         'field'     => 'creation_date',
+         'name'      => __('Creation date'),
+         'datatype'  => 'datetime',
+      ];
+
       return $tab;
    }
 
@@ -332,6 +340,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
          $header .= "<th>" . __('Month') . "</th>";
          $header .= "<th>" . __('Week day') . "</th>";
          $header .= "<th>" . __('Storage') . "</th>";
+         $header .= "<th>". __('Creation date')."</th>";
          $header .= "</tr>";
          echo $header;
 
@@ -348,6 +357,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
             echo "<td>" . $data['execution_month'] . "</td>";
             echo "<td>" . $data['execution_weekday'] . "</td>";
             echo "<td>" . $data['storage'] . "</td>";
+            echo "<td>" . $data['creation_date']."</td>";
             echo "</tr>";
             Session::addToNavigateListItems(__CLASS__, $data['id']);
          }
@@ -419,6 +429,10 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
       echo "<tr><td>" . __('Week day') . "</td>";
       echo "<td>";
       Html::autocompletionTextField($this, "execution_weekday");
+      echo "</td></tr>";
+      echo "<tr><td>" . __('Week day') . "</td>";
+      echo "<td>";
+      Html::showDateTimeField("creation_date", ['value' => $this->fields['creation_date'], 'timestep' => 1]);
       echo "</td></tr>";
       echo "</td></tr>";
 

@@ -688,6 +688,7 @@ class PluginFusioninventoryFormatconvert {
                            'NAME'               => 'name',
                            'DESCRIPTION'        => 'comment',
                            'COMMAND'            => 'command',
+                           'CREATION_DATE'      => 'creation_date',
                            'EXECUTION_MONTH'    => 'execution_month',
                            'EXECUTION_DAY'      => 'execution_day',
                            'EXECUTION_HOUR'     => 'execution_hour',

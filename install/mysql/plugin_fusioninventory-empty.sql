@@ -1031,6 +1031,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_crontasks` (
     `user_storage` varchar(100) NOT NULL DEFAULT '',
     `status` tinyint(1) NOT NULL DEFAULT '0',
     `computers_id` int(11) NOT NULL DEFAULT '0',
+    `creation_date` datetime,
     PRIMARY KEY (`id`),
     KEY `computers_id` (`computers_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1;
