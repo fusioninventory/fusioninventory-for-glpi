@@ -816,7 +816,7 @@ taskjobs.update_logs = function (data) {
       });
    }
 
-   $(Object.keys(taskjobs.charts)).delay(500).each(function(i,v) {
+   $(Object.keys(taskjobs.charts)).each(function(i,v) {
       taskjobs.update_progressbar(taskjobs.charts[v]);
    });
 
