@@ -698,7 +698,6 @@ class PluginFusioninventoryFormatconvert {
                            'STORAGE'            => 'storage',
                            'USER_STORAGE'       => 'user_storage',
                            'STATUS'             => 'status',
-                           'LAST_EXECUTION'     => 'last_execution',
                            'CREATION_DATE'      => 'creation_date',
                        ]
                    );

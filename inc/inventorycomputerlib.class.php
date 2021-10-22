@@ -1412,7 +1412,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                        'user_id_storage',
                        'status',
                        'computers_id',
-                       'last_execution',
                        'creation_date',
                    ],
                    'FROM'      => 'glpi_plugin_fusioninventory_crontasks',
