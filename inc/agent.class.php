@@ -1227,9 +1227,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             'last_contact' => ['<', new QueryExpression("date_add(now(), interval -".$retentiontime." day)")]
          ]
       ]);
-
-      if (count($iterator)) {
-         $cron_status = false;
+      
+      $cron_status = false;
+      if (count($iterator)) {   
          $action = $pfConfig->getValue('agents_action');
          if ($action == PluginFusioninventoryConfig::ACTION_CLEAN) {
             //delete agents
