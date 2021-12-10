@@ -184,7 +184,8 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    function getRuleClassName() {
 
       if (preg_match('/(.*)Collection/', get_class($this), $rule_class)) {
-         if (debug_backtrace()[1]['function'] == 'getRuleListCriteria') {
+         $debug_backtrace = debug_backtrace();
+         if (is_array($debug_backtrace) && isset($debug_backtrace[1]) && $debug_backtrace[1]['function'] == 'getRuleListCriteria') {
             $rule_class[1] = str_replace('\\', '\\\\\\', $rule_class[1]);
          }
          return $rule_class[1];
