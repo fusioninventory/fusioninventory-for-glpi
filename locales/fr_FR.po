@@ -1017,7 +1017,7 @@ msgstr "Nombre par seconde"
 
 #: inc/stateinventory.class.php:123
 msgid "To inventory"
-msgstr "A inventorier"
+msgstr "À inventorier"
 
 #: inc/stateinventory.class.php:124
 msgid "Error(s)"
@@ -1064,7 +1064,7 @@ msgstr "Inventaire distant des hôtes VMware"
 
 #: inc/staticmisc.class.php:107 inc/deploypackage.class.php:1029
 msgid "Package deploy"
-msgstr "Déploiement de package"
+msgstr "Déploiement de paquet"
 
 #: inc/staticmisc.class.php:115
 msgid "Collect data"
@@ -2202,8 +2202,8 @@ msgstr "Agent arrêté / crashé"
 #: inc/collect_wmi.class.php:65
 msgid "Found WMI"
 msgid_plural "Found WMIs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "WMI trouvé"
+msgstr[1] "WMI trouvés"
 
 #: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
 msgid "Properties"
