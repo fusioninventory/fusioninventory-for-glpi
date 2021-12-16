@@ -960,7 +960,7 @@ msgstr "en se basant sur les deux"
 
 #: inc/config.class.php:850
 msgid "Delete successful on demand tasks after (in days)"
-msgstr "Supprimer les tâches à la demandes réussies après (en jours)"
+msgstr "Supprimer les tâches à la demande réussies après (en jours)"
 
 #: inc/printercartridge.class.php:97
 msgid "Cartridge(s)"
@@ -1040,15 +1040,15 @@ msgstr "Total des matériels découverts"
 
 #: inc/statediscovery.class.php:177
 msgid "Devices not imported"
-msgstr "Equipements non importés"
+msgstr "Équipements non importés"
 
 #: inc/statediscovery.class.php:178
 msgid "Devices linked"
-msgstr "Equipements liés"
+msgstr "Équipements liés"
 
 #: inc/statediscovery.class.php:179
 msgid "Devices imported"
-msgstr "Equipements importés"
+msgstr "Équipements importés"
 
 #: inc/deployinstall.class.php:65 inc/deployinstall.class.php:81
 msgid "Package actions"
@@ -1056,7 +1056,7 @@ msgstr "Actions sur le paquet"
 
 #: inc/staticmisc.class.php:71 inc/profile.class.php:411
 msgid "Wake On LAN"
-msgstr "WakeOnLan"
+msgstr "Wake On Lan"
 
 #: inc/staticmisc.class.php:87
 msgid "VMware host remote inventory"
@@ -1068,7 +1068,7 @@ msgstr "Déploiement de package"
 
 #: inc/staticmisc.class.php:115
 msgid "Collect data"
-msgstr "Collecte de donnée"
+msgstr "Collecte de données"
 
 #: inc/staticmisc.class.php:289 inc/profile.class.php:398
 msgid "Agents"
@@ -1349,7 +1349,7 @@ msgstr "Impossible de supprimer cette tâche car elle est active"
 
 #: inc/ignoredimportdevice.class.php:75 inc/profile.class.php:306
 msgid "Equipment ignored on import"
-msgstr "Equipement ignoré à l'import"
+msgstr "Équipement ignoré à l'import"
 
 #: inc/communicationnetworkdiscovery.class.php:123
 msgid "Processed:"
@@ -1393,7 +1393,7 @@ msgstr "La sortie de la commande ne contient pas"
 
 #: inc/deployaction.class.php:218
 msgid "Command to execute"
-msgstr " Commande à exécuter"
+msgstr "Commande à exécuter"
 
 #: inc/deployaction.class.php:232
 msgid "return codes saved for this command"
@@ -1532,7 +1532,7 @@ msgstr "Import refusé"
 
 #: inc/credentialip.class.php:95
 msgid "Remote device inventory"
-msgstr "Inventaire du matériel à distance "
+msgstr "Inventaire du matériel à distance"
 
 #: inc/task.class.php:70 inc/menu.class.php:280
 msgid "Task management"
@@ -1571,7 +1571,7 @@ msgstr "Cet agent n'appartient plus à la liste des acteurs pour ce job."
 
 #: inc/task.class.php:679
 msgid "Device no longer defined in definition of job"
-msgstr "Equipement non défini dans la définition du job"
+msgstr "Équipement non défini dans la définition du job"
 
 #: inc/task.class.php:1709
 msgid "Task has been disabled"
@@ -1633,7 +1633,7 @@ msgstr "Nombre de pages couleur imprimées"
 
 #: inc/printerlog.class.php:218 inc/mapping.class.php:651
 msgid "Number of pages printed duplex"
-msgstr "Nombre de pages recto/verso imprimées"
+msgstr "Nombre de pages recto-verso imprimées"
 
 #: inc/printerlog.class.php:226 inc/mapping.class.php:654
 msgid "Number of scanned pages"
@@ -1673,7 +1673,7 @@ msgstr "Total des pages imprimées"
 
 #: inc/printerlog.class.php:399
 msgid "Pages / day"
-msgstr "Pages / jour"
+msgstr "Pages par jour"
 
 #: inc/printerlog.class.php:436
 msgid "Meter"
@@ -1741,7 +1741,7 @@ msgstr "Déploiement d'application"
 
 #: inc/profile.class.php:231 inc/profile.class.php:331
 msgid "Deploy packages on demand"
-msgstr "Déployer des packages à la demande"
+msgstr "Déployer des paquets à la demande"
 
 #: inc/profile.class.php:298
 msgid "Fields blacklist"
@@ -1864,7 +1864,7 @@ msgstr "Règles"
 
 #: inc/menu.class.php:418
 msgid "Discovery status"
-msgstr "Etat des découvertes"
+msgstr "État des découvertes"
 
 #: inc/menu.class.php:426
 msgid "Network inventory status"
@@ -1902,7 +1902,7 @@ msgstr "Nombre d'ordinateurs inventoriés dans les dernières heures"
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
 msgstr ""
-"Etapes pour configurer le plugin FusionInventory pour l'inventaire "
+"Étapes pour configurer le plugin FusionInventory pour l'inventaire "
 "ordinateur"
 
 #: inc/menu.class.php:548
@@ -1929,7 +1929,7 @@ msgid ""
 " for SNMP inventory)"
 msgstr ""
 "Définissez les règles pour l'import : fusionner et créer un nouvel "
-"ordinateur (ATTENTION: règles identiques pour l'inventaire SNMP) "
+"ordinateur (ATTENTION : règles identiques pour l'inventaire SNMP) "
 
 #: inc/menu.class.php:626
 msgid ""
@@ -1949,7 +1949,7 @@ msgid ""
 "for computer inventory)"
 msgstr ""
 "Définissez les règles pour l'import : fusionner et créer un nouvel "
-"ordinateur (ATTENTION: règles identiques pour l'inventaire SNMP) "
+"ordinateur (ATTENTION : règles identiques pour l'inventaire SNMP) "
 
 #: inc/menu.class.php:642
 msgid "`Network Discovery`, used to discover the devices on the network"
@@ -2050,7 +2050,7 @@ msgstr "Ports sur les équipements réseaux (inventaire remonté par SNMP)"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr "Ports sur tout les équipements réséaux"
+msgstr "Ports sur tout les équipements réseaux"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
@@ -2067,7 +2067,7 @@ msgstr "Modification refusée"
 #: inc/deploypackage.class.php:280
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
-msgstr[0] "La tâche suivante est éxécutée avec ce paquet"
+msgstr[0] "La tâche suivante est exécutée avec ce paquet"
 msgstr[1] "Les tâches suivantes sont exécutées avec ce paquet"
 
 #: inc/deploypackage.class.php:383 inc/deploypackage.class.php:499
@@ -2251,11 +2251,11 @@ msgstr "Après les actions"
 
 #: inc/deployuserinteraction.class.php:112
 msgid "On download failure"
-msgstr "A l'échec du téléchargement"
+msgstr "À l'échec du téléchargement"
 
 #: inc/deployuserinteraction.class.php:113
 msgid "On actions failure"
-msgstr "A l'échec de l'exécution des actions"
+msgstr "À l'échec de l'exécution des actions"
 
 #: inc/deployuserinteraction.class.php:214
 msgid "Interaction label"
@@ -2455,7 +2455,7 @@ msgstr "Purger"
 
 #: inc/taskjobview.class.php:699
 msgid "Confirm the final deletion ?"
-msgstr "Confirmez vous la suppression définitive ?"
+msgstr "Confirmez-vous la suppression définitive ?"
 
 #: inc/networkport.class.php:135
 msgid "Last change"
@@ -2483,7 +2483,7 @@ msgstr "réseau > uptime"
 
 #: inc/mapping.class.php:135
 msgid "networking > port > mtu"
-msgstr "réseau > port > mtu"
+msgstr "réseau > port > MTU"
 
 #: inc/mapping.class.php:138
 msgid "networking > port > speed"
@@ -2949,7 +2949,7 @@ msgstr "réseau > adresses IP"
 
 #: inc/mapping.class.php:486
 msgid "networking > PVID (port VLAN ID)"
-msgstr "réseau > pvid (port vlan id)"
+msgstr "réseau > PVID (port VLAN id)"
 
 #: inc/mapping.class.php:489
 msgid "printer > meter > total number of printed pages (print)"
@@ -2984,7 +2984,7 @@ msgstr "imprimante > compteur > nombre total de pages imprimées (fax)"
 
 #: inc/mapping.class.php:510
 msgid "networking > port > vlan"
-msgstr "réseau > port > vlan"
+msgstr "réseau > port > VLAN"
 
 #: inc/mapping.class.php:513
 msgid "networking > CDP remote sysdescr"
@@ -3012,19 +3012,19 @@ msgstr "réseau > LLDP description du port distant"
 
 #: inc/mapping.class.php:543
 msgid "Number of received bytes"
-msgstr "Nb d'octets recus"
+msgstr "Nombre d'octets reçus"
 
 #: inc/mapping.class.php:546
 msgid "Number of outgoing bytes"
-msgstr "Nb d'octets envoyés"
+msgstr "Nombre d'octets envoyés"
 
 #: inc/mapping.class.php:549
 msgid "Number of input errors"
-msgstr "Nb d'erreurs en entrée"
+msgstr "Nombre d'erreurs en entrée"
 
 #: inc/mapping.class.php:552
 msgid "Number of output errors"
-msgstr "Nb d'erreurs en sortie"
+msgstr "Nombre d'erreurs en sortie"
 
 #: inc/mapping.class.php:555
 msgid "CPU usage"
@@ -3120,35 +3120,35 @@ msgstr "Kit de maintenance"
 
 #: inc/mapping.class.php:660
 msgid "Black toner"
-msgstr "Toner Noir"
+msgstr "Toner noir"
 
 #: inc/mapping.class.php:663
 msgid "Cyan toner"
-msgstr "Toner Cyan"
+msgstr "Toner cyan"
 
 #: inc/mapping.class.php:666
 msgid "Magenta toner"
-msgstr "Toner Magenta"
+msgstr "Toner magenta"
 
 #: inc/mapping.class.php:669
 msgid "Yellow toner"
-msgstr "Toner Jaune"
+msgstr "Toner jaune"
 
 #: inc/mapping.class.php:672
 msgid "Black drum"
-msgstr "Tambour Noir"
+msgstr "Tambour noir"
 
 #: inc/mapping.class.php:675
 msgid "Cyan drum"
-msgstr "Tambour Cyan"
+msgstr "Tambour cyan"
 
 #: inc/mapping.class.php:678
 msgid "Magenta drum"
-msgstr "Tambour Magenta"
+msgstr "Tambour magenta"
 
 #: inc/mapping.class.php:681
 msgid "Yellow drum"
-msgstr "Tambour Jaune"
+msgstr "Tambour jaune"
 
 #: inc/mapping.class.php:684
 msgid "Many informations grouped"
@@ -3156,99 +3156,99 @@ msgstr "Informations diverses regroupées"
 
 #: inc/mapping.class.php:687
 msgid "Black toner 2"
-msgstr "Toner Noir 2"
+msgstr "Toner noir 2"
 
 #: inc/mapping.class.php:690
 msgid "Black toner Utilisé"
-msgstr "Toner Noir Utilisé"
+msgstr "Toner noir Utilisé"
 
 #: inc/mapping.class.php:693
-msgid "Black toner Restant"
+msgid "Black toner restant"
 msgstr "Toner Noir Restant"
 
 #: inc/mapping.class.php:696
 msgid "Cyan toner Max"
-msgstr "Toner Cyan Max"
+msgstr "Toner cyan max"
 
 #: inc/mapping.class.php:699
 msgid "Cyan toner Utilisé"
-msgstr "Toner Cyan Utilisé"
+msgstr "Toner cyan utilisé"
 
 #: inc/mapping.class.php:702
 msgid "Cyan toner Restant"
-msgstr "Toner Cyan Restant"
+msgstr "Toner cyan restant"
 
 #: inc/mapping.class.php:705
 msgid "Magenta toner Max"
-msgstr "Toner Magenta Max"
+msgstr "Toner magenta max"
 
 #: inc/mapping.class.php:708
 msgid "Magenta toner Utilisé"
-msgstr "Toner Magenta Utilisé"
+msgstr "Toner magenta utilisé"
 
 #: inc/mapping.class.php:711
 msgid "Magenta toner Restant"
-msgstr "Toner Magenta Restant"
+msgstr "Toner magenta restant"
 
 #: inc/mapping.class.php:714
 msgid "Yellow toner Max"
-msgstr "Toner Jaune Max"
+msgstr "Toner jaune max"
 
 #: inc/mapping.class.php:717
 msgid "Yellow toner Utilisé"
-msgstr "Toner Jaune Utilisé"
+msgstr "Toner jaune utilisé"
 
 #: inc/mapping.class.php:720
 msgid "Yellow toner Restant"
-msgstr "Toner Jaune Restant"
+msgstr "Toner jaune restant"
 
 #: inc/mapping.class.php:723
 msgid "Black drum Max"
-msgstr "Tambour Noir Max"
+msgstr "Tambour noir max"
 
 #: inc/mapping.class.php:726
 msgid "Black drum Utilisé"
-msgstr "Tambour Noir Utilisé"
+msgstr "Tambour noir utilisé"
 
 #: inc/mapping.class.php:729
 msgid "Black drum Restant"
-msgstr "Tambour Noir Restant"
+msgstr "Tambour noir restant"
 
 #: inc/mapping.class.php:732
 msgid "Cyan drum Max"
-msgstr "Tambour Cyan Max"
+msgstr "Tambour cyan max"
 
 #: inc/mapping.class.php:735
 msgid "Cyan drum Utilisé"
-msgstr "Tambour Cyan Utilisé"
+msgstr "Tambour cyan utilisé"
 
 #: inc/mapping.class.php:738
-msgid "Cyan drumRestant"
-msgstr "Tambour Cyan Restant"
+msgid "Cyan drum Restant"
+msgstr "Tambour cyan restant"
 
 #: inc/mapping.class.php:741
 msgid "Magenta drum Max"
-msgstr "Tambour Magenta Max"
+msgstr "Tambour magenta max"
 
 #: inc/mapping.class.php:744
 msgid "Magenta drum Utilisé"
-msgstr "Tambour Magenta Utilisé"
+msgstr "Tambour magenta utilisé"
 
 #: inc/mapping.class.php:747
 msgid "Magenta drum Restant"
-msgstr "Tambour Magenta Restant"
+msgstr "Tambour magenta restant"
 
 #: inc/mapping.class.php:750
 msgid "Yellow drum Max"
-msgstr "Tambour Jaune Max"
+msgstr "Tambour jaune max"
 
 #: inc/mapping.class.php:753
 msgid "Yellow drum Utilisé"
-msgstr "Tambour Jaune Utilisé"
+msgstr "Tambour jaune utilisé"
 
 #: inc/mapping.class.php:756
 msgid "Yellow drum Restant"
-msgstr "Tambour Jaune Restant"
+msgstr "Tambour jaune restant"
 
 #: inc/mapping.class.php:759
 msgid "Waste bin Max"
@@ -3260,19 +3260,19 @@ msgstr "Bac récupérateur de déchet Utilisé"
 
 #: inc/mapping.class.php:765
 msgid "Waste bin Restant"
-msgstr "Bac récupérateur de déchet Restant"
+msgstr "Bac récupérateur de déchet restant"
 
 #: inc/mapping.class.php:768
 msgid "Maintenance kit Max"
-msgstr "Kit de maintenance Max"
+msgstr "Kit de maintenance max"
 
 #: inc/mapping.class.php:771
 msgid "Maintenance kit Utilisé"
-msgstr "Kit de maintenance Utilisé"
+msgstr "Kit de maintenance utilisé"
 
 #: inc/mapping.class.php:774
 msgid "Maintenance kit Restant"
-msgstr "Kit de maintenance Restant"
+msgstr "Kit de maintenance restant"
 
 #: inc/mapping.class.php:777
 msgid "Grey ink cartridge"
@@ -3419,7 +3419,7 @@ msgstr "Chemin/fichier"
 
 #: inc/unmanaged.class.php:78 inc/unmanaged.class.php:129
 msgid "Unmanaged device"
-msgstr "Equipement non-géré"
+msgstr "Équipement non géré"
 
 #: inc/unmanaged.class.php:182 inc/unmanaged.class.php:460
 msgid "Network hub"
@@ -3431,7 +3431,7 @@ msgstr "Matériels approuvés"
 
 #: inc/unmanaged.class.php:527
 msgid "Import unmanaged device into asset"
-msgstr "Equipement non-géré à importer dans l'inventaire"
+msgstr "Équipement non géré à importer dans l'inventaire"
 
 #: inc/iprange_configsecurity.class.php:109
 msgid "Associated SNMP credentials"
@@ -3502,9 +3502,9 @@ msgid ""
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
 msgstr ""
-"Vous pouvez utiliser ce menu pour uploader le XML généré par l'agent. Le "
+"Vous pouvez utiliser ce menu pour téléverser le XML généré par l'agent. Le "
 "fichier doit avoir une extension en .xml ou .ocs. Il est également possible "
-"d'uploader une archive <b>ZIP</b> avec des fichiers XML. Lire la "
+"de téléverser une archive <b>ZIP</b> avec des fichiers XML. Lire la "
 "documentation de l'agent pour voir comment générer ces fichier XML"
 
 #: inc/networkportconnectionlog.class.php:73
@@ -3611,7 +3611,7 @@ msgstr "Expiration de l'affichage de la fenêtre d'alerte"
 
 #: inc/deployuserinteractiontemplate.class.php:558
 msgid "Button ok"
-msgstr "Bouton ok"
+msgstr "Bouton OK"
 
 #: inc/deployuserinteractiontemplate.class.php:559
 msgid "Button yes"
