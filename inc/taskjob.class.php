@@ -1236,9 +1236,11 @@ function new_subtype(id) {
 
       $a_taskjobs = getAllDataFromTable(
               $this->getTable(),
-              ['plugin_fusioninventory_tasks_id' => $tasks_id],
-              false,
-              '`ranking`');
+              [
+                 'WHERE' => ['plugin_fusioninventory_tasks_id' => $tasks_id],
+                 'ORDER' => 'ranking'
+              ],
+              false);
       echo  "<div id='drag_taskjob_taskjobs'>";
       echo "<table class='tab_cadrehov package_item_list' id='table_taskjob_$rand' style='width: 950px'>";
       $i=0;
