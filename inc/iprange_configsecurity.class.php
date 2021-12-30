@@ -160,9 +160,11 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
       $rand = mt_rand();
 
       $a_data = getAllDataFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
-                                     ['plugin_fusioninventory_ipranges_id' => $item->getID()],
-                                     false,
-                                     '`rank`');
+                                     [
+                                        'WHERE' => ['plugin_fusioninventory_ipranges_id' => $item->getID()],
+                                        'ORDER' => 'rank'
+                                     ],
+                                     false);
       $a_used = [];
       foreach ($a_data as $data) {
          $a_used[] = $data['plugin_fusioninventory_configsecurities_id'];
