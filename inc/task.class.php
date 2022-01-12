@@ -657,9 +657,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                          PluginFusioninventoryTaskjobstate::FINISHED,
                          PluginFusioninventoryTaskjobstate::IN_ERROR,
                          PluginFusioninventoryTaskjobstate::CANCELLED,
-                      ]],
-                   'NOT' => [
-                     'plugin_fusioninventory_agents_id' => array_keys($agent_ids)]
+                      ],
+                      'plugin_fusioninventory_agents_id' => array_keys($agent_ids)]
                    ]);
             foreach ($jobstates_tocancel as $jobstate_tocancel) {
                $jobstate->getFromDB($jobstate_tocancel['id']);
