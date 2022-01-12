@@ -664,8 +664,17 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                }
                $devices[$num]['networkport'][] = $port;
             } else {
-               // Generic port, so add in all devices
-               $devices[$num]['networkport'][] = $port;
+               // Test another format (HP for example)
+               preg_match('/^(\d+)\/(\d+)$/', $port['name'], $matches);
+               if (count($matches) == 3) {
+                  if ($portswitchid != $matches[1]) {
+                     continue;
+                  }
+                  $devices[$num]['networkport'][] = $port;
+               } else {
+                  // Generic port, so add in all devices
+                  $devices[$num]['networkport'][] = $port;
+               }
             }
          }
          $num++;
