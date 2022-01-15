@@ -123,7 +123,7 @@ switch (filter_input(INPUT_GET, "action")) {
 
                   // Update associated files list
                   foreach ($jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
-                     if (!array_key_exists($hash, $order->associatedFiles)) {
+                     if (!isset($order->associatedFiles->$hash)) {
                         $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }
