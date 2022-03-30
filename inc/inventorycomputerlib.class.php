@@ -192,6 +192,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          $this->importSimcards('Computer', $a_computerinventory, $computers_id, $no_history);
       }
 
+      // Manage the fields have ' in the field to prevent SQL error
+      $a_computerinventory = Toolbox::addslashes_deep($a_computerinventory);
+
       // * Computer
       $db_computer = $computer->fields;
       // manage auto inventory number

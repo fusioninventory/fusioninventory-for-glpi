@@ -152,7 +152,15 @@ class ComputerPeripheralTest extends TestCase {
       <PRODUCTID>0811</PRODUCTID>
       <VENDORID>2109</VENDORID>
     </USBDEVICES>
-</CONTENT>
+    <USBDEVICES>
+      <CAPTION>Flash Drive (Store'n'Go)</CAPTION>
+      <MANUFACTURER>Verbatim, Ltd</MANUFACTURER>
+      <NAME>Flash Drive (Store'n'Go)</NAME>
+      <PRODUCTID>0243</PRODUCTID>
+      <SERIAL>12192404000025</SERIAL>
+      <VENDORID>18A5</VENDORID>
+    </USBDEVICES>
+  </CONTENT>
 </REQUEST>";
 
    }
@@ -192,10 +200,12 @@ class ComputerPeripheralTest extends TestCase {
       $manufacturerSecond = $manufacturer->fields['id'];
       $manufacturer->getFromDBByCrit(['name' => 'STMicroelectronics']);
       $manufacturerThird = $manufacturer->fields['id'];
+      $manufacturer->getFromDBByCrit(['name' => 'Verbatim, Ltd']);
+      $manufacturerFourth = $manufacturer->fields['id'];
 
       $reference = [
          [
-            'name' => 'Périphérique USB composite',
+            'name'                => 'Périphérique USB composite',
             'serial'              => '10075973',
             'peripheraltypes_id'  => 0,
             'peripheralmodels_id' => 0,
@@ -221,7 +231,7 @@ class ComputerPeripheralTest extends TestCase {
             'is_recursive'        => 0
          ],
          [
-            'name' => 'H5321 gw Mobile Broadband Module',
+            'name'                => 'H5321 gw Mobile Broadband Module',
             'serial'              => '187A047919938CM0',
             'peripheraltypes_id'  => 0,
             'peripheralmodels_id' => 0,
@@ -247,11 +257,37 @@ class ComputerPeripheralTest extends TestCase {
             'is_recursive'        => 0
          ],
          [
-            'name' => 'Sensor Hub',
+            'name'                => 'Sensor Hub',
             'serial'              => 'STM32_EMOTION2',
             'peripheraltypes_id'  => 0,
             'peripheralmodels_id' => 0,
             'manufacturers_id'    => $manufacturerThird,
+            'is_global'           => 0,
+            'is_deleted'          => 0,
+            'is_template'         => 0,
+            'is_dynamic'          => 1,
+            'entities_id'         => 0,
+            'contact'             => null,
+            'contact_num'         => null,
+            'users_id_tech'       => 0,
+            'groups_id_tech'      => 0,
+            'comment'             => null,
+            'otherserial'         => '',
+            'locations_id'        => 0,
+            'brand'               => null,
+            'template_name'       => null,
+            'users_id'            => 0,
+            'groups_id'           => 0,
+            'states_id'           => 0,
+            'ticket_tco'          => '0.0000',
+            'is_recursive'        => 0
+         ],
+         [
+            'name'                => "Flash Drive (Store'n'Go)",
+            'serial'              => '12192404000025',
+            'peripheraltypes_id'  => 0,
+            'peripheralmodels_id' => 0,
+            'manufacturers_id'    => $manufacturerFourth,
             'is_global'           => 0,
             'is_deleted'          => 0,
             'is_template'         => 0,
