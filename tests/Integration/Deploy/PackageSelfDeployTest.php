@@ -341,10 +341,13 @@ class PackageSelfDeployTest extends TestCase {
       $user = new User();
 
       $pfDeployGroup->getFromDBByCrit(['name' => 'all']);
+      $this->assertNotFalse($pfDeployGroup->fields['id']);
+      $this->assertNotEmpty($pfDeployGroup->fields['id']);
 
       $computer->getFromDBByCrit(['name' => 'pc01']);
       $computerId1 = $computer->fields['id'];
 
+      $this->assertNotFalse($computerId1);
       $user->getFromDBByCrit(['name' => 'David']);
 
       $computerId2 = $computer->add([
@@ -356,7 +359,7 @@ class PackageSelfDeployTest extends TestCase {
 
       $agentId = $pfAgent->add([
          'computers_id'=> $computerId2,
-         'entities_id' => 0
+         'entities_id' => 1
       ]);
       $this->assertNotFalse($agentId);
 
@@ -393,6 +396,7 @@ class PackageSelfDeployTest extends TestCase {
       $_SESSION['glpiID'] = 2; // glpi user account
       $pfDeployPackage->deployToComputer($computerId2, $packages_id_1, $_SESSION['glpiID']);
       $_SESSION['glpiID'] = $userId;
+
       // Prepare task
       PluginFusioninventoryTask::cronTaskscheduler();
 

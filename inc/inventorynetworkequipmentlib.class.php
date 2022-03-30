@@ -380,17 +380,19 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          }
       }
       // delete ports not in the inventory
-      $a_ports_DB = $networkPort->find(
-         [
-            'itemtype'       => 'NetworkEquipment',
-            'items_id'       => $items_id,
-            'NOT'            => ['id' => $portsUpdatedInDB]
-         ]
-      );
-      foreach ($a_ports_DB as $port) {
-         if ($port['name'] != "generale"
-            && $port['instantiation_type'] != 'NetworkPortAggregate') {
-            $networkPort->delete($port);
+      if (!empty($portsUpdatedInDB)) {
+         $a_ports_DB = $networkPort->find(
+            [
+               'itemtype'       => 'NetworkEquipment',
+               'items_id'       => $items_id,
+               'NOT'            => ['id' => $portsUpdatedInDB]
+            ]
+         );
+         foreach ($a_ports_DB as $port) {
+            if ($port['name'] != "generale"
+               && $port['instantiation_type'] != 'NetworkPortAggregate') {
+               $networkPort->delete($port);
+            }
          }
       }
    }
