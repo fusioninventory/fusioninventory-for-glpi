@@ -2177,6 +2177,11 @@ function plugin_item_purge_fusioninventory($parm) {
                ]
             );
          }
+         // Delete the XML file
+         PluginFusioninventoryToolbox::deleteXML(
+            $parm->fields['id'],
+            'NetworkEquipment'
+         );
          break;
 
       case "Printer":
@@ -2195,7 +2200,19 @@ function plugin_item_purge_fusioninventory($parm) {
                'printers_id' => $parm->fields['id']
             ]
          );
+         // Delete the XML
+         PluginFusioninventoryToolbox::deleteXML(
+            $parm->fields['id'],
+            'Printer'
+         );
          break;
+
+      case 'Computer':
+         // Delete the XML
+         PluginFusioninventoryToolbox::deleteXML(
+            $parm->fields['id'],
+            'Computer'
+         );
 
       case 'PluginFusioninventoryTimeslot';
          $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();

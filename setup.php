@@ -362,7 +362,8 @@ function plugin_init_fusioninventory() {
          'Printer'                            => 'plugin_item_purge_fusioninventory',
          'PluginFusioninventoryTimeslot'      => 'plugin_item_purge_fusioninventory',
          'Entity'                             => 'plugin_item_purge_fusioninventory',
-         'PluginFusioninventoryDeployPackage' => 'plugin_item_purge_fusioninventory'
+         'PluginFusioninventoryDeployPackage' => 'plugin_item_purge_fusioninventory',
+         'Computer'                           => 'plugin_item_purge_fusioninventory'
       ];
       $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
 

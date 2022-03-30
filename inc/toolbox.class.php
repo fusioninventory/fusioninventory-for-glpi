@@ -331,6 +331,22 @@ class PluginFusioninventoryToolbox {
       fclose($fileopen);
    }
 
+   /**
+    * Delete the XML file of an item
+    */
+   static function deleteXML($items_id, $itemtype) {
+      $folder = substr($items_id, 0, -1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      $itemtype_dir = PLUGIN_FUSIONINVENTORY_XML_DIR.strtolower($itemtype);
+
+      $file = $itemtype_dir."/".$folder."/".$items_id.'.xml';
+      if (file_exists($file)) {
+         unlink($file);
+      }
+   }
+
 
    /**
     * Add AUTHENTICATION string to XML node
