@@ -272,7 +272,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $input['domains_id'] = $a_computerinventory['Computer']['domains_id'];
       }
 
-         $input['tag'] = $tagAgent;
+      $input['tag'] = $tagAgent;
 
       if ((isset($a_computerinventory['Computer']['name']))
                  AND ($a_computerinventory['Computer']['name'] != '')) {

@@ -132,6 +132,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
       $item_DeviceBios              = new Item_DeviceFirmware();
+      $domain_Item                  = new Domain_Item();
       $pfInventoryComputerAntivirus = new ComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
@@ -268,6 +269,61 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($setdynamic == 1) {
          $this->setDynamicLinkItems($computers_id);
       }
+
+      // * Domain
+      if ($pfConfig->getValue('import_domain') == 1) {
+         $db_domain = [];
+         if ($no_history === false) {
+            $iterator = $DB->request([
+               'SELECT'    => [
+                  'id',
+                  'domains_id'
+               ],
+               'FROM'      => 'glpi_domains_items',
+               'WHERE'     => [
+                  'itemtype'  => 'Computer',
+                  'items_id'  => $computers_id
+               ]
+            ]);
+            while ($data = $iterator->next()) {
+               $idtmp = $data['id'];
+               unset($data['id']);
+               $db_domain[$idtmp] = $data['domains_id'];
+            }
+         }
+         if (count($db_domain) == 0) {
+            if (isset($a_computerinventory['Computer']['domains_id'])
+                  && !empty($a_computerinventory['Computer']['domains_id'])) {
+               $this->addDomain($a_computerinventory['Computer']['domains_id'], $computers_id, $no_history);
+            }
+         } else {
+            $foundDomain = false;
+            if (isset($a_computerinventory['Computer']['domains_id'])
+                  && !empty($a_computerinventory['Computer']['domains_id'])) {
+               foreach ($db_domain as $keydb => $domains_id) {
+                  if ($a_computerinventory['Computer']['domains_id'] == $domains_id) {
+                     unset($db_domain[$keydb]);
+                     $foundDomain = true;
+                     break;
+                  }
+               }
+            }
+
+            if (count($db_domain) != 0) {
+               // Delete Domain in DB
+               foreach ($db_domain as $idtmp => $domains_id) {
+                  $domain_Item->delete(['id'=>$idtmp], 1);
+               }
+            }
+
+            if (!$foundDomain
+                  && isset($a_computerinventory['Computer']['domains_id'])
+                  && !empty($a_computerinventory['Computer']['domains_id'])) {
+               $this->addDomain($a_computerinventory['Computer']['domains_id'], $computers_id, $no_history);
+            }
+         }
+      }
+
 
       // * BIOS
       $db_bios = [];
@@ -2081,6 +2137,24 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
    }
+
+   /**
+    * Add a new domain
+    *
+    * @param array $data
+    * @param integer $computers_id
+    * @param boolean $no_history
+    */
+    function addDomain($domains_id, $computers_id, $no_history) {
+      $domain_Item = new Domain_Item();
+      $data = [
+         'items_id' => $computers_id,
+         'itemtype' => 'Computer',
+         'domains_id' => $domains_id
+      ];
+      $domain_Item->add($data, [], !$no_history);
+   }
+
 
 
    /**
