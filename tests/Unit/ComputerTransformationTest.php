@@ -1181,15 +1181,17 @@ class ComputerTransformationTest extends TestCase {
       $a_reference = [];
       $a_reference[0] = [
             'manufacturers_id'   => 'NEC Technologies, Inc.',
-            'name'               => 'Écran Plug-and-Play',
+            'name'               => '27/2001',
             'serial'             => '',
-            'is_dynamic'         => 1
+            'is_dynamic'         => 1,
+            'monitormodels_id'   => 'Écran Plug-and-Play'
           ];
       $a_reference[1] = [
             'manufacturers_id'   => 'Lenovo',
-            'name'               => 'ThinkPad Display 1280x800',
+            'name'               => '',
             'serial'             => 'UBYVUTFYEIUI',
-            'is_dynamic'         => 1
+            'is_dynamic'         => 1,
+            'monitormodels_id'   => 'ThinkPad Display 1280x800'
           ];
       $this->assertEquals($a_reference, $a_return['monitor']);
    }

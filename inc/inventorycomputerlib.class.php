@@ -1467,6 +1467,18 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                $a_monitors[] = $monitor->add($arrays);
             } else {
                $a_monitors[] = $data['found_equipment'][0];
+               // Check monitor information to update if not good (in case of modification in agent for example)
+               $monitor->getFromDB($data['found_equipment'][0]);
+               $input = [];
+               $input['id'] = $data['found_equipment'][0];
+               foreach (['manufacturers_id', 'name', 'monitormodels_id'] as $key) {
+                  if ($monitor->fields[$key] !== $arrays[$key] && !empty($arrays[$key])) {
+                     $input[$key] = $arrays[$key];
+                  }
+               }
+               if (count($input) > 1) {
+                  $monitor->update($input);
+               }
             }
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();

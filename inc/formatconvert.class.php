@@ -1068,19 +1068,14 @@ class PluginFusioninventoryFormatconvert {
          foreach ($array['MONITORS'] as $a_monitors) {
             $array_tmp = $thisc->addValues($a_monitors,
                                            [
-                                              'CAPTION'      => 'name',
+                                              'CAPTION'      => 'monitormodels_id',
                                               'MANUFACTURER' => 'manufacturers_id',
                                               'SERIAL'       => 'serial',
                                               'DESCRIPTION'  => 'comment']);
             $array_tmp['is_dynamic'] = 1;
-            if (!isset($array_tmp['name'])) {
-               $array_tmp['name'] = '';
-            }
-            if ($array_tmp['name'] == ''
-                    && isset($array_tmp['comment'])) {
-               $array_tmp['name'] = $array_tmp['comment'];
-            }
+            $array_tmp['name'] = '';
             if (isset($array_tmp['comment'])) {
+               $array_tmp['name'] = $array_tmp['comment'];
                unset($array_tmp['comment']);
             }
             if (!isset($array_tmp['serial'])) {
