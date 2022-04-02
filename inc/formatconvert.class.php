@@ -336,6 +336,7 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+
       $array_tmp['is_dynamic'] = 1;
 
       $a_inventory['Computer'] = $array_tmp;
