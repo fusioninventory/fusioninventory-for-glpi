@@ -141,6 +141,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $printer                      = new Printer();
       $peripheral                   = new Peripheral();
       $pfComputerRemotemgmt         = new PluginFusioninventoryComputerRemoteManagement();
+      $cronTask                     = new PluginFusioninventoryCronTask();
 
       $computer->getFromDB($computers_id);
 
@@ -1445,6 +1446,86 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
+      // * Crontasks
+      if ($pfConfig->getValue("import_crontask") != 0) {
+           $db_crontasks = [];
+         if ($no_history === false) {
+               $iterator = $DB->request([
+                   'SELECT'    => [
+                       'id',
+                       'name',
+                       'storage',
+                       'user_storage',
+                       'user_id_storage'
+                   ],
+                   'FROM'      => 'glpi_plugin_fusioninventory_crontasks',
+                   'WHERE'     => [
+                       'computers_id'     => $computers_id
+                   ]
+               ]);
+
+            while ($data = $iterator->next()) {
+               $idtmp = $data['id'];
+               unset($data['id']);
+               $data = Toolbox::addslashes_deep($data);
+               $data = array_map('strtolower', $data);
+               $db_crontasks[$idtmp] = $data;
+            }
+         }
+
+         if (count($db_crontasks) == 0) {
+            foreach ($a_computerinventory['crontasks'] as $a_crontask) {
+               if (isset($a_crontask['user_execution'])) {
+                  $a_crontask['user_id_execution'] = $this->retrieveFusionInventoryCronTaskUserId($DB, $a_crontask['user_execution']);
+               }
+
+               if (isset($a_crontask['user_storage'])) {
+                  $a_crontask['user_id_storage'] = $this->retrieveFusionInventoryCronTaskUserId($DB, $a_crontask['user_storage']);
+               }
+
+               $a_crontask['computers_id'] = $computers_id;
+               $this->addFusionInventoryCronTask($a_crontask, $no_history);
+            }
+         } else {
+            foreach ($a_computerinventory['crontasks'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+
+               foreach ($db_crontasks as $keydb => $arraydb) {
+                  if ($arrayslower['name'] == $arraydb['name']
+                        && $arrayslower['storage'] == $arraydb['storage']) {
+                     $arrays['id'] =  $keydb;
+                     $cronTask->update($arrays);
+                     unset($a_computerinventory['crontasks'][$key]);
+                     unset($db_crontasks[$keydb]);
+                     break;
+                  }
+               }
+            }
+
+            //delete remaining crontasks in database
+            if (count($db_crontasks) > 0) {
+               foreach ($db_crontasks as $idtmp => $data) {
+                  $cronTask->delete(['id' => $idtmp], 1);
+               }
+            }
+            //add new crontasks in database
+            if (count($a_computerinventory['crontasks']) != 0) {
+               foreach ($a_computerinventory['crontasks'] as $a_crontask) {
+                  if (isset($a_crontask['user_execution'])) {
+                     $a_crontask['user_id_execution'] = $this->retrieveFusionInventoryCronTaskUserId($DB, $a_crontask['user_execution']);
+                  }
+
+                  if (isset($a_crontask['user_storage'])) {
+                     $a_crontask['user_id_storage'] = $this->retrieveFusionInventoryCronTaskUserId($DB, $a_crontask['user_storage']);
+                  }
+
+                  $a_crontask['computers_id'] = $computers_id;
+                  $this->addFusionInventoryCronTask($a_crontask, $no_history);
+               }
+            }
+         }
+      }
+
       $entities_id = $_SESSION["plugin_fusioninventory_entity"];
       // * Monitors
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -2391,6 +2472,34 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $data['is_dynamic']         = 1;
       $data['_no_history']        = $no_history;
       $item_DeviceBattery->add($data, [], !$no_history);
+   }
+
+   /**
+   * Add a new cron task
+   *
+   * @param array $data
+   * @param boolean $no_history
+   */
+   function addFusionInventoryCronTask($data, $no_history) {
+      $cronTask = new PluginFusioninventoryCronTask();
+      $cronTask->add($data, [], !$no_history);
+   }
+
+   /**
+   * Returns glpi user id if found or 0
+   *
+   * @param $DB
+   * @param $user
+   * @return int
+   */
+   function retrieveFusionInventoryCronTaskUserId($DB, $user) {
+      $query = "SELECT `id`
+                      FROM `glpi_users`
+                      WHERE `name` = '" . $user . "'
+                      LIMIT 1";
+      $result = $DB->query($query);
+
+      return $DB->numrows($result) == 1 ? $DB->result($result, 0, 0) : 0;
    }
 
 

@@ -114,6 +114,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['import_vm']              = 1;
       $input['import_monitor_on_partial_sn'] = 0;
       $input['import_domain']          = 0;
+      $input['import_crontask']        = 1;
       $input['component_processor']    = 1;
       $input['component_memory']       = 1;
       $input['component_harddrive']    = 1;
@@ -652,7 +653,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("import_domain", $pfConfig->getValue('import_domain'));
       echo "</td>";
-      echo "<td colspan='2'>";
+      echo "<td>";
+      echo __('Import cron tasks', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_crontask", $pfConfig->getValue('import_crontask'));
       echo "</td>";
       echo "</tr>";
 

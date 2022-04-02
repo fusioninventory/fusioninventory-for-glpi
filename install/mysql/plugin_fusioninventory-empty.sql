@@ -1015,6 +1015,32 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_crontasks`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_crontasks` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL DEFAULT '',
+    `comment` text DEFAULT NULL,
+    `command` text DEFAULT NULL,
+    `execution_year` varchar(255) NOT NULL DEFAULT '',
+    `execution_month` varchar(255) NOT NULL DEFAULT '',
+    `execution_day` varchar(255) NOT NULL DEFAULT '',
+    `execution_hour` varchar(255) NOT NULL DEFAULT '',
+    `execution_minute` varchar(255) NOT NULL DEFAULT '',
+    `execution_weekday` varchar(255) NOT NULL DEFAULT '',
+    `user_id_execution` int(11) NOT NULL DEFAULT '0',
+    `user_execution` varchar(100) NOT NULL DEFAULT '',
+    `storage` varchar(100) NOT NULL DEFAULT '',
+    `user_id_storage` int(11) NOT NULL DEFAULT '0',
+    `user_storage` varchar(100) NOT NULL DEFAULT '',
+    `status` tinyint(1) NOT NULL DEFAULT '0',
+    `computers_id` int(11) NOT NULL DEFAULT '0',
+    `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    PRIMARY KEY (`id`),
+    KEY `computers_id` (`computers_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1;
+
+
 -- INSERT
 -- glpi_plugin_fusioninventory_configsecurities
 INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
@@ -1127,7 +1153,21 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryStateDiscovery', '9', '7', '0'),
           (NULL,'PluginFusioninventoryStateDiscovery', '10', '8', '0'),
           (NULL,'PluginFusioninventoryStateDiscovery', '11', '9', '0'),
-          (NULL,'PluginFusioninventoryStateDiscovery', '12', '10', '0');
+          (NULL,'PluginFusioninventoryStateDiscovery', '12', '10', '0'),
+
+          (NULL,'PluginFusioninventoryCronTask', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '5', '4', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '6', '5', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '7', '6', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '8', '7', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '9', '8', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '10', '9', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '11', '10', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '12', '11', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '13', '12', '0'),
+          (NULL,'PluginFusioninventoryCronTask', '14', '13', '0');
 
 
 

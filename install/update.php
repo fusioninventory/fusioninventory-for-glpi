@@ -385,6 +385,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       do_dblocks_migration($migration);
       do_rule_migration($migration);
       do_task_migration($migration);
+      do_crontask_migration($migration);
 
    // ********* Migration SNMP discovery and inventory ********************** //
 
@@ -7438,6 +7439,141 @@ function do_task_migration($migration) {
    $a_table['keys'][] = ['field' => 'plugin_fusioninventory_tasks_id', 'name' => '', 'type' => 'INDEX'];
    $a_table['keys'][] = ['field' => 'entities_id', 'name' => '', 'type' => 'INDEX'];
    $a_table['keys'][] = ['field' => 'method', 'name' => '', 'type' => 'INDEX'];
+
+   $a_table['oldkeys'] = [];
+
+   migrateTablesFusionInventory($migration, $a_table);
+}
+
+
+/**
+ * Manage the crontask part migration
+ *
+ * @global object $DB
+ * @param object $migration
+ */
+function do_crontask_migration($migration) {
+   global $DB;
+
+   /*
+    * Table glpi_plugin_fusioninventory_crontasks
+    */
+   $a_table = [];
+   $a_table['name'] = 'glpi_plugin_fusioninventory_crontasks';
+   $a_table['oldname'] = [];
+
+   $a_table['fields']  = [];
+   $a_table['fields']['id'] = [
+      'type'    => 'autoincrement',
+      'value'   => ''
+   ];
+   $a_table['fields']['name'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['comment'] = [
+      'type'    => 'text',
+      'value'   => null
+   ];
+   $a_table['fields']['command'] = [
+      'type'    => 'text',
+      'value'   => null
+   ];
+   $a_table['fields']['execution_year'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['execution_year'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['execution_month'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['execution_day'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['execution_hour'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['execution_minute'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['execution_weekday'] = [
+      'type'    => 'string',
+      'value'   => ''
+   ];
+   $a_table['fields']['user_id_execution'] = [
+      'type'    => 'integer',
+      'value'   => null
+   ];
+   $a_table['fields']['user_execution'] = [
+      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'value'   => ''
+   ];
+   $a_table['fields']['storage'] = [
+      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'value'   => ''
+   ];
+   $a_table['fields']['user_id_storage'] = [
+      'type'    => 'integer',
+      'value'   => null
+   ];
+   $a_table['fields']['user_storage'] = [
+      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'value'   => ''
+   ];
+   $a_table['fields']['status'] = [
+      'type'    => "tinyint(1) NOT NULL DEFAULT '0'",
+      'value'   => ''
+   ];
+   $a_table['fields']['computers_id'] = [
+      'type'    => 'integer',
+      'value'   => null
+   ];
+   $a_table['fields']['creation_date'] = [
+      'type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
+      'value'   => null
+   ];
+   $a_table['fields']['user_execution'] = [
+      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'value'   => ''
+   ];
+   $a_table['fields']['storage'] = [
+      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'value'   => ''
+   ];
+   $a_table['fields']['user_id_storage'] = [
+      'type'    => 'integer',
+      'value'   => null
+   ];
+   $a_table['fields']['user_storage'] = [
+      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'value'   => ''
+   ];
+   $a_table['fields']['status'] = [
+      'type'    => "tinyint(1) NOT NULL DEFAULT '0'",
+      'value'   => ''
+   ];
+   $a_table['fields']['computers_id'] = [
+      'type'    => 'integer',
+      'value'   => null
+   ];
+   $a_table['fields']['creation_date'] = [
+      'type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
+      'value'   => null
+   ];
+
+   $a_table['oldfields']  = [];
+
+   $a_table['renamefields'] = [];
+
+   $a_table['keys']   = [];
+   $a_table['keys'][] = ['field' => 'computers_id', 'name' => '', 'type' => 'INDEX'];
 
    $a_table['oldkeys'] = [];
 

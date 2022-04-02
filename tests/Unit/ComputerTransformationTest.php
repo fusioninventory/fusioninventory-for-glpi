@@ -150,6 +150,7 @@ class ComputerTransformationTest extends TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
       ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -233,6 +234,7 @@ class ComputerTransformationTest extends TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux/admin@local.com'
       ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -332,6 +334,7 @@ class ComputerTransformationTest extends TestCase {
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1,
       ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
 
       $operatingsystems = [
@@ -1037,6 +1040,7 @@ class ComputerTransformationTest extends TestCase {
           'computertypes_id'                 => 'VirtualBox',
           'is_dynamic'                       => 1
       ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -1359,6 +1363,7 @@ class ComputerTransformationTest extends TestCase {
           'bmanufacturer'                    => 'Dell Inc.',
           'mmodel'                           => '0FJ030'
       ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -1461,19 +1466,20 @@ class ComputerTransformationTest extends TestCase {
           ]
           ];
       $a_reference['Computer'] = [
-          'name'                             => 'vbox-winxp',
-          'uuid'                             => '',
-          'domains_id'                       => 'WORKGROUP',
-          'manufacturers_id'                 => 'Dell Inc.',
-          'computermodels_id'                => 'Dell DXP051',
-          'serial'                           => '6PkkD1K',
-          'mserial'                          => '..CN7082166DF04E.',
-          'computertypes_id'                 => '0FJ030',
-          'is_dynamic'                       => 1,
-          'mmanufacturer'                    => 'Dell Inc.',
-          'bmanufacturer'                    => 'Dell Inc.',
-          'mmodel'                           => '0FJ030'
-          ];
+         'name'                             => 'vbox-winxp',
+         'uuid'                             => '',
+         'domains_id'                       => 'WORKGROUP',
+         'manufacturers_id'                 => 'Dell Inc.',
+         'computermodels_id'                => 'Dell DXP051',
+         'serial'                           => '6PkkD1K',
+         'mserial'                          => '..CN7082166DF04E.',
+         'computertypes_id'                 => '0FJ030',
+         'is_dynamic'                       => 1,
+         'mmanufacturer'                    => 'Dell Inc.',
+         'bmanufacturer'                    => 'Dell Inc.',
+         'mmodel'                           => '0FJ030'
+      ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
    }
 
@@ -1955,20 +1961,21 @@ class ComputerTransformationTest extends TestCase {
           ]
           ];
       $a_reference['Computer'] = [
-          'name'                             => 'vbox-winxp',
-          'uuid'                             => '',
-          'domains_id'                       => 'WORKGROUP',
-          'manufacturers_id'                 => 'Dell Inc.',
-          'computermodels_id'                => 'Dell DXP051',
-          'serial'                           => '6PkkD1K',
-          'mserial'                          => '..CN7082166DF04E.',
-          'computertypes_id'                 => '0FJ030',
-          'is_dynamic'                       => 1,
-          'mmanufacturer'                    => 'Dell Inc.',
-          'bmanufacturer'                    => 'Dell Inc.',
-          'mmodel'                           => '0FJ030',
-          'otherserial'                      => 'LAPTOP0034'
-          ];
+         'name'                             => 'vbox-winxp',
+         'uuid'                             => '',
+         'domains_id'                       => 'WORKGROUP',
+         'manufacturers_id'                 => 'Dell Inc.',
+         'computermodels_id'                => 'Dell DXP051',
+         'serial'                           => '6PkkD1K',
+         'mserial'                          => '..CN7082166DF04E.',
+         'computertypes_id'                 => '0FJ030',
+         'is_dynamic'                       => 1,
+         'mmanufacturer'                    => 'Dell Inc.',
+         'bmanufacturer'                    => 'Dell Inc.',
+         'mmodel'                           => '0FJ030',
+         'otherserial'                      => 'LAPTOP0034'
+      ];
+      $a_reference['crontasks'] = [];
       $this->assertEquals($a_reference, $a_return);
    }
 

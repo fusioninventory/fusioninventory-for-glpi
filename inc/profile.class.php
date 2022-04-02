@@ -380,7 +380,10 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'],
           ['itemtype'  => 'PluginFusioninventoryLock',
                 'label'     => __('Lock', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_lock']
+                'field'     => 'plugin_fusioninventory_lock'],
+          ['itemtype'  => 'PluginFusioninventoryCronTask',
+              'label'     => __('Cron tasks', 'fusioninventory'),
+              'field'     => 'plugin_fusioninventory_crontask']
       ];
       return $rights;
    }
