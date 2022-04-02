@@ -324,7 +324,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
          }
       }
 
-
       // * BIOS
       $db_bios = [];
       if ($no_history === false) {
@@ -2145,7 +2144,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
     * @param integer $computers_id
     * @param boolean $no_history
     */
-    function addDomain($domains_id, $computers_id, $no_history) {
+   function addDomain($domains_id, $computers_id, $no_history) {
       $domain_Item = new Domain_Item();
       $data = [
          'items_id' => $computers_id,
@@ -2154,7 +2153,6 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       ];
       $domain_Item->add($data, [], !$no_history);
    }
-
 
 
    /**
