@@ -540,6 +540,9 @@ class PluginFusioninventoryInventoryComputerInventory {
                'value' => $items_id
             ]
          );
+         // this will ignore error `Duplicate entry 'xxx' for key 'PRIMARY'`
+         $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $query);
+
          $CFG_GLPI["use_log_in_files"] = false;
          if (!$DB->query($query)) {
             $communication = new PluginFusioninventoryCommunication();
