@@ -86,6 +86,8 @@ class PluginFusioninventoryDBLock {
                'value' => $value
             ]
          );
+         // this will ignore error `Duplicate entry 'xxx' for key 'PRIMARY'`
+         $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $query);
 
          while (!$DB->query($query)) {
             usleep(self::MILLISECOND_LOCK_WAIT);
