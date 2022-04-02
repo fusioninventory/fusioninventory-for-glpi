@@ -67,13 +67,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    const LINK_RESULT_LINK              = 2;
 
    /**
-    * Define the matching only available
-    *
-    * @var type
-    */
-   var $restrict_matching = Rule::AND_MATCHING;
-
-   /**
     * Define the right name
     *
     * @var type
