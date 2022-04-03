@@ -180,6 +180,9 @@ function plugin_init_fusioninventory() {
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntity');
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
               ['rulecollections_types'=>true]);
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleRemotework');
+      $Plugin->registerClass('PluginFusioninventoryInventoryRuleRemoteworkCollection',
+               ['rulecollections_types'=>true]);
       $Plugin->registerClass('PluginFusioninventoryRulematchedlog',
               ['addtabon' => ['Computer',
                               'Monitor',

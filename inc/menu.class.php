@@ -121,6 +121,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'unmanaged'                  => 'PluginFusioninventoryUnmanaged',
           'inventoryruleimport'        => 'PluginFusioninventoryInventoryRuleImport',
           'inventoryruleentity'        => 'PluginFusioninventoryInventoryRuleEntity',
+          'inventoryruleremotework'    => 'PluginFusioninventoryInventoryRuleRemotework',
           'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
           'collectrule'                => 'PluginFusioninventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
@@ -326,43 +327,51 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $a_menu = [];
 
       if (Session::haveRight('plugin_fusioninventory_ruleimport', READ)) {
-         $a_menu[1]['name'] = __('Equipment import and link rules', 'fusioninventory');
+         $a_menu[1]['name'] = __('Remotework', 'fusioninventory');
          $a_menu[1]['pic']  = $fi_path."/pics/menu_rules.png";
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
+                    'PluginFusioninventoryInventoryRuleRemotework'
+                 );
+      }
+
+      if (Session::haveRight('plugin_fusioninventory_ruleimport', READ)) {
+         $a_menu[2]['name'] = __('Equipment import and link rules', 'fusioninventory');
+         $a_menu[2]['pic']  = $fi_path."/pics/menu_rules.png";
+         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
                     'PluginFusioninventoryInventoryRuleImport'
                  );
       }
 
       if (Session::haveRight('plugin_fusioninventory_ignoredimportdevice', READ)) {
-         $a_menu[2]['name'] = __('Asset skipped during import', 'fusioninventory');
-         $a_menu[2]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL(
+         $a_menu[3]['name'] = __('Asset skipped during import', 'fusioninventory');
+         $a_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
+         $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL(
                     'PluginFusioninventoryIgnoredimportdevice'
                  );
       }
 
       if (Session::haveRight('plugin_fusioninventory_ruleentity', READ)) {
-         $a_menu[3]['name'] = __('Computer entity rules', 'fusioninventory');
-         $a_menu[3]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[3]['link'] = $fi_path."/front/inventoryruleentity.php";
+         $a_menu[4]['name'] = __('Computer entity rules', 'fusioninventory');
+         $a_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
+         $a_menu[4]['link'] = $fi_path."/front/inventoryruleentity.php";
       }
 
       if (Session::haveRight('plugin_fusioninventory_rulelocation', READ)) {
-         $a_menu[4]['name'] = __('Location rules', 'fusioninventory');
-         $a_menu[4]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[4]['link'] = $fi_path."/front/inventoryrulelocation.php";
+         $a_menu[5]['name'] = __('Location rules', 'fusioninventory');
+         $a_menu[5]['pic']  = $fi_path."/pics/menu_rules.png";
+         $a_menu[5]['link'] = $fi_path."/front/inventoryrulelocation.php";
       }
 
       if (Session::haveRight("plugin_fusioninventory_rulecollect", READ)) {
-         $a_menu[5]['name'] = __('Computer information rules', 'fusioninventory');
-         $a_menu[5]['pic']  = $fi_path."/pics/menu_rules.png";
-         $a_menu[5]['link'] = $fi_path."/front/collectrule.php";
+         $a_menu[6]['name'] = __('Computer information rules', 'fusioninventory');
+         $a_menu[6]['pic']  = $fi_path."/pics/menu_rules.png";
+         $a_menu[6]['link'] = $fi_path."/front/collectrule.php";
       }
 
       if (Session::haveRight('plugin_fusioninventory_blacklist', READ)) {
-         $a_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
-         $a_menu[6]['pic']  = $fi_path."/pics/menu_blacklist.png";
-         $a_menu[6]['link'] = $fi_path."/front/inventorycomputerblacklist.php";
+         $a_menu[7]['name'] = _n('Blacklist', 'Blacklists', 1);
+         $a_menu[7]['pic']  = $fi_path."/pics/menu_blacklist.png";
+         $a_menu[7]['link'] = $fi_path."/front/inventorycomputerblacklist.php";
       }
 
       if (!empty($a_menu)) {
