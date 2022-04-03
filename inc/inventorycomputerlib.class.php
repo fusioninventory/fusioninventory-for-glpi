@@ -151,14 +151,10 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if (isset($a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'])) {
          $ios = new Item_OperatingSystem();
          $pfos = $a_computerinventory['fusioninventorycomputer']['items_operatingsystems_id'];
-         $ios->getFromDBByCrit([
-         'itemtype'                          => 'Computer',
-         'items_id'                          => $computers_id
-         ]);
 
          $input_os = [
             'itemtype'                          => 'Computer',
-            'items_id'                          => $computer->getID(),
+            'items_id'                          => $computers_id,
             'operatingsystemarchitectures_id'   => $pfos['operatingsystemarchitectures_id'],
             'operatingsystemkernelversions_id'  => $pfos['operatingsystemkernelversions_id'],
             'operatingsystems_id'               => $pfos['operatingsystems_id'],
@@ -171,18 +167,26 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
             'entities_id'                       => $computer->fields['entities_id']
          ];
 
-         if (!$ios->isNewItem()) {
-            //OS exists, check for updates
-            $same = true;
-            foreach ($input_os as $key => $value) {
-               if ($ios->fields[$key] != $value) {
-                  $same = false;
-                  break;
-               }
+         $iterator = $DB->request([
+            'SELECT'    => [
+               'id'
+            ],
+            'FROM'      => 'glpi_items_operatingsystems',
+            'WHERE'     => [
+               'itemtype'  => 'Computer',
+               'items_id'  => $computers_id
+            ]
+         ]);
+         $firstFound = 0;
+         while ($data = $iterator->next()) {
+            if ($firstFound > 0) {
+               $ios->delete(['id' => $data['id']], true);
+            } else {
+               $firstFound = $data['id'];
             }
-            if ($same === false) {
-               $ios->update(['id' => $ios->getID()] + $input_os);
-            }
+         }
+         if ($firstFound > 0) {
+            $ret = $ios->update(['id' => $firstFound] + $input_os);
          } else {
             $input_os['_no_history'] = $no_history;
             $ios->add($input_os);
