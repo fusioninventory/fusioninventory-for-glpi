@@ -1104,8 +1104,22 @@ class PluginFusioninventoryFormatconvert {
                                               'DESCRIPTION'  => 'comment']);
             $array_tmp['is_dynamic'] = 1;
             $array_tmp['name'] = '';
+            if ($array_tmp['name'] == '' && isset($array_tmp['monitormodels_id'])) {
+               if (isset($array_tmp['manufacturers_id'])) {
+                  preg_match('/\b\w+\b/i', $array_tmp['manufacturers_id'], $res_manufacture);
+                  preg_match('/\b\w+\b/i', $array_tmp['monitormodels_id'], $res_monitormodel);
+                  if (strcasecmp($res_manufacture[0], $res_monitormodel[0]) != 0) {
+                     $array_tmp['name'] = $res_manufacture[0] . " " . $array_tmp['monitormodels_id'];
+                  } else {
+                     $array_tmp['name'] = $array_tmp['monitormodels_id']; 
+                    }
+               } else {
+                   $array_tmp['name'] = $array_tmp['monitormodels_id']; 
+                 }
+            } else if (isset($array_tmp['comment'])) {
+               $array_tmp['name'] = $array_tmp['comment']; 
+               }
             if (isset($array_tmp['comment'])) {
-               $array_tmp['name'] = $array_tmp['comment'];
                unset($array_tmp['comment']);
             }
             if (!isset($array_tmp['serial'])) {
