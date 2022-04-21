@@ -960,7 +960,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $tasks_list = "AND task.`id` IN ('".implode("', '", $task_ids)."')";
       } else {
          // Not task identifiers provided
-         return ['tasks' => $logs, 'agents' => $agents];
+         $tasks_list = "";
       }
 
       // Restrict by IP to prevent display tasks in another entity use not have right
