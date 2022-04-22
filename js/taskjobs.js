@@ -505,12 +505,15 @@ taskjobs.display_agents_view = function(chart_id) {
             $('.refresh_button > span').addClass('fetching');
             var params = [];
             $("input.check_restart:checked").each(function(index) {
-               var position = $(this).parent().index();
+               var agent_id = $(this).attr('value');
                var agents = chart.agents.toArray();
-               params.push({
-                  'agent_id': agents[position][1][0].agent_id,
-                  'jobstate_id': agents[position][1][0].jobstate_id
+               var agent = $.grep(agents, function(e){ return e[0] === agent_id; });
+               if (agent.length > 0){
+                  params.push({
+                     'agent_id': agent_id,
+                     'jobstate_id': agent[0][1][0].jobstate_id
                   });
+               }
             });
 
             $.ajax({
