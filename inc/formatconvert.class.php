@@ -1112,14 +1112,14 @@ class PluginFusioninventoryFormatconvert {
                   if (strcasecmp($res_manufacture[0], $res_monitormodel[0]) != 0) {
                      $array_tmp['name'] = $res_manufacture[0] . " " . $array_tmp['monitormodels_id'];
                   } else {
-                     $array_tmp['name'] = $array_tmp['monitormodels_id']; 
-                    }
+                     $array_tmp['name'] = $array_tmp['monitormodels_id'];
+                  }
                } else {
-                   $array_tmp['name'] = $array_tmp['monitormodels_id']; 
-                 }
-            } else if (isset($array_tmp['comment'])) {
-               $array_tmp['name'] = $array_tmp['comment']; 
+                  $array_tmp['name'] = $array_tmp['monitormodels_id'];
                }
+            } else if (isset($array_tmp['comment'])) {
+               $array_tmp['name'] = $array_tmp['comment'];
+            }
             if (isset($array_tmp['comment'])) {
                unset($array_tmp['comment']);
             }
