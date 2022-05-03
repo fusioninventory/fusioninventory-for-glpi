@@ -9,5 +9,10 @@
     "classmap": [
       "inc/"
     ]
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
