@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-versions: ['7.4', '8.0', '8.1']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -55,8 +55,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
-        glpi-versions: ['9.5.7']
+        php-versions: ['7.4', '8.0', '8.1']
+        glpi-versions: ['10.0.0']
     name: phpunit-GLPI-latest (${{ matrix.glpi-versions }}) | PHP(${{ matrix.php-versions }})
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
@@ -114,130 +114,66 @@ jobs:
     - name: run tests
       run: cd glpi/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/
 
-  phpunit-GLPI-previous:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions: ['7.4']
-        glpi-versions: ['9.5.3','9.5.4','9.5.5','9.5.6']
-    name: phpunit-GLPI-latest (${{ matrix.glpi-versions }}) | PHP(${{ matrix.php-versions }})
-    env:
-      extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
-      key: cache-v1
-    steps:
-    - uses: ankane/setup-mariadb@v1
-      with:
-        mariadb-version: 10.5
-    - uses: actions/checkout@v1
-    - name: Setup cache environment
-      id: extcache
-      uses: shivammathur/cache-extensions@v1
-      with:
-        php-version: ${{ matrix.php-versions }}
-        extensions: ${{ env.extensions }}
-        key: ${{ env.key }}
+  # phpunit-GSIT:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       php-versions: ['7.3', '7.4', '8.0']
+  #       gsit-versions: ['9.5.7']
+  #   name: phpunit-GSIT (${{ matrix.gsit-versions }}) | PHP(${{ matrix.php-versions }})
+  #   env:
+  #     extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
+  #     key: cache-v1
+  #   steps:
+  #   - uses: ankane/setup-mariadb@v1
+  #     with:
+  #       mariadb-version: 10.5
+  #   - uses: actions/checkout@v1
+  #   - name: Setup cache environment
+  #     id: extcache
+  #     uses: shivammathur/cache-extensions@v1
+  #     with:
+  #       php-version: ${{ matrix.php-versions }}
+  #       extensions: ${{ env.extensions }}
+  #       key: ${{ env.key }}
 
-    - name: Cache extensions
-      uses: actions/cache@v2
-      with:
-        path: ${{ steps.extcache.outputs.dir }}
-        key: ${{ steps.extcache.outputs.key }}
-        restore-keys: ${{ steps.extcache.outputs.key }}
+  #   - name: Cache extensions
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: ${{ steps.extcache.outputs.dir }}
+  #       key: ${{ steps.extcache.outputs.key }}
+  #       restore-keys: ${{ steps.extcache.outputs.key }}
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-        extensions: ${{ env.extensions }}
+  #   - name: Setup PHP
+  #     uses: shivammathur/setup-php@v2
+  #     with:
+  #       php-version: ${{ matrix.php-versions }}
+  #       extensions: ${{ env.extensions }}
 
-    - name: Cache Composer dependencies
-      uses: actions/cache@v2
-      with:
-        path: /tmp/composer-cache
-        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
-    - uses: php-actions/composer@v6
-      with:
-        php_version: ${{ matrix.php-versions }}
-    - name: Get GLPI
-      run: wget https://github.com/glpi-project/glpi/releases/download/${{ matrix.glpi-versions }}/glpi-${{ matrix.glpi-versions }}.tgz
-    - name: Uncompress GLPI
-      run: tar zxvf glpi-${{ matrix.glpi-versions }}.tgz
-    - name: Copy Plugin FusionInventory
-      run: rsync -avr --exclude='glpi' ./* glpi/plugins/fusioninventory/
-    - name: Create the database
-      run: mysqladmin create glpi
-    - name: Check php dependencies
-      run: cd glpi && php bin/console glpi:system:check_requirements
-    - name: Install GLPI
-      run: cd glpi && mkdir tests && php bin/console glpi:database:install -n --config-dir=tests --db-name=glpi --db-user=root
-    - name: Install plugin FusionInventory
-      run: cd glpi && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
-    - name: Activate plugin FusionInventory
-      run: cd glpi && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory
-    - name: run tests
-      run: cd glpi/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/
-
-  phpunit-GSIT:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions: ['7.3', '7.4', '8.0']
-        gsit-versions: ['9.5.7']
-    name: phpunit-GSIT (${{ matrix.gsit-versions }}) | PHP(${{ matrix.php-versions }})
-    env:
-      extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
-      key: cache-v1
-    steps:
-    - uses: ankane/setup-mariadb@v1
-      with:
-        mariadb-version: 10.5
-    - uses: actions/checkout@v1
-    - name: Setup cache environment
-      id: extcache
-      uses: shivammathur/cache-extensions@v1
-      with:
-        php-version: ${{ matrix.php-versions }}
-        extensions: ${{ env.extensions }}
-        key: ${{ env.key }}
-
-    - name: Cache extensions
-      uses: actions/cache@v2
-      with:
-        path: ${{ steps.extcache.outputs.dir }}
-        key: ${{ steps.extcache.outputs.key }}
-        restore-keys: ${{ steps.extcache.outputs.key }}
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-        extensions: ${{ env.extensions }}
-
-    - name: Cache Composer dependencies
-      uses: actions/cache@v2
-      with:
-        path: /tmp/composer-cache
-        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
-    - uses: php-actions/composer@v6
-      with:
-        php_version: ${{ matrix.php-versions }}
-    - name: Get GSIT
-      run: wget https://github.com/DCS-Easyware/gsit/releases/download/GSIT-${{ matrix.gsit-versions }}/gsit-${{ matrix.gsit-versions }}.tar.gz
-    - name: Uncompress GSIT
-      run: tar zxvf gsit-${{ matrix.gsit-versions }}.tar.gz
-    - name: Copy Plugin FusionInventory
-      run: rsync -avr --exclude='gsit' ./* gsit/plugins/fusioninventory/
-    - name: Create the database
-      run: mysqladmin create gsit
-    - name: Check php dependencies
-      run: cd gsit && php bin/console glpi:system:check_requirements
-    - name: Install GSIT
-      run: cd gsit && mkdir tests && php bin/console glpi:database:install -n --config-dir=tests --db-name=gsit --db-user=root
-    - name: Install plugin FusionInventory
-      run: cd gsit && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
-    - name: Activate plugin FusionInventory
-      run: cd gsit && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory
-    - name: run tests
-      run: cd gsit/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/
+  #   - name: Cache Composer dependencies
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: /tmp/composer-cache
+  #       key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}    
+  #   - uses: php-actions/composer@v6
+  #     with:
+  #       php_version: ${{ matrix.php-versions }}
+  #   - name: Get GSIT
+  #     run: wget https://github.com/DCS-Easyware/gsit/releases/download/GSIT-${{ matrix.gsit-versions }}/gsit-${{ matrix.gsit-versions }}.tar.gz
+  #   - name: Uncompress GSIT
+  #     run: tar zxvf gsit-${{ matrix.gsit-versions }}.tar.gz
+  #   - name: Copy Plugin FusionInventory
+  #     run: rsync -avr --exclude='gsit' ./* gsit/plugins/fusioninventory/
+  #   - name: Create the database
+  #     run: mysqladmin create gsit
+  #   - name: Check php dependencies
+  #     run: cd gsit && php bin/console glpi:system:check_requirements
+  #   - name: Install GSIT
+  #     run: cd gsit && mkdir tests && php bin/console glpi:database:install -n --config-dir=tests --db-name=gsit --db-user=root
+  #   - name: Install plugin FusionInventory
+  #     run: cd gsit && php bin/console glpi:plugin:install -vvv -n --config-dir=tests --username=glpi fusioninventory
+  #   - name: Activate plugin FusionInventory
+  #     run: cd gsit && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory
+  #   - name: run tests
+  #     run: cd gsit/plugins/fusioninventory/ && php vendor/bin/phpunit --testdox tests/
