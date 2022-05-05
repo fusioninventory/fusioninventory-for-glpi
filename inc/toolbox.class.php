@@ -45,6 +45,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -247,11 +249,11 @@ class PluginFusioninventoryToolbox {
             if (count($value->children()) > 0) {
                $this->cleanXML($value);
             } else if (isset($nodes[$key])) {
-               $xml->$key->$i = Toolbox::clean_cross_side_scripting_deep(
+               $xml->$key->$i = Sanitizer::encodeHtmlSpecialChars(
                                     Toolbox::addslashes_deep($value));
                $i++;
             } else {
-               $xml->$key = Toolbox::clean_cross_side_scripting_deep(
+               $xml->$key = Sanitizer::encodeHtmlSpecialChars(
                                  Toolbox::addslashes_deep($value));
             }
          }
@@ -850,9 +852,6 @@ class PluginFusioninventoryToolbox {
       $config = new PluginFusioninventoryConfig();
 
       $autonum = $config->getValue('auto_inventory_number_'.strtolower($itemtype));
-      $autonum = str_replace('<', '&lt;', $autonum);
-      $autonum = str_replace('>', '&gt;', $autonum);
-
       $new_value = $dbutils->autoName($autonum, 'otherserial', true, $itemtype, $entities_id);
 
       return $new_value;

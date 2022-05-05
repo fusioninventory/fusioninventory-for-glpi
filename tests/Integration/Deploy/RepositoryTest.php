@@ -63,13 +63,15 @@ class RepositoryTest extends TestCase {
 
       // create a package
       $this->packages_1_id = $pfDeployPackage->add([
-         'name' => 'test package 1',
+         'name'        => 'test package 1',
+         'entities_id' => 0
       ]);
       $this->assertNotFalse($this->packages_1_id);
 
       // create a second package
       $this->packages_2_id = $pfDeployPackage->add([
-         'name' => 'test package 2',
+         'name'        => 'test package 2',
+         'entities_id' => 0
       ]);
       $this->assertNotFalse($this->packages_2_id);
 

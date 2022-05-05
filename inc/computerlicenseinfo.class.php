@@ -82,20 +82,20 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
     * @param integer $computers_id id of the computer
     * @return true
     */
-   function showForm($computers_id) {
+   function showForm($computers_id, $options = []) {
       global $CFG_GLPI, $DB;
 
       $iterator = $DB->request('glpi_plugin_fusioninventory_computerlicenseinfos',
                                ['computers_id' => $computers_id]);
 
-      if ($iterator->numrows()) {
+      if (count($iterator)) {
 
          echo '<div align="center">';
          echo "<form method='POST' action='".self::getFormURL()."'>";
 
          echo '<table class="tab_cadre_fixe">';
          echo '<tr>';
-         echo '<th colspan="4">'.self::getTypeName($iterator->numrows()).'</th>';
+         echo '<th colspan="4">'.self::getTypeName(count($iterator)).'</th>';
          echo '</tr>';
 
          foreach ($iterator as $licenseInfo) {

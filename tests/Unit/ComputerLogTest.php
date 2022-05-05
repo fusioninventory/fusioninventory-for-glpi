@@ -71,6 +71,7 @@ class ComputerLogTest extends TestCase {
       $date = date('Y-m-d H:i:s');
 
       $inventory = [
+         'Computer',
           'fusioninventorycomputer' => [
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
@@ -99,13 +100,8 @@ class ComputerLogTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
-          'batteries'      => [],
-          'peripheral'     => [],
-          'printer'        => [],
-          'monitor'        => [],
-          'remote_mgmt'    => [],
-          'licenseinfo'    => [],
-          'antivirus'      => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           'itemtype'       => 'Computer'
           ];
       $inventory['Computer'] = [
@@ -327,15 +323,17 @@ class ComputerLogTest extends TestCase {
       $a_reference = [];
 
       $this->assertEquals($a_reference, $a_logs, "Log may be empty at update ".print_r($a_logs, true));
+      return;
    }
 
 
    /**
     * @test
     * @depends onlyLogCreationWhenCreateComputer
+    * @depends noLogsWhenUpdateComputer
     * @depends getInventory
     */
-   public function logsWhenUpdateComputerModifications($id, $inventory) {
+   public function logsWhenUpdateComputerModifications($id, $nouse, $inventory) {
       global $DB;
 
       $pfiComputerLib = new PluginFusioninventoryInventoryComputerLib();

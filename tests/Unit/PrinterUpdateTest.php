@@ -176,6 +176,11 @@ class PrinterUpdateTest extends TestCase {
          'states_id'            => 0,
          'ticket_tco'           => '0.0000',
          'is_dynamic'           => 1,
+         'uuid'                 => null,
+         'sysdescr'             => null,
+         'last_inventory_update' => null,
+         'snmpcredentials_id'   => 0,
+         'autoupdatesystems_id' => 0
       ];
 
       $this->assertEquals($a_reference, $printer->fields);

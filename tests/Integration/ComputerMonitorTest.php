@@ -106,6 +106,7 @@ class ComputerMonitorTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
 
@@ -166,6 +167,7 @@ class ComputerMonitorTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
    }

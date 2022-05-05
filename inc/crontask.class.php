@@ -368,7 +368,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
          echo $header;
 
          $crontask = new self();
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $crontask->getFromResultSet($data);
             echo "<tr class='tab_bg_2" . (isset($data['is_deleted']) && $data['is_deleted'] ? " tab_bg_2_2'" : "'") . "'>";
             echo "<td>" . $crontask->getLink() . "</td><td>";
@@ -409,7 +409,7 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __('Name') . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "name", ['option' => 'size=66']);
+      echo Html::input("name", ['size' => 66, 'value' => $this->fields['name']]);
       echo "</td><td>" . __('Enabled') . "</td>";
       echo "<td>";
       Dropdown::showYesNo("status", $this->fields["status"]);
@@ -421,17 +421,17 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
       echo "<textarea cols='64' rows='4' name='command' >" . $this->fields["command"] . "</textarea>";
       echo "</td></tr><tr></tr><td>" . __('Execution user') . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "user_execution", ['option' => 'size=66']);
+      echo Html::input("user_execution", ['size' => 66, 'value' => $this->fields['user_execution']]);
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __('Storage') . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "storage", ['option' => 'size=66']);
+      echo Html::input("storage", ['size' => 66, 'value' => $this->fields['storage']]);
       echo "</td></tr>";
       echo "<tr><td>" . __('Storage user') . "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "user_storage", ['option' => 'size=66']);
+      echo Html::input("user_storage", ['size' => 66, 'value' => $this->fields['user_storage']]);
       echo "</td></tr>";
 
       echo "<tr>";
@@ -447,12 +447,12 @@ class PluginFusioninventoryCronTask extends PluginFusioninventoryItem
          echo "</tr>";
 
          echo "<tr>";
-         echo "<td>".Html::autocompletionTextField($this, "execution_minute", ['option' => 'size="8"','display' => false])."</td>";
-         echo "<td>".Html::autocompletionTextField($this, "execution_hour", ['option' => 'size="8"','display' => false])."</td>";
-         echo "<td>".Html::autocompletionTextField($this, "execution_day", ['option' => 'size="8"','display' => false])."</td>";
-         echo "<td>".Html::autocompletionTextField($this, "execution_month", ['option' => 'size="8"','display' => false])."</td>";
-         echo "<td>".Html::autocompletionTextField($this, "execution_year", ['option' => 'size="8"','display' => false])."</td>";
-         echo "<td>".Html::autocompletionTextField($this, "execution_weekday", ['option' => 'size="8"','display' => false])."</td>";
+         echo "<td>".Html::input("execution_minute", ['option' => 'size="8"','display' => false, 'value' => $this->fields['execution_minute']])."</td>";
+         echo "<td>".Html::input("execution_hour", ['option' => 'size="8"','display' => false, 'value' => $this->fields['execution_hour']])."</td>";
+         echo "<td>".Html::input("execution_day", ['option' => 'size="8"','display' => false, 'value' => $this->fields['execution_day']])."</td>";
+         echo "<td>".Html::input("execution_month", ['option' => 'size="8"','display' => false, 'value' => $this->fields['execution_month']])."</td>";
+         echo "<td>".Html::input("execution_year", ['option' => 'size="8"','display' => false, 'value' => $this->fields['execution_year']])."</td>";
+         echo "<td>".Html::input("execution_weekday", ['option' => 'size="8"','display' => false, 'value' => $this->fields['execution_weekday']])."</td>";
          echo "</tr>";
       echo "</table>";
       echo "</td>";

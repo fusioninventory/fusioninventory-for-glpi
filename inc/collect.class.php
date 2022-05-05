@@ -280,7 +280,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'name');
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";

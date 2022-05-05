@@ -98,7 +98,10 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
                $d,
                $h
             );
-            $stmt->execute();
+            $ret = $stmt->execute();
+            if (!$ret) {
+               trigger_error($stmt->error, E_USER_ERROR);
+            }
          }
       }
       mysqli_stmt_close($stmt);

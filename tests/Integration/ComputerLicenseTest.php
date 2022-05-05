@@ -98,6 +98,7 @@ class ComputerLicenseTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
           'itemtype'       => 'Computer'
       ];
 

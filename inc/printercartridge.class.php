@@ -65,7 +65,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm(Printer $item, $options = []) {
+   function showFormDisplay(Printer $item, $options = []) {
       global $DB;
 
       // ** Get link OID fields

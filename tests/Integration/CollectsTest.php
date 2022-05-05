@@ -323,6 +323,7 @@ class CollectsTest extends TestCase {
 
       $matches = [];
       preg_match('/"token":"([a-z0-9]+)"/', $result, $matches);
+      // Check if errors in logs
       $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"'.$jobstate['uniqid'].'","_sid":'.$registry_tm.'},'
                                           . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/FusionInventory-Agent\/*","uuid":"'.$jobstate['uniqid'].'","_sid":'.$registry_fi.'}],"postmethod":"POST","token":"'.$matches[1].'"}');
       // answer 1

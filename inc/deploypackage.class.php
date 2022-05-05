@@ -486,7 +486,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td>".__('Comments')."&nbsp;:</td>";
@@ -1812,7 +1812,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $iterator = $DB->request($query);
 
       // case 1: if exist, we add computer in actors of the taskjob
-      if ($iterator->numrows() == 1) {
+      if (count($iterator) == 1) {
          foreach ($iterator as $data) {
 
             //Get current list of actors

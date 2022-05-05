@@ -137,6 +137,8 @@ class ComputerTransformationTest extends TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'pc',
@@ -221,6 +223,8 @@ class ComputerTransformationTest extends TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'pc',
@@ -323,6 +327,8 @@ class ComputerTransformationTest extends TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
@@ -1029,6 +1035,8 @@ class ComputerTransformationTest extends TestCase {
           'drive'          => [],
           'batteries'      => [],
           'remote_mgmt'    => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
@@ -1347,7 +1355,9 @@ class ComputerTransformationTest extends TestCase {
               'manufacturers_id' => 'Dell Inc.',
               'serial'           => '',
               'designation'      => 'Dell Inc. BIOS'
-          ]
+          ],
+          'crontasks'      => [],
+          'virtualmachine' => []
       ];
       $a_reference['Computer'] = [
           'name'                             => 'vbox-winxp',
@@ -1463,7 +1473,9 @@ class ComputerTransformationTest extends TestCase {
               'manufacturers_id' => 'Dell Inc.',
               'serial'           => '',
               'designation'      => 'Dell Inc. BIOS'
-          ]
+          ],
+          'crontasks'      => [],
+          'virtualmachine' => []
           ];
       $a_reference['Computer'] = [
          'name'                             => 'vbox-winxp',
@@ -1958,7 +1970,9 @@ class ComputerTransformationTest extends TestCase {
               'manufacturers_id' => 'Dell Inc.',
               'serial'           => '',
               'designation'      => 'Dell Inc. BIOS'
-          ]
+          ],
+          'crontasks'      => [],
+          'virtualmachine' => []
           ];
       $a_reference['Computer'] = [
          'name'                             => 'vbox-winxp',

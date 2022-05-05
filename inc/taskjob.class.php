@@ -633,7 +633,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          'FROM'    => 'glpi_plugin_fusioninventory_taskjobstates',
          'WHERE'   => ['state' => [0, 1, 2]],
          'GROUPBY' => ['uniqid', 'plugin_fusioninventory_agents_id']]);
-      while ($data = $a_taskjobstate->next()) {
+      foreach ($a_taskjobstate as $data) {
          $sql = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
                ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`

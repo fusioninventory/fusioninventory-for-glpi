@@ -229,16 +229,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       if ($cronTask->fields['lastrun'] == ''
               OR strtotime($cronTask->fields['lastrun']) < strtotime("-3 day")) {
          $message = __('GLPI cron not running, see ', 'fusioninventory');
-         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/cron.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
-         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+         echo "<center>";
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message, ['http://fusioninventory.org/documentation/fi4g/cron.html' => __('documentation', 'fusioninventory')]);
+         echo "</center>";
       }
 
       // Check if plugin right updated (because security problems)
       $fi_php_path = Plugin::getPhpDir('fusioninventory');
       if (file_exists($fi_php_path."/ajax/deploydropdown_operatingsystems.php")) {
          $message = __('SECURITY PROBLEM, see `2.1 Update` section to update correctly the plugin on ', 'fusioninventory');
-         $message .= " <a href='http://fusioninventory.org/documentation/fi4g/installation.html' target='_blank'>".__('documentation', 'fusioninventory')."</a>";
-         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message);
+         echo "<center>";
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message, ['http://fusioninventory.org/documentation/fi4g/installation.html' => __('documentation', 'fusioninventory')]);
+         echo "<c/enter>";
       }
 
       $width_status = 0;
@@ -1015,4 +1017,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       });");
       echo "</div>";
    }
+
+   public static function getIcon()
+   {
+       return "ti ti-fusioninventory";
+   }
+
 }

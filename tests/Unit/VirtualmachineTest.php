@@ -89,6 +89,8 @@ class VirtualmachineTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           'itemtype'       => 'Computer'
           ];
       $a_inventory['Computer'] = [

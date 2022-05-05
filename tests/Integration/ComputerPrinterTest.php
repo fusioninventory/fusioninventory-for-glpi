@@ -124,6 +124,7 @@ class ComputerPrinterTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
 
@@ -191,6 +192,7 @@ class ComputerPrinterTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
 
@@ -237,6 +239,7 @@ class ComputerPrinterTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
    }

@@ -417,7 +417,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')." :</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
       echo "<td>".__('Device_id', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -583,7 +583,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $agent = [];
       if (count($iterator)) {
-         $agent = $iterator->next();
+         $agent = $iterator->current();
       }
       return $agent;
    }
@@ -1233,14 +1233,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $action = $pfConfig->getValue('agents_action');
          if ($action == PluginFusioninventoryConfig::ACTION_CLEAN) {
             //delete agents
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $pfAgent->delete($data);
                $task->addVolume(1);
                $cron_status = true;
             }
          } else {
             //change status of agents
-            while ($data = $iterator->next()) {
+            foreach ($iterator as $data) {
                $computer = new Computer();
                if ($computer->getFromDB($data['computers_id'])) {
                   $computer->update([

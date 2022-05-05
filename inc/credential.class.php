@@ -118,7 +118,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * @param integer $ID
     * @param array $field
     */
-   function displaySpecificTypeField($ID, $field = []) {
+   function displaySpecificTypeField($ID, $field = [], $options = []) {
 
       switch ($field['type']) {
 

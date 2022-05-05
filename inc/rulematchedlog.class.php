@@ -160,7 +160,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          }
       } else if ($tabnum == '1') {
          if ($item->fields['id'] > 0) {
-            $pfRulematchedlog->showForm($item->fields['id'], $item->getType());
+            $pfRulematchedlog->showFormDisplay($item->fields['id'], $item->getType());
 
             $itemtype = '';
             switch (get_class($item)) {
@@ -215,7 +215,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
     * @param string $itemtype
     * @return true
     */
-   function showForm($items_id, $itemtype) {
+   function showFormDisplay($items_id, $itemtype) {
       global $DB;
 
       $rule    = new PluginFusioninventoryInventoryRuleImport();
@@ -237,7 +237,11 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                  'COUNT' => 'cpt'
                 ];
       $iterator = $DB->request($params);
-      $number   = $iterator->next()['cpt'];
+      $dataLog = $iterator->current();
+      $number = 0;
+      if (isset($dataLog['cpt'])) {
+         $number = $dataLog['cpt'];
+      }
 
       // Display the pager
       Html::printAjaxPager(self::getTypeName(2), $start, $number);

@@ -219,7 +219,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td rowspan='3' class='middle right'>".__('Comments')."&nbsp;: </td>";
@@ -233,7 +233,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'url', ['size' => 40]);
+      echo Html::input('url', ['size' => 40, 'value' => $this->fields['url']]);
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";

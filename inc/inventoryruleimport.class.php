@@ -576,6 +576,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                && $itemtype != 'Cluster'
                && $itemtype != 'Contract'
                && $itemtype != 'SoftwareVersion'
+               && $itemtype != 'DatabaseInstance'
+               && $itemtype != 'Cable'
                )) {
                $itemtypeselected[] = $itemtype;
             }
@@ -1098,7 +1100,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
              || $criteria->fields['condition'] == Rule::REGEX_NOT_MATCH) {
 
                $rc = new $this->rulecriteriaclass();
-               Html::autocompletionTextField($rc, "pattern", ['name'  => $name,
+               echo Html::input("pattern", ['name'  => $name,
                                                        'value' => $value,
                                                        'size'  => 70]);
                return;
@@ -1109,7 +1111,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                     AND ($name != "itemtype" AND $name != 'states_id')) {
 
                $rc = new $this->rulecriteriaclass();
-               Html::autocompletionTextField($rc, "pattern", ['name'  => $name,
+               echo Html::input("pattern", ['name'  => $name,
                                                        'value' => $value,
                                                        'size'  => 70]);
                return;
@@ -1170,7 +1172,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       if (!$display) {
          $rc = new $this->rulecriteriaclass();
-         Html::autocompletionTextField($rc, "pattern", ['name'  => $name,
+         Html::input("pattern", ['name'  => $name,
                                                        'value' => $value,
                                                        'size'  => 70]);
       }

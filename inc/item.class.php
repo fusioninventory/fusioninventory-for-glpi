@@ -133,7 +133,7 @@ class PluginFusioninventoryItem extends CommonDBTM {
     * @param CommonDBTM $item CommonDBTM instance
     * @param array $options optional parameters to be used for display purpose
     */
-   function showForm(CommonDBTM $item, $options = []) {
+   function showFormDisplay(CommonDBTM $item, $options = []) {
       Session::checkRight($this::$rightname, READ);
 
       $fk     = getForeignKeyFieldForItemType($this->itemtype);

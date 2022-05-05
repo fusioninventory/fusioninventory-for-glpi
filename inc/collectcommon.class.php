@@ -160,7 +160,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
          echo "<th>".$label."</th>";
       }
       echo "</tr>";
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          echo "<tr>";
          $row_data = $this->displayOneRow($data);
          foreach ($row_data as $value) {
@@ -202,7 +202,7 @@ class PluginFusioninventoryCollectCommon extends CommonDBTM {
       echo "<td>";
       echo Html::hidden('plugin_fusioninventory_collects_id',
                         ['value' => $collects_id]);
-      Html::autocompletionTextField($this, 'name');
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
       $this->displayNewSpecificities();
 

@@ -179,6 +179,7 @@ class UnmanagedManagedTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
       $a_inventory['Computer'] = [

@@ -26,15 +26,15 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agents` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
    `name` varchar(255) DEFAULT NULL,
    `last_contact` timestamp NULL DEFAULT NULL,
    `version` varchar(255) DEFAULT NULL,
    `lock` tinyint(1) NOT NULL DEFAULT '0',
    `device_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
-   `computers_id` int(11) NOT NULL DEFAULT '0',
+   `computers_id` int unsigned NOT NULL DEFAULT '0',
    `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -67,8 +67,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_configs` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_entities`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_entities` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
    `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
    `agent_base_url` varchar(255) NOT NULL DEFAULT '',
    PRIMARY KEY (`id`),
@@ -80,9 +80,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_entities` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_locks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_locks` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `tablename` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `items_id` int(11) NOT NULL DEFAULT '0',
+   `items_id` int unsigned NOT NULL DEFAULT '0',
    `tablefields` text DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `tablename` (`tablename`),
@@ -95,16 +95,16 @@ CREATE TABLE `glpi_plugin_fusioninventory_locks` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_tasks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `datetime_start` timestamp NULL DEFAULT NULL,
   `datetime_end` timestamp NULL DEFAULT NULL,
-  `plugin_fusioninventory_timeslots_prep_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_timeslots_exec_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_timeslots_prep_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_timeslots_exec_id` int unsigned NOT NULL DEFAULT '0',
   `last_agent_wakeup` timestamp NULL DEFAULT NULL,
   `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
   `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
@@ -125,16 +125,16 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_tasks_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_tasks_id` int unsigned NOT NULL DEFAULT '0',
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_creation` timestamp NULL DEFAULT NULL,
   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `targets` text DEFAULT NULL COLLATE utf8_unicode_ci,
   `actors` text DEFAULT NULL COLLATE utf8_unicode_ci,
   `comment` text DEFAULT NULL,
-  `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
+  `rescheduled_taskjob_id` int unsigned NOT NULL DEFAULT '0',
   `statuscomments` text DEFAULT NULL,
   `enduser` text DEFAULT NULL COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
@@ -149,9 +149,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjoblogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjobstates_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_taskjobstates_id` int unsigned NOT NULL DEFAULT '0',
   `date` timestamp NULL DEFAULT NULL,
-  `items_id` int(11) NOT NULL DEFAULT '0',
+  `items_id` int unsigned NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
@@ -165,11 +165,11 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobstates`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
-  `items_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_taskjobs_id` int unsigned NOT NULL DEFAULT '0',
+  `items_id` int unsigned NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_agents_id` int unsigned NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_start` timestamp NULL DEFAULT NULL,
@@ -188,7 +188,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mappings`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -208,13 +208,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unmanageds`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `date_mod` timestamp NULL DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `locations_id` int(11) NOT NULL DEFAULT '0',
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
+   `locations_id` int unsigned NOT NULL DEFAULT '0',
    `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-   `users_id` int(11) NOT NULL DEFAULT '0',
+   `users_id` int unsigned NOT NULL DEFAULT '0',
    `serial` varchar(255) DEFAULT NULL,
    `otherserial` varchar(255) DEFAULT NULL,
    `contact` varchar(255) DEFAULT NULL,
@@ -222,12 +222,12 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
    `comment` text DEFAULT NULL,
    `item_type` varchar(255) DEFAULT NULL,
    `accepted` tinyint(1) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agents_id` int unsigned NOT NULL DEFAULT '0',
    `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `hub` tinyint(1) NOT NULL DEFAULT '0',
-   `states_id` int(11) NOT NULL DEFAULT '0',
+   `states_id` int unsigned NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_configsecurities_id` int unsigned NOT NULL DEFAULT '0',
    `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
    `serialized_inventory` longblob DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unmanageds` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `modulename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `is_active` tinyint(1) NOT NULL DEFAULT '0',
    `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
@@ -255,9 +255,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
    `ip_start` varchar(255) DEFAULT NULL,
    `ip_end` varchar(255) DEFAULT NULL,
    PRIMARY KEY (`id`),
@@ -269,9 +269,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges_configsecurities`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_ipranges_configsecurities` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_ipranges_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_ipranges_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_configsecurities_id` int unsigned NOT NULL DEFAULT '0',
   `rank` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `unicity` (`plugin_fusioninventory_ipranges_id`,`plugin_fusioninventory_configsecurities_id`)
@@ -282,8 +282,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges_configsecurities` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentials`;
 
 CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
    `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -299,9 +299,9 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentialips`;
 
 CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_credentials_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_credentials_id` int unsigned NOT NULL DEFAULT '0',
    `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `comment` text DEFAULT NULL,
    `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -314,18 +314,18 @@ CREATE TABLE  `glpi_plugin_fusioninventory_credentialips` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ignoredimportdevices`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `date` timestamp NULL DEFAULT NULL,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
    `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `rules_id` int(11) NOT NULL DEFAULT '0',
+   `rules_id` int unsigned NOT NULL DEFAULT '0',
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agents_id` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -334,12 +334,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rulematchedlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `date` timestamp NULL DEFAULT NULL,
-   `items_id` int(11) NOT NULL DEFAULT '0',
+   `items_id` int unsigned NOT NULL DEFAULT '0',
    `itemtype` varchar(100) DEFAULT NULL,
-   `rules_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `rules_id` int unsigned NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agents_id` int unsigned NOT NULL DEFAULT '0',
    `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `criteria` text DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -351,7 +351,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercriterias`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercriterias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -363,8 +363,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercriterias` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerblacklists`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_criterium_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_criterium_id` int unsigned NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`)
@@ -376,8 +376,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercomputers`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
   `operatingsystem_installationdate` timestamp NULL DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
@@ -411,7 +411,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configlogfields`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
    `id` int(8) NOT NULL AUTO_INCREMENT,
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int unsigned NOT NULL DEFAULT '0',
    `days` int(255) NOT NULL DEFAULT '-1',
    PRIMARY KEY ( `id` ) ,
    KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
@@ -422,12 +422,12 @@ CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportconnectionlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `date_mod` timestamp NULL DEFAULT NULL,
    `creation` tinyint(1) NOT NULL DEFAULT '0',
    `networkports_id_source` int(11) NOT NULL DEFAULT '0',
    `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agentprocesses_id` int unsigned NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
    KEY `date_mod` (`date_mod`)
@@ -438,10 +438,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkequipments`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkequipments_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `networkequipments_id` int unsigned NOT NULL DEFAULT '0',
    `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_configsecurities_id` int unsigned NOT NULL DEFAULT '0',
    `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
    `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
    `memory` int(11) NOT NULL DEFAULT '0',
@@ -457,7 +457,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkporttypes`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `number` int(4) NOT NULL DEFAULT '0',
    `othername` varchar(255) DEFAULT NULL,
@@ -469,10 +469,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_printers` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `printers_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `printers_id` int unsigned NOT NULL DEFAULT '0',
    `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_configsecurities_id` int unsigned NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` timestamp NULL DEFAULT NULL,
    `serialized_inventory` longblob DEFAULT NULL,
@@ -487,8 +487,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printerlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `printers_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `printers_id` int unsigned NOT NULL DEFAULT '0',
    `date` timestamp NULL DEFAULT NULL,
    `pages_total` int(11) NOT NULL DEFAULT '0',
    `pages_n_b` int(11) NOT NULL DEFAULT '0',
@@ -512,9 +512,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printercartridges`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
    `id` bigint(100) NOT NULL AUTO_INCREMENT,
-   `printers_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   `cartridges_id` int(11) NOT NULL DEFAULT '0',
+   `printers_id` int unsigned NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int unsigned NOT NULL DEFAULT '0',
+   `cartridges_id` int unsigned NOT NULL DEFAULT '0',
    `state` int(3) NOT NULL DEFAULT '100',
    PRIMARY KEY (`id`),
    KEY `printers_id` (`printers_id`),
@@ -527,8 +527,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkports`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkports_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `networkports_id` int unsigned NOT NULL DEFAULT '0',
    `ifmtu` int(8) NOT NULL DEFAULT '0',
    `ifspeed` bigint(50) NOT NULL DEFAULT '0',
    `ifinternalstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -554,7 +554,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configsecurities`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
    `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
    `community` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -574,13 +574,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `networkports_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
+   `networkports_id` int unsigned NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int unsigned NOT NULL DEFAULT '0',
    `date_mod` timestamp NULL DEFAULT NULL,
    `value_old` varchar(255) DEFAULT NULL,
    `value_new` varchar(255) DEFAULT NULL,
-   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agentprocesses_id` int unsigned NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `networkports_id` (`networkports_id`,`date_mod`),
    KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
@@ -593,9 +593,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_statediscoveries`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_taskjob_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_agents_id` int unsigned NOT NULL DEFAULT '0',
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
@@ -613,9 +613,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerlicenseinfos`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `softwarelicenses_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `softwarelicenses_id` int unsigned NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `fullname` varchar(255) DEFAULT NULL,
   `serial` varchar(255) DEFAULT NULL,
@@ -633,8 +633,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerremotemanagements`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
   `number` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -649,17 +649,17 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerremotemanagements` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `comment` text DEFAULT NULL,
-  `entities_id` int(11) NOT NULL,
+  `entities_id` int unsigned NOT NULL,
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `date_mod` timestamp NULL DEFAULT NULL,
   `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `json` longtext DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
   `style` varchar(10) DEFAULT NULL,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_deploygroups_id` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
@@ -670,9 +670,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_entities`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_entities` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int unsigned NOT NULL DEFAULT '0',
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
@@ -685,10 +685,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_entities` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_groups`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `groups_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int unsigned NOT NULL DEFAULT '0',
+  `groups_id` int unsigned NOT NULL DEFAULT '0',
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
@@ -702,10 +702,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_groups` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_profiles`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `profiles_id` int(11) NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int unsigned NOT NULL DEFAULT '0',
+  `profiles_id` int unsigned NOT NULL DEFAULT '0',
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
@@ -719,9 +719,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_profiles` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploypackages_users`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL DEFAULT '0',
-  `users_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploypackages_id` int unsigned NOT NULL DEFAULT '0',
+  `users_id` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploypackages_id` (`plugin_fusioninventory_deploypackages_id`),
   KEY `users_id` (`users_id`)
@@ -732,14 +732,14 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploypackages_users` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfiles`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mimetype` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `filesize` bigint(20) NOT NULL,
   `comment` text DEFAULT NULL,
   `sha512` char(128) NOT NULL,
   `shortsha512` char(6) NOT NULL,
-  `entities_id` int(11) NOT NULL,
+  `entities_id` int unsigned NOT NULL,
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `date_mod` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -753,13 +753,13 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploymirrors`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entities_id` int(11) NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `entities_id` int unsigned NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `locations_id` int(11) NOT NULL,
+  `locations_id` int unsigned NOT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -774,7 +774,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploygroups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `comment` text DEFAULT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -786,10 +786,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups_staticdatas`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_staticdatas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploygroups_id` int unsigned NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
-  `items_id` int(11) NOT NULL DEFAULT '0',
+  `items_id` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (  `id` ),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `items_id` (`items_id`)
@@ -800,8 +800,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_staticdatas` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_deploygroups_id` int unsigned NOT NULL DEFAULT '0',
   `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
   `computers_id_cache` longtext DEFAULT NULL,
@@ -813,9 +813,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `id` int unsigned NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `entities_id` int unsigned NOT NULL DEFAULT '0',
    `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
    `date_creation` timestamp NULL DEFAULT NULL,
    `date_mod` timestamp NULL DEFAULT NULL,
@@ -836,9 +836,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontem
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `type` varchar(255) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
@@ -851,9 +851,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_id` int unsigned NOT NULL DEFAULT '0',
   `hive` varchar(255) DEFAULT NULL,
   `path` text DEFAULT NULL,
   `key` varchar(255) DEFAULT NULL,
@@ -865,9 +865,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries_contents`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_registries_id` int unsigned NOT NULL DEFAULT '0',
   `key` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -879,9 +879,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_id` int unsigned NOT NULL DEFAULT '0',
   `moniker` varchar(255) DEFAULT NULL,
   `class` varchar(255) DEFAULT NULL,
   `properties` varchar(255) DEFAULT NULL,
@@ -893,9 +893,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis_contents`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_wmis_id` int unsigned NOT NULL DEFAULT '0',
   `property` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -906,9 +906,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_id` int unsigned NOT NULL DEFAULT '0',
   `dir` varchar(255) DEFAULT NULL,
   `limit` int(4) NOT NULL DEFAULT '50',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
@@ -930,9 +930,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files_contents`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `computers_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_collects_files_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_files_id` int unsigned NOT NULL DEFAULT '0',
   `pathfile` text DEFAULT NULL,
   `size` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -943,8 +943,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslots`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `entities_id` int unsigned NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
@@ -957,9 +957,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslotentries`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_timeslotentries` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
- `entities_id` int(11) NOT NULL DEFAULT '0',
+ `id` int unsigned NOT NULL AUTO_INCREMENT,
+ `plugin_fusioninventory_timeslots_id` int unsigned NOT NULL DEFAULT '0',
+ `entities_id` int unsigned NOT NULL DEFAULT '0',
  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
  `day` tinyint(1) NOT NULL DEFAULT '1',
  `begin` int(11) DEFAULT NULL,
@@ -1018,7 +1018,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_dblocksoftwareversions` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_crontasks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_crontasks` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `id` int unsigned NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL DEFAULT '',
     `comment` text DEFAULT NULL,
     `command` text DEFAULT NULL,
@@ -1034,7 +1034,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_crontasks` (
     `user_id_storage` int(11) NOT NULL DEFAULT '0',
     `user_storage` varchar(100) NOT NULL DEFAULT '',
     `status` tinyint(1) NOT NULL DEFAULT '0',
-    `computers_id` int(11) NOT NULL DEFAULT '0',
+    `computers_id` int unsigned NOT NULL DEFAULT '0',
     `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     PRIMARY KEY (`id`),
     KEY `computers_id` (`computers_id`)

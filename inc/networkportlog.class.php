@@ -167,13 +167,16 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          $stmt = $DB->prepare($delete);
       }
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $type = '';
          $name= '';
          list($type, $name) = explode("-", $data['field']);
          if (!isset($listName[$type."-".$name])) {
             $stmt->bind_param('s', $data['id']);
-            $stmt->execute();
+            $ret = $stmt->execute();
+            if (!$ret) {
+               trigger_error($stmt->error, E_USER_ERROR);
+            }
          } else {
             $options[$data['field']]=$listName[$type."-".$name];
          }

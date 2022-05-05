@@ -2154,7 +2154,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $input              = $this->fields;
          $input['name']      = sprintf(__('Copy of %s'),
                                        $this->fields['name']);
-         $input['is_active'] = false;
+         $input['is_active'] = 0;
          unset($input['id']);
          $input              = Toolbox::addslashes_deep($input);
          if ($target_task_id = $this->add($input)) {

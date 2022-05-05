@@ -323,7 +323,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          ]
       );
       $stmt = $DB->prepare($update);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $comment = $data['comment'];
          foreach ($texts as $key=>$value) {
             $comment = str_replace("==".$key."==", "==".$value."==", $comment);

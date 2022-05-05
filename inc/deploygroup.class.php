@@ -352,7 +352,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'name', ['size' => 40]);
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
@@ -657,7 +657,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             'itemtype' => 'Computer',
          ],
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";
@@ -675,7 +675,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             'computers_id_cache' => ["LIKE", '%"'.$computers_id.'"%'],
          ],
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->getFromDB($data['plugin_fusioninventory_deploygroups_id']);
          echo "<tr>";
          echo "<td>";

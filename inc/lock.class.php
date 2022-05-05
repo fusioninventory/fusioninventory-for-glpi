@@ -161,10 +161,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
          return true;
       }
       if ($item->fields['id'] < 1) {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
+         $pflock->showLockForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock'),
                            $item->getType());
       } else {
-         $pflock->showForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
+         $pflock->showLockForm(Toolbox::getItemTypeFormURL('PluginFusioninventoryLock').'?id='.
                               $item->fields['id'],
                            $item->getType(), $item->fields['id']);
       }
@@ -182,7 +182,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @param integer $p_items_id Line id.
     * @return true
     */
-   function showForm($p_target, $p_itemtype, $p_items_id = 0) {
+   function showLockForm($p_target, $p_itemtype, $p_items_id = 0) {
 
       $can = 0;
       $typeright = strtolower($p_itemtype);
@@ -890,7 +890,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $itemtype = str_replace("massform", "", $_POST['container']);
 
          $pfil = new self;
-         $pfil->showForm($_SERVER["PHP_SELF"], $itemtype);
+         $pfil->showLockForm($_SERVER["PHP_SELF"], $itemtype);
          return true;
       }
       return false;
@@ -960,10 +960,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $itemtype = $item->getType();
       if ($itemtype::canUpdate()) {
          if ($item->getID() < 1) {
-            $pflock->showForm(Toolbox::getItemTypeFormURL(__CLASS__),
+            $pflock->showLockForm(Toolbox::getItemTypeFormURL(__CLASS__),
                               $item->getType());
          } else {
-            $pflock->showForm(Toolbox::getItemTypeFormURL(__CLASS__).'?id='.
+            $pflock->showLockForm(Toolbox::getItemTypeFormURL(__CLASS__).'?id='.
                               $item->getID(), $item->getType(), $item->getID());
          }
       }

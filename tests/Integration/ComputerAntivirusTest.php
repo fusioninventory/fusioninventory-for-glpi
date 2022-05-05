@@ -83,7 +83,7 @@ class ComputerAntivirusTest extends TestCase {
           'antivirus'      => [
              [
                 'name'              => 'Trend Micro Security Agent',
-                'manufacturers_id'  => '',
+                'manufacturers_id'  => 0,
                 'antivirus_version' => '',
                 'is_active'         => '1',
                 'is_uptodate'       => '1'
@@ -96,6 +96,7 @@ class ComputerAntivirusTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
           'itemtype'       => 'Computer'
       ];
 

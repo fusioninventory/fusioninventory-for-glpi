@@ -124,7 +124,7 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
       'FROM'   => 'glpi_networkports',
       'WHERE'  => ['itemtype' => '5153']
    ]);
-   while ($data = $iterator->next()) {
+   foreach ($iterator as $data) {
       $networkPort->delete(['id'=>$data['id']], 1);
    }
 

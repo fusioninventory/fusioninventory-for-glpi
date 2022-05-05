@@ -169,7 +169,7 @@ class PluginFusioninventoryCollectContentCommon extends CommonDBTM {
          ]
       ];
       $iterator = $DB->request($params);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $this->showContent($data['id']);
       }
    }

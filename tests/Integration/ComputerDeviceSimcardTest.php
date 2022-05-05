@@ -88,6 +88,7 @@ class ComputerDeviceSimcardTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'simcards'       => [
             [
                'serial'            => '11124406000051565111',
@@ -158,6 +159,7 @@ class ComputerDeviceSimcardTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'simcards'       => [
             ['serial'            => '11124406000051565111',
              'msin'              => '204043721717241',

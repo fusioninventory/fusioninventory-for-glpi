@@ -148,6 +148,7 @@ class DevicesLocksTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
           'itemtype'       => 'Computer'
       ];
 
@@ -252,6 +253,7 @@ class DevicesLocksTest extends TestCase {
          'batteries'      => [],
          'remote_mgmt'    => [],
          'bios'           => [],
+         'crontasks'      => [],
          'itemtype'       => 'Computer'
       ];
 

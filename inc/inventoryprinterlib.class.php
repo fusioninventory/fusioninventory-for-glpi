@@ -121,7 +121,7 @@ class PluginFusioninventoryInventoryPrinterLib extends PluginFusioninventoryInve
          'WHERE' => ['printers_id' => $printers_id]
       ];
       $iterator = $DB->request($params);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          foreach ($data as $key=>$value) {
             $db_printer[$key] = Toolbox::addslashes_deep($value);
          }

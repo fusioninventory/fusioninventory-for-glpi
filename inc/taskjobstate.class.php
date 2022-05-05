@@ -204,7 +204,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                                 'WHERE' => ['plugin_fusioninventory_taskjobs_id' => $taskjobs_id,
                                             'state' => ['NOT', self::FINISHED]]
                                ]);
-      if ($iterator->numrows() > 0) {
+      if (count($iterator) > 0) {
          foreach ($iterator as $data) {
             $total++;
             $state[$data['state']]++;
@@ -667,7 +667,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
 
             $stmt->bind_param('s', $data['plugin_fusioninventory_taskjobstates_id']);
-            $stmt->execute();
+            $ret = $stmt->execute();
+            if (!$ret) {
+               trigger_error($stmt->error, E_USER_ERROR);
+            }
          }
          mysqli_stmt_close($stmt);
       }
@@ -713,7 +716,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          ],
          'ORDER' => 'id DESC',
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
          $pfTask->getFromDB($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
          if (!isset($tasks_id[$pfTask->fields['id']])) {

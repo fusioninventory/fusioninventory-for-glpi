@@ -570,10 +570,10 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                   ],
                   'START'     => 0,
                   'LIMIT'     => 1
-               ])->next();
+               ]);
                $out = "<a href='".$CFG_GLPI['root_doc']."/front/networking.form.php?id=".
-                          $data2["id"]."'>";
-               $out .= $data2["name"]."</a>";
+                          current($data2)["id"]."'>";
+               $out .= current($data2)["name"]."</a>";
                return "<center>".$out."</center>";
 
             // ** Name and link of port of networking device (port of switch)
@@ -630,7 +630,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                ]);
 
                if (count($iterator)) {
-                  $row = $iterator->next();
+                  $row = $iterator->current();
                   $out .= "<br/><a href='".$CFG_GLPI['root_doc']."/front/networkport.form.php?id=";
                   $out .= $data['raw']["ITEM_$num"]."'>".$row['name']."</a>";
                }
@@ -775,7 +775,7 @@ function plugin_fusioninventory_searchOptionsValues($item) {
          'GROUPBY'   => 'uniqid',
          'ORDER'     => 'uniqid'
       ]);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $elements[$data['uniqid']] = $data['uniqid'];
       }
       Dropdown::showFromArray($item['name'], $elements, ['value' => $item['value']]);
@@ -2166,7 +2166,7 @@ function plugin_item_purge_fusioninventory($parm) {
                'itemtype'  => 'NetworkEquipment'
             ]
          ]);
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $DB->delete(
                'glpi_plugin_fusioninventory_networkports', [
                   'id' => $data['id']

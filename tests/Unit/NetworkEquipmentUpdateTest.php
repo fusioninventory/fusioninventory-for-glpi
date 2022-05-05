@@ -248,7 +248,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
           'serial'               => 'FOC147UJEU4',
           'entities_id'          => 0,
           'is_recursive'         => 0,
-          'ram'                  => 64,
+          'ram'                  => '64',
           'otherserial'          => null,
           'contact'              => null,
           'contact_num'          => null,
@@ -267,7 +267,14 @@ class NetworkEquipmentUpdateTest extends TestCase {
           'groups_id'            => 0,
           'states_id'            => 0,
           'ticket_tco'           => '0.0000',
-          'is_dynamic'           => 1
+          'is_dynamic'           => 1,
+          'uuid'                 => null,
+          'autoupdatesystems_id' => 0,
+          'sysdescr'             => null,
+          'cpu'                  => 0,
+          'uptime'               => '0',
+          'last_inventory_update' => null,
+          'snmpcredentials_id'   => 0          
       ];
 
       $this->assertEquals($a_reference, $networkEquipment->fields);

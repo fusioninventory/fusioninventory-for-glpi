@@ -107,7 +107,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     *
     * @return boolean true if no problem
     */
-   function showForm() {
+   function showForm($id, $options = []) {
 
       $pfAgent = new PluginFusioninventoryAgent();
 

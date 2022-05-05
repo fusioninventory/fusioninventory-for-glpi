@@ -191,7 +191,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       if (empty($a_computerextend)) {
          return;
       }
-
+      echo "<table class='tab_cadre_fixe'>";
       echo '<tr class="tab_bg_1">';
       echo "<th colspan='4'></th>";
       echo "</tr>";
@@ -217,6 +217,7 @@ class PluginFusioninventoryInventoryComputerComputer extends PluginFusioninvento
       echo $a_computerextend['hostid'];
       echo "</td><colspan='2'></td>";
       echo "</tr>";
+      echo "</table>";
 
       return true;
    }

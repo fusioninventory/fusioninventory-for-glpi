@@ -71,6 +71,8 @@ class DeploymirrorTest extends TestCase {
       $input = ['name'    => 'MyMirror',
                 'comment' => 'MyComment',
                 'url'     => 'http://localhost:8080/mirror',
+                'entities_id'  => 0,
+                'locations_id' => 0
                ];
       $mirrors_id = $pfDeploymirror->add($input);
       $this->assertGreaterThan(0, $mirrors_id);

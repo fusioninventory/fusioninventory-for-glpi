@@ -95,6 +95,7 @@ class ComputerDynamicTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
           'itemtype'       => 'Computer'
       ];
 
@@ -179,6 +180,7 @@ class ComputerDynamicTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
           'itemtype'       => 'Computer'
       ];
 
@@ -296,6 +298,7 @@ class ComputerDynamicTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
           'itemtype'       => 'Computer'
           ];
 

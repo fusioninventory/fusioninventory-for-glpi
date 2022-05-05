@@ -132,6 +132,8 @@ class ComputerUpdateTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           'itemtype'       => 'Computer'
           ];
       $a_inventory['Computer'] = [
@@ -227,6 +229,7 @@ class ComputerUpdateTest extends TestCase {
       $a_inventory['monitor'] = [
             [
                     'name'              => 'ThinkPad Display 1280x800',
+                    'monitormodels_id'  => 'ThinkPad Display 1280x800',
                     'serial'            => 'UBYVUTFYEIUI',
                     'manufacturers_id'  => 'Lenovo',
                     'is_dynamic'        => 1
@@ -365,7 +368,8 @@ class ComputerUpdateTest extends TestCase {
           'states_id'                        => 0,
           'ticket_tco'                       => '0.0000',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'is_recursive'                     => 0
+          'is_recursive'                     => 0,
+          'last_inventory_update'            => null
       ];
 
       $this->assertEquals($a_reference, $computer->fields);
@@ -491,6 +495,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -536,6 +541,8 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
+
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -582,6 +589,7 @@ class ComputerUpdateTest extends TestCase {
           'is_helpdesk_visible'     => 1,
           'softwarecategories_id'   => 0,
           'is_valid'                => 1,
+          'pictures'                => null
       ];
       $this->assertEquals($item['date_mod'], $item['date_creation']);
       $this->assertStringContainsString(date('Y-m-d'), $item['date_mod']);
@@ -618,7 +626,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $soft['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -650,7 +659,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $software['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -682,7 +692,8 @@ class ComputerUpdateTest extends TestCase {
           'softwares_id'         => $software['id'],
           'states_id'            => 0,
           'comment'              => null,
-          'operatingsystems_id'  => 0
+          'operatingsystems_id'  => 0,
+          'arch'                 => null
       ];
 
       $this->assertEquals($a_reference, $item);
@@ -1098,7 +1109,23 @@ class ComputerUpdateTest extends TestCase {
             'name'                  => 'em0',
             'instantiation_type'    => 'NetworkPortEthernet',
             'mac'                   => '00:23:18:cf:0d:93',
-            'comment'               => null
+            'comment'               => null,
+            'ifmtu'                 => 0,
+            'ifspeed'               => 0,
+            'ifinternalstatus'      => null,
+            'ifconnectionstatus'    => 0,
+            'iflastchange'          => null,
+            'ifinbytes'             => 0,
+            'ifinerrors'            => 0,
+            'ifoutbytes'            => 0,
+            'ifouterrors'           => 0,
+            'ifstatus'              => null,
+            'ifdescr'               => null,
+            'ifalias'               => null,
+            'portduplex'            => null,
+            'trunk'                 => 0,
+            'lastup'                => null
+         
          ],
          [
             'items_id'              => $id,
@@ -1111,7 +1138,22 @@ class ComputerUpdateTest extends TestCase {
             'name'                  => 'lo0',
             'instantiation_type'    => 'NetworkPortLocal',
             'mac'                   => '',
-            'comment'               => null
+            'comment'               => null,
+            'ifmtu'                 => 0,
+            'ifspeed'               => 0,
+            'ifinternalstatus'      => null,
+            'ifconnectionstatus'    => 0,
+            'iflastchange'          => null,
+            'ifinbytes'             => 0,
+            'ifinerrors'            => 0,
+            'ifoutbytes'            => 0,
+            'ifouterrors'           => 0,
+            'ifstatus'              => null,
+            'ifdescr'               => null,
+            'ifalias'               => null,
+            'portduplex'            => null,
+            'trunk'                 => 0,
+            'lastup'                => null
          ]
       ];
 
@@ -1145,6 +1187,8 @@ class ComputerUpdateTest extends TestCase {
 
       $manufacturer = new Manufacturer();
       $manufacturer->getFromDBByCrit(['name' => 'Lenovo']);
+      $monitormodel = new MonitorModel();
+      $monitormodel->getFromDBByCrit(['name' => 'ThinkPad Display 1280x800']);
 
       $a_reference = [
           'entities_id'       => 0,
@@ -1167,7 +1211,7 @@ class ComputerUpdateTest extends TestCase {
           'have_displayport'  => 0,
           'locations_id'      => 0,
           'monitortypes_id'   => 0,
-          'monitormodels_id'  => 0,
+          'monitormodels_id'  => $monitormodel->fields['id'],
           'manufacturers_id'  => $manufacturer->fields['id'],
           'is_global'         => 0,
           'is_deleted'        => 0,
@@ -1178,7 +1222,11 @@ class ComputerUpdateTest extends TestCase {
           'states_id'         => 0,
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => 1,
-          'is_recursive'      => 0
+          'is_recursive'      => 0,
+          'autoupdatesystems_id' => 0,
+          'uuid'              => null
+       
+
       ];
 
       $this->assertEquals($a_reference, $monitor->fields);
@@ -1214,7 +1262,7 @@ class ComputerUpdateTest extends TestCase {
           'users_id_tech'        => 0,
           'groups_id_tech'       => 0,
           'serial'               => 'MY47L1W1JHEB6',
-          'otherserial'          => null,
+          'otherserial'          => '',
           'have_serial'          => 0,
           'have_parallel'        => 0,
           'have_usb'             => 1,
@@ -1238,6 +1286,12 @@ class ComputerUpdateTest extends TestCase {
           'states_id'            => 0,
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => 1,
+          'uuid'                 => null,
+          'sysdescr'             => null,
+          'last_inventory_update' => null,
+          'snmpcredentials_id'   => 0,
+          'autoupdatesystems_id' => 0
+                
       ];
 
       $this->assertEquals($a_reference, $printer->fields);
@@ -1296,6 +1350,8 @@ class ComputerUpdateTest extends TestCase {
           'batteries'      => [],
           'remote_mgmt'    => [],
           'bios'           => [],
+          'crontasks'      => [],
+          'virtualmachine' => [],
           'itemtype'       => 'Computer'
           ];
       $a_inventory['Computer'] = [

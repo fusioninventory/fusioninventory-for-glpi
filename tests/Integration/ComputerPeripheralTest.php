@@ -228,7 +228,10 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'autoupdatesystems_id' => 0,
+            'uuid'                => null
+
          ],
          [
             'name'                => 'H5321 gw Mobile Broadband Module',
@@ -254,7 +257,9 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'autoupdatesystems_id' => 0,
+            'uuid'                => null
          ],
          [
             'name'                => 'Sensor Hub',
@@ -280,7 +285,9 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'autoupdatesystems_id' => 0,
+            'uuid'                => null
          ],
          [
             'name'                => "Flash Drive (Store'n'Go)",
@@ -306,7 +313,9 @@ class ComputerPeripheralTest extends TestCase {
             'groups_id'           => 0,
             'states_id'           => 0,
             'ticket_tco'          => '0.0000',
-            'is_recursive'        => 0
+            'is_recursive'        => 0,
+            'autoupdatesystems_id' => 0,
+            'uuid'                => null
          ]
       ];
 

@@ -135,7 +135,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
          ]
       ]);
 
-      while ($task = $iterator->next()) {
+      foreach ($iterator as $task) {
          if (!is_null($task['wakeup_agent_time'])) {
             //Do not wake up is last wake up in inferior to the minimum wake up interval
             $interval   = time() - strtotime($task['last_agent_wakeup']);
@@ -179,7 +179,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
          ]);
          $counter = 0;
 
-         while ($state = $iterator2->next()) {
+         foreach ($iterator2 as $state) {
             $agents_id = $state['plugin_fusioninventory_agents_id'];
             if (isset($wakeupArray[$agents_id])) {
                $counter++;

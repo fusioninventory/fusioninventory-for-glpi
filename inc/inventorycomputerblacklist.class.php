@@ -151,7 +151,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('blacklisted value', 'fusioninventory')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, 'value');
+      echo Html::input('value', ['size' => 40, 'value' => $this->fields['value']]);
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";

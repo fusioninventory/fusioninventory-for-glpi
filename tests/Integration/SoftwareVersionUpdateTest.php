@@ -160,8 +160,8 @@ class SoftwareVersionUpdateTest extends TestCase {
 
       //Load the software version
       $iterator = $DB->request('glpi_items_softwareversions', ['items_id' => $computers_id, 'itemtype' => 'Computer']);
-      $this->assertEquals(1, $iterator->numrows());
-      $data = $iterator->next();
+      $this->assertEquals(1, count($iterator));
+      $data = $iterator->current();
       //Check that it's not the same version as the one we have manually created
       $this->assertNotEquals($data['softwareversions_id'], $versions_id);
 

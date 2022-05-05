@@ -1,5 +1,7 @@
 <?php
 
+use Glpi\Cache\CacheManager;
+
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
@@ -36,7 +38,8 @@ foreach (get_defined_constants() as $constant_name => $constant_value) {
 }
 
 //init cache
-$GLPI_CACHE = Config::getCache('cache_db');
+$cache_manager = new CacheManager();
+$GLPI_CACHE = $cache_manager->getCoreCacheInstance();
 
 global $PLUGIN_HOOKS;
 

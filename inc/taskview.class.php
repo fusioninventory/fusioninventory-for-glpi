@@ -340,6 +340,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if (!$new_item) {
          echo "<div class='fusinv_form'>";
          $this->showCheckboxField( __('Active'), "is_active" );
+         echo "<br>";
 
          $datetime_field_options = [
             'timestep'   => 1,

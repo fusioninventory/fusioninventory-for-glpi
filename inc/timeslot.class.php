@@ -276,7 +276,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $objectName = autoName($this->fields["name"], "name",
                              (isset($options['withtemplate']) && ( $options['withtemplate']== 2)),
                              $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, 'name', ['value' => $objectName]);
+      echo Html::input('name', ['size' => 40, 'value' => $objectName]);
       echo "</td>";
       echo "<td>".__('Comments')."</td>";
       echo "<td class='middle'>";

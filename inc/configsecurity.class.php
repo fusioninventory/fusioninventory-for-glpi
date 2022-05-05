@@ -97,7 +97,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
-      Html::autocompletionTextField($this, 'name');
+      echo Html::input('name', ['size' => 40, 'value' => $this->fields['name']]);
       echo "</td>";
       echo "</tr>";
 
@@ -116,14 +116,14 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Community', 'fusioninventory') . "</td>";
       echo "<td align='center'>";
-      Html::autocompletionTextField($this, 'community');
+      echo Html::input('community', ['size' => 40, 'value' => $this->fields['community']]);
       echo "</td>";
 
       echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
       // FIXME This is a credential field so it is not in autocomplete whitelist.
       // Replace with a simple text input.
-      Html::autocompletionTextField($this, 'username');
+      echo Html::input('username', ['size' => 40, 'value' => $this->fields['username']]);
       echo "</td>";
       echo "</tr>";
 
@@ -142,7 +142,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td align='center'>";
       // FIXME This is a credential field so it is not in autocomplete whitelist.
       // Replace with a password text input, crypt it, and handle ability to "blank" it.
-      Html::autocompletionTextField($this, 'auth_passphrase');
+      echo Html::input('auth_passphrase', ['size' => 40, 'value' => $this->fields['auth_passphrase']]);
       echo "</td>";
       echo "</tr>";
 
@@ -160,7 +160,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td align='center'>";
       // FIXME This is a credential field so it is not in autocomplete whitelist.
       // Replace with a password text input, crypt it, and handle ability to "blank" it.
-      Html::autocompletionTextField($this, 'priv_passphrase');
+      echo Html::input('priv_passphrase', ['size' => 40, 'value' => $this->fields['priv_passphrase']]);
       echo "</td>";
       echo "</tr>";
 

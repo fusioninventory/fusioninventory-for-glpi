@@ -45,6 +45,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -135,7 +137,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          'WHERE' => ['networkequipments_id' => $items_id]
       ];
       $iterator = $DB->request($params);
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          foreach ($data as $key=>$value) {
             $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
          }
@@ -755,7 +757,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                && isset($input['mac'])) {
             $manufacturer = PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($input['mac']);
             $manufacturer = Toolbox::addslashes_deep($manufacturer);
-            $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
+            $manufacturer = Sanitizer::encodeHtmlSpecialChars($manufacturer);
             $input['name'] = $manufacturer;
          }
          $items_id = $class->add($input);
@@ -798,7 +800,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                && isset($this->data_device['mac'])) {
             $manufacturer = PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($this->data_device['mac']);
             $manufacturer = Toolbox::addslashes_deep($manufacturer);
-            $manufacturer = Toolbox::clean_cross_side_scripting_deep($manufacturer);
+            $manufacturer = Sanitizer::encodeHtmlSpecialChars($manufacturer);
             $input['name'] = $manufacturer;
          }
          if (isset($this->data_device['mac'])

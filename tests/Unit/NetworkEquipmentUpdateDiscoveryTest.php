@@ -60,7 +60,22 @@ class NetworkEquipmentUpdateDiscoveryTest extends TestCase {
          'mac'                 => '38:22:d6:3c:da:e7',
          'comment'             => null,
          'is_deleted'          => 0,
-         'is_dynamic'          => 0
+         'is_dynamic'          => 0,
+         'ifmtu'               => 0,
+         'ifspeed'             => 0,
+         'ifinternalstatus'    => null,
+         'ifconnectionstatus'  => 0,
+         'iflastchange'        => null,
+         'ifinbytes'           => 0,
+         'ifinerrors'          => 0,
+         'ifoutbytes'          => 0,
+         'ifouterrors'         => 0,
+         'ifstatus'            => null,
+         'ifdescr'             => null,
+         'ifalias'             => null,
+         'portduplex'          => null,
+         'trunk'               => 0,
+         'lastup'              => null
       ]
    ];
 

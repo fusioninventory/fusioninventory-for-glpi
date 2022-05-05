@@ -114,7 +114,10 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                   $stmt = $DB->prepare($delete);
                   while ($data=$DB->fetchArray($result)) {
                      $stmt->bind_param('s', $data['id']);
-                     $stmt->execute();
+                     $ret = $stmt->execute();
+                     if (!$ret) {
+                        trigger_error($stmt->error, E_USER_ERROR);
+                     }
                   }
                   mysqli_stmt_close($stmt);
                }
@@ -157,7 +160,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
     * @param array $options
     * @return true
     */
-   function showForm($options = []) {
+   function showForm($id, $options = []) {
       global $DB;
 
       $mapping = new PluginFusioninventoryMapping();

@@ -139,7 +139,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    public function showTextField($title, $varname) {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
-      Html::autocompletionTextField ($this, $varname, $this->fields['name']);
+      echo Html::input($varname, ['size' => 40, 'value' => $this->fields[$varname]]);
       echo "</div>";
    }
 
@@ -172,9 +172,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       $options['checked'] = $this->fields[$varname];
       $options['zero_on_empty']= true;
 
-      echo "<div class='input_wrap'>";
       Html::showCheckbox($options);
-      echo "</div>";
    }
 
 

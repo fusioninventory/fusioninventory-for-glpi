@@ -45,6 +45,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -236,7 +238,7 @@ class PluginFusioninventoryFormatconvert {
             if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $value)) {
                $value = Toolbox::addslashes_deep($value);
             }
-            $value = Toolbox::clean_cross_side_scripting_deep($value);
+            $value = Sanitizer::encodeHtmlSpecialChars($value);
          }
          $data[$key] = $value;
       }
@@ -622,7 +624,6 @@ class PluginFusioninventoryFormatconvert {
          }
          $a_inventory['fusioninventorycomputer']['items_operatingsystems_id'] = $array_tmp;
       }
-
       // otherserial (on tag) if defined in config
       if ($pfConfig->getValue('otherserial') == 1) {
          if (isset($array['ACCOUNTINFO'])) {
@@ -1347,7 +1348,8 @@ class PluginFusioninventoryFormatconvert {
                      ] + $where_add,
                      'LIMIT'  => 1
                   ]);
-                  if ($row = $iterator->next()) {
+                  if (count($iterator)) {
+                     $row = $iterator->current();
                      $a_inventory['Computer']['users_id'] = $row['id'];
                   }
                }
@@ -1583,9 +1585,11 @@ class PluginFusioninventoryFormatconvert {
 
       //Get the default entity for softwares, as defined in the entity's
       //configuration
-      $entities_id_software = Entity::getUsedConfig('entities_id_software',
-                                                    $entities_id);
-
+      $entities_id_software = Entity::getUsedConfig(
+         'entities_strategy_software',
+         $entities_id,
+         'entities_id_software'
+      );
       //By default a software is not recursive
       $is_software_recursive = 0;
 
@@ -2007,6 +2011,21 @@ class PluginFusioninventoryFormatconvert {
                         $array[$key] = Dropdown::importExternal('ComputerModel', $value, $entities_id, [
                            'manufacturer' => $manufacture_name
                         ]);
+                     } else if ($key == "domains_id") {
+                        if ($value == '') {
+                           $array[$key] = 0;
+                        } else {
+                           $domain = new Domain();
+                           $domainItems = $domain->getFromDBByCrit(['name' => $value, 'entities_id' => $entities_id]);
+                           if ($domainItems == false) {
+                              $input = [
+                                 'name'        => $value,
+                                 'entities_id' => $entities_id
+                              ];
+                              $domain->add($input);
+                           }
+                           $array[$key] = $domain->fields['id'];
+                        }
                      } else if (isset($this->foreignkey_itemtype[$key])) {
                         $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key], $value, $entities_id);
                      } else if (isForeignKeyField($key)

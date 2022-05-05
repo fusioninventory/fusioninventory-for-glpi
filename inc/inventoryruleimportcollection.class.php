@@ -168,7 +168,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       $iterator = $DB->request($criteria);
 
       $this->RuleList->list = [];
-      while ($rule = $iterator->next()) {
+      foreach ($iterator as $rule) {
          //For each rule, get a Rule object with all the criterias and actions
          $tempRule = $this->getRuleClass();
 
