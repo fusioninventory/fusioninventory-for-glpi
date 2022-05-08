@@ -167,7 +167,6 @@ class FusinvDB extends Assert{
             }
          }
       }
-
       $a_tables_ref_tableonly = [];
       foreach ($a_tables_ref as $table=>$data) {
          $a_tables_ref_tableonly[] = $table;
