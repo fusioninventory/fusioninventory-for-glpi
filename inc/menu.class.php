@@ -1018,8 +1018,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</div>";
    }
 
-   public static function getIcon()
-   {
+   public static function getIcon() {
        return "ti ti-fusioninventory";
    }
 

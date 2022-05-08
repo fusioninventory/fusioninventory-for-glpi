@@ -1161,7 +1161,7 @@ function do_agent_migration($migration) {
                                                 'value'   => ''];
    $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
-   $a_table['fields']['is_recursive']  = ['type'    => 'bool',
+   $a_table['fields']['is_recursive']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '1'",
                                                 'value'   => '1'];
    $a_table['fields']['name']          = ['type'    => 'string',
                                                 'value'   => null];
@@ -1169,7 +1169,7 @@ function do_agent_migration($migration) {
                                                 'value'   => null];
    $a_table['fields']['version']       = ['type'    => 'string',
                                                 'value'   => null];
-   $a_table['fields']['lock']          = ['type'    => 'bool',
+   $a_table['fields']['lock']          = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['device_id']     = ['type'    => 'string',
                                                 'value'   => null];
@@ -1190,7 +1190,7 @@ function do_agent_migration($migration) {
       'value'   => null];
 
    $a_table['fields']['senddico']      = [
-      'type'    => 'bool',
+      'type'    => "tinyint(1) NOT NULL DEFAULT '0'",
       'value'   => null
    ];
 
@@ -1249,7 +1249,7 @@ function do_agent_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['modulename'] = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['is_active']  = ['type'    => 'bool',
+   $a_table['fields']['is_active']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['exceptions'] = ['type'    => 'text',
                                              'value'   => null];
@@ -2132,7 +2132,7 @@ function do_timeslot_migration($migration) {
                                               'value'   => ''];
    $a_table['fields']['entities_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                               'value'   => null];
-   $a_table['fields']['is_recursive'] = ['type'    => 'bool',
+   $a_table['fields']['is_recursive'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                               'value'   => '0'];
    $a_table['fields']['name']         = ['type'    => 'string',
                                               'value'   => null];
@@ -2165,9 +2165,9 @@ function do_timeslot_migration($migration) {
                                               'value'   => null];
    $a_table['fields']['entities_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                               'value'   => null];
-   $a_table['fields']['is_recursive'] = ['type'    => 'bool',
+   $a_table['fields']['is_recursive'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                               'value'   => '0'];
-   $a_table['fields']['day']          = ['type'    => 'bool',
+   $a_table['fields']['day']          = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                               'value'   => 1];
    $a_table['fields']['begin']        = ['type'    => 'int unsigned DEFAULT NULL',
                                               'value'   => null];
@@ -2215,7 +2215,7 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['locations_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['is_deleted'] = ['type'    => 'bool',
+   $a_table['fields']['is_deleted'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['users_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
@@ -2231,13 +2231,13 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['item_type']  = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['accepted']   = ['type'    => 'bool',
+   $a_table['fields']['accepted']   = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['plugin_fusioninventory_agents_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['ip']         = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['hub']        = ['type'    => 'bool',
+   $a_table['fields']['hub']        = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['states_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
@@ -2245,7 +2245,7 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['plugin_fusioninventory_configsecurities_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['is_dynamic'] = ['type'    => 'bool',
+   $a_table['fields']['is_dynamic'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['serialized_inventory'] = ['type'    => 'longblob',
                                             'value'   => null];
@@ -2852,7 +2852,7 @@ function do_computercomputer_migration($migration) {
                                                    'value'   => null];
    $a_table['fields']['serialized_inventory']   = ['type'    => 'longblob',
                                                    'value'   => null];
-   $a_table['fields']['is_entitylocked']        = ['type'    => 'bool',
+   $a_table['fields']['is_entitylocked']        = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                    'value'   => "0"];
    $a_table['fields']['oscomment']              = ['type'    => 'text',
                                                    'value'   => null];
@@ -5010,11 +5010,11 @@ function do_computerlicense_migration($migration) {
                                                      'value'   => null];
    $a_table['fields']['serial']              = ['type'    => 'string',
                                                      'value'   => null];
-   $a_table['fields']['is_trial']            = ['type'    => 'bool',
+   $a_table['fields']['is_trial']            = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                      'value'   => null];
-   $a_table['fields']['is_update']           = ['type'    => 'bool',
+   $a_table['fields']['is_update']           = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                      'value'   => null];
-   $a_table['fields']['is_oem']              = ['type'    => 'bool',
+   $a_table['fields']['is_oem']              = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                      'value'   => null];
    $a_table['fields']['activation_date']     = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                      'value'   => null];
@@ -5496,7 +5496,7 @@ function do_deployfile_migration($migration) {
          $migration->addField('glpi_plugin_fusinvdeploy_files',
                  'entities_id', "int unsigned NOT NULL DEFAULT '0'", ['value' => 0]);
          $migration->addField('glpi_plugin_fusinvdeploy_files',
-                 'is_recursive', 'bool', ['value' => 0]);
+                 'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", ['value' => 0]);
          $migration->migrationOneTable('glpi_plugin_fusinvdeploy_files');
          if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
             $sql = "SELECT  files.`id`, files.`name`, files.`filesize`, "
@@ -5693,7 +5693,7 @@ function do_deploypackage_migration($migration) {
                                                                           'value' => null];
    $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
-   $a_table['fields']['is_recursive']  = ['type'    => 'bool',
+   $a_table['fields']['is_recursive']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                'value'   => '0'];
    $a_table['oldfields']  = [];
 
@@ -5724,7 +5724,7 @@ function do_deploypackage_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
-   $a_table['fields']['is_recursive']  = ['type'    => 'bool',
+   $a_table['fields']['is_recursive']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                'value'   => '0'];
    $a_table['oldfields']  = [];
 
@@ -5756,7 +5756,7 @@ function do_deploypackage_migration($migration) {
                                                'value'   => null];
    $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
-   $a_table['fields']['is_recursive']  = ['type'    => 'bool',
+   $a_table['fields']['is_recursive']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                'value'   => '0'];
    $a_table['oldfields']  = [];
 
@@ -6049,7 +6049,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'can_update_group' =>  [
-         'type' => 'bool',
+         'type' => "tinyint(1) NOT NULL DEFAULT '0'",
          'value' => 0
       ],
       'computers_id_cache' =>  [
@@ -6148,7 +6148,7 @@ function do_dblocks_migration($migration) {
       $a_table['oldname'] = [];
 
       $a_table['fields']  = [];
-      $a_table['fields']['value']      = ['type'    => 'bool',
+      $a_table['fields']['value']      = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                'value'   => null];
       $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
@@ -6172,7 +6172,7 @@ function do_dblocks_migration($migration) {
       $a_table['oldname'] = [];
 
       $a_table['fields']  = [];
-      $a_table['fields']['value']      = ['type'    => 'bool',
+      $a_table['fields']['value']      = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                'value'   => null];
       $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
@@ -6211,7 +6211,7 @@ function do_credentialESX_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['is_recursive']= ['type'    => 'bool',
+   $a_table['fields']['is_recursive']= ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => ""];
@@ -6301,11 +6301,11 @@ function do_collect_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
-   $a_table['fields']['is_recursive']  = ['type'    => 'bool',
+   $a_table['fields']['is_recursive']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['type']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['is_active']  = ['type'    => 'bool',
+   $a_table['fields']['is_active']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['comment']    = ['type'    => 'text',
                                              'value'   => null];
@@ -6459,7 +6459,7 @@ function do_collect_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['limit']      = ['type'    => "int unsigned NOT NULL DEFAULT '50'",
                                              'value'   => null];
-   $a_table['fields']['is_recursive'] = ['type'    => 'bool',
+   $a_table['fields']['is_recursive'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['filter_regex'] = ['type'    => 'string',
                                              'value'   => null];
@@ -6477,9 +6477,9 @@ function do_collect_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['filter_iname'] = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['filter_is_file'] = ['type'    => 'bool',
+   $a_table['fields']['filter_is_file'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => '1'];
-   $a_table['fields']['filter_is_dir'] = ['type'    => 'bool',
+   $a_table['fields']['filter_is_dir'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => '0'];
 
    $a_table['oldfields']  = [];

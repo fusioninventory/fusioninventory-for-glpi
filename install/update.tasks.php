@@ -85,7 +85,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value'   => null
       ],
       'is_active'  => [
-         'type'    => 'bool',
+         'type'    => "tinyint(1) NOT NULL DEFAULT '0'",
          'value'   => null
       ],
       'datetime_start' => [

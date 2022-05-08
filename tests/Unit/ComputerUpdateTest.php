@@ -1125,7 +1125,6 @@ class ComputerUpdateTest extends TestCase {
             'portduplex'            => null,
             'trunk'                 => 0,
             'lastup'                => null
-         
          ],
          [
             'items_id'              => $id,
@@ -1225,8 +1224,6 @@ class ComputerUpdateTest extends TestCase {
           'is_recursive'      => 0,
           'autoupdatesystems_id' => 0,
           'uuid'              => null
-       
-
       ];
 
       $this->assertEquals($a_reference, $monitor->fields);
@@ -1291,7 +1288,6 @@ class ComputerUpdateTest extends TestCase {
           'last_inventory_update' => null,
           'snmpcredentials_id'   => 0,
           'autoupdatesystems_id' => 0
-                
       ];
 
       $this->assertEquals($a_reference, $printer->fields);

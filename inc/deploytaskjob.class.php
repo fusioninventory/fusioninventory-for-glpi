@@ -204,7 +204,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          if (!$ret) {
             trigger_error($stmt->error, E_USER_ERROR);
          }
-}
+      }
       mysqli_stmt_close($stmt);
    }
 

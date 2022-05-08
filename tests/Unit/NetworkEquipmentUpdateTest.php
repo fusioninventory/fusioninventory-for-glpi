@@ -274,7 +274,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
           'cpu'                  => 0,
           'uptime'               => '0',
           'last_inventory_update' => null,
-          'snmpcredentials_id'   => 0          
+          'snmpcredentials_id'   => 0
       ];
 
       $this->assertEquals($a_reference, $networkEquipment->fields);

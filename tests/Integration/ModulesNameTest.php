@@ -172,7 +172,7 @@ class ModulesNameTest extends TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
       foreach ($iterator as $data) {
-        $this->assertEquals('inventory', $data['method']);
+         $this->assertEquals('inventory', $data['method']);
       }
 
       // second run (update)
@@ -185,7 +185,7 @@ class ModulesNameTest extends TestCase {
 
       $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs'));
       foreach ($iterator as $data) {
-        $this->assertEquals('inventory', $data['method']);
+         $this->assertEquals('inventory', $data['method']);
       }
 
    }
@@ -369,7 +369,7 @@ class ModulesNameTest extends TestCase {
       ]);
       $this->assertEquals(1, count($iterator));
       foreach ($iterator as $data) {
-        $this->assertEquals('networkdiscovery', $data['method']);
+         $this->assertEquals('networkdiscovery', $data['method']);
       }
    }
 }

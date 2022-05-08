@@ -45,8 +45,6 @@
  *
  */
 
-use Glpi\Application\ErrorHandler;
-
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -1478,22 +1476,22 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       if ($pfConfig->getValue("import_crontask") != 0) {
            $db_crontasks = [];
          if ($no_history === false) {
-               $iterator = $DB->request([
-                   'SELECT'    => [
-                       'id',
-                       'name',
-                       'storage',
-                       'user_storage',
-                       'user_id_storage'
-                   ],
-                   'FROM'      => 'glpi_plugin_fusioninventory_crontasks',
-                   'WHERE'     => [
-                       'computers_id'     => $computers_id
-                   ]
-               ]);
+            $iterator = $DB->request([
+                  'SELECT'    => [
+                     'id',
+                     'name',
+                     'storage',
+                     'user_storage',
+                     'user_id_storage'
+                  ],
+                  'FROM'      => 'glpi_plugin_fusioninventory_crontasks',
+                  'WHERE'     => [
+                     'computers_id'     => $computers_id
+                  ]
+            ]);
 
-               foreach ($iterator as $data) {
-                  $idtmp = $data['id'];
+            foreach ($iterator as $data) {
+               $idtmp = $data['id'];
                unset($data['id']);
                $data = Toolbox::addslashes_deep($data);
                $data = array_map('strtolower', $data);
