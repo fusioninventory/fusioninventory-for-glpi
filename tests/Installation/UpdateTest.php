@@ -122,6 +122,14 @@ class UpdateTest extends TestCase {
          WHERE `itemtype` LIKE 'PluginFus%'";
       $DB->query($query);
 
+      $query = "DELETE FROM `glpi_crontasks`
+         WHERE `itemtype` LIKE 'PluginFus%'";
+      $DB->query($query);
+
+      $query = "DELETE FROM `glpi_plugins`
+         WHERE `name` LIKE 'FusionInv%'";
+      $DB->query($query);
+
       // Delete all fusion rules
       $rule = new Rule();
       $items = $rule->find(['sub_type' => ['like', "PluginFusion%"]]);
@@ -167,14 +175,16 @@ class UpdateTest extends TestCase {
       exec($commandActivate, $outputActivate, $returncodeActivate);
       $this->assertEquals(0, $returncode, implode("\n", $output));
 
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      // $GLPIlog = new GLPIlogs();
+      // $GLPIlog->testSQLlogs();
+      // $GLPIlog->testPHPlogs();
 
       $FusinvDB = new FusinvDB();
       $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);
 
-      $this->verifyEntityRules($nbrules);
+      if ($version == '0.83+2.1') {
+         $this->verifyEntityRules($nbrules);
+      }
       $this->checkDeployMirrors();
 
       if ($verify) {
@@ -253,6 +263,7 @@ class UpdateTest extends TestCase {
       // version, verifyConfig, nb entity rules
       return [
          '0.83+2.1'     => ["0.83+2.1", true, 1],
+         '9.5+4.0'      => ["9.5+4.0", true, 1],
          'empty tables' => ["", false, 0],
       ];
    }

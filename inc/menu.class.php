@@ -230,16 +230,16 @@ class PluginFusioninventoryMenu extends CommonGLPI {
               OR strtotime($cronTask->fields['lastrun']) < strtotime("-3 day")) {
          $message = __('GLPI cron not running, see ', 'fusioninventory');
          echo "<center>";
-         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message, ['http://fusioninventory.org/documentation/fi4g/cron.html' => __('documentation', 'fusioninventory')]);
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message, ['https://documentation.fusioninventory.org/%20FusionInventory_for_GLPI/%20%20Installation%20%26%20update/3.cron/' => __('documentation', 'fusioninventory')]);
          echo "</center>";
       }
 
       // Check if plugin right updated (because security problems)
       $fi_php_path = Plugin::getPhpDir('fusioninventory');
       if (file_exists($fi_php_path."/ajax/deploydropdown_operatingsystems.php")) {
-         $message = __('SECURITY PROBLEM, see `2.1 Update` section to update correctly the plugin on ', 'fusioninventory');
+         $message = __('SECURITY PROBLEM, see `Update` page to update correctly the plugin on ', 'fusioninventory');
          echo "<center>";
-         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message, ['http://fusioninventory.org/documentation/fi4g/installation.html' => __('documentation', 'fusioninventory')]);
+         Html::displayTitle($CFG_GLPI['root_doc']."/pics/warning.png", $message, $message, ['https://documentation.fusioninventory.org/%20FusionInventory_for_GLPI/%20%20Installation%20%26%20update/2.update/' => __('documentation', 'fusioninventory')]);
          echo "<c/enter>";
       }
 
@@ -726,19 +726,19 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
       $width_status = ($width + $width_status);
 
-      echo "<table class='tab_cadre' style='position: relative; z-index: 30;'
+      echo "<table class='tab_cadre' style='position: relative; z-index: 1030;'
          onMouseOver='document.getElementById(\"menu".$menu_name."\").style.display=\"block\"'
          onMouseOut='document.getElementById(\"menu".$menu_name."\").style.display=\"none\"'>";
 
       echo "<tr>";
-      echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
+      echo "<th colspan='".count($a_menu)."' nowrap width='".$width."' style='background-color: #e6eaf3;'>
          <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
          &nbsp;".str_replace("FusionInventory ", "", $menu_name)."&nbsp;
          <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
       </th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none; position: relative; z-index: 30;'>";
+      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none; position: relative; z-index: 30;border: solid 1px #e6eaf3;border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;'>";
       echo "<td>";
       echo "<table>";
       foreach ($a_menu as $menu_id) {

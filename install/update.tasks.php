@@ -266,7 +266,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value' => null
       ],
       'itemtype' => [
-         'type' => 'varchar(100) DEFAULT NULL',
+         'type' => 'varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL',
          'value' => null
       ],
       'state' => [
@@ -362,7 +362,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value' => null
       ],
       'itemtype' => [
-         'type' => 'varchar(100) DEFAULT NULL',
+         'type' => 'varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL',
          'value' => null
       ],
       'plugin_fusioninventory_agents_id' => [

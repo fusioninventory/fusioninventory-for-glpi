@@ -606,6 +606,16 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'is_deploy_on_demand');
    $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
 
+   $migration->changeField('glpi_plugin_fusioninventory_tasks',
+                           "wakeup_agent_counter",
+                           "wakeup_agent_counter",
+                           "int unsigned NOT NULL DEFAULT '0'");
+   $migration->changeField('glpi_plugin_fusioninventory_tasks',
+                           "wakeup_agent_time",
+                           "wakeup_agent_time",
+                           "int unsigned NOT NULL DEFAULT '0'");
+   $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
+
    //deploy on demand task migration :
    //the way to detect a deploy on demand task was by looking at it's name
    //we've now introduced a boolean to easily check for it
@@ -617,9 +627,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       }
    }
 
-      /*
-       * Update pci and usb ids and oui
-       */
+   /*
+    * Update pci and usb ids and oui
+    */
    foreach (['usbid.sql', 'pciid.sql', 'oui.sql'] as $sql) {
       $DB_file = PLUGIN_FUSIONINVENTORY_DIR ."/install/mysql/$sql";
       $DBf_handle = fopen($DB_file, "rt");
@@ -1202,7 +1212,7 @@ function do_agent_migration($migration) {
       'type' => "int unsigned NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
       'value'   => null
    ];
-   $a_table['fields']['agent_port']    = ['type'    => 'varchar(6)',
+   $a_table['fields']['agent_port']    = ['type'    => 'smallint unsigned DEFAULT NULL',
                                                 'value'   => null];
 
    $a_table['oldfields']  = [
@@ -1251,7 +1261,7 @@ function do_agent_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['is_active']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['exceptions'] = ['type'    => 'text',
+   $a_table['fields']['exceptions'] = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -1797,11 +1807,11 @@ function do_locks_migration($migration) {
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
    $a_table['fields']['tablename']  = [
-                     'type'    => "varchar(64) NOT NULL DEFAULT ''",
+                     'type'    => "varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
                      'value'   => null];
    $a_table['fields']['items_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['tablefields']= ['type'    => 'text',
+   $a_table['fields']['tablefields']= ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                             'value'   => null];
 
    $a_table['oldfields']  = ['itemtype'];
@@ -1871,7 +1881,7 @@ function do_iprangeconfigsecurity_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['plugin_fusioninventory_configsecurities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['rank']       = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
+   $a_table['fields']['rank']       = ['type'    => "int unsigned NOT NULL DEFAULT '1'",
                                             'value'   => '1'];
 
    $a_table['oldfields']    = [];
@@ -1939,7 +1949,7 @@ function do_mapping_migration($migration) {
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
    $a_table['fields']['itemtype']   = [
-                     'type'    => "varchar(100) DEFAULT NULL",
+                     'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL",
                      'value'   => null];
    $a_table['fields']['name']       = ['type'    => 'string',
                                             'value'   => null];
@@ -2136,7 +2146,7 @@ function do_timeslot_migration($migration) {
                                               'value'   => '0'];
    $a_table['fields']['name']         = ['type'    => 'string',
                                               'value'   => null];
-   $a_table['fields']['comment']      = ['type'    => 'text',
+   $a_table['fields']['comment']      = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                               'value'   => null];
    $a_table['fields']['date_mod']     = ['type'    => 'timestamp NULL DEFAULT NULL',
                                               'value'   => null];
@@ -2167,7 +2177,7 @@ function do_timeslot_migration($migration) {
                                               'value'   => null];
    $a_table['fields']['is_recursive'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                               'value'   => '0'];
-   $a_table['fields']['day']          = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
+   $a_table['fields']['day']          = ['type'    => "tinyint(1) NOT NULL DEFAULT '1'",
                                               'value'   => 1];
    $a_table['fields']['begin']        = ['type'    => 'int unsigned DEFAULT NULL',
                                               'value'   => null];
@@ -2227,7 +2237,7 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['domain']     = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['comment']    = ['type'    => 'text',
+   $a_table['fields']['comment']    = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                             'value'   => null];
    $a_table['fields']['item_type']  = ['type'    => 'string',
                                             'value'   => null];
@@ -2241,7 +2251,7 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['states_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['sysdescr']   = ['type'    => 'text',
+   $a_table['fields']['sysdescr']   = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                             'value'   => null];
    $a_table['fields']['plugin_fusioninventory_configsecurities_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
@@ -2373,7 +2383,7 @@ function do_ignoredimport_migration($migration) {
    $a_table['fields']['date']       = ['type'    => 'timestamp NULL DEFAULT NULL',
                                             'value'   => null];
    $a_table['fields']['itemtype']   = [
-                     'type'    => "varchar(100) DEFAULT NULL",
+                     'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL",
                      'value'   => null];
    $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
@@ -2428,7 +2438,7 @@ function do_blacklist_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['comment']    = ['type'    => 'text',
+   $a_table['fields']['comment']    = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -2755,6 +2765,18 @@ function do_rulematchedlog_migration($migration) {
                               "id",
                               "id",
                               "int unsigned NOT NULL AUTO_INCREMENT");
+   $migration->changeField($newTable,
+                              "itemtype",
+                              "itemtype",
+                              "varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+   $migration->changeField($newTable,
+                              "method",
+                              "method",
+                              "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+   $migration->changeField($newTable,
+                              "criteria",
+                              "criteria",
+                              "text COLLATE utf8mb4_unicode_ci DEFAULT NULL");
 
    $migration->migrationOneTable($newTable);
 
@@ -2766,7 +2788,7 @@ function do_rulematchedlog_migration($migration) {
                               "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "itemtype",
-                              "varchar(100) DEFAULT NULL");
+                              "varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                               "rules_id",
                               "int unsigned NOT NULL DEFAULT '0'");
@@ -2775,10 +2797,10 @@ function do_rulematchedlog_migration($migration) {
                               "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "method",
-                              "varchar(255) DEFAULT NULL");
+                              "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "criteria",
-                           'text DEFAULT NULL');
+                           'text COLLATE utf8mb4_unicode_ci DEFAULT NULL');
    $migration->migrationOneTable($newTable);
    $DB->listFields($newTable, false);
 }
@@ -2854,7 +2876,7 @@ function do_computercomputer_migration($migration) {
                                                    'value'   => null];
    $a_table['fields']['is_entitylocked']        = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                                    'value'   => "0"];
-   $a_table['fields']['oscomment']              = ['type'    => 'text',
+   $a_table['fields']['oscomment']              = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                                    'value'   => null];
    $a_table['fields']['last_boot']              = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                    'value'   => null];
@@ -3050,8 +3072,12 @@ function do_computerstat_migration($migration) {
       require_once(PLUGIN_FUSIONINVENTORY_DIR . "/inc/inventorycomputerstat.class.php");
       PluginFusioninventoryInventoryComputerStat::init();
    }
+   $migration->changeField('glpi_plugin_fusioninventory_inventorycomputerstats',
+                           "counter",
+                           "counter",
+                           "int unsigned NOT NULL DEFAULT '0'");
+   $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputerstats');
 }
-
 
 /**
  * Manage the configuration log fields (for network equipment and printer)
@@ -3253,7 +3279,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "name",
                            "name",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "number",
                            "number",
@@ -3261,7 +3287,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "othername",
                            "othername",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "import",
                            "import",
@@ -3269,13 +3295,13 @@ function do_networkport_migration($migration) {
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                         "name",
-                        "varchar(255) DEFAULT NULL");
+                        "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                         "number",
                         "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "othername",
-                        "varchar(255) DEFAULT NULL");
+                        "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                         "import",
                         "tinyint(1) NOT NULL DEFAULT '0'");
@@ -3315,7 +3341,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifinternalstatus",
                            "ifinternalstatus",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifconnectionstatus",
                            "ifconnectionstatus",
@@ -3323,7 +3349,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "iflastchange",
                            "iflastchange",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifinoctets",
                            "ifinoctets",
@@ -3343,19 +3369,19 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifstatus",
                            "ifstatus",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "mac",
                            "mac",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifdescr",
                            "ifdescr",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "portduplex",
                            "portduplex",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "trunk",
                            "trunk",
@@ -3376,7 +3402,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifmac",
                            "mac",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->dropKey($newTable,
                         "FK_networking_ports");
    $migration->migrationOneTable($newTable);
@@ -3394,13 +3420,13 @@ function do_networkport_migration($migration) {
                            "bigint(50) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifinternalstatus",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "ifconnectionstatus",
                            "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "iflastchange",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "ifinoctets",
                            "bigint(50) NOT NULL DEFAULT '0'");
@@ -3415,19 +3441,19 @@ function do_networkport_migration($migration) {
                            "bigint(50) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifstatus",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "mac",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "ifdescr",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "ifalias",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "portduplex",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "trunk",
                            "tinyint(1) NOT NULL DEFAULT '0'");
@@ -3556,11 +3582,11 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "value_old",
                            "value_old",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "value_new",
                            "value_new",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_agentprocesses_id",
                            "plugin_fusioninventory_agentprocesses_id",
@@ -3605,7 +3631,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "old_value",
                            "value_old",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->dropField($newTable,
                            "old_device_type");
    $migration->dropField($newTable,
@@ -3613,7 +3639,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "new_value",
                            "value_new",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->dropField($newTable,
                            "new_device_type");
    $migration->dropField($newTable,
@@ -3637,10 +3663,10 @@ function do_networkport_migration($migration) {
                            "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "value_old",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "value_new",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_agentprocesses_id",
                            "int unsigned NOT NULL DEFAULT '0'");
@@ -3828,7 +3854,7 @@ function do_printer_migration($migration) {
    $migration->changeField($newTable,
                            "sysdescr",
                            "sysdescr",
-                           "text DEFAULT NULL");
+                           "text COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusinvsnmp_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
@@ -3883,7 +3909,7 @@ function do_printer_migration($migration) {
                            "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "sysdescr",
-                           "text DEFAULT NULL");
+                           "text COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "int unsigned NOT NULL DEFAULT '0'");
@@ -4389,7 +4415,7 @@ function do_networkequipment_migration($migration) {
    $migration->changeField($newTable,
                            "sysdescr",
                            "sysdescr",
-                           "text DEFAULT NULL");
+                           "text COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
@@ -4397,7 +4423,7 @@ function do_networkequipment_migration($migration) {
    $migration->changeField($newTable,
                            "uptime",
                            "uptime",
-                           "varchar(255) NOT NULL DEFAULT '0'");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "cpu",
                            "cpu",
@@ -4456,13 +4482,13 @@ function do_networkequipment_migration($migration) {
                            "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "sysdescr",
-                           "text DEFAULT NULL");
+                           "text COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "uptime",
-                           "varchar(255) NOT NULL DEFAULT '0'");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "cpu",
                            "int unsigned NOT NULL DEFAULT '0' COMMENT '%'");
@@ -4512,7 +4538,7 @@ function do_networkequipment_migration($migration) {
       $migration->changeField($newTable,
                               "ip",
                               "ip",
-                              "varchar(255) DEFAULT NULL");
+                              "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
       $migration->changeField($newTable,
                               "ID",
@@ -4525,7 +4551,7 @@ function do_networkequipment_migration($migration) {
       $migration->changeField($newTable,
                               "ifaddr",
                               "ip",
-                              "varchar(255) DEFAULT NULL");
+                              "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
       $migration->dropKey($newTable,
                            "ifaddr");
       $migration->migrationOneTable($newTable);
@@ -4537,7 +4563,7 @@ function do_networkequipment_migration($migration) {
                               "int  unsigned NOT NULL DEFAULT '0'");
       $migration->addField($newTable,
                               "ip",
-                              "varchar(255) DEFAULT NULL");
+                              "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
       $migration->addKey($newTable,
                            "ip");
       $migration->addKey($newTable,
@@ -4750,44 +4776,44 @@ function do_configsecurity_migration($migration) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
                            "int  unsigned NOT NULL AUTO_INCREMENT");
-      $migration->changeField($newTable,
+   $migration->changeField($newTable,
                            "name",
                            "name",
-                           "varchar(64) DEFAULT NULL");
+                           "varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "snmpversion",
                            "snmpversion",
-                           "varchar(8) NOT NULL DEFAULT '1'");
+                           "varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "community",
                            "community",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "username",
                            "username",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "authentication",
                            "authentication",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "auth_passphrase",
                            "auth_passphrase",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "encryption",
                            "encryption",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "priv_passphrase",
                            "priv_passphrase",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->changeField($newTable,
                            "is_deleted",
                            "is_deleted",
@@ -4800,11 +4826,11 @@ function do_configsecurity_migration($migration) {
    $migration->changeField($newTable,
                            "FK_snmp_version",
                            "snmpversion",
-                           "varchar(8) NOT NULL DEFAULT '1'");
+                           "varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "sec_name",
                            "username",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->dropField($newTable,
                            "sec_level");
    $migration->dropField($newTable,
@@ -4819,28 +4845,28 @@ function do_configsecurity_migration($migration) {
                            "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "name",
-                           "varchar(64) DEFAULT NULL");
+                           "varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "snmpversion",
-                           "varchar(8) NOT NULL DEFAULT '1'");
+                           "varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1'");
    $migration->addField($newTable,
                            "community",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "username",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "authentication",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "auth_passphrase",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "encryption",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "priv_passphrase",
-                           "varchar(255) DEFAULT NULL");
+                           "varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
    $migration->addField($newTable,
                            "is_deleted",
                            "tinyint(1) NOT NULL DEFAULT '0'");
@@ -5382,7 +5408,7 @@ function do_deployuserinteraction_migration($migration) {
          `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
          `date_creation` timestamp NULL DEFAULT NULL,
          `date_mod` timestamp NULL DEFAULT NULL,
-         `json` longtext DEFAULT NULL,
+         `json` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
          PRIMARY KEY (`id`),
          KEY `date_mod` (`date_mod`),
          KEY `date_creation` (`date_creation`),
@@ -5419,11 +5445,11 @@ function do_deployfile_migration($migration) {
                'value'  => null
       ],
       'name' => [
-               'type'   => 'varchar(255) NOT NULL',
+               'type'   => 'varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL',
                'value'  => null
       ],
       'mimetype' => [
-               'type'   => 'varchar(255) NOT NULL',
+               'type'   => 'varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL',
                'value'  => null
       ],
       'filesize' => [
@@ -5431,7 +5457,7 @@ function do_deployfile_migration($migration) {
                'value' => null
       ],
       'comment' => [
-               'type'   => 'text DEFAULT NULL',
+               'type'   => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                'value'  => null
       ],
       'sha512' => [
@@ -5567,11 +5593,11 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'name' =>  [
-               'type' => 'varchar(255) NOT NULL',
+               'type' => 'varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL',
                'value' => null
       ],
       'comment' =>  [
-               'type' => "text",
+               'type' => "text COLLATE utf8mb4_unicode_ci DEFAULT NULL",
                'value' => null
       ],
       'entities_id' =>  [
@@ -5591,15 +5617,15 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'json' =>  [
-               'type' => 'longtext DEFAULT NULL',
+               'type' => 'longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                'value' => null
       ],
       'icon' =>  [
-               'type' => 'varchar(255) DEFAULT NULL',
+               'type' => 'varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                'value' => null
       ],
       'style' =>  [
-               'type' => 'varchar(10) DEFAULT NULL',
+               'type' => 'varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                'value' => null
       ],
       'plugin_fusioninventory_deploygroups_id' => [
@@ -5847,12 +5873,11 @@ function do_deploymirror_migration($migration) {
          'value' => null
       ],
       'name' =>  [
-         'type' => 'varchar(255) NOT NULL',
+         'type' => 'varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL',
          'value' => null
       ],
       'url' =>  [
-         'type' => "varchar(255)".
-                   " NOT NULL DEFAULT ''",
+         'type' => "varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
          'value' => null
       ],
       'locations_id' => [
@@ -5860,7 +5885,7 @@ function do_deploymirror_migration($migration) {
          'value' => 0
       ],
       'comment' =>  [
-         'type' => "text",
+         'type' => "text COLLATE utf8mb4_unicode_ci DEFAULT NULL",
          'value' => null
       ],
       'date_mod' =>  [
@@ -5940,15 +5965,15 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'name' =>  [
-         'type' => 'varchar(255) NOT NULL',
+         'type' => 'varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL',
          'value' => null
       ],
       'comment' =>  [
-         'type' => "text",
+         'type' => "text COLLATE utf8mb4_unicode_ci DEFAULT NULL",
          'value' => null
       ],
       'type' =>  [
-         'type' => 'varchar(255) NOT NULL',
+         'type' => 'varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL',
          'value' => null
       ],
    ];
@@ -5989,7 +6014,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'itemtype' =>  [
-         'type' => 'varchar(100) DEFAULT NULL',
+         'type' => 'varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL',
          'value' => null
       ],
       'items_id' =>  [
@@ -6045,7 +6070,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'fields_array' =>  [
-         'type' => 'text',
+         'type' => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
          'value' => null
       ],
       'can_update_group' =>  [
@@ -6053,7 +6078,7 @@ function do_deploygroup_migration($migration) {
          'value' => 0
       ],
       'computers_id_cache' =>  [
-         'type' => 'longtext',
+         'type' => 'longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL',
          'value' => null
       ],
    ];
@@ -6100,7 +6125,7 @@ function do_dblocks_migration($migration) {
       $a_table['oldname'] = [];
 
       $a_table['fields']  = [];
-      $a_table['fields']['value']      = ['type'    => "varchar(100) NOT NULL DEFAULT ''",
+      $a_table['fields']['value']      = ['type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
                                                'value'   => null];
       $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
@@ -6219,7 +6244,7 @@ function do_credentialESX_migration($migration) {
                                              'value'   => ""];
    $a_table['fields']['password']   = ['type'    => 'string',
                                              'value'   => ""];
-   $a_table['fields']['comment']    = ['type'    => 'text',
+   $a_table['fields']['comment']    = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
    $a_table['fields']['date_mod']   = ['type'    => 'timestamp NULL DEFAULT NULL',
                                              'value'   => null];
@@ -6261,7 +6286,7 @@ function do_credentialESX_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => ""];
-   $a_table['fields']['comment']    = ['type'    => 'text',
+   $a_table['fields']['comment']    = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
    $a_table['fields']['ip']         = ['type'    => 'string',
                                              'value'   => ""];
@@ -6307,7 +6332,7 @@ function do_collect_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['is_active']  = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['comment']    = ['type'    => 'text',
+   $a_table['fields']['comment']    = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -6336,7 +6361,7 @@ function do_collect_migration($migration) {
                                                 'value'   => null];
    $a_table['fields']['hive']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['path']       = ['type'    => 'text',
+   $a_table['fields']['path']       = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
    $a_table['fields']['key']        = ['type'    => 'string',
                                              'value'   => null];
@@ -6477,7 +6502,7 @@ function do_collect_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['filter_iname'] = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['filter_is_file'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
+   $a_table['fields']['filter_is_file'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '1'",
                                              'value'   => '1'];
    $a_table['fields']['filter_is_dir'] = ['type'    => "tinyint(1) NOT NULL DEFAULT '0'",
                                              'value'   => '0'];
@@ -6506,7 +6531,7 @@ function do_collect_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['plugin_fusioninventory_collects_files_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
-   $a_table['fields']['pathfile']   = ['type'    => 'text',
+   $a_table['fields']['pathfile']   = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                              'value'   => null];
    $a_table['fields']['size']       = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
@@ -7466,17 +7491,17 @@ function do_task_migration($migration) {
                                                'value'   => null];
    $a_table['fields']['method']        = ['type'    => 'string',
                                                'value'   => null];
-   $a_table['fields']['targets']       = ['type'    => 'text',
+   $a_table['fields']['targets']       = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                                'value'   => null];
-   $a_table['fields']['actors']        = ['type'    => 'text',
+   $a_table['fields']['actors']        = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                                'value'   => null];
-   $a_table['fields']['comment']       = ['type'    => 'text',
+   $a_table['fields']['comment']       = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                                'value'   => null];
    $a_table['fields']['rescheduled_taskjob_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                         'value'   => null];
-   $a_table['fields']['statuscomments'] = ['type'    => 'text',
+   $a_table['fields']['statuscomments'] = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                                 'value'   => null];
-   $a_table['fields']['enduser']       = ['type'    => 'text',
+   $a_table['fields']['enduser']       = ['type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
                                                'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -7520,11 +7545,11 @@ function do_crontask_migration($migration) {
       'value'   => ''
    ];
    $a_table['fields']['comment'] = [
-      'type'    => 'text',
+      'type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
       'value'   => null
    ];
    $a_table['fields']['command'] = [
-      'type'    => 'text',
+      'type'    => 'text COLLATE utf8mb4_unicode_ci DEFAULT NULL',
       'value'   => null
    ];
    $a_table['fields']['execution_year'] = [
@@ -7560,11 +7585,11 @@ function do_crontask_migration($migration) {
       'value'   => null
    ];
    $a_table['fields']['user_execution'] = [
-      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
       'value'   => ''
    ];
    $a_table['fields']['storage'] = [
-      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
       'value'   => ''
    ];
    $a_table['fields']['user_id_storage'] = [
@@ -7572,7 +7597,7 @@ function do_crontask_migration($migration) {
       'value'   => null
    ];
    $a_table['fields']['user_storage'] = [
-      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
       'value'   => ''
    ];
    $a_table['fields']['status'] = [
@@ -7588,11 +7613,11 @@ function do_crontask_migration($migration) {
       'value'   => null
    ];
    $a_table['fields']['user_execution'] = [
-      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
       'value'   => ''
    ];
    $a_table['fields']['storage'] = [
-      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
       'value'   => ''
    ];
    $a_table['fields']['user_id_storage'] = [
@@ -7600,7 +7625,7 @@ function do_crontask_migration($migration) {
       'value'   => null
    ];
    $a_table['fields']['user_storage'] = [
-      'type'    => "varchar(100) NOT NULL DEFAULT ''",
+      'type'    => "varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''",
       'value'   => ''
    ];
    $a_table['fields']['status'] = [
@@ -10027,7 +10052,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       //add json field in deploy order table to store datas from old misc tables
       $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
                                     "json",
-                                    "longtext DEFAULT NULL");
+                                    "longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
 
       $final_datas = [];
