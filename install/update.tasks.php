@@ -69,7 +69,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value'   => ''
       ],
       'entities_id' => [
-         'type'    => 'integer',
+         'type'    => "int unsigned NOT NULL DEFAULT '0'",
          'value'   => null
       ],
       'name' => [
@@ -77,7 +77,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value'   => null
       ],
       'date_creation' => [
-         'type'    => 'datetime',
+         'type'    => 'timestamp NULL DEFAULT NULL',
          'value'   => null
       ],
       'comment'    => [
@@ -89,19 +89,19 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value'   => null
       ],
       'datetime_start' => [
-         'type'    => 'datetime',
+         'type'    => 'timestamp NULL DEFAULT NULL',
          'value'   => null
       ],
       'datetime_end' => [
-         'type'    => 'datetime',
+         'type'    => 'timestamp NULL DEFAULT NULL',
          'value'   => null
       ],
       'plugin_fusioninventory_timeslots_prep_id' => [
-         'type'    => 'integer',
+         'type'    => "int unsigned NOT NULL DEFAULT '0'",
          'value'   => null
       ],
       'plugin_fusioninventory_timeslots_exec_id' => [
-         'type'    => 'integer',
+         'type'    => "int unsigned NOT NULL DEFAULT '0'",
          'value'   => null
       ],
    ];
@@ -161,11 +161,11 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value'   => ''
       ],
       'plugin_fusioninventory_tasks_id' => [
-         'type'    => 'integer',
+         'type'    => "int unsigned NOT NULL DEFAULT '0'",
          'value'   => null
       ],
       'entities_id' => [
-         'type'    => 'integer',
+         'type'    => "int unsigned NOT NULL DEFAULT '0'",
          'value'   => null
       ],
       'name' => [
@@ -173,7 +173,7 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value'   => null
       ],
       'date_creation' => [
-         'type'    => 'datetime',
+         'type'    => 'timestamp NULL DEFAULT NULL',
          'value'   => null
       ],
       'method' => [
@@ -250,27 +250,27 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
 
    $table['fields']  = [
       'id' => [
-         'type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
+         'type' => 'BIGINT unsigned NOT NULL AUTO_INCREMENT',
          'value' => ''
       ],
       'plugin_fusioninventory_taskjobstates_id' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'date' => [
-         'type' => 'datetime',
+         'type' => 'timestamp NULL DEFAULT NULL',
          'value' => null
       ],
       'items_id' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'itemtype' => [
-         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+         'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
       'state' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'comment' => [
@@ -350,23 +350,23 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
 
    $table['fields'] = [
       'id' => [
-         'type' => 'bigint(20) not null auto_increment',
+         'type' => 'bigint unsigned not null auto_increment',
          'value' => '0'
       ],
       'plugin_fusioninventory_taskjobs_id' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'items_id' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'itemtype' => [
-         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+         'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
       'plugin_fusioninventory_agents_id' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'specificity' => [
@@ -378,19 +378,19 @@ function pluginFusioninventoryUpdateTasks($migration, $plugin_id) {
          'value' => null
       ],
       'state' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'date_start' => [
-         'type' => 'datetime',
+         'type' => 'timestamp NULL DEFAULT NULL',
          'value' => null
       ],
       'nb_retry' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => 0
       ],
       'max_retry' => [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '1'",
          'value' => 1
       ]
    ];

@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbvendors`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vendorid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `vendorid` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vendorid` (`vendorid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -12,10 +12,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbdevices`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `deviceid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_fusioninventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `deviceid` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_usbvendor_id` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`,`plugin_fusioninventory_usbvendor_id`),
   KEY `plugin_fusioninventory_usbvendor_id` (`plugin_fusioninventory_usbvendor_id`)

@@ -97,7 +97,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
          switch (Session::getActiveTab('NetworkEquipment')) {
             case 'PluginFusioninventoryNetworkEquipment$1':
-               $pfNetworkEquipment->showForm($item, $options);
+               $pfNetworkEquipment->showExtendedInfos($item, $options);
                break;
 
             case 'NetworkPort$1':
@@ -248,7 +248,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       }
 
       $query = "SELECT `glpi_networkports`.`id`, `instantiation_type`,
-         `ifdescr`,
+         `glpi_plugin_fusioninventory_networkports`.`ifdescr`,
          `glpi_plugin_fusioninventory_networkports`.`id` as `fusionid`
       FROM glpi_plugin_fusioninventory_networkports
 

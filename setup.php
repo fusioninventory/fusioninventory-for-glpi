@@ -437,7 +437,7 @@ function plugin_init_fusioninventory() {
                     && filter_input(INPUT_GET, "_itemtype") == 'NetworkEquipment') {
 
                if (filter_input(INPUT_GET, "_glpi_tab") == 'NetworkPort$1') {
-                  $_UGET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
+                  $_GET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
                } else if (filter_input(INPUT_GET, "_glpi_tab") == 'PluginFusioninventoryNetworkEquipment$1') {
                   $_GET['displaysnmpinfo'] = 1;
                }

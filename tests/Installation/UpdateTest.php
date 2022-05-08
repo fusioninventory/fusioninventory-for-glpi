@@ -156,7 +156,15 @@ class UpdateTest extends TestCase {
 
       $commandActivate = "cd ../../ && php bin/console glpi:plugin:activate -n --config-dir=tests fusioninventory";
       exec($commandActivate, $outputActivate, $returncodeActivate);
+      $this->assertEquals(0, $returncode, implode("\n", $output));
 
+      // post upgrade
+      $commandActivate = "cd ../../ && php bin/console glpi:migration:utf8mb4 -n --config-dir=tests -q";
+      exec($commandActivate, $outputActivate, $returncodeActivate);
+      $this->assertEquals(0, $returncode, implode("\n", $output));
+
+      $commandActivate = "cd ../../ && php bin/console glpi:migration:unsigned_keys -n --config-dir=tests -q";
+      exec($commandActivate, $outputActivate, $returncodeActivate);
       $this->assertEquals(0, $returncode, implode("\n", $output));
 
       $GLPIlog = new GLPIlogs();

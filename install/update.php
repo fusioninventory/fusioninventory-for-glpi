@@ -596,9 +596,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
    */
 
    //Push task functionnality
-   $migration->addField('glpi_plugin_fusioninventory_tasks', 'last_agent_wakeup', 'datetime');
-   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', "int(11) NOT NULL DEFAULT '0'");
-   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', "int(11) NOT NULL DEFAULT '0'");
+   $migration->addField('glpi_plugin_fusioninventory_tasks', 'last_agent_wakeup', 'timestamp NULL DEFAULT NULL');
+   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', "int unsigned NOT NULL DEFAULT '0'");
+   $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'reprepare_if_successful', "tinyint(1) NOT NULL DEFAULT '1'");
    $deploy_on_demand = $migration->addField('glpi_plugin_fusioninventory_tasks', 'is_deploy_on_demand', "tinyint(1) NOT NULL DEFAULT '0'");
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter');
@@ -1159,13 +1159,13 @@ function do_agent_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']            = ['type'    => 'autoincrement',
                                                 'value'   => ''];
-   $a_table['fields']['entities_id']   = ['type'    => 'integer',
+   $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                 'value'   => '1'];
    $a_table['fields']['name']          = ['type'    => 'string',
                                                 'value'   => null];
-   $a_table['fields']['last_contact']  = ['type'    => 'datetime',
+   $a_table['fields']['last_contact']  = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                 'value'   => null];
    $a_table['fields']['version']       = ['type'    => 'string',
                                                 'value'   => null];
@@ -1173,7 +1173,7 @@ function do_agent_migration($migration) {
                                                 'value'   => null];
    $a_table['fields']['device_id']     = ['type'    => 'string',
                                                 'value'   => null];
-   $a_table['fields']['computers_id']  = ['type'    => 'integer',
+   $a_table['fields']['computers_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['token']         = ['type'    => 'string',
                                                 'value'   => null];
@@ -1182,11 +1182,11 @@ function do_agent_migration($migration) {
    $a_table['fields']['tag']           = ['type'    => 'string',
                                                 'value'   => null];
    $a_table['fields']['threads_networkdiscovery'] = [
-      'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+      'type' => "int unsigned NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
       'value'   => null];
 
    $a_table['fields']['threads_networkinventory'] = [
-      'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+      'type' => "int unsigned NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
       'value'   => null];
 
    $a_table['fields']['senddico']      = [
@@ -1195,11 +1195,11 @@ function do_agent_migration($migration) {
    ];
 
    $a_table['fields']['timeout_networkdiscovery'] = [
-      'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout'",
+      'type' => "int unsigned NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout'",
       'value'   => null
    ];
    $a_table['fields']['timeout_networkinventory'] = [
-      'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
+      'type' => "int unsigned NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
       'value'   => null
    ];
    $a_table['fields']['agent_port']    = ['type'    => 'varchar(6)',
@@ -1620,9 +1620,9 @@ function do_entities_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
-   $a_table['fields']['entities_id']= ['type'    => 'integer',
+   $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['transfers_id_auto']= ['type'    => 'integer',
+   $a_table['fields']['transfers_id_auto']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                               'value'   => null];
    $a_table['fields']['agent_base_url']= ['type'    => 'string',
                                               'value'   => ''];
@@ -1738,7 +1738,7 @@ function do_iprange_migration($migration) {
    $a_table['fields']  = [
       'id'         => ['type'    => 'autoincrement',    'value'   => ''],
       'name'       => ['type'    => 'string',           'value'   => null],
-      'entities_id'=> ['type'    => 'integer',          'value'   => null],
+      'entities_id'=> ['type'    => "int unsigned NOT NULL DEFAULT '0'",          'value'   => null],
       'ip_start'   => ['type'    => 'string',           'value'   => null],
       'ip_end'     => ['type'    => 'string',           'value'   => null]
    ];
@@ -1797,9 +1797,9 @@ function do_locks_migration($migration) {
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
    $a_table['fields']['tablename']  = [
-                     'type'    => "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
+                     'type'    => "varchar(64) NOT NULL DEFAULT ''",
                      'value'   => null];
-   $a_table['fields']['items_id']   = ['type'    => 'integer',
+   $a_table['fields']['items_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['tablefields']= ['type'    => 'text',
                                             'value'   => null];
@@ -1867,11 +1867,11 @@ function do_iprangeconfigsecurity_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_ipranges_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_ipranges_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_configsecurities_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_configsecurities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['rank']       = ['type'    => 'integer',
+   $a_table['fields']['rank']       = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => '1'];
 
    $a_table['oldfields']    = [];
@@ -1939,7 +1939,7 @@ function do_mapping_migration($migration) {
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                             'value'   => ''];
    $a_table['fields']['itemtype']   = [
-                     'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
+                     'type'    => "varchar(100) DEFAULT NULL",
                      'value'   => null];
    $a_table['fields']['name']       = ['type'    => 'string',
                                             'value'   => null];
@@ -1947,9 +1947,9 @@ function do_mapping_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['tablefield'] = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['locale']     = ['type'    => "int(4) NOT NULL DEFAULT '0'",
+   $a_table['fields']['locale']     = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['shortlocale']= ['type'    => 'int(4) DEFAULT NULL',
+   $a_table['fields']['shortlocale']= ['type'    => 'int unsigned DEFAULT NULL',
                                             'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -2041,9 +2041,9 @@ function do_profile_migration($migration) {
                                                'value'   => ''];
       $a_table['fields']['right']      = ['type'    => 'char',
                                                'value'   => null];
-      $a_table['fields']['plugins_id'] = ['type'    => 'integer',
+      $a_table['fields']['plugins_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
-      $a_table['fields']['profiles_id']= ['type'    => 'integer',
+      $a_table['fields']['profiles_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
 
       $a_table['oldfields']  = [
@@ -2130,7 +2130,7 @@ function do_timeslot_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']           = ['type'    => 'autoincrement',
                                               'value'   => ''];
-   $a_table['fields']['entities_id']  = ['type'    => 'integer',
+   $a_table['fields']['entities_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                               'value'   => null];
    $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                               'value'   => '0'];
@@ -2138,7 +2138,7 @@ function do_timeslot_migration($migration) {
                                               'value'   => null];
    $a_table['fields']['comment']      = ['type'    => 'text',
                                               'value'   => null];
-   $a_table['fields']['date_mod']     = ['type'    => 'datetime',
+   $a_table['fields']['date_mod']     = ['type'    => 'timestamp NULL DEFAULT NULL',
                                               'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -2161,17 +2161,17 @@ function do_timeslot_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']           = ['type'    => 'autoincrement',
                                               'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_timeslots_id']  = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_timeslots_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                               'value'   => null];
-   $a_table['fields']['entities_id']  = ['type'    => 'integer',
+   $a_table['fields']['entities_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                               'value'   => null];
    $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                               'value'   => '0'];
    $a_table['fields']['day']          = ['type'    => 'bool',
                                               'value'   => 1];
-   $a_table['fields']['begin']        = ['type'    => 'int(11) DEFAULT NULL',
+   $a_table['fields']['begin']        = ['type'    => 'int unsigned DEFAULT NULL',
                                               'value'   => null];
-   $a_table['fields']['end']          = ['type'    => 'int(11) DEFAULT NULL',
+   $a_table['fields']['end']          = ['type'    => 'int unsigned DEFAULT NULL',
                                               'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -2209,15 +2209,15 @@ function do_unmanaged_migration($migration) {
                                             'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['date_mod']   = ['type'    => 'datetime',
+   $a_table['fields']['date_mod']   = ['type'    => 'timestamp NULL DEFAULT NULL',
                                             'value'   => null];
-   $a_table['fields']['entities_id']= ['type'    => 'integer',
+   $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
-   $a_table['fields']['locations_id']= ['type'    => 'integer',
+   $a_table['fields']['locations_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['is_deleted'] = ['type'    => 'bool',
                                             'value'   => null];
-   $a_table['fields']['users_id']   = ['type'    => 'integer',
+   $a_table['fields']['users_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['serial']     = ['type'    => 'string',
                                             'value'   => null];
@@ -2225,7 +2225,7 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['contact']    = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['domain']     = ['type'    => 'integer',
+   $a_table['fields']['domain']     = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['comment']    = ['type'    => 'text',
                                             'value'   => null];
@@ -2233,17 +2233,17 @@ function do_unmanaged_migration($migration) {
                                             'value'   => null];
    $a_table['fields']['accepted']   = ['type'    => 'bool',
                                             'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_agents_id'] = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_agents_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['ip']         = ['type'    => 'string',
                                             'value'   => null];
    $a_table['fields']['hub']        = ['type'    => 'bool',
                                             'value'   => null];
-   $a_table['fields']['states_id']  = ['type'    => 'integer',
+   $a_table['fields']['states_id']  = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['sysdescr']   = ['type'    => 'text',
                                             'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_configsecurities_id'] = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_configsecurities_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['is_dynamic'] = ['type'    => 'bool',
                                             'value'   => null];
@@ -2370,18 +2370,18 @@ function do_ignoredimport_migration($migration) {
                                             'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['date']       = ['type'    => 'datetime',
+   $a_table['fields']['date']       = ['type'    => 'timestamp NULL DEFAULT NULL',
                                             'value'   => null];
    $a_table['fields']['itemtype']   = [
-                     'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
+                     'type'    => "varchar(100) DEFAULT NULL",
                      'value'   => null];
-   $a_table['fields']['entities_id']= ['type'    => 'integer',
+   $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['ip']         = ['type'    => 'string',
                                             'value'   => null];
    $a_table['fields']['mac']        = ['type'    => 'string',
                                             'value'   => null];
-   $a_table['fields']['rules_id']   = ['type'    => 'integer',
+   $a_table['fields']['rules_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['fields']['method']     = ['type'    => 'string',
                                             'value'   => null];
@@ -2390,7 +2390,7 @@ function do_ignoredimport_migration($migration) {
    $a_table['fields']['uuid']       = ['type'    => 'string',
                                             'value'   => null];
    $a_table['fields']['plugin_fusioninventory_agents_id']
-                                    = ['type'    => 'integer',
+                                    = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -2452,7 +2452,7 @@ function do_blacklist_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                              'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_criterium_id'] = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_criterium_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                                      'value'   => null];
    $a_table['fields']['value']  = ['type'    => 'string',
                                           'value'   => null];
@@ -2746,39 +2746,39 @@ function do_rulematchedlog_migration($migration) {
    $newTable = "glpi_plugin_fusioninventory_rulematchedlogs";
    if (!$DB->tableExists($newTable)) {
       $query = "CREATE TABLE `".$newTable."` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
                               "id",
                               "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
+                              "int unsigned NOT NULL AUTO_INCREMENT");
 
    $migration->migrationOneTable($newTable);
 
    $migration->addField($newTable,
                               "date",
-                              "datetime DEFAULT NULL");
+                              "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                               "items_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+                              "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "itemtype",
-                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "varchar(100) DEFAULT NULL");
    $migration->addField($newTable,
                               "rules_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+                              "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "plugin_fusioninventory_agents_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+                              "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                               "method",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "criteria",
-                           'text COLLATE utf8_unicode_ci DEFAULT NULL');
+                           'text DEFAULT NULL');
    $migration->migrationOneTable($newTable);
    $DB->listFields($newTable, false);
 }
@@ -2838,15 +2838,15 @@ function do_computercomputer_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']                     = ['type'    => 'autoincrement',
                                                    'value'   => ''];
-   $a_table['fields']['computers_id']           = ['type'    => 'integer',
+   $a_table['fields']['computers_id']           = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                    'value'   => null];
-   $a_table['fields']['operatingsystem_installationdate'] = ['type'    => 'datetime',
+   $a_table['fields']['operatingsystem_installationdate'] = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                              'value'   => null];
    $a_table['fields']['winowner']               = ['type'    => 'string',
                                                    'value'   => null];
    $a_table['fields']['wincompany']             = ['type'    => 'string',
                                                    'value'   => null];
-   $a_table['fields']['last_fusioninventory_update']     = ['type'    => 'datetime',
+   $a_table['fields']['last_fusioninventory_update']     = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                             'value'   => null];
    $a_table['fields']['remote_addr']            = ['type'    => 'string',
                                                    'value'   => null];
@@ -2856,7 +2856,7 @@ function do_computercomputer_migration($migration) {
                                                    'value'   => "0"];
    $a_table['fields']['oscomment']              = ['type'    => 'text',
                                                    'value'   => null];
-   $a_table['fields']['last_boot']              = ['type'    => 'datetime',
+   $a_table['fields']['last_boot']              = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                    'value'   => null];
 
    $a_table['oldfields']  = [
@@ -3028,13 +3028,13 @@ function do_computerstat_migration($migration) {
       $a_table['oldname'] = [];
 
       $a_table['fields']  = [];
-      $a_table['fields']['id']      = ['type'    => "smallint(3) NOT NULL AUTO_INCREMENT",
+      $a_table['fields']['id']      = ['type'    => "smallint unsigned NOT NULL AUTO_INCREMENT",
                                                          'value'   => ''];
       $a_table['fields']['day']     = ['type'    => "smallint(3) NOT NULL DEFAULT '0'",
                                                          'value'   => ''];
       $a_table['fields']['hour']    = ['type'    => "tinyint(2) NOT NULL DEFAULT '0'",
                                                          'value'   => ''];
-      $a_table['fields']['counter'] = ['type'    => 'integer',
+      $a_table['fields']['counter'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                          'value'   => null];
 
       $a_table['oldfields']  = [];
@@ -3091,46 +3091,46 @@ function do_configlogfield_migration($migration) {
    }
    if (!$DB->tableExists($newTable)) {
       $query = "CREATE TABLE `".$newTable."` (
-                  `id` int(8) NOT NULL AUTO_INCREMENT,
+                  `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+               ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(8) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_mappings_id",
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "days",
                            "days",
-                           "int(255) NOT NULL DEFAULT '-1'");
+                           "smallint(6) NOT NULL DEFAULT '-1'");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(8) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "field",
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "int(8) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "days",
-                           "int(255) NOT NULL DEFAULT '-1'");
+                           "smallint(6) NOT NULL DEFAULT '-1'");
    $migration->addKey($newTable,
                         "plugin_fusioninventory_mappings_id");
    $migration->migrationOneTable($newTable);
@@ -3159,26 +3159,26 @@ function do_networkport_migration($migration) {
 
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                         "ID",
                         "id",
-                        "int(11) NOT NULL AUTO_INCREMENT");
+                        "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                         "id",
                         "id",
-                        "int(11) NOT NULL AUTO_INCREMENT");
+                        "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                         "date",
                         "date_mod",
-                        "datetime DEFAULT NULL");
+                        "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                         "date_mod",
                         "date_mod",
-                        "datetime DEFAULT NULL");
+                        "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                         "creation",
                         "creation",
@@ -3186,43 +3186,43 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                         "FK_port_source",
                         "networkports_id_source",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                         "networkports_id_source",
                         "networkports_id_source",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                         "FK_port_destination",
                         "networkports_id_destination",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                         "networkports_id_destination",
                         "networkports_id_destination",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                         "plugin_fusioninventory_agentprocesses_id",
                         "plugin_fusioninventory_agentprocesses_id",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->dropField($newTable, "process_number");
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                         "id",
-                        "int(11) NOT NULL AUTO_INCREMENT");
+                        "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                         "date_mod",
-                        "datetime DEFAULT NULL");
+                        "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                         "creation",
                         "tinyint(1) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "networkports_id_source",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "networkports_id_destination",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "plugin_fusioninventory_agentprocesses_id",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->addKey($newTable,
                         ["networkports_id_source",
                               "networkports_id_destination",
@@ -3241,15 +3241,15 @@ function do_networkport_migration($migration) {
                               $newTable);
    if (!$DB->tableExists($newTable)) {
       $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "name",
                            "name",
@@ -3257,7 +3257,7 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "number",
                            "number",
-                           "int(4) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "othername",
                            "othername",
@@ -3272,7 +3272,7 @@ function do_networkport_migration($migration) {
                         "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                         "number",
-                        "int(4) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "othername",
                         "varchar(255) DEFAULT NULL");
@@ -3292,22 +3292,22 @@ function do_networkport_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "networkports_id",
                            "networkports_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "ifmtu",
                            "ifmtu",
-                           "int(8) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "ifspeed",
                            "ifspeed",
@@ -3315,15 +3315,15 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifinternalstatus",
                            "ifinternalstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifconnectionstatus",
                            "ifconnectionstatus",
-                           "int(8) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "iflastchange",
                            "iflastchange",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifinoctets",
                            "ifinoctets",
@@ -3343,19 +3343,19 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "ifstatus",
                            "ifstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "mac",
                            "mac",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "ifdescr",
                            "ifdescr",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "portduplex",
                            "portduplex",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "trunk",
                            "trunk",
@@ -3363,44 +3363,44 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "lastup",
                            "lastup",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_networking_ports",
                            "networkports_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "ifmac",
                            "mac",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->dropKey($newTable,
                         "FK_networking_ports");
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "networkports_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifmtu",
-                           "int(8) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifspeed",
                            "bigint(50) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifinternalstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifconnectionstatus",
-                           "int(8) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "iflastchange",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifinoctets",
                            "bigint(50) NOT NULL DEFAULT '0'");
@@ -3415,25 +3415,25 @@ function do_networkport_migration($migration) {
                            "bigint(50) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "ifstatus",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "mac",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifdescr",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "ifalias",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "portduplex",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "trunk",
                            "tinyint(1) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "lastup",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addKey($newTable,
                         "networkports_id");
    $migration->migrationOneTable($newTable);
@@ -3532,27 +3532,27 @@ function do_networkport_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
-                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "networkports_id",
                            "networkports_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_mappings_id",
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "date_mod",
                            "date_mod",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "value_old",
                            "value_old",
@@ -3564,19 +3564,19 @@ function do_networkport_migration($migration) {
    $migration->changeField($newTable,
                            "plugin_fusioninventory_agentprocesses_id",
                            "plugin_fusioninventory_agentprocesses_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_ports",
                            "networkports_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "plugin_fusioninventory_mappings_id",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
 
    // Update with mapping
@@ -3625,16 +3625,16 @@ function do_networkport_migration($migration) {
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "networkports_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "date_mod",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "value_old",
                            "varchar(255) DEFAULT NULL");
@@ -3643,7 +3643,7 @@ function do_networkport_migration($migration) {
                            "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_agentprocesses_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addKey($newTable,
                         ["networkports_id", "date_mod"],
                         "networkports_id");
@@ -3813,55 +3813,55 @@ function do_printer_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "printers_id",
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "sysdescr",
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusinvsnmp_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "frequence_days",
                            "frequence_days",
-                           "int(5) NOT NULL DEFAULT '1'");
+                           "int unsigned NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "last_fusioninventory_update",
                            "last_fusioninventory_update",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_printers",
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "FK_snmp_connection",
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "last_tracker_update",
                            "last_fusioninventory_update",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->dropKey($newTable,
                         "FK_printers");
    $migration->dropKey($newTable,
@@ -3877,22 +3877,22 @@ function do_printer_migration($migration) {
                         "FK_model_infos");
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "frequence_days",
-                           "int(5) NOT NULL DEFAULT '1'");
+                           "int unsigned NOT NULL DEFAULT '1'");
    $migration->addField($newTable,
                            "last_fusioninventory_update",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                         "serialized_inventory",
                         "longblob");
@@ -3913,125 +3913,125 @@ function do_printer_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "printers_id",
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "date",
                            "date",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "pages_total",
                            "pages_total",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_n_b",
                            "pages_n_b",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_color",
                            "pages_color",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_recto_verso",
                            "pages_recto_verso",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "scanned",
                            "scanned",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_total_print",
                            "pages_total_print",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_n_b_print",
                            "pages_n_b_print",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_color_print",
                            "pages_color_print",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_total_copy",
                            "pages_total_copy",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_n_b_copy",
                            "pages_n_b_copy",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_color_copy",
                            "pages_color_copy",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "pages_total_fax",
                            "pages_total_fax",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_printers",
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "date",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "pages_total",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_n_b",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_color",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_recto_verso",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "scanned",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_total_print",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_n_b_print",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_color_print",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_total_copy",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_n_b_copy",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_color_copy",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "pages_total_fax",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addKey($newTable,
                         ["printers_id", "date"],
                         "printers_id");
@@ -4048,46 +4048,46 @@ function do_printer_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` bigint(100) NOT NULL AUTO_INCREMENT,
+                        `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "bigint(100) NOT NULL AUTO_INCREMENT");
+                           "bigint unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "printers_id",
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_mappings_id",
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "cartridges_id",
                            "cartridges_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "state",
                            "state",
-                           "int(3) NOT NULL DEFAULT '100'");
+                           "int unsigned NOT NULL DEFAULT '100'");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "bigint(100) NOT NULL AUTO_INCREMENT");
+                           "bigint unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_printers",
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "FK_cartridges",
                            "cartridges_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "plugin_fusioninventory_mappings_id",
-                        "int(11) NOT NULL DEFAULT '0'");
+                        "int  unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
 
    // Update with mapping
@@ -4115,19 +4115,19 @@ function do_printer_migration($migration) {
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "bigint(100) NOT NULL AUTO_INCREMENT");
+                           "bigint unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "printers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "plugin_fusioninventory_mappings_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "cartridges_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "state",
-                           "int(3) NOT NULL DEFAULT '100'");
+                           "int unsigned NOT NULL DEFAULT '100'");
    $migration->addKey($newTable,
                         "printers_id");
    $migration->addKey($newTable,
@@ -4374,67 +4374,67 @@ function do_networkequipment_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "networkequipments_id",
                            "networkequipments_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "sysdescr",
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "uptime",
                            "uptime",
-                           "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'");
+                           "varchar(255) NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "cpu",
                            "cpu",
-                           "int(3) NOT NULL DEFAULT '0' COMMENT '%'");
+                           "int unsigned NOT NULL DEFAULT '0' COMMENT '%'");
    $migration->changeField($newTable,
                            "memory",
                            "memory",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "last_fusioninventory_update",
                            "last_fusioninventory_update",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "last_PID_update",
                            "last_PID_update",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_networking",
                            "networkequipments_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "FK_snmp_connection",
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "last_tracker_update",
                            "last_fusioninventory_update",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "plugin_fusinvsnmp_configsecurities_id",
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->dropKey($newTable,
                         "FK_networking");
    $migration->dropKey($newTable,
@@ -4450,31 +4450,31 @@ function do_networkequipment_migration($migration) {
                            "FK_model_infos");
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "networkequipments_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "sysdescr",
-                           "text COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "text DEFAULT NULL");
    $migration->addField($newTable,
                            "plugin_fusioninventory_configsecurities_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "uptime",
-                           "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'");
+                           "varchar(255) NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "cpu",
-                           "int(3) NOT NULL DEFAULT '0' COMMENT '%'");
+                           "int unsigned NOT NULL DEFAULT '0' COMMENT '%'");
    $migration->addField($newTable,
                            "memory",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "last_fusioninventory_update",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "last_PID_update",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                         "serialized_inventory",
                         "longblob");
@@ -4497,18 +4497,18 @@ function do_networkequipment_migration($migration) {
                               $newTable);
       if (!$DB->tableExists($newTable)) {
          $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
       }
       $migration->changeField($newTable,
                               "id",
                               "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
+                              "int  unsigned NOT NULL AUTO_INCREMENT");
       $migration->changeField($newTable,
                               "networkequipments_id",
                               "networkequipments_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+                              "int  unsigned NOT NULL DEFAULT '0'");
       $migration->changeField($newTable,
                               "ip",
                               "ip",
@@ -4517,11 +4517,11 @@ function do_networkequipment_migration($migration) {
       $migration->changeField($newTable,
                               "ID",
                               "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
+                              "int  unsigned NOT NULL AUTO_INCREMENT");
       $migration->changeField($newTable,
                               "FK_networking",
                               "networkequipments_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+                              "int  unsigned NOT NULL DEFAULT '0'");
       $migration->changeField($newTable,
                               "ifaddr",
                               "ip",
@@ -4531,10 +4531,10 @@ function do_networkequipment_migration($migration) {
       $migration->migrationOneTable($newTable);
       $migration->addField($newTable,
                               "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
+                              "int  unsigned NOT NULL AUTO_INCREMENT");
       $migration->addField($newTable,
                               "networkequipments_id",
-                              "int(11) NOT NULL DEFAULT '0'");
+                              "int  unsigned NOT NULL DEFAULT '0'");
       $migration->addField($newTable,
                               "ip",
                               "varchar(255) DEFAULT NULL");
@@ -4748,46 +4748,46 @@ function do_configsecurity_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
       $migration->changeField($newTable,
                            "name",
                            "name",
-                           "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(64) DEFAULT NULL");
    $migration->changeField($newTable,
                            "snmpversion",
                            "snmpversion",
-                           "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+                           "varchar(8) NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "community",
                            "community",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "username",
                            "username",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "authentication",
                            "authentication",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "auth_passphrase",
                            "auth_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "encryption",
                            "encryption",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "priv_passphrase",
                            "priv_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->changeField($newTable,
                            "is_deleted",
                            "is_deleted",
@@ -4796,15 +4796,15 @@ function do_configsecurity_migration($migration) {
    $migration->changeField($newTable,
                            "ID",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "FK_snmp_version",
                            "snmpversion",
-                           "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+                           "varchar(8) NOT NULL DEFAULT '1'");
    $migration->changeField($newTable,
                            "sec_name",
                            "username",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->dropField($newTable,
                            "sec_level");
    $migration->dropField($newTable,
@@ -4816,31 +4816,31 @@ function do_configsecurity_migration($migration) {
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "name",
-                           "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(64) DEFAULT NULL");
    $migration->addField($newTable,
                            "snmpversion",
-                           "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+                           "varchar(8) NOT NULL DEFAULT '1'");
    $migration->addField($newTable,
                            "community",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "username",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "authentication",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "auth_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "encryption",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "priv_passphrase",
-                           "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                           "varchar(255) DEFAULT NULL");
    $migration->addField($newTable,
                            "is_deleted",
                            "tinyint(1) NOT NULL DEFAULT '0'");
@@ -4878,95 +4878,95 @@ function do_statediscovery_migration($migration) {
                            $newTable);
    if (!$DB->tableExists($newTable)) {
       $DB->query("CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                     `id` int unsigned NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1");
    }
    $migration->changeField($newTable,
                            "id",
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_taskjob_id",
                            "plugin_fusioninventory_taskjob_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "plugin_fusioninventory_agents_id",
                            "plugin_fusioninventory_agents_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "start_time",
                            "start_time",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "end_time",
                            "end_time",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "date_mod",
                            "date_mod",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->changeField($newTable,
                            "threads",
                            "threads",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "nb_ip",
                            "nb_ip",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "nb_found",
                            "nb_found",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "nb_error",
                            "nb_error",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "nb_exists",
                            "nb_exists",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->changeField($newTable,
                            "nb_import",
                            "nb_import",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $migration->addField($newTable,
                            "id",
-                           "int(11) NOT NULL AUTO_INCREMENT");
+                           "int  unsigned NOT NULL AUTO_INCREMENT");
    $migration->addField($newTable,
                            "plugin_fusioninventory_taskjob_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "plugin_fusioninventory_agents_id",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "start_time",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "end_time",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "date_mod",
-                           "datetime DEFAULT NULL");
+                           "timestamp NULL DEFAULT NULL");
    $migration->addField($newTable,
                            "threads",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "nb_ip",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "nb_found",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "nb_error",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "nb_exists",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->addField($newTable,
                            "nb_import",
-                           "int(11) NOT NULL DEFAULT '0'");
+                           "int  unsigned NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
    $DB->listFields($newTable, false);
 }
@@ -5000,9 +5000,9 @@ function do_computerlicense_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']                  = ['type'    => 'autoincrement',
                                                      'value'   => ''];
-   $a_table['fields']['computers_id']        = ['type'    => 'integer',
+   $a_table['fields']['computers_id']        = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                      'value'   => null];
-   $a_table['fields']['softwarelicenses_id'] = ['type'    => 'integer',
+   $a_table['fields']['softwarelicenses_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                      'value'   => null];
    $a_table['fields']['name']                = ['type'    => 'string',
                                                      'value'   => null];
@@ -5016,7 +5016,7 @@ function do_computerlicense_migration($migration) {
                                                      'value'   => null];
    $a_table['fields']['is_oem']              = ['type'    => 'bool',
                                                      'value'   => null];
-   $a_table['fields']['activation_date']     = ['type'    => 'datetime',
+   $a_table['fields']['activation_date']     = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                      'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -5050,7 +5050,7 @@ function do_computerremotemgmt_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']                  = ['type'    => 'autoincrement',
                                                      'value'   => ''];
-   $a_table['fields']['computers_id']        = ['type'    => 'integer',
+   $a_table['fields']['computers_id']        = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                      'value'   => null];
    $a_table['fields']['number']              = ['type'    => 'string',
                                                      'value'   => null];
@@ -5376,19 +5376,19 @@ function do_deployuserinteraction_migration($migration) {
 
    if (!$DB->tableExists('glpi_plugin_fusioninventory_deployuserinteractions')) {
       $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployuserinteractiontemplates` (
-         `id` int(11) NOT NULL AUTO_INCREMENT,
-         `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-         `entities_id` int(11) NOT NULL DEFAULT '0',
+         `id` int unsigned NOT NULL AUTO_INCREMENT,
+         `name` varchar(255) DEFAULT NULL,
+         `entities_id` int unsigned NOT NULL DEFAULT '0',
          `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-         `date_creation` datetime DEFAULT NULL,
-         `date_mod` datetime DEFAULT NULL,
+         `date_creation` timestamp NULL DEFAULT NULL,
+         `date_mod` timestamp NULL DEFAULT NULL,
          `json` longtext DEFAULT NULL,
          PRIMARY KEY (`id`),
          KEY `date_mod` (`date_mod`),
          KEY `date_creation` (`date_creation`),
          KEY `entities_id` (`entities_id`),
          KEY `is_recursive` (`is_recursive`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;";
       $DB->query($query);
    }
 }
@@ -5443,7 +5443,7 @@ function do_deployfile_migration($migration) {
                'value'  => null
       ],
       'entities_id' => [
-               'type'   => 'int(11) NOT NULL',
+               'type'   => 'int unsigned NOT NULL',
                'value'  => null
       ],
       'is_recursive' => [
@@ -5451,7 +5451,7 @@ function do_deployfile_migration($migration) {
                'value'  => 0
       ],
       'date_mod' => [
-               'type'   => 'datetime DEFAULT NULL',
+               'type'   => 'timestamp NULL DEFAULT NULL',
                'value'  => null
       ],
 
@@ -5494,7 +5494,7 @@ function do_deployfile_migration($migration) {
    if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
       if (!$DB->fieldExists("glpi_plugin_fusinvdeploy_files", "entities_id")) {
          $migration->addField('glpi_plugin_fusinvdeploy_files',
-                 'entities_id', 'integer', ['value' => 0]);
+                 'entities_id', "int unsigned NOT NULL DEFAULT '0'", ['value' => 0]);
          $migration->addField('glpi_plugin_fusinvdeploy_files',
                  'is_recursive', 'bool', ['value' => 0]);
          $migration->migrationOneTable('glpi_plugin_fusinvdeploy_files');
@@ -5567,7 +5567,7 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'name' =>  [
-               'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
+               'type' => 'varchar(255) NOT NULL',
                'value' => null
       ],
       'comment' =>  [
@@ -5575,7 +5575,7 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'entities_id' =>  [
-               'type' => 'int(11) NOT NULL',
+               'type' => 'int unsigned NOT NULL',
                'value' => null
       ],
       'is_recursive' =>  [
@@ -5583,7 +5583,7 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'date_mod' =>  [
-               'type' => 'datetime DEFAULT NULL',
+               'type' => 'timestamp NULL DEFAULT NULL',
                'value' => null
       ],
       'uuid' =>  [
@@ -5603,7 +5603,7 @@ function do_deploypackage_migration($migration) {
                'value' => null
       ],
       'plugin_fusioninventory_deploygroups_id' => [
-               'type'    => 'integer',
+               'type'    => "int unsigned NOT NULL DEFAULT '0'",
                'value'   => null
       ],
 
@@ -5689,9 +5689,9 @@ function do_deploypackage_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => 'integer',
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => "int unsigned NOT NULL DEFAULT '0'",
                                                                           'value' => null];
-   $a_table['fields']['entities_id']   = ['type'    => 'integer',
+   $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
    $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                'value'   => '0'];
@@ -5718,11 +5718,11 @@ function do_deploypackage_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => 'integer',
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => "int unsigned NOT NULL DEFAULT '0'",
                                                                           'value' => null];
-   $a_table['fields']['groups_id']   = ['type'    => 'integer',
+   $a_table['fields']['groups_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['entities_id']   = ['type'    => 'integer',
+   $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
    $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                'value'   => '0'];
@@ -5750,11 +5750,11 @@ function do_deploypackage_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => 'integer',
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => "int unsigned NOT NULL DEFAULT '0'",
                                                                           'value' => null];
-   $a_table['fields']['profiles_id']   = ['type'    => 'integer',
+   $a_table['fields']['profiles_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
-   $a_table['fields']['entities_id']   = ['type'    => 'integer',
+   $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
    $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                'value'   => '0'];
@@ -5782,9 +5782,9 @@ function do_deploypackage_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']      = ['type'    => 'autoincrement',
                                          'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => 'integer',
+   $a_table['fields']['plugin_fusioninventory_deploypackages_id'] = ['type' => "int unsigned NOT NULL DEFAULT '0'",
                                                                           'value' => null];
-   $a_table['fields']['users_id']   = ['type'    => 'integer',
+   $a_table['fields']['users_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                             'value'   => null];
    $a_table['oldfields']  = [];
 
@@ -5835,7 +5835,7 @@ function do_deploymirror_migration($migration) {
          'value' => null
       ],
       'entities_id' =>  [
-         'type' => 'int(11) NOT NULL',
+         'type' => 'int unsigned NOT NULL',
          'value' => null
       ],
       'is_active' =>  [
@@ -5847,16 +5847,16 @@ function do_deploymirror_migration($migration) {
          'value' => null
       ],
       'name' =>  [
-         'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+         'type' => 'varchar(255) NOT NULL',
          'value' => null
       ],
       'url' =>  [
-         'type' => "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci".
+         'type' => "varchar(255)".
                    " NOT NULL DEFAULT ''",
          'value' => null
       ],
       'locations_id' => [
-         'type' => 'int(11) NOT NULL',
+         'type' => 'int unsigned NOT NULL',
          'value' => 0
       ],
       'comment' =>  [
@@ -5864,7 +5864,7 @@ function do_deploymirror_migration($migration) {
          'value' => null
       ],
       'date_mod' =>  [
-         'type' => 'datetime DEFAULT NULL',
+         'type' => 'timestamp NULL DEFAULT NULL',
          'value' => null
       ],
    ];
@@ -5940,7 +5940,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'name' =>  [
-         'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+         'type' => 'varchar(255) NOT NULL',
          'value' => null
       ],
       'comment' =>  [
@@ -5948,7 +5948,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'type' =>  [
-         'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
+         'type' => 'varchar(255) NOT NULL',
          'value' => null
       ],
    ];
@@ -5985,15 +5985,15 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'plugin_fusioninventory_deploygroups_id' =>  [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'itemtype' =>  [
-         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+         'type' => 'varchar(100) DEFAULT NULL',
          'value' => null
       ],
       'items_id' =>  [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
    ];
@@ -6041,7 +6041,7 @@ function do_deploygroup_migration($migration) {
          'value' => null
       ],
       'plugin_fusioninventory_deploygroups_id' =>  [
-         'type' => 'integer',
+         'type' => "int unsigned NOT NULL DEFAULT '0'",
          'value' => null
       ],
       'fields_array' =>  [
@@ -6124,7 +6124,7 @@ function do_dblocks_migration($migration) {
       $a_table['oldname'] = [];
 
       $a_table['fields']  = [];
-      $a_table['fields']['value']      = ['type'    => 'integer',
+      $a_table['fields']['value']      = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
       $a_table['fields']['date']       = ['type'    => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()',
                                                'value'   => null];
@@ -6209,7 +6209,7 @@ function do_credentialESX_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                              'value'   => ''];
-   $a_table['fields']['entities_id']= ['type'    => 'integer',
+   $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['is_recursive']= ['type'    => 'bool',
                                              'value'   => null];
@@ -6221,7 +6221,7 @@ function do_credentialESX_migration($migration) {
                                              'value'   => ""];
    $a_table['fields']['comment']    = ['type'    => 'text',
                                              'value'   => null];
-   $a_table['fields']['date_mod']   = ['type'    => 'datetime',
+   $a_table['fields']['date_mod']   = ['type'    => 'timestamp NULL DEFAULT NULL',
                                              'value'   => null];
    $a_table['fields']['itemtype']   = ['type'    => 'string',
                                              'value'   => ""];
@@ -6255,9 +6255,9 @@ function do_credentialESX_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => 'autoincrement',
                                              'value'   => ''];
-   $a_table['fields']['entities_id']= ['type'    => 'integer',
+   $a_table['fields']['entities_id']= ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_credentials_id'] = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_credentials_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => ""];
@@ -6265,7 +6265,7 @@ function do_credentialESX_migration($migration) {
                                              'value'   => null];
    $a_table['fields']['ip']         = ['type'    => 'string',
                                              'value'   => ""];
-   $a_table['fields']['date_mod']   = ['type'    => 'datetime',
+   $a_table['fields']['date_mod']   = ['type'    => 'timestamp NULL DEFAULT NULL',
                                              'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -6299,7 +6299,7 @@ function do_collect_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['entities_id']   = ['type'    => 'integer',
+   $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['is_recursive']  = ['type'    => 'bool',
                                                 'value'   => null];
@@ -6332,7 +6332,7 @@ function do_collect_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_collects_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_collects_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['hive']       = ['type'    => 'string',
                                              'value'   => null];
@@ -6361,9 +6361,9 @@ function do_collect_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => "autoincrement",
                                              'value'   => ''];
-   $a_table['fields']['computers_id'] = ['type'    => 'integer',
+   $a_table['fields']['computers_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_collects_registries_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_collects_registries_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['key']       = ['type'    => 'string',
                                              'value'   => null];
@@ -6393,7 +6393,7 @@ function do_collect_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_collects_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_collects_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['moniker']    = ['type'    => 'string',
                                              'value'   => null];
@@ -6422,9 +6422,9 @@ function do_collect_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => "autoincrement",
                                              'value'   => ''];
-   $a_table['fields']['computers_id'] = ['type'    => 'integer',
+   $a_table['fields']['computers_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_collects_wmis_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_collects_wmis_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['property']   = ['type'    => 'string',
                                              'value'   => null];
@@ -6453,21 +6453,21 @@ function do_collect_migration($migration) {
                                              'value'   => ''];
    $a_table['fields']['name']       = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_collects_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_collects_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['dir']        = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['limit']      = ['type'    => "int(4) NOT NULL DEFAULT '50'",
+   $a_table['fields']['limit']      = ['type'    => "int unsigned NOT NULL DEFAULT '50'",
                                              'value'   => null];
    $a_table['fields']['is_recursive'] = ['type'    => 'bool',
                                              'value'   => null];
    $a_table['fields']['filter_regex'] = ['type'    => 'string',
                                              'value'   => null];
-   $a_table['fields']['filter_sizeequals'] = ['type'    => 'integer',
+   $a_table['fields']['filter_sizeequals'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['filter_sizegreater'] = ['type'    => 'integer',
+   $a_table['fields']['filter_sizegreater'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['filter_sizelower'] = ['type'    => 'integer',
+   $a_table['fields']['filter_sizelower'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
    $a_table['fields']['filter_checksumsha512'] = ['type'    => 'string',
                                              'value'   => null];
@@ -6502,13 +6502,13 @@ function do_collect_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']         = ['type'    => "autoincrement",
                                              'value'   => ''];
-   $a_table['fields']['computers_id'] = ['type'    => 'integer',
+   $a_table['fields']['computers_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
-   $a_table['fields']['plugin_fusioninventory_collects_files_id']   = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_collects_files_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                 'value'   => null];
    $a_table['fields']['pathfile']   = ['type'    => 'text',
                                              'value'   => null];
-   $a_table['fields']['size']       = ['type'    => 'integer',
+   $a_table['fields']['size']       = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                              'value'   => null];
 
    $a_table['oldfields']  = [];
@@ -7456,13 +7456,13 @@ function do_task_migration($migration) {
    $a_table['fields']  = [];
    $a_table['fields']['id']                     = ['type'    => 'autoincrement',
                                                         'value'   => ''];
-   $a_table['fields']['plugin_fusioninventory_tasks_id'] = ['type'    => 'integer',
+   $a_table['fields']['plugin_fusioninventory_tasks_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                                  'value'   => null];
-   $a_table['fields']['entities_id']   = ['type'    => 'integer',
+   $a_table['fields']['entities_id']   = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                'value'   => null];
    $a_table['fields']['name']          = ['type'    => 'string',
                                                'value'   => null];
-   $a_table['fields']['date_creation'] = ['type'    => 'datetime',
+   $a_table['fields']['date_creation'] = ['type'    => 'timestamp NULL DEFAULT NULL',
                                                'value'   => null];
    $a_table['fields']['method']        = ['type'    => 'string',
                                                'value'   => null];
@@ -7472,7 +7472,7 @@ function do_task_migration($migration) {
                                                'value'   => null];
    $a_table['fields']['comment']       = ['type'    => 'text',
                                                'value'   => null];
-   $a_table['fields']['rescheduled_taskjob_id'] = ['type'    => 'integer',
+   $a_table['fields']['rescheduled_taskjob_id'] = ['type'    => "int unsigned NOT NULL DEFAULT '0'",
                                                         'value'   => null];
    $a_table['fields']['statuscomments'] = ['type'    => 'text',
                                                 'value'   => null];
@@ -7556,7 +7556,7 @@ function do_crontask_migration($migration) {
       'value'   => ''
    ];
    $a_table['fields']['user_id_execution'] = [
-      'type'    => 'integer',
+      'type'    => "int unsigned NOT NULL DEFAULT '0'",
       'value'   => null
    ];
    $a_table['fields']['user_execution'] = [
@@ -7568,7 +7568,7 @@ function do_crontask_migration($migration) {
       'value'   => ''
    ];
    $a_table['fields']['user_id_storage'] = [
-      'type'    => 'integer',
+      'type'    => "int unsigned NOT NULL DEFAULT '0'",
       'value'   => null
    ];
    $a_table['fields']['user_storage'] = [
@@ -7580,7 +7580,7 @@ function do_crontask_migration($migration) {
       'value'   => ''
    ];
    $a_table['fields']['computers_id'] = [
-      'type'    => 'integer',
+      'type'    => "int unsigned NOT NULL DEFAULT '0'",
       'value'   => null
    ];
    $a_table['fields']['creation_date'] = [
@@ -7596,7 +7596,7 @@ function do_crontask_migration($migration) {
       'value'   => ''
    ];
    $a_table['fields']['user_id_storage'] = [
-      'type'    => 'integer',
+      'type'    => "int unsigned NOT NULL DEFAULT '0'",
       'value'   => null
    ];
    $a_table['fields']['user_storage'] = [
@@ -7608,7 +7608,7 @@ function do_crontask_migration($migration) {
       'value'   => ''
    ];
    $a_table['fields']['computers_id'] = [
-      'type'    => 'integer',
+      'type'    => "int unsigned NOT NULL DEFAULT '0'",
       'value'   => null
    ];
    $a_table['fields']['creation_date'] = [
@@ -9946,14 +9946,14 @@ function migrateTablesFusionInventory($migration, $a_table) {
 
       if (strstr($a_table['name'], 'glpi_plugin_fusioninventory_dblock')) {
          $query = "CREATE TABLE `".$a_table['name']."` (
-                        `value` int(11) NOT NULL AUTO_INCREMENT,
+                        `value` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`value`)
-                     ) ENGINE=MEMORY  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                     ) ENGINE=MEMORY  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       } else {
          $query = "CREATE TABLE `".$a_table['name']."` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       }
 
       $DB->query($query);
