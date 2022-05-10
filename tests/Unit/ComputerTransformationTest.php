@@ -1185,14 +1185,14 @@ class ComputerTransformationTest extends TestCase {
       $a_reference = [];
       $a_reference[0] = [
             'manufacturers_id'   => 'NEC Technologies, Inc.',
-            'name'               => '27/2001',
+            'name'               => 'NEC Écran Plug-and-Play',
             'serial'             => '',
             'is_dynamic'         => 1,
             'monitormodels_id'   => 'Écran Plug-and-Play'
           ];
       $a_reference[1] = [
             'manufacturers_id'   => 'Lenovo',
-            'name'               => '',
+            'name'               => 'Lenovo ThinkPad Display 1280x800',
             'serial'             => 'UBYVUTFYEIUI',
             'is_dynamic'         => 1,
             'monitormodels_id'   => 'ThinkPad Display 1280x800'
