@@ -6273,6 +6273,9 @@ function do_credentialESX_migration($migration) {
    /*
     * Table glpi_plugin_fusioninventory_credentialips
     */
+   // fix for a problem with a user, not sure same problem for other users, but for prevention
+   $DB->query("UPDATE glpi_plugin_fusioninventory_credentialips SET plugin_fusioninventory_credentials_id=0 WHERE plugin_fusioninventory_credentials_id=-1;");
+
    $a_table = [];
    $a_table['name'] = 'glpi_plugin_fusioninventory_credentialips';
    $a_table['oldname'] = [];
