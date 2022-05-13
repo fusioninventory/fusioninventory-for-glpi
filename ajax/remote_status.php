@@ -46,6 +46,7 @@ Session::checkCentralAccess();
 header("Content-Type: text/json; charset=UTF-8");
 Html::header_nocache();
 
+session_write_close();
 if (isset($_REQUEST['id'])) {
    $agent = new PluginFusioninventoryAgent;
    $agent->getFromDB((int) $_REQUEST['id']);
