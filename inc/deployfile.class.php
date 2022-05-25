@@ -364,6 +364,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
     */
    static function showServerFileTree($rand) {
       echo "<script type='text/javascript'>";
+      echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
       echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
          dataUrl:'".Plugin::getWebDir('fusioninventory')."/ajax/serverfilestreesons.php'
       });";
