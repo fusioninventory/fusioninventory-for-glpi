@@ -69,7 +69,10 @@ class PluginFusioninventoryDeployFilepart {
       preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
       $sha512 = $matches[1];
-      //      $short_sha512 = substr($sha512, 0, 6);
+      if (!preg_match('/^\w{128}$/', $file)) {
+         header("HTTP/1.1 403");
+         exit;
+      }
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
