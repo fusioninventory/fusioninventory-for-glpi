@@ -46,6 +46,8 @@
  *
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -325,6 +327,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * @return array
     */
    function run($taskjobstate) {
+      global $DB;
 
       //Check if the job has been postponed
       if (!is_null($taskjobstate->fields['date_start'])
@@ -389,7 +392,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       if (isset($order_job['actions'])) {
          foreach ($order_job['actions'] as $key => $value) {
             if (isset($value['cmd']) && isset($value['cmd']['exec'])) {
-               $order_job['actions'][$key]['cmd']['exec']= Toolbox::unclean_cross_side_scripting_deep($value['cmd']['exec']);
+               $order_job['actions'][$key]['cmd']['exec']= $DB->escape(Sanitizer::decodeHtmlSpecialChars($value['cmd']['exec']));
             }
          }
       }
