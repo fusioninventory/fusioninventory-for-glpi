@@ -1846,7 +1846,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          //Add the new task
          $input = [
-            'name'                    => '[deploy on demand] '.$this->fields['name'],
+            'name'                    => '[deploy on demand] '.Toolbox::addslashes_deep($this->fields['name']),
             'entities_id'             => $computer->fields['entities_id'],
             'reprepare_if_successful' => 0,
             'is_deploy_on_demand'     => 1,
