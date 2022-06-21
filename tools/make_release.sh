@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # /**
 #  * ---------------------------------------------------------------------
 #  * GLPI - Gestionnaire Libre de Parc Informatique
@@ -73,12 +73,12 @@ else
   echo "$RELEASE has not been found in setup.php. Exiting."
   exit 1;
 fi
-if grep --quiet $RELEASE fusioninventory.xml; then
-  echo "$RELEASE found in fusioninventory.xml, OK."
-else
-  echo "$RELEASE has not been found in fusioninventory.xml. Exiting."
-  exit 1;
-fi
+# if grep --quiet $RELEASE fusioninventory.xml; then
+#   echo "$RELEASE found in fusioninventory.xml, OK."
+# else
+#   echo "$RELEASE has not been found in fusioninventory.xml. Exiting."
+#   exit 1;
+# fi
 if grep --quiet $RELEASE js/footer.js; then
   echo "$RELEASE found in js/footer.js, OK."
 else
@@ -92,6 +92,18 @@ if ! xmllint --noout fusioninventory.xml; then
    exit 1;
 fi
 
+echo "Remove vendor if exists"
+\rm -fr vendor
+
+echo "Remove all minify js files"
+find ./ -type f -name "*.min.js" -exec \rm {} \;
+
+echo "Minify javascripts"
+find ./ -type f \
+    -name "*.js" ! -name "*.min.*" ! -name "vfs_fonts*" \
+    -exec echo {} \; \
+    -exec sh -c 'uglifyjs -o "${1%.*}.min.js" "$1"' sh {} \;
+
 echo "Retrieve PHP vendor"
 composer install --no-dev --optimize-autoloader --prefer-dist --quiet
 
@@ -100,9 +112,6 @@ sed \
    -e 's/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0"/"PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "1"/' \
    -e 's/ SNAPSHOT//' \
    -i '' setup.php
-
-echo "Minify stylesheets and javascripts"
-$INIT_PWD/vendor/bin/robo minify
 
 echo "Compile locale files"
 ./tools/update_mo.pl
