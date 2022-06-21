@@ -105,9 +105,21 @@
    </authors>
    <versions>
       <version>
+         <num>10.0.1+1.0</num>
+         <compatibility>10.0.1</compatibility>
+      </version>   
+      <version>
+         <num>10.0.0+1.1</num>
+         <compatibility>10.0.0</compatibility>
+      </version>   
+      <version>
          <num>10.0.0+1.0</num>
          <compatibility>10.0.0</compatibility>
       </version>   
+      <version>
+         <num>9.5+4.2</num>
+         <compatibility>9.5.3</compatibility>
+      </version>
       <version>
          <num>9.5+4.1</num>
          <compatibility>9.5.3</compatibility>
