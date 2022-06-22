@@ -69,7 +69,7 @@ class PluginFusioninventoryDeployFilepart {
       preg_match('/.\/..\/([^\/]+)/', $file, $matches);
 
       $sha512 = $matches[1];
-      if (!preg_match('/^\w{128}$/', $file)) {
+      if (!preg_match('/^\w{128}$/', $sha512)) {
          header("HTTP/1.1 403");
          exit;
       }
