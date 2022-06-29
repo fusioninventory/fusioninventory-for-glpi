@@ -279,7 +279,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "     task.`id`, task.`name`, task.`is_active`,",
          "     task.`datetime_start`, task.`datetime_end`,",
          "     task.`plugin_fusioninventory_timeslots_exec_id` as timeslot_id,",
-         "     job.`id`, job.`name`, job.`method`, job.`actors`,",
+         "     job.`id`, job.`name`, job.`method`, job.`actors`, job.targets,",
          "     run.`itemtype`, run.`items_id`, run.`state`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
          "FROM `glpi_plugin_fusioninventory_taskjobstates` run",
@@ -306,6 +306,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       if ($query_result) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
+
+      foreach ($results as &$result) {
+          $targets = importArrayFromDB($result['job']['targets']);
+          $result['order'] = $result['job']['id'] * 1000 + array_search( $result['run']['items_id'], array_column($targets, $result['run']['itemtype']));
+      }
+      unset($result);
+      usort($results, function($x, $y) {
+         if ($x['order'] === $y['order']) {
+            return 0;
+         }
+         return $x['order'] < $y['order'] ? -1 : 1;
+      });
 
       // Fetch a list of unique actors since the same actor can be assigned to many jobs.
       $actors = [];
