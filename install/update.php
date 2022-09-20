@@ -978,6 +978,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
                                'comment'=>Toolbox::addslashes_deep(__('Wake agents ups'))]);
    }
 
+   /**
+    * Add task to manage queued inventory if not exist
+    */
+    if (!$crontask->getFromDBbyName('PluginFusioninventoryQueuedinventory', 'queuedinventory')) {
+      CronTask::Register('PluginFusioninventoryQueuedinventory', 'queuedinventory', 300,
+                        ['state' => 0, 'mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30, 'param' => 10,
+                           'comment' => Toolbox::addslashes_deep(__('Manage inventories in queue'))]);
+   }
+
    // Fix software version in computers. see https://github.com/fusioninventory/fusioninventory-for-glpi/issues/1810
    $iterator = $DB->request([
       'FROM'   => 'glpi_computers',
@@ -7656,6 +7665,23 @@ function do_crontask_migration($migration) {
    migrateTablesFusionInventory($migration, $a_table);
 }
 
+function do_queuedinventory_migration($migration) {
+   global $DB;
+   if (!$DB->tableExists(PluginFusioninventoryQueuedinventory::getTable())) {
+      $DB->query("CREATE TABLE `glpi_plugin_fusioninventory_queuedinventories` (
+         `id` int(11) NOT NULL AUTO_INCREMENT,
+         `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+         `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+         `date_creation` timestamp NULL DEFAULT NULL,
+         `inventory_status` int(11) NOT NULL DEFAULT '1',
+         `xml_content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+         `error` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+         PRIMARY KEY (`id`),
+         KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
+         KEY `inventory_status` (`inventory_status`)
+       ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+   }
+}
 
 /**
  * Migrate search params from the old system to the new one

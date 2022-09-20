@@ -383,7 +383,10 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_lock'],
           ['itemtype'  => 'PluginFusioninventoryCronTask',
               'label'     => __('Cron tasks', 'fusioninventory'),
-              'field'     => 'plugin_fusioninventory_crontask']
+              'field'     => 'plugin_fusioninventory_crontask'],
+              ['itemtype'  => 'PluginFusioninventoryQueuedinventory',
+                'label'     => __('Inventory queue', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_queuedinventory']
       ];
       return $rights;
    }

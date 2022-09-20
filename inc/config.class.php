@@ -81,6 +81,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    CONST ACTION_STATUS = 1;
 
+   CONST INVENTORY_DIRECT_MODE = 0;
+   CONST INVENTORY_QUEUED_MODE = 1;
 
    /**
     * Initialize config values of fusioninventory plugin
@@ -166,6 +168,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['auto_inventory_number_peripheral']       = '';
       $input['auto_inventory_number_phone']            = '';
       $input['auto_inventory_number_printer']          = '';
+
+      // options for queued inventory
+      $input['inventory_mode'] = self::INVENTORY_DIRECT_MODE;
+      $input['queued_max'] = 0;
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -389,7 +395,26 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan =2></td>";
+      echo "<td>".__('Inventory mode', 'fusioninventory')."</td>";
+      echo "<td >";
+      Dropdown::showFromArray('inventory_mode',
+      [self::getModes(self::INVENTORY_DIRECT_MODE), self::getModes(self::INVENTORY_QUEUED_MODE)],
+      ['value' => $this->getValue('inventory_mode')]);
+      echo "</td>";
+
+      echo "<td>".__('Maximum number of XML to be add in queued', 'fusioninventory')."</td>";
+      echo "<td width='20%'>";
+      Dropdown::showNumber("queued_max",
+                           [
+                            'value' => $this->getValue('queued_max'),
+                            'min' => 0,
+                            'max' => 50000,
+                            'step' => 10,
+                           ]
+         );
+      echo "</td>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Maximum number of agents to wake up in a task', 'fusioninventory')."</td>";
       echo "<td width='20%'>";
       Dropdown::showNumber("wakeup_agent_max",
@@ -510,6 +535,24 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
          case self::ACTION_CLEAN:
               return __('Clean agents', 'fusioninventory');
+
+      }
+   }
+
+   /**
+    * Get the action for agent action
+    *
+    * @param integer $action
+    * @return string
+   */
+   static function getModes($mode) {
+      switch ($mode) {
+
+         case self::INVENTORY_DIRECT_MODE:
+            return __('Direct import', 'fusioninventory');
+
+         case self::INVENTORY_QUEUED_MODE:
+            return __('Queued', 'fusioninventory');
 
       }
    }

@@ -133,7 +133,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
           'deploygroup'                => 'PluginFusioninventoryDeployGroup',
           'deployuserinteractiontemplate' => 'PluginFusioninventoryDeployUserinteractionTemplate',
-          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
+          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice',
+          'queuedinventory'            => 'PluginFusioninventoryQueuedinventory'
       ];
       $options = [];
 
@@ -314,6 +315,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[12]['name'] = __('Time slot', 'fusioninventory');
          $a_menu[12]['pic']  = $fi_path."/pics/menu_timeslot.png";
          $a_menu[12]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTimeslot');
+      }
+
+      if (Session::haveRight('plugin_fusioninventory_queuedinventory', READ)) {
+         $a_menu[13]['name'] = __('Inventory queue', 'fusioninventory');
+         $a_menu[13]['pic']  = $fi_path."/pics/menu_importxml.png";
+         $a_menu[13]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryQueuedinventory');
       }
 
       if (!empty($a_menu)) {

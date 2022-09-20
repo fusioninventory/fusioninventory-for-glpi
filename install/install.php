@@ -305,7 +305,9 @@ function pluginFusioninventoryInstall($version, $migrationname = 'Migration') {
    CronTask::Register('PluginFusioninventoryTask', 'cleanondemand', 86400,
                         ['mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
                         'comment' => Toolbox::addslashes_deep(__('Clean on demand deployment tasks'))]);
-
+   CronTask::Register('PluginFusioninventoryQueuedinventory', 'queuedinventory', 300,
+                        ['state' => 0, 'mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30, 'param' => 10,
+                        'comment' => Toolbox::addslashes_deep(__('Manage inventories in queue'))]);
    /*
     * Create rules
     */

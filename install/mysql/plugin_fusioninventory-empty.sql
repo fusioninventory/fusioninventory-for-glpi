@@ -550,6 +550,21 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_queuedinventories`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_queuedinventories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `date_creation` timestamp NULL DEFAULT NULL,
+  `inventory_status` int(11) NOT NULL DEFAULT '1',
+  `xml_content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `error` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
+  KEY `inventory_status` (`inventory_status`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configsecurities`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
@@ -1153,6 +1168,11 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryStateDiscovery', '10', '8', '0'),
           (NULL,'PluginFusioninventoryStateDiscovery', '11', '9', '0'),
           (NULL,'PluginFusioninventoryStateDiscovery', '12', '10', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '12', '10', '0'),
+
+          (NULL,'PluginFusioninventoryQueuedinventory', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryQueuedinventory', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryQueuedinventory', '4', '3', '0');
 
           (NULL,'PluginFusioninventoryCronTask', '2', '1', '0'),
           (NULL,'PluginFusioninventoryCronTask', '3', '2', '0'),
