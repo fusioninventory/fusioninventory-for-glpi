@@ -658,7 +658,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       if ($result) {
          $delete = $DB->buildDelete(
             'glpi_plugin_fusioninventory_taskjoblogs', [
-               'plugin_fusioninventory_taskjobstates_id' => new \Queryparam()
+               'plugin_fusioninventory_taskjobstates_id' => new \QueryParam()
             ]
          );
          $stmt = $DB->prepare($delete);
