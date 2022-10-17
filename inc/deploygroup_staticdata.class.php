@@ -156,29 +156,12 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
     * @param object $item PluginFusioninventoryDeployGroup instance
     */
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
-      // WITH checking post values
-      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
-      //If metacriteria array is empty, remove it as it displays the metacriteria form,
-      //and it's is not we want !
-      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
-         unset($search_params['metacriteria']);
-      }
-      PluginFusioninventoryDeployGroup::showCriteria($item, $search_params);
 
-      //Add extra parameters for massive action display : only the Add action should be displayed
-      $search_params['massiveactionparams']['extraparams']['id']                    = $item->getID();
-      $search_params['massiveactionparams']['extraparams']['custom_action']         = 'add_to_group';
-      $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = ['action', 'id'];
-
-      $data = Search::prepareDatasForSearch('PluginFusioninventoryComputer', $search_params);
-      $data['itemtype'] = 'Computer';
-      Search::constructSQL($data);
-
-      // Use our specific constructDatas function rather than Glpi function
-      PluginFusioninventorySearch::constructDatas($data);
-      $data['search']['target'] = PluginFusioninventoryDeployGroup::getSearchEngineTargetURL($item->getID(), false);
-      $data['itemtype'] = 'PluginFusioninventoryComputer';
-      Search::displayData($data);
+      echo '<p class="mt-2 mb-n2 alert alert-warning">';
+      echo "With the difficulties to use the search engine in GLPI 10.0.x, we can't continue to propose add computers from this tab.<br><br>";
+      echo "We invite you to go in <a href='".Toolbox::getItemTypeSearchURL('Computer')."'>computer list</a>, search, then check computers you want to add to this group.<br><br>";
+      echo "To finish, click on <i>actions</i> button and use <strong>Add to static group</strong>";
+      echo '</p>';
    }
 
 
