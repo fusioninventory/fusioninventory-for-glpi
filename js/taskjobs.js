@@ -189,9 +189,10 @@ function pin_agent(args) {
    //chart.pinned_agents = {};
    chart.pinned_agents[agent_id] = chart.agents.toObject()[agent_id];
    chart.pinned_agents[agent_id].logs = {};
-   taskjobs.refresh_pinned_agents(chart_id);
+   //taskjobs.refresh_pinned_agents(chart_id);
    //agents_dispatch.view(chart_id);
    //   taskjobs.update_agents_view(chart_id);
+   taskjobs.queue_refresh_logs( taskjobs.ajax_url, taskjobs.task_id );
 }
 
 function add_runlogs(extra) {
