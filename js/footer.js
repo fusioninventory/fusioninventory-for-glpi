@@ -1,6 +1,6 @@
 var fifooter = "<br/> \
 <a class='copyright' href='http://fusioninventory.org/'> \
-FusionInventory 10.0.2+1.0 - Copyleft \
+FusionInventory 10.0.3+1.0 - Copyleft \
 <span style='display:inline-block;transform: rotate(180deg);font-size: 12px;'>&copy;</span> \
 2010-2019 by FusionInventory Team \
 </a>";
