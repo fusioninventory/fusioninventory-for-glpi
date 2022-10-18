@@ -123,6 +123,9 @@ echo "Delete various scripts and directories"
 \rm -rf phpunit;
 \rm -rf tests;
 \rm -rf .gitignore;
+\rm -rf .github;
+\rm -rf README.tests.md;
+\rm -rf phpunit.xml;
 \rm -rf .travis.yml;
 \rm -rf .coveralls.yml;
 \rm -rf phpunit.xml.dist;
