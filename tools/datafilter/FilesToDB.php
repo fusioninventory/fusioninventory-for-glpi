@@ -59,7 +59,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
          $vendorId = $stack[1];
          $vendorName = $stack[2];
 
-         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes(htmlentities($vendorName))."'),";
+         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes($vendorName)."'),";
          $nblines_vendor++;
       }
 
@@ -75,7 +75,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
          $deviceId = $stack[1];
          $deviceName=$stack[2];
 
-         $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".addslashes(htmlentities($deviceName))."', '".$v."'),";
+         $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".addslashes($deviceName)."', '".$v."'),";
          $nblines_device++;
       }
    }
@@ -146,7 +146,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
          $vendorId = $stack[1];
          $vendorName = $stack[2];
 
-         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes(htmlentities($vendorName))."'),";
+         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes($vendorName)."'),";
          $nblines_vendor++;
       }
 
@@ -162,7 +162,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
          $deviceId = $stack[1];
          $deviceName=$stack[2];
 
-          $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".addslashes(htmlentities($deviceName))."', '".$v."'),";
+          $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".addslashes($deviceName)."', '".$v."'),";
          $nblines_device++;
       }
    }
@@ -214,7 +214,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
          $OUI = strtr($OUI, "-", ":");
          $organization = trim($stack[2]);
          $d++;
-         $sql_insert_oui .= "\n(".$d.", '".$OUI."', '".addslashes(htmlentities($organization))."'),";
+         $sql_insert_oui .= "\n(".$d.", '".$OUI."', '".addslashes($organization)."'),";
 
          $nblines++;
       }
