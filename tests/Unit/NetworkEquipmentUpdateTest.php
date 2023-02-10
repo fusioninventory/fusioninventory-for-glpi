@@ -226,7 +226,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
               ." SET `import`='0'"
               ." WHERE `number`='54'");
 
-      // To be sure not have 2 sme informations
+      // To be sure not have 2 same informations
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 0);
 
    }
@@ -458,6 +458,6 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $networkPort = new NetworkPort();
       $a_networkports = $networkPort->find(['itemtype' => 'NetworkEquipment']);
 
-      $this->assertEquals(4, count($a_networkports), 'Number of networkport must be 4');
+      $this->assertEquals(4, count($a_networkports), 'Number of networkport must be 4'.print_r($a_networkports, true));
    }
 }

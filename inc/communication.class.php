@@ -417,12 +417,12 @@ class PluginFusioninventoryCommunication {
       $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
       if (!$pxml) {
          $pxml = @simplexml_load_string(
-            utf8_encode($xml),
+            mb_convert_encoding($xml, 'UTF-8', mb_list_encodings()),
             'SimpleXMLElement',
             LIBXML_NOCDATA
          );
          if ($pxml) {
-            $xml = utf8_encode($xml);
+            $xml = mb_convert_encoding($xml, 'UTF-8', mb_list_encodings());
          }
       }
 

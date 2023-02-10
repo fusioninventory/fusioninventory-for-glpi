@@ -929,7 +929,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $seconds  = intval($interval % 60);
       $minutes  = intval($interval / 60);
       $hours    = intval($interval / 60 / 60);
-      return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
+      return "{$hours}h {$minutes}m {$seconds}s {$micro}µs";
    }
 
 

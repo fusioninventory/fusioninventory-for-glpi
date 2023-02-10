@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.0', '8.1']
+        php-versions: ['7.4', '8.0', '8.1', '8.2']
     name: lint (${{ matrix.php-versions }})
     env:
       extensions: zip
@@ -55,8 +55,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0', '8.1']
-        glpi-versions: ['10.0.3']
+        php-versions: ['7.4', '8.0', '8.1', '8.2']
+        glpi-versions: ['10.0.6']
     name: phpunit-GLPI-latest (${{ matrix.glpi-versions }}) | PHP(${{ matrix.php-versions }})
     env:
       extensions: zip, hash, fileinfo, mysqli, gd, bz2, xdebug
@@ -64,7 +64,7 @@ jobs:
     steps:
     - uses: ankane/setup-mariadb@v1
       with:
-        mariadb-version: 10.5
+        mariadb-version: 10.8
     - uses: actions/checkout@v1
     - name: Setup cache environment
       id: extcache

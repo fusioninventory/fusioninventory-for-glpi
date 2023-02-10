@@ -282,7 +282,8 @@ class ComputerDeviceSimcardTest extends TestCase {
          'puk2'               => '',
          'msin'               => "204043721717241",
          'users_id'           => 0,
-         'groups_id'          => 0
+         'groups_id'          => 0,
+         'comment'            => null
       ];
 
       $this->assertEquals(
@@ -314,7 +315,8 @@ class ComputerDeviceSimcardTest extends TestCase {
          'puk2'               => '',
          'msin'               => "126543721717241",
          'users_id'           => 0,
-         'groups_id'          => 0
+         'groups_id'          => 0,
+         'comment'            => null
       ];
 
       $this->assertEquals(

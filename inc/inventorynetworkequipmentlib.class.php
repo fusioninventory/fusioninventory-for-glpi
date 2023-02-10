@@ -377,7 +377,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                    'logical_number' => $a_port['logical_number']],
                   [], 1);
             if (count($a_ports_DB) > 0) {
-               $networkPort->delete(current($a_ports_DB));
+               $networkPort->delete(current($a_ports_DB), 1);
             }
          }
       }
@@ -393,7 +393,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
          foreach ($a_ports_DB as $port) {
             if ($port['name'] != "generale"
                && $port['instantiation_type'] != 'NetworkPortAggregate') {
-               $networkPort->delete($port);
+               $networkPort->delete($port, 1);
             }
          }
       }

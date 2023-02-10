@@ -369,7 +369,8 @@ class ComputerUpdateTest extends TestCase {
           'ticket_tco'                       => '0.0000',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
           'is_recursive'                     => 0,
-          'last_inventory_update'            => null
+          'last_inventory_update'            => null,
+          'last_boot'                        => null
       ];
 
       $this->assertEquals($a_reference, $computer->fields);
@@ -407,7 +408,8 @@ class ComputerUpdateTest extends TestCase {
          'is_deleted'                        => 0,
          'is_dynamic'                        => 1,
          'entities_id'                       => 0,
-         'is_recursive'                      => 0
+         'is_recursive'                      => 0,
+         'install_date'                      => null
       ];
 
       unset($ios->fields['date_mod']);

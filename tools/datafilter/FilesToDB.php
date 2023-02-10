@@ -86,7 +86,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
 
-   file_put_contents("../../install/mysql/pciid.sql", utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
+   file_put_contents(
+      "../../install/mysql/pciid.sql",
+      mb_convert_encoding($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device, 'UTF-8', mb_list_encodings())
+   );
 }
 
 
@@ -170,7 +173,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
 
-   file_put_contents("../../install/mysql/usbid.sql", utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
+   file_put_contents(
+      "../../install/mysql/usbid.sql",
+      mb_convert_encoding($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device, 'UTF-8', mb_list_encodings())
+   );
 }
 
 
@@ -215,6 +221,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
    }
    $sql_insert_oui .= ";";
    $sql_insert_oui = str_replace(",;", ";\n", $sql_insert_oui);
-   file_put_contents("../../install/mysql/oui.sql", utf8_encode($sql_creation.$sql_insert_oui));
-
+   file_put_contents(
+      "../../install/mysql/oui.sql",
+      mb_convert_encoding($sql_creation.$sql_insert_oui, 'UTF-8', mb_list_encodings())
+   );
 }
