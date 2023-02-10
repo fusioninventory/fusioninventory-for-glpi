@@ -45,11 +45,11 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "10.0.3+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "10.0.6+1.0");
 // Minimal GLPI version, inclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '10.0.3');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '10.0.6');
 // Maximum GLPI version, exclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '10.0.4');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '10.0.7');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
@@ -565,6 +565,10 @@ function plugin_fusioninventory_check_prerequisites() {
 
       if (!function_exists('finfo_open')) {
          echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
+         return false;
+      }
+      if (!function_exists('mb_convert_encoding')) {
+         echo __('mbstring extension (PHP) is required...', 'fusioninventory');
          return false;
       }
    }

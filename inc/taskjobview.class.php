@@ -317,7 +317,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       echo "<td class='control'>".
                Html::getCheckbox(['name' => 'taskjobs[]', 'value' => $id])."
             </td>
-            <td id='taskjob_${id}' class='taskjob_block'>
+            <td id='taskjob_{$id}' class='taskjob_block'>
                <a href='#taskjobs_form'
                   class='taskjobs_edit'
                   data-ajaxurl='".$this->getBaseUrlFor('fi.job.edit')."'
