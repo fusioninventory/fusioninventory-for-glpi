@@ -30,12 +30,11 @@
  *
  * ------------------------------------------------------------------------
  *
- * This file is used to manage the communication with the agent.
+ * This file is used to manage lock during inventory.
  *
  * ------------------------------------------------------------------------
  *
  * @package   FusionInventory
- * @author    Vincent Mazzoni
  * @author    David Durieux
  * @copyright Copyright (c) 2010-2023 FusionInventory team
  * @license   AGPL License 3.0 or (at your option) any later version
@@ -45,55 +44,23 @@
  *
  */
 
-ob_start();
-ini_set("memory_limit", "-1");
-ini_set("max_execution_time", "0");
-ini_set('display_errors', 1);
-
-if (session_id()=="") {
-   session_start();
-}
-
 if (!defined('GLPI_ROOT')) {
-   include_once("../../../inc/includes.php");
-}
-$_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
-if (!isset($_SESSION['glpilanguage'])) {
-   $_SESSION['glpilanguage'] = 'fr_FR';
-}
-$_SESSION['glpi_fusionionventory_nolock'] = true;
-ini_set('display_errors', 'On');
-error_reporting(E_ALL | E_STRICT);
-$_SESSION['glpi_use_mode'] = 0;
-$_SESSION['glpiparententities'] = '';
-$_SESSION['glpishowallentities'] = true;
-
-$DBFUSIONINVENTORYLOCK = new PluginFusioninventoryDBMysqlLock();
-
-ob_end_clean();
-header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
-
-if (!class_exists("PluginFusioninventoryConfig")) {
-   header("Content-Type: application/xml");
-   echo "<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-   <ERROR>Plugin FusionInventory not installed!</ERROR>
-</REPLY>";
-   session_destroy();
-   exit();
+   die("Sorry. You can't access directly to this file");
 }
 
-$pfCommunication  = new PluginFusioninventoryCommunication();
+/**
+ * Manage db locks during inventory.
+ */
+class PluginFusioninventoryDBMysqlLock extends DB {
 
-if (!isset($rawdata)) {
-   $rawdata = file_get_contents("php://input");
+    /**
+     * Execute a MySQL query without log Errors
+     *
+     * @param string $query Query to execute
+     *
+     * @return mysqli_result|boolean Query result handler
+     */
+   public function queryNoError($query) {
+      return $this->dbh->query($query);
+   }
 }
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   PluginFusioninventoryCommunicationRest::handleFusionCommunication();
-} else if (!empty($rawdata)) {
-   $pfCommunication->handleOCSCommunication($rawdata);
-}
-
-$DBFUSIONINVENTORYLOCK->close();
-session_destroy();
-

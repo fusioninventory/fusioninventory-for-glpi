@@ -102,7 +102,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 }
 
 $pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
-$pfInventoryComputerImportXML->showForm();
+$pfInventoryComputerImportXML->showForm(0);
 
 Html::footer();
 

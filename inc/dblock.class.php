@@ -72,7 +72,14 @@ class PluginFusioninventoryDBLock {
    * @return boolean the result of the lock
    */
    function setLock($type, $value = '1', $callback_method = false) {
-      global $DB, $CFG_GLPI;
+      global $DB, $CFG_GLPI, $DBFUSIONINVENTORYLOCK;
+
+      // In case $DBFUSIONINVENTORYLOCK not set
+      $closePFDNML = false;
+      if (!defined('DBFUSIONINVENTORYLOCK')) {
+         $DBFUSIONINVENTORYLOCK = new PluginFusioninventoryDBMysqlLock();
+         $closePFDNML = true;
+      }
 
       $result = true;
       $table  = "glpi_plugin_fusioninventory_dblock".$type;
@@ -87,9 +94,7 @@ class PluginFusioninventoryDBLock {
             ]
          );
          // this will ignore error `Duplicate entry 'xxx' for key 'PRIMARY'`
-         $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $query);
-
-         while (!$DB->query($query)) {
+         while (!$DBFUSIONINVENTORYLOCK->queryNoError($query)) {
             usleep(self::MILLISECOND_LOCK_WAIT);
             if ($callback_method) {
                $result = $this->checkLockForAgents($start_time);
@@ -99,6 +104,9 @@ class PluginFusioninventoryDBLock {
             }
          }
          $CFG_GLPI["use_log_in_files"] = true;
+      }
+      if ($closePFDNML) {
+         $DBFUSIONINVENTORYLOCK->close();
       }
       return $result;
    }
@@ -152,7 +160,7 @@ class PluginFusioninventoryDBLock {
    *
    */
    function releaseAllLocks() {
-      $where = ['date' => ['<', new \QueryExpression("CURRENT_TIMESTAMP() - ".self::SECONDS_TO_RELEASE_LOCK)]];
+      $where = ['date' => ['<', new \QueryExpression("(CURRENT_TIMESTAMP() - INTERVAL ".self::SECONDS_TO_RELEASE_LOCK." second)")]];
       $tables = [
          'inventorynames',
          'inventories',
