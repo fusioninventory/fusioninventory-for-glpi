@@ -905,6 +905,10 @@ class PluginFusioninventoryFormatconvert {
                            if ($array_tmp['speed'] > 100000) {
                               $array_tmp['speed'] = $array_tmp['speed'] / 1000000;
                            }
+                           // some cases we have very too high speed (9223372036854775807)
+                           if ($array_tmp['speed'] > 99999999999) {
+                              $array_tmp['speed'] = 0;
+                           }
                         } else {
                            $array_tmp['speed'] = 0;
                         }
