@@ -95,6 +95,8 @@ function plugin_init_fusioninventory() {
 
    $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
+   echo "<div class='fusioninventorylogo'></div>";
+
    $Plugin = new Plugin();
    $moduleId = 0;
 
@@ -613,19 +615,18 @@ function plugin_fusioninventory_haveTypeRight($type, $right) {
  * @param string $baseroot
  */
 function plugin_fusioninventory_footer($baseroot) {
-
-      echo "<div id='footer'>";
-      echo "<table width='100%'>";
-      echo "<tr>";
-      echo "<td class='right'>";
-      echo "<a href='http://fusioninventory.org/'>";
-      echo "<span class='copyright'>FusionInventory ".PLUGIN_FUSIONINVENTORY_VERSION." | copyleft ".
-           "<img src='".$baseroot."/".Plugin::getWebDir('fusioninventory', false)."/pics/copyleft.png'/> "
-              . " 2010-2016 by FusionInventory Team".
-           "</span>";
-      echo "</a>";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-      echo "</div>";
+   echo "<div id='footer'>";
+   echo "<table width='100%'>";
+   echo "<tr>";
+   echo "<td class='right'>";
+   echo "<a href='http://fusioninventory.org/'>";
+   echo "<span class='copyright'>FusionInventory ".PLUGIN_FUSIONINVENTORY_VERSION." | copyleft ".
+         "<img src='".$baseroot."/".Plugin::getWebDir('fusioninventory', false)."/pics/copyleft.png'/> "
+            . " 2010-2016 by FusionInventory Team".
+         "</span>";
+   echo "</a>";
+   echo "</td>";
+   echo "</tr>";
+   echo "</table>";
+   echo "</div>";
 }
