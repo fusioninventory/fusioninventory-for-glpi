@@ -75,10 +75,8 @@ class PluginFusioninventoryDBLock {
       global $DB, $CFG_GLPI, $DBFUSIONINVENTORYLOCK;
 
       // In case $DBFUSIONINVENTORYLOCK not set
-      $closePFDNML = false;
-      if (!defined('DBFUSIONINVENTORYLOCK')) {
+      if (!isset($DBFUSIONINVENTORYLOCK)) {
          $DBFUSIONINVENTORYLOCK = new PluginFusioninventoryDBMysqlLock();
-         $closePFDNML = true;
       }
 
       $result = true;
@@ -104,9 +102,6 @@ class PluginFusioninventoryDBLock {
             }
          }
          $CFG_GLPI["use_log_in_files"] = true;
-      }
-      if ($closePFDNML) {
-         $DBFUSIONINVENTORYLOCK->close();
       }
       return $result;
    }
