@@ -95,8 +95,6 @@ function plugin_init_fusioninventory() {
 
    $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
-   echo "<div class='fusioninventorylogo'></div>";
-
    $Plugin = new Plugin();
    $moduleId = 0;
 
