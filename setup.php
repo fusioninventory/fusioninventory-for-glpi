@@ -45,7 +45,7 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.3+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "9.4+2.4");
 // Minimal GLPI version, inclusive
 define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '9.4');
 // Maximum GLPI version, exclusive
@@ -58,7 +58,7 @@ $PF_ESXINVENTORY = false;
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "9.3+1.1 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", PLUGIN_FUSIONINVENTORY_VERSION . " SNAPSHOT");
 
 define("PLUGIN_FUSIONINVENTORY_REPOSITORY_DIR",
        GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/");
@@ -178,10 +178,13 @@ function plugin_init_fusioninventory() {
               ['rulecollections_types'=>true]);
       $Plugin->registerClass('PluginFusioninventoryRulematchedlog',
               ['addtabon' => ['Computer',
-                                        'PluginFusioninventoryAgent',
-                                        'PluginFusioninventoryUnmanaged',
-                                        'Printer',
-                                        'NetworkEquipment']]);
+                              'Monitor',
+                              'NetworkEquipment',
+                              'Peripheral',
+                              'Phone',
+                              'PluginFusioninventoryAgent',
+                              'PluginFusioninventoryUnmanaged',
+                              'Printer']]);
 
       //Classes for rulesengine
       $Plugin->registerClass('PluginFusioninventoryInventoryRuleImport');

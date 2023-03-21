@@ -119,6 +119,7 @@ if (!is_null($args['--as-user'])) {
 print("Running...\n");
 
 $plugin = new Plugin();
+$plugin->checkStates(true);
 $plugin->init();
 
 require_once (GLPI_ROOT . "/plugins/fusioninventory/install/climigration.class.php");

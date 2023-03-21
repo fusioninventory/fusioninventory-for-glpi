@@ -99,6 +99,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          'field'     => 'name',
          'name'      => __('Name'),
          'datatype'  => 'itemlink',
+         'autocomplete' => true,
       ];
 
       $tab[] = [
@@ -471,6 +472,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkdiscovery", [
              'value' => $this->fields["threads_networkdiscovery"],
+             'toadd' => [ __('General setup') ],
              'min' => 1,
              'max' => 400]
          );
@@ -488,7 +490,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkdiscovery", [
              'value' => $this->fields["timeout_networkdiscovery"],
-             'min' => 0,
+             'toadd' => [ __('General setup') ],
+             'min' => 1,
              'max' => 60]
          );
       echo "</td>";
@@ -504,6 +507,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkinventory", [
              'value' => $this->fields["threads_networkinventory"],
+             'toadd' => [ __('General setup') ],
              'min' => 1,
              'max' => 400]
       );
@@ -519,7 +523,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkinventory", [
              'value' => $this->fields["timeout_networkinventory"],
-             'min' => 0,
+             'toadd' => [ __('General setup') ],
+             'min' => 1,
              'max' => 60]
       );
       echo "</td>";
@@ -604,6 +609,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             $a_input['useragent'] = filter_input(INPUT_SERVER, "HTTP_USER_AGENT");
+            // Set default number of threads for network tasks to 0 to follow general setup
+            $a_input['threads_networkdiscovery'] = 0;
+            $a_input['threads_networkinventory'] = 0;
             $agents_id = $this->add($a_input);
             if ($agents_id) {
                return $agents_id;
@@ -789,12 +797,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>";
 
-      $load_anim   = '<i class="fa fa-spinner fa-spin fa-fw"></i>';
+      $load_anim   = '<i class="fas fa-sync fa-spin fa-fw"></i>';
 
       echo Html::scriptBlock("$(function() {
          var waiting = false;
 
-         var refresh_status = function(display_refresh = true) {
+         var refresh_status = function(display_refresh) {
+            var display_refresh = (typeof display_refresh !== 'undefined') ? display_refresh : true;
             $('#agent_status').html('$load_anim');
             $('#refresh_status').hide();
             $('#force_inventory_button').hide();
@@ -853,7 +862,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<span id='agent_status'>".
            __("not yet requested, refresh?", 'fusioninventory').
            "</span>";
-      echo "<span id='refresh_status'><i class='fa fa-refresh'></i></span>";
+      echo "<span id='refresh_status'><i class='fas fa-sync'></i></span>";
       echo "</td>";
 
       echo "<td colspan='2'>";

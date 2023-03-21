@@ -94,7 +94,11 @@ class PluginFusioninventoryComputerRemoteManagement extends CommonDBTM {
          foreach ($a_remotemanagement as $remotemanagement) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>".$remotemanagement['type']."</td>";
-            echo "<td>".$remotemanagement['number']."</td>";
+            if ($remotemanagement['type'] == "teamviewer") {
+               echo "<td><a href='https://start.teamviewer.com/".$remotemanagement['number']."'>".$remotemanagement['number']."</a></td>";
+            } else {
+               echo "<td>".$remotemanagement['number']."</td>";
+            }
             echo "<td colspan='2'>";
             echo "</tr>";
          }

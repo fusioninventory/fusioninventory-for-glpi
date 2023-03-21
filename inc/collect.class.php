@@ -152,6 +152,27 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       ];
    }
 
+   function rawSearchOptions() {
+
+      $tab = [];
+
+      $tab[] = [
+         'id'           => 'common',
+         'name'         => __('Characteristics')
+      ];
+
+      $tab[] = [
+         'id'           => '1',
+         'table'        => $this->getTable(),
+         'field'        => 'name',
+         'name'         => __('Name'),
+         'datatype'     => 'itemlink',
+         'autocomplete' => true,
+      ];
+
+      return $tab;
+   }
+
 
    /**
     * Add search options
@@ -178,7 +199,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
             $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_registries_id` = ".$registry['id'],
                                           'jointype' => 'child'];
             $i++;
@@ -196,7 +216,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
             $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_wmis_id` = ".$wmi['id'],
                                           'jointype' => 'child'];
             $i++;
@@ -217,7 +236,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
             $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
                                           'jointype' => 'child'];
             $i++;
@@ -232,7 +250,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $tab[$i]['datatype']      = 'text';
             $tab[$i]['forcegroupby']  = true;
             $tab[$i]['massiveaction'] = false;
-            $tab[$i]['nodisplay']     = true;
             $tab[$i]['joinparams']    = ['condition' => "AND NEWTABLE.`plugin_fusioninventory_collects_files_id` = ".$file['id'],
                                           'jointype' => 'child'];
             $i++;

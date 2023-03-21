@@ -98,7 +98,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       // compute short shas to find the corresponding entries in database
       $short_shas = [];
       foreach ($data['jobs']['associatedFiles'] as $sha512) {
-         $short_shas[] = "'".substr($sha512, 0, 6)."'";
+         $short_shas[] = substr($sha512, 0, 6);
       }
       // find corresponding file entries
       $files = $this->find(['shortsha512' => $short_shas]);
@@ -234,7 +234,7 @@ class PluginFusioninventoryDeployFile extends PluginFusioninventoryDeployPackage
       }
       if ($canedit) {
          echo "<tr><th>";
-         Html::checkAllAsCheckbox("filesList$rand", mt_rand());
+         echo Html::getCheckAllAsCheckbox("filesList$rand", mt_rand());
          echo "</th><th colspan='3' class='mark'></th></tr>";
       }
       echo "</table>";

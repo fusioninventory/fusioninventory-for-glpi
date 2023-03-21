@@ -119,16 +119,14 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                break;
 
             case 'Computer':
-               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-               break;
-
+            case 'Monitor':
+            case 'NetworkEquipment':
+            case 'Peripheral':
+            case 'Phone':
             case 'Printer':
                $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
                break;
 
-            case 'NetworkEquipment':
-               $continue = PluginFusioninventoryToolbox::isAFusionInventoryDevice($item);
-               break;
             default:
                break;
 
@@ -224,8 +222,9 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
 
       $class = PluginFusioninventoryItem::getFIItemClassInstance($itemtype);
-      $class->showDownloadInventoryFile($items_id);
-
+      if ($class) {
+         $class->showDownloadInventoryFile($items_id);
+      }
       if (isset($_GET["start"])) {
          $start = $_GET["start"];
       } else {
@@ -246,7 +245,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
 
       echo "<tr>";
-      echo "<th colspan='4'>";
+      echo "<th colspan='5'>";
       echo __('Rule import logs', 'fusioninventory');
 
       echo "</th>";
@@ -267,6 +266,10 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       echo "</th>";
       echo "<th>";
       echo __('Module', 'fusioninventory');
+
+      echo "</th>";
+      echo "<th>";
+      echo _n('Criterion', 'Criteria', 2);
 
       echo "</th>";
       echo "</tr>";
@@ -298,6 +301,22 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
             if ($mdata['method'] == $data['method']) {
                echo $mdata['name'];
             }
+         }
+         echo "</td>";
+         echo "<td>";
+         $criteria = importArrayFromDB($data['criteria']);
+         if (count($criteria) > 0) {
+            echo "<ul style='list-style-type:disc'>";
+            foreach ($criteria as $key=>$value) {
+               echo "<li>".$key.": ";
+               if (is_array($value)) {
+                  echo implode("<br>", $value);
+               } else {
+                  echo $value;
+               }
+               echo "</li>";
+            }
+            echo "</ul><hr class='criteriarule'>";
          }
          echo "</td>";
          echo "</tr>";

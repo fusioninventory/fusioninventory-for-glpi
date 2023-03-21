@@ -126,7 +126,7 @@ class PluginFusioninventoryFormatconvert {
          if (isset($datainventory['CONTENT'])
               && isset($datainventory['CONTENT']['BIOS'])
               && !is_array($datainventory['CONTENT']['BIOS'])) {
-         unset($datainventory['CONTENT']['BIOS']);
+            unset($datainventory['CONTENT']['BIOS']);
          }
          if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])) {
             foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data) {
@@ -142,10 +142,10 @@ class PluginFusioninventoryFormatconvert {
          // Hack for Network discovery and inventory
          if (isset($datainventory['CONTENT']['DEVICE'])
               AND !is_array($datainventory['CONTENT']['DEVICE'])) {
-         $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
+            $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
          } else if (isset($datainventory['CONTENT']['DEVICE'])
               AND !is_int(key($datainventory['CONTENT']['DEVICE']))) {
-         $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
+            $datainventory['CONTENT']['DEVICE'] = [$datainventory['CONTENT']['DEVICE']];
          }
          if (isset($datainventory['CONTENT']['DEVICE'])) {
             foreach ($datainventory['CONTENT']['DEVICE'] as $num=>$data) {
@@ -857,7 +857,7 @@ class PluginFusioninventoryFormatconvert {
                         } else if (isset($array_tmp["instantiation_type"])
                                 AND ($array_tmp["instantiation_type"] == 'fibrechannel'
                                     OR $array_tmp["instantiation_type"] == 'fiberchannel')
-                                OR !empty($array_tmp['wwn']) ) {
+                                OR !empty($array_tmp['wwn'])) {
                            $array_tmp["instantiation_type"] = 'NetworkPortFiberchannel';
                         } else if ($array_tmp['mac'] != '') {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
@@ -979,10 +979,14 @@ class PluginFusioninventoryFormatconvert {
                if ($pfConfig->getValue('import_volume') == 1) {
                   $array_tmp = $thisc->addValues($a_drives,
                                                  [
-                                                    'VOLUMN'      => 'device',
-                                                    'FILESYSTEM'  => 'filesystems_id',
-                                                    'TOTAL'       => 'totalsize',
-                                                    'FREE'        => 'freesize']);
+                                                    'VOLUMN'         => 'device',
+                                                    'FILESYSTEM'     => 'filesystems_id',
+                                                    'TOTAL'          => 'totalsize',
+                                                    'FREE'           => 'freesize',
+                                                    'ENCRYPT_NAME'   => 'encryption_tool',
+                                                    'ENCRYPT_ALGO'   => 'encryption_algorithm',
+                                                    'ENCRYPT_STATUS' => 'encryption_status',
+                                                    'ENCRYPT_TYPE'   => 'encryption_type']);
                   if ((isset($a_drives['LABEL'])) AND (!empty($a_drives['LABEL']))) {
                      $array_tmp['name'] = $a_drives['LABEL'];
                   } else if (((!isset($a_drives['VOLUMN']))
@@ -1159,8 +1163,8 @@ class PluginFusioninventoryFormatconvert {
                }
                $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
                if (!empty($dataArray[1])
-                       AND empty($a_peripherals['productname'])) {
-                  $a_peripherals['productname'] = $dataArray[1];
+                       AND empty($array_tmp['productname'])) {
+                  $array_tmp['productname'] = $dataArray[1];
                }
             }
 
@@ -1897,7 +1901,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
-         'nbcores', 'nbthreads', 'frequency'];
+         'nbcores', 'nbthreads', 'frequency', 'tagged'];
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
@@ -1926,6 +1930,7 @@ class PluginFusioninventoryFormatconvert {
     */
    function replaceids($array, $itemtype, $items_id, $level = 0) {
       global $CFG_GLPI;
+
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($itemtype),
                                                              $items_id);
 
@@ -2001,8 +2006,6 @@ class PluginFusioninventoryFormatconvert {
                         }
                      }
                   }
-               } else {
-                  unset($array[$key]);
                }
             }
          }
@@ -2274,7 +2277,8 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp = $thisc->addValues($a_vlan,
                                                  [
                                                     'NAME'   => 'name',
-                                                    'NUMBER' => 'tag']);
+                                                    'NUMBER' => 'tag',
+                                                    'TAGGED' => 'tagged']);
                   if (isset($array_tmp['tag'])) {
                      $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
                   }
@@ -2287,6 +2291,33 @@ class PluginFusioninventoryFormatconvert {
                }
                $a_inventory['aggregate'][$a_port['IFNUMBER']] = $a_port['AGGREGATE']['PORT'];
             }
+         }
+      }
+      // * COMPONENTS
+      $a_inventory['components'] = [];
+      if (isset($array['COMPONENTS'])) {
+         foreach ($array['COMPONENTS']['COMPONENT'] as $a_component) {
+            $array_tmp = $thisc->addValues($a_component,
+                                           [
+                                              'INDEX'            => 'index',
+                                              'NAME'             => 'name',
+                                              'DESCRIPTION'      => 'comment',
+                                              'SERIAL'           => 'serial',
+                                              'MODEL'            => 'model',
+                                              'TYPE'             => 'type',
+                                              'FRU'              => 'fru',
+                                              'MANUFACTURER'     => 'manufacturers_id',
+                                              'FIRMWARE'         => 'firmware',
+                                              'REVISION'         => 'revision',
+                                              'VERSION'          => 'version',
+                                              'CONTAINEDININDEX' => 'parent_index',
+                                              'MAC'              => 'mac',
+                                              'IP'               => 'ip'
+                                           ]);
+            if (!isset($a_component['INDEX'])) {
+               continue;
+            }
+            $a_inventory['components'][$a_component['INDEX']] = $array_tmp;
          }
       }
       return $a_inventory;
@@ -2334,6 +2365,18 @@ class PluginFusioninventoryFormatconvert {
          $pfMapping = new PluginFusioninventoryMapping();
 
          foreach ($array['CARTRIDGES'] as $name => $value) {
+            // Special case for paper roll
+            if (is_array($value)) {
+               if ($name == 'PAPERROLL') {
+                  $plugin_fusioninventory_mappings = $pfMapping->get("Printer", 'paperrollinches');
+                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value['INCHES'];
+
+                  $plugin_fusioninventory_mappings = $pfMapping->get("Printer", 'paperrollcentimeters');
+                  $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value['CENTIMETERS'];
+               }
+               continue;
+            }
+
             $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
             if ($plugin_fusioninventory_mappings) {
                if (strstr($value, 'pages')) { // 30pages

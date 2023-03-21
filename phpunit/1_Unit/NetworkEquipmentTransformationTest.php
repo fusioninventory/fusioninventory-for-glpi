@@ -409,7 +409,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 ],
           'networkport'    => [],
           'internalport'   => ['172.27.0.40', '172.27.1.40'],
-          'itemtype'       => 'NetworkEquipment'
+          'itemtype'       => 'NetworkEquipment',
+          'components'     => []
           ];
       $a_reference['NetworkEquipment'] = [
                'name'                           => 'sw1.siprossii.com',
@@ -486,7 +487,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                ],
           'networkport'    => [],
           'internalport'   => ['172.27.0.40', '172.27.1.40'],
-          'itemtype'       => 'NetworkEquipment'
+          'itemtype'       => 'NetworkEquipment',
+          'components'     => []
           ];
       $a_reference['NetworkEquipment'] = [
                'name'                           => 'sw1.siprossii.com',

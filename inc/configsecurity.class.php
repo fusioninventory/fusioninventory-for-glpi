@@ -121,6 +121,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
+      // FIXME This is a credential field so it is not in autocomplete whitelist.
+      // Replace with a simple text input.
       Html::autocompletionTextField($this, 'username');
       echo "</td>";
       echo "</tr>";
@@ -138,6 +140,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
+      // FIXME This is a credential field so it is not in autocomplete whitelist.
+      // Replace with a password text input, crypt it, and handle ability to "blank" it.
       Html::autocompletionTextField($this, 'auth_passphrase');
       echo "</td>";
       echo "</tr>";
@@ -154,6 +158,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
+      // FIXME This is a credential field so it is not in autocomplete whitelist.
+      // Replace with a password text input, crypt it, and handle ability to "blank" it.
       Html::autocompletionTextField($this, 'priv_passphrase');
       echo "</td>";
       echo "</tr>";
@@ -370,4 +376,34 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    }
 
 
+   function rawSearchOptions() {
+
+      $tab = [];
+
+      $tab[] = [
+         'id'            => 'common',
+         'name'          => __('Characteristics')
+      ];
+
+      $tab[] = [
+         'id'            => '1',
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'autocomplete'  => true,
+      ];
+
+      $tab[] = [
+         'id'            => '2',
+         'table'         => $this->getTable(),
+         'field'         => 'community',
+         'name'          => __('Community', 'fusioninventory'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+         'autocomplete'  => true,
+      ];
+
+      return $tab;
+   }
 }

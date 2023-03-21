@@ -188,7 +188,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_dynamic'          => '1'
           ],
           2 => [
-              'name' => 'H5321 gw Mobile Broadband Device',
+              'name' => 'H5321 gw Mobile Broadband Driver',
               'id'                  => '2',
               'serial'              => '187A047919938CM0',
               'peripheraltypes_id'  => '0',
@@ -200,7 +200,7 @@ class ComputerPeripheral extends RestoreDatabase_TestCase {
               'is_dynamic'          => '1'
           ],
           3 => [
-              'name' => 'Périphérique d’entrée USB',
+              'name' => 'Sensor Hub',
               'id'                  => '3',
               'serial'              => 'STM32_EMOTION2',
               'peripheraltypes_id'  => '0',

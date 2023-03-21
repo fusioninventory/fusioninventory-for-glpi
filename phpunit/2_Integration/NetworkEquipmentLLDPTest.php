@@ -150,6 +150,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'items_id'    => $networkequipments_id,
           'entities_id' => 0
       ]);
+      $this->assertNotFalse($networkports_id);
 
       // Another switch
       $networkequipments_other_id = $networkEquipment->add([
@@ -164,6 +165,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'mac'            => '00:24:b5:bd:c8:01',
           'logical_number' => 22
       ]);
+      $this->assertNotFalse($networkports_other_id);
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 
@@ -239,7 +241,8 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'itemtype'       => 'PluginFusioninventoryUnmanaged',
           'items_id'       => $unmanageds_id,
           'entities_id'    => 0,
-          'mac'            => '00:24:b5:bd:c8:01'
+          'mac'            => '00:24:b5:bd:c8:01',
+          'logical_number' => 22,
       ]);
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
@@ -589,6 +592,7 @@ class NetworkEquipmentLLDPTest extends Common_TestCase {
           'items_id'    => $networkequipments_id,
           'entities_id' => 0
       ]);
+      $this->assertNotFalse($networkports_id);
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
 

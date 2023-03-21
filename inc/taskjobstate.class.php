@@ -118,6 +118,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    public $method = '';
 
 
+   static $rightname = 'plugin_fusioninventory_task';
+
    /**
     * Get the tab name used for item
     *
@@ -403,7 +405,9 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       if (isset($params['last_date'])) {
          $last_date = $params['last_date'];
       }
-
+      if (!preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/", $last_date)) {
+         $last_date = null;
+      }
       if (!is_null($id) && !is_null($last_date)) {
          echo json_encode($this->getLogs($id, $last_date));
       }

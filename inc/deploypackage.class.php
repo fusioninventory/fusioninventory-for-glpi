@@ -335,6 +335,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_link' => $this->getType(),
+         'autocomplete'  => true,
       ];
 
       $tab[] = [
@@ -477,6 +478,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return true
     */
    function showForm($ID, $options = []) {
+      global $CFG_GLPI;
+
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
       //Add redips_clone element before displaying tabs
@@ -502,6 +505,44 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</td>";
 
       echo "<td colspan='2'></td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td>";
+      echo __('Current icon', 'fusioninventory') . ' : ';
+      echo "</td>";
+      echo "<td colspan='3'>";
+      echo "<i class='" . $this->fields['style'] . " fa-" . $this->fields['icon'] . " fa-4x'>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td style='width: 15%;'>";
+      echo __('Style', 'fusioninventory') . ' : ';
+      echo "</td>";
+      echo "<td style='width: 15%;'>";
+      $elements = [
+         Dropdown::EMPTY_VALUE => Dropdown::EMPTY_VALUE,
+         'fas' => __('Solid', 'fusioninventory'),
+         'fab' => __('Brands', 'fusioninventory')
+      ];
+      $options = [];
+      $rand = Dropdown::showFromArray('style', $elements, $options);
+
+      echo "</td>";
+      echo "<td style='width: 20%;'>";
+      echo __('Choose an icon for this Store service', 'fusioninventory') . ' :';
+      echo "</td>";
+      echo "<td style='width: 50%;'>";
+
+      $params = ['style' => '__VALUE__'];
+
+      Ajax::updateItemOnSelectEvent("dropdown_style$rand", "show_icons$rand",
+         $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/ajax/dropdownIcon.php", $params);
+
+      echo "<div id='show_icons$rand'>&nbsp;</div>\n";
+
+      echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
@@ -1043,18 +1084,16 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
     * @return boolean
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      switch ($item->getType()) {
-         case __CLASS__ :
-            switch ($tabnum) {
-               case 1:
-                  $item->showVisibility();
-                  return true;
-            }
 
-         case 'Computer':
-            $package = new self();
-            $package->showPackageForMe($_SESSION['glpiID'], $item);
+      if ($item->getType() == __CLASS__) {
+         if ($tabnum == 1) {
+            $item->showVisibility();
             return true;
+         }
+      } else if ($item->getType() == 'Computer') {
+         $package = new self();
+         $package->showPackageForMe($_SESSION['glpiID'], $item);
+         return true;
       }
       return false;
    }
@@ -1563,48 +1602,48 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             echo "</td>";
             echo "</tr>";
          }
-      }
 
-      if (count($package_to_install)) {
+         if (count($package_to_install)) {
 
-         $p['name']     = 'deploypackages_'.$computers_id;
-         $p['display']  = true;
-         $p['multiple'] = true;
-         $p['size']     = 3;
-         $p['width']    = 950;
+            $p['name']     = 'deploypackages_'.$computers_id;
+            $p['display']  = true;
+            $p['multiple'] = true;
+            $p['size']     = 3;
+            $p['width']    = 950;
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Select packages you want install', 'fusioninventory');
-         echo "<br/>";
-         Dropdown::showFromArray($p['name'], $package_to_install, $p);
-         echo "</td>";
-         echo "</tr>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo __('Select packages you want install', 'fusioninventory');
+            echo "<br/>";
+            Dropdown::showFromArray($p['name'], $package_to_install, $p);
+            echo "</td>";
+            echo "</tr>";
 
-         echo "<tr>";
-         echo "<th colspan='2'>";
-         echo Html::submit(__('Prepare for install', 'fusioninventory'),
-                           ['name' => 'prepareinstall']);
-         echo "&nbsp;";
-         if (!$self_service) {
-            $options = ['local'  => __("I'm on this computer: local wakeup", 'fusioninventory'),
-                        'remote' => __("I'm not on this computer: wakeup from the server", 'fusioninventory'),
-                        'none'   => __("Don't wakeup", 'fusioninventory')
-                       ];
-            Dropdown::showFromArray('wakeup_type', $options,
-                                    ['value' => 'remote']);
+            echo "<tr>";
+            echo "<th colspan='2'>";
+            echo Html::submit(__('Prepare for install', 'fusioninventory'),
+                              ['name' => 'prepareinstall']);
+            echo "&nbsp;";
+            if (!$self_service) {
+               $options = ['local'  => __("I'm on this computer: local wakeup", 'fusioninventory'),
+                           'remote' => __("I'm not on this computer: wakeup from the server", 'fusioninventory'),
+                           'none'   => __("Don't wakeup", 'fusioninventory')
+                        ];
+               Dropdown::showFromArray('wakeup_type', $options,
+                                       ['value' => 'remote']);
+            } else {
+               echo Html::hidden('wakeup_type', ['value' => 'local']);
+            }
+            echo Html::hidden('self_service', ['value' => $self_service]);
+            echo "</th>";
+            echo "</tr>";
          } else {
-            echo Html::hidden('wakeup_type', ['value' => 'local']);
+            echo "<tr>";
+            echo "<th colspan='2'>";
+            echo __('No packages available to install', 'fusioninventory');
+            echo "</th>";
+            echo "</tr>";
          }
-         echo Html::hidden('self_service', ['value' => $self_service]);
-         echo "</th>";
-         echo "</tr>";
-      } else {
-         echo "<tr>";
-         echo "<th colspan='2'>";
-         echo __('No packages available to install', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
       }
       echo "</table>"; // .tab_cadre_fixe
       Html::closeForm();

@@ -58,7 +58,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
       $sopt[5150]['field']     = 'last_fusioninventory_update';
-      $sopt[5150]['linkfield'] = 'id';
       $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
          __('Last inventory', 'fusioninventory');
       $sopt[5150]['datatype']  = 'datetime';
@@ -194,6 +193,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5182]['datatype']  = 'datetime';
       $sopt[5182]['massiveaction'] = false;
 
+      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
+
    }
 
    if ($itemtype == 'Computer') {
@@ -210,8 +211,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['linkfield'] = '';
       $sopt[5193]['name'] = __('FusInv', 'fusioninventory')." - ".__('Switch ports');
       $sopt[5193]['forcegroupby'] = '1';
-
-      $sopt += PluginFusioninventoryCollect::getSearchOptionsToAdd();
 
       $sopt[5197]['table']         = 'glpi_plugin_fusioninventory_agents';
       $sopt[5197]['field']         = 'last_contact';
@@ -1219,11 +1218,11 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   ON (`glpi_computers`.`id`=`glpi_plugin_fusioninventory_agents`.`computers_id`) ";
                 break;
 
-            case 'glpi_plugin_fusioninventory_inventorycomputercomputers.id':
+            case 'glpi_plugin_fusioninventory_inventorycomputercomputers.plugin_fusioninventory_inventorycomputercomputers_id':
                return " LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputercomputers`
-                    AS glpi_plugin_fusioninventory_inventorycomputercomputers_id
+                    AS glpi_plugin_fusioninventory_inventorycomputercomputers
                     ON (`glpi_computers`.`id` = ".
-                    "`glpi_plugin_fusioninventory_inventorycomputercomputers_id`.".
+                    "`glpi_plugin_fusioninventory_inventorycomputercomputers`.".
                     "`computers_id` ) ";
 
             // ** FusionInventory - switch
@@ -2408,8 +2407,8 @@ function plugin_fusioninventory_dynamicReport($params) {
             $data = Search::prepareDatasForSearch($params["item_type"], $params);
             $data['itemtype'] = 'Computer';
             Search::constructSQL($data);
-            Search::constructDatas($data);
-            Search::displayDatas($data);
+            Search::constructData($data);
+            Search::displayData($data);
 
             return true;
          }

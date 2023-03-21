@@ -204,6 +204,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['serial']))) {
          $input['serial'] = $a_computerinventory['Computer']['serial'];
       }
+      if ((isset($a_computerinventory['Computer']['otherserial']))
+                 AND (!empty($a_computerinventory['Computer']['otherserial']))) {
+         $input['otherserial'] = $a_computerinventory['Computer']['otherserial'];
+      }
       if ((isset($a_computerinventory['Computer']['uuid']))
                  AND (!empty($a_computerinventory['Computer']['uuid']))) {
          $input['uuid'] = $a_computerinventory['Computer']['uuid'];
@@ -400,7 +404,7 @@ class PluginFusioninventoryInventoryComputerInventory {
     * @param integer $items_id id of the item (0 = not exist in database)
     * @param string $itemtype
     */
-   function rulepassed($items_id, $itemtype) {
+   function rulepassed($items_id, $itemtype, $ports_id = 0) {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY, $CFG_GLPI;
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -530,6 +534,23 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          PluginFusioninventoryInventoryComputerStat::increment();
 
+         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            $inputrulelog = [];
+            $inputrulelog['date'] = date('Y-m-d H:i:s');
+            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+               $inputrulelog['plugin_fusioninventory_agents_id'] =
+                              $_SESSION['plugin_fusioninventory_agents_id'];
+            }
+            $inputrulelog['items_id'] = $items_id;
+            $inputrulelog['itemtype'] = $itemtype;
+            $inputrulelog['method'] = 'inventory';
+            $pfRulematchedlog->add($inputrulelog, [], false);
+            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+            unset($_SESSION['plugin_fusioninventory_rules_id']);
+         }
+
          $pfInventoryComputerLib->updateComputer(
                  $a_computerinventory,
                  $items_id,
@@ -556,22 +577,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          //  memory_get_peak_usage()."\n".
          //  memory_get_peak_usage()."\n");
 
-         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-            $inputrulelog = [];
-            $inputrulelog['date'] = date('Y-m-d H:i:s');
-            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] =
-                              $_SESSION['plugin_fusioninventory_agents_id'];
-            }
-            $inputrulelog['items_id'] = $items_id;
-            $inputrulelog['itemtype'] = $itemtype;
-            $inputrulelog['method'] = 'inventory';
-            $pfRulematchedlog->add($inputrulelog, [], false);
-            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-            unset($_SESSION['plugin_fusioninventory_rules_id']);
-         }
          // Write XML file
          if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
             PluginFusioninventoryToolbox::writeXML(

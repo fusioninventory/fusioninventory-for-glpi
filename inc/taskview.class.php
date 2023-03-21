@@ -109,7 +109,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       );
 
       // display export button
-      echo "<i class='openExportDialog pointer fa fa-lg fa-floppy-o'
+      echo "<i class='openExportDialog pointer fa fa-lg fa-save'
                title='"._sx('button', 'Export')."'></i>";
 
       // Add a manual refresh button
@@ -487,4 +487,24 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    }
 
 
+   function rawSearchOptions() {
+
+      $tab = [];
+
+      $tab[] = [
+         'id'           => 'common',
+         'name'         => __('Characteristics')
+      ];
+
+      $tab[] = [
+         'id'           => '1',
+         'table'        => $this->getTable(),
+         'field'        => 'name',
+         'name'         => __('Name'),
+         'datatype'     => 'itemlink',
+         'autocomplete' => true,
+      ];
+
+      return $tab;
+   }
 }

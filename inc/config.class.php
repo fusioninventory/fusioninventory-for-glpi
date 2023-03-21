@@ -112,6 +112,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['import_registry']        = 1;
       $input['import_process']         = 1;
       $input['import_vm']              = 1;
+      $input['import_monitor_on_partial_sn'] = 0;
       $input['component_processor']    = 1;
       $input['component_memory']       = 1;
       $input['component_harddrive']    = 1;
@@ -155,6 +156,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['clean_on_demand_tasks'] = -1;
 
       $input['reprepare_job']         = 0;
+
+      // options for inventory number
+      $input['auto_inventory_number_computer']         = '';
+      $input['auto_inventory_number_monitor']          = '';
+      $input['auto_inventory_number_networkequipment'] = '';
+      $input['auto_inventory_number_peripheral']       = '';
+      $input['auto_inventory_number_phone']            = '';
+      $input['auto_inventory_number_printer']          = '';
 
       if (!$getOnly) {
          $this->addValues($input);
@@ -439,7 +448,43 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          'entity' => $_SESSION['glpiactive_entity']]);
       echo "</span>";
       echo "</td>";
+      echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan=4 >".__('Automatic inventory number', 'fusioninventory')."<i class='fa fa-magic' title='".__s('You can define an autofill template')."'></i></th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Computer')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_computer' value='".$this->getValue('auto_inventory_number_computer')."'/>";
+      echo "</td>";
+      echo "<td>".__('Monitor')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_monitor' value='".$this->getValue('auto_inventory_number_monitor')."'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Network equpment')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_networkequipment' value='".$this->getValue('auto_inventory_number_networkequipment')."'/>";
+      echo "</td>";
+      echo "<td>".__('Peripheral')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_peripheral' value='".$this->getValue('auto_inventory_number_peripheral')."'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Phone')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_phone' value='".$this->getValue('auto_inventory_number_phone')."'/>";
+      echo "</td>";
+      echo "<td>".__('Printer')."</td>";
+      echo "<td>";
+      echo "<input type='text' name='auto_inventory_number_printer' value='".$this->getValue('auto_inventory_number_printer')."'/>";
+      echo "</td>";
       echo "</tr>";
 
       $options['candel'] = false;
@@ -591,7 +636,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("manage_osname", $pfConfig->getValue('manage_osname'));
       echo "</td>";
-      echo "<td colspan='2'></td>";
+      echo "<td>";
+      echo __('Import monitor on serial partial match:', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("import_monitor_on_partial_sn", $pfConfig->getValue('import_monitor_on_partial_sn'));
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";

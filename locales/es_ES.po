@@ -3,14 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Walid Nouh, 2018
+# Pruebas, 2018
+# Gustavo Plottier Pilotto <gplottier@gmail.com>, 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Pruebas, 2018\n"
+"PO-Revision-Date: 2018-01-05 08:43+0000\n"
+"Last-Translator: Gustavo Plottier Pilotto <gplottier@gmail.com>, 2019\n"
 "Language-Team: Spanish (Spain) (https://www.transifex.com/ddurieux/teams/797/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -260,7 +265,7 @@ msgstr "Ruta no encontrada"
 
 #: install/update.php:943 install/install.php:302
 msgid "Delete agents that have not contacted the server since \"xxx\" days."
-msgstr ""
+msgstr "Apague los agentes que no se han conectado en los últimos \"xxx\" días"
 
 #: install/install.php:305
 msgid "Wake agents ups"
@@ -412,21 +417,23 @@ msgstr "¡Imposible comunicar con el agente!"
 
 #: inc/deploygroup_staticdata.class.php:116
 msgid "CSV import"
-msgstr ""
+msgstr "Importar desde \"csv\""
 
 #: inc/deploygroup_staticdata.class.php:252
 msgid ""
 "Import a list of computers from a CSV file (the first column must contain "
 "the computer ID)"
 msgstr ""
+"Importar una lista de ordenadores desde un archivo .csv (la primera columna "
+"debe de contener la ID del ordenador)"
 
 #: inc/deploygroup_staticdata.class.php:296
 msgid "Computers imported successfully from CSV file"
-msgstr ""
+msgstr "Ordenadores importados con suceso desde el archivo .csv"
 
 #: inc/deploygroup_staticdata.class.php:299
 msgid "Impossible to read the CSV file"
-msgstr ""
+msgstr "Imposible leer el archivo .csv"
 
 #: inc/taskview.class.php:78
 msgid "Include old jobs"
@@ -548,8 +555,8 @@ msgstr "Hora de finalización"
 #: inc/collect_registry.class.php:65
 msgid "Found entry"
 msgid_plural "Found entries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Entradas encontradas"
+msgstr[1] "Entradas encontradas"
 
 #: inc/collect_registry.class.php:82 inc/collect_registry.class.php:99
 msgid "Hive"
@@ -626,7 +633,7 @@ msgstr "Información SNMP"
 
 #: inc/item.class.php:186
 msgid "SNMP authentication"
-msgstr ""
+msgstr "Autenticación SNMP"
 
 #: inc/item.class.php:299
 msgid "sec(s)"
@@ -700,8 +707,8 @@ msgstr "Forzar la parada"
 #: inc/collect_file.class.php:65
 msgid "Found file"
 msgid_plural "Found files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Archivos encontrados"
+msgstr[1] "Archivos encontrados"
 
 #: inc/collect_file.class.php:72 inc/collect_file.class.php:117
 msgid "Limit"
@@ -842,7 +849,7 @@ msgstr "Depuración extra"
 
 #: inc/config.class.php:374
 msgid "Re-prepare successful jobs"
-msgstr ""
+msgstr "Trabajos preparados con suceso"
 
 #: inc/config.class.php:382
 msgid "Maximum number of agents to wake up in a task"
@@ -1169,7 +1176,7 @@ msgstr "Uso de memoria (en %)"
 
 #: inc/networkequipment.class.php:1118
 msgid "No data available"
-msgstr ""
+msgstr "No hay datos disponibles"
 
 #: inc/agentwakeup.class.php:169
 msgid "Maximum number of agent wakeup reached"
@@ -1577,27 +1584,28 @@ msgstr "Paquete"
 msgid ""
 "You must choose a task and a package to target a task with a deployment "
 "package."
-msgstr ""
+msgstr "Debe elegir una tarea y una aplicación para implementar una tarea "
 
 #: inc/task.class.php:2088
 msgid "Deployment job, package: "
-msgstr ""
+msgstr "Tarea de implementación, aplicación:"
 
 #: inc/task.class.php:2103
 msgid "Updated a deployment job, package: "
-msgstr ""
+msgstr "Tarea de actualización, aplicación:"
 
 #: inc/task.class.php:2104 inc/task.class.php:2136
 msgid ", actors: "
-msgstr ""
+msgstr ",actores:"
 
 #: inc/task.class.php:2127
 msgid "The selected task already has a deployment job for another package: "
 msgstr ""
+"La tarea seleccionada ya tiene un trabajo de despliegue para otro paquete: "
 
 #: inc/task.class.php:2135
 msgid "Created a deployment job, package: "
-msgstr ""
+msgstr "Creada una tarea de implementación, aplicación:"
 
 #: inc/deploypackageitem.class.php:323 inc/deploypackage.class.php:982
 msgid "The modified JSON contained a syntax error :"
@@ -1992,15 +2000,15 @@ msgstr "Otros equipos"
 
 #: inc/menu.class.php:851
 msgid "Network equipments"
-msgstr ""
+msgstr "Equipamientos de rede"
 
 #: inc/menu.class.php:856
 msgid "Printers"
-msgstr ""
+msgstr "Impresoras "
 
 #: inc/menu.class.php:890 inc/menu.class.php:919
 msgid "Linked with a device"
-msgstr ""
+msgstr "Conectado con un dispositivo"
 
 #: inc/menu.class.php:895
 msgid "SNMP switch network ports not linked"
@@ -2008,35 +2016,35 @@ msgstr "Puertos de red SNMP switch no vinculados"
 
 #: inc/menu.class.php:924
 msgid "Not linked"
-msgstr ""
+msgstr "Sin vincular "
 
 #: inc/menu.class.php:951
 msgid "Prepared and waiting"
-msgstr ""
+msgstr "Preparado y esperando"
 
 #: inc/menu.class.php:985
 msgid "Automatic inventory vs manually added"
-msgstr ""
+msgstr "Inventario automático vs agregado manual"
 
 #: inc/menu.class.php:987
 msgid "Computer inventories in the last hours"
-msgstr ""
+msgstr "Ordenadores inventariados en las últimas horas"
 
 #: inc/menu.class.php:988
 msgid "Deployment"
-msgstr ""
+msgstr "Implementación "
 
 #: inc/menu.class.php:989
 msgid "Network inventory by SNMP"
-msgstr ""
+msgstr "Inventario de rede por protocolo SNMP "
 
 #: inc/menu.class.php:990
 msgid "Ports on network equipments (inventoried by SNMP)"
-msgstr ""
+msgstr "Puertas de dispositivos de rede (inventariados por SNMP)"
 
 #: inc/menu.class.php:991
 msgid "Ports on all network equipments"
-msgstr ""
+msgstr "Puertas en todos los dispositivos de rede"
 
 #: inc/inventorycomputerwebservice.class.php:82
 msgid "Computer injected into GLPI"
@@ -2187,8 +2195,8 @@ msgstr "Agente parado/averiado"
 #: inc/collect_wmi.class.php:65
 msgid "Found WMI"
 msgid_plural "Found WMIs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "WMIs encontradas"
+msgstr[1] "WMIs encontradas"
 
 #: inc/collect_wmi.class.php:73 inc/collect_wmi.class.php:102
 msgid "Properties"
@@ -2379,6 +2387,9 @@ msgid ""
 "Several jobs in the same task is not anymore supported because of unexpected side-effects. \n"
 "         Please consider modifying this task to avoid unexpected results."
 msgstr ""
+"Varios trabajos en la misma tarea no se admiten debido a posibles efectos "
+"secundarios inesperados. Considere modificar esta tarea para evitar "
+"problemas."
 
 #: inc/taskjobview.class.php:355
 msgid "Actor Type"
@@ -3367,7 +3378,7 @@ msgstr "Unidad"
 
 #: inc/deploycheck.class.php:537
 msgid "If not successful"
-msgstr ""
+msgstr "Si no tiene éxito"
 
 #: inc/iprange.class.php:93
 msgid "Communication mode"
