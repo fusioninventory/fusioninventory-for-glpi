@@ -514,11 +514,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
 
       // Try detect phone + computer on this port
       if (count($list_all_ports_found) == 2) {
+         $phonecase = 0;
+         $macNotPhone_id = 0;
+         $phonePort_id = 0;
          foreach ($this->found_ports as $itemtype => $ids) {
-            $phonecase = 0;
-            $macNotPhone_id = 0;
-            $phonePort_id = 0;
-            if ($itemtype == "phone") {
+            if ($itemtype == "Phone") {
                // Connect phone on switch port and other (computer..) in this phone
                foreach ($ids as $items_id) {
                   $phonePort_id = current($items_id);
