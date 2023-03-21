@@ -938,6 +938,37 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                     if (!empty($link2)) {
                                        echo "<br/>".$link2;
                                     }
+                                } else if ($networkport->fields['itemtype'] == 'Printer') {
+                                    echo "<hr/>";
+                                    echo "<img src='".$CFG_GLPI['root_doc'].
+                                            "/plugins/fusioninventory/pics/printer_icon.png' ".
+                                            "style='float:left'/> ";
+                                    $printer = new Printer();
+                                    $printer->getFromDB($networkport->fields["items_id"]);
+                                    $link1 = $printer->getLink(1);
+                                    $link = str_replace($printer->getName(0),
+                                                        $networkport->fields["mac"],
+                                                        $printer->getLink());
+                                    $link2 = str_replace($printer->getName(0),
+                                                         $networkport->fields["ip"],
+                                                         $printer->getLink());
+
+                                    echo $icon.$link1;
+                                    if (!empty($link)) {
+                                       echo "<br/>".$link;
+                                    }    
+                                    if (!empty($link2)) {
+                                       echo "<br/>".$link2;
+                                    }  
+                       } else if ($networkport->fields['itemtype'] == 'PluginFusioninventoryUnmanaged') {
+                                        $my_item = new PluginFusioninventoryUnmanaged();
+                                        $my_item->getFromDB($networkport->fields['items_id']);
+                                        $my_link1 = $my_item->getLink(1);
+                                        $my_link = str_replace($my_item->getName(0),
+                                                        $networkport->fields["mac"],
+                                                        $my_item->getLink());
+                                        echo "<hr/>";
+                                        echo "<div style='background-color:#cf9b9b' >".$my_link1."<br>".$my_link."</div>";
                                  }
                               }
                            }
