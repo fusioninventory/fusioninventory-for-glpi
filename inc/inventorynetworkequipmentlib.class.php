@@ -531,8 +531,18 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
             }
          }
          if ($phonecase == 1) {
-            $wire->add(['networkports_id_1'=> $networkports_id,
+            $opposite_id = $wire->getOppositeContact($networkports_id);
+            if (isset($opposite_id)) {
+                    if ($opposite_id != $phonePort_id) {
+                          $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
+                          $pfNetworkPort->disconnectDB($phonePort_id); // disconnect this port
+                            $wire->add(['networkports_id_1'=> $networkports_id,
+                                     'networkports_id_2' => $phonePort_id]);
+                    }
+            } else {
+                    $wire->add(['networkports_id_1'=> $networkports_id,
                              'networkports_id_2' => $phonePort_id]);
+            }
             $networkPort->getFromDB($phonePort_id);
             $portLink_id = 0;
             if ($networkPort->fields['name'] == 'Link') {
