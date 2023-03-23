@@ -571,11 +571,15 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends PluginFusioninve
                }
             }
             $opposite_id = false;
-            if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
+            if ($opposite_id = $wire->getOppositeContact($portLink_id)) {
                if ($opposite_id != $macNotPhone_id) {
                   $pfNetworkPort->disconnectDB($portLink_id); // disconnect this port
                   $pfNetworkPort->disconnectDB($macNotPhone_id); // disconnect destination port
+               } else { // yet connected
+                return;
                }
+            } else {
+               $pfNetworkPort->disconnectDB($macNotPhone_id); // disconnect destination port
             }
             $wire->add([
                'networkports_id_1'=> $portLink_id,
