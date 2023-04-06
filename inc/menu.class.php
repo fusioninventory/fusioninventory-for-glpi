@@ -245,7 +245,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $width_status = 0;
 
-      echo "<div align='center' style='height: 35px; display: inline-block; width: 100%; margin: 0 auto;'>";
+      echo "<div align='center' style='height: 35px; display: inline-block; width: 100%; margin: 0 auto;position: relative;z-index: 0;'>";
       echo "<table width='100%'>";
 
       echo "<tr>";
