@@ -1058,6 +1058,9 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                      $input['virtualmachinestates_id'] =
                          $a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'];
                   }
+                  if (isset($a_computerinventory['virtualmachine'][$key]['comment'])) {
+                     $input['comment'] =
+                         $a_computerinventory['virtualmachine'][$key]['comment'];
                   $computerVirtualmachine->update($input, !$no_history);
                   unset($simplecomputervirtualmachine[$key]);
                   unset($a_computerinventory['virtualmachine'][$key]);
